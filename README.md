@@ -4,7 +4,7 @@ Set of scripts to control FFBE for TMR farming
 This is a bit of a weekend project, but I learned of the power of ADB and I though, its time to get those TMRs i'm missing.
 You will need android studio and android debgging tools in order for this to function.
 
-This is currently built for my phone, the Axon7 and will nto work with anyother phone.
+This is currently built for my phone, the Axon7 and will not work with any other device.
 
 # What is it doing
 

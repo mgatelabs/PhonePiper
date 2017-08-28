@@ -115,7 +115,12 @@ public class GameRunner {
     }
 
     private BufferedImage getScreenshot() {
-        if (exec("./screenshot.bat")) {
+
+        if (OutputImage.exists()) {
+            OutputImage.delete();
+        }
+
+        if (exec("adb shell screencap -p /mnt/sdcard/output.png") && exec("adb pull /mnt/sdcard/output.png output.png") && exec("adb shell rm /mnt/sdcard/output.png")) {
             try {
                 return readImage();
             } catch (Exception ex) {

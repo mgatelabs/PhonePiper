@@ -1,74 +1,94 @@
 package com.mgatelabs.ffbe.shared;
 
-import com.mgatelabs.ffbe.shared.GameState;
-
-import java.awt.image.BufferedImage;
+import java.awt.image.*;
+import java.util.*;
 
 /**
  * Created by @mgatelabs (Michael Fuller) on 8/27/2017.
  */
-public abstract class GameAction {
+public class GameAction {
 
-    private final GameState requiredState;
-    private final GameState exitState;
-    private final String title;
-    private final String command;
+  private final GameState requiredState;
+  private final GameState exitState;
+  private final String title;
+  private final ActionOutcome outcome;
 
-    private final int waitTime;
+  private List<SamplePoint> points;
+  private final List<CommandAction> actions;
+  private final CommandMode commandMode;
 
-    public GameAction(GameState requiredState, GameState exitState, String title, String command, int waitTime) {
-        this.requiredState = requiredState;
-        this.exitState = exitState;
-        this.title = title;
-        this.command = command;
-        this.waitTime = waitTime * 1000;
-    }
+  private final int waitTime;
 
-    public boolean acceptable() {
-        return false;
-    }
+  public GameAction(GameState requiredState, GameState exitState, ActionOutcome outcome, String title, int waitTime, CommandMode commandMode) {
+    this.requiredState = requiredState;
+    this.exitState = exitState;
+    this.outcome = outcome;
+    this.commandMode = commandMode;
+    this.actions = new ArrayList<>();
+    this.title = title;
+    this.waitTime = waitTime * 1000;
+    points = null;
+  }
 
-    // Make sure the screen is ready
-    public boolean validate(BufferedImage bufferedImage) {
+  public void addAction(CommandAction action) {
+    actions.add(action);
+  }
 
-        return false;
-    }
+  public boolean acceptable() {
+    return false;
+  }
 
-    public GameState getRequiredState() {
-        return requiredState;
-    }
+  // Make sure the screen is ready
+  public boolean validate(BufferedImage bufferedImage) {
+    return SamplePoint.validate(getPoints(), bufferedImage);
+  }
 
-    public GameState getExitState() {
-        return exitState;
-    }
+  public GameState getRequiredState() {
+    return requiredState;
+  }
 
-    public String getTitle() {
-        return title;
-    }
+  public GameState getExitState() {
+    return exitState;
+  }
 
-    public String getCommand() {
-        return command;
-    }
+  public String getTitle() {
+    return title;
+  }
 
-    public boolean isMove() {
-        return false;
-    }
+  public boolean isMove() {
+    return outcome == ActionOutcome.NEXT;
+  }
 
-    public boolean isRestart() {
-        return false;
-    }
+  public boolean isRestart() {
+    return outcome == ActionOutcome.REPEAT;
+  }
 
-    public int getWaitTime() {
-        return waitTime;
-    }
+  public int getWaitTime() {
+    return waitTime;
+  }
 
-    /**
-     * See if it's finished
-     * @return
-     */
-    public boolean check() {
-        return false;
-    }
+  /**
+   * See if it's finished
+   *
+   * @return
+   */
+  public boolean check() {
+    return false;
+  }
 
-    public abstract SamplePoint[] getPoints();
+  public List<SamplePoint> getPoints() {
+    return points;
+  }
+
+  public void setPoints(List<SamplePoint> points) {
+    this.points = points;
+  }
+
+  public List<CommandAction> getActions() {
+    return actions;
+  }
+
+  public CommandMode getCommandMode() {
+    return commandMode;
+  }
 }

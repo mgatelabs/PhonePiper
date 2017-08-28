@@ -1,0 +1,157 @@
+{
+  "actions": {
+
+    "earthshrine-enter":{
+      "screen":"earthshrine-missions",
+      "command":{
+        "type": "tap",
+        "id": "choose"
+      },
+      "type":"next",
+      "wait": 0
+    },
+
+    "mission-goals":{
+      "screen":"mission-goals",
+      "command":{
+        "type": "tap",
+        "id": "choose"
+      },
+      "type":"next",
+      "wait": 0
+    },
+
+    "mission-friend":{
+      "screen":"mission-friend",
+      "command":{
+        "type": "tap",
+        "id": "choose"
+      },
+      "type":"next",
+      "wait": 0
+    },
+
+    "mission-depart":{
+      "screen":"mission-depart",
+      "command":{
+        "type": "tap",
+        "id": "choose"
+      },
+      "type":"next",
+      "wait": 0
+    },
+
+    "battle-game-ready":{
+      "screen":"battle-game-ready",
+      "command":{
+        "type": "tap",
+        "id": "choose"
+      },
+      "type":"next",
+      "wait": 0
+    },
+
+    "battle-results":{
+      "screen":"battle-results",
+      "command":{
+        "type": "tap",
+        "id": "choose"
+      },
+      "type":"next",
+      "wait": 0
+    },
+
+    "battle-points":{
+      "screen":"battle-points",
+      "command":{
+        "type": "tap",
+        "id": "choose"
+      },
+      "type":"next",
+      "wait": 0
+    },
+
+    "battle-items":{
+      "screen":"battle-items",
+      "command":{
+        "type": "tap",
+        "id": "choose"
+      },
+      "type":"next",
+      "wait": 0
+    },
+
+    "battle-items-error":{
+      "screen":"battle-items",
+      "command":{
+        "type": "tap",
+        "id": "choose"
+      },
+      "type":"repeat",
+      "wait": 0
+    },
+
+    "friend-request":{
+      "screen":"friend-request",
+      "command":{
+        "type": "tap",
+        "id": "choose"
+      },
+      "type":"restart",
+      "wait": 0
+    },
+
+    "connection-lost":{
+      "screen":"connection-lost",
+      "command":{
+        "type": "tap",
+        "id": "choose"
+      },
+      "type":"restart",
+      "wait": 0
+    }
+
+  },
+  "sets": [
+    {
+      "title": "Earth Shrine - Exit",
+      "wait": 0,
+      "actions": ["connection-lost","battle-items-error","earthshrine-enter"]
+    },
+    {
+      "title": "Goals",
+      "wait": 0,
+      "actions": ["connection-lost","mission-goals"]
+    },
+    {
+      "title": "Friend",
+      "wait": 0,
+      "actions": ["connection-lost","mission-friend"]
+    },
+    {
+      "title": "Depart",
+      "wait": 0,
+      "actions": ["connection-lost","mission-depart"]
+    },
+    {
+      "title": "Enable Auto-Attack",
+      "wait": 0,
+      "actions": ["connection-lost","battle-game-ready"]
+    },
+    {
+      "title": "Battle Results",
+      "wait": 0,
+      "actions": ["connection-lost","battle-results"]
+    },
+    {
+      "title": "Battle Points",
+      "wait": 0,
+      "actions": ["connection-lost","battle-points"]
+    },
+    {
+      "title": "Battle Items",
+      "wait": 0,
+      "actions": ["connection-lost","battle-items"]
+    }
+  ]
+}

@@ -7,6 +7,7 @@ import javax.imageio.*;
 import java.awt.image.*;
 import java.io.*;
 import java.security.*;
+import java.text.SimpleDateFormat;
 import java.util.*;
 
 /**
@@ -180,6 +181,18 @@ public class GameRunner {
       e.printStackTrace();
       return null;
     }
+  }
+
+  public void snap() {
+    getScreenshot();
+
+    Date date = new Date();
+
+
+    SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd_HHmmss");
+    String yyyyMMdd = sdf.format(date);
+
+    OutputImage.renameTo(new File(yyyyMMdd + ".png"));
   }
 
 }

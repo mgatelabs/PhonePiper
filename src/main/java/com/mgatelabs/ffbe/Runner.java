@@ -9,7 +9,10 @@ public class Runner {
     public static void main(String [] args) {
         GameRunner runner = new GameRunner();
 
-        if (args.length != 2) {
+        if (args.length == 1 && args[0].equals("snap")) {
+            runner.snap();
+            return;
+        } else if (args.length != 2) {
             System.out.println("Required Parameters: phone script");
             return;
         }

@@ -8,6 +8,7 @@ import java.util.*;
  */
 public class ScreenDetail {
   private List<SamplePoint> points;
+  private Map<String, SwipeDetail> swipes;
   private Map<String, ButtonLocation> buttons;
 
   public List<SamplePoint> getPoints() {
@@ -24,5 +25,13 @@ public class ScreenDetail {
 
   public void setButtons(Map<String, ButtonLocation> buttons) {
     this.buttons = buttons;
+  }
+
+  public Map<String, SwipeDetail> getSwipes() {
+    return swipes;
+  }
+
+  public void setSwipes(Map<String, SwipeDetail> swipes) {
+    this.swipes = swipes;
   }
 }

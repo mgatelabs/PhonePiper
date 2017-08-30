@@ -89,6 +89,10 @@ public class GameRunner {
             System.out.println("Moving to Next ActionSet");
             currentSetIndex = (currentSetIndex + 1) % sets.size();
             if (currentSetIndex == 0) {
+              System.out.println();
+              System.out.println("Remaing Loops: " + maxLoops);
+              System.out.println();
+              System.out.println();
               maxLoops--;
             }
             break;

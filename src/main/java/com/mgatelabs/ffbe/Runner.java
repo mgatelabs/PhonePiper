@@ -16,6 +16,12 @@ public class Runner {
       if ("snap".equalsIgnoreCase(args[0])) {
         runner.snap();
         return;
+      } else if ("mapper".equalsIgnoreCase(args[0])) {
+        final String phoneName = args.length == 1 ? "axon7" : args[2];
+        Phone phone = runner.loadPhone(phoneName);
+        DungeonMapperCommandLine dungeonMapperCommandLine = new DungeonMapperCommandLine(phone);
+        dungeonMapperCommandLine.run();
+        return;
       } else if ("run".equalsIgnoreCase(args[0])) {
         if (args.length < 2) {
           showHelp = true;

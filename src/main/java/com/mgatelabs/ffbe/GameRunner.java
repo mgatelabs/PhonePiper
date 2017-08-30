@@ -57,7 +57,7 @@ public class GameRunner {
     // Start with a Screen shot
 
     while (maxLoops > 0) {
-      BufferedImage bufferedImage = getScreen();
+      BufferedImage bufferedImage = getScreen(OutputImage);
       ActionSet set = sets.get(currentSetIndex);
 
       int waitTime = set.getWaitTime();
@@ -120,19 +120,17 @@ public class GameRunner {
     }
   }
 
-  private BufferedImage getScreen() {
-
-    if (OutputImage.exists()) {
-      OutputImage.delete();
+  public static BufferedImage getScreen(File imageFile) {
+    if (imageFile.exists()) {
+      imageFile.delete();
     }
-
-    if (exec("adb shell screencap -p /mnt/sdcard/output.png") && exec("adb pull /mnt/sdcard/output.png output.png") && exec("adb shell rm /mnt/sdcard/output.png")) {
-      return ImageUtil.readImage(OutputImage);
+    if (exec("adb shell screencap -p /mnt/sdcard/output.png") && exec("adb pull /mnt/sdcard/output.png " + imageFile.getName()) && exec("adb shell rm /mnt/sdcard/output.png")) {
+      return ImageUtil.readImage(imageFile);
     }
     return null;
   }
 
-  private boolean exec(final String command) {
+  public static boolean exec(final String command) {
     try {
       Process myProcess = Runtime.getRuntime().exec(command);
       myProcess.waitFor();
@@ -168,10 +166,9 @@ public class GameRunner {
   }
 
   public void snap() {
-    getScreen();
+    getScreen(OutputImage);
 
     Date date = new Date();
-
 
     SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd_HHmmss");
     String yyyyMMdd = sdf.format(date);

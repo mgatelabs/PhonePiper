@@ -3,7 +3,6 @@ package com.mgatelabs.ffbe;
 import com.fasterxml.jackson.databind.*;
 import com.mgatelabs.ffbe.shared.*;
 
-import javax.imageio.*;
 import java.awt.image.*;
 import java.io.*;
 import java.security.*;
@@ -58,7 +57,7 @@ public class GameRunner {
     // Start with a Screen shot
 
     while (maxLoops > 0) {
-      BufferedImage bufferedImage = getScreenshot();
+      BufferedImage bufferedImage = getScreen();
       ActionSet set = sets.get(currentSetIndex);
 
       int waitTime = set.getWaitTime();
@@ -121,31 +120,16 @@ public class GameRunner {
     }
   }
 
-  private BufferedImage getScreenshot() {
+  private BufferedImage getScreen() {
 
     if (OutputImage.exists()) {
       OutputImage.delete();
     }
 
     if (exec("adb shell screencap -p /mnt/sdcard/output.png") && exec("adb pull /mnt/sdcard/output.png output.png") && exec("adb shell rm /mnt/sdcard/output.png")) {
-      try {
-        return readImage();
-      } catch (Exception ex) {
-        ex.printStackTrace();
-        return null;
-      }
+      return ImageUtil.readImage(OutputImage);
     }
     return null;
-  }
-
-  private BufferedImage readImage() {
-    try {
-      BufferedImage bufferedImage = ImageIO.read(OutputImage);
-      return bufferedImage;
-    } catch (Exception ex) {
-      ex.printStackTrace();
-      return null;
-    }
   }
 
   private boolean exec(final String command) {
@@ -184,7 +168,7 @@ public class GameRunner {
   }
 
   public void snap() {
-    getScreenshot();
+    getScreen();
 
     Date date = new Date();
 

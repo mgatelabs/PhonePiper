@@ -19,14 +19,18 @@ public class MiniMapParser {
         int rows = miniMapComponent.getW() / miniMapCenterComponent.getW();
         int columns = miniMapComponent.getH() / miniMapCenterComponent.getH();
 
+        if (rows % 2 == 0 || columns % 2 == 0) {
+            throw new RuntimeException("Calculated Map size must be uneven");
+        }
+
         int halfRows = rows / 2;
         int halfColumns = columns / 2;
 
-        int deadRowStart = halfRows - 1;
-        int deadRowEnd = halfRows + 1;
+        int deadRowStart = halfRows;
+        int deadRowEnd = halfRows + 2;
 
-        int deadColumnStart = halfColumns - 1;
-        int deadColumnEnd = halfColumns + 1;
+        int deadColumnStart = halfColumns;
+        int deadColumnEnd = halfColumns + 2;
 
         byte [][] result = new byte [rows][columns];
 
@@ -39,15 +43,14 @@ public class MiniMapParser {
         for (int y = 0; y < rows; y++) {
             for (int x = 0; x < columns; x++) {
                 if (x >= deadRowStart && x <= deadRowEnd && y >= deadColumnStart && y <= deadColumnEnd) {
-                    result[y][x] = 9;
+                    result[y][x] = '?';
                     continue;
                 }
-
 
                 int px = miniMapComponent.getX() + (x * miniMapCenterComponent.getW()) + (miniMapCenterComponent.getW() / 2);
                 int py = miniMapComponent.getY() + (y * miniMapCenterComponent.getH()) + (miniMapCenterComponent.getH() / 2);
 
-                result[y][x] = 0;
+                result[y][x] = '#';
 
                 short validSamples = 0;
 
@@ -61,7 +64,7 @@ public class MiniMapParser {
                 }
 
                 if (validSamples > 7) {
-                    result[y][x] = 1;
+                    result[y][x] = '-';
                 }
             }
         }

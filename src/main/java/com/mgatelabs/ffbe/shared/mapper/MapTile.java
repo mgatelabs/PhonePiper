@@ -15,6 +15,14 @@ public class MapTile {
     this.y = y;
   }
 
+  public int getTopleftX() {
+    return this.x - ((this.area.length / 2));
+  }
+
+  public int getTopLeftY() {
+    return this.y + ((this.area.length / 2));
+  }
+
   public byte[][] getArea() {
     return area;
   }

@@ -69,5 +69,26 @@ public class DungeonMapper {
     if (minY < this.minY) {
       this.minY = minY;
     }
+
+    this.tiles.add(tile);
+  }
+
+  public void write() {
+    byte [][] area = new byte [(maxY - minY) + 1][(maxX - minX) + 1];
+
+    for (MapTile tile: tiles) {
+      int leftX = tile.getTopleftX();
+      int topY = tile.getTopLeftY();
+
+      for (int y = 0; y < tile.getArea().length; y++) {
+        for (int x = 0; x < tile.getArea()[y].length; x++) {
+          int fx = (-minX) + leftX + x;
+          int fy = (-minY) + topY + y;
+          area[fy][fx] = tile.getArea()[y][x];
+        }
+      }
+
+    }
+
   }
 }

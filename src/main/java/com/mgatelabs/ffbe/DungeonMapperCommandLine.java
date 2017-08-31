@@ -40,6 +40,7 @@ public class DungeonMapperCommandLine {
       System.out.println("Commands:");
       System.out.println("0: Move & Snap");
       System.out.println("1: New Segment");
+      System.out.println("2: Write");
       System.out.println("99: Stop");
       System.out.print("Command: ");
 
@@ -64,6 +65,9 @@ public class DungeonMapperCommandLine {
         } break;
         case  1: {
 
+        } break;
+        case 2: {
+          mapper.write();
         } break;
         case 99: {
           // Stop

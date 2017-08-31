@@ -56,18 +56,28 @@ public class GameRunner {
 
     // Start with a Screen shot
 
+    System.out.println("----------------------");
+    System.out.println("Game Runner");
+    System.out.println("----------------------");
+
+    SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+
     while (maxLoops > 0) {
       BufferedImage bufferedImage = getScreen(OutputImage);
       ActionSet set = sets.get(currentSetIndex);
 
       int waitTime = set.getWaitTime();
 
-      System.out.println("Running Set: " + set.getTitle());
+      System.out.println();
+      System.out.println("----------------------");
+      System.out.println("Running Set: " + set.getTitle() + " - " + sdf.format(new Date()));
+      System.out.println("----------------------");
 
       for (GameAction action : set.getPossibleActions()) {
-        System.out.println("Testing Action: " + action.getTitle());
+        System.out.print("Testing Action: " + action.getTitle() + " - ");
         if (action.validate(bufferedImage)) {
-          System.out.println("Action Passed");
+          System.out.println(" Success");
+
           switch (action.getCommandMode()) {
             case FLOW: {
               for (CommandAction commandAction : action.getActions()) {
@@ -80,6 +90,9 @@ public class GameRunner {
               runAction(action.getActions().get(index), secureRandom);
             }
             break;
+            case SKIP: {
+
+            } break;
           }
           // Let it override the wait time
           if (action.getWaitTime() > 0) {
@@ -90,7 +103,7 @@ public class GameRunner {
             currentSetIndex = (currentSetIndex + 1) % sets.size();
             if (currentSetIndex == 0) {
               System.out.println();
-              System.out.println("Remaing Loops: " + maxLoops);
+              System.out.println("Remaining Loops: " + maxLoops);
               System.out.println();
               System.out.println();
               maxLoops--;
@@ -100,6 +113,8 @@ public class GameRunner {
             System.out.println("Restarting Action");
             break; // Stop processing
           }
+        } else {
+          System.out.println(" Failed");
         }
       }
 
@@ -128,7 +143,7 @@ public class GameRunner {
     if (imageFile.exists()) {
       imageFile.delete();
     }
-    if (exec("adb shell screencap -p /mnt/sdcard/output.png") && exec("adb pull /mnt/sdcard/output.png " + imageFile.getName()) && exec("adb shell rm /mnt/sdcard/output.png")) {
+    if (exec("adb shell rm /mnt/sdcard/output.png") && exec("adb shell screencap -p /mnt/sdcard/output.png") && exec("adb pull /mnt/sdcard/output.png " + imageFile.getName())) {
       return ImageUtil.readImage(imageFile);
     }
     return null;

@@ -70,6 +70,19 @@
       "wait": 1
     },
 
+    "battle-game-ready-error":{
+      "screen":"battle-game-ready",
+      "flow": "FLOW",
+      "commands": [
+        {
+          "type": "TAP",
+          "id": "choose"
+        }
+      ],
+      "outcome":"REPEAT",
+      "wait": 1
+    },
+
     "battle-results":{
       "screen":"battle-results",
       "flow": "FLOW",
@@ -83,6 +96,19 @@
       "wait": 8
     },
 
+    "battle-results-error":{
+      "screen":"battle-results",
+      "flow": "FLOW",
+      "commands": [
+        {
+          "type": "TAP",
+          "id": "choose"
+        }
+      ],
+      "outcome":"REPEAT",
+      "wait": 8
+    },
+
     "battle-points":{
       "screen":"battle-points",
       "flow": "FLOW",
@@ -93,6 +119,19 @@
         }
       ],
       "outcome":"NEXT",
+      "wait": 2
+    },
+
+    "battle-points-error":{
+      "screen":"battle-points",
+      "flow": "FLOW",
+      "commands": [
+        {
+          "type": "TAP",
+          "id": "choose"
+        }
+      ],
+      "outcome":"REPEAT",
       "wait": 2
     },
 
@@ -146,28 +185,41 @@
       ],
       "outcome":"REPEAT",
       "wait": 0
+    },
+
+    "daily-complete":{
+      "screen":"daily-complete",
+      "flow": "FLOW",
+      "commands": [
+        {
+          "type": "TAP",
+          "id": "choose"
+        }
+      ],
+      "outcome":"REPEAT",
+      "wait": 0
     }
 
   },
   "sets": [
     {
       "title": "Earth Shrine - Exit",
-      "wait": 2,
-      "actions": ["connection-lost","battle-items-error","earthshrine-enter"]
+      "wait": 3,
+      "actions": ["connection-lost", "daily-complete", "battle-items-error","earthshrine-enter"]
     },
     {
       "title": "Goals",
-      "wait": 2,
+      "wait": 3,
       "actions": ["connection-lost","mission-goals"]
     },
     {
       "title": "Friend",
-      "wait": 2,
+      "wait": 3,
       "actions": ["connection-lost","mission-friend"]
     },
     {
       "title": "Depart",
-      "wait": 2,
+      "wait": 3,
       "actions": ["connection-lost","mission-depart"]
     },
     {
@@ -178,17 +230,17 @@
     {
       "title": "Battle Results",
       "wait": 8,
-      "actions": ["connection-lost","battle-results"]
+      "actions": ["connection-lost", "battle-game-ready-error", "battle-results"]
     },
     {
       "title": "Battle Points",
       "wait": 2,
-      "actions": ["connection-lost","battle-points"]
+      "actions": ["connection-lost", "battle-results-error", "battle-points"]
     },
     {
       "title": "Battle Items",
       "wait": 2,
-      "actions": ["connection-lost","battle-items"]
+      "actions": ["connection-lost", "daily-complete", "battle-points-error","battle-items"]
     }
   ]
 }

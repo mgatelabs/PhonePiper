@@ -6,5 +6,6 @@ package com.mgatelabs.ffbe.shared;
  */
 public enum CommandMode {
   FLOW,
-  RANDOM
+  RANDOM,
+  SKIP
 }

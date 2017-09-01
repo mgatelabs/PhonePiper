@@ -39,8 +39,8 @@ public class GameAction {
   }
 
   // Make sure the screen is ready
-  public boolean validate(BufferedImage bufferedImage) {
-    return SamplePoint.validate(getPoints(), bufferedImage);
+  public boolean validate(RawImageReader rawImage) {
+    return SamplePoint.validate(getPoints(), rawImage);
   }
 
   public GameState getRequiredState() {

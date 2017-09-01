@@ -14,8 +14,9 @@ public class MiniMapParserTest {
     @Test
     public void parseMap() throws Exception {
 
-        BufferedImage bufferedImage = ImageUtil.readImage(new File("mini-map-1.png"));
+        //BufferedImage bufferedImage = ImageUtil.readImage(new File("mini-map-1.png"));
 
+        /*
         ComponentDetail miniMapDetail = new ComponentDetail(63, 145,504,504);
         ComponentDetail miniMapCenterDetail = new ComponentDetail(297, 379,18,18);
 
@@ -27,7 +28,7 @@ public class MiniMapParserTest {
             }
             System.out.println();
         }
-
+        */
 
     }
 

@@ -9,12 +9,12 @@ public class MiniMapParser {
 
     /**
      * Example the mini-map and build a small image form it
-     * @param bufferedImage
+     * @param rawImage
      * @param miniMapComponent
      * @param miniMapCenterComponent
      * @return
      */
-    public static byte [][] parseMap(BufferedImage bufferedImage, ComponentDetail miniMapComponent, ComponentDetail miniMapCenterComponent) {
+    public static byte [][] parseMap(RawImageReader rawImage, ComponentDetail miniMapComponent, ComponentDetail miniMapCenterComponent) {
 
         int rows = miniMapComponent.getW() / miniMapCenterComponent.getW();
         int columns = miniMapComponent.getH() / miniMapCenterComponent.getH();
@@ -56,7 +56,7 @@ public class MiniMapParser {
 
                 for (int sx = sampleStart; sx <= sampleEnd; sx++) {
                     for (int sy = sampleStart; sy <= sampleEnd; sy++) {
-                        sample.parse(bufferedImage.getRGB(px + sx, py + sy));
+                        sample.parse(rawImage.getPixel(px + sx, py + sy));
                         if (sample.getG() > 128 || sample.getB() > 128 || sample.getR() > 128) {
                             validSamples++;
                         }

@@ -93,7 +93,7 @@
         }
       ],
       "outcome":"NEXT",
-      "wait": 8
+      "wait": 3
     },
 
     "battle-results-error":{
@@ -106,7 +106,7 @@
         }
       ],
       "outcome":"REPEAT",
-      "wait": 8
+      "wait": 4
     },
 
     "battle-points":{
@@ -229,7 +229,7 @@
     },
     {
       "title": "Battle Results",
-      "wait": 8,
+      "wait": 3,
       "actions": ["connection-lost", "battle-game-ready-error", "battle-results"]
     },
     {

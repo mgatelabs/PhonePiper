@@ -1,6 +1,9 @@
 package com.mgatelabs.ffbe;
 
 import com.mgatelabs.ffbe.shared.*;
+import com.mgatelabs.ffbe.ui.*;
+
+import java.util.*;
 
 /**
  * Created by @mgatelabs (Michael Fuller) on 8/27/2017.
@@ -14,7 +17,14 @@ public class Runner {
 
     if (args.length >= 1) {
       if ("snap".equalsIgnoreCase(args[0])) {
-        runner.snap();
+
+        RawImageReader rawImageReader = GameRunner.getScreen();
+
+        ImagePixelPickerDialog dialog = new ImagePixelPickerDialog();
+        dialog.setup(rawImageReader, new ArrayList<>());
+        dialog.start();
+
+        //runner.snap();
         return;
       } else if ("mapper".equalsIgnoreCase(args[0])) {
         final String phoneName = args.length == 1 ? "axon7" : args[2];

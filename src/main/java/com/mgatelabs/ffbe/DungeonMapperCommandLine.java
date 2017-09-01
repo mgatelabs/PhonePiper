@@ -56,7 +56,7 @@ public class DungeonMapperCommandLine {
           x += offX;
           y += offY;
 
-          byte [][] area = MiniMapParser.parseMap(GameRunner.getScreen(OutputImage), mapPosition, centerPosition);
+          byte [][] area = MiniMapParser.parseMap(GameRunner.getScreen(), mapPosition, centerPosition);
 
           MapTile tile = new MapTile(area, x, y);
 

@@ -67,11 +67,18 @@ public class GameRunner {
 
         while (maxLoops > 0) {
             long startTime = System.nanoTime();
-            RawImageReader bufferedImage = getScreen(OutputImage);
+            RawImageReader bufferedImage = getScreen();
             long endTime = System.nanoTime();
 
             long dif = endTime - startTime;
 
+            if (!bufferedImage.isReady()) {
+              System.out.println();
+              System.out.println("----------------------");
+              System.out.println("Error: Image Failure: " + ((float) dif / 1000000000.0));
+              System.out.println("----------------------");
+              continue;
+            }
 
             ActionSet set = sets.get(currentSetIndex);
 
@@ -150,28 +157,12 @@ public class GameRunner {
         }
     }
 
-    public static RawImageReader getScreen(File imageFile) {
-        if (imageFile.exists()) {
-            imageFile.delete();
-        }
-        //byte [] bytes = exec2("adb exec-out screencap -p");
+    public static RawImageReader getScreen() {
         byte[] bytes = exec2("adb exec-out screencap");
         try {
             ByteBuffer byteBuffer = ByteBuffer.wrap(bytes);
             byteBuffer.order(ByteOrder.LITTLE_ENDIAN);
-            //RawImage rawImage = new RawImage();
-
             RawImageReader rawImageReader = new RawImageReader(byteBuffer.getInt(), byteBuffer.getInt(), RawImageReader.ImageFormats.RGBA, 12, bytes);
-
-      /*
-      BufferedImage image = new BufferedImage(rawImageReader.getWidth(), rawImageReader.getHeigth(), BufferedImage.TYPE_INT_ARGB);
-      for (int y = 0 ; y < rawImageReader.getHeigth() ; y++) {
-        for (int x = 0 ; x < rawImageReader.getWidth() ; x++) {
-          image.setRGB(x, y, rawImageReader.getPixel(x, y));
-        }
-      }
-      */
-
             return rawImageReader;
         } catch (Exception e) {
             e.printStackTrace();

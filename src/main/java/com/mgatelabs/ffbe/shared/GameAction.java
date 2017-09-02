@@ -1,6 +1,7 @@
 package com.mgatelabs.ffbe.shared;
 
-import java.awt.image.*;
+import com.mgatelabs.ffbe.shared.image.RawImageReader;
+
 import java.util.*;
 
 /**

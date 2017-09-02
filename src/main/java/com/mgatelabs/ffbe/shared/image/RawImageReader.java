@@ -1,9 +1,17 @@
-package com.mgatelabs.ffbe.shared;
+package com.mgatelabs.ffbe.shared.image;
+
+import com.mgatelabs.ffbe.shared.ColorSample;
+import com.mgatelabs.ffbe.shared.image.ImageReader;
+
+import javax.imageio.ImageIO;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
 
 /**
  * Created by @mgatelabs (Michael Fuller) on 8/31/2017.
  */
-public class RawImageReader {
+public class RawImageReader implements ImageReader {
 
     public enum ImageFormats {
 
@@ -91,34 +99,39 @@ public class RawImageReader {
 
     private final int dataOffset;
     private final int width;
-    private final int heigth;
+    private final int height;
     private final ImageFormats format;
     private final byte [] data;
 
-    public RawImageReader(int width, int heigth, ImageFormats format, int dataOffset, byte[] data) {
+    public RawImageReader(int width, int height, ImageFormats format, int dataOffset, byte[] data) {
         this.dataOffset = dataOffset;
         this.width = width;
-        this.heigth = heigth;
+        this.height = height;
         this.format = format;
         this.data = data;
     }
 
+    @Override
     public boolean isReady() {
-        return this.data.length >= this.dataOffset + ((width * heigth) * format.getBpp());
+        if (width == 0 || height == 0) return false;
+        return this.data.length >= this.dataOffset + ((width * height) * format.getBpp());
     }
 
+    @Override
     public int getWidth() {
         return width;
     }
 
-    public int getHeigth() {
-        return heigth;
+    @Override
+    public int getHeight() {
+        return height;
     }
 
     public ImageFormats getFormat() {
         return format;
     }
 
+    @Override
     public int getPixel(int x, int y) {
         int startIndex = dataOffset + ((y * width) * format.getBpp()) + (x * format.getBpp());
 
@@ -134,6 +147,7 @@ public class RawImageReader {
         return a | r | g | b;
     }
 
+    @Override
     public void getPixel(int x, int y, ColorSample sample) {
         int startIndex = dataOffset + ((y * width) * format.getBpp()) + (x * format.getBpp());
         sample.setR(0xff & data[startIndex]);
@@ -148,5 +162,23 @@ public class RawImageReader {
             value <<= (shift * -1);
         }
         return value;
+    }
+
+    @Override
+    public boolean savePng(File file) {
+        BufferedImage bufferedImage = new BufferedImage(getWidth(), getHeight(), BufferedImage.TYPE_INT_RGB);
+        for (int y = 0; y < height; y++) {
+            for (int x = 0; x < width; x++) {
+                int color = getPixel(x,y);
+                bufferedImage.setRGB(x,y, 0xFFFFFF & color);
+            }
+        }
+        try {
+            ImageIO.write(bufferedImage, "PNG", file);
+            return true;
+        } catch (IOException e) {
+            e.printStackTrace();
+            return false;
+        }
     }
 }

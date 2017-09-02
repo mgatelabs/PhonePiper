@@ -1,8 +1,16 @@
 package com.mgatelabs.ffbe;
 
 import com.mgatelabs.ffbe.shared.*;
+import com.mgatelabs.ffbe.shared.details.DeviceDefinition;
+import com.mgatelabs.ffbe.shared.image.ImageReader;
+import com.mgatelabs.ffbe.shared.image.PngImageReader;
+import com.mgatelabs.ffbe.shared.image.RawImageReader;
 import com.mgatelabs.ffbe.ui.*;
 
+import javax.imageio.ImageIO;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
 import java.util.*;
 
 /**
@@ -16,9 +24,34 @@ public class Runner {
     boolean showHelp = false;
 
     if (args.length >= 1) {
-      if ("snap".equalsIgnoreCase(args[0])) {
+      if ("manage".equalsIgnoreCase(args[0])) {
+        DeviceDefinition deviceDefinition = null;
+        if (args.length == 2) {
+          deviceDefinition = DeviceDefinition.read(args[1]);
+        } else {
+          deviceDefinition = DeviceDefinition.read("axon7");
+        }
+        if (deviceDefinition == null) {
+          System.out.println("Could not find a device definition");
+        }
 
-        RawImageReader rawImageReader = GameRunner.getScreen();
+        GameManager manager = new GameManager(deviceDefinition);
+
+        manager.manage();
+      } else if ("snap".equalsIgnoreCase(args[0])) {
+
+        File sampleFile = new File("pieces//friendrequest.png");
+
+        BufferedImage bufferedImage = null;
+
+        try {
+          bufferedImage = ImageIO.read(sampleFile);
+        } catch (IOException e) {
+          e.printStackTrace();
+          return;
+        }
+
+        ImageReader rawImageReader = new PngImageReader(bufferedImage);// GameRunner.getScreen();
 
         ImagePixelPickerDialog dialog = new ImagePixelPickerDialog();
         dialog.setup(rawImageReader, new ArrayList<>());

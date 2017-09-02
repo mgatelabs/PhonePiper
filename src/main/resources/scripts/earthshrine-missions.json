@@ -214,7 +214,7 @@
     },
     {
       "title": "Friend",
-      "wait": 3,
+      "wait": 4,
       "actions": ["connection-lost","mission-friend"]
     },
     {

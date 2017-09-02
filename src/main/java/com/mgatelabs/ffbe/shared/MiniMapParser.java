@@ -1,6 +1,6 @@
 package com.mgatelabs.ffbe.shared;
 
-import java.awt.image.BufferedImage;
+import com.mgatelabs.ffbe.shared.image.RawImageReader;
 
 /**
  * Created by @mgatelabs (Michael Fuller) on 8/29/2017.

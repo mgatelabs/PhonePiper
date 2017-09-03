@@ -44,6 +44,19 @@
       "wait": 2
     },
 
+    "mission-friend-error":{
+      "screen":"mission-friend",
+      "flow": "FLOW",
+      "commands": [
+        {
+          "type": "TAP",
+          "id": "choose"
+        }
+      ],
+      "outcome":"REPEAT",
+      "wait": 2
+    },
+
     "mission-depart":{
       "screen":"mission-depart",
       "flow": "FLOW",
@@ -54,6 +67,19 @@
         }
       ],
       "outcome":"NEXT",
+      "wait": 2
+    },
+
+    "mission-depart-error":{
+      "screen":"mission-depart",
+      "flow": "FLOW",
+      "commands": [
+        {
+          "type": "TAP",
+          "id": "choose"
+        }
+      ],
+      "outcome":"REPEAT",
       "wait": 2
     },
 
@@ -90,6 +116,10 @@
         {
           "type": "TAP",
           "id": "choose"
+        },
+        {
+          "type": "TAP",
+          "id": "choose"
         }
       ],
       "outcome":"NEXT",
@@ -100,6 +130,10 @@
       "screen":"battle-results",
       "flow": "FLOW",
       "commands": [
+        {
+          "type": "TAP",
+          "id": "choose"
+        },
         {
           "type": "TAP",
           "id": "choose"
@@ -116,6 +150,9 @@
         {
           "type": "TAP",
           "id": "choose"
+        },{
+          "type": "TAP",
+          "id": "choose"
         }
       ],
       "outcome":"NEXT",
@@ -127,6 +164,9 @@
       "flow": "FLOW",
       "commands": [
         {
+          "type": "TAP",
+          "id": "choose"
+        },{
           "type": "TAP",
           "id": "choose"
         }
@@ -142,6 +182,10 @@
         {
           "type": "TAP",
           "id": "choose"
+        },
+        {
+          "type": "TAP",
+          "id": "choose"
         }
       ],
       "outcome":"NEXT",
@@ -152,6 +196,10 @@
       "screen":"battle-items",
       "flow": "FLOW",
       "commands": [
+        {
+          "type": "TAP",
+          "id": "choose"
+        },
         {
           "type": "TAP",
           "id": "choose"
@@ -220,12 +268,12 @@
     {
       "title": "Depart",
       "wait": 3,
-      "actions": ["connection-lost","mission-depart"]
+      "actions": ["connection-lost", "mission-friend-error","mission-depart"]
     },
     {
       "title": "Enable Auto-Attack",
       "wait": 1,
-      "actions": ["connection-lost","battle-game-ready"]
+      "actions": ["connection-lost", "mission-friend-error", "mission-depart-error","battle-game-ready"]
     },
     {
       "title": "Battle Results",

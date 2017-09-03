@@ -54,7 +54,7 @@ public class GameRunner {
 
     private void runSets(List<ActionSet> sets) {
         int currentSetIndex = 0;
-        int maxLoops = 100;
+        int maxLoops = 1000;
 
         SecureRandom secureRandom = new SecureRandom();
 

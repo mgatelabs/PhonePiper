@@ -28,6 +28,10 @@ public class GameManager {
         viewDefinition = ViewDefinition.read(deviceDefinition.getViewId());
     }
 
+    private void save() {
+        viewDefinition.save(deviceDefinition.getViewId());
+    }
+
     public void manage() {
 
         if (viewDefinition == null) {
@@ -83,7 +87,7 @@ public class GameManager {
                     newScreen();
                 } break;
                 case 2: {
-
+                    listScreens();
                 } break;
                 case  9: {
                     return;
@@ -91,10 +95,6 @@ public class GameManager {
             }
 
         }
-    }
-
-    private void save() {
-        viewDefinition.save(deviceDefinition.getViewId());
     }
 
     private void newScreen() {
@@ -127,7 +127,7 @@ public class GameManager {
 
             boolean duplicate = false;
             for (ScreenDefinition screenDefinition: viewDefinition.getScreens()) {
-                if (screenDefinition.getComponentId().equalsIgnoreCase(id)) {
+                if (screenDefinition.getScreenId().equalsIgnoreCase(id)) {
                     System.out.println("Duplicate screen found, please try again");
                     duplicate = true;
                     break;
@@ -179,15 +179,88 @@ public class GameManager {
         if (ConsoleInput.yesNo()) {
 
             ScreenDefinition screenDefinition = new ScreenDefinition();
-            screenDefinition.setComponentId(id);
+            screenDefinition.setScreenId(id);
+            screenDefinition.setName(name);
             screenDefinition.setPoints(samples);
 
             viewDefinition.getScreens().add(screenDefinition);
 
-            rawImageReader.savePng(new File("views/" + deviceDefinition.getViewId() + "/s-" + id + ".png"));
+            rawImageReader.savePng(ScreenDefinition.getPreviewPath(deviceDefinition.getViewId(), id));
 
             save();
         }
+    }
+
+    private void listScreens() {
+
+        System.out.println("----------");
+        System.out.println("Screens:");
+        System.out.println("----------");
+        System.out.println();
+
+        System.out.println("0: Stop");
+
+        while (true) {
+            for (int i = 0; i < viewDefinition.getScreens().size(); i++) {
+                System.out.println((i + 1) + ": " + viewDefinition.getScreens().get(i).getScreenId() + " - " + viewDefinition.getScreens().get(i).getName());
+            }
+            int command = ConsoleInput.getInt();
+            if (command <= 0) return;
+            if (command >= 1 && command <= viewDefinition.getScreens().size()) {
+
+            }
+        }
+
+    }
+
+    private void manageScreen(int screenIndex) {
+
+        System.out.println("----------");
+        System.out.println("Screen Options:");
+        System.out.println("----------");
+        System.out.println();
+
+        ScreenDefinition screenDefinition = viewDefinition.getScreens().get(screenIndex);
+
+        File previewPath = ScreenDefinition.getPreviewPath(deviceDefinition.getViewId(), screenDefinition.getScreenId());
+
+        while (true) {
+            System.out.println("0: Stop");
+
+            System.out.println("1: Verify (Live Data)");
+            if (previewPath.exists()) {
+                System.out.println("2: Verify (Saved Data)");
+            }
+            System.out.println("3: Edit Points");
+            System.out.println("7: Delete Screen");
+
+            int command = ConsoleInput.getInt();
+            if (command <= 0) return;
+
+            switch (command) {
+                case 1: {
+
+
+
+                } break;
+                case 2: {
+
+                } break;
+                case 3: {
+
+                } break;
+                case 7: {
+                    System.out.println("Are you sure? (Y/N)");
+                    if (ConsoleInput.yesNo()) {
+                        // Delete
+                        viewDefinition.getScreens().remove(screenIndex);
+                        return;
+                    }
+                } break;
+            }
+
+        }
+
     }
 
     private void manageComponents() {

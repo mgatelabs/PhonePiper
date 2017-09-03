@@ -2,6 +2,7 @@ package com.mgatelabs.ffbe.shared.details;
 
 import com.mgatelabs.ffbe.shared.SamplePoint;
 
+import java.io.File;
 import java.util.List;
 
 /**
@@ -11,19 +12,19 @@ public class ScreenDefinition {
 
     private String name;
 
-    private String componentId;
+    private String screenId;
 
     private List<SamplePoint> points;
 
     public ScreenDefinition() {
     }
 
-    public String getComponentId() {
-        return componentId;
+    public String getScreenId() {
+        return screenId;
     }
 
-    public void setComponentId(String componentId) {
-        this.componentId = componentId;
+    public void setScreenId(String screenId) {
+        this.screenId = screenId;
     }
 
     public List<SamplePoint> getPoints() {
@@ -32,5 +33,17 @@ public class ScreenDefinition {
 
     public void setPoints(List<SamplePoint> points) {
         this.points = points;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public static File getPreviewPath(String viewId, String screenId) {
+        return new File("views/" + viewId + "/s-" + screenId + ".png");
     }
 }

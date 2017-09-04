@@ -7,8 +7,8 @@ import java.util.List;
  */
 public class StateDetail {
     private String name;
-    private ConditionDetail condition;
-    private List<ActionDetail> actions;
+
+    private List<StatementDetail> statements;
 
     public String getName() {
         return name;
@@ -18,19 +18,11 @@ public class StateDetail {
         this.name = name;
     }
 
-    public ConditionDetail getCondition() {
-        return condition;
+    public List<StatementDetail> getStatements() {
+        return statements;
     }
 
-    public void setCondition(ConditionDetail condition) {
-        this.condition = condition;
-    }
-
-    public List<ActionDetail> getActions() {
-        return actions;
-    }
-
-    public void setActions(List<ActionDetail> actions) {
-        this.actions = actions;
+    public void setStatements(List<StatementDetail> statements) {
+        this.statements = statements;
     }
 }

@@ -10,11 +10,11 @@ import java.io.IOException;
 /**
  * Created by @mgatelabs (Michael Fuller) on 9/1/2017.
  */
-public class PngImageReader implements ImageReader {
+public class PngImageWrapper implements ImageWrapper {
 
     BufferedImage bufferedImage;
 
-    public PngImageReader(BufferedImage bufferedImage) {
+    public PngImageWrapper(BufferedImage bufferedImage) {
         this.bufferedImage = bufferedImage;
     }
 

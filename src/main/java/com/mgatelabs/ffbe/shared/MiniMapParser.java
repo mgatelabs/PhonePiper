@@ -1,6 +1,6 @@
 package com.mgatelabs.ffbe.shared;
 
-import com.mgatelabs.ffbe.shared.image.RawImageReader;
+import com.mgatelabs.ffbe.shared.image.RawImageWrapper;
 
 /**
  * Created by @mgatelabs (Michael Fuller) on 8/29/2017.
@@ -14,7 +14,7 @@ public class MiniMapParser {
      * @param miniMapCenterComponent
      * @return
      */
-    public static byte [][] parseMap(RawImageReader rawImage, ComponentDetail miniMapComponent, ComponentDetail miniMapCenterComponent) {
+    public static byte [][] parseMap(RawImageWrapper rawImage, ComponentDetail miniMapComponent, ComponentDetail miniMapCenterComponent) {
 
         int rows = miniMapComponent.getW() / miniMapCenterComponent.getW();
         int columns = miniMapComponent.getH() / miniMapCenterComponent.getH();

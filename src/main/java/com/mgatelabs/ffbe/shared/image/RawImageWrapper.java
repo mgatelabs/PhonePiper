@@ -1,7 +1,6 @@
 package com.mgatelabs.ffbe.shared.image;
 
 import com.mgatelabs.ffbe.shared.ColorSample;
-import com.mgatelabs.ffbe.shared.image.ImageReader;
 
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
@@ -11,7 +10,7 @@ import java.io.IOException;
 /**
  * Created by @mgatelabs (Michael Fuller) on 8/31/2017.
  */
-public class RawImageReader implements ImageReader {
+public class RawImageWrapper implements ImageWrapper {
 
     public enum ImageFormats {
 
@@ -103,7 +102,7 @@ public class RawImageReader implements ImageReader {
     private final ImageFormats format;
     private final byte [] data;
 
-    public RawImageReader(int width, int height, ImageFormats format, int dataOffset, byte[] data) {
+    public RawImageWrapper(int width, int height, ImageFormats format, int dataOffset, byte[] data) {
         this.dataOffset = dataOffset;
         this.width = width;
         this.height = height;

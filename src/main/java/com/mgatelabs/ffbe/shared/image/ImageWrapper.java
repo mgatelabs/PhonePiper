@@ -7,7 +7,7 @@ import java.io.File;
 /**
  * Created by @mgatelabs (Michael Fuller) on 9/1/2017.
  */
-public interface ImageReader {
+public interface ImageWrapper {
     boolean isReady();
 
     int getWidth();

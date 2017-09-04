@@ -1,6 +1,6 @@
 package com.mgatelabs.ffbe.shared;
 
-import com.mgatelabs.ffbe.shared.image.RawImageReader;
+import com.mgatelabs.ffbe.shared.image.RawImageWrapper;
 
 import java.util.*;
 
@@ -40,7 +40,7 @@ public class GameAction {
   }
 
   // Make sure the screen is ready
-  public boolean validate(RawImageReader rawImage) {
+  public boolean validate(RawImageWrapper rawImage) {
     return SamplePoint.validate(getPoints(), rawImage);
   }
 

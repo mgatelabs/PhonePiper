@@ -14,7 +14,7 @@ import java.util.List;
 public class ViewDefinition {
 
     private List<ScreenDefinition> screens;
-    private List<ScreenDefinition> components;
+    private List<ComponentDefinition> components;
 
     public ViewDefinition() {
     }
@@ -27,11 +27,11 @@ public class ViewDefinition {
         this.screens = screens;
     }
 
-    public List<ScreenDefinition> getComponents() {
+    public List<ComponentDefinition> getComponents() {
         return components;
     }
 
-    public void setComponents(List<ScreenDefinition> components) {
+    public void setComponents(List<ComponentDefinition> components) {
         this.components = components;
     }
 

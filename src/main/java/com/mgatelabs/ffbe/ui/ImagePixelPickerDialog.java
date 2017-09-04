@@ -1,13 +1,17 @@
 package com.mgatelabs.ffbe.ui;
 
 import com.mgatelabs.ffbe.shared.ColorSample;
-import com.mgatelabs.ffbe.shared.image.ImageReader;
-import com.mgatelabs.ffbe.shared.image.RawImageReader;
 import com.mgatelabs.ffbe.shared.SamplePoint;
+import com.mgatelabs.ffbe.shared.image.ImageWrapper;
+import groovy.swing.impl.ListWrapperListModel;
 
 import javax.swing.*;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
 import java.awt.*;
 import java.awt.event.*;
+import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 
 /**
@@ -16,18 +20,25 @@ import java.util.List;
  */
 public class ImagePixelPickerDialog extends JDialog implements KeyListener {
 
+    public enum Mode {
+        PIXELS,
+        BOX
+    }
+
     private JPanel container;
 
     private ImageRenderer drawPanel;
+    private JList<SamplePoint> pointList;
 
-    private ImageReader imageReader;
-    private List<SamplePoint> pointList;
+    private List<SamplePoint> points;
+    RefreshableListModel<SamplePoint> sampleModel;
 
     public static final int cellSize = 10;
     public static final int cells = 51;
     public static final int drawSize = cellSize * cells;
     public static final int centerIndex = (cells / 2) + 1;
 
+    boolean isOk = false;
 
     private Timer timer;
 
@@ -35,52 +46,84 @@ public class ImagePixelPickerDialog extends JDialog implements KeyListener {
     private int miniWidth;
     private int miniHeight;
 
-    public ImagePixelPickerDialog() {
+    private final JDialog dialog;
+
+    private final Mode mode;
+
+    public ImagePixelPickerDialog(Mode mode) {
         super((JFrame) null, "Pixel Picker", true);
+        this.points = new ArrayList<>();
+        this.dialog = this;
+        this.mode = mode;
+
         buildComponents();
         setResizable(false);
         setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
-    }
-
-    public void setup(ImageReader rawImageReader, List<SamplePoint> pointList) {
-        this.imageReader = rawImageReader;
-        this.pointList = pointList;
-        drawPanel.setImageReader(rawImageReader);
-        drawPanel.setPointList(pointList);
-
-
-        int miniScale = 15;
-        miniHeight = rawImageReader.getHeight() / miniScale;
-        miniWidth = rawImageReader.getWidth() / miniScale;
-
-        drawPanel.setMiniHeight(miniHeight);
-        drawPanel.setMiniWidth(miniWidth);
-        drawPanel.setMiniScale(miniScale);
-
-        drawPanel.setPreferredSize(new Dimension(drawSize + miniWidth, drawSize));
-        drawPanel.setMaximumSize(drawPanel.getPreferredSize());
-
-        drawPanel.makeReady();
-
-        this.pack();
     }
 
     private void buildComponents() {
 
         container = new JPanel();
 
-        drawPanel = new ImageRenderer();
+        drawPanel = new ImageRenderer(points, this.mode);
         drawPanel.setBackground(Color.BLACK);
         drawPanel.setMinimumSize(new Dimension(drawSize, drawSize));
         drawPanel.setPreferredSize(drawPanel.getMinimumSize());
         drawPanel.setMaximumSize(drawPanel.getMinimumSize());
-
         container.add(drawPanel);
+
+        JPanel sidePanel = new JPanel();
+        sidePanel.setLayout(new BoxLayout(sidePanel, BoxLayout.Y_AXIS));
+        container.add(sidePanel);
+
+        JPanel buttonPanel = new JPanel();
+        buttonPanel.setLayout(new BoxLayout(buttonPanel, BoxLayout.X_AXIS));
+        sidePanel.add(buttonPanel);
+
+        JButton moveButton = new JButton("MOVE");
+        buttonPanel.add(moveButton);
+        moveButton.addKeyListener(this);
+
+        JButton okButton = new JButton("OK");
+        buttonPanel.add(okButton);
+        okButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                isOk = true;
+                dialog.dispose();
+            }
+        });
+
+        JButton cancelButton = new JButton("CANCEL");
+        buttonPanel.add(cancelButton);
+        cancelButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                dialog.dispose();
+            }
+        });
+
+        sampleModel = new RefreshableListModel<SamplePoint>(points);
+
+        pointList = new JList<>(sampleModel);
+        pointList.addListSelectionListener(new ListSelectionListener() {
+            @Override
+            public void valueChanged(ListSelectionEvent e) {
+                int index = pointList.getSelectedIndex();
+                if (index >= 0 && index < points.size()) {
+                    SamplePoint point = points.get(index);
+                    drawPanel.set(point.getX(), point.getY());
+                    drawPanel.repaint();
+                }
+            }
+        });
+        JScrollPane pointListScroller = new JScrollPane(pointList);
+        pointListScroller.setPreferredSize(new Dimension(200, 200));
+        sidePanel.add(pointListScroller);
 
         this.addKeyListener(this);
 
         this.getRootPane().setContentPane(container);
-        this.pack();
 
         ActionListener taskPerformer = new ActionListener() {
             public void actionPerformed(ActionEvent evt) {
@@ -109,7 +152,7 @@ public class ImagePixelPickerDialog extends JDialog implements KeyListener {
                 }
 
                 if (x != 0 || y != 0) {
-                    drawPanel.shift(x * xMulti,y * yMulti);
+                    drawPanel.shift(x * xMulti, y * yMulti);
                     drawPanel.repaint();
                 } else {
                     timer.stop();
@@ -120,8 +163,57 @@ public class ImagePixelPickerDialog extends JDialog implements KeyListener {
         timer = new Timer(500, taskPerformer);
     }
 
+    public boolean isOk() {
+        return isOk;
+    }
+
+    public void setup(ImageWrapper imageWrapper, List<SamplePoint> points) {
+        this.points.clear();
+        this.points.addAll(points);
+
+        commonSetup(imageWrapper);
+
+        this.pointList.repaint();
+
+        this.pack();
+    }
+
+    public void setup(ImageWrapper imageWrapper, int x, int y, int w, int h) {
+        this.points.clear();
+        this.points.add(new SamplePoint(x,y,0,0,0));
+        this.points.add(new SamplePoint(x + w,y + h,0,0,0));
+
+        commonSetup(imageWrapper);
+
+        this.pointList.repaint();
+
+        this.pack();
+    }
+
+    public void commonSetup(ImageWrapper rawImageWrapper) {
+
+        drawPanel.setImageWrapper(rawImageWrapper);
+
+        int miniScale = 15;
+        miniHeight = rawImageWrapper.getHeight() / miniScale;
+        miniWidth = rawImageWrapper.getWidth() / miniScale;
+
+        drawPanel.setMiniHeight(miniHeight);
+        drawPanel.setMiniWidth(miniWidth);
+        drawPanel.setMiniScale(miniScale);
+
+        drawPanel.setPreferredSize(new Dimension(drawSize + miniWidth, drawSize));
+        drawPanel.setMaximumSize(drawPanel.getPreferredSize());
+
+        drawPanel.makeReady();
+    }
+
     public void start() {
         this.setVisible(true);
+    }
+
+    public List<SamplePoint> getPoints() {
+        return points;
     }
 
     boolean spaceState;
@@ -143,9 +235,6 @@ public class ImagePixelPickerDialog extends JDialog implements KeyListener {
         int y = 0;
 
         if (e.getKeyCode() == KeyEvent.VK_SPACE && !spaceState) {
-
-
-
             spaceState = true;
         }
 
@@ -177,7 +266,7 @@ public class ImagePixelPickerDialog extends JDialog implements KeyListener {
         if (upState || downState || leftState || rightState) {
 
             if (x != 0 || y != 0) {
-                drawPanel.shift(x,y);
+                drawPanel.shift(x, y);
                 drawPanel.repaint();
             }
 
@@ -193,6 +282,7 @@ public class ImagePixelPickerDialog extends JDialog implements KeyListener {
         if (e.getKeyCode() == KeyEvent.VK_SPACE) {
             spaceState = false;
             drawPanel.togglePoint();
+            sampleModel.refresh();
         }
 
         if (e.getKeyCode() == KeyEvent.VK_UP) {
@@ -221,8 +311,10 @@ public class ImagePixelPickerDialog extends JDialog implements KeyListener {
 
     private static class ImageRenderer extends JPanel {
 
-        private ImageReader imageReader = null;
-        private List<SamplePoint> pointList = null;
+        private ImageWrapper imageWrapper = null;
+        private final List<SamplePoint> points;
+
+        private SamplePoint [] boxPoints;
 
         private int miniScale;
         private int miniWidth;
@@ -233,13 +325,21 @@ public class ImagePixelPickerDialog extends JDialog implements KeyListener {
 
         private int offX;
 
-        private SamplePoint [][] samples;
+        private SamplePoint[][] samples;
 
-        public ImageRenderer() {
+        private Mode mode;
+
+        public ImageRenderer(List<SamplePoint> points, Mode mode) {
+            this.points = points;
             viewX = 0;
             viewY = 0;
+            this.mode = mode;
 
             offX = cellSize * cells;
+
+            boxPoints = new SamplePoint[2];
+            boxPoints[0] = new SamplePoint(0,0,0,0,0);
+            boxPoints[1] = new SamplePoint(0,0,0,0,0);
 
             this.addMouseListener(new MouseListener() {
                 @Override
@@ -252,6 +352,9 @@ public class ImagePixelPickerDialog extends JDialog implements KeyListener {
 
                         viewX = (e.getX() - offX) * miniScale;
                         viewY = e.getY() * miniScale;
+
+                        viewX -= centerIndex;
+                        viewY -= centerIndex;
 
                         repaint();
                     }
@@ -280,9 +383,18 @@ public class ImagePixelPickerDialog extends JDialog implements KeyListener {
 
         }
 
+        public SamplePoint[] getBoxPoints() {
+            return boxPoints;
+        }
+
         public void shift(int x, int y) {
             viewX += x;
             viewY += y;
+        }
+
+        public void set(int x, int y) {
+            viewX = x - centerIndex;
+            viewY = y - centerIndex;
         }
 
         public int getMiniScale() {
@@ -325,20 +437,20 @@ public class ImagePixelPickerDialog extends JDialog implements KeyListener {
             this.viewY = viewY;
         }
 
-        public ImageReader getImageReader() {
-            return imageReader;
+        public ImageWrapper getImageWrapper() {
+            return imageWrapper;
         }
 
-        public void setImageReader(ImageReader imageReader) {
-            this.imageReader = imageReader;
+        public void setImageWrapper(ImageWrapper imageWrapper) {
+            this.imageWrapper = imageWrapper;
 
         }
 
         public void makeReady() {
-            if (imageReader != null) {
-                samples = new SamplePoint[this.imageReader.getHeight()][this.imageReader.getWidth()];
-                for (SamplePoint point: pointList) {
-                    samples[point.getY()][point.getY()] = point;
+            if (imageWrapper != null) {
+                samples = new SamplePoint[this.imageWrapper.getHeight()][this.imageWrapper.getWidth()];
+                for (SamplePoint point : points) {
+                    samples[point.getY()][point.getX()] = point;
                 }
             } else {
                 samples = new SamplePoint[0][0];
@@ -349,15 +461,15 @@ public class ImagePixelPickerDialog extends JDialog implements KeyListener {
             int px = viewX + centerIndex;
             int py = viewY + centerIndex;
 
-            if (px >= 0 && px < imageReader.getWidth() && py >=0 && py < imageReader.getHeight()) {
+            if (px >= 0 && px < imageWrapper.getWidth() && py >= 0 && py < imageWrapper.getHeight()) {
                 if (samples[py][px] == null) {
                     ColorSample sample = new ColorSample();
-                    imageReader.getPixel(px, py, sample);
-                    SamplePoint point = new SamplePoint(px, py, sample.getR(),sample.getG(), sample.getB());
+                    imageWrapper.getPixel(px, py, sample);
+                    SamplePoint point = new SamplePoint(px, py, sample.getR(), sample.getG(), sample.getB());
                     samples[py][px] = point;
-                    pointList.add(point);
+                    points.add(point);
                 } else {
-                    pointList.remove(samples[py][px]);
+                    points.remove(samples[py][px]);
                     samples[py][px] = null;
                 }
 
@@ -365,12 +477,8 @@ public class ImagePixelPickerDialog extends JDialog implements KeyListener {
             }
         }
 
-        public List<SamplePoint> getPointList() {
-            return pointList;
-        }
-
-        public void setPointList(List<SamplePoint> pointList) {
-            this.pointList = pointList;
+        public List<SamplePoint> getPoints() {
+            return points;
         }
 
         @Override
@@ -378,13 +486,38 @@ public class ImagePixelPickerDialog extends JDialog implements KeyListener {
             super.paintComponent(g);
             Graphics2D g2d = (Graphics2D) g;
             ColorSample sample = new ColorSample();
+
+            int boxX1 = -1;
+            int boxX2 = -1;
+            int boxY1 = -1;
+            int boxY2 = -1;
+
+            if (mode == Mode.BOX && points.size() == 2) {
+                boxX1 = points.get(0).getX();
+                boxY1 = points.get(0).getY();
+                boxX2 = points.get(1).getX();
+                boxY2 = points.get(1).getY();
+                if (boxX1 > boxX2) {
+                    int temp = boxX1;
+                    boxX1 = boxX2;
+                    boxX2 = temp;
+                }
+                if (boxY1 > boxY2) {
+                    int temp = boxY1;
+                    boxY1 = boxY2;
+                    boxY2 = temp;
+                }
+            }
+
+
+            // Pixels
             for (int y = 0; y < cells; y++) {
                 for (int x = 0; x < cells; x++) {
                     int px = x + viewX;
                     int py = y + viewY;
                     boolean isPoint = false;
-                    if (px >= 0 && px < imageReader.getWidth() && py >= 0 && py < imageReader.getHeight()) {
-                        imageReader.getPixel(px, py, sample);
+                    if (px >= 0 && px < imageWrapper.getWidth() && py >= 0 && py < imageWrapper.getHeight()) {
+                        imageWrapper.getPixel(px, py, sample);
                         g2d.setColor(new Color(sample.getR(), sample.getG(), sample.getB()));
                         g2d.fillRect(x * cellSize, (y) * cellSize, cellSize, cellSize);
                         isPoint = samples[py][px] != null;
@@ -392,9 +525,19 @@ public class ImagePixelPickerDialog extends JDialog implements KeyListener {
                         g2d.setColor(Color.GRAY);
                         g2d.fillRect(x * cellSize, (y) * cellSize, cellSize, cellSize);
                     }
-                    if (isPoint) {
-                        g2d.setColor(Color.GREEN);
-                        g2d.drawRect((x * cellSize) + 2, ((y) * cellSize) + 2, cellSize - 4, cellSize - 4);
+                    if (mode == Mode.PIXELS) {
+                        if (isPoint) {
+                            g2d.setColor(Color.GREEN);
+                            g2d.drawRect((x * cellSize) + 2, ((y) * cellSize) + 2, cellSize - 4, cellSize - 4);
+                        }
+                    } else if (mode == Mode.BOX) {
+                        if (boxX1 != -1 && px >= boxX1 && px <= boxX2 && py >= boxY1 && py <= boxY2) {
+                            g2d.setColor(Color.YELLOW);
+                            g2d.drawRect((x * cellSize) + 2, ((y) * cellSize) + 2, cellSize - 4, cellSize - 4);
+                        } else if (boxX1 == -1 && isPoint) {
+                            g2d.setColor(Color.GREEN);
+                            g2d.drawRect((x * cellSize) + 2, ((y) * cellSize) + 2, cellSize - 4, cellSize - 4);
+                        }
                     }
                     if (x == centerIndex && y == centerIndex) {
                         g2d.setColor(Color.RED);
@@ -403,27 +546,77 @@ public class ImagePixelPickerDialog extends JDialog implements KeyListener {
                 }
             }
 
+            // Mini Map
             for (int y = 0; y < miniHeight; y++) {
                 for (int x = 0; x < miniWidth; x++) {
                     int px = x * miniScale;
                     int py = y * miniScale;
                     Color color = Color.BLACK;
-                    if (px >= 0 && px < imageReader.getWidth() && py >= 0 && py < imageReader.getHeight()) {
-                        imageReader.getPixel(px, py, sample);
-                        color = new Color(sample.getR(), sample.getG(), sample.getB());
+                    if (px >= 0 && px < imageWrapper.getWidth() && py >= 0 && py < imageWrapper.getHeight()) {
+                        imageWrapper.getPixel(px, py, sample);
+                        if (boxX1 != -1 && px >= boxX1 && px <= boxX2 && py >= boxY1 && py <= boxY2) {
+                            color = Color.YELLOW;
+                        } else {
+                            color = new Color(sample.getR(), sample.getG(), sample.getB());
+                        }
                     }
                     g2d.setColor(color);
                     g2d.fillRect(offX + x, y, 1, 1);
                 }
             }
 
-            int centerX = ((int)((viewX + centerIndex) / (float)miniScale)) + offX;
-            int centerY = ((int)((viewY + centerIndex) / (float)miniScale));
+            // Cross
+            int centerX = ((int) ((viewX + centerIndex) / (float) miniScale)) + offX;
+            int centerY = ((int) ((viewY + centerIndex) / (float) miniScale));
 
             g2d.setColor(Color.RED);
 
             g2d.drawLine(centerX - 2, centerY - 2, centerX + 2, centerY + 2);
             g2d.drawLine(centerX - 2, centerY + 2, centerX + 2, centerY - 2);
+
+            // Color Grid
+
+            int cx = centerIndex + viewX;
+            int cy = centerIndex + viewY;
+
+
+            if (cx > 0 && cx < imageWrapper.getWidth() - 1 && cy > 0 && cy <= imageWrapper.getHeight() - 1) {
+
+                ColorSample center = new ColorSample();
+                imageWrapper.getPixel(cx, cy, center);
+
+                int trippleSize = (miniWidth / 3);
+
+                for (int y = -1; y <= 1; y++) {
+                    for (int x = -1; x <= 1; x++) {
+                        imageWrapper.getPixel(cx + x, cy + y, sample);
+
+                        int diffR = center.getR() - sample.getR();
+                        int diffG = center.getG() - sample.getG();
+                        int diffB = center.getB() - sample.getB();
+                        if (diffR < 0) diffR *= -1;
+                        if (diffG < 0) diffG *= -1;
+                        if (diffB < 0) diffB *= -1;
+
+                        g2d.setColor(new Color(sample.getR(), sample.getG(), sample.getB()));
+                        g2d.fillRect(offX + (trippleSize + (x * trippleSize)), miniHeight + (trippleSize + (y * trippleSize)), trippleSize, trippleSize);
+
+                        if (x == 0 && y == 0) {
+
+                        } else {
+
+                            if (diffR <= 6 && diffG <= 6 && diffB <= 6) {
+                                g2d.setColor(Color.GREEN);
+                            } else {
+                                g2d.setColor(Color.RED);
+                            }
+
+                            g2d.drawRect(offX + (trippleSize + (x * trippleSize)) + 1, miniHeight + (trippleSize + (y * trippleSize)) + 1, trippleSize - 2, trippleSize - 2);
+                        }
+                    }
+                }
+
+            }
         }
     }
 

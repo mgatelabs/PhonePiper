@@ -2,9 +2,8 @@ package com.mgatelabs.ffbe;
 
 import com.mgatelabs.ffbe.shared.*;
 import com.mgatelabs.ffbe.shared.details.DeviceDefinition;
-import com.mgatelabs.ffbe.shared.image.ImageReader;
-import com.mgatelabs.ffbe.shared.image.PngImageReader;
-import com.mgatelabs.ffbe.shared.image.RawImageReader;
+import com.mgatelabs.ffbe.shared.image.ImageWrapper;
+import com.mgatelabs.ffbe.shared.image.PngImageWrapper;
 import com.mgatelabs.ffbe.ui.*;
 
 import javax.imageio.ImageIO;
@@ -51,10 +50,10 @@ public class Runner {
           return;
         }
 
-        ImageReader rawImageReader = new PngImageReader(bufferedImage);// GameRunner.getScreen();
+        ImageWrapper rawImageWrapper = new PngImageWrapper(bufferedImage);// GameRunner.getScreen();
 
-        ImagePixelPickerDialog dialog = new ImagePixelPickerDialog();
-        dialog.setup(rawImageReader, new ArrayList<>());
+        ImagePixelPickerDialog dialog = new ImagePixelPickerDialog(ImagePixelPickerDialog.Mode.BOX);
+        dialog.setup(rawImageWrapper, new ArrayList<>());
         dialog.start();
 
         //runner.snap();

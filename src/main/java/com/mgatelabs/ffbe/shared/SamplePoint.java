@@ -1,6 +1,6 @@
 package com.mgatelabs.ffbe.shared;
 
-import com.mgatelabs.ffbe.shared.image.RawImageReader;
+import com.mgatelabs.ffbe.shared.image.ImageWrapper;
 
 import java.util.*;
 
@@ -65,7 +65,7 @@ public class SamplePoint {
         return b;
     }
 
-    public static boolean validate(List<SamplePoint> points, RawImageReader bufferedImage) {
+    public static boolean validate(List<SamplePoint> points, ImageWrapper bufferedImage) {
         for (SamplePoint point: points) {
             int color = bufferedImage.getPixel(point.getX(), point.getY());
             int r = (color & 0xff0000) >> 16;
@@ -87,11 +87,22 @@ public class SamplePoint {
             }
 
             // Make it a bit fuzzy
-            if ( r >= 0 && r <= 4 && g >= 0 && g <= 4 && b >= 0 && b <= 4) {
+            if ( r >= 0 && r <= 6 && g >= 0 && g <= 6 && b >= 0 && b <= 6) {
                 continue;
             }
             return false;
         }
         return true;
+    }
+
+    @Override
+    public String toString() {
+        return "{" +
+                "x=" + x +
+                ", y=" + y +
+                ", r=" + r +
+                ", g=" + g +
+                ", b=" + b +
+                '}';
     }
 }

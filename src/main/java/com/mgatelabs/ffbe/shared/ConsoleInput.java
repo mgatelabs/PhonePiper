@@ -10,7 +10,7 @@ public class ConsoleInput {
     public static int getInt() {
         Scanner scanner = new Scanner(System.in);
         while (scanner.hasNextLine()) {
-            String value = scanner.next();
+            String value = scanner.nextLine();
             try {
                 return Integer.parseInt(value);
             } catch (Exception ex) {
@@ -23,7 +23,7 @@ public class ConsoleInput {
     public static String getString() {
         Scanner scanner = new Scanner(System.in);
         if (scanner.hasNextLine()) {
-            return scanner.next();
+            return scanner.nextLine();
         }
         return "";
     }

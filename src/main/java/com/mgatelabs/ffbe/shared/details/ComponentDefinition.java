@@ -1,5 +1,7 @@
 package com.mgatelabs.ffbe.shared.details;
 
+import java.io.File;
+
 /**
  * Created by @mgatelabs (Michael Fuller) on 9/1/2017.
  */
@@ -60,5 +62,9 @@ public class ComponentDefinition {
 
     public void setH(int h) {
         this.h = h;
+    }
+
+    public static File getPreviewPath(String viewId, String componentId) {
+        return new File("views/" + viewId + "/c-" + componentId + ".png");
     }
 }

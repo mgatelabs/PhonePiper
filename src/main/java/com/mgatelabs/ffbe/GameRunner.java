@@ -2,7 +2,8 @@ package com.mgatelabs.ffbe;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.mgatelabs.ffbe.shared.*;
-import com.mgatelabs.ffbe.shared.image.RawImageReader;
+import com.mgatelabs.ffbe.shared.details.ComponentDefinition;
+import com.mgatelabs.ffbe.shared.image.RawImageWrapper;
 
 import java.io.*;
 import java.nio.ByteBuffer;
@@ -68,7 +69,7 @@ public class GameRunner {
 
         while (maxLoops > 0) {
             long startTime = System.nanoTime();
-            RawImageReader bufferedImage = getScreen();
+            RawImageWrapper bufferedImage = getScreen();
             long endTime = System.nanoTime();
 
             long dif = endTime - startTime;
@@ -158,7 +159,7 @@ public class GameRunner {
         }
     }
 
-    public static RawImageReader getScreen() {
+    public static RawImageWrapper getScreen() {
         byte[] bytes = exec2("adb exec-out screencap");
         try {
             int w, h;
@@ -173,12 +174,36 @@ public class GameRunner {
                 h = 0;
             }
 
-            RawImageReader rawImageReader = new RawImageReader(w, h, RawImageReader.ImageFormats.RGBA, 12, bytes);
+            RawImageWrapper rawImageReader = new RawImageWrapper(w, h, RawImageWrapper.ImageFormats.RGBA, 12, bytes);
             return rawImageReader;
         } catch (Exception e) {
             e.printStackTrace();
         }
         return null;
+    }
+
+    public static void runComponent(ComponentDefinition componentDefinition, com.mgatelabs.ffbe.shared.details.ActionType type) {
+
+        final SecureRandom random = new SecureRandom();
+
+        switch (type) {
+            case TAP: {
+
+                int x = componentDefinition.getX();
+                int y = componentDefinition.getY();
+
+                x += random.nextInt(componentDefinition.getW());
+                y += random.nextInt(componentDefinition.getH());
+
+                exec("adb shell input tap " + x + " " + y);
+            } break;
+            case SWIPE_UP: {
+
+            } break;
+            case SWIPE_DOWN: {
+
+            } break;
+        }
     }
 
     public static boolean exec(final String command) {

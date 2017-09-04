@@ -1,5 +1,7 @@
-package com.mgatelabs.ffbe.shared;
+package com.mgatelabs.ffbe.shared.mapper;
 
+import com.mgatelabs.ffbe.shared.ColorSample;
+import com.mgatelabs.ffbe.shared.ComponentDetail;
 import com.mgatelabs.ffbe.shared.image.RawImageWrapper;
 
 /**

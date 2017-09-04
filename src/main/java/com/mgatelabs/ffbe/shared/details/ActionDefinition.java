@@ -3,7 +3,7 @@ package com.mgatelabs.ffbe.shared.details;
 /**
  * Created by @mgatelabs (Michael Fuller) on 9/3/2017.
  */
-public class ActionDetail {
+public class ActionDefinition {
     private ActionType type;
     private String value;
 

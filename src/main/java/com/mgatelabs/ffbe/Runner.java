@@ -1,7 +1,11 @@
 package com.mgatelabs.ffbe;
 
+import com.mgatelabs.ffbe.runners.ScriptRunner;
 import com.mgatelabs.ffbe.shared.*;
 import com.mgatelabs.ffbe.shared.details.DeviceDefinition;
+import com.mgatelabs.ffbe.shared.details.PlayerDetail;
+import com.mgatelabs.ffbe.shared.details.ScriptDetail;
+import com.mgatelabs.ffbe.shared.details.ViewDefinition;
 import com.mgatelabs.ffbe.shared.image.ImageWrapper;
 import com.mgatelabs.ffbe.shared.image.PngImageWrapper;
 import com.mgatelabs.ffbe.ui.*;
@@ -64,6 +68,60 @@ public class Runner {
         DungeonMapperCommandLine dungeonMapperCommandLine = new DungeonMapperCommandLine(phone);
         dungeonMapperCommandLine.run();
         return;
+      } else if ("script".equalsIgnoreCase(args[0])) {
+
+        if (args.length < 2) {
+          showHelp = true;
+        } else {
+          final String scriptName = args[1];
+          final String deviceName = args.length == 2 ? "axon7" : args[2];
+
+          ScriptDetail script = ScriptDetail.read(scriptName);
+          if (script == null) {
+            System.out.println("Could not locate script: " + scriptName);
+            return;
+          }
+          DeviceDefinition device = DeviceDefinition.read(deviceName);
+          if (device == null) {
+            System.out.println("Could not locate device: " + deviceName);
+            return;
+          }
+          ViewDefinition view = ViewDefinition.read(device.getViewId());
+          if (view == null) {
+            System.out.println("Could not locate view: " + device.getViewId());
+            return;
+          }
+          PlayerDetail playerDetail = PlayerDetail.read();
+          if (playerDetail == null) {
+            playerDetail = new PlayerDetail();
+            while (true) {
+              System.out.println("Please enter your current Player Level: ");
+              int level = ConsoleInput.getInt();
+              if (level > 8 && level <= 150) {
+                playerDetail.setLevel(level);
+                playerDetail.write();
+                break;
+              } else {
+                System.out.println("Invalid level, it must be between 8 and 150.  Stopping.");
+                return;
+              }
+            }
+
+          }
+          ScriptRunner scriptRunner = new ScriptRunner(playerDetail, script, device, view);
+
+          System.out.println("----------");
+          System.out.println("Script: "+scriptName);
+          System.out.println("Device: "+deviceName);
+          System.out.println("View: "+device.getViewId());
+          System.out.println("Energy: "+playerDetail.getTotalEnergy());
+          System.out.println("----------");
+          System.out.println();
+
+          scriptRunner.run("main");
+        }
+
+
       } else if ("run".equalsIgnoreCase(args[0])) {
         if (args.length < 2) {
           showHelp = true;
@@ -91,6 +149,7 @@ public class Runner {
     if (showHelp) {
       System.out.println("Required Parameters missing");
       System.out.println("run (scriptName) [phoneName]");
+      System.out.println("script (scriptName) [deviceName]");
       System.out.println("snap");
     }
   }

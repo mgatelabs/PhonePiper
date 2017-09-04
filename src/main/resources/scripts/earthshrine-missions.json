@@ -116,10 +116,6 @@
         {
           "type": "TAP",
           "id": "choose"
-        },
-        {
-          "type": "TAP",
-          "id": "choose"
         }
       ],
       "outcome":"NEXT",
@@ -130,10 +126,6 @@
       "screen":"battle-results",
       "flow": "FLOW",
       "commands": [
-        {
-          "type": "TAP",
-          "id": "choose"
-        },
         {
           "type": "TAP",
           "id": "choose"
@@ -150,9 +142,6 @@
         {
           "type": "TAP",
           "id": "choose"
-        },{
-          "type": "TAP",
-          "id": "choose"
         }
       ],
       "outcome":"NEXT",
@@ -164,9 +153,6 @@
       "flow": "FLOW",
       "commands": [
         {
-          "type": "TAP",
-          "id": "choose"
-        },{
           "type": "TAP",
           "id": "choose"
         }
@@ -182,10 +168,6 @@
         {
           "type": "TAP",
           "id": "choose"
-        },
-        {
-          "type": "TAP",
-          "id": "choose"
         }
       ],
       "outcome":"NEXT",
@@ -196,10 +178,6 @@
       "screen":"battle-items",
       "flow": "FLOW",
       "commands": [
-        {
-          "type": "TAP",
-          "id": "choose"
-        },
         {
           "type": "TAP",
           "id": "choose"

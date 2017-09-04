@@ -4,23 +4,27 @@
       "name": "Earth Shrine - Mission List",
       "statements": [
         {
-          "condition":{"type":"ISSCREEN", "value": "es-mission-select", "and":[
-              {"type":"ISENERGY", "value":"4"}
-            ]
-          },
+          "condition":{"is":"SCREEN", "value": "es-mission-select", "and": {"is":"ENERGY", "value":"4"}},
           "actions":[
-            {"type":"TAP", "value": "mission-list-1"},
+            {"type":"TAP", "value": "menu-mission_list-item_1"},
             {"type":"WAIT", "value": "1500"},
             {"type":"REPEAT", "value": ""}
           ]
         },{
-          "condition":{"type":"ISSCREEN", "value": "menu-goal-list"},
+          "condition":{"is":"SCREEN", "value": "es-mission-select", "and": {"is":"ENERGY", "value":"3"}},
           "actions":[
-            {"type":"SWITCH", "value": "mission-goals"}
+            {"type":"TAP", "value": "menu-level"},
+            {"type":"WAIT", "value": "3000"},
+            {"type":"REPEAT", "value": ""}
+          ]
+        },{
+          "condition":{"is":"SCREEN", "value": "menu-goal_list"},
+          "actions":[
+            {"type":"SWAP", "value": "mission-goals"}
           ]
         },
         {
-          "condition":{"type":"ISSCREEN", "value": "menu-connection_error"},
+          "condition":{"is":"SCREEN", "value": "menu-connection_error"},
           "actions":[
             {"type":"TAP", "value": "menu-connection_error-ok"},
             {"type":"WAIT", "value": "1500"},
@@ -33,22 +37,20 @@
       "name":"Mission Goals",
       "statements": [
         {
-          "condition":{"type":"ISSCREEN", "value": "menu-goal-list", "and":[
-            {"type":"ISSCREEN", "value": "menu-goal_list-next"}
-          ]},
+          "condition":{"is":"SCREEN", "value": "menu-goal_list", "and": {"is":"SCREEN", "value": "menu-goal_list-next"}},
           "actions":[
             {"type":"TAP", "value": "menu-goal_list-next"},
             {"type":"WAIT", "value": "1500"},
             {"type":"REPEAT", "value": ""}
           ]
         },{
-          "condition":{"type":"ISSCREEN", "value": "menu-friend_select"},
+          "condition":{"is":"SCREEN", "value": "menu-friend_select"},
           "actions":[
-            {"type":"SWITCH", "value": "mission-friend"}
+            {"type":"SWAP", "value": "mission-friend"}
           ]
         },
         {
-          "condition":{"type":"ISSCREEN", "value": "menu-connection_error"},
+          "condition":{"is":"SCREEN", "value": "menu-connection_error"},
           "actions":[
             {"type":"TAP", "value": "menu-connection_error-ok"},
             {"type":"WAIT", "value": "1500"},
@@ -61,20 +63,20 @@
       "name":"Mission Companion",
       "statements": [
         {
-          "condition":{"type":"ISSCREEN", "value": "menu-friend_select"},
+          "condition":{"is":"SCREEN", "value": "menu-friend_select"},
           "actions":[
             {"type":"TAP", "value": "menu-friend_select-item_0"},
             {"type":"WAIT", "value": "1500"},
             {"type":"REPEAT", "value": ""}
           ]
         },{
-          "condition":{"type":"ISSCREEN", "value": "menu-depart"},
+          "condition":{"is":"SCREEN", "value": "menu-depart"},
           "actions":[
-            {"type":"SWITCH", "value": "mission-depart"}
+            {"type":"SWAP", "value": "mission-depart"}
           ]
         },
         {
-          "condition":{"type":"ISSCREEN", "value": "menu-connection_error"},
+          "condition":{"is":"SCREEN", "value": "menu-connection_error"},
           "actions":[
             {"type":"TAP", "value": "menu-connection_error-ok"},
             {"type":"WAIT", "value": "1500"},
@@ -87,25 +89,25 @@
       "name":"Mission Depart",
       "statements": [
         {
-          "condition":{"type":"ISSCREEN", "value": "menu-depart"},
+          "condition":{"is":"SCREEN", "value": "menu-depart"},
           "actions":[
             {"type":"TAP", "value": "menu-depart-depart"},
             {"type":"WAIT", "value": "1500"},
             {"type":"REPEAT", "value": ""}
           ]
         },{
-          "condition":{"type":"ISSCREEN", "value": "game-battle"},
+          "condition":{"is":"SCREEN", "value": "game-battle"},
           "actions":[
-            {"type":"SWITCH", "value": "game-battle"}
+            {"type":"SWAP", "value": "game-battle"}
           ]
         },{
-          "condition":{"type":"ISSCREEN", "value": "menu-friend_select"},
+          "condition":{"is":"SCREEN", "value": "menu-friend_select"},
           "actions":[
-            {"type":"SWITCH", "value": "mission-friend"}
+            {"type":"SWAP", "value": "mission-friend"}
           ]
         },
         {
-          "condition":{"type":"ISSCREEN", "value": "menu-connection_error"},
+          "condition":{"is":"SCREEN", "value": "menu-connection_error"},
           "actions":[
             {"type":"TAP", "value": "menu-connection_error-ok"},
             {"type":"WAIT", "value": "1500"},
@@ -118,9 +120,7 @@
       "name":"Battle",
       "statements": [
         {
-          "condition":{"type":"ISSCREEN", "value": "game-battle", "and":[
-            {"type":"ISSCREEN", "value": "game-battle-auto_off"}
-          ]},
+          "condition":{"is":"SCREEN", "value": "game-battle", "and": {"is":"SCREEN", "value": "game-battle-auto_off"}},
           "actions":[
             {"type":"TAP", "value": "battle-auto"},
             {"type":"WAIT", "value": "10000"},
@@ -128,16 +128,14 @@
           ]
         },
         {
-          "condition":{"type":"ISSCREEN", "value": "game-battle", "and":[
-            {"type":"ISSCREEN", "value": "game-battle-auto_on"}
-          ]},
+          "condition":{"is":"SCREEN", "value": "game-battle", "and": {"is":"SCREEN", "value": "game-battle-auto_on"}},
           "actions":[
             {"type":"WAIT", "value": "4500"},
             {"type":"REPEAT", "value": ""}
           ]
         },
         {
-          "condition":{"type":"ISSCREEN", "value": "menu-connection_error"},
+          "condition":{"is":"SCREEN", "value": "menu-connection_error"},
           "actions":[
             {"type":"TAP", "value": "menu-connection_error-ok"},
             {"type":"WAIT", "value": "1500"},
@@ -145,9 +143,9 @@
           ]
         },
         {
-          "condition":{"type":"ISSCREEN", "value": "menu-results-points"},
+          "condition":{"is":"SCREEN", "value": "menu-results-points"},
           "actions":[
-            {"type":"SWITCH", "value": "menu-results"}
+            {"type":"SWAP", "value": "menu-results"}
           ]
         }
       ]
@@ -156,7 +154,19 @@
       "name":"Results",
       "statements": [
         {
-          "condition":{"type":"ISSCREEN", "value": "menu-results-points"},
+          "condition":{"is":"SCREEN", "value": "menu-results-points"},
+          "actions":[
+            {"type":"TAP", "value": "menu-results-next"},
+            {"type":"WAIT", "value": "500"},
+            {"type":"TAP", "value": "menu-results-next"},
+            {"type":"WAIT", "value": "500"},
+            {"type":"TAP", "value": "menu-results-next"},
+            {"type":"WAIT", "value": "500"},
+            {"type":"REPEAT", "value": ""}
+          ]
+        },
+        {
+          "condition":{"is":"SCREEN", "value": "menu-results-units"},
           "actions":[
             {"type":"TAP", "value": "menu-results-next"},
             {"type":"WAIT", "value": "500"},
@@ -166,17 +176,7 @@
           ]
         },
         {
-          "condition":{"type":"ISSCREEN", "value": "menu-results-units"},
-          "actions":[
-            {"type":"TAP", "value": "menu-results-next"},
-            {"type":"WAIT", "value": "500"},
-            {"type":"TAP", "value": "menu-results-next"},
-            {"type":"WAIT", "value": "500"},
-            {"type":"REPEAT", "value": ""}
-          ]
-        },
-        {
-          "condition":{"type":"ISSCREEN", "value": "menu-results-items"},
+          "condition":{"is":"SCREEN", "value": "menu-results-items"},
           "actions":[
             {"type":"TAP", "value": "menu-results-next"},
             {"type":"WAIT", "value": "500"},
@@ -184,7 +184,7 @@
           ]
         },
         {
-          "condition":{"type":"ISSCREEN", "value": "menu-connection_error"},
+          "condition":{"is":"SCREEN", "value": "menu-connection_error"},
           "actions":[
             {"type":"TAP", "value": "menu-connection_error-ok"},
             {"type":"WAIT", "value": "1500"},
@@ -192,9 +192,9 @@
           ]
         },
         {
-          "condition":{"type":"ISSCREEN", "value": "es-mission-select"},
+          "condition":{"is":"SCREEN", "value": "es-mission-select"},
           "actions":[
-            {"type":"SWITCH", "value": "main"}
+            {"type":"SWAP", "value": "main"}
           ]
         }
       ]

@@ -65,9 +65,9 @@ public class SamplePoint {
         return b;
     }
 
-    public static boolean validate(List<SamplePoint> points, ImageWrapper bufferedImage) {
+    public static boolean validate(final List<SamplePoint> points, final ImageWrapper imageWrapper) {
         for (SamplePoint point: points) {
-            int color = bufferedImage.getPixel(point.getX(), point.getY());
+            int color = imageWrapper.getPixel(point.getX(), point.getY());
             int r = (color & 0xff0000) >> 16;
             int g = (color & 0xff00) >> 8;
             int b = color & 0xff;

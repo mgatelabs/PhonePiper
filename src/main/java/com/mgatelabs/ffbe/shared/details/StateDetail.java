@@ -8,7 +8,7 @@ import java.util.List;
 public class StateDetail {
     private String name;
 
-    private List<StatementDetail> statements;
+    private List<StatementDefinition> statements;
 
     public String getName() {
         return name;
@@ -18,11 +18,11 @@ public class StateDetail {
         this.name = name;
     }
 
-    public List<StatementDetail> getStatements() {
+    public List<StatementDefinition> getStatements() {
         return statements;
     }
 
-    public void setStatements(List<StatementDetail> statements) {
+    public void setStatements(List<StatementDefinition> statements) {
         this.statements = statements;
     }
 }

@@ -1,200 +1,449 @@
 {
   "states": {
     "main": {
-      "name": "Earth Shrine - Mission List",
+      "name": "Earth Shrine - Menu",
       "statements": [
         {
-          "condition":{"is":"SCREEN", "value": "es-mission-select", "and": {"is":"ENERGY", "value":"4"}},
-          "actions":[
-            {"type":"TAP", "value": "menu-mission_list-item_1"},
-            {"type":"WAIT", "value": "1500"},
-            {"type":"REPEAT", "value": ""}
-          ]
-        },{
-          "condition":{"is":"SCREEN", "value": "es-mission-select", "and": {"is":"ENERGY", "value":"3"}},
-          "actions":[
-            {"type":"TAP", "value": "menu-level"},
-            {"type":"WAIT", "value": "3000"},
-            {"type":"REPEAT", "value": ""}
-          ]
-        },{
-          "condition":{"is":"SCREEN", "value": "menu-goal_list"},
-          "actions":[
-            {"type":"SWAP", "value": "mission-goals"}
+          "condition": {
+            "is": "SCREEN",
+            "value": "es-mission-select",
+            "and": {
+              "is": "ENERGY",
+              "value": "4"
+            }
+          },
+          "actions": [
+            {
+              "type": "TAP",
+              "value": "menu-mission_list-item_1"
+            },
+            {
+              "type": "WAIT",
+              "value": "1500"
+            },{
+              "type": "TAP",
+              "value": "menu-goal_list-next"
+            },
+            {
+              "type": "WAIT",
+              "value": "4000"
+            },{
+              "type": "TAP",
+              "value": "menu-friend_select-item_0"
+            },{
+              "type": "WAIT",
+              "value": "2000"
+            },{
+              "type": "TAP",
+              "value": "menu-depart-depart"
+            }, {
+              "type": "REPEAT",
+              "value": ""
+            }
           ]
         },
         {
-          "condition":{"is":"SCREEN", "value": "menu-connection_error"},
-          "actions":[
-            {"type":"TAP", "value": "menu-connection_error-ok"},
-            {"type":"WAIT", "value": "1500"},
-            {"type":"REPEAT", "value": ""}
-          ]
-        }
-      ]
-    },
-    "mission-goals": {
-      "name":"Mission Goals",
-      "statements": [
-        {
-          "condition":{"is":"SCREEN", "value": "menu-goal_list", "and": {"is":"SCREEN", "value": "menu-goal_list-next"}},
-          "actions":[
-            {"type":"TAP", "value": "menu-goal_list-next"},
-            {"type":"WAIT", "value": "1500"},
-            {"type":"REPEAT", "value": ""}
-          ]
-        },{
-          "condition":{"is":"SCREEN", "value": "menu-friend_select"},
-          "actions":[
-            {"type":"SWAP", "value": "mission-friend"}
+          "condition": {
+            "is": "SCREEN",
+            "value": "es-mission-select",
+            "and": {
+              "is": "ENERGY",
+              "value": "3"
+            }
+          },
+          "actions": [
+            {
+              "type": "TAP",
+              "value": "menu-level"
+            },
+            {
+              "type": "WAIT",
+              "value": "3000"
+            },
+            {
+              "type": "REPEAT",
+              "value": ""
+            }
           ]
         },
         {
-          "condition":{"is":"SCREEN", "value": "menu-connection_error"},
-          "actions":[
-            {"type":"TAP", "value": "menu-connection_error-ok"},
-            {"type":"WAIT", "value": "1500"},
-            {"type":"REPEAT", "value": ""}
-          ]
-        }
-      ]
-    },
-    "mission-friend": {
-      "name":"Mission Companion",
-      "statements": [
-        {
-          "condition":{"is":"SCREEN", "value": "menu-friend_select"},
-          "actions":[
-            {"type":"TAP", "value": "menu-friend_select-item_0"},
-            {"type":"WAIT", "value": "1500"},
-            {"type":"REPEAT", "value": ""}
-          ]
-        },{
-          "condition":{"is":"SCREEN", "value": "menu-depart"},
-          "actions":[
-            {"type":"SWAP", "value": "mission-depart"}
+          "condition": {
+            "is": "SCREEN",
+            "value": "menu-goal_list",
+            "and": {
+              "is": "SCREEN",
+              "value": "menu-goal_list-next"
+            }
+          },
+          "actions": [
+            {
+              "type": "TAP",
+              "value": "menu-goal_list-next"
+            },
+            {
+              "type": "WAIT",
+              "value": "1500"
+            },
+            {
+              "type": "REPEAT",
+              "value": ""
+            }
           ]
         },
         {
-          "condition":{"is":"SCREEN", "value": "menu-connection_error"},
-          "actions":[
-            {"type":"TAP", "value": "menu-connection_error-ok"},
-            {"type":"WAIT", "value": "1500"},
-            {"type":"REPEAT", "value": ""}
-          ]
-        }
-      ]
-    },
-    "mission-depart": {
-      "name":"Mission Depart",
-      "statements": [
-        {
-          "condition":{"is":"SCREEN", "value": "menu-depart"},
-          "actions":[
-            {"type":"TAP", "value": "menu-depart-depart"},
-            {"type":"WAIT", "value": "1500"},
-            {"type":"REPEAT", "value": ""}
-          ]
-        },{
-          "condition":{"is":"SCREEN", "value": "game-battle"},
-          "actions":[
-            {"type":"SWAP", "value": "game-battle"}
-          ]
-        },{
-          "condition":{"is":"SCREEN", "value": "menu-friend_select"},
-          "actions":[
-            {"type":"SWAP", "value": "mission-friend"}
+          "condition": {
+            "is": "SCREEN",
+            "value": "menu-friend_select"
+          },
+          "actions": [
+            {
+              "type": "TAP",
+              "value": "menu-friend_select-item_0"
+            },
+            {
+              "type": "WAIT",
+              "value": "1500"
+            },
+            {
+              "type": "REPEAT",
+              "value": ""
+            }
           ]
         },
         {
-          "condition":{"is":"SCREEN", "value": "menu-connection_error"},
-          "actions":[
-            {"type":"TAP", "value": "menu-connection_error-ok"},
-            {"type":"WAIT", "value": "1500"},
-            {"type":"REPEAT", "value": ""}
+          "condition": {
+            "is": "SCREEN",
+            "value": "menu-depart"
+          },
+          "actions": [
+            {
+              "type": "TAP",
+              "value": "menu-depart-depart"
+            },
+            {
+              "type": "WAIT",
+              "value": "1500"
+            },
+            {
+              "type": "REPEAT",
+              "value": ""
+            }
+          ]
+        },
+        {
+          "condition": {
+            "is": "SCREEN",
+            "value": "game-battle"
+          },
+          "actions": [
+            {
+              "type": "SWAP",
+              "value": "game-battle"
+            }
+          ]
+        },
+        {
+          "condition": {
+            "is": "SCREEN",
+            "value": "menu-connection_error"
+          },
+          "actions": [
+            {
+              "type": "TAP",
+              "value": "menu-connection_error-ok"
+            },
+            {
+              "type": "WAIT",
+              "value": "1500"
+            },
+            {
+              "type": "REPEAT",
+              "value": ""
+            }
           ]
         }
       ]
     },
     "game-battle": {
-      "name":"Battle",
+      "name": "Battle - Start",
       "statements": [
         {
-          "condition":{"is":"SCREEN", "value": "game-battle", "and": {"is":"SCREEN", "value": "game-battle-auto_off"}},
-          "actions":[
-            {"type":"TAP", "value": "battle-auto"},
-            {"type":"WAIT", "value": "10000"},
-            {"type":"REPEAT", "value": ""}
+          "condition": {
+            "is": "SCREEN",
+            "value": "game-battle",
+            "and": {
+              "is": "SCREEN",
+              "value": "game-battle-auto_off"
+            }
+          },
+          "actions": [
+            {
+              "type": "TAP",
+              "value": "battle-auto"
+            },
+            {
+              "type": "WAIT",
+              "value": "10000"
+            },
+            {
+              "type": "REPEAT",
+              "value": ""
+            }
           ]
         },
         {
-          "condition":{"is":"SCREEN", "value": "game-battle", "and": {"is":"SCREEN", "value": "game-battle-auto_on"}},
-          "actions":[
-            {"type":"WAIT", "value": "4500"},
-            {"type":"REPEAT", "value": ""}
+          "condition": {
+            "is": "SCREEN",
+            "value": "game-battle",
+            "and": {
+              "is": "SCREEN",
+              "value": "game-battle-auto_on"
+            }
+          },
+          "actions": [
+            {
+              "type": "SWAP",
+              "value": "game-battle-wait"
+            }
           ]
         },
         {
-          "condition":{"is":"SCREEN", "value": "menu-connection_error"},
-          "actions":[
-            {"type":"TAP", "value": "menu-connection_error-ok"},
-            {"type":"WAIT", "value": "1500"},
-            {"type":"REPEAT", "value": ""}
+          "condition": {
+            "is": "SCREEN",
+            "value": "menu-connection_error"
+          },
+          "actions": [
+            {
+              "type": "TAP",
+              "value": "menu-connection_error-ok"
+            },
+            {
+              "type": "WAIT",
+              "value": "1500"
+            },
+            {
+              "type": "REPEAT",
+              "value": ""
+            }
           ]
         },
         {
-          "condition":{"is":"SCREEN", "value": "menu-results-points"},
-          "actions":[
-            {"type":"SWAP", "value": "menu-results"}
+          "condition": {
+            "is": "SCREEN",
+            "value": "menu-results-points"
+          },
+          "actions": [
+            {
+              "type": "SWAP",
+              "value": "menu-results"
+            }
+          ]
+        }
+      ]
+    },"game-battle-wait": {
+      "name": "Battle - Waiting",
+      "statements": [
+        {
+          "condition": {
+            "is": "SCREEN",
+            "value": "game-battle",
+            "and": {
+              "is": "SCREEN",
+              "value": "game-battle-auto_on"
+            }
+          },
+          "actions": [
+            {
+              "type": "REPEAT",
+              "value": ""
+            }
+          ]
+        },
+        {
+          "condition": {
+            "is": "SCREEN",
+            "value": "menu-connection_error"
+          },
+          "actions": [
+            {
+              "type": "TAP",
+              "value": "menu-connection_error-ok"
+            },
+            {
+              "type": "WAIT",
+              "value": "1500"
+            },
+            {
+              "type": "REPEAT",
+              "value": ""
+            }
+          ]
+        },
+        {
+          "condition": {
+            "is": "SCREEN",
+            "value": "menu-results-points"
+          },
+          "actions": [
+            {
+              "type": "SWAP",
+              "value": "menu-results"
+            }
           ]
         }
       ]
     },
     "menu-results": {
-      "name":"Results",
+      "name": "Results",
       "statements": [
         {
-          "condition":{"is":"SCREEN", "value": "menu-results-points"},
-          "actions":[
-            {"type":"TAP", "value": "menu-results-next"},
-            {"type":"WAIT", "value": "500"},
-            {"type":"TAP", "value": "menu-results-next"},
-            {"type":"WAIT", "value": "500"},
-            {"type":"TAP", "value": "menu-results-next"},
-            {"type":"WAIT", "value": "500"},
-            {"type":"REPEAT", "value": ""}
+          "condition": {
+            "is": "SCREEN",
+            "value": "menu-results-points"
+          },
+          "actions": [
+            {
+              "type": "TAP",
+              "value": "menu-results-next"
+            },
+            {
+              "type": "WAIT",
+              "value": "250"
+            },
+            {
+              "type": "TAP",
+              "value": "screen-center"
+            },
+            {
+              "type": "WAIT",
+              "value": "250"
+            },{
+              "type": "TAP",
+              "value": "screen-center"
+            },
+            {
+              "type": "WAIT",
+              "value": "250"
+            },{
+              "type": "TAP",
+              "value": "screen-center"
+            },
+            {
+              "type": "WAIT",
+              "value": "1000"
+            },
+            {
+              "type": "TAP",
+              "value": "menu-results-next"
+            },
+            {
+              "type": "WAIT",
+              "value": "250"
+            },
+            {
+              "type": "REPEAT",
+              "value": ""
+            }
           ]
         },
         {
-          "condition":{"is":"SCREEN", "value": "menu-results-units"},
-          "actions":[
-            {"type":"TAP", "value": "menu-results-next"},
-            {"type":"WAIT", "value": "500"},
-            {"type":"TAP", "value": "menu-results-next"},
-            {"type":"WAIT", "value": "500"},
-            {"type":"REPEAT", "value": ""}
+          "condition": {
+            "is": "SCREEN",
+            "value": "menu-results-units"
+          },
+          "actions": [
+            {
+              "type": "TAP",
+              "value": "menu-results-next"
+            },
+            {
+              "type": "WAIT",
+              "value": "500"
+            },
+            {
+              "type": "TAP",
+              "value": "menu-results-next"
+            },
+            {
+              "type": "WAIT",
+              "value": "500"
+            },
+            {
+              "type": "REPEAT",
+              "value": ""
+            }
           ]
         },
         {
-          "condition":{"is":"SCREEN", "value": "menu-results-items"},
-          "actions":[
-            {"type":"TAP", "value": "menu-results-next"},
-            {"type":"WAIT", "value": "500"},
-            {"type":"REPEAT", "value": ""}
+          "condition": {
+            "is": "SCREEN",
+            "value": "menu-results-items"
+          },
+          "actions": [
+            {
+              "type": "TAP",
+              "value": "menu-results-next"
+            },
+            {
+              "type": "WAIT",
+              "value": "500"
+            },
+            {
+              "type": "REPEAT",
+              "value": ""
+            }
           ]
         },
         {
-          "condition":{"is":"SCREEN", "value": "menu-connection_error"},
-          "actions":[
-            {"type":"TAP", "value": "menu-connection_error-ok"},
-            {"type":"WAIT", "value": "1500"},
-            {"type":"REPEAT", "value": ""}
+          "condition": {
+            "is": "SCREEN",
+            "value": "menu-connection_error"
+          },
+          "actions": [
+            {
+              "type": "TAP",
+              "value": "menu-connection_error-ok"
+            },
+            {
+              "type": "WAIT",
+              "value": "1500"
+            },
+            {
+              "type": "REPEAT",
+              "value": ""
+            }
           ]
         },
         {
-          "condition":{"is":"SCREEN", "value": "es-mission-select"},
-          "actions":[
-            {"type":"SWAP", "value": "main"}
+          "condition": {
+            "is": "SCREEN",
+            "value": "menu-friend_request"
+          },
+          "actions": [
+            {
+              "type": "TAP",
+              "value": "menu-friend_request-no"
+            },
+            {
+              "type": "WAIT",
+              "value": "1500"
+            },
+            {
+              "type": "REPEAT",
+              "value": ""
+            }
+          ]
+        },
+        {
+          "condition": {
+            "is": "SCREEN",
+            "value": "es-mission-select"
+          },
+          "actions": [
+            {
+              "type": "SWAP",
+              "value": "main"
+            }
           ]
         }
       ]

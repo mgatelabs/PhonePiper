@@ -10,6 +10,7 @@ public class StateResult {
         SWAP,
         MOVE,
         REPEAT,
+        STOP
     }
 
     private final Type type;

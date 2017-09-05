@@ -15,5 +15,6 @@ public enum ActionType {
     PUSH, // Start a new state, but still leave old state alone
     POP, // Don't with this bubble
     WAIT, // Wait a few MS
-    MSG // Show a message
+    MSG, // Show a message
+    STOP // Stop execution
 }

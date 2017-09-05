@@ -8,6 +8,7 @@ import com.mgatelabs.ffbe.shared.details.*;
 import com.mgatelabs.ffbe.shared.image.ImageWrapper;
 
 import java.util.Map;
+import java.util.Stack;
 
 /**
  * Created by @mgatelabs (Michael Fuller) on 9/4/2017.
@@ -24,11 +25,14 @@ public class ScriptRunner {
     private Map<String, ScreenDefinition> screens;
     private Map<String, ComponentDefinition> components;
 
+    private Stack<String> stack;
+
     public ScriptRunner(PlayerDetail playerDetail, ScriptDetail scriptDetail, DeviceDefinition deviceDefinition, ViewDefinition viewDefinition) {
         this.playerDetail = playerDetail;
         this.scriptDetail = scriptDetail;
         this.deviceDefinition = deviceDefinition;
         this.viewDefinition = viewDefinition;
+        stack = new Stack<>();
 
         screens = Maps.newHashMap();
         for (ScreenDefinition screenDefinition : viewDefinition.getScreens()) {
@@ -87,33 +91,54 @@ public class ScriptRunner {
                 StateResult result = state(stateDetail, imageWrapper);
 
                 switch (result.getType()) {
-                    case POP:
+                    case STOP: {
                         return;
+                    }
+                    case POP:
+                        if (stack.size() > 0) {
+                            final String oldState = stack.pop();
+                            stateDetail = scriptDetail.getStates().get(oldState);
+                            if (stateDetail == null) {
+                                throw new RuntimeException("Cannot find state with id: " + oldState);
+                            }
+                            keepRunning = false;
+                        } else {
+                            throw new RuntimeException("Stack is empty");
+                        }
+                        break;
                     case MOVE: {
                         stateDetail = scriptDetail.getStates().get(result.getValue());
                         if (stateDetail == null) {
                             throw new RuntimeException("Cannot find state with id: " + result.getValue());
                         }
-                    } break;
+                    }
+                    break;
                     case PUSH: {
+                        stack.push(stateDetail.getName());
+                        stateDetail = scriptDetail.getStates().get(result.getValue());
+                        if (stateDetail == null) {
+                            throw new RuntimeException("Cannot find state with id: " + result.getValue());
+                        }
                         keepRunning = false;
-                        run(result.getValue());
-                    } break;
+                    }
+                    break;
                     case SWAP: {
                         stateDetail = scriptDetail.getStates().get(result.getValue());
                         if (stateDetail == null) {
                             throw new RuntimeException("Cannot find state with id: " + result.getValue());
                         }
                         keepRunning = true;
-                    } break;
+                    }
+                    break;
                     case REPEAT: {
                         keepRunning = false;
-                    } break;
+                    }
+                    break;
                 }
 
             }
 
-            waitFor(1500);
+            waitFor(500);
         }
 
     }
@@ -133,24 +158,27 @@ public class ScriptRunner {
                             System.out.println("MSG: " + actionDefinition.getValue());
                             System.out.println("------------");
                             System.out.println();
-                        } break;
+                        }
+                        break;
                         case TAP: {
                             ComponentDefinition componentDefinition = components.get(actionDefinition.getValue());
                             if (componentDefinition == null) {
                                 throw new RuntimeException("Cannot find component with id: " + actionDefinition.getValue());
                             }
                             AdbUtils.component(componentDefinition, ActionType.TAP);
-                        } break;
+                        }
+                        break;
                         case WAIT: {
                             long time = Long.parseLong(actionDefinition.getValue());
                             if (time > 0) {
                                 waitFor(time);
-                            } else  {
+                            } else {
                                 throw new RuntimeException("Invalid wait time: " + actionDefinition.getValue());
                             }
-                        } break;
+                        }
+                        break;
                         case POP: {
-                         return StateResult.POP;
+                            return StateResult.POP;
                         }
                         case PUSH: {
                             return StateResult.push(actionDefinition.getValue());
@@ -201,8 +229,8 @@ public class ScriptRunner {
             case ENERGY: {
                 int energy = Integer.parseInt(conditionDefinition.getValue());
                 if (energy >= PlayerDetail.MIN_ENERGY && energy <= PlayerDetail.MAX_ENERGY) {
-                    float requiredPercent = ((float)energy / (float)playerDetail.getTotalEnergy());
-                    int requiredPixel = ((int)(energyBar.getW() * requiredPercent) + 1);
+                    float requiredPercent = ((float) energy / (float) playerDetail.getTotalEnergy());
+                    int requiredPixel = ((int) (energyBar.getW() * requiredPercent) + 1);
                     if (requiredPixel > energyBar.getW()) {
                         requiredPixel = energyBar.getW();
                     }

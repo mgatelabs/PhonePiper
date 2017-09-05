@@ -7,8 +7,8 @@ import com.mgatelabs.ffbe.shared.SamplePoint;
 import com.mgatelabs.ffbe.shared.details.*;
 import com.mgatelabs.ffbe.shared.image.ImageWrapper;
 
-import java.util.Map;
-import java.util.Stack;
+import java.text.*;
+import java.util.*;
 
 /**
  * Created by @mgatelabs (Michael Fuller) on 9/4/2017.
@@ -26,6 +26,8 @@ public class ScriptRunner {
     private Map<String, ComponentDefinition> components;
 
     private Stack<String> stack;
+
+    public static final SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 
     public ScriptRunner(PlayerDetail playerDetail, ScriptDetail scriptDetail, DeviceDefinition deviceDefinition, ViewDefinition viewDefinition) {
         this.playerDetail = playerDetail;
@@ -50,6 +52,10 @@ public class ScriptRunner {
         }
     }
 
+    public static String getDateString() {
+        return sdf.format(new Date());
+    }
+
     public void run(String stateName) {
 
         ImageWrapper imageWrapper;
@@ -71,14 +77,14 @@ public class ScriptRunner {
 
             if (imageWrapper == null || !imageWrapper.isReady()) {
                 System.out.println("------------");
-                System.out.println("Image: Failure: " + seconds + "s");
+                System.out.println("Image: Failure: " + seconds + "s" + " : " + getDateString());
                 System.out.println("------------");
                 System.out.println();
                 waitFor(250);
                 continue;
             } else {
                 System.out.println("------------");
-                System.out.println("Image: Success " + seconds + "s");
+                System.out.println("Image: Success " + seconds + "s" + " : " + getDateString());
                 System.out.println("------------");
                 System.out.println();
             }
@@ -146,8 +152,9 @@ public class ScriptRunner {
     private StateResult state(final StateDetail stateDetail, final ImageWrapper imageWrapper) {
 
         System.out.println("------------");
-        System.out.println("Running State: " + stateDetail.getName());
+        System.out.println("Running State: " + stateDetail.getName()+ " : " + getDateString());
         System.out.println("------------");
+        System.out.println();
 
         for (StatementDefinition statementDefinition : stateDetail.getStatements()) {
             if (check(statementDefinition.getCondition(), imageWrapper)) {
@@ -155,7 +162,7 @@ public class ScriptRunner {
                     switch (actionDefinition.getType()) {
                         case MSG: {
                             System.out.println("------------");
-                            System.out.println("MSG: " + actionDefinition.getValue());
+                            System.out.println("MSG: " + actionDefinition.getValue()+ " : " + getDateString());
                             System.out.println("------------");
                             System.out.println();
                         }

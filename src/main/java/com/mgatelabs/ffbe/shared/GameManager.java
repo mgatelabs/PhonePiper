@@ -15,6 +15,8 @@ import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 import java.util.regex.Pattern;
 
@@ -54,6 +56,20 @@ public class GameManager {
             System.out.println("Could not locate viewId: " + deviceDefinition.getViewId());
             return;
         }
+
+        Collections.sort(viewDefinition.getScreens(), new Comparator<ScreenDefinition>() {
+            @Override
+            public int compare(ScreenDefinition o1, ScreenDefinition o2) {
+                return o1.getScreenId().compareTo(o2.getScreenId());
+            }
+        });
+
+        Collections.sort(viewDefinition.getComponents(), new Comparator<ComponentDefinition>() {
+            @Override
+            public int compare(ComponentDefinition o1, ComponentDefinition o2) {
+                return o1.getComponentId().compareTo(o2.getComponentId());
+            }
+        });
 
         while (true) {
 

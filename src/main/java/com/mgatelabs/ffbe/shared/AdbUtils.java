@@ -44,7 +44,11 @@ public class AdbUtils {
         }
     }
 
-    public static ImageWrapper screen() {
+    public static void persistScreen() {
+        execWait("adb exec-out screencap /mnt/sdcard/framebuffer.raw");
+    }
+
+    public static ImageWrapper getScreen() {
         byte[] bytes = execStream("adb exec-out screencap");
         try {
             int w, h;

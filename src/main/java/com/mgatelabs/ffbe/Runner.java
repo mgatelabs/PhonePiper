@@ -21,7 +21,7 @@ import java.util.*;
  */
 public class Runner {
   public static void main(String[] args) {
-    GameRunner runner = new GameRunner();
+
 
 
     boolean showHelp = false;
@@ -41,8 +41,17 @@ public class Runner {
         GameManager manager = new GameManager(deviceDefinition);
 
         manager.manage();
-      } else if ("snap".equalsIgnoreCase(args[0])) {
+      } else if ("frame".equalsIgnoreCase(args[0])) {
 
+        long startTime = System.nanoTime();
+        AdbUtils.persistScreen();
+        long endTime = System.nanoTime();
+
+        long dif = endTime - startTime;
+
+        System.out.println("Frame captured in: " + ((float) dif / 1000000000.0)+"s");
+
+        /*
         File sampleFile = new File("pieces//friendrequest.png");
 
         BufferedImage bufferedImage = null;
@@ -59,16 +68,17 @@ public class Runner {
         ImagePixelPickerDialog dialog = new ImagePixelPickerDialog(ImagePixelPickerDialog.Mode.BOX);
         dialog.setup(rawImageWrapper, new ArrayList<>());
         dialog.start();
+      */
 
         //runner.snap();
         return;
-      } else if ("mapper".equalsIgnoreCase(args[0])) {
+      } /*else if ("mapper".equalsIgnoreCase(args[0])) {
         final String phoneName = args.length == 1 ? "axon7" : args[2];
         Phone phone = runner.loadPhone(phoneName);
         DungeonMapperCommandLine dungeonMapperCommandLine = new DungeonMapperCommandLine(phone);
         dungeonMapperCommandLine.run();
         return;
-      } else if ("script".equalsIgnoreCase(args[0])) {
+      }*/ else if ("script".equalsIgnoreCase(args[0])) {
 
         if (args.length < 2) {
           showHelp = true;
@@ -122,35 +132,20 @@ public class Runner {
         }
 
 
-      } else if ("run".equalsIgnoreCase(args[0])) {
-        if (args.length < 2) {
-          showHelp = true;
-        } else {
-          final String scriptName = args[1];
-          final String phoneName = args.length == 2 ? "axon7" : args[2];
-
-          Script script = runner.loadScript(scriptName);
-
-          Phone phone = runner.loadPhone(phoneName);
-
-          if (phone != null && script != null) {
-            runner.run(phone, script);
-          } else if (phone == null) {
-            System.out.println("Error: could not find phone with name " + phoneName);
-          } else {
-            System.out.println("Error: could not find script with name " + scriptName);
-          }
-        }
       }
     } else {
       showHelp = true;
     }
 
     if (showHelp) {
-      System.out.println("Required Parameters missing");
-      System.out.println("run (scriptName) [phoneName]");
+      System.out.println("How to use:");
+      System.out.println();
       System.out.println("script (scriptName) [deviceName]");
-      System.out.println("snap");
+      System.out.println("\tRun a script for a given device.  Will default to Axon7 device.");
+      System.out.println("manage [deviceName]");
+      System.out.println("\tEdit a device's screens and components.  Will default to Axon7 device.");
+      System.out.println("frame");
+      System.out.println("\tCapture the current frame to your device for later inspection");
     }
   }
 }

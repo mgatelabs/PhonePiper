@@ -159,6 +159,16 @@ public class GameRunner {
         }
     }
 
+    public void saveScreen() {
+        long startTime = System.nanoTime();
+        AdbUtils.persistScreen();
+        long endTime = System.nanoTime();
+
+        long dif = endTime - startTime;
+
+        System.out.println("Frame captured in: " + ((float) dif / 1000000000.0)+"s");
+    }
+
     public static RawImageWrapper getScreen() {
         byte[] bytes = exec2("adb exec-out screencap");
         try {

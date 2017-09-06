@@ -21,14 +21,15 @@ public class DungeonMapperTest {
   @Test
   public void write() throws Exception {
 
-    BufferedImage bufferedImage = ImageIO.read(new File("F:\\Investigate\\FFBE\\pieces\\20170830_063631.png"));
+    //BufferedImage bufferedImage = ImageIO.read(new File("F:\\Investigate\\FFBE\\pieces\\20170830_063631.png"));
 
-    GameRunner runner = new GameRunner();
+    //GameRunner runner = new GameRunner();
 
-    Phone phone = runner.loadPhone("axon7");
+    //Phone phone = runner.loadPhone("axon7");
 
-    ScreenDetail screenDetail = phone.getScreens().get("daily-complete");
+    //ScreenDetail screenDetail = phone.getScreens().get("daily-complete");
 
+    /*
     for (SamplePoint samplePoint : screenDetail.getPoints()) {
       for (int y = -5; y <= 5; y++) {
         for (int x = -5; x <=5 ; x++) {
@@ -36,8 +37,9 @@ public class DungeonMapperTest {
         }
       }
     }
+    */
 
-    ImageIO.write(bufferedImage, "PNG", new File("F:\\Investigate\\FFBE\\pieces\\20170830_063631_PIXELS.png"));
+    //ImageIO.write(bufferedImage, "PNG", new File("F:\\Investigate\\FFBE\\pieces\\20170830_063631_PIXELS.png"));
   }
 
 }

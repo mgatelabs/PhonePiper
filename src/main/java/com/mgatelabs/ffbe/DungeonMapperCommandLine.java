@@ -26,6 +26,8 @@ public class DungeonMapperCommandLine {
 
   public void run() {
 
+    /*
+
     ComponentDetail mapPosition = phone.getComponents().get("mini-map");
     ComponentDetail centerPosition = phone.getComponents().get("mini-map-center");
 
@@ -75,7 +77,7 @@ public class DungeonMapperCommandLine {
       }
 
     }
-
+    */
   }
 
   public int getInt() {

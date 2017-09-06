@@ -1,14 +1,9 @@
 package com.mgatelabs.ffbe.shared;
 
-import com.mgatelabs.ffbe.GameRunner;
 import com.mgatelabs.ffbe.shared.details.ActionType;
-import com.mgatelabs.ffbe.shared.details.ComponentDefinition;
-import com.mgatelabs.ffbe.shared.details.DeviceDefinition;
-import com.mgatelabs.ffbe.shared.details.ScreenDefinition;
-import com.mgatelabs.ffbe.shared.details.ViewDefinition;
+import com.mgatelabs.ffbe.shared.details.*;
 import com.mgatelabs.ffbe.shared.image.ImageWrapper;
 import com.mgatelabs.ffbe.shared.image.PngImageWrapper;
-import com.mgatelabs.ffbe.shared.image.RawImageWrapper;
 import com.mgatelabs.ffbe.ui.ImagePixelPickerDialog;
 
 import javax.imageio.ImageIO;
@@ -87,11 +82,13 @@ public class GameManager {
             switch (command) {
                 case 1: {
                     manageScreens();
-                } break;
+                }
+                break;
                 case 2: {
                     manageComponents();
-                } break;
-                case  0: {
+                }
+                break;
+                case 0: {
                     return;
                 }
             }
@@ -127,11 +124,13 @@ public class GameManager {
             switch (command) {
                 case 1: {
                     newScreen();
-                } break;
+                }
+                break;
                 case 2: {
                     listScreens();
-                } break;
-                case  0: {
+                }
+                break;
+                case 0: {
                     return;
                 }
             }
@@ -168,7 +167,7 @@ public class GameManager {
             }
 
             boolean duplicate = false;
-            for (ScreenDefinition screenDefinition: viewDefinition.getScreens()) {
+            for (ScreenDefinition screenDefinition : viewDefinition.getScreens()) {
                 if (screenDefinition.getScreenId().equalsIgnoreCase(id)) {
                     System.out.println("Duplicate screen found, please try again");
                     duplicate = true;
@@ -186,11 +185,11 @@ public class GameManager {
 
         System.out.println("Starting capture");
 
-        RawImageWrapper rawImageReader;
+        ImageWrapper imageReader;
 
         while (true) {
-            rawImageReader = GameRunner.getScreen();
-            if (rawImageReader == null || !rawImageReader.isReady()) {
+            imageReader = AdbUtils.getScreen();
+            if (imageReader == null || !imageReader.isReady()) {
                 System.out.println("Something went wrong, try again? (y/n)");
                 if (!ConsoleInput.yesNo()) {
                     System.out.println("Stopping");
@@ -205,7 +204,7 @@ public class GameManager {
 
         while (true) {
             ImagePixelPickerDialog imagePixelPickerDialog = new ImagePixelPickerDialog(ImagePixelPickerDialog.Mode.PIXELS);
-            imagePixelPickerDialog.setup(rawImageReader, samples);
+            imagePixelPickerDialog.setup(imageReader, samples);
             imagePixelPickerDialog.start();
 
             if (!imagePixelPickerDialog.isOk()) {
@@ -233,7 +232,7 @@ public class GameManager {
 
             viewDefinition.getScreens().add(screenDefinition);
 
-            rawImageReader.savePng(ScreenDefinition.getPreviewPath(deviceDefinition.getViewId(), id));
+            imageReader.savePng(ScreenDefinition.getPreviewPath(deviceDefinition.getViewId(), id));
 
             save();
         }
@@ -290,20 +289,25 @@ public class GameManager {
 
             switch (command) {
                 case 1: {
-                    verifyScreenImage(screenDefinition,true);
-                } break;
+                    verifyScreenImage(screenDefinition, true);
+                }
+                break;
                 case 2: {
-                    verifyScreenImage(screenDefinition,false);
-                } break;
+                    verifyScreenImage(screenDefinition, false);
+                }
+                break;
                 case 3: {
                     updateScreenPoints(screenDefinition);
-                } break;
+                }
+                break;
                 case 4: {
                     updateScreenImage(screenDefinition);
-                } break;
+                }
+                break;
                 case 5: {
                     changeScreenName(screenDefinition);
-                } break;
+                }
+                break;
                 case 7: {
                     System.out.println("Are you sure? (Y/N)");
                     if (ConsoleInput.yesNo()) {
@@ -311,7 +315,8 @@ public class GameManager {
                         viewDefinition.getScreens().remove(screenIndex);
                         return;
                     }
-                } break;
+                }
+                break;
             }
 
         }
@@ -361,7 +366,7 @@ public class GameManager {
         try {
             final BufferedImage bufferedImage = ImageIO.read(path);
             return new PngImageWrapper(bufferedImage);
-        }catch (Exception ex) {
+        } catch (Exception ex) {
             return null;
         }
     }
@@ -371,7 +376,7 @@ public class GameManager {
         ImageWrapper imageWrapper;
 
         while (true) {
-            imageWrapper = GameRunner.getScreen();
+            imageWrapper = AdbUtils.getScreen();
             if (imageWrapper == null || !imageWrapper.isReady()) {
                 System.out.println("Something went wrong, try again? (y/n)");
                 if (!ConsoleInput.yesNo()) {
@@ -436,7 +441,7 @@ public class GameManager {
     public ImageWrapper getLiveImage() {
         ImageWrapper imageWrapper;
         while (true) {
-            imageWrapper = GameRunner.getScreen();
+            imageWrapper = AdbUtils.getScreen();
             if (imageWrapper == null || !imageWrapper.isReady()) {
                 System.out.println("Something went wrong, try again? (y/n)");
                 if (!ConsoleInput.yesNo()) {
@@ -476,11 +481,13 @@ public class GameManager {
             switch (command) {
                 case 1: {
                     newComponent();
-                } break;
+                }
+                break;
                 case 2: {
                     listComponents();
-                } break;
-                case  0: {
+                }
+                break;
+                case 0: {
                     return;
                 }
             }
@@ -517,7 +524,7 @@ public class GameManager {
             }
 
             boolean duplicate = false;
-            for (ComponentDefinition componentDefinition: viewDefinition.getComponents()) {
+            for (ComponentDefinition componentDefinition : viewDefinition.getComponents()) {
                 if (componentDefinition.getComponentId().equalsIgnoreCase(id)) {
                     System.out.println("Duplicate component found, please try again");
                     duplicate = true;
@@ -535,11 +542,11 @@ public class GameManager {
 
         System.out.println("Starting capture");
 
-        RawImageWrapper rawImageReader;
+        ImageWrapper imageReader;
 
         while (true) {
-            rawImageReader = GameRunner.getScreen();
-            if (rawImageReader == null || !rawImageReader.isReady()) {
+            imageReader = AdbUtils.getScreen();
+            if (imageReader == null || !imageReader.isReady()) {
                 System.out.println("Something went wrong, try again? (y/n)");
                 if (!ConsoleInput.yesNo()) {
                     System.out.println("Stopping");
@@ -556,7 +563,7 @@ public class GameManager {
 
         while (true) {
             ImagePixelPickerDialog imagePixelPickerDialog = new ImagePixelPickerDialog(ImagePixelPickerDialog.Mode.BOX);
-            imagePixelPickerDialog.setup(rawImageReader, new ArrayList<>());
+            imagePixelPickerDialog.setup(imageReader, new ArrayList<>());
             imagePixelPickerDialog.start();
 
             if (!imagePixelPickerDialog.isOk()) {
@@ -568,7 +575,7 @@ public class GameManager {
                     System.out.println("Stopping");
                     return;
                 }
-            } else if (imagePixelPickerDialog.getPoints().size() != 2){
+            } else if (imagePixelPickerDialog.getPoints().size() != 2) {
                 System.out.println("You must select 2 points, try again: (y/n)");
                 if (!ConsoleInput.yesNo()) {
                     System.out.println("Stopping");
@@ -605,7 +612,7 @@ public class GameManager {
         System.out.println("Save component: " + id + "(y/n)");
         if (ConsoleInput.yesNo()) {
             viewDefinition.getComponents().add(componentDefinition);
-            rawImageReader.savePng(ComponentDefinition.getPreviewPath(deviceDefinition.getViewId(), id));
+            imageReader.savePng(ComponentDefinition.getPreviewPath(deviceDefinition.getViewId(), id));
             save();
         }
     }
@@ -660,17 +667,21 @@ public class GameManager {
             switch (command) {
                 case 1: {
                     updateComponentPoints(componentDefinition);
-                } break;
+                }
+                break;
                 case 2: {
                     updateComponentImage(componentDefinition);
-                } break;
+                }
+                break;
                 case 3: {
                     changeComponentName(componentDefinition);
-                } break;
+                }
+                break;
                 case 4: {
                     System.out.println("Sending Tap");
-                    GameRunner.runComponent(componentDefinition, ActionType.TAP);
-                } break;
+                    AdbUtils.component(componentDefinition, ActionType.TAP);
+                }
+                break;
                 case 7: {
                     System.out.println("Are you sure? (Y/N)");
                     if (ConsoleInput.yesNo()) {
@@ -678,7 +689,8 @@ public class GameManager {
                         viewDefinition.getComponents().remove(componentIndex);
                         return;
                     }
-                } break;
+                }
+                break;
             }
 
         }
@@ -755,7 +767,7 @@ public class GameManager {
         ImageWrapper imageWrapper;
 
         while (true) {
-            imageWrapper = GameRunner.getScreen();
+            imageWrapper = AdbUtils.getScreen();
             if (imageWrapper == null || !imageWrapper.isReady()) {
                 System.out.println("Something went wrong, try again? (y/n)");
                 if (!ConsoleInput.yesNo()) {

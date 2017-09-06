@@ -7,8 +7,10 @@ import com.mgatelabs.ffbe.shared.SamplePoint;
 import com.mgatelabs.ffbe.shared.details.*;
 import com.mgatelabs.ffbe.shared.image.ImageWrapper;
 
-import java.text.*;
-import java.util.*;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.Map;
+import java.util.Stack;
 
 /**
  * Created by @mgatelabs (Michael Fuller) on 9/4/2017.
@@ -68,7 +70,7 @@ public class ScriptRunner {
 
         while (true) {
             long startTime = System.nanoTime();
-            imageWrapper = AdbUtils.screen();
+            imageWrapper = AdbUtils.getScreen();
             long endTime = System.nanoTime();
 
             long dif = endTime - startTime;
@@ -152,7 +154,7 @@ public class ScriptRunner {
     private StateResult state(final StateDetail stateDetail, final ImageWrapper imageWrapper) {
 
         System.out.println("------------");
-        System.out.println("Running State: " + stateDetail.getName()+ " : " + getDateString());
+        System.out.println("Running State: " + stateDetail.getName() + " : " + getDateString());
         System.out.println("------------");
         System.out.println();
 
@@ -162,7 +164,7 @@ public class ScriptRunner {
                     switch (actionDefinition.getType()) {
                         case MSG: {
                             System.out.println("------------");
-                            System.out.println("MSG: " + actionDefinition.getValue()+ " : " + getDateString());
+                            System.out.println("MSG: " + actionDefinition.getValue() + " : " + getDateString());
                             System.out.println("------------");
                             System.out.println();
                         }

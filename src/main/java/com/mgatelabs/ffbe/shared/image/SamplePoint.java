@@ -1,6 +1,4 @@
-package com.mgatelabs.ffbe.shared;
-
-import com.mgatelabs.ffbe.shared.image.ImageWrapper;
+package com.mgatelabs.ffbe.shared.image;
 
 import java.util.*;
 

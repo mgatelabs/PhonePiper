@@ -18,6 +18,7 @@ public class PlayerDetail {
     public static final int MAX_LEVEL = 150;
 
     private int level;
+    private String ip;
 
     public int getLevel() {
         return level;
@@ -25,6 +26,14 @@ public class PlayerDetail {
 
     public void setLevel(int level) {
         this.level = level;
+    }
+
+    public String getIp() {
+        return ip;
+    }
+
+    public void setIp(String ip) {
+        this.ip = ip;
     }
 
     @JsonIgnore

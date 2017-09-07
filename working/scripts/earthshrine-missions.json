@@ -262,6 +262,10 @@
           },
           "actions": [
             {
+              "type": "WAIT",
+              "value": "1500"
+            },
+            {
               "type": "REPEAT",
               "value": ""
             }

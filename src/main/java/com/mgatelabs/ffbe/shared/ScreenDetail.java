@@ -1,5 +1,7 @@
 package com.mgatelabs.ffbe.shared;
 
+import com.mgatelabs.ffbe.shared.image.SamplePoint;
+
 import java.util.*;
 
 /**

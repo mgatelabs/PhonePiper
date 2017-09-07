@@ -1,6 +1,6 @@
 package com.mgatelabs.ffbe.shared.details;
 
-import com.mgatelabs.ffbe.shared.SamplePoint;
+import com.mgatelabs.ffbe.shared.image.SamplePoint;
 
 import java.io.File;
 import java.util.List;

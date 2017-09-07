@@ -180,4 +180,8 @@ public class RawImageWrapper implements ImageWrapper {
             return false;
         }
     }
+
+    public static int getOffsetFor(final int width, final int dataOffset, final int x, final int y, final ImageFormats format) {
+        return dataOffset + ((y * width) * format.getBpp()) + (x * format.getBpp());
+    }
 }

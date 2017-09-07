@@ -1,17 +1,6 @@
 package com.mgatelabs.ffbe;
 
-import com.mgatelabs.ffbe.shared.GameState;
-import com.mgatelabs.ffbe.shared.Phone;
-import com.mgatelabs.ffbe.shared.SamplePoint;
-import com.mgatelabs.ffbe.shared.ScreenDetail;
 import org.junit.*;
-
-import javax.imageio.ImageIO;
-import java.awt.image.BufferedImage;
-import java.io.File;
-import java.nio.Buffer;
-
-import static org.junit.Assert.*;
 
 /**
  * @author <a href="mailto:mfuller@acteksoft.com">Michael Fuller</a>

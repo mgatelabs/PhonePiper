@@ -4,6 +4,7 @@ import com.mgatelabs.ffbe.shared.details.ActionType;
 import com.mgatelabs.ffbe.shared.details.*;
 import com.mgatelabs.ffbe.shared.image.ImageWrapper;
 import com.mgatelabs.ffbe.shared.image.PngImageWrapper;
+import com.mgatelabs.ffbe.shared.image.SamplePoint;
 import com.mgatelabs.ffbe.ui.ImagePixelPickerDialog;
 
 import javax.imageio.ImageIO;

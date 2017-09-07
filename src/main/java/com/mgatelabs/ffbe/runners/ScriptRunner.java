@@ -79,7 +79,12 @@ public class ScriptRunner {
         if (ConsoleInput.yesNo()) {
             System.out.println("Phone IP Address: " + (playerDetail.getIp() != null ? playerDetail.getIp() : "?"));
             phoneIp = ConsoleInput.getString();
-            if (phoneIp.length() == 0) {
+            if (phoneIp.length() > 0) {
+                playerDetail.setIp(phoneIp);
+                if (playerDetail.write()) {
+                    System.out.println("Player profile updated!");
+                }
+            } else if (phoneIp.length() == 0) {
                 phoneIp = playerDetail.getIp();
             }
 
@@ -275,7 +280,7 @@ public class ScriptRunner {
 
             }
 
-            waitFor(500);
+            waitFor(1000);
         }
 
     }

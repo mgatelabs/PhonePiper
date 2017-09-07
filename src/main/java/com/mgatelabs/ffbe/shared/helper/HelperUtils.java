@@ -39,15 +39,20 @@ public class HelperUtils {
             return false;
         }
 
-
         Request request = new Request.Builder()
                 .url("http://"+ipAddress+":8080/setup").post(RequestBody.create(MediaType.parse("application/json"), arrayOutputStream.toByteArray()))
                 .build();
 
         try (Response response = client.newCall(request).execute()) {
             if (!response.isSuccessful()) throw new IOException("Unexpected code " + response);
-            System.out.println(response.body().string());
-            return true;
+            HelperStatus helperStatus = objectMapper.readValue(response.body().byteStream(), HelperStatus.class);
+            if (helperStatus.getStatus() == HelperStatus.Status.FAIL) {
+                System.out.println(helperStatus.getMsg());
+                failures++;
+                return false;
+            }
+            failures = 0;
+            return helperStatus.getStates() != null;
         } catch (IOException ioEx) {
             ioEx.printStackTrace();
             failures++;
@@ -68,6 +73,7 @@ public class HelperUtils {
                 failures++;
                 return ImmutableSet.of();
             }
+            failures = 0;
             return ImmutableSet.copyOf(helperStatus.getScreens());
         } catch (IOException ioEx) {
             failures++;
@@ -88,6 +94,7 @@ public class HelperUtils {
                 failures++;
                 return null;
             }
+            failures = 0;
             return helperStatus.getPixels();
         } catch (IOException ioEx) {
             ioEx.printStackTrace();

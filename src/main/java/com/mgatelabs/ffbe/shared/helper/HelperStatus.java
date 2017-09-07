@@ -16,6 +16,8 @@ public class HelperStatus {
 
     private String msg;
 
+    private String states;
+
     private int [] pixels;
 
     private Set<String> screens;
@@ -50,5 +52,13 @@ public class HelperStatus {
 
     public void setPixels(int[] pixels) {
         this.pixels = pixels;
+    }
+
+    public String getStates() {
+        return states;
+    }
+
+    public void setStates(String states) {
+        this.states = states;
     }
 }

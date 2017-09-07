@@ -383,7 +383,7 @@ public class ScriptRunner {
                     }
                     ColorSample sample = new ColorSample();
                     if (helperUtils != null) {
-                        int [] pixels = helperUtils.pixel(RawImageWrapper.getOffsetFor(deviceDefinition.getWidth(), 12, energyBar.getX(), energyBar.getY(), RawImageWrapper.ImageFormats.RGBA));
+                        int [] pixels = helperUtils.pixel(RawImageWrapper.getOffsetFor(deviceDefinition.getWidth(), 12, energyBar.getX() + requiredPixel, energyBar.getY(), RawImageWrapper.ImageFormats.RGBA));
                         if (pixels != null) {
                             sample.setR(pixels[0]);
                             sample.setG(pixels[1]);

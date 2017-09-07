@@ -53,6 +53,10 @@
           },
           "actions": [
             {
+              "type": "MSG",
+              "value": "No energy"
+            },
+            {
               "type": "TAP",
               "value": "menu-level"
             },

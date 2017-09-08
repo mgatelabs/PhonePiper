@@ -14,7 +14,7 @@ public class ConsoleInput {
             try {
                 return Integer.parseInt(value);
             } catch (Exception ex) {
-                System.out.println("Invalid Integer Input: " + value);
+                System.out.println("Invalid integer input: " + value);
             }
         }
         return -1;

@@ -1,20 +1,13 @@
 package com.mgatelabs.ffbe;
 
+import com.mgatelabs.ffbe.runners.GameManager;
 import com.mgatelabs.ffbe.runners.ScriptRunner;
-import com.mgatelabs.ffbe.shared.*;
 import com.mgatelabs.ffbe.shared.details.DeviceDefinition;
 import com.mgatelabs.ffbe.shared.details.PlayerDetail;
 import com.mgatelabs.ffbe.shared.details.ScriptDetail;
 import com.mgatelabs.ffbe.shared.details.ViewDefinition;
-import com.mgatelabs.ffbe.shared.image.ImageWrapper;
-import com.mgatelabs.ffbe.shared.image.PngImageWrapper;
-import com.mgatelabs.ffbe.ui.*;
-
-import javax.imageio.ImageIO;
-import java.awt.image.BufferedImage;
-import java.io.File;
-import java.io.IOException;
-import java.util.*;
+import com.mgatelabs.ffbe.shared.util.AdbUtils;
+import com.mgatelabs.ffbe.shared.util.ConsoleInput;
 
 /**
  * Created by @mgatelabs (Michael Fuller) on 8/27/2017.

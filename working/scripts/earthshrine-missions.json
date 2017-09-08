@@ -14,6 +14,10 @@
           },
           "actions": [
             {
+              "type": "MSG",
+              "value": "LONG ACTION"
+            },
+            {
               "type": "TAP",
               "value": "menu-mission_list-item_1"
             },
@@ -318,6 +322,10 @@
             "value": "menu-results-points"
           },
           "actions": [
+            {
+              "type": "MSG",
+              "value": "LONG ACTION"
+            },
             {
               "type": "TAP",
               "value": "menu-results-next"

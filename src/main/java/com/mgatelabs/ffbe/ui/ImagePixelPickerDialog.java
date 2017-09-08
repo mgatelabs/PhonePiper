@@ -1,6 +1,5 @@
 package com.mgatelabs.ffbe.ui;
 
-import com.mgatelabs.ffbe.shared.*;
 import com.mgatelabs.ffbe.shared.image.*;
 
 import javax.swing.*;
@@ -461,7 +460,7 @@ public class ImagePixelPickerDialog extends JDialog implements KeyListener {
 
       if (px >= 0 && px < imageWrapper.getWidth() && py >= 0 && py < imageWrapper.getHeight()) {
         if (samples[py][px] == null) {
-          ColorSample sample = new ColorSample();
+          Sampler sample = new Sampler();
           imageWrapper.getPixel(px, py, sample);
           SamplePoint point = new SamplePoint(px, py, sample.getR(), sample.getG(), sample.getB());
           samples[py][px] = point;
@@ -483,7 +482,7 @@ public class ImagePixelPickerDialog extends JDialog implements KeyListener {
     protected void paintComponent(Graphics g) {
       super.paintComponent(g);
       Graphics2D g2d = (Graphics2D) g;
-      ColorSample sample = new ColorSample();
+      Sampler sample = new Sampler();
 
       int boxX1 = -1;
       int boxX2 = -1;
@@ -579,7 +578,7 @@ public class ImagePixelPickerDialog extends JDialog implements KeyListener {
 
 
       if (cx > 0 && cx < imageWrapper.getWidth() - 1 && cy > 0 && cy <= imageWrapper.getHeight() - 1) {
-        ColorSample center = new ColorSample();
+        Sampler center = new Sampler();
         imageWrapper.getPixel(cx, cy, center);
         int trippleSize = (miniWidth / 3);
         for (int y = -1; y <= 1; y++) {

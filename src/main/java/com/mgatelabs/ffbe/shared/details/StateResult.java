@@ -1,4 +1,4 @@
-package com.mgatelabs.ffbe.runners;
+package com.mgatelabs.ffbe.shared.details;
 
 /**
  * Created by @mgatelabs (Michael Fuller) on 9/4/2017.

@@ -15,13 +15,11 @@ public class DungeonMapperCommandLine {
   private static final File OutputImage = new File("mapper.png");
 
   private DungeonMapper mapper;
-  private Phone phone;
   private int x;
   private int y;
 
-  public DungeonMapperCommandLine(Phone phone) {
+  public DungeonMapperCommandLine() {
     this.mapper = new DungeonMapper("untitled");
-    this.phone = phone;
   }
 
   public void run() {

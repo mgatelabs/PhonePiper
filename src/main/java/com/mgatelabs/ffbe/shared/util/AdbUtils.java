@@ -1,4 +1,4 @@
-package com.mgatelabs.ffbe.shared;
+package com.mgatelabs.ffbe.shared.util;
 
 import com.mgatelabs.ffbe.shared.details.ActionType;
 import com.mgatelabs.ffbe.shared.details.ComponentDefinition;

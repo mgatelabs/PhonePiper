@@ -1,7 +1,5 @@
 package com.mgatelabs.ffbe.shared.image;
 
-import com.mgatelabs.ffbe.shared.ColorSample;
-
 import java.io.File;
 
 /**
@@ -16,7 +14,7 @@ public interface ImageWrapper {
 
     int getPixel(int x, int y);
 
-    void getPixel(int x, int y, ColorSample sample);
+    void getPixel(int x, int y, Sampler sample);
 
     boolean savePng(File file);
 }

@@ -1,23 +1,23 @@
-package com.mgatelabs.ffbe.shared;
+package com.mgatelabs.ffbe.shared.image;
 
 /**
  * Created by @mgatelabs (Michael Fuller) on 8/29/2017.
  */
-public class ColorSample {
+public class Sampler {
     private int r;
     private int g;
     private int b;
 
-    public ColorSample() {
+    public Sampler() {
     }
 
-    public ColorSample(int srgb) {
+    public Sampler(int srgb) {
         r = (srgb & 0xff0000) >> 16;
         g = (srgb & 0xff00) >> 8;
         b = srgb & 0xff;
     }
 
-    public ColorSample(int r, int g, int b) {
+    public Sampler(int r, int g, int b) {
         this.r = r;
         this.g = g;
         this.b = b;
@@ -31,6 +31,12 @@ public class ColorSample {
 
     public int getR() {
         return r;
+    }
+
+    public void add(int r, int g, int b) {
+        this.r += r;
+        this.g += g;
+        this.b += b;
     }
 
     public void setR(int r) {

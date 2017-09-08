@@ -1,7 +1,5 @@
 package com.mgatelabs.ffbe.shared.mapper;
 
-import com.mgatelabs.ffbe.shared.ColorSample;
-import com.mgatelabs.ffbe.shared.ComponentDetail;
 import com.mgatelabs.ffbe.shared.image.RawImageWrapper;
 
 /**
@@ -11,13 +9,13 @@ public class MiniMapParser {
 
     /**
      * Example the mini-map and build a small image form it
+     *
      * @param rawImage
-     * @param miniMapComponent
-     * @param miniMapCenterComponent
      * @return
      */
-    public static byte [][] parseMap(RawImageWrapper rawImage, ComponentDetail miniMapComponent, ComponentDetail miniMapCenterComponent) {
+    public static byte[][] parseMap(RawImageWrapper rawImage) {
 
+        /*
         int rows = miniMapComponent.getW() / miniMapCenterComponent.getW();
         int columns = miniMapComponent.getH() / miniMapCenterComponent.getH();
 
@@ -36,7 +34,7 @@ public class MiniMapParser {
 
         byte [][] result = new byte [rows][columns];
 
-        ColorSample sample = new ColorSample();
+        Sampler sample = new Sampler();
 
         final int sampleStart = -3;
         final int sampleEnd = 3;
@@ -72,6 +70,8 @@ public class MiniMapParser {
         }
 
         return result;
+        */
+        return null;
     }
 
 }

@@ -2,9 +2,13 @@ package com.mgatelabs.ffbe.runners;
 
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
-import com.mgatelabs.ffbe.shared.AdbUtils;
-import com.mgatelabs.ffbe.shared.ColorSample;
-import com.mgatelabs.ffbe.shared.ConsoleInput;
+import com.mgatelabs.ffbe.shared.helper.InfoTransfer;
+import com.mgatelabs.ffbe.shared.helper.MapTransfer;
+import com.mgatelabs.ffbe.shared.helper.PointTransfer;
+import com.mgatelabs.ffbe.shared.util.AdbUtils;
+import com.mgatelabs.ffbe.shared.image.Sampler;
+import com.mgatelabs.ffbe.shared.util.ConsoleInput;
+import com.mgatelabs.ffbe.shared.details.StateResult;
 import com.mgatelabs.ffbe.shared.details.*;
 import com.mgatelabs.ffbe.shared.helper.HelperUtils;
 import com.mgatelabs.ffbe.shared.image.*;
@@ -28,6 +32,7 @@ public class ScriptRunner {
     private Map<String, ComponentDefinition> components;
 
     private Map<String, StateTransfer> transferStateMap;
+    private MapTransfer transferMap;
 
     private Stack<String> stack;
 
@@ -73,6 +78,12 @@ public class ScriptRunner {
         transferStateMap = Maps.newHashMap();
         transferStateMap.putAll(generateStateInfo());
 
+        transferMap = new MapTransfer();
+        ComponentDefinition miniMapArea = components.get("dungeon-mini_map-area");
+        ComponentDefinition miniMapAreaCenter = components.get("dungeon-mini_map-center");
+        transferMap.setup(deviceDefinition.getWidth(), 12, 4, miniMapArea.getW(), miniMapArea.getH(), miniMapArea.getX(), miniMapArea.getY(), miniMapAreaCenter.getW(), miniMapAreaCenter.getH());
+
+
         validScreenIds = null;
 
         System.out.println("Use Phone Helper? (Y/N)");
@@ -92,6 +103,12 @@ public class ScriptRunner {
 
             InfoTransfer infoTransfer = new InfoTransfer();
             infoTransfer.setStates(transferStateMap);
+            infoTransfer.setMap(transferMap);
+
+            System.out.println("------------");
+            System.out.println("Helper: /setup/" + " : " + getDateString());
+            System.out.println("------------");
+            System.out.println();
 
             if (helperUtils.setup(infoTransfer)) {
                 System.out.println("Image Server Ready!");
@@ -381,7 +398,7 @@ public class ScriptRunner {
                     if (requiredPixel > energyBar.getW()) {
                         requiredPixel = energyBar.getW();
                     }
-                    ColorSample sample = new ColorSample();
+                    Sampler sample = new Sampler();
                     if (helperUtils != null) {
                         int [] pixels = helperUtils.pixel(RawImageWrapper.getOffsetFor(deviceDefinition.getWidth(), 12, energyBar.getX() + requiredPixel, energyBar.getY(), RawImageWrapper.ImageFormats.RGBA));
                         if (pixels != null) {

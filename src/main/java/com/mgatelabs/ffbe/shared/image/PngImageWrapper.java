@@ -1,7 +1,5 @@
 package com.mgatelabs.ffbe.shared.image;
 
-import com.mgatelabs.ffbe.shared.ColorSample;
-
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
 import java.io.File;
@@ -39,7 +37,7 @@ public class PngImageWrapper implements ImageWrapper {
     }
 
     @Override
-    public void getPixel(int x, int y, ColorSample sample) {
+    public void getPixel(int x, int y, Sampler sample) {
         int color = bufferedImage.getRGB(x, y);
         sample.setR((color & 0xFF0000) >>16);
         sample.setG((color & 0xFF00) >>8);

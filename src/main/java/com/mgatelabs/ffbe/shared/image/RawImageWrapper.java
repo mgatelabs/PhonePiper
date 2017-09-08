@@ -1,7 +1,5 @@
 package com.mgatelabs.ffbe.shared.image;
 
-import com.mgatelabs.ffbe.shared.ColorSample;
-
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
 import java.io.File;
@@ -147,7 +145,7 @@ public class RawImageWrapper implements ImageWrapper {
     }
 
     @Override
-    public void getPixel(int x, int y, ColorSample sample) {
+    public void getPixel(int x, int y, Sampler sample) {
         int startIndex = dataOffset + ((y * width) * format.getBpp()) + (x * format.getBpp());
         sample.setR(0xff & data[startIndex]);
         sample.setG(0xff & data[startIndex + 1]);

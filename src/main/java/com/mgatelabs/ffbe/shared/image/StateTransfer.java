@@ -1,5 +1,7 @@
 package com.mgatelabs.ffbe.shared.image;
 
+import com.mgatelabs.ffbe.shared.helper.PointTransfer;
+
 import java.util.List;
 
 /**

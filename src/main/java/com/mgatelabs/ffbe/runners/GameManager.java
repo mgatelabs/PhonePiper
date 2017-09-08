@@ -1,5 +1,7 @@
-package com.mgatelabs.ffbe.shared;
+package com.mgatelabs.ffbe.runners;
 
+import com.mgatelabs.ffbe.shared.util.AdbUtils;
+import com.mgatelabs.ffbe.shared.util.ConsoleInput;
 import com.mgatelabs.ffbe.shared.details.ActionType;
 import com.mgatelabs.ffbe.shared.details.*;
 import com.mgatelabs.ffbe.shared.image.ImageWrapper;

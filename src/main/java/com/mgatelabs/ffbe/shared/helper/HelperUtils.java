@@ -2,8 +2,6 @@ package com.mgatelabs.ffbe.shared.helper;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.common.collect.ImmutableSet;
-import com.mgatelabs.ffbe.shared.image.InfoTransfer;
-import com.mgatelabs.ffbe.shared.image.StateTransfer;
 import okhttp3.*;
 
 import java.io.ByteArrayOutputStream;

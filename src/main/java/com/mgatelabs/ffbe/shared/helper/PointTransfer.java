@@ -1,4 +1,4 @@
-package com.mgatelabs.ffbe.shared.image;
+package com.mgatelabs.ffbe.shared.helper;
 
 /**
  * Created by @mgatelabs (Michael Fuller) on 9/6/2017.

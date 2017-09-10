@@ -5,7 +5,7 @@ import java.util.Set;
 /**
  * Created by @mgatelabs (Michael Fuller) on 9/6/2017.
  */
-public class HelperStatus {
+public class DeviceStatus {
 
     public enum Status {
         OK,

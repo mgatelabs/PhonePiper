@@ -10,7 +10,7 @@ import com.mgatelabs.ffbe.shared.image.Sampler;
 import com.mgatelabs.ffbe.shared.util.ConsoleInput;
 import com.mgatelabs.ffbe.shared.details.StateResult;
 import com.mgatelabs.ffbe.shared.details.*;
-import com.mgatelabs.ffbe.shared.helper.HelperUtils;
+import com.mgatelabs.ffbe.shared.helper.DeviceHelper;
 import com.mgatelabs.ffbe.shared.image.*;
 
 import java.text.SimpleDateFormat;
@@ -40,7 +40,7 @@ public class ScriptRunner {
 
     private String phoneIp;
 
-    private HelperUtils helperUtils;
+    private DeviceHelper deviceHelper;
 
     private Set<String> validScreenIds;
 
@@ -99,7 +99,7 @@ public class ScriptRunner {
                 phoneIp = playerDetail.getIp();
             }
 
-            helperUtils = new HelperUtils(phoneIp);
+            deviceHelper = new DeviceHelper(phoneIp);
 
             InfoTransfer infoTransfer = new InfoTransfer();
             infoTransfer.setStates(transferStateMap);
@@ -110,7 +110,7 @@ public class ScriptRunner {
             System.out.println("------------");
             System.out.println();
 
-            if (helperUtils.setup(infoTransfer)) {
+            if (deviceHelper.setup(infoTransfer)) {
                 System.out.println("Image Server Ready!");
                 System.out.println("Continue? (Y/N)");
                 if (!ConsoleInput.yesNo()) {
@@ -120,7 +120,7 @@ public class ScriptRunner {
 
         } else {
             phoneIp = null;
-            helperUtils = null;
+            deviceHelper = null;
         }
     }
 
@@ -188,11 +188,11 @@ public class ScriptRunner {
 
         while (true) {
 
-            if (helperUtils != null && helperUtils.getFailures() > 20) {
-                helperUtils = null;
+            if (deviceHelper != null && deviceHelper.getFailures() > 20) {
+                deviceHelper = null;
             }
 
-            if (helperUtils != null) {
+            if (deviceHelper != null) {
                 long startTime = System.nanoTime();
                 AdbUtils.persistScreen();
                 long endTime = System.nanoTime();
@@ -237,14 +237,14 @@ public class ScriptRunner {
             while (keepRunning) {
                 keepRunning = false;
 
-                if (helperUtils != null) {
+                if (deviceHelper != null) {
 
                     System.out.println("------------");
                     System.out.println("Helper: /check/" + stateDetail.getId() + " : " + getDateString());
                     System.out.println("------------");
                     System.out.println();
 
-                    validScreenIds = helperUtils.check(stateDetail.getId());
+                    validScreenIds = deviceHelper.check(stateDetail.getId());
                 }
 
                 StateResult result = state(stateDetail, imageWrapper);
@@ -379,7 +379,7 @@ public class ScriptRunner {
             }
             break;
             case SCREEN: {
-                if (helperUtils != null) {
+                if (deviceHelper != null) {
                     result = validScreenIds.contains(conditionDefinition.getValue());
                 } else {
                     ScreenDefinition screenDefinition = screens.get(conditionDefinition.getValue());
@@ -399,8 +399,8 @@ public class ScriptRunner {
                         requiredPixel = energyBar.getW();
                     }
                     Sampler sample = new Sampler();
-                    if (helperUtils != null) {
-                        int [] pixels = helperUtils.pixel(RawImageWrapper.getOffsetFor(deviceDefinition.getWidth(), 12, energyBar.getX() + requiredPixel, energyBar.getY(), RawImageWrapper.ImageFormats.RGBA));
+                    if (deviceHelper != null) {
+                        int [] pixels = deviceHelper.pixel(RawImageWrapper.getOffsetFor(deviceDefinition.getWidth(), 12, energyBar.getX() + requiredPixel, energyBar.getY(), RawImageWrapper.ImageFormats.RGBA));
                         if (pixels != null) {
                             sample.setR(pixels[0]);
                             sample.setG(pixels[1]);

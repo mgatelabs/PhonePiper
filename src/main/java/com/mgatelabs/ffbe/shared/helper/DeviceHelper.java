@@ -11,7 +11,7 @@ import java.util.Set;
 /**
  * Created by @mgatelabs (Michael Fuller) on 9/7/2017.
  */
-public class HelperUtils {
+public class DeviceHelper {
 
     private String ipAddress;
     private ObjectMapper objectMapper;
@@ -19,7 +19,7 @@ public class HelperUtils {
 
     private int failures;
 
-    public HelperUtils(String ipAddress) {
+    public DeviceHelper(String ipAddress) {
         this.ipAddress = ipAddress;
         objectMapper = new ObjectMapper();
         client = new OkHttpClient();
@@ -43,14 +43,14 @@ public class HelperUtils {
 
         try (Response response = client.newCall(request).execute()) {
             if (!response.isSuccessful()) throw new IOException("Unexpected code " + response);
-            HelperStatus helperStatus = objectMapper.readValue(response.body().byteStream(), HelperStatus.class);
-            if (helperStatus.getStatus() == HelperStatus.Status.FAIL) {
-                System.out.println(helperStatus.getMsg());
+            DeviceStatus deviceStatus = objectMapper.readValue(response.body().byteStream(), DeviceStatus.class);
+            if (deviceStatus.getStatus() == DeviceStatus.Status.FAIL) {
+                System.out.println(deviceStatus.getMsg());
                 failures++;
                 return false;
             }
             failures = 0;
-            return helperStatus.getStates() != null;
+            return deviceStatus.getStates() != null;
         } catch (IOException ioEx) {
             ioEx.printStackTrace();
             failures++;
@@ -65,14 +65,14 @@ public class HelperUtils {
 
         try (Response response = client.newCall(request).execute()) {
             if (!response.isSuccessful()) throw new IOException("Unexpected code " + response);
-            HelperStatus helperStatus = objectMapper.readValue(response.body().byteStream(), HelperStatus.class);
-            if (helperStatus.getStatus() == HelperStatus.Status.FAIL) {
-                System.out.println(helperStatus.getMsg());
+            DeviceStatus deviceStatus = objectMapper.readValue(response.body().byteStream(), DeviceStatus.class);
+            if (deviceStatus.getStatus() == DeviceStatus.Status.FAIL) {
+                System.out.println(deviceStatus.getMsg());
                 failures++;
                 return ImmutableSet.of();
             }
             failures = 0;
-            return ImmutableSet.copyOf(helperStatus.getScreens());
+            return ImmutableSet.copyOf(deviceStatus.getScreens());
         } catch (IOException ioEx) {
             failures++;
             ioEx.printStackTrace();
@@ -86,14 +86,14 @@ public class HelperUtils {
                 .build();
         try (Response response = client.newCall(request).execute()) {
             if (!response.isSuccessful()) throw new IOException("Unexpected code " + response);
-            HelperStatus helperStatus = objectMapper.readValue(response.body().byteStream(), HelperStatus.class);
-            if (helperStatus.getStatus() == HelperStatus.Status.FAIL) {
-                System.out.println(helperStatus.getMsg());
+            DeviceStatus deviceStatus = objectMapper.readValue(response.body().byteStream(), DeviceStatus.class);
+            if (deviceStatus.getStatus() == DeviceStatus.Status.FAIL) {
+                System.out.println(deviceStatus.getMsg());
                 failures++;
                 return null;
             }
             failures = 0;
-            return helperStatus.getPixels();
+            return deviceStatus.getPixels();
         } catch (IOException ioEx) {
             ioEx.printStackTrace();
             failures++;

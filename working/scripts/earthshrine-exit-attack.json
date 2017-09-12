@@ -1,0 +1,440 @@
+{
+  "states": {
+    "main": {
+      "name": "Earth Shrine - Menu",
+      "statements": [
+        {
+          "condition": {
+            "is": "SCREEN",
+            "value": "es-mission-select",
+            "and": {
+              "is": "ENERGY",
+              "value": "4"
+            }
+          },
+          "actions": [
+            {
+              "type": "MSG",
+              "value": "LONG ACTION"
+            },
+            {
+              "type": "TAP",
+              "value": "menu-mission_list-item_1"
+            },
+            {
+              "type": "WAIT",
+              "value": "1000"
+            },{
+              "type": "TAP",
+              "value": "menu-goal_list-next"
+            },
+            {
+              "type": "WAIT",
+              "value": "2000"
+            },{
+              "type": "TAP",
+              "value": "menu-friend_select-item_0"
+            },{
+              "type": "WAIT",
+              "value": "2000"
+            },{
+              "type": "TAP",
+              "value": "menu-depart-depart"
+            }, {
+              "type": "REPEAT",
+              "value": ""
+            }
+          ]
+        },
+        {
+          "condition": {
+            "is": "SCREEN",
+            "value": "es-mission-select",
+            "and": {
+              "is": "ENERGY",
+              "value": "3"
+            }
+          },
+          "actions": [
+            {
+              "type": "MSG",
+              "value": "No energy"
+            },
+            {
+              "type": "TAP",
+              "value": "menu-level"
+            },
+            {
+              "type": "WAIT",
+              "value": "3000"
+            },
+            {
+              "type": "REPEAT",
+              "value": ""
+            }
+          ]
+        },
+        {
+          "condition": {
+            "is": "SCREEN",
+            "value": "menu-goal_list",
+            "and": {
+              "is": "SCREEN",
+              "value": "menu-goal_list-next"
+            }
+          },
+          "actions": [
+            {
+              "type": "TAP",
+              "value": "menu-goal_list-next"
+            },
+            {
+              "type": "WAIT",
+              "value": "1500"
+            },
+            {
+              "type": "REPEAT",
+              "value": ""
+            }
+          ]
+        },
+        {
+          "condition": {
+            "is": "SCREEN",
+            "value": "menu-friend_select"
+          },
+          "actions": [
+            {
+              "type": "TAP",
+              "value": "menu-friend_select-item_0"
+            },
+            {
+              "type": "WAIT",
+              "value": "1500"
+            },
+            {
+              "type": "REPEAT",
+              "value": ""
+            }
+          ]
+        },
+        {
+          "condition": {
+            "is": "SCREEN",
+            "value": "menu-depart"
+          },
+          "actions": [
+            {
+              "type": "TAP",
+              "value": "menu-depart-depart"
+            },
+            {
+              "type": "WAIT",
+              "value": "1500"
+            },
+            {
+              "type": "REPEAT",
+              "value": ""
+            }
+          ]
+        },
+        {
+          "condition": {
+            "is": "SCREEN",
+            "value": "game-battle"
+          },
+          "actions": [
+            {
+              "type": "SWAP",
+              "value": "game-battle"
+            }
+          ]
+        },
+        {
+          "condition": {
+            "is": "SCREEN",
+            "value": "menu-connection_error"
+          },
+          "actions": [
+            {
+              "type": "TAP",
+              "value": "menu-connection_error-ok"
+            },
+            {
+              "type": "WAIT",
+              "value": "1500"
+            },
+            {
+              "type": "REPEAT",
+              "value": ""
+            }
+          ]
+        }, {
+          "condition": {"is":"BOOLEAN", "value":"true"},
+          "actions": [
+            {
+              "type": "MSG",
+              "value": "No-Op"
+            }
+          ]
+        }
+      ]
+    },
+    "game-battle": {
+      "name": "Battle - Start",
+      "statements": [
+        {
+          "condition": {
+            "is": "SCREEN",
+            "value": "game-battle",
+            "and": {
+              "is": "SCREEN",
+              "value": "game-battle-auto_off"
+            }
+          },
+          "actions": [
+            {
+              "type": "TAP",
+              "value": "battle-unit_0"
+            },
+            {
+              "type": "TAP",
+              "value": "battle-unit_1"
+            },
+            {
+              "type": "TAP",
+              "value": "battle-unit_2"
+            },
+            {
+              "type": "WAIT",
+              "value": "1000"
+            },
+            {
+              "type": "REPEAT",
+              "value": ""
+            }
+          ]
+        },
+        {
+          "condition": {
+            "is": "SCREEN",
+            "value": "menu-connection_error"
+          },
+          "actions": [
+            {
+              "type": "TAP",
+              "value": "menu-connection_error-ok"
+            },
+            {
+              "type": "WAIT",
+              "value": "1500"
+            },
+            {
+              "type": "REPEAT",
+              "value": ""
+            }
+          ]
+        },
+        {
+          "condition": {
+            "is": "SCREEN",
+            "value": "menu-results-points"
+          },
+          "actions": [
+            {
+              "type": "SWAP",
+              "value": "menu-results"
+            }
+          ]
+        }
+      ]
+    },
+    "menu-results": {
+      "name": "Results",
+      "statements": [
+        {
+          "condition": {
+            "is": "SCREEN",
+            "value": "menu-results-points"
+          },
+          "actions": [
+            {
+              "type": "MSG",
+              "value": "LONG ACTION"
+            },
+            {
+              "type": "TAP",
+              "value": "menu-results-next"
+            },
+            {
+              "type": "WAIT",
+              "value": "250"
+            },
+            {
+              "type": "TAP",
+              "value": "screen-center"
+            },
+            {
+              "type": "WAIT",
+              "value": "250"
+            },{
+              "type": "TAP",
+              "value": "screen-center"
+            },
+            {
+              "type": "WAIT",
+              "value": "250"
+            },{
+              "type": "TAP",
+              "value": "screen-center"
+            },
+            {
+              "type": "WAIT",
+              "value": "1000"
+            },
+            {
+              "type": "TAP",
+              "value": "menu-results-next"
+            },
+            {
+              "type": "WAIT",
+              "value": "250"
+            },
+            {
+              "type": "REPEAT",
+              "value": ""
+            }
+          ]
+        },
+        {
+          "condition": {
+            "is": "SCREEN",
+            "value": "menu-results-units"
+          },
+          "actions": [
+            {
+              "type": "TAP",
+              "value": "menu-results-next"
+            },
+            {
+              "type": "WAIT",
+              "value": "500"
+            },
+            {
+              "type": "TAP",
+              "value": "menu-results-next"
+            },
+            {
+              "type": "WAIT",
+              "value": "500"
+            },
+            {
+              "type": "REPEAT",
+              "value": ""
+            }
+          ]
+        },
+        {
+          "condition": {
+            "is": "SCREEN",
+            "value": "menu-results-items"
+          },
+          "actions": [
+            {
+              "type": "TAP",
+              "value": "menu-results-next"
+            },
+            {
+              "type": "WAIT",
+              "value": "500"
+            },
+            {
+              "type": "REPEAT",
+              "value": ""
+            }
+          ]
+        },
+        {
+          "condition": {
+            "is": "SCREEN",
+            "value": "menu-connection_error"
+          },
+          "actions": [
+            {
+              "type": "TAP",
+              "value": "menu-connection_error-ok"
+            },
+            {
+              "type": "WAIT",
+              "value": "1500"
+            },
+            {
+              "type": "REPEAT",
+              "value": ""
+            }
+          ]
+        },
+        {
+          "condition": {
+            "is": "SCREEN",
+            "value": "menu-friend_request"
+          },
+          "actions": [
+            {
+              "type": "TAP",
+              "value": "menu-friend_request-no"
+            },
+            {
+              "type": "WAIT",
+              "value": "1500"
+            },
+            {
+              "type": "REPEAT",
+              "value": ""
+            }
+          ]
+        },
+        {
+          "condition": {
+            "is": "SCREEN",
+            "value": "menu-daily-notice"
+          },
+          "actions": [
+            {
+              "type": "TAP",
+              "value": "menu-daily-close"
+            },
+            {
+              "type": "WAIT",
+              "value": "1500"
+            },
+            {
+              "type": "REPEAT",
+              "value": ""
+            }
+          ]
+        },
+        {
+          "condition": {
+            "is": "SCREEN",
+            "value": "es-mission-select"
+          },
+          "actions": [
+            {
+              "type": "SWAP",
+              "value": "main"
+            }
+          ]
+        }, {
+          "condition": {"is":"BOOLEAN", "value":"true"},
+          "actions": [
+            {
+              "type": "MSG",
+              "value": "No-Op"
+            }
+          ]
+        }
+      ]
+    }
+  }
+}

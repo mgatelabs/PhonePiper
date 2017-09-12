@@ -22,13 +22,8 @@ public class AdbUtils {
     public static void component(ComponentDefinition componentDefinition, ActionType type) {
         switch (type) {
             case TAP: {
-
-                int x = componentDefinition.getX();
-                int y = componentDefinition.getY();
-
-                x += RANDOM.nextInt(componentDefinition.getW());
-                y += RANDOM.nextInt(componentDefinition.getH());
-
+                final int x = getStartX(componentDefinition, type);
+                final int y = getStartY(componentDefinition, type);
                 execWait("adb shell input tap " + x + " " + y);
             }
             break;
@@ -36,12 +31,88 @@ public class AdbUtils {
             case SWIPE_RIGHT:
             case SWIPE_LEFT:
             case SWIPE_UP: {
-
+                final int x1 = getStartX(componentDefinition, type);
+                final int y1 = getStartY(componentDefinition, type);
+                final int x2 = getEndX(componentDefinition, type);
+                final int y2 = getEndY(componentDefinition, type);
+                execWait("adb shell input swipe " + x1 + " " + y1 + " "  + x2 + " " + y2 + " 100");
             } break;
             default: {
                 System.out.println("Unhandled component command: " + type.name());
             } break;
         }
+    }
+
+    private static int getStartX(ComponentDefinition componentDefinition, ActionType type) {
+        int x = componentDefinition.getX();
+        switch (type) {
+            case SWIPE_LEFT: {
+                x += (componentDefinition.getW() - (componentDefinition.getW() / 8));
+            } break;
+            case SWIPE_RIGHT: {
+                x += (componentDefinition.getW() / 8);
+            } break;
+            case SWIPE_UP:
+            case SWIPE_DOWN: {
+                x += componentDefinition.getW() / 2;
+            } break;
+            default: {
+                x += RANDOM.nextInt(componentDefinition.getW());
+            } break;
+        }
+        return x;
+    }
+
+    private static int getEndX(ComponentDefinition componentDefinition, ActionType type) {
+        int x = componentDefinition.getX();
+        switch (type) {
+            case SWIPE_RIGHT: {
+                x += (componentDefinition.getW() - (componentDefinition.getW() / 8));
+            } break;
+            case SWIPE_LEFT: {
+                x += (componentDefinition.getW() / 8);
+            } break;
+            default: {
+                return getStartX(componentDefinition, type);
+            }
+        }
+        return x;
+    }
+
+    private static int getStartY(ComponentDefinition componentDefinition, ActionType type) {
+        int y = componentDefinition.getY();
+        switch (type) {
+            case SWIPE_UP: {
+                y += (componentDefinition.getH() - (componentDefinition.getH() / 8));
+            } break;
+            case SWIPE_DOWN: {
+                y += (componentDefinition.getH() / 8);
+            } break;
+            case SWIPE_LEFT:
+            case SWIPE_RIGHT: {
+                y += componentDefinition.getH() / 2;
+            } break;
+            default: {
+                y += RANDOM.nextInt(componentDefinition.getH());
+            } break;
+        }
+        return y;
+    }
+
+    private static int getEndY(ComponentDefinition componentDefinition, ActionType type) {
+        int y = componentDefinition.getY();
+        switch (type) {
+            case SWIPE_DOWN: {
+                y += (componentDefinition.getH() - (componentDefinition.getH() / 8));
+            } break;
+            case SWIPE_UP: {
+                y += (componentDefinition.getH() / 8);
+            } break;
+            default: {
+                return getStartY(componentDefinition, type);
+            }
+        }
+        return y;
     }
 
     public static void persistScreen() {

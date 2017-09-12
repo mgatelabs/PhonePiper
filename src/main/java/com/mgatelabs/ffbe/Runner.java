@@ -20,7 +20,7 @@ public class Runner {
     boolean showHelp = false;
 
     if (args.length >= 1) {
-      if ("manage".equalsIgnoreCase(args[0])) {
+      if ("manage".equalsIgnoreCase(args[0]) || "manager".equalsIgnoreCase(args[0])) {
         DeviceDefinition deviceDefinition = null;
         if (args.length == 2) {
           deviceDefinition = DeviceDefinition.read(args[1]);

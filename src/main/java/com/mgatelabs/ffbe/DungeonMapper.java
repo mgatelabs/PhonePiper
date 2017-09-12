@@ -20,7 +20,7 @@ public class DungeonMapper {
 
   public String name;
 
-  public List<MapTile> tiles;
+  //public List<MapTile> tiles;
 
   public DungeonMapper(String name) {
     x = 0;
@@ -34,7 +34,7 @@ public class DungeonMapper {
 
     this.name = name;
 
-    this.tiles = new ArrayList<>();
+    //this.tiles = new ArrayList<>();
   }
 
   public String getName() {
@@ -45,6 +45,7 @@ public class DungeonMapper {
     this.name = name;
   }
 
+  /*
   public void addTile(MapTile tile) {
 
     int strut = tile.getArea().length / 2;
@@ -91,4 +92,5 @@ public class DungeonMapper {
     }
 
   }
+  */
 }

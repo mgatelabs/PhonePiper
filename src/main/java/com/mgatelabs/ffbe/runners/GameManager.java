@@ -1,5 +1,6 @@
 package com.mgatelabs.ffbe.runners;
 
+import com.mgatelabs.ffbe.shared.util.AdbShell;
 import com.mgatelabs.ffbe.shared.util.AdbUtils;
 import com.mgatelabs.ffbe.shared.util.ConsoleInput;
 import com.mgatelabs.ffbe.shared.details.ActionType;
@@ -29,9 +30,13 @@ public class GameManager {
 
     Pattern pattern = Pattern.compile("^[a-zA-Z0-9-_]+$");
 
+    private AdbShell shell;
+
     public GameManager(DeviceDefinition deviceDefinition) {
         this.deviceDefinition = deviceDefinition;
         viewDefinition = ViewDefinition.read(deviceDefinition.getViewId());
+
+        shell = new AdbShell();
     }
 
     private void save() {
@@ -682,7 +687,7 @@ public class GameManager {
                 break;
                 case 4: {
                     System.out.println("Sending Tap");
-                    AdbUtils.component(componentDefinition, ActionType.TAP);
+                    AdbUtils.component(componentDefinition, ActionType.TAP, shell);
                 }
                 break;
                 case 7: {

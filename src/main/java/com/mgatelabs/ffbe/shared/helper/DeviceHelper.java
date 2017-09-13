@@ -64,7 +64,7 @@ public class DeviceHelper {
                 .build();
 
         try (Response response = client.newCall(request).execute()) {
-            if (!response.isSuccessful()) throw new IOException("Unexpected code " + response);
+            //if (!response.isSuccessful()) throw new IOException("Unexpected code " + response);
             DeviceStatus deviceStatus = objectMapper.readValue(response.body().byteStream(), DeviceStatus.class);
             if (deviceStatus.getStatus() == DeviceStatus.Status.FAIL) {
                 System.out.println(deviceStatus.getMsg());
@@ -85,7 +85,7 @@ public class DeviceHelper {
                 .url("http://"+ipAddress+":8080/pixel/" + offset).get()
                 .build();
         try (Response response = client.newCall(request).execute()) {
-            if (!response.isSuccessful()) throw new IOException("Unexpected code " + response);
+            //if (!response.isSuccessful()) throw new IOException("Unexpected code " + response);
             DeviceStatus deviceStatus = objectMapper.readValue(response.body().byteStream(), DeviceStatus.class);
             if (deviceStatus.getStatus() == DeviceStatus.Status.FAIL) {
                 System.out.println(deviceStatus.getMsg());

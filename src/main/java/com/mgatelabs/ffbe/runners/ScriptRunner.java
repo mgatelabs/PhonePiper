@@ -5,6 +5,7 @@ import com.google.common.collect.Maps;
 import com.mgatelabs.ffbe.shared.helper.InfoTransfer;
 import com.mgatelabs.ffbe.shared.helper.MapTransfer;
 import com.mgatelabs.ffbe.shared.helper.PointTransfer;
+import com.mgatelabs.ffbe.shared.util.AdbShell;
 import com.mgatelabs.ffbe.shared.util.AdbUtils;
 import com.mgatelabs.ffbe.shared.image.Sampler;
 import com.mgatelabs.ffbe.shared.util.ConsoleInput;
@@ -44,12 +45,16 @@ public class ScriptRunner {
 
     private Set<String> validScreenIds;
 
+    private AdbShell shell;
+
     public ScriptRunner(PlayerDetail playerDetail, ScriptDetail scriptDetail, DeviceDefinition deviceDefinition, ViewDefinition viewDefinition) {
         this.playerDetail = playerDetail;
         this.scriptDetail = scriptDetail;
         this.deviceDefinition = deviceDefinition;
         this.viewDefinition = viewDefinition;
         stack = new Stack<>();
+
+        shell = new AdbShell();
 
         screens = Maps.newHashMap();
         for (ScreenDefinition screenDefinition : viewDefinition.getScreens()) {
@@ -194,7 +199,7 @@ public class ScriptRunner {
 
             if (deviceHelper != null) {
                 long startTime = System.nanoTime();
-                AdbUtils.persistScreen();
+                AdbUtils.persistScreen(shell);
                 long endTime = System.nanoTime();
 
                 long dif = endTime - startTime;
@@ -320,14 +325,17 @@ public class ScriptRunner {
                             System.out.println();
                         }
                         break;
-                        case TAP: {
+                        case TAP:
+                        case SWIPE_DOWN:
+                        case SWIPE_UP:
+                        case SWIPE_LEFT:
+                        case SWIPE_RIGHT: {
                             ComponentDefinition componentDefinition = components.get(actionDefinition.getValue());
                             if (componentDefinition == null) {
                                 throw new RuntimeException("Cannot find component with id: " + actionDefinition.getValue());
                             }
-                            AdbUtils.component(componentDefinition, ActionType.TAP);
-                        }
-                        break;
+                            AdbUtils.component(componentDefinition, actionDefinition.getType(), shell);
+                        } break;
                         case WAIT: {
                             long time = Long.parseLong(actionDefinition.getValue());
                             if (time > 0) {

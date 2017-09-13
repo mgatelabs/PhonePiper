@@ -19,12 +19,12 @@ public class AdbUtils {
 
     private static final SecureRandom RANDOM = new SecureRandom();
 
-    public static void component(ComponentDefinition componentDefinition, ActionType type) {
+    public static void component(ComponentDefinition componentDefinition, ActionType type, AdbShell shell) {
         switch (type) {
             case TAP: {
                 final int x = getStartX(componentDefinition, type);
                 final int y = getStartY(componentDefinition, type);
-                execWait("adb shell input tap " + x + " " + y);
+                shell.exec("input tap " + x + " " + y);
             }
             break;
             case SWIPE_DOWN:
@@ -35,7 +35,7 @@ public class AdbUtils {
                 final int y1 = getStartY(componentDefinition, type);
                 final int x2 = getEndX(componentDefinition, type);
                 final int y2 = getEndY(componentDefinition, type);
-                execWait("adb shell input swipe " + x1 + " " + y1 + " "  + x2 + " " + y2 + " 100");
+                shell.exec("input swipe " + x1 + " " + y1 + " "  + x2 + " " + y2 + " 100");
             } break;
             default: {
                 System.out.println("Unhandled component command: " + type.name());
@@ -115,8 +115,8 @@ public class AdbUtils {
         return y;
     }
 
-    public static void persistScreen() {
-        execWait("adb exec-out screencap /mnt/sdcard/framebuffer.raw");
+    public static void persistScreen(AdbShell shell) {
+        shell.exec("screencap /mnt/sdcard/framebuffer.raw");
     }
 
     public static ImageWrapper getScreen() {

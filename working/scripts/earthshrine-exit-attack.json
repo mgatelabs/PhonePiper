@@ -15,7 +15,7 @@
           "actions": [
             {
               "type": "MSG",
-              "value": "LONG ACTION"
+              "value": "Starting ACTION"
             },
             {
               "type": "TAP",
@@ -23,24 +23,9 @@
             },
             {
               "type": "WAIT",
-              "value": "1000"
-            },{
-              "type": "TAP",
-              "value": "menu-goal_list-next"
+              "value": "3000"
             },
             {
-              "type": "WAIT",
-              "value": "2000"
-            },{
-              "type": "TAP",
-              "value": "menu-friend_select-item_0"
-            },{
-              "type": "WAIT",
-              "value": "2000"
-            },{
-              "type": "TAP",
-              "value": "menu-depart-depart"
-            }, {
               "type": "REPEAT",
               "value": ""
             }
@@ -200,10 +185,6 @@
             {
               "type": "TAP",
               "value": "battle-unit_1"
-            },
-            {
-              "type": "TAP",
-              "value": "battle-unit_2"
             },
             {
               "type": "WAIT",

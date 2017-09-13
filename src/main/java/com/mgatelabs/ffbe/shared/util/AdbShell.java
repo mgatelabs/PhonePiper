@@ -1,8 +1,12 @@
 package com.mgatelabs.ffbe.shared.util;
 
+import com.google.common.base.Joiner;
+import com.google.common.collect.Lists;
+
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.util.List;
 import java.util.logging.Logger;
 
 /**
@@ -27,7 +31,11 @@ public class AdbShell {
 
     private boolean ready;
 
+    private List<String> batch;
+
     public AdbShell() {
+        batch = Lists.newArrayList();
+
         builder = new ProcessBuilder("adb", "shell");
         try {
             adb = builder.start();
@@ -47,6 +55,18 @@ public class AdbShell {
 
     public boolean isReady() {
         return ready;
+    }
+
+    public void batch(String adbCommand) {
+        batch.add(adbCommand);
+    }
+
+    public synchronized void exec() {
+        if (batch.size() > 0) {
+            String cmd = Joiner.on('\n').join(batch);
+            batch.clear();
+            exec(cmd);
+        }
     }
 
     public synchronized void exec(String adbCommand) {

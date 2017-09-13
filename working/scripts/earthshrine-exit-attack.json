@@ -179,12 +179,20 @@
           },
           "actions": [
             {
+              "type": "BATCH",
+              "value": "START"
+            },
+            {
               "type": "TAP",
               "value": "battle-unit_0"
             },
             {
               "type": "TAP",
               "value": "battle-unit_1"
+            },
+            {
+              "type": "BATCH",
+              "value": "END"
             },
             {
               "type": "WAIT",
@@ -240,46 +248,8 @@
           },
           "actions": [
             {
-              "type": "MSG",
-              "value": "LONG ACTION"
-            },
-            {
               "type": "TAP",
               "value": "menu-results-next"
-            },
-            {
-              "type": "WAIT",
-              "value": "250"
-            },
-            {
-              "type": "TAP",
-              "value": "screen-center"
-            },
-            {
-              "type": "WAIT",
-              "value": "250"
-            },{
-              "type": "TAP",
-              "value": "screen-center"
-            },
-            {
-              "type": "WAIT",
-              "value": "250"
-            },{
-              "type": "TAP",
-              "value": "screen-center"
-            },
-            {
-              "type": "WAIT",
-              "value": "1000"
-            },
-            {
-              "type": "TAP",
-              "value": "menu-results-next"
-            },
-            {
-              "type": "WAIT",
-              "value": "250"
             },
             {
               "type": "REPEAT",
@@ -293,14 +263,6 @@
             "value": "menu-results-units"
           },
           "actions": [
-            {
-              "type": "TAP",
-              "value": "menu-results-next"
-            },
-            {
-              "type": "WAIT",
-              "value": "500"
-            },
             {
               "type": "TAP",
               "value": "menu-results-next"

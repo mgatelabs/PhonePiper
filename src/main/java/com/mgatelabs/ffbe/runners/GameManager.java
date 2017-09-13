@@ -687,7 +687,7 @@ public class GameManager {
                 break;
                 case 4: {
                     System.out.println("Sending Tap");
-                    AdbUtils.component(componentDefinition, ActionType.TAP, shell);
+                    AdbUtils.component(componentDefinition, ActionType.TAP, shell, false);
                 }
                 break;
                 case 7: {

@@ -19,12 +19,13 @@ public class AdbUtils {
 
     private static final SecureRandom RANDOM = new SecureRandom();
 
-    public static void component(ComponentDefinition componentDefinition, ActionType type, AdbShell shell) {
+    public static void component(ComponentDefinition componentDefinition, ActionType type, AdbShell shell, boolean batch) {
+        final String cmd;
         switch (type) {
             case TAP: {
                 final int x = getStartX(componentDefinition, type);
                 final int y = getStartY(componentDefinition, type);
-                shell.exec("input tap " + x + " " + y);
+                cmd = ("input tap " + x + " " + y);
             }
             break;
             case SWIPE_DOWN:
@@ -35,11 +36,16 @@ public class AdbUtils {
                 final int y1 = getStartY(componentDefinition, type);
                 final int x2 = getEndX(componentDefinition, type);
                 final int y2 = getEndY(componentDefinition, type);
-                shell.exec("input swipe " + x1 + " " + y1 + " "  + x2 + " " + y2 + " 100");
+                cmd = ("input swipe " + x1 + " " + y1 + " "  + x2 + " " + y2 + " 100");
             } break;
             default: {
                 System.out.println("Unhandled component command: " + type.name());
-            } break;
+            } return;
+        }
+        if (batch) {
+            shell.batch(cmd);
+        } else {
+            shell.exec(cmd);
         }
     }
 

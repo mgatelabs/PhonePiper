@@ -5,6 +5,7 @@ package com.mgatelabs.ffbe.shared.details;
  */
 public enum ActionType {
     TAP, // Screen Tap
+    BATCH, // Screen Tap
     SWIPE_UP, // Swipe
     SWIPE_RIGHT, // Swipe
     SWIPE_DOWN, // Swipe

@@ -314,6 +314,8 @@ public class ScriptRunner {
         System.out.println("------------");
         System.out.println();
 
+        boolean batchCmds = false;
+
         for (StatementDefinition statementDefinition : stateDetail.getStatements()) {
             if (check(statementDefinition.getCondition(), imageWrapper)) {
                 for (ActionDefinition actionDefinition : statementDefinition.getActions()) {
@@ -325,6 +327,14 @@ public class ScriptRunner {
                             System.out.println();
                         }
                         break;
+                        case BATCH: {
+                            if ("START".equalsIgnoreCase(actionDefinition.getValue())) {
+                                batchCmds = true;
+                            } else if (batchCmds) {
+                                batchCmds = false;
+                                shell.exec();
+                            }
+                        } break;
                         case TAP:
                         case SWIPE_DOWN:
                         case SWIPE_UP:
@@ -334,7 +344,7 @@ public class ScriptRunner {
                             if (componentDefinition == null) {
                                 throw new RuntimeException("Cannot find component with id: " + actionDefinition.getValue());
                             }
-                            AdbUtils.component(componentDefinition, actionDefinition.getType(), shell);
+                            AdbUtils.component(componentDefinition, actionDefinition.getType(), shell, batchCmds);
                         } break;
                         case WAIT: {
                             long time = Long.parseLong(actionDefinition.getValue());

@@ -81,7 +81,11 @@
           "actions": [
             {
               "type": "MSG",
-              "value": "Unit 0 - Wait"
+              "value": "Unit Wait"
+            },
+            {
+              "type": "BATCH",
+              "value": "START"
             },
             {
               "type": "SWIPE_DOWN",
@@ -90,21 +94,6 @@
             {
               "type": "TAP",
               "value": "battle-unit_0"
-            }
-          ]
-        },{
-          "condition": {
-            "is": "SCREEN",
-            "value": "game-battle-repeat",
-            "and": {
-              "is": "SCREEN",
-              "value": "battle-unit-1_ready"
-            }
-          },
-          "actions": [
-            {
-              "type": "MSG",
-              "value": "Unit 1 - Wait"
             },
             {
               "type": "SWIPE_DOWN",
@@ -113,6 +102,10 @@
             {
               "type": "TAP",
               "value": "battle-unit_1"
+            },
+            {
+              "type": "BATCH",
+              "value": "END"
             }
           ]
         },{
@@ -121,10 +114,6 @@
             "value": "true"
           },
           "actions": [
-            {
-              "type": "WAIT",
-              "value": "2000"
-            },
             {
               "type": "REPEAT",
               "value": ""
@@ -148,6 +137,10 @@
               "value": "Unit 0 - LB"
             },
             {
+              "type": "BATCH",
+              "value": "START"
+            },
+            {
               "type": "SWIPE_RIGHT",
               "value": "battle-unit_0"
             },
@@ -158,21 +151,6 @@
             {
               "type": "TAP",
               "value": "battle-unit_0"
-            }
-          ]
-        },{
-          "condition": {
-            "is": "SCREEN",
-            "value": "game-battle-repeat",
-            "and": {
-              "is": "SCREEN",
-              "value": "battle-unit-1_ready"
-            }
-          },
-          "actions": [
-            {
-              "type": "MSG",
-              "value": "Unit 1 - Wait"
             },
             {
               "type": "SWIPE_DOWN",
@@ -181,6 +159,10 @@
             {
               "type": "TAP",
               "value": "battle-unit_1"
+            },
+            {
+              "type": "BATCH",
+              "value": "END"
             }
           ]
         },{
@@ -195,7 +177,7 @@
             },
             {
               "type": "WAIT",
-              "value": "4000"
+              "value": "2000"
             },
             {
               "type": "MOVE",
@@ -220,6 +202,10 @@
               "value": "Unit 0 - Esper"
             },
             {
+              "type": "BATCH",
+              "value": "START"
+            },
+            {
               "type": "SWIPE_RIGHT",
               "value": "battle-unit_0"
             },
@@ -230,21 +216,6 @@
             {
               "type": "TAP",
               "value": "battle-unit_0"
-            }
-          ]
-        },{
-          "condition": {
-            "is": "SCREEN",
-            "value": "game-battle-repeat",
-            "and": {
-              "is": "SCREEN",
-              "value": "battle-unit-1_ready"
-            }
-          },
-          "actions": [
-            {
-              "type": "MSG",
-              "value": "Unit 1 - Wait"
             },
             {
               "type": "SWIPE_DOWN",
@@ -253,6 +224,10 @@
             {
               "type": "TAP",
               "value": "battle-unit_1"
+            },
+            {
+              "type": "BATCH",
+              "value": "END"
             }
           ]
         },{
@@ -267,7 +242,7 @@
             },
             {
               "type": "WAIT",
-              "value": "4000"
+              "value": "2000"
             },
             {
               "type": "MOVE",

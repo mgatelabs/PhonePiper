@@ -667,7 +667,9 @@ public class GameManager {
             System.out.println("2: Update Image");
             System.out.println("3: Change Name");
             System.out.println("4: Tap");
-            System.out.println("7: Delete Screen");
+            System.out.println("5: Swipe Right");
+            System.out.println("6: Swipe Down");
+            System.out.println("666: Delete Screen");
 
             int command = ConsoleInput.getInt();
             if (command <= 0) return;
@@ -690,7 +692,19 @@ public class GameManager {
                     AdbUtils.component(componentDefinition, ActionType.TAP, shell, false);
                 }
                 break;
-                case 7: {
+
+                case 5: {
+                    System.out.println("Sending Swipe Right");
+                    AdbUtils.component(componentDefinition, ActionType.SWIPE_RIGHT, shell, false);
+                }
+                break;
+                case 6: {
+                    System.out.println("Sending Down");
+                    AdbUtils.component(componentDefinition, ActionType.SWIPE_DOWN, shell, false);
+                }
+                break;
+
+                case 666: {
                     System.out.println("Are you sure? (Y/N)");
                     if (ConsoleInput.yesNo()) {
                         // Delete

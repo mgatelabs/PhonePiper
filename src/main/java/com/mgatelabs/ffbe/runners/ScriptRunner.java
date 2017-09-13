@@ -275,6 +275,7 @@ public class ScriptRunner {
                         if (stateDetail == null) {
                             throw new RuntimeException("Cannot find state with id: " + result.getValue());
                         }
+                        keepRunning = false;
                     }
                     break;
                     case PUSH: {
@@ -362,10 +363,10 @@ public class ScriptRunner {
                             return StateResult.push(actionDefinition.getValue());
                         }
                         case SWAP: {
-                            return StateResult.move(actionDefinition.getValue());
+                            return StateResult.swap(actionDefinition.getValue());
                         }
                         case MOVE: {
-                            return StateResult.swap(actionDefinition.getValue());
+                            return StateResult.move(actionDefinition.getValue());
                         }
                         case REPEAT: {
                             return StateResult.REPEAT;

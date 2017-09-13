@@ -1,0 +1,282 @@
+{
+  "states": {
+    "main": {
+      "name": "Waiting",
+      "statements": [
+
+        {
+          "condition": {
+            "is": "SCREEN",
+            "value": "game-battle-repeat",
+            "and": {
+              "is": "SCREEN",
+              "value": "battle-unit-0_ready",
+              "and": {
+                "is": "SCREEN",
+                "value": "battle-unit-1_ready",
+                "and": {
+                  "is": "NOT",
+                  "value": "",
+                  "and": {
+                    "is":"SCREEN",
+                    "value":"battle-esper-notfull"
+                  }
+                }
+              }
+            }
+          },
+          "actions": [
+            {
+              "type": "MSG",
+              "value": "Switch to Esper"
+            },
+            {
+              "type": "SWAP",
+              "value": "esper"
+            }
+          ]
+        },
+
+        {
+          "condition": {
+            "is": "SCREEN",
+            "value": "game-battle-repeat",
+            "and": {
+              "is": "SCREEN",
+              "value": "battle-unit-0_ready",
+              "and": {
+                "is": "SCREEN",
+                "value": "battle-unit-1_ready",
+                "and": {
+                  "is": "NOT",
+                  "value": "",
+                  "and": {
+                    "is":"SCREEN",
+                    "value":"battle-unit-0_notfull"
+                  }
+                }
+              }
+            }
+          },
+          "actions": [
+            {
+              "type": "MSG",
+              "value": "Switch to LB"
+            },
+            {
+              "type": "SWAP",
+              "value": "lb"
+            }
+          ]
+        },
+        {
+          "condition": {
+            "is": "SCREEN",
+            "value": "game-battle-repeat",
+            "and": {
+              "is": "SCREEN",
+              "value": "battle-unit-0_ready"
+            }
+          },
+          "actions": [
+            {
+              "type": "MSG",
+              "value": "Unit 0 - Wait"
+            },
+            {
+              "type": "SWIPE_DOWN",
+              "value": "battle-unit_0-swipe_down"
+            },
+            {
+              "type": "TAP",
+              "value": "battle-unit_0"
+            }
+          ]
+        },{
+          "condition": {
+            "is": "SCREEN",
+            "value": "game-battle-repeat",
+            "and": {
+              "is": "SCREEN",
+              "value": "battle-unit-1_ready"
+            }
+          },
+          "actions": [
+            {
+              "type": "MSG",
+              "value": "Unit 1 - Wait"
+            },
+            {
+              "type": "SWIPE_DOWN",
+              "value": "battle-unit_1-swipe_down"
+            },
+            {
+              "type": "TAP",
+              "value": "battle-unit_1"
+            }
+          ]
+        },{
+          "condition": {
+            "is": "BOOLEAN",
+            "value": "true"
+          },
+          "actions": [
+            {
+              "type": "WAIT",
+              "value": "2000"
+            },
+            {
+              "type": "REPEAT",
+              "value": ""
+            }
+          ]
+        }
+      ]
+    },
+
+    "lb": {
+      "name": "Limit Burst Release",
+      "statements": [
+        {
+          "condition": {
+            "is": "BOOLEAN",
+            "value": "true"
+          },
+          "actions": [
+            {
+              "type": "MSG",
+              "value": "Unit 0 - LB"
+            },
+            {
+              "type": "SWIPE_RIGHT",
+              "value": "battle-unit_0"
+            },
+            {
+              "type": "TAP",
+              "value": "battle-unit_0"
+            },
+            {
+              "type": "TAP",
+              "value": "battle-unit_0"
+            }
+          ]
+        },{
+          "condition": {
+            "is": "SCREEN",
+            "value": "game-battle-repeat",
+            "and": {
+              "is": "SCREEN",
+              "value": "battle-unit-1_ready"
+            }
+          },
+          "actions": [
+            {
+              "type": "MSG",
+              "value": "Unit 1 - Wait"
+            },
+            {
+              "type": "SWIPE_DOWN",
+              "value": "battle-unit_1-swipe_down"
+            },
+            {
+              "type": "TAP",
+              "value": "battle-unit_1"
+            }
+          ]
+        },{
+          "condition": {
+            "is": "BOOLEAN",
+            "value": "true"
+          },
+          "actions": [
+            {
+              "type": "MSG",
+              "value": "Move to Main"
+            },
+            {
+              "type": "WAIT",
+              "value": "4000"
+            },
+            {
+              "type": "MOVE",
+              "value": "main"
+            }
+          ]
+        }
+      ]
+    },
+
+    "esper": {
+      "name": "Esper Release",
+      "statements": [
+        {
+          "condition": {
+            "is": "BOOLEAN",
+            "value": "true"
+          },
+          "actions": [
+            {
+              "type": "MSG",
+              "value": "Unit 0 - Esper"
+            },
+            {
+              "type": "SWIPE_RIGHT",
+              "value": "battle-unit_0"
+            },
+            {
+              "type": "TAP",
+              "value": "battle-unit_3"
+            },
+            {
+              "type": "TAP",
+              "value": "battle-unit_0"
+            }
+          ]
+        },{
+          "condition": {
+            "is": "SCREEN",
+            "value": "game-battle-repeat",
+            "and": {
+              "is": "SCREEN",
+              "value": "battle-unit-1_ready"
+            }
+          },
+          "actions": [
+            {
+              "type": "MSG",
+              "value": "Unit 1 - Wait"
+            },
+            {
+              "type": "SWIPE_DOWN",
+              "value": "battle-unit_1-swipe_down"
+            },
+            {
+              "type": "TAP",
+              "value": "battle-unit_1"
+            }
+          ]
+        },{
+          "condition": {
+            "is": "BOOLEAN",
+            "value": "true"
+          },
+          "actions": [
+            {
+              "type": "MSG",
+              "value": "Move to Main"
+            },
+            {
+              "type": "WAIT",
+              "value": "4000"
+            },
+            {
+              "type": "MOVE",
+              "value": "main"
+            }
+          ]
+        }
+      ]
+    }
+
+  }
+}

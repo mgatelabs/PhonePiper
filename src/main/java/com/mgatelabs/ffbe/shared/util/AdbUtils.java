@@ -36,7 +36,13 @@ public class AdbUtils {
                 final int y1 = getStartY(componentDefinition, type);
                 final int x2 = getEndX(componentDefinition, type);
                 final int y2 = getEndY(componentDefinition, type);
-                cmd = ("input swipe " + x1 + " " + y1 + " "  + x2 + " " + y2 + " 100");
+                final int time;
+                if (type == ActionType.SWIPE_DOWN || type == ActionType.SWIPE_UP) {
+                    time = 200;
+                } else {
+                    time = 100;
+                }
+                cmd = ("input swipe " + x1 + " " + y1 + " "  + x2 + " " + y2 + " " + time);
             } break;
             default: {
                 System.out.println("Unhandled component command: " + type.name());
@@ -73,10 +79,9 @@ public class AdbUtils {
         int x = componentDefinition.getX();
         switch (type) {
             case SWIPE_RIGHT: {
-                x += (componentDefinition.getW() - (componentDefinition.getW() / 8));
+                x += componentDefinition.getW();
             } break;
             case SWIPE_LEFT: {
-                x += (componentDefinition.getW() / 8);
             } break;
             default: {
                 return getStartX(componentDefinition, type);
@@ -109,10 +114,10 @@ public class AdbUtils {
         int y = componentDefinition.getY();
         switch (type) {
             case SWIPE_DOWN: {
-                y += (componentDefinition.getH() - (componentDefinition.getH() / 8));
+                y += (componentDefinition.getH());
             } break;
             case SWIPE_UP: {
-                y += (componentDefinition.getH() / 8);
+
             } break;
             default: {
                 return getStartY(componentDefinition, type);

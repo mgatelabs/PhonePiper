@@ -35,6 +35,19 @@ public class MapDefinition {
         this.floors = floors;
     }
 
+    public FloorDefinition addFloor(String floorId) {
+        FloorDefinition floorDefinition = floors.get(floorId);
+        if (floorDefinition == null) {
+            floorDefinition = new FloorDefinition(floorId, 512, 512);
+            floors.put(floorId, floorDefinition);
+        }
+        return floorDefinition;
+    }
+
+    public FloorDefinition getFloor(String floorId) {
+        return floors.get(floorId);
+    }
+
     public Map<String, TileEvent> getEvents() {
         return events;
     }

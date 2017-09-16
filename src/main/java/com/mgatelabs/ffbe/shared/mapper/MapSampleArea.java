@@ -1,6 +1,8 @@
 package com.mgatelabs.ffbe.shared.mapper;
 
 /**
+ * Used to bring in
+ *
  * Created by @mgatelabs (Michael Fuller) on 9/10/2017.
  */
 public class MapSampleArea {

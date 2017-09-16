@@ -1,5 +1,7 @@
 package com.mgatelabs.ffbe.ui;
 
+import com.mgatelabs.ffbe.shared.mapper.MapDefinition;
+
 import javax.swing.*;
 import java.awt.*;
 
@@ -11,6 +13,10 @@ public class MainFrame extends JFrame {
     JDesktopPane desktopPane;
     PlayerPanel playerPanel;
 
+    MapPanel mapPanel;
+
+
+
     public MainFrame() throws HeadlessException {
         super("FFBExecute 0.0.1");
         setMinimumSize(new Dimension(800, 600));
@@ -20,8 +26,15 @@ public class MainFrame extends JFrame {
         desktopPane = new JDesktopPane();
 
         playerPanel = new PlayerPanel();
-
         desktopPane.add(playerPanel);
+
+        mapPanel = new MapPanel();
+        desktopPane.add(mapPanel);
+        mapPanel.setLocation(playerPanel.getWidth(), 0);
+
+        MapDefinition mapDefinition = new MapDefinition();
+        mapDefinition.addFloor("start");
+        mapPanel.setMap(mapDefinition);
 
         this.pack();
 

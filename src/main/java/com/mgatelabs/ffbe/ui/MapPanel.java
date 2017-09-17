@@ -1,6 +1,5 @@
 package com.mgatelabs.ffbe.ui;
 
-import com.mgatelabs.ffbe.shared.mapper.FloorDefinition;
 import com.mgatelabs.ffbe.shared.mapper.MapDefinition;
 
 import javax.swing.*;

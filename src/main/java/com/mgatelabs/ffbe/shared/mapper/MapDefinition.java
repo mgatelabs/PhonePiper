@@ -38,7 +38,7 @@ public class MapDefinition {
     public FloorDefinition addFloor(String floorId) {
         FloorDefinition floorDefinition = floors.get(floorId);
         if (floorDefinition == null) {
-            floorDefinition = new FloorDefinition(floorId, 512, 512);
+            floorDefinition = new FloorDefinition(floorId, 256, 256);
             floors.put(floorId, floorDefinition);
         }
         return floorDefinition;

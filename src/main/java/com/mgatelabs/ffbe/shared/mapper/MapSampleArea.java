@@ -37,6 +37,27 @@ public class MapSampleArea {
         }
     }
 
+    public TileDefinition getTile(int x, int y) {
+        if (x >= 0 && x < getWidth() && y >= 0 && y < getHeight()) {
+            return area[y][x];
+        }
+        return null;
+    }
+
+    public int getWidth() {
+        if (area != null && area.length > 0) {
+            return area[0].length;
+        }
+        return 0;
+    }
+
+    public int getHeight() {
+        if (area != null) {
+            return area.length;
+        }
+        return 0;
+    }
+
     public TileDefinition[][] getArea() {
         return area;
     }

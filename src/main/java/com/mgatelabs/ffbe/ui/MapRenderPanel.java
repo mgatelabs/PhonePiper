@@ -275,10 +275,15 @@ public class MapRenderPanel extends JPanel {
             int possibleWidth = getWidth() / cellSize;
             int possibleHeight = (getHeight() - 24) / cellSize;
             if (possibleWidth > 1 && possibleHeight > 1) {
-
+                if (mapSampleArea != null) {
+                    sampleX = viewX + ((possibleWidth - mapSampleArea.getWidth()) / 2);
+                    sampleY = viewY + ((possibleHeight - mapSampleArea.getHeight()) / 2);
+                } else {
+                    sampleX = 0;
+                    sampleY = 0;
+                }
                 final int maxW = floorDefinition.getWidth();
                 final int maxH = floorDefinition.getHeight();
-
                 for (int y = 0; y < possibleHeight; y++)
                     for (int x = 0; x < possibleWidth; x++) {
                         final int startX = x * cellSize;
@@ -328,8 +333,6 @@ public class MapRenderPanel extends JPanel {
     public int yMulti = 1;
 
     public void keyPressed(int x, int y) {
-
-
         if (upState || downState || leftState || rightState) {
             if (x != 0 || y != 0) {
                 shift(x, y);

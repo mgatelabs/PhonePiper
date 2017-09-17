@@ -191,6 +191,10 @@
               "value": "battle-unit_1"
             },
             {
+              "type": "TAP",
+              "value": "battle-unit_2"
+            },
+            {
               "type": "BATCH",
               "value": "END"
             },

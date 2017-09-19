@@ -10,6 +10,7 @@ import com.mgatelabs.ffbe.shared.util.AdbShell;
 import com.mgatelabs.ffbe.shared.util.AdbUtils;
 import com.mgatelabs.ffbe.shared.util.ConsoleInput;
 import com.mgatelabs.ffbe.ui.MainFrame;
+import com.mgatelabs.ffbe.ui.frame.StartupFrame;
 
 /**
  * Created by @mgatelabs (Michael Fuller) on 8/27/2017.
@@ -36,7 +37,10 @@ public class Runner {
 
                 manager.manage();
             } else if ("gui".equalsIgnoreCase(args[0])) {
-                new MainFrame().setVisible(true);
+
+                new StartupFrame();
+
+                //new MainFrame().setVisible(true);
             } else if ("frame".equalsIgnoreCase(args[0])) {
 
                 long startTime = System.nanoTime();

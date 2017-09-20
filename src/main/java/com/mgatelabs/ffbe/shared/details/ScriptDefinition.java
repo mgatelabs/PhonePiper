@@ -11,24 +11,24 @@ import java.util.Map;
 /**
  * Created by @mgatelabs (Michael Fuller) on 9/4/2017.
  */
-public class ScriptDetail {
+public class ScriptDefinition {
 
-    Map<String, StateDetail> states;
+    Map<String, StateDefinition> states;
 
-    public Map<String, StateDetail> getStates() {
+    public Map<String, StateDefinition> getStates() {
         return states;
     }
 
-    public void setStates(Map<String, StateDetail> states) {
+    public void setStates(Map<String, StateDefinition> states) {
         this.states = states;
     }
 
-    public static ScriptDetail read(String deviceName) {
-        File deviceFile = new File("scripts/" + deviceName + ".json");
+    public static ScriptDefinition read(String scriptName) {
+        File deviceFile = new File("scripts/" + scriptName + ".json");
         if (deviceFile.exists()) {
             ObjectMapper objectMapper = new ObjectMapper();
             try {
-                return objectMapper.readValue(deviceFile, ScriptDetail.class);
+                return objectMapper.readValue(deviceFile, ScriptDefinition.class);
             } catch (JsonParseException e) {
                 e.printStackTrace();
             } catch (JsonMappingException e) {

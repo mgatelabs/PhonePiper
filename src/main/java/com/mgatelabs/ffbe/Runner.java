@@ -4,11 +4,12 @@ import com.mgatelabs.ffbe.runners.GameManager;
 import com.mgatelabs.ffbe.runners.ScriptRunner;
 import com.mgatelabs.ffbe.shared.details.DeviceDefinition;
 import com.mgatelabs.ffbe.shared.details.PlayerDetail;
-import com.mgatelabs.ffbe.shared.details.ScriptDetail;
+import com.mgatelabs.ffbe.shared.details.ScriptDefinition;
 import com.mgatelabs.ffbe.shared.details.ViewDefinition;
 import com.mgatelabs.ffbe.shared.util.AdbShell;
 import com.mgatelabs.ffbe.shared.util.AdbUtils;
 import com.mgatelabs.ffbe.shared.util.ConsoleInput;
+import com.mgatelabs.ffbe.ui.FrameChoices;
 import com.mgatelabs.ffbe.ui.MainFrame;
 import com.mgatelabs.ffbe.ui.frame.StartupFrame;
 
@@ -38,7 +39,40 @@ public class Runner {
                 manager.manage();
             } else if ("gui".equalsIgnoreCase(args[0])) {
 
-                new StartupFrame();
+                PlayerDetail playerDetail = PlayerDetail.read();
+
+                while (true) {
+                    StartupFrame startupFrame = new StartupFrame(playerDetail);
+
+                    while (startupFrame.isShowing()) {
+                        try {
+                            Thread.sleep(100);
+                        } catch (InterruptedException e) {
+                            e.printStackTrace();
+                        }
+                    }
+
+                    if (startupFrame.getSelectedAction() != null && startupFrame.getSelectedMode() != null) {
+
+                        FrameChoices frameChoices = new FrameChoices(startupFrame.getSelectedAction(), startupFrame.getSelectedMode(), playerDetail, startupFrame.getSelectedMap(), startupFrame.getSelectedScript(), startupFrame.getSelectedDevice(), startupFrame.getSelectedView());
+
+                        if (frameChoices.isValid()) {
+                            MainFrame frame = new MainFrame(frameChoices);
+
+                            while (frame.isShowing()) {
+                                try {
+                                    Thread.sleep(100);
+                                } catch (InterruptedException e) {
+                                    e.printStackTrace();
+                                }
+                            }
+
+                            return;
+                        } else {
+
+                        }
+                    }
+                }
 
                 //new MainFrame().setVisible(true);
             } else if ("frame".equalsIgnoreCase(args[0])) {
@@ -86,7 +120,7 @@ public class Runner {
                     final String scriptName = args[1];
                     final String deviceName = args.length == 2 ? "axon7" : args[2];
 
-                    ScriptDetail script = ScriptDetail.read(scriptName);
+                    ScriptDefinition script = ScriptDefinition.read(scriptName);
                     if (script == null) {
                         System.out.println("Could not locate script: " + scriptName);
                         return;

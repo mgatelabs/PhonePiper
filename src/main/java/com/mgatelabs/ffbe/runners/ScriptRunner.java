@@ -23,7 +23,7 @@ import java.util.*;
 public class ScriptRunner {
 
     private PlayerDetail playerDetail;
-    private ScriptDetail scriptDetail;
+    private ScriptDefinition scriptDefinition;
     private DeviceDefinition deviceDefinition;
     private ViewDefinition viewDefinition;
 
@@ -47,9 +47,9 @@ public class ScriptRunner {
 
     private AdbShell shell;
 
-    public ScriptRunner(PlayerDetail playerDetail, ScriptDetail scriptDetail, DeviceDefinition deviceDefinition, ViewDefinition viewDefinition) {
+    public ScriptRunner(PlayerDetail playerDetail, ScriptDefinition scriptDefinition, DeviceDefinition deviceDefinition, ViewDefinition viewDefinition) {
         this.playerDetail = playerDetail;
-        this.scriptDetail = scriptDetail;
+        this.scriptDefinition = scriptDefinition;
         this.deviceDefinition = deviceDefinition;
         this.viewDefinition = viewDefinition;
         stack = new Stack<>();
@@ -71,7 +71,7 @@ public class ScriptRunner {
             throw new RuntimeException("Cannot find required component id: " + "menu-energy_bar");
         }
 
-        for (Map.Entry<String, StateDetail> entry: scriptDetail.getStates().entrySet()) {
+        for (Map.Entry<String, StateDefinition> entry: scriptDefinition.getStates().entrySet()) {
             entry.getValue().setId(entry.getKey());
         }
 
@@ -145,7 +145,7 @@ public class ScriptRunner {
 
         Map<String, StateTransfer> results = Maps.newHashMap();
 
-        for (Map.Entry<String, StateDetail> stateEntry : scriptDetail.getStates().entrySet()) {
+        for (Map.Entry<String, StateDefinition> stateEntry : scriptDefinition.getStates().entrySet()) {
 
             StateTransfer stateTransfer = new StateTransfer();
             stateTransfer.setStateId(stateEntry.getKey());
@@ -185,9 +185,9 @@ public class ScriptRunner {
 
         ImageWrapper imageWrapper;
 
-        StateDetail stateDetail = scriptDetail.getStates().get(stateName);
+        StateDefinition stateDefinition = scriptDefinition.getStates().get(stateName);
 
-        if (stateDetail == null) {
+        if (stateDefinition == null) {
             throw new RuntimeException("Cannot find state with id: " + stateName);
         }
 
@@ -245,14 +245,14 @@ public class ScriptRunner {
                 if (deviceHelper != null) {
 
                     System.out.println("------------");
-                    System.out.println("Helper: /check/" + stateDetail.getId() + " : " + getDateString());
+                    System.out.println("Helper: /check/" + stateDefinition.getId() + " : " + getDateString());
                     System.out.println("------------");
                     System.out.println();
 
-                    validScreenIds = deviceHelper.check(stateDetail.getId());
+                    validScreenIds = deviceHelper.check(stateDefinition.getId());
                 }
 
-                StateResult result = state(stateDetail, imageWrapper);
+                StateResult result = state(stateDefinition, imageWrapper);
 
                 switch (result.getType()) {
                     case STOP: {
@@ -261,8 +261,8 @@ public class ScriptRunner {
                     case POP:
                         if (stack.size() > 0) {
                             final String oldState = stack.pop();
-                            stateDetail = scriptDetail.getStates().get(oldState);
-                            if (stateDetail == null) {
+                            stateDefinition = scriptDefinition.getStates().get(oldState);
+                            if (stateDefinition == null) {
                                 throw new RuntimeException("Cannot find state with id: " + oldState);
                             }
                             keepRunning = false;
@@ -271,25 +271,25 @@ public class ScriptRunner {
                         }
                         break;
                     case MOVE: {
-                        stateDetail = scriptDetail.getStates().get(result.getValue());
-                        if (stateDetail == null) {
+                        stateDefinition = scriptDefinition.getStates().get(result.getValue());
+                        if (stateDefinition == null) {
                             throw new RuntimeException("Cannot find state with id: " + result.getValue());
                         }
                         keepRunning = false;
                     }
                     break;
                     case PUSH: {
-                        stack.push(stateDetail.getName());
-                        stateDetail = scriptDetail.getStates().get(result.getValue());
-                        if (stateDetail == null) {
+                        stack.push(stateDefinition.getName());
+                        stateDefinition = scriptDefinition.getStates().get(result.getValue());
+                        if (stateDefinition == null) {
                             throw new RuntimeException("Cannot find state with id: " + result.getValue());
                         }
                         keepRunning = false;
                     }
                     break;
                     case SWAP: {
-                        stateDetail = scriptDetail.getStates().get(result.getValue());
-                        if (stateDetail == null) {
+                        stateDefinition = scriptDefinition.getStates().get(result.getValue());
+                        if (stateDefinition == null) {
                             throw new RuntimeException("Cannot find state with id: " + result.getValue());
                         }
                         keepRunning = true;
@@ -308,16 +308,16 @@ public class ScriptRunner {
 
     }
 
-    private StateResult state(final StateDetail stateDetail, final ImageWrapper imageWrapper) {
+    private StateResult state(final StateDefinition stateDefinition, final ImageWrapper imageWrapper) {
 
         System.out.println("------------");
-        System.out.println("Running State: " + stateDetail.getName() + " : " + getDateString());
+        System.out.println("Running State: " + stateDefinition.getName() + " : " + getDateString());
         System.out.println("------------");
         System.out.println();
 
         boolean batchCmds = false;
 
-        for (StatementDefinition statementDefinition : stateDetail.getStatements()) {
+        for (StatementDefinition statementDefinition : stateDefinition.getStatements()) {
             if (check(statementDefinition.getCondition(), imageWrapper)) {
                 for (ActionDefinition actionDefinition : statementDefinition.getActions()) {
                     switch (actionDefinition.getType()) {

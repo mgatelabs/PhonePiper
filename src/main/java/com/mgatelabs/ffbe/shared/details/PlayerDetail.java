@@ -63,7 +63,7 @@ public class PlayerDetail {
                 e.printStackTrace();
             }
         }
-        return null;
+        return new PlayerDetail();
     }
 
     public boolean write() {

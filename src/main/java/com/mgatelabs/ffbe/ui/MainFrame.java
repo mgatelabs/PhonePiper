@@ -1,6 +1,9 @@
 package com.mgatelabs.ffbe.ui;
 
+import com.mgatelabs.ffbe.shared.details.DeviceDefinition;
 import com.mgatelabs.ffbe.shared.details.PlayerDetail;
+import com.mgatelabs.ffbe.shared.details.ScriptDefinition;
+import com.mgatelabs.ffbe.shared.details.ViewDefinition;
 import com.mgatelabs.ffbe.shared.mapper.MapDefinition;
 
 import javax.swing.*;
@@ -13,6 +16,11 @@ public class MainFrame extends JFrame {
 
     final PlayerDetail playerDetail;
 
+    private ScriptDefinition scriptDefinition;
+    private MapDefinition mapDefinition;
+    private DeviceDefinition deviceDefinition;
+    private ViewDefinition viewDefinition;
+
     JDesktopPane desktopPane;
     PlayerPanel playerPanel;
 
@@ -20,17 +28,18 @@ public class MainFrame extends JFrame {
     MapperPanel mapperPanel;
 
 
-    public MainFrame() throws HeadlessException {
+    public MainFrame(FrameChoices choices) throws HeadlessException {
         super("FFBExecute 0.0.1");
         setMinimumSize(new Dimension(800, 600));
         setPreferredSize(new Dimension(1024, 768));
         setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
 
-        PlayerDetail tempPlayerDetail = PlayerDetail.read();// new PlayerDetail();
-        if (tempPlayerDetail == null) {
-            tempPlayerDetail = new PlayerDetail();
-        }
-        playerDetail = tempPlayerDetail;
+        playerDetail = choices.getPlayerDetail();
+        scriptDefinition = choices.getScriptDefinition();
+        mapDefinition = choices.getMapDefinition();
+        deviceDefinition = choices.getDeviceDefinition();
+
+
 
         desktopPane = new JDesktopPane();
 
@@ -52,5 +61,7 @@ public class MainFrame extends JFrame {
         this.pack();
 
         setContentPane(desktopPane);
+
+        setVisible(true);
     }
 }

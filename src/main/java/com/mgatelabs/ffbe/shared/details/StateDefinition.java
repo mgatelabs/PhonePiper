@@ -10,7 +10,7 @@ import java.util.Set;
 /**
  * Created by @mgatelabs (Michael Fuller) on 9/4/2017.
  */
-public class StateDetail {
+public class StateDefinition {
     private String name;
     @JsonIgnore
     private String id;

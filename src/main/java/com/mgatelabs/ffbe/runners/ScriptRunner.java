@@ -405,7 +405,7 @@ public class ScriptRunner {
                     if (screenDefinition == null) {
                         throw new RuntimeException("Cannot find screen with id: " + conditionDefinition.getValue());
                     }
-                    result = SamplePoint.validate(screenDefinition.getPoints(), imageWrapper);
+                    result = SamplePoint.validate(screenDefinition.getPoints(), imageWrapper, false);
                 }
             }
             break;

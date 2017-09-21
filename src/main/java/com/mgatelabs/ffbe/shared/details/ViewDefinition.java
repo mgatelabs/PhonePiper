@@ -3,6 +3,8 @@ package com.mgatelabs.ffbe.shared.details;
 import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.SerializationConfig;
+import com.fasterxml.jackson.databind.SerializationFeature;
 
 import java.io.File;
 import java.io.IOException;
@@ -56,6 +58,7 @@ public class ViewDefinition {
         File viewFile = new File("views/" + viewName + "/definition.json");
 
         ObjectMapper objectMapper = new ObjectMapper();
+        objectMapper.enable(SerializationFeature.INDENT_OUTPUT);
         try {
             objectMapper.writeValue(viewFile, this);
             return true;

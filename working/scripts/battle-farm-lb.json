@@ -153,6 +153,10 @@
               "value": "battle-unit_0"
             },
             {
+              "type": "TAP",
+              "value": "battle-unit_0"
+            },
+            {
               "type": "SWIPE_DOWN",
               "value": "battle-unit_1-swipe_down"
             },
@@ -212,6 +216,10 @@
             {
               "type": "TAP",
               "value": "battle-unit_3"
+            },
+            {
+              "type": "TAP",
+              "value": "battle-unit_0"
             },
             {
               "type": "TAP",

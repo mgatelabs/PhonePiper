@@ -63,7 +63,8 @@ public class SamplePoint {
         return b;
     }
 
-    public static boolean validate(final List<SamplePoint> points, final ImageWrapper imageWrapper) {
+    public static boolean validate(final List<SamplePoint> points, final ImageWrapper imageWrapper, boolean log) {
+        int i = 0;
         for (SamplePoint point: points) {
             int color = imageWrapper.getPixel(point.getX(), point.getY());
             int r = (color & 0xff0000) >> 16;
@@ -86,8 +87,13 @@ public class SamplePoint {
 
             // Make it a bit fuzzy
             if ( r >= 0 && r <= 6 && g >= 0 && g <= 6 && b >= 0 && b <= 6) {
+                i++;
                 continue;
             }
+            if (log) {
+                System.out.println("Point: " + i + " Failed : " + r + ":" + g + ":" + b);
+            }
+
             return false;
         }
         return true;

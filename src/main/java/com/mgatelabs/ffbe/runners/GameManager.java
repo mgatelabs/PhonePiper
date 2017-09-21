@@ -362,7 +362,7 @@ public class GameManager {
         }
 
         System.out.print("Status: ");
-        if (SamplePoint.validate(definition.getPoints(), imageWrapper)) {
+        if (SamplePoint.validate(definition.getPoints(), imageWrapper, true)) {
             System.out.println("Valid");
         } else {
             System.out.println("Invalid");

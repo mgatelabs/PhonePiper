@@ -1,4 +1,4 @@
-package com.mgatelabs.ffbe.ui;
+package com.mgatelabs.ffbe.ui.utils;
 
 /**
  * @author <a href="mailto:mfuller@acteksoft.com">Michael Fuller</a>

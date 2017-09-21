@@ -1,8 +1,9 @@
-package com.mgatelabs.ffbe.ui;
+package com.mgatelabs.ffbe.ui.panels;
 
 import com.google.common.collect.Lists;
 import com.mgatelabs.ffbe.shared.mapper.FloorDefinition;
 import com.mgatelabs.ffbe.shared.mapper.MapSampleArea;
+import com.mgatelabs.ffbe.ui.utils.RefreshableListModel;
 
 import javax.swing.*;
 import java.awt.*;

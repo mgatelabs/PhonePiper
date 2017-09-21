@@ -2,7 +2,7 @@ package com.mgatelabs.ffbe.ui.frame;
 
 import com.google.common.collect.Lists;
 import com.mgatelabs.ffbe.shared.details.PlayerDetail;
-import com.mgatelabs.ffbe.ui.Constants;
+import com.mgatelabs.ffbe.ui.utils.Constants;
 
 import javax.swing.*;
 import java.awt.*;

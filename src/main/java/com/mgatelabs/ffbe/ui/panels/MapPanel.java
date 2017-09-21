@@ -1,4 +1,4 @@
-package com.mgatelabs.ffbe.ui;
+package com.mgatelabs.ffbe.ui.panels;
 
 import com.mgatelabs.ffbe.shared.mapper.MapDefinition;
 

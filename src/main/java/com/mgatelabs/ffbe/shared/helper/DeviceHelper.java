@@ -14,7 +14,7 @@ import java.util.Set;
 public class DeviceHelper {
 
     private String ipAddress;
-    private ObjectMapper objectMapper;
+    private final ObjectMapper objectMapper;
     private final OkHttpClient client;
 
     private int failures;
@@ -24,6 +24,14 @@ public class DeviceHelper {
         objectMapper = new ObjectMapper();
         client = new OkHttpClient();
         failures = 0;
+    }
+
+    public String getIpAddress() {
+        return ipAddress;
+    }
+
+    public void setIpAddress(String ipAddress) {
+        this.ipAddress = ipAddress;
     }
 
     public boolean setup(InfoTransfer info) {

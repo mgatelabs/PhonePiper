@@ -1,6 +1,7 @@
 package com.mgatelabs.ffbe.ui;
 
 import com.mgatelabs.ffbe.shared.image.*;
+import com.mgatelabs.ffbe.ui.utils.RefreshableListModel;
 
 import javax.swing.*;
 import javax.swing.Timer;

@@ -1,4 +1,4 @@
-package com.mgatelabs.ffbe.ui;
+package com.mgatelabs.ffbe.ui.utils;
 
 import javax.swing.*;
 import java.util.List;

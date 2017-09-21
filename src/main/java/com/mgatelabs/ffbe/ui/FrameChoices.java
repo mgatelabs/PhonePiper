@@ -5,6 +5,7 @@ import com.mgatelabs.ffbe.shared.details.PlayerDetail;
 import com.mgatelabs.ffbe.shared.details.ScriptDefinition;
 import com.mgatelabs.ffbe.shared.details.ViewDefinition;
 import com.mgatelabs.ffbe.shared.mapper.MapDefinition;
+import com.mgatelabs.ffbe.ui.utils.Constants;
 
 /**
  * @author <a href="mailto:mfuller@acteksoft.com">Michael Fuller</a>
@@ -134,8 +135,8 @@ public class FrameChoices {
         if (action == Action.DELETE) return false;
         if (action == Action.CREATE) return false;
         switch (mode) {
-            case MAP:
             case DEVICE:
+            case MAP:
                 return true;
             case VIEW:
             case SCRIPT:
@@ -162,10 +163,10 @@ public class FrameChoices {
         if (action == Action.DELETE) return false;
         if (action == Action.CREATE) return false;
         switch (mode) {
-            case MAP:
             case VIEW:
-            case SCRIPT:
                 return false;
+            case MAP:
+            case SCRIPT:
             case DEVICE:
                 return true;
         }
@@ -179,7 +180,7 @@ public class FrameChoices {
             case MAP:
             case SCRIPT:
             case DEVICE:
-                return true;
+                return false;
             case VIEW: {
                 return true;
             }

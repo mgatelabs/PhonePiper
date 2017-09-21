@@ -10,7 +10,7 @@ import com.mgatelabs.ffbe.shared.util.AdbShell;
 import com.mgatelabs.ffbe.shared.util.AdbUtils;
 import com.mgatelabs.ffbe.shared.util.ConsoleInput;
 import com.mgatelabs.ffbe.ui.FrameChoices;
-import com.mgatelabs.ffbe.ui.MainFrame;
+import com.mgatelabs.ffbe.ui.frame.MainFrame;
 import com.mgatelabs.ffbe.ui.frame.StartupFrame;
 
 /**

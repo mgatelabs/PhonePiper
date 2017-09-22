@@ -2,10 +2,7 @@ package com.mgatelabs.ffbe;
 
 import com.mgatelabs.ffbe.runners.GameManager;
 import com.mgatelabs.ffbe.runners.ScriptRunner;
-import com.mgatelabs.ffbe.shared.details.DeviceDefinition;
-import com.mgatelabs.ffbe.shared.details.PlayerDetail;
-import com.mgatelabs.ffbe.shared.details.ScriptDefinition;
-import com.mgatelabs.ffbe.shared.details.ViewDefinition;
+import com.mgatelabs.ffbe.shared.details.*;
 import com.mgatelabs.ffbe.shared.util.AdbShell;
 import com.mgatelabs.ffbe.shared.util.AdbUtils;
 import com.mgatelabs.ffbe.shared.util.ConsoleInput;
@@ -71,6 +68,8 @@ public class Runner {
                         } else {
 
                         }
+                    } else {
+                        return;
                     }
                 }
 
@@ -135,6 +134,7 @@ public class Runner {
                         System.out.println("Could not locate view: " + device.getViewId());
                         return;
                     }
+                    ConnectionDefinition connectionDefinition = ConnectionDefinition.read();
                     PlayerDetail playerDetail = PlayerDetail.read();
                     if (playerDetail == null) {
                         playerDetail = new PlayerDetail();
@@ -152,7 +152,7 @@ public class Runner {
                         }
 
                     }
-                    ScriptRunner scriptRunner = new ScriptRunner(playerDetail, script, device, view);
+                    ScriptRunner scriptRunner = new ScriptRunner(playerDetail, connectionDefinition, script, device, view);
 
                     System.out.println("----------");
                     System.out.println("Script: " + scriptName);

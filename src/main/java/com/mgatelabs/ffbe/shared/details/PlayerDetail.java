@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.mgatelabs.ffbe.shared.util.JsonTool;
 
 import java.io.File;
 import java.io.IOException;
@@ -52,7 +53,7 @@ public class PlayerDetail {
     public static PlayerDetail read() {
         File playerFile = new File("player.json");
         if (playerFile.exists()) {
-            ObjectMapper objectMapper = new ObjectMapper();
+            ObjectMapper objectMapper = JsonTool.INSTANCE;
             try {
                 return objectMapper.readValue(playerFile, PlayerDetail.class);
             } catch (JsonParseException e) {
@@ -68,7 +69,7 @@ public class PlayerDetail {
 
     public boolean write() {
         File playerFile = new File("player.json");
-        ObjectMapper objectMapper = new ObjectMapper();
+        ObjectMapper objectMapper = JsonTool.INSTANCE;
         try {
             objectMapper.writeValue(playerFile, this);
             return true;

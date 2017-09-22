@@ -5,6 +5,7 @@ import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationConfig;
 import com.fasterxml.jackson.databind.SerializationFeature;
+import com.mgatelabs.ffbe.shared.util.JsonTool;
 
 import java.io.File;
 import java.io.IOException;
@@ -40,7 +41,7 @@ public class ViewDefinition {
     public static ViewDefinition read(String viewName) {
         File viewFile = new File("views/" + viewName + "/definition.json");
         if (viewFile.exists()) {
-            ObjectMapper objectMapper = new ObjectMapper();
+            ObjectMapper objectMapper = JsonTool.INSTANCE;
             try {
                 return objectMapper.readValue(viewFile, ViewDefinition.class);
             } catch (JsonParseException e) {
@@ -57,8 +58,7 @@ public class ViewDefinition {
     public boolean save(String viewName) {
         File viewFile = new File("views/" + viewName + "/definition.json");
 
-        ObjectMapper objectMapper = new ObjectMapper();
-        objectMapper.enable(SerializationFeature.INDENT_OUTPUT);
+        ObjectMapper objectMapper = JsonTool.INSTANCE;
         try {
             objectMapper.writeValue(viewFile, this);
             return true;

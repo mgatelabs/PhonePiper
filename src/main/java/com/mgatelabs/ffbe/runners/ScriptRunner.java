@@ -47,7 +47,7 @@ public class ScriptRunner {
 
     private AdbShell shell;
 
-    public ScriptRunner(PlayerDetail playerDetail, ScriptDefinition scriptDefinition, DeviceDefinition deviceDefinition, ViewDefinition viewDefinition) {
+    public ScriptRunner(PlayerDetail playerDetail, ConnectionDefinition connectionDefinition, ScriptDefinition scriptDefinition, DeviceDefinition deviceDefinition, ViewDefinition viewDefinition) {
         this.playerDetail = playerDetail;
         this.scriptDefinition = scriptDefinition;
         this.deviceDefinition = deviceDefinition;
@@ -93,12 +93,12 @@ public class ScriptRunner {
 
         System.out.println("Use Phone Helper? (Y/N)");
         if (ConsoleInput.yesNo()) {
-            System.out.println("Phone IP Address: " + (playerDetail.getIp() != null ? playerDetail.getIp() : "?"));
+            System.out.println("Phone IP Address: " + (connectionDefinition.getIp() != null ? connectionDefinition.getIp() : "?"));
             phoneIp = ConsoleInput.getString();
             if (phoneIp.length() > 0) {
-                playerDetail.setIp(phoneIp);
-                if (playerDetail.write()) {
-                    System.out.println("Player profile updated!");
+                connectionDefinition.setIp(phoneIp);
+                if (connectionDefinition.write()) {
+                    System.out.println("Connection updated!");
                 }
             } else if (phoneIp.length() == 0) {
                 phoneIp = playerDetail.getIp();

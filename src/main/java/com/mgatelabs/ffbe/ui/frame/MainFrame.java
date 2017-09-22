@@ -128,12 +128,12 @@ public class MainFrame extends JFrame {
        // mapPanel.setLocation(playerPanel.getWidth(), 0);
 
 
-
+        setContentPane(desktopPane);
 
 
         this.pack();
 
-        setContentPane(desktopPane);
+        setLocationRelativeTo(null);
 
         setVisible(true);
     }

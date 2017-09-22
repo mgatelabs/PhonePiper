@@ -2,6 +2,7 @@ package com.mgatelabs.ffbe.shared.helper;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.common.collect.ImmutableSet;
+import com.mgatelabs.ffbe.shared.util.JsonTool;
 import okhttp3.*;
 
 import java.io.ByteArrayOutputStream;
@@ -21,7 +22,7 @@ public class DeviceHelper {
 
     public DeviceHelper(String ipAddress) {
         this.ipAddress = ipAddress;
-        objectMapper = new ObjectMapper();
+        objectMapper = JsonTool.INSTANCE;
         client = new OkHttpClient();
         failures = 0;
     }

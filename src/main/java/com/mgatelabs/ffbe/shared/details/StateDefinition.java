@@ -48,4 +48,9 @@ public class StateDefinition {
         }
         return ImmutableList.copyOf(screenIds);
     }
+
+    @Override
+    public String toString() {
+        return id + " - " +  name;
+    }
 }

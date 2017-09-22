@@ -3,6 +3,7 @@ package com.mgatelabs.ffbe.shared.details;
 import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.mgatelabs.ffbe.shared.util.JsonTool;
 
 import java.io.File;
 import java.io.IOException;
@@ -54,7 +55,7 @@ public class DeviceDefinition {
     public static DeviceDefinition read(String deviceName) {
         File deviceFile = new File("devices/" + deviceName + ".json");
         if (deviceFile.exists()) {
-            ObjectMapper objectMapper = new ObjectMapper();
+            ObjectMapper objectMapper = JsonTool.INSTANCE;
             try {
                 return objectMapper.readValue(deviceFile, DeviceDefinition.class);
             } catch (JsonParseException e) {

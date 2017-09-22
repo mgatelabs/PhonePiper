@@ -235,6 +235,9 @@ public class StartupFrame extends JFrame {
         }
 
         pack();
+
+        setLocationRelativeTo(null);
+
         setVisible(true);
     }
 

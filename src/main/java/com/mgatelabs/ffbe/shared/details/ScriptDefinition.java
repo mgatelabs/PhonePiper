@@ -3,6 +3,8 @@ package com.mgatelabs.ffbe.shared.details;
 import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.google.common.collect.Maps;
+import com.mgatelabs.ffbe.shared.util.JsonTool;
 
 import java.io.File;
 import java.io.IOException;
@@ -26,9 +28,19 @@ public class ScriptDefinition {
     public static ScriptDefinition read(String scriptName) {
         File deviceFile = new File("scripts/" + scriptName + ".json");
         if (deviceFile.exists()) {
-            ObjectMapper objectMapper = new ObjectMapper();
+            ObjectMapper objectMapper = JsonTool.INSTANCE;
             try {
-                return objectMapper.readValue(deviceFile, ScriptDefinition.class);
+                ScriptDefinition scriptDefinition = objectMapper.readValue(deviceFile, ScriptDefinition.class);
+
+                if (scriptDefinition.getStates() == null) {
+                    scriptDefinition.setStates(Maps.newHashMap());
+                } else {
+                    for (Map.Entry<String, StateDefinition> entry: scriptDefinition.getStates().entrySet()) {
+                        entry.getValue().setId(entry.getKey());
+                    }
+                }
+
+                return scriptDefinition;
             } catch (JsonParseException e) {
                 e.printStackTrace();
             } catch (JsonMappingException e) {

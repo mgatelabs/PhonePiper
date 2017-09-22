@@ -7,6 +7,7 @@ import com.mgatelabs.ffbe.ui.utils.RefreshableListModel;
 
 import javax.swing.*;
 import java.awt.*;
+import java.util.List;
 
 /**
  * Created by @mgatelabs (Michael Fuller) on 9/17/2017.
@@ -15,10 +16,11 @@ public class MapperPanel extends JInternalFrame {
 
     MapPanel mapPanel;
 
-    JList<FloorDefinition> floorList;
+    private List<FloorDefinition> floors;
+    JList<FloorDefinition> floorListComponent;
     RefreshableListModel<FloorDefinition> floorModel;
 
-    JList<MapSampleArea> sampleList;
+    JList<MapSampleArea> sampleListComponent;
     RefreshableListModel<MapSampleArea> sampleModel;
 
     JButton captureSample;
@@ -29,6 +31,9 @@ public class MapperPanel extends JInternalFrame {
     public MapperPanel(MapPanel mapPanel) {
         super("Mapper", true, false, false, false);
         this.mapPanel = mapPanel;
+
+        floors = Lists.newArrayList();
+
 
 
         setMinimumSize(new Dimension(300, 450));
@@ -48,9 +53,9 @@ public class MapperPanel extends JInternalFrame {
         c.gridheight = 1;
         container.add(floorLabel, c);
 
-        floorModel = new RefreshableListModel<>(Lists.newArrayList());
-        floorList = new JList<>(floorModel);
-        JScrollPane floorScroller = new JScrollPane(floorList);
+        floorModel = new RefreshableListModel<>(floors);
+        floorListComponent = new JList<>(floorModel);
+        JScrollPane floorScroller = new JScrollPane(floorListComponent);
         c.fill = GridBagConstraints.BOTH;
         c.gridx = 0;
         c.gridy = 1;
@@ -70,8 +75,8 @@ public class MapperPanel extends JInternalFrame {
         container.add(sampleLabel, c);
 
         sampleModel = new RefreshableListModel<>(Lists.newArrayList());
-        sampleList = new JList<>(sampleModel);
-        JScrollPane sampleScroller = new JScrollPane(sampleList);
+        sampleListComponent = new JList<>(sampleModel);
+        JScrollPane sampleScroller = new JScrollPane(sampleListComponent);
         c.fill = GridBagConstraints.BOTH;
         c.gridx = 0;
         c.gridy = 7;

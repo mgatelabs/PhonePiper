@@ -42,7 +42,7 @@ public class RunScriptPanel extends JInternalFrame {
     }
 
     private void build() {
-        setMinimumSize(new Dimension(300,150));
+        setMinimumSize(new Dimension(300,125));
         setPreferredSize(getMinimumSize());
 
         setLayout(new GridBagLayout());
@@ -54,7 +54,7 @@ public class RunScriptPanel extends JInternalFrame {
         c.gridy = 0;
         c.gridwidth = 2;
         c.weightx = 1.0f;
-        c.insets = new Insets(5, 5, 5, 5);
+        c.insets = new Insets(3, 5, 3, 5);
         this.add(startStopButton, c);
 
         JLabel tempLabel = new JLabel("State:");

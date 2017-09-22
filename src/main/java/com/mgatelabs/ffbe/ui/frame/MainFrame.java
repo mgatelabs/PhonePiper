@@ -52,7 +52,7 @@ public class MainFrame extends JFrame {
         boolean showMapper = false;
         boolean showAdb = false;
         boolean showConnection =  false;
-        boolean showRunScript =  true;
+        boolean showRunScript =  false;
 
         switch (choices.getAction()) {
             case RUN: {
@@ -104,29 +104,36 @@ public class MainFrame extends JFrame {
         // playerPanel = new PlayerPanel(playerDetail);
         // desktopPane.add(playerPanel);
 
+        int column0Top = 0;
+
         if (showMap) {
             mapPanel = new MapPanel();
+            mapPanel.setMap(mapDefinition);
+            mapPanel.setLocation(300, 0);
             desktopPane.add(mapPanel);
             mapPanel.setMap(mapDefinition);
-            if (showMapper) {
-                mapperPanel = new MapperPanel(mapPanel);
-                //mapperPanel.setLocation(0, playerPanel.getHeight());
-                desktopPane.add(mapperPanel);
-            }
         }
 
         if (showConnection) {
             connectionPanel = new ConnectionPanel(connectionDefinition);
+            connectionPanel.setLocation(0, column0Top);
+            column0Top += connectionPanel.getHeight();
             desktopPane.add(connectionPanel);
         }
 
         if (showRunScript) {
             runScriptPanel = new RunScriptPanel(connectionPanel.getDeviceHelper(), shell, viewDefinition, scriptDefinition, mapPanel);
+            runScriptPanel.setLocation(0, column0Top);
+            column0Top += runScriptPanel.getHeight();
             desktopPane.add(runScriptPanel);
         }
 
-       // mapPanel.setLocation(playerPanel.getWidth(), 0);
-
+        if (showMapper) {
+            mapperPanel = new MapperPanel(mapPanel);
+            mapperPanel.setLocation(0, column0Top);
+            column0Top += mapperPanel.getHeight();
+            desktopPane.add(mapperPanel);
+        }
 
         setContentPane(desktopPane);
 

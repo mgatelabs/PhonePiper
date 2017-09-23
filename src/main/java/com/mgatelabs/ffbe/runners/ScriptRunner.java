@@ -58,6 +58,12 @@ public class ScriptRunner {
         vars = Maps.newHashMap();
         shell = new AdbShell();
 
+        for (VarDefinition varDefinition: scriptDefinition.getVars()) {
+            if (varDefinition.getType() == VarType.INT) {
+                addVar(varDefinition.getName(), Integer.parseInt(varDefinition.getValue()));
+            }
+        }
+
         screens = Maps.newHashMap();
         for (ScreenDefinition screenDefinition : viewDefinition.getScreens()) {
             screens.put(screenDefinition.getScreenId(), screenDefinition);
@@ -432,6 +438,12 @@ public class ScriptRunner {
                 String varName = conditionDefinition.getVar();
                 int currentValue = getVar(varName);
                 result = currentValue < value;
+            } break;
+            case EQUAL: {
+                int value = Integer.parseInt(conditionDefinition.getValue());
+                String varName = conditionDefinition.getVar();
+                int currentValue = getVar(varName);
+                result = currentValue == value;
             } break;
             case SCREEN: {
                 if (deviceHelper != null) {

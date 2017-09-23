@@ -9,5 +9,6 @@ public enum ConditionType {
     BOOLEAN,
     NOT,
     GREATER,
-    LESS
+    LESS,
+    EQUAL
 }

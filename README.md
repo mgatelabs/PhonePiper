@@ -13,6 +13,8 @@ This is currently built for my phone, the Axon7 and will not work with any other
 2. Open FFBE and navigate to the Earth Shrine mission list.
 3. run with the arguments "script earthshrine-exit-attack"
 
+It is highly recommended to have IntelliJ Community edition to run this app.  You only need android studio, so you can have access to ADB.
+
 ## What is it doing
 
 0. Loading Script, Device, View, Connection & Player Information

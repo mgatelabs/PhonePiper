@@ -689,18 +689,18 @@ public class GameManager {
                 break;
                 case 4: {
                     System.out.println("Sending Tap");
-                    AdbUtils.component(componentDefinition, ActionType.TAP, shell, false);
+                    AdbUtils.component(deviceDefinition, componentDefinition, ActionType.TAP, shell, false);
                 }
                 break;
 
                 case 5: {
                     System.out.println("Sending Swipe Right");
-                    AdbUtils.component(componentDefinition, ActionType.SWIPE_RIGHT, shell, false);
+                    AdbUtils.component(deviceDefinition, componentDefinition, ActionType.SWIPE_RIGHT, shell, false);
                 }
                 break;
                 case 6: {
                     System.out.println("Sending Down");
-                    AdbUtils.component(componentDefinition, ActionType.SWIPE_DOWN, shell, false);
+                    AdbUtils.component(deviceDefinition, componentDefinition, ActionType.SWIPE_DOWN, shell, false);
                 }
                 break;
 

@@ -369,7 +369,7 @@ public class ScriptRunner {
                             if (componentDefinition == null) {
                                 throw new RuntimeException("Cannot find component with id: " + actionDefinition.getValue());
                             }
-                            AdbUtils.component(componentDefinition, actionDefinition.getType(), shell, batchCmds);
+                            AdbUtils.component(deviceDefinition, componentDefinition, actionDefinition.getType(), shell, batchCmds);
                         } break;
                         case WAIT: {
                             long time = Long.parseLong(actionDefinition.getValue());

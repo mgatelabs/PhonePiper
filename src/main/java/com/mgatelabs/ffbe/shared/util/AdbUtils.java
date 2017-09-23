@@ -2,6 +2,7 @@ package com.mgatelabs.ffbe.shared.util;
 
 import com.mgatelabs.ffbe.shared.details.ActionType;
 import com.mgatelabs.ffbe.shared.details.ComponentDefinition;
+import com.mgatelabs.ffbe.shared.details.DeviceDefinition;
 import com.mgatelabs.ffbe.shared.image.ImageWrapper;
 import com.mgatelabs.ffbe.shared.image.RawImageWrapper;
 
@@ -19,7 +20,7 @@ public class AdbUtils {
 
     private static final SecureRandom RANDOM = new SecureRandom();
 
-    public static void component(ComponentDefinition componentDefinition, ActionType type, AdbShell shell, boolean batch) {
+    public static void component(DeviceDefinition deviceDefinition, ComponentDefinition componentDefinition, ActionType type, final AdbShell shell, boolean batch) {
         final String cmd;
         switch (type) {
             case TAP: {
@@ -34,19 +35,21 @@ public class AdbUtils {
             case SWIPE_UP: {
                 final int x1 = getStartX(componentDefinition, type);
                 final int y1 = getStartY(componentDefinition, type);
-                final int x2 = getEndX(componentDefinition, type);
-                final int y2 = getEndY(componentDefinition, type);
+                final int x2 = getEndX(deviceDefinition, componentDefinition, type);
+                final int y2 = getEndY(deviceDefinition, componentDefinition, type);
                 final int time;
                 if (type == ActionType.SWIPE_DOWN || type == ActionType.SWIPE_UP) {
                     time = 200;
                 } else {
                     time = 100;
                 }
-                cmd = ("input swipe " + x1 + " " + y1 + " "  + x2 + " " + y2 + " " + time);
-            } break;
+                cmd = ("input swipe " + x1 + " " + y1 + " " + x2 + " " + y2 + " " + time);
+            }
+            break;
             default: {
                 System.out.println("Unhandled component command: " + type.name());
-            } return;
+            }
+            return;
         }
         if (batch) {
             shell.batch(cmd);
@@ -60,34 +63,38 @@ public class AdbUtils {
         switch (type) {
             case SWIPE_LEFT: {
                 x += (componentDefinition.getW() - (componentDefinition.getW() / 8));
-            } break;
+            }
+            break;
             case SWIPE_RIGHT: {
                 x += (componentDefinition.getW() / 8);
-            } break;
+            }
+            break;
             case SWIPE_UP:
             case SWIPE_DOWN: {
                 x += componentDefinition.getW() / 2;
-            } break;
+            }
+            break;
             default: {
                 x += RANDOM.nextInt(componentDefinition.getW());
-            } break;
+            }
+            break;
         }
         return x;
     }
 
-    private static int getEndX(ComponentDefinition componentDefinition, ActionType type) {
+    private static int getEndX(DeviceDefinition deviceDefinition, ComponentDefinition componentDefinition, ActionType type) {
         int x = componentDefinition.getX();
         switch (type) {
             case SWIPE_RIGHT: {
-                x += componentDefinition.getW();
-            } break;
+                return least(deviceDefinition.getWidth(), x + (componentDefinition.getW() * 2));
+            }
             case SWIPE_LEFT: {
-            } break;
+                return greater(0, x - (componentDefinition.getW()));
+            }
             default: {
                 return getStartX(componentDefinition, type);
             }
         }
-        return x;
     }
 
     private static int getStartY(ComponentDefinition componentDefinition, ActionType type) {
@@ -95,35 +102,52 @@ public class AdbUtils {
         switch (type) {
             case SWIPE_UP: {
                 y += (componentDefinition.getH() - (componentDefinition.getH() / 8));
-            } break;
+            }
+            break;
             case SWIPE_DOWN: {
                 y += (componentDefinition.getH() / 8);
-            } break;
+            }
+            break;
             case SWIPE_LEFT:
             case SWIPE_RIGHT: {
                 y += componentDefinition.getH() / 2;
-            } break;
+            }
+            break;
             default: {
                 y += RANDOM.nextInt(componentDefinition.getH());
-            } break;
+            }
+            break;
         }
         return y;
     }
 
-    private static int getEndY(ComponentDefinition componentDefinition, ActionType type) {
+    private static int getEndY(DeviceDefinition deviceDefinition, ComponentDefinition componentDefinition, ActionType type) {
         int y = componentDefinition.getY();
         switch (type) {
             case SWIPE_DOWN: {
-                y += (componentDefinition.getH());
-            } break;
+                return least(deviceDefinition.getHeight(), y + (componentDefinition.getH() * 2));
+            }
             case SWIPE_UP: {
-
-            } break;
+                return greater(0, y - (componentDefinition.getH() * 2));
+            }
             default: {
                 return getStartY(componentDefinition, type);
             }
         }
-        return y;
+    }
+
+    private static int least(int max, int value) {
+        if (value > max) {
+            return max;
+        }
+        return value;
+    }
+
+    private static int greater(int min, int value) {
+        if (value < min) {
+            return min;
+        }
+        return value;
     }
 
     public static void persistScreen(AdbShell shell) {
@@ -172,28 +196,28 @@ public class AdbUtils {
     }
 
     private static byte[] repair(InputStream bytesIn) throws Exception {
-        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
         int value;
         int temp = 0;
         boolean useTemp = false;
         BufferedInputStream bufferedInputStream = new BufferedInputStream(bytesIn);
         while ((value = bufferedInputStream.read()) != -1) {
             if (useTemp && value == 0x0A) {
-                baos.write(value);
+                outputStream.write(value);
                 useTemp = false;
                 continue;
             } else if (useTemp) {
-                baos.write(temp);
+                outputStream.write(temp);
                 useTemp = false;
             }
             if (value == 0x0d) {
                 useTemp = true;
                 temp = value;
             } else {
-                baos.write(value);
+                outputStream.write(value);
             }
         }
-        baos.close();
-        return baos.toByteArray();
+        outputStream.close();
+        return outputStream.toByteArray();
     }
 }

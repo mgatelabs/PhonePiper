@@ -15,7 +15,7 @@ public class DeviceDefinition {
     private String name;
     private String viewId;
     private int width;
-    private String height;
+    private int height;
 
     public DeviceDefinition() {
     }
@@ -44,11 +44,11 @@ public class DeviceDefinition {
         this.width = width;
     }
 
-    public String getHeight() {
+    public int getHeight() {
         return height;
     }
 
-    public void setHeight(String height) {
+    public void setHeight(int height) {
         this.height = height;
     }
 

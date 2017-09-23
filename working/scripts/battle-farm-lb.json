@@ -89,7 +89,7 @@
             },
             {
               "type": "SWIPE_DOWN",
-              "value": "battle-unit_0-swipe_down"
+              "value": "battle-unit_0"
             },
             {
               "type": "TAP",
@@ -97,7 +97,7 @@
             },
             {
               "type": "SWIPE_DOWN",
-              "value": "battle-unit_1-swipe_down"
+              "value": "battle-unit_1"
             },
             {
               "type": "TAP",
@@ -158,7 +158,7 @@
             },
             {
               "type": "SWIPE_DOWN",
-              "value": "battle-unit_1-swipe_down"
+              "value": "battle-unit_1"
             },
             {
               "type": "TAP",
@@ -227,7 +227,7 @@
             },
             {
               "type": "SWIPE_DOWN",
-              "value": "battle-unit_1-swipe_down"
+              "value": "battle-unit_1"
             },
             {
               "type": "TAP",

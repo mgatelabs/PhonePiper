@@ -10,6 +10,7 @@ import java.util.Set;
 public class ConditionDefinition {
     private ConditionType is;
     private String value;
+    private String var;
 
     private ConditionDefinition and;
     private ConditionDefinition or;
@@ -44,6 +45,14 @@ public class ConditionDefinition {
 
     public void setOr(ConditionDefinition or) {
         this.or = or;
+    }
+
+    public String getVar() {
+        return var;
+    }
+
+    public void setVar(String var) {
+        this.var = var;
     }
 
     public Set<String> determineScreenIds() {

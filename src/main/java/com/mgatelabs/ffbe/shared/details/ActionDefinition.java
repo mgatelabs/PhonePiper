@@ -5,6 +5,7 @@ package com.mgatelabs.ffbe.shared.details;
  */
 public class ActionDefinition {
     private ActionType type;
+    private String var;
     private String value;
 
     public ActionType getType() {
@@ -13,6 +14,14 @@ public class ActionDefinition {
 
     public void setType(ActionType type) {
         this.type = type;
+    }
+
+    public String getVar() {
+        return var;
+    }
+
+    public void setVar(String var) {
+        this.var = var;
     }
 
     public String getValue() {

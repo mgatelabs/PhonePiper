@@ -47,13 +47,15 @@ public class ScriptRunner {
 
     private AdbShell shell;
 
+    private Map<String, Integer> vars;
+
     public ScriptRunner(PlayerDetail playerDetail, ConnectionDefinition connectionDefinition, ScriptDefinition scriptDefinition, DeviceDefinition deviceDefinition, ViewDefinition viewDefinition) {
         this.playerDetail = playerDetail;
         this.scriptDefinition = scriptDefinition;
         this.deviceDefinition = deviceDefinition;
         this.viewDefinition = viewDefinition;
         stack = new Stack<>();
-
+        vars = Maps.newHashMap();
         shell = new AdbShell();
 
         screens = Maps.newHashMap();
@@ -127,6 +129,18 @@ public class ScriptRunner {
             phoneIp = null;
             deviceHelper = null;
         }
+    }
+
+    private int getVar(String name) {
+        return vars.getOrDefault(name, 0);
+    }
+
+    private void addVar(String name, int value) {
+        vars.put(name, getVar(name) + value);
+    }
+
+    private void setVar(String name, int value) {
+        vars.put(name, value);
     }
 
     public static String getDateString() {
@@ -336,6 +350,16 @@ public class ScriptRunner {
                                 shell.exec();
                             }
                         } break;
+                        case SET: {
+                            String varName = actionDefinition.getVar();
+                            int value = Integer.parseInt(actionDefinition.getValue());
+                            setVar(varName, value);
+                        } break;
+                        case ADD: {
+                            String varName = actionDefinition.getVar();
+                            int value = Integer.parseInt(actionDefinition.getValue());
+                            addVar(varName, value);
+                        } break;
                         case TAP:
                         case SWIPE_DOWN:
                         case SWIPE_UP:
@@ -397,6 +421,18 @@ public class ScriptRunner {
                 result = "true".equalsIgnoreCase(conditionDefinition.getValue());
             }
             break;
+            case GREATER: {
+                int value = Integer.parseInt(conditionDefinition.getValue());
+                String varName = conditionDefinition.getVar();
+                int currentValue = getVar(varName);
+                result = currentValue > value;
+            } break;
+            case LESS: {
+                int value = Integer.parseInt(conditionDefinition.getValue());
+                String varName = conditionDefinition.getVar();
+                int currentValue = getVar(varName);
+                result = currentValue < value;
+            } break;
             case SCREEN: {
                 if (deviceHelper != null) {
                     result = validScreenIds.contains(conditionDefinition.getValue());

@@ -17,5 +17,7 @@ public enum ActionType {
     POP, // Don't with this bubble
     WAIT, // Wait a few MS
     MSG, // Show a message
-    STOP // Stop execution
+    STOP, // Stop execution
+    SET, // Zero a variable
+    ADD, // Increment a variable
 }

@@ -130,6 +130,11 @@
           },
           "actions": [
             {
+              "type": "SET",
+              "var": "loops",
+              "value": "0"
+            },
+            {
               "type": "SWAP",
               "value": "game-battle"
             }
@@ -166,18 +171,28 @@
       ]
     },
     "game-battle": {
-      "name": "Battle - Start",
+      "name": "Battle",
       "statements": [
+
         {
           "condition": {
             "is": "SCREEN",
             "value": "game-battle",
             "and": {
               "is": "SCREEN",
-              "value": "game-battle-auto_off"
+              "value": "game-battle-auto_off",
+              "and": {
+                "is": "SCREEN",
+                "value": "battle-unit-0_ready"
+              }
             }
           },
           "actions": [
+            {
+              "type": "SET",
+              "var": "loops",
+              "value": "0"
+            },
             {
               "type": "BATCH",
               "value": "START"
@@ -237,6 +252,55 @@
             {
               "type": "SWAP",
               "value": "menu-results"
+            }
+          ]
+        },
+
+        {
+          "condition": {
+            "var": "loops",
+            "is": "GREATER",
+            "value": "20",
+            "and": {
+              "is": "SCREEN",
+              "value": "game-battle-auto_off"
+            }
+          },
+          "actions": [
+            {
+              "type": "TAP",
+              "value": "battle-auto"
+            },
+            {
+              "type": "WAIT",
+              "value": "1000"
+            },
+            {
+              "type": "SET",
+              "var": "loops",
+              "value": "0"
+            },
+            {
+              "type": "REPEAT",
+              "value": ""
+            }
+          ]
+        },
+
+        {
+          "condition": {
+            "is": "BOOLEAN",
+            "value": "true"
+          },
+          "actions": [
+            {
+              "type": "ADD",
+              "value": "1",
+              "var": "loops"
+            },
+            {
+              "type": "REPEAT",
+              "value": ""
             }
           ]
         }

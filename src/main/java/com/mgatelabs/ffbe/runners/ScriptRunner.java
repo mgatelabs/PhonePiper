@@ -213,6 +213,22 @@ public class ScriptRunner {
 
         while (true) {
 
+            if (!shell.isReady()) {
+                System.out.println("Bad Shell: Starting again");
+                try {
+                    shell.shutdown();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+                try {
+                    shell = new AdbShell();
+                    wait(1000);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+                continue;
+            }
+
             if (deviceHelper != null && deviceHelper.getFailures() > 20) {
                 deviceHelper = null;
             }

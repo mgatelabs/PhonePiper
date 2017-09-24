@@ -53,6 +53,12 @@ public class AdbShell {
         }
     }
 
+    public void shutdown() {
+        if (adb.isAlive()) {
+            adb.destroyForcibly();
+        }
+    }
+
     public boolean isReady() {
         return ready;
     }

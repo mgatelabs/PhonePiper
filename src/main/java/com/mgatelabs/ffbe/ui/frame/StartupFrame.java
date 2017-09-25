@@ -1,7 +1,7 @@
 package com.mgatelabs.ffbe.ui.frame;
 
 import com.google.common.collect.Lists;
-import com.mgatelabs.ffbe.shared.details.PlayerDetail;
+import com.mgatelabs.ffbe.shared.details.PlayerDefinition;
 import com.mgatelabs.ffbe.ui.utils.Constants;
 
 import javax.swing.*;
@@ -27,7 +27,7 @@ public class StartupFrame extends JFrame {
     private JComboBox<String> mapComboBox;
     private JComboBox<String> modeComboBox;
     private JComboBox<String> actionComboBox;
-    private final PlayerDetail playerDetail;
+    private final PlayerDefinition playerDefinition;
 
     private String selectedView;
     private String selectedDevice;
@@ -36,10 +36,10 @@ public class StartupFrame extends JFrame {
     private String selectedMode;
     private String selectedAction;
 
-    public StartupFrame(PlayerDetail playerDetail) throws HeadlessException {
+    public StartupFrame(PlayerDefinition playerDefinition) throws HeadlessException {
         super("FFBExecute");
         frame = this;
-        this.playerDetail = playerDetail;
+        this.playerDefinition = playerDefinition;
         setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
         setResizable(false);
         setMinimumSize(new Dimension(400, 200));

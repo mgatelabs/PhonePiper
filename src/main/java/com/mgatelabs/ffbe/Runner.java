@@ -1,7 +1,6 @@
 package com.mgatelabs.ffbe;
 
 import com.mgatelabs.ffbe.runners.GameManager;
-import com.mgatelabs.ffbe.runners.ScriptRunner;
 import com.mgatelabs.ffbe.shared.details.*;
 import com.mgatelabs.ffbe.shared.util.AdbShell;
 import com.mgatelabs.ffbe.shared.util.AdbUtils;
@@ -36,10 +35,10 @@ public class Runner {
                 manager.manage();
             } else if ("gui".equalsIgnoreCase(args[0])) {
 
-                PlayerDetail playerDetail = PlayerDetail.read();
+                PlayerDefinition playerDefinition = PlayerDefinition.read();
 
                 while (true) {
-                    StartupFrame startupFrame = new StartupFrame(playerDetail);
+                    StartupFrame startupFrame = new StartupFrame(playerDefinition);
 
                     while (startupFrame.isShowing()) {
                         try {
@@ -51,7 +50,7 @@ public class Runner {
 
                     if (startupFrame.getSelectedAction() != null && startupFrame.getSelectedMode() != null) {
 
-                        FrameChoices frameChoices = new FrameChoices(startupFrame.getSelectedAction(), startupFrame.getSelectedMode(), playerDetail, startupFrame.getSelectedMap(), startupFrame.getSelectedScript(), startupFrame.getSelectedDevice(), startupFrame.getSelectedView());
+                        FrameChoices frameChoices = new FrameChoices(startupFrame.getSelectedAction(), startupFrame.getSelectedMode(), playerDefinition, startupFrame.getSelectedMap(), startupFrame.getSelectedScript(), startupFrame.getSelectedDevice(), startupFrame.getSelectedView());
 
                         if (frameChoices.isValid()) {
                             MainFrame frame = new MainFrame(frameChoices);
@@ -135,15 +134,15 @@ public class Runner {
                         return;
                     }
                     ConnectionDefinition connectionDefinition = ConnectionDefinition.read();
-                    PlayerDetail playerDetail = PlayerDetail.read();
-                    if (playerDetail == null) {
-                        playerDetail = new PlayerDetail();
+                    PlayerDefinition playerDefinition = PlayerDefinition.read();
+                    if (playerDefinition == null) {
+                        playerDefinition = new PlayerDefinition();
                         while (true) {
                             System.out.println("Please enter your current Player Level: ");
                             int level = ConsoleInput.getInt();
                             if (level > 8 && level <= 150) {
-                                playerDetail.setLevel(level);
-                                playerDetail.write();
+                                playerDefinition.setLevel(level);
+                                playerDefinition.write();
                                 break;
                             } else {
                                 System.out.println("Invalid level, it must be between 8 and 150.  Stopping.");
@@ -158,7 +157,7 @@ public class Runner {
                     System.out.println("Script: " + scriptName);
                     System.out.println("Device: " + deviceName);
                     System.out.println("View: " + device.getViewId());
-                    System.out.println("Energy: " + playerDetail.getTotalEnergy());
+                    System.out.println("Energy: " + playerDefinition.getTotalEnergy());
                     System.out.println("----------");
                     System.out.println();
 

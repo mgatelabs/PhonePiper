@@ -10,6 +10,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.text.SimpleDateFormat;
 import java.util.Comparator;
 import java.util.Map;
 import java.util.SortedSet;
@@ -38,7 +39,11 @@ public class RunScriptPanel extends JInternalFrame {
 
     private Map<String, Integer> stateToIntegerMap;
 
-    public RunScriptPanel(DeviceHelper helper, PlayerDetail playerDetail, AdbShell shell, DeviceDefinition deviceDefinition, ViewDefinition viewDefinition, ScriptDefinition scriptDefinition, MapPanel mapPanel) {
+    private JLabel lastImageTimeLabel;
+
+    private SimpleDateFormat simpleDateFormat = new SimpleDateFormat("hh:mm:ss");
+
+    public RunScriptPanel(DeviceHelper helper, PlayerDefinition playerDefinition, AdbShell shell, DeviceDefinition deviceDefinition, ViewDefinition viewDefinition, ScriptDefinition scriptDefinition, MapPanel mapPanel) {
         super("Script Runner", true, false, true, false);
         this.helper = helper;
         this.shell = shell;
@@ -48,7 +53,7 @@ public class RunScriptPanel extends JInternalFrame {
 
         timer = null;
 
-        scriptRunner = new ScriptRunner(playerDetail, helper, scriptDefinition, deviceDefinition, viewDefinition);
+        scriptRunner = new ScriptRunner(playerDefinition, helper, scriptDefinition, deviceDefinition, viewDefinition);
 
         scriptThread = null;
 
@@ -64,7 +69,7 @@ public class RunScriptPanel extends JInternalFrame {
         setLayout(new GridBagLayout());
         GridBagConstraints c = new GridBagConstraints();
 
-        startStopButton = new JButton("Start / Pause");
+        startStopButton = new JButton("Start Script");
         c.fill = GridBagConstraints.HORIZONTAL;
         c.gridx = 0;
         c.gridy = 0;
@@ -77,11 +82,18 @@ public class RunScriptPanel extends JInternalFrame {
                 if (scriptRunner.getStatus() == ScriptRunner.Status.RUNNING) {
                     scriptRunner.setStatus(ScriptRunner.Status.PAUSED);
                     scriptThread = null;
+                    startStopButton.setText("Start Script");
                 } else if (scriptRunner.getStatus() != ScriptRunner.Status.PAUSED) {
                     scriptRunner.initHelper();
                     scriptThread = new ScriptThread(scriptRunner, ((StateDefinition)stateCombo.getSelectedItem()).getId());
                     scriptThread.start();
                     timer.start();
+                    startStopButton.setText("Pause  Script");
+                } else if (scriptRunner.getStatus() == ScriptRunner.Status.PAUSED) {
+                    scriptThread = new ScriptThread(scriptRunner, ((StateDefinition)stateCombo.getSelectedItem()).getId());
+                    scriptThread.start();
+                    timer.start();
+                    startStopButton.setText("Pause Script");
                 }
             }
         });
@@ -123,6 +135,23 @@ public class RunScriptPanel extends JInternalFrame {
             stateToIntegerMap.put(stateDefinition.getId(), i++);
         }
 
+        tempLabel = new JLabel("Image:");
+        c.fill = GridBagConstraints.HORIZONTAL;
+        c.gridx = 0;
+        c.gridy = 2;
+        c.weightx = 0;
+        c.gridwidth = 1;
+        add(tempLabel, c);
+
+        lastImageTimeLabel = new JLabel("?");
+        c.fill = GridBagConstraints.HORIZONTAL;
+        c.gridx = 1;
+        c.gridy = 2;
+        c.gridwidth = 1;
+        c.weightx = 1.0f;
+        //c.insets = new Insets(5, 5, 5, 5);
+        this.add(lastImageTimeLabel, c);
+
         pack();
 
         setVisible(true);
@@ -135,6 +164,9 @@ public class RunScriptPanel extends JInternalFrame {
                     if (stateCombo.getSelectedIndex() != neededIndex) {
                         stateCombo.setSelectedIndex(neededIndex);
                     }
+                }
+                if (scriptRunner.getLastImageDate() != null) {
+                    lastImageTimeLabel.setText(simpleDateFormat.format(scriptRunner.getLastImageDate()) + String.format(" (%2.2f)", scriptRunner.getLastImageDuration()) );
                 }
                 if (scriptRunner.getStatus() != ScriptRunner.Status.RUNNING) {
                     timer.stop();

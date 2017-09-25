@@ -14,7 +14,7 @@ import java.awt.*;
  */
 public class MainFrame extends JFrame {
 
-    final PlayerDetail playerDetail;
+    final PlayerDefinition playerDefinition;
     private ScriptDefinition scriptDefinition;
     private MapDefinition mapDefinition;
     private DeviceDefinition deviceDefinition;
@@ -40,7 +40,7 @@ public class MainFrame extends JFrame {
 
         connectionDefinition = ConnectionDefinition.read();
 
-        playerDetail = choices.getPlayerDetail();
+        playerDefinition = choices.getPlayerDefinition();
         scriptDefinition = choices.getScriptDefinition();
         mapDefinition = choices.getMapDefinition();
         deviceDefinition = choices.getDeviceDefinition();
@@ -122,7 +122,7 @@ public class MainFrame extends JFrame {
         }
 
         if (showRunScript) {
-            runScriptPanel = new RunScriptPanel(connectionPanel.getDeviceHelper(), playerDetail, shell, deviceDefinition, viewDefinition, scriptDefinition, mapPanel);
+            runScriptPanel = new RunScriptPanel(connectionPanel.getDeviceHelper(), playerDefinition, shell, deviceDefinition, viewDefinition, scriptDefinition, mapPanel);
             runScriptPanel.setLocation(0, column0Top);
             column0Top += runScriptPanel.getHeight();
             desktopPane.add(runScriptPanel);

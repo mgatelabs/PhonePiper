@@ -1,6 +1,6 @@
 package com.mgatelabs.ffbe.ui.panels;
 
-import com.mgatelabs.ffbe.shared.details.PlayerDetail;
+import com.mgatelabs.ffbe.shared.details.PlayerDefinition;
 
 import javax.swing.*;
 import javax.swing.event.ChangeEvent;
@@ -13,17 +13,17 @@ import java.awt.event.ActionEvent;
  */
 public class PlayerPanel extends JInternalFrame {
 
-    final PlayerDetail playerDetail;
+    final PlayerDefinition playerDefinition;
 
     private JTextField ipAddress;
     private JSlider levelSlider;
     private JLabel levelValueLabel;
     private JLabel energyValueLabel;
 
-    public PlayerPanel(PlayerDetail playerDetail) {
+    public PlayerPanel(PlayerDefinition playerDefinition) {
         super("Device/Player", false, false, false, false);
 
-        this.playerDetail = playerDetail;
+        this.playerDefinition = playerDefinition;
 
         setMinimumSize(new Dimension(300, 135));
         setPreferredSize(getMinimumSize());
@@ -34,6 +34,10 @@ public class PlayerPanel extends JInternalFrame {
         this.add(container);
 
         GridBagConstraints c;
+        c = new GridBagConstraints();
+
+        /*
+        GridBagConstraints c;
         JLabel ipLabel = new JLabel("IP Address:");
         c = new GridBagConstraints();
         c.fill = GridBagConstraints.HORIZONTAL;
@@ -43,11 +47,12 @@ public class PlayerPanel extends JInternalFrame {
         container.add(ipLabel, c);
 
         ipAddress = new JTextField();
-        ipAddress.setText(playerDetail.getIp());
+        ipAddress.setText(playerDefinition.getIp());
         c.gridx = 0;
         c.gridy = 1;
         c.gridwidth = 4;
         container.add(ipAddress, c);
+        */
 
         JLabel levelLabel = new JLabel("Level:");
         c.fill = GridBagConstraints.HORIZONTAL;
@@ -57,7 +62,7 @@ public class PlayerPanel extends JInternalFrame {
         c.gridwidth = 1;
         container.add(levelLabel, c);
 
-        levelValueLabel = new JLabel(Integer.toString(playerDetail.getLevel()));
+        levelValueLabel = new JLabel(Integer.toString(playerDefinition.getLevel()));
         levelValueLabel.setHorizontalAlignment(SwingConstants.CENTER);
         c.fill = GridBagConstraints.HORIZONTAL;
         c.gridx = 1;
@@ -74,7 +79,7 @@ public class PlayerPanel extends JInternalFrame {
         c.gridwidth = 1;
         container.add(energyLabel, c);
 
-        energyValueLabel = new JLabel(Integer.toString(playerDetail.getTotalEnergy()));
+        energyValueLabel = new JLabel(Integer.toString(playerDefinition.getTotalEnergy()));
         energyValueLabel.setHorizontalAlignment(SwingConstants.RIGHT);
         c.fill = GridBagConstraints.HORIZONTAL;
         c.gridx = 3;
@@ -83,13 +88,13 @@ public class PlayerPanel extends JInternalFrame {
         c.gridwidth = 1;
         container.add(energyValueLabel, c);
 
-        levelSlider = new JSlider(15, PlayerDetail.MAX_LEVEL);
+        levelSlider = new JSlider(15, PlayerDefinition.MAX_LEVEL);
         levelSlider.addChangeListener(new ChangeListener() {
             @Override
             public void stateChanged(ChangeEvent e) {
-                playerDetail.setLevel(levelSlider.getValue());
-                levelValueLabel.setText(Integer.toString(playerDetail.getLevel()));
-                energyValueLabel.setText(Integer.toString(playerDetail.getTotalEnergy()));
+                playerDefinition.setLevel(levelSlider.getValue());
+                levelValueLabel.setText(Integer.toString(playerDefinition.getLevel()));
+                energyValueLabel.setText(Integer.toString(playerDefinition.getTotalEnergy()));
             }
         });
         c.gridx = 0;
@@ -97,14 +102,14 @@ public class PlayerPanel extends JInternalFrame {
         c.gridwidth = 4;
         container.add(levelSlider, c);
 
-        levelSlider.setValue(playerDetail.getLevel());
+        levelSlider.setValue(playerDefinition.getLevel());
 
         JButton saveButton = new JButton("Save");
         saveButton.addActionListener(new AbstractAction() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                playerDetail.setIp(ipAddress.getText());
-                playerDetail.write();
+                //playerDefinition.setIp(ipAddress.getText());
+                playerDefinition.write();
             }
         });
         c.fill = GridBagConstraints.BOTH;

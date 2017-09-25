@@ -12,14 +12,13 @@ import java.io.IOException;
 /**
  * Created by @mgatelabs (Michael Fuller) on 9/4/2017.
  */
-public class PlayerDetail {
+public class PlayerDefinition {
 
     public static final int MIN_ENERGY = 1;
     public static final int MAX_ENERGY = 165;
     public static final int MAX_LEVEL = 150;
 
     private int level;
-    private String ip;
 
     public int getLevel() {
         return level;
@@ -27,14 +26,6 @@ public class PlayerDetail {
 
     public void setLevel(int level) {
         this.level = level;
-    }
-
-    public String getIp() {
-        return ip;
-    }
-
-    public void setIp(String ip) {
-        this.ip = ip;
     }
 
     @JsonIgnore
@@ -50,12 +41,12 @@ public class PlayerDetail {
         return energy;
     }
 
-    public static PlayerDetail read() {
+    public static PlayerDefinition read() {
         File playerFile = new File("player.json");
         if (playerFile.exists()) {
             ObjectMapper objectMapper = JsonTool.INSTANCE;
             try {
-                return objectMapper.readValue(playerFile, PlayerDetail.class);
+                return objectMapper.readValue(playerFile, PlayerDefinition.class);
             } catch (JsonParseException e) {
                 e.printStackTrace();
             } catch (JsonMappingException e) {
@@ -64,7 +55,7 @@ public class PlayerDetail {
                 e.printStackTrace();
             }
         }
-        return new PlayerDetail();
+        return new PlayerDefinition();
     }
 
     public boolean write() {

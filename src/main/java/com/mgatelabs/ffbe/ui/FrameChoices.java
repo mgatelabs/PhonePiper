@@ -1,7 +1,7 @@
 package com.mgatelabs.ffbe.ui;
 
 import com.mgatelabs.ffbe.shared.details.DeviceDefinition;
-import com.mgatelabs.ffbe.shared.details.PlayerDetail;
+import com.mgatelabs.ffbe.shared.details.PlayerDefinition;
 import com.mgatelabs.ffbe.shared.details.ScriptDefinition;
 import com.mgatelabs.ffbe.shared.details.ViewDefinition;
 import com.mgatelabs.ffbe.shared.mapper.MapDefinition;
@@ -13,7 +13,7 @@ import com.mgatelabs.ffbe.ui.utils.Constants;
  */
 public class FrameChoices {
 
-    private final PlayerDetail playerDetail;
+    private final PlayerDefinition playerDefinition;
     private final MapDefinition mapDefinition;
     private final ScriptDefinition scriptDefinition;
     private final DeviceDefinition deviceDefinition;
@@ -41,8 +41,8 @@ public class FrameChoices {
     private final Mode mode;
     private final Action action;
 
-    public FrameChoices(String actionId, String modeId, PlayerDetail playerDetail, String mapId, String scriptId, String deviceId, String viewId) {
-        this.playerDetail = playerDetail;
+    public FrameChoices(String actionId, String modeId, PlayerDefinition playerDefinition, String mapId, String scriptId, String deviceId, String viewId) {
+        this.playerDefinition = playerDefinition;
 
         switch (modeId) {
             case Constants.MODE_SCRIPT:
@@ -212,8 +212,8 @@ public class FrameChoices {
         return action;
     }
 
-    public PlayerDetail getPlayerDetail() {
-        return playerDetail;
+    public PlayerDefinition getPlayerDefinition() {
+        return playerDefinition;
     }
 
     public MapDefinition getMapDefinition() {

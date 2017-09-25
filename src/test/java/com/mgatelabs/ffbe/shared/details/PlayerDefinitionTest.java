@@ -3,15 +3,13 @@ package com.mgatelabs.ffbe.shared.details;
 import org.junit.Assert;
 import org.junit.Test;
 
-import static org.junit.Assert.*;
-
 /**
  * Created by @mgatelabs (Michael Fuller) on 9/4/2017.
  */
-public class PlayerDetailTest {
+public class PlayerDefinitionTest {
     @Test
     public void getTotalEnergy() throws Exception {
-        PlayerDetail detail = new PlayerDetail();
+        PlayerDefinition detail = new PlayerDefinition();
 
         // Maximum
         detail.setLevel(150);

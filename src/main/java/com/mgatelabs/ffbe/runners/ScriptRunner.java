@@ -1,5 +1,6 @@
 package com.mgatelabs.ffbe.runners;
 
+import com.google.common.collect.ImmutableSet;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 import com.mgatelabs.ffbe.shared.details.*;
@@ -10,7 +11,6 @@ import com.mgatelabs.ffbe.shared.helper.PointTransfer;
 import com.mgatelabs.ffbe.shared.image.*;
 import com.mgatelabs.ffbe.shared.util.AdbShell;
 import com.mgatelabs.ffbe.shared.util.AdbUtils;
-import com.mgatelabs.ffbe.shared.util.ConsoleInput;
 
 import java.text.SimpleDateFormat;
 import java.util.*;
@@ -27,7 +27,7 @@ public class ScriptRunner {
         PAUSED
     }
 
-    private PlayerDetail playerDetail;
+    private PlayerDefinition playerDefinition;
     private ScriptDefinition scriptDefinition;
     private DeviceDefinition deviceDefinition;
     private ViewDefinition viewDefinition;
@@ -54,8 +54,11 @@ public class ScriptRunner {
 
     private volatile Status status;
 
-    public ScriptRunner(PlayerDetail playerDetail, DeviceHelper deviceHelper, ScriptDefinition scriptDefinition, DeviceDefinition deviceDefinition, ViewDefinition viewDefinition) {
-        this.playerDetail = playerDetail;
+    private Date lastImageDate;
+    private float lastImageDuration;
+
+    public ScriptRunner(PlayerDefinition playerDefinition, DeviceHelper deviceHelper, ScriptDefinition scriptDefinition, DeviceDefinition deviceDefinition, ViewDefinition viewDefinition) {
+        this.playerDefinition = playerDefinition;
         this.scriptDefinition = scriptDefinition;
         this.deviceDefinition = deviceDefinition;
         this.viewDefinition = viewDefinition;
@@ -106,6 +109,14 @@ public class ScriptRunner {
         this.deviceHelper = deviceHelper;
 
         status = Status.INIT;
+    }
+
+    public Date getLastImageDate() {
+        return lastImageDate;
+    }
+
+    public float getLastImageDuration() {
+        return lastImageDuration;
     }
 
     public boolean initHelper() {
@@ -202,6 +213,10 @@ public class ScriptRunner {
         return currentStateId;
     }
 
+    public Set<String> getValidScreenIds() {
+        return ImmutableSet.copyOf(validScreenIds);
+    }
+
     public void run(String stateName) {
         currentStateId = stateName;
         this.status = Status.RUNNING;
@@ -243,7 +258,10 @@ public class ScriptRunner {
 
                 long dif = endTime - startTime;
 
-                String seconds = String.format("%2.2f", ((float) dif / 1000000000.0));
+                lastImageDate = new Date();
+                lastImageDuration = ((float) dif / 1000000000.0f);
+
+                String seconds = String.format("%2.2f", lastImageDuration);
 
                 System.out.println("------------");
                 System.out.println("Image: Persisted " + seconds + "s" + " : " + getDateString());
@@ -259,7 +277,10 @@ public class ScriptRunner {
 
                 long dif = endTime - startTime;
 
-                String seconds = String.format("%2.2f", ((float) dif / 1000000000.0));
+                lastImageDate = new Date();
+                lastImageDuration = ((float) dif / 1000000000.0f);
+
+                String seconds = String.format("%2.2f", lastImageDuration);
 
                 if (imageWrapper == null || !imageWrapper.isReady()) {
                     System.out.println("------------");
@@ -493,8 +514,8 @@ public class ScriptRunner {
             break;
             case ENERGY: {
                 int energy = Integer.parseInt(conditionDefinition.getValue());
-                if (energy >= PlayerDetail.MIN_ENERGY && energy <= PlayerDetail.MAX_ENERGY) {
-                    float requiredPercent = ((float) energy / (float) playerDetail.getTotalEnergy());
+                if (energy >= PlayerDefinition.MIN_ENERGY && energy <= PlayerDefinition.MAX_ENERGY) {
+                    float requiredPercent = ((float) energy / (float) playerDefinition.getTotalEnergy());
                     int requiredPixel = ((int) (energyBar.getW() * requiredPercent) + 1);
                     if (requiredPixel > energyBar.getW()) {
                         requiredPixel = energyBar.getW();

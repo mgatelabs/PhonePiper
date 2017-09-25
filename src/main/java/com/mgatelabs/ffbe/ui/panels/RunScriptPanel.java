@@ -1,15 +1,17 @@
 package com.mgatelabs.ffbe.ui.panels;
 
-import com.mgatelabs.ffbe.shared.details.ScriptDefinition;
-import com.mgatelabs.ffbe.shared.details.StateDefinition;
-import com.mgatelabs.ffbe.shared.details.ViewDefinition;
+import com.google.common.collect.Maps;
+import com.mgatelabs.ffbe.runners.ScriptRunner;
+import com.mgatelabs.ffbe.shared.details.*;
 import com.mgatelabs.ffbe.shared.helper.DeviceHelper;
 import com.mgatelabs.ffbe.shared.util.AdbShell;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.Comparator;
+import java.util.Map;
 import java.util.SortedSet;
 import java.util.TreeSet;
 
@@ -30,13 +32,27 @@ public class RunScriptPanel extends JInternalFrame {
 
     private JComboBox<StateDefinition> stateCombo;
 
-    public RunScriptPanel(DeviceHelper helper, AdbShell shell, ViewDefinition viewDefinition, ScriptDefinition scriptDefinition, MapPanel mapPanel) {
+    private ScriptRunner scriptRunner;
+
+    private ScriptThread scriptThread;
+
+    private Map<String, Integer> stateToIntegerMap;
+
+    public RunScriptPanel(DeviceHelper helper, PlayerDetail playerDetail, AdbShell shell, DeviceDefinition deviceDefinition, ViewDefinition viewDefinition, ScriptDefinition scriptDefinition, MapPanel mapPanel) {
         super("Script Runner", true, false, true, false);
         this.helper = helper;
         this.shell = shell;
         this.viewDefinition = viewDefinition;
         this.scriptDefinition = scriptDefinition;
         this.mapPanel = mapPanel;
+
+        timer = null;
+
+        scriptRunner = new ScriptRunner(playerDetail, helper, scriptDefinition, deviceDefinition, viewDefinition);
+
+        scriptThread = null;
+
+        stateToIntegerMap = Maps.newHashMap();
 
         build();
     }
@@ -48,13 +64,27 @@ public class RunScriptPanel extends JInternalFrame {
         setLayout(new GridBagLayout());
         GridBagConstraints c = new GridBagConstraints();
 
-        startStopButton = new JButton("Start / Stop");
+        startStopButton = new JButton("Start / Pause");
         c.fill = GridBagConstraints.HORIZONTAL;
         c.gridx = 0;
         c.gridy = 0;
         c.gridwidth = 2;
         c.weightx = 1.0f;
         c.insets = new Insets(3, 5, 3, 5);
+        startStopButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if (scriptRunner.getStatus() == ScriptRunner.Status.RUNNING) {
+                    scriptRunner.setStatus(ScriptRunner.Status.PAUSED);
+                    scriptThread = null;
+                } else if (scriptRunner.getStatus() != ScriptRunner.Status.PAUSED) {
+                    scriptRunner.initHelper();
+                    scriptThread = new ScriptThread(scriptRunner, ((StateDefinition)stateCombo.getSelectedItem()).getId());
+                    scriptThread.start();
+                    timer.start();
+                }
+            }
+        });
         this.add(startStopButton, c);
 
         JLabel tempLabel = new JLabel("State:");
@@ -87,8 +117,10 @@ public class RunScriptPanel extends JInternalFrame {
         });
         definitions.addAll(scriptDefinition.getStates().values());
 
+        int i = 0;
         for (StateDefinition stateDefinition: definitions) {
             stateCombo.addItem(stateDefinition);
+            stateToIntegerMap.put(stateDefinition.getId(), i++);
         }
 
         pack();
@@ -98,8 +130,31 @@ public class RunScriptPanel extends JInternalFrame {
         timer = new Timer(500, new AbstractAction() {
             @Override
             public void actionPerformed(ActionEvent e) {
-
+                Integer neededIndex = stateToIntegerMap.get(scriptRunner.getCurrentStateId());
+                if (neededIndex != null) {
+                    if (stateCombo.getSelectedIndex() != neededIndex) {
+                        stateCombo.setSelectedIndex(neededIndex);
+                    }
+                }
+                if (scriptRunner.getStatus() != ScriptRunner.Status.RUNNING) {
+                    timer.stop();
+                }
             }
         });
+    }
+
+    private static class ScriptThread extends Thread {
+        ScriptRunner runner;
+        String state;
+        public ScriptThread(ScriptRunner scriptRunner, String state) {
+            this.runner = scriptRunner;
+            this.state = state;
+        }
+
+        @Override
+        public void run() {
+            super.run();
+            this.runner.run(state);
+        }
     }
 }

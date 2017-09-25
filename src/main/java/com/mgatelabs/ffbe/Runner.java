@@ -152,7 +152,7 @@ public class Runner {
                         }
 
                     }
-                    ScriptRunner scriptRunner = new ScriptRunner(playerDetail, connectionDefinition, script, device, view);
+                    //ScriptRunner scriptRunner = new ScriptRunner(playerDetail, connectionDefinition, script, device, view);
 
                     System.out.println("----------");
                     System.out.println("Script: " + scriptName);
@@ -162,7 +162,7 @@ public class Runner {
                     System.out.println("----------");
                     System.out.println();
 
-                    scriptRunner.run("main");
+                    //scriptRunner.run("main");
                 }
 
 

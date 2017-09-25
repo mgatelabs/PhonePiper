@@ -122,7 +122,7 @@ public class MainFrame extends JFrame {
         }
 
         if (showRunScript) {
-            runScriptPanel = new RunScriptPanel(connectionPanel.getDeviceHelper(), shell, viewDefinition, scriptDefinition, mapPanel);
+            runScriptPanel = new RunScriptPanel(connectionPanel.getDeviceHelper(), playerDetail, shell, deviceDefinition, viewDefinition, scriptDefinition, mapPanel);
             runScriptPanel.setLocation(0, column0Top);
             column0Top += runScriptPanel.getHeight();
             desktopPane.add(runScriptPanel);

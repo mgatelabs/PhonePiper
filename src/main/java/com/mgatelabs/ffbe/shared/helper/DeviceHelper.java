@@ -27,6 +27,10 @@ public class DeviceHelper {
         failures = 0;
     }
 
+    public boolean ready() {
+        return this.ipAddress != null && ipAddress.length() > 5;
+    }
+
     public String getIpAddress() {
         return ipAddress;
     }

@@ -2,17 +2,15 @@ package com.mgatelabs.ffbe.runners;
 
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
+import com.mgatelabs.ffbe.shared.details.*;
+import com.mgatelabs.ffbe.shared.helper.DeviceHelper;
 import com.mgatelabs.ffbe.shared.helper.InfoTransfer;
 import com.mgatelabs.ffbe.shared.helper.MapTransfer;
 import com.mgatelabs.ffbe.shared.helper.PointTransfer;
+import com.mgatelabs.ffbe.shared.image.*;
 import com.mgatelabs.ffbe.shared.util.AdbShell;
 import com.mgatelabs.ffbe.shared.util.AdbUtils;
-import com.mgatelabs.ffbe.shared.image.Sampler;
 import com.mgatelabs.ffbe.shared.util.ConsoleInput;
-import com.mgatelabs.ffbe.shared.details.StateResult;
-import com.mgatelabs.ffbe.shared.details.*;
-import com.mgatelabs.ffbe.shared.helper.DeviceHelper;
-import com.mgatelabs.ffbe.shared.image.*;
 
 import java.text.SimpleDateFormat;
 import java.util.*;
@@ -21,6 +19,13 @@ import java.util.*;
  * Created by @mgatelabs (Michael Fuller) on 9/4/2017.
  */
 public class ScriptRunner {
+
+    public enum Status {
+        INIT,
+        READY,
+        RUNNING,
+        PAUSED
+    }
 
     private PlayerDetail playerDetail;
     private ScriptDefinition scriptDefinition;
@@ -39,8 +44,6 @@ public class ScriptRunner {
 
     public static final SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 
-    private String phoneIp;
-
     private DeviceHelper deviceHelper;
 
     private Set<String> validScreenIds;
@@ -49,7 +52,9 @@ public class ScriptRunner {
 
     private Map<String, Integer> vars;
 
-    public ScriptRunner(PlayerDetail playerDetail, ConnectionDefinition connectionDefinition, ScriptDefinition scriptDefinition, DeviceDefinition deviceDefinition, ViewDefinition viewDefinition) {
+    private volatile Status status;
+
+    public ScriptRunner(PlayerDetail playerDetail, DeviceHelper deviceHelper, ScriptDefinition scriptDefinition, DeviceDefinition deviceDefinition, ViewDefinition viewDefinition) {
         this.playerDetail = playerDetail;
         this.scriptDefinition = scriptDefinition;
         this.deviceDefinition = deviceDefinition;
@@ -58,7 +63,7 @@ public class ScriptRunner {
         vars = Maps.newHashMap();
         shell = new AdbShell();
 
-        for (VarDefinition varDefinition: scriptDefinition.getVars()) {
+        for (VarDefinition varDefinition : scriptDefinition.getVars()) {
             if (varDefinition.getType() == VarType.INT) {
                 addVar(varDefinition.getName(), Integer.parseInt(varDefinition.getValue()));
             }
@@ -79,7 +84,7 @@ public class ScriptRunner {
             throw new RuntimeException("Cannot find required component id: " + "menu-energy_bar");
         }
 
-        for (Map.Entry<String, StateDefinition> entry: scriptDefinition.getStates().entrySet()) {
+        for (Map.Entry<String, StateDefinition> entry : scriptDefinition.getStates().entrySet()) {
             entry.getValue().setId(entry.getKey());
         }
 
@@ -96,45 +101,31 @@ public class ScriptRunner {
         ComponentDefinition miniMapAreaCenter = components.get("dungeon-mini_map-center");
         transferMap.setup(deviceDefinition.getWidth(), 12, 4, miniMapArea.getW(), miniMapArea.getH(), miniMapArea.getX(), miniMapArea.getY(), miniMapAreaCenter.getW(), miniMapAreaCenter.getH());
 
-
         validScreenIds = null;
 
-        System.out.println("Use Phone Helper? (Y/N)");
-        if (ConsoleInput.yesNo()) {
-            System.out.println("Phone IP Address: " + (connectionDefinition.getIp() != null ? connectionDefinition.getIp() : "?"));
-            phoneIp = ConsoleInput.getString();
-            if (phoneIp.length() > 0) {
-                connectionDefinition.setIp(phoneIp);
-                if (connectionDefinition.write()) {
-                    System.out.println("Connection updated!");
-                }
-            } else if (phoneIp.length() == 0) {
-                phoneIp = playerDetail.getIp();
-            }
+        this.deviceHelper = deviceHelper;
 
-            deviceHelper = new DeviceHelper(phoneIp);
+        status = Status.INIT;
+    }
 
+    public boolean initHelper() {
+        if (deviceHelper.ready()) {
             InfoTransfer infoTransfer = new InfoTransfer();
             infoTransfer.setStates(transferStateMap);
             infoTransfer.setMap(transferMap);
-
-            System.out.println("------------");
-            System.out.println("Helper: /setup/" + " : " + getDateString());
-            System.out.println("------------");
-            System.out.println();
-
             if (deviceHelper.setup(infoTransfer)) {
-                System.out.println("Image Server Ready!");
-                System.out.println("Continue? (Y/N)");
-                if (!ConsoleInput.yesNo()) {
-                    return;
-                }
+                return true;
             }
-
-        } else {
-            phoneIp = null;
-            deviceHelper = null;
         }
+        return false;
+    }
+
+    public Status getStatus() {
+        return status;
+    }
+
+    public void setStatus(Status status) {
+        this.status = status;
     }
 
     private int getVar(String name) {
@@ -201,7 +192,19 @@ public class ScriptRunner {
         return results;
     }
 
+    public boolean isRunning() {
+        return this.status == Status.RUNNING;
+    }
+
+    private String currentStateId;
+
+    public String getCurrentStateId() {
+        return currentStateId;
+    }
+
     public void run(String stateName) {
+        currentStateId = stateName;
+        this.status = Status.RUNNING;
 
         ImageWrapper imageWrapper;
 
@@ -211,7 +214,7 @@ public class ScriptRunner {
             throw new RuntimeException("Cannot find state with id: " + stateName);
         }
 
-        while (true) {
+        while (isRunning()) {
 
             if (!shell.isReady()) {
                 System.out.println("Bad Shell: Starting again");
@@ -275,7 +278,7 @@ public class ScriptRunner {
 
             boolean keepRunning = true;
 
-            while (keepRunning) {
+            while (keepRunning && isRunning()) {
                 keepRunning = false;
 
                 if (deviceHelper != null) {
@@ -311,6 +314,7 @@ public class ScriptRunner {
                         if (stateDefinition == null) {
                             throw new RuntimeException("Cannot find state with id: " + result.getValue());
                         }
+                        currentStateId = stateDefinition.getId();
                         keepRunning = false;
                     }
                     break;
@@ -320,6 +324,7 @@ public class ScriptRunner {
                         if (stateDefinition == null) {
                             throw new RuntimeException("Cannot find state with id: " + result.getValue());
                         }
+                        currentStateId = stateDefinition.getId();
                         keepRunning = false;
                     }
                     break;
@@ -328,6 +333,7 @@ public class ScriptRunner {
                         if (stateDefinition == null) {
                             throw new RuntimeException("Cannot find state with id: " + result.getValue());
                         }
+                        currentStateId = stateDefinition.getId();
                         keepRunning = true;
                     }
                     break;
@@ -342,6 +348,10 @@ public class ScriptRunner {
             waitFor(1000);
         }
 
+        System.out.println("------------");
+        System.out.println("Script Stopped : " + getDateString());
+        System.out.println("------------");
+        System.out.println();
     }
 
     private StateResult state(final StateDefinition stateDefinition, final ImageWrapper imageWrapper) {
@@ -371,17 +381,20 @@ public class ScriptRunner {
                                 batchCmds = false;
                                 shell.exec();
                             }
-                        } break;
+                        }
+                        break;
                         case SET: {
                             String varName = actionDefinition.getVar();
                             int value = Integer.parseInt(actionDefinition.getValue());
                             setVar(varName, value);
-                        } break;
+                        }
+                        break;
                         case ADD: {
                             String varName = actionDefinition.getVar();
                             int value = Integer.parseInt(actionDefinition.getValue());
                             addVar(varName, value);
-                        } break;
+                        }
+                        break;
                         case TAP:
                         case SWIPE_DOWN:
                         case SWIPE_UP:
@@ -392,7 +405,8 @@ public class ScriptRunner {
                                 throw new RuntimeException("Cannot find component with id: " + actionDefinition.getValue());
                             }
                             AdbUtils.component(deviceDefinition, componentDefinition, actionDefinition.getType(), shell, batchCmds);
-                        } break;
+                        }
+                        break;
                         case WAIT: {
                             long time = Long.parseLong(actionDefinition.getValue());
                             if (time > 0) {
@@ -443,24 +457,28 @@ public class ScriptRunner {
                 result = "true".equalsIgnoreCase(conditionDefinition.getValue());
             }
             break;
-            case GREATER: {
-                int value = Integer.parseInt(conditionDefinition.getValue());
-                String varName = conditionDefinition.getVar();
-                int currentValue = getVar(varName);
-                result = currentValue > value;
-            } break;
-            case LESS: {
-                int value = Integer.parseInt(conditionDefinition.getValue());
-                String varName = conditionDefinition.getVar();
-                int currentValue = getVar(varName);
-                result = currentValue < value;
-            } break;
+            case GREATER:
+            case LESS:
             case EQUAL: {
                 int value = Integer.parseInt(conditionDefinition.getValue());
                 String varName = conditionDefinition.getVar();
                 int currentValue = getVar(varName);
-                result = currentValue == value;
-            } break;
+                switch (conditionDefinition.getIs()) {
+                    case GREATER: {
+                        result = currentValue > value;
+                    }
+                    break;
+                    case LESS: {
+                        result = currentValue < value;
+                    }
+                    break;
+                    case EQUAL: {
+                        result = currentValue == value;
+                    }
+                    break;
+                }
+            }
+            break;
             case SCREEN: {
                 if (deviceHelper != null) {
                     result = validScreenIds.contains(conditionDefinition.getValue());
@@ -483,7 +501,7 @@ public class ScriptRunner {
                     }
                     Sampler sample = new Sampler();
                     if (deviceHelper != null) {
-                        int [] pixels = deviceHelper.pixel(RawImageWrapper.getOffsetFor(deviceDefinition.getWidth(), 12, energyBar.getX() + requiredPixel, energyBar.getY(), RawImageWrapper.ImageFormats.RGBA));
+                        int[] pixels = deviceHelper.pixel(RawImageWrapper.getOffsetFor(deviceDefinition.getWidth(), 12, energyBar.getX() + requiredPixel, energyBar.getY(), RawImageWrapper.ImageFormats.RGBA));
                         if (pixels != null) {
                             sample.setR(pixels[0]);
                             sample.setG(pixels[1]);

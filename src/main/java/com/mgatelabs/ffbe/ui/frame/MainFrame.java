@@ -40,8 +40,9 @@ public class MainFrame extends JFrame {
 
     private boolean returnRequested;
 
-    public MainFrame(FrameChoices choices) throws HeadlessException {
+    public MainFrame(FrameChoices choices, ImageIcon icon) throws HeadlessException {
         super("FFBExecute 0.0.2");
+        setIconImage(icon.getImage());
         setMinimumSize(new Dimension(800, 600));
         setPreferredSize(new Dimension(1024, 768));
         setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);

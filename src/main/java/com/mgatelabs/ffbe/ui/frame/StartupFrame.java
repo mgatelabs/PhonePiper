@@ -36,8 +36,9 @@ public class StartupFrame extends JFrame {
     private String selectedMode;
     private String selectedAction;
 
-    public StartupFrame(PlayerDefinition playerDefinition) throws HeadlessException {
+    public StartupFrame(PlayerDefinition playerDefinition, ImageIcon icon) throws HeadlessException {
         super("FFBExecute");
+        setIconImage(icon.getImage());
         frame = this;
         this.playerDefinition = playerDefinition;
         setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);

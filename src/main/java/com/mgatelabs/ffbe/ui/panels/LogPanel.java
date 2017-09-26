@@ -66,12 +66,20 @@ public class LogPanel extends JInternalFrame {
             @Override
             public void actionPerformed(ActionEvent e) {
                 ImmutableList<LogRecord> records = customHandler.getEvents();
-                if (records.size() > 0) {
-                    for (LogRecord logRecord: records) {
-                        defaultTableModel.insertRow(0, new String[]{logRecord.getSourceClassName().substring(logRecord.getSourceClassName().lastIndexOf('.')), sdf.format(new Date(logRecord.getMillis())), logRecord.getLevel().getName(), logRecord.getMessage()});
+                try {
+                    if (records.size() > 0) {
+                        final String[] cols = new String[4];
+                        for (LogRecord logRecord : records) {
+                            cols[0] = logRecord.getSourceClassName().substring(logRecord.getSourceClassName().lastIndexOf('.'));
+                            cols[1] = sdf.format(new Date(logRecord.getMillis()));
+                            cols[2] = logRecord.getLevel().getName();
+                            cols[3] = logRecord.getMessage();
+                            defaultTableModel.insertRow(0, cols);
+                        }
                     }
+                } catch (Exception ex) {
+                    ex.printStackTrace();
                 }
-
                 while (defaultTableModel.getRowCount() > 50) {
                     defaultTableModel.removeRow(defaultTableModel.getRowCount() - 1);
                 }

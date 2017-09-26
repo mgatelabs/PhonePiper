@@ -9,6 +9,8 @@ import com.mgatelabs.ffbe.ui.FrameChoices;
 import com.mgatelabs.ffbe.ui.frame.MainFrame;
 import com.mgatelabs.ffbe.ui.frame.StartupFrame;
 
+import javax.swing.*;
+
 /**
  * Created by @mgatelabs (Michael Fuller) on 8/27/2017.
  */
@@ -37,8 +39,10 @@ public class Runner {
 
                 PlayerDefinition playerDefinition = PlayerDefinition.read();
 
+                final ImageIcon imageIcon = new ImageIcon(playerDefinition.getClass().getResource("/icon.png"));
+
                 while (true) {
-                    StartupFrame startupFrame = new StartupFrame(playerDefinition);
+                    StartupFrame startupFrame = new StartupFrame(playerDefinition, imageIcon);
 
                     while (startupFrame.isShowing()) {
                         try {
@@ -53,7 +57,7 @@ public class Runner {
                         FrameChoices frameChoices = new FrameChoices(startupFrame.getSelectedAction(), startupFrame.getSelectedMode(), playerDefinition, startupFrame.getSelectedMap(), startupFrame.getSelectedScript(), startupFrame.getSelectedDevice(), startupFrame.getSelectedView());
 
                         if (frameChoices.isValid()) {
-                            MainFrame frame = new MainFrame(frameChoices);
+                            MainFrame frame = new MainFrame(frameChoices, imageIcon);
 
                             while (frame.isShowing()) {
                                 try {

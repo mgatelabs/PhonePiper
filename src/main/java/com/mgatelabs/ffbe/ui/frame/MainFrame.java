@@ -8,6 +8,8 @@ import com.mgatelabs.ffbe.ui.panels.*;
 import com.mgatelabs.ffbe.ui.utils.CustomHandler;
 
 import javax.swing.*;
+import javax.swing.event.MenuEvent;
+import javax.swing.event.MenuListener;
 import java.awt.*;
 import java.beans.PropertyVetoException;
 
@@ -36,11 +38,15 @@ public class MainFrame extends JFrame {
 
     private CustomHandler customHandler;
 
+    private boolean returnRequested;
+
     public MainFrame(FrameChoices choices) throws HeadlessException {
-        super("FFBExecute 0.0.1");
+        super("FFBExecute 0.0.2");
         setMinimumSize(new Dimension(800, 600));
         setPreferredSize(new Dimension(1024, 768));
         setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
+
+        returnRequested = false;
 
         customHandler = new CustomHandler();
 
@@ -154,11 +160,39 @@ public class MainFrame extends JFrame {
 
         setContentPane(desktopPane);
 
+        JMenuBar menuBar = new JMenuBar();
+        this.setJMenuBar(menuBar);
+
+        JMenu returnMenuItem = new JMenu("Return");
+
+        returnMenuItem.addMenuListener(new MenuListener() {
+            @Override
+            public void menuSelected(MenuEvent e) {
+                returnRequested = true;
+                setVisible(false);
+            }
+
+            @Override
+            public void menuDeselected(MenuEvent e) {
+
+            }
+
+            @Override
+            public void menuCanceled(MenuEvent e) {
+
+            }
+        });
+
+        menuBar.add(returnMenuItem);
 
         this.pack();
 
         setLocationRelativeTo(null);
 
         setVisible(true);
+    }
+
+    public boolean isReturnRequested() {
+        return returnRequested;
     }
 }

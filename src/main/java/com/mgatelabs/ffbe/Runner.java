@@ -63,7 +63,9 @@ public class Runner {
                                 }
                             }
 
-                            return;
+                            if (!frame.isReturnRequested()) {
+                                return;
+                            }
                         } else {
 
                         }

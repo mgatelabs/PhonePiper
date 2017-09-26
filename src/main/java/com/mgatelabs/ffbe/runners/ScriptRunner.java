@@ -11,9 +11,12 @@ import com.mgatelabs.ffbe.shared.helper.PointTransfer;
 import com.mgatelabs.ffbe.shared.image.*;
 import com.mgatelabs.ffbe.shared.util.AdbShell;
 import com.mgatelabs.ffbe.shared.util.AdbUtils;
+import com.mgatelabs.ffbe.ui.utils.CustomHandler;
 
 import java.text.SimpleDateFormat;
 import java.util.*;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  * Created by @mgatelabs (Michael Fuller) on 9/4/2017.
@@ -57,7 +60,9 @@ public class ScriptRunner {
     private Date lastImageDate;
     private float lastImageDuration;
 
-    public ScriptRunner(PlayerDefinition playerDefinition, DeviceHelper deviceHelper, ScriptDefinition scriptDefinition, DeviceDefinition deviceDefinition, ViewDefinition viewDefinition) {
+    private Logger logger = Logger.getLogger("ScriptRunner");
+
+    public ScriptRunner(PlayerDefinition playerDefinition, DeviceHelper deviceHelper, ScriptDefinition scriptDefinition, DeviceDefinition deviceDefinition, ViewDefinition viewDefinition, CustomHandler customHandler) {
         this.playerDefinition = playerDefinition;
         this.scriptDefinition = scriptDefinition;
         this.deviceDefinition = deviceDefinition;
@@ -66,16 +71,24 @@ public class ScriptRunner {
         vars = Maps.newHashMap();
         shell = new AdbShell();
 
+        logger.addHandler(customHandler);
+
+        logger.info("Extracting Variables");
+
         for (VarDefinition varDefinition : scriptDefinition.getVars()) {
             if (varDefinition.getType() == VarType.INT) {
                 addVar(varDefinition.getName(), Integer.parseInt(varDefinition.getValue()));
             }
         }
 
+        logger.info("Extracting Screens");
+
         screens = Maps.newHashMap();
         for (ScreenDefinition screenDefinition : viewDefinition.getScreens()) {
             screens.put(screenDefinition.getScreenId(), screenDefinition);
         }
+
+        logger.info("Extracting Components");
 
         components = Maps.newHashMap();
         for (ComponentDefinition componentDefinition : viewDefinition.getComponents()) {
@@ -84,6 +97,7 @@ public class ScriptRunner {
 
         energyBar = components.get("menu-energy_bar");
         if (energyBar == null) {
+            logger.log(Level.SEVERE, "Cannot find required component id: " + "menu-energy_bar");
             throw new RuntimeException("Cannot find required component id: " + "menu-energy_bar");
         }
 
@@ -91,10 +105,7 @@ public class ScriptRunner {
             entry.getValue().setId(entry.getKey());
         }
 
-        System.out.println("------------");
-        System.out.println("Generating State Info : " + getDateString());
-        System.out.println("------------");
-        System.out.println();
+        logger.info("Generating State Info");
 
         transferStateMap = Maps.newHashMap();
         transferStateMap.putAll(generateStateInfo());
@@ -226,13 +237,14 @@ public class ScriptRunner {
         StateDefinition stateDefinition = scriptDefinition.getStates().get(stateName);
 
         if (stateDefinition == null) {
+            logger.log(Level.SEVERE, "Cannot find state with id: " + stateName);
             throw new RuntimeException("Cannot find state with id: " + stateName);
         }
 
         while (isRunning()) {
 
             if (!shell.isReady()) {
-                System.out.println("Bad Shell: Starting again");
+                logger.log(Level.WARNING, "Bad Shell: Starting again");
                 try {
                     shell.shutdown();
                 } catch (Exception e) {
@@ -261,12 +273,7 @@ public class ScriptRunner {
                 lastImageDate = new Date();
                 lastImageDuration = ((float) dif / 1000000000.0f);
 
-                String seconds = String.format("%2.2f", lastImageDuration);
-
-                System.out.println("------------");
-                System.out.println("Image: Persisted " + seconds + "s" + " : " + getDateString());
-                System.out.println("------------");
-                System.out.println();
+                logger.fine("Image Persisted");
 
                 imageWrapper = null;
             } else {
@@ -280,20 +287,12 @@ public class ScriptRunner {
                 lastImageDate = new Date();
                 lastImageDuration = ((float) dif / 1000000000.0f);
 
-                String seconds = String.format("%2.2f", lastImageDuration);
-
                 if (imageWrapper == null || !imageWrapper.isReady()) {
-                    System.out.println("------------");
-                    System.out.println("Image: Failure: " + seconds + "s" + " : " + getDateString());
-                    System.out.println("------------");
-                    System.out.println();
+                    logger.warning("Image Failure");
                     waitFor(250);
                     continue;
                 } else {
-                    System.out.println("------------");
-                    System.out.println("Image: Success " + seconds + "s" + " : " + getDateString());
-                    System.out.println("------------");
-                    System.out.println();
+                    logger.fine("Image Persisted");
                 }
             }
 
@@ -304,10 +303,7 @@ public class ScriptRunner {
 
                 if (deviceHelper != null) {
 
-                    System.out.println("------------");
-                    System.out.println("Helper: /check/" + stateDefinition.getId() + " : " + getDateString());
-                    System.out.println("------------");
-                    System.out.println();
+                    logger.info("Helper: /check/" + stateDefinition.getId());
 
                     validScreenIds = deviceHelper.check(stateDefinition.getId());
                 }
@@ -323,6 +319,7 @@ public class ScriptRunner {
                             final String oldState = stack.pop();
                             stateDefinition = scriptDefinition.getStates().get(oldState);
                             if (stateDefinition == null) {
+                                logger.log(Level.SEVERE, "Cannot find state with id: " + oldState);
                                 throw new RuntimeException("Cannot find state with id: " + oldState);
                             }
                             keepRunning = false;
@@ -333,6 +330,7 @@ public class ScriptRunner {
                     case MOVE: {
                         stateDefinition = scriptDefinition.getStates().get(result.getValue());
                         if (stateDefinition == null) {
+                            logger.log(Level.SEVERE, "Cannot find state with id: " + result.getValue());
                             throw new RuntimeException("Cannot find state with id: " + result.getValue());
                         }
                         currentStateId = stateDefinition.getId();
@@ -343,6 +341,7 @@ public class ScriptRunner {
                         stack.push(stateDefinition.getName());
                         stateDefinition = scriptDefinition.getStates().get(result.getValue());
                         if (stateDefinition == null) {
+                            logger.log(Level.SEVERE, "Cannot find state with id: " + result.getValue());
                             throw new RuntimeException("Cannot find state with id: " + result.getValue());
                         }
                         currentStateId = stateDefinition.getId();
@@ -352,6 +351,7 @@ public class ScriptRunner {
                     case SWAP: {
                         stateDefinition = scriptDefinition.getStates().get(result.getValue());
                         if (stateDefinition == null) {
+                            logger.log(Level.SEVERE, "Cannot find state with id: " + result.getValue());
                             throw new RuntimeException("Cannot find state with id: " + result.getValue());
                         }
                         currentStateId = stateDefinition.getId();
@@ -369,18 +369,12 @@ public class ScriptRunner {
             waitFor(1000);
         }
 
-        System.out.println("------------");
-        System.out.println("Script Stopped : " + getDateString());
-        System.out.println("------------");
-        System.out.println();
+        logger.info("Script Stopped");
     }
 
     private StateResult state(final StateDefinition stateDefinition, final ImageWrapper imageWrapper) {
 
-        System.out.println("------------");
-        System.out.println("Running State: " + stateDefinition.getName() + " : " + getDateString());
-        System.out.println("------------");
-        System.out.println();
+        logger.info("Running State: " + stateDefinition.getName());
 
         boolean batchCmds = false;
 
@@ -389,10 +383,7 @@ public class ScriptRunner {
                 for (ActionDefinition actionDefinition : statementDefinition.getActions()) {
                     switch (actionDefinition.getType()) {
                         case MSG: {
-                            System.out.println("------------");
-                            System.out.println("MSG: " + actionDefinition.getValue() + " : " + getDateString());
-                            System.out.println("------------");
-                            System.out.println();
+                            logger.info("MSG: " + actionDefinition.getValue());
                         }
                         break;
                         case BATCH: {
@@ -423,6 +414,7 @@ public class ScriptRunner {
                         case SWIPE_RIGHT: {
                             ComponentDefinition componentDefinition = components.get(actionDefinition.getValue());
                             if (componentDefinition == null) {
+                                logger.log(Level.SEVERE, "Cannot find component with id: " + actionDefinition.getValue());
                                 throw new RuntimeException("Cannot find component with id: " + actionDefinition.getValue());
                             }
                             AdbUtils.component(deviceDefinition, componentDefinition, actionDefinition.getType(), shell, batchCmds);
@@ -433,6 +425,7 @@ public class ScriptRunner {
                             if (time > 0) {
                                 waitFor(time);
                             } else {
+                                logger.log(Level.SEVERE, "Invalid wait time: " + actionDefinition.getValue());
                                 throw new RuntimeException("Invalid wait time: " + actionDefinition.getValue());
                             }
                         }
@@ -506,6 +499,7 @@ public class ScriptRunner {
                 } else {
                     ScreenDefinition screenDefinition = screens.get(conditionDefinition.getValue());
                     if (screenDefinition == null) {
+                        logger.log(Level.SEVERE, "Cannot find screen with id: " + conditionDefinition.getValue());
                         throw new RuntimeException("Cannot find screen with id: " + conditionDefinition.getValue());
                     }
                     result = SamplePoint.validate(screenDefinition.getPoints(), imageWrapper, false);
@@ -535,12 +529,14 @@ public class ScriptRunner {
                     }
                     result = sample.getB() > 100;
                 } else {
+                    logger.log(Level.SEVERE, "Invalid energy value: " + conditionDefinition.getValue());
                     throw new RuntimeException("Invalid energy value: " + conditionDefinition.getValue());
                 }
             }
             break;
             case NOT: {
                 if (conditionDefinition.getAnd() == null) {
+                    logger.log(Level.SEVERE, "is (NOT) requires a AND value");
                     throw new RuntimeException("is (NOT) requires a AND value");
                 }
                 checkAnd = false;

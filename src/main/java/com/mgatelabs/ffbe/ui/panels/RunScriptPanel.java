@@ -5,6 +5,7 @@ import com.mgatelabs.ffbe.runners.ScriptRunner;
 import com.mgatelabs.ffbe.shared.details.*;
 import com.mgatelabs.ffbe.shared.helper.DeviceHelper;
 import com.mgatelabs.ffbe.shared.util.AdbShell;
+import com.mgatelabs.ffbe.ui.utils.CustomHandler;
 
 import javax.swing.*;
 import java.awt.*;
@@ -41,9 +42,9 @@ public class RunScriptPanel extends JInternalFrame {
 
     private JLabel lastImageTimeLabel;
 
-    private SimpleDateFormat simpleDateFormat = new SimpleDateFormat("hh:mm:ss");
+    private SimpleDateFormat simpleDateFormat = new SimpleDateFormat("HH:mm:ss");
 
-    public RunScriptPanel(DeviceHelper helper, PlayerDefinition playerDefinition, AdbShell shell, DeviceDefinition deviceDefinition, ViewDefinition viewDefinition, ScriptDefinition scriptDefinition, MapPanel mapPanel) {
+    public RunScriptPanel(DeviceHelper helper, PlayerDefinition playerDefinition, AdbShell shell, DeviceDefinition deviceDefinition, ViewDefinition viewDefinition, ScriptDefinition scriptDefinition, MapPanel mapPanel, CustomHandler customHandler) {
         super("Script Runner", true, false, true, false);
         this.helper = helper;
         this.shell = shell;
@@ -53,7 +54,7 @@ public class RunScriptPanel extends JInternalFrame {
 
         timer = null;
 
-        scriptRunner = new ScriptRunner(playerDefinition, helper, scriptDefinition, deviceDefinition, viewDefinition);
+        scriptRunner = new ScriptRunner(playerDefinition, helper, scriptDefinition, deviceDefinition, viewDefinition, customHandler);
 
         scriptThread = null;
 

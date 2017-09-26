@@ -5,9 +5,11 @@ import com.mgatelabs.ffbe.shared.mapper.MapDefinition;
 import com.mgatelabs.ffbe.shared.util.AdbShell;
 import com.mgatelabs.ffbe.ui.FrameChoices;
 import com.mgatelabs.ffbe.ui.panels.*;
+import com.mgatelabs.ffbe.ui.utils.CustomHandler;
 
 import javax.swing.*;
 import java.awt.*;
+import java.beans.PropertyVetoException;
 
 /**
  * Created by @mgatelabs (Michael Fuller) on 9/12/2017.
@@ -23,18 +25,24 @@ public class MainFrame extends JFrame {
     private RunScriptPanel runScriptPanel;
     private AdbShell shell;
 
-    JDesktopPane desktopPane;
-    PlayerPanel playerPanel;
+    private JDesktopPane desktopPane;
+    private PlayerPanel playerPanel;
 
-    MapPanel mapPanel;
-    MapperPanel mapperPanel;
-    ConnectionPanel connectionPanel;
+    private MapPanel mapPanel;
+    private MapperPanel mapperPanel;
+    private ConnectionPanel connectionPanel;
+
+    private LogPanel logPanel;
+
+    private CustomHandler customHandler;
 
     public MainFrame(FrameChoices choices) throws HeadlessException {
         super("FFBExecute 0.0.1");
         setMinimumSize(new Dimension(800, 600));
         setPreferredSize(new Dimension(1024, 768));
         setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
+
+        customHandler = new CustomHandler();
 
         shell = new AdbShell();
 
@@ -101,6 +109,15 @@ public class MainFrame extends JFrame {
 
         desktopPane = new JDesktopPane();
 
+        logPanel = new LogPanel(customHandler);
+        desktopPane.add(logPanel);
+
+        try {
+            logPanel.setIcon(true);
+         } catch (PropertyVetoException e) {
+            e.printStackTrace();
+         }
+
         // playerPanel = new PlayerPanel(playerDetail);
         // desktopPane.add(playerPanel);
 
@@ -122,7 +139,7 @@ public class MainFrame extends JFrame {
         }
 
         if (showRunScript) {
-            runScriptPanel = new RunScriptPanel(connectionPanel.getDeviceHelper(), playerDefinition, shell, deviceDefinition, viewDefinition, scriptDefinition, mapPanel);
+            runScriptPanel = new RunScriptPanel(connectionPanel.getDeviceHelper(), playerDefinition, shell, deviceDefinition, viewDefinition, scriptDefinition, mapPanel, customHandler);
             runScriptPanel.setLocation(0, column0Top);
             column0Top += runScriptPanel.getHeight();
             desktopPane.add(runScriptPanel);

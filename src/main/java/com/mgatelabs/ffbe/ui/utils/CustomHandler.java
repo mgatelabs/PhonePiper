@@ -12,7 +12,7 @@ import java.util.logging.LogRecord;
  */
 public class CustomHandler extends Handler {
 
-    public BlockingQueue<LogRecord> events = new ArrayBlockingQueue<>(25);
+    public BlockingQueue<LogRecord> events = new ArrayBlockingQueue<>(100);
 
     public CustomHandler() {
 

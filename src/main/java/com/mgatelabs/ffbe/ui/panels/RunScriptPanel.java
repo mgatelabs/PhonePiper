@@ -176,6 +176,14 @@ public class RunScriptPanel extends JInternalFrame {
         });
     }
 
+    public void stop() {
+        if (scriptRunner != null) {
+            scriptRunner.setStatus(ScriptRunner.Status.PAUSED);
+        }
+        scriptThread = null;
+        startStopButton.setText("Start Script");
+    }
+
     private static class ScriptThread extends Thread {
         ScriptRunner runner;
         String state;

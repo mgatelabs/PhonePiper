@@ -11,6 +11,8 @@ import javax.swing.*;
 import javax.swing.event.MenuEvent;
 import javax.swing.event.MenuListener;
 import java.awt.*;
+import java.awt.event.WindowEvent;
+import java.awt.event.WindowListener;
 import java.beans.PropertyVetoException;
 
 /**
@@ -47,6 +49,45 @@ public class MainFrame extends JFrame {
         setPreferredSize(new Dimension(1024, 768));
         setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
 
+        addWindowListener(new WindowListener() {
+            @Override
+            public void windowOpened(WindowEvent e) {
+
+            }
+
+            @Override
+            public void windowClosing(WindowEvent e) {
+                if (runScriptPanel != null) {
+                    runScriptPanel.stop();
+                }
+            }
+
+            @Override
+            public void windowClosed(WindowEvent e) {
+
+            }
+
+            @Override
+            public void windowIconified(WindowEvent e) {
+
+            }
+
+            @Override
+            public void windowDeiconified(WindowEvent e) {
+
+            }
+
+            @Override
+            public void windowActivated(WindowEvent e) {
+
+            }
+
+            @Override
+            public void windowDeactivated(WindowEvent e) {
+
+            }
+        });
+
         returnRequested = false;
 
         customHandler = new CustomHandler();
@@ -66,8 +107,8 @@ public class MainFrame extends JFrame {
         boolean showStates = false;
         boolean showMapper = false;
         boolean showAdb = false;
-        boolean showConnection =  false;
-        boolean showRunScript =  false;
+        boolean showConnection = false;
+        boolean showRunScript = false;
 
         switch (choices.getAction()) {
             case RUN: {
@@ -75,31 +116,39 @@ public class MainFrame extends JFrame {
                 viewDefinition = ViewDefinition.read(deviceDefinition.getViewId());
 
                 showStates = true;
+                showPlayer = true;
                 showMap = true;
                 showAdb = true;
                 showConnection = true;
                 showRunScript = true;
 
-            } break;
+            }
+            break;
             case EDIT: {
                 switch (choices.getMode()) {
                     case SCRIPT: {
 
-                    } break;
+                    }
+                    break;
                     case MAP: {
                         showMap = true;
-                    } break;
+                    }
+                    break;
                     case VIEW: {
                         showConnection = true;
-                    } break;
+                    }
+                    break;
                     case DEVICE: {
 
-                    } break;
+                    }
+                    break;
                 }
-            } break;
+            }
+            break;
             case DELETE: {
 
-            } break;
+            }
+            break;
             case CREATE: {
                 switch (choices.getMode()) {
                     case MAP: {
@@ -109,9 +158,11 @@ public class MainFrame extends JFrame {
                         showMapper = true;
                         showAdb = true;
                         showConnection = true;
-                    } break;
+                    }
+                    break;
                 }
-            } break;
+            }
+            break;
         }
 
         desktopPane = new JDesktopPane();
@@ -121,12 +172,9 @@ public class MainFrame extends JFrame {
 
         try {
             logPanel.setIcon(true);
-         } catch (PropertyVetoException e) {
+        } catch (PropertyVetoException e) {
             e.printStackTrace();
-         }
-
-        // playerPanel = new PlayerPanel(playerDetail);
-        // desktopPane.add(playerPanel);
+        }
 
         int column0Top = 0;
 
@@ -143,6 +191,13 @@ public class MainFrame extends JFrame {
             connectionPanel.setLocation(0, column0Top);
             column0Top += connectionPanel.getHeight();
             desktopPane.add(connectionPanel);
+        }
+
+        if (showPlayer) {
+            playerPanel = new PlayerPanel(playerDefinition);
+            playerPanel.setLocation(0, column0Top);
+            column0Top += playerPanel.getHeight();
+            desktopPane.add(playerPanel);
         }
 
         if (showRunScript) {

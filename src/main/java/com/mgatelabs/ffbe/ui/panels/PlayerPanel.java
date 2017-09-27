@@ -21,11 +21,11 @@ public class PlayerPanel extends JInternalFrame {
     private JLabel energyValueLabel;
 
     public PlayerPanel(PlayerDefinition playerDefinition) {
-        super("Device/Player", false, false, false, false);
+        super("Player Info", false, false, false, false);
 
         this.playerDefinition = playerDefinition;
 
-        setMinimumSize(new Dimension(300, 135));
+        setMinimumSize(new Dimension(300, 100));
         setPreferredSize(getMinimumSize());
         //setMaximumSize(getMinimumSize());
 
@@ -36,28 +36,10 @@ public class PlayerPanel extends JInternalFrame {
         GridBagConstraints c;
         c = new GridBagConstraints();
 
-        /*
-        GridBagConstraints c;
-        JLabel ipLabel = new JLabel("IP Address:");
-        c = new GridBagConstraints();
-        c.fill = GridBagConstraints.HORIZONTAL;
-        c.gridx = 0;
-        c.gridy = 0;
-        c.gridwidth = 4;
-        container.add(ipLabel, c);
-
-        ipAddress = new JTextField();
-        ipAddress.setText(playerDefinition.getIp());
-        c.gridx = 0;
-        c.gridy = 1;
-        c.gridwidth = 4;
-        container.add(ipAddress, c);
-        */
-
         JLabel levelLabel = new JLabel("Level:");
         c.fill = GridBagConstraints.HORIZONTAL;
         c.gridx = 0;
-        c.gridy = 2;
+        c.gridy = 1;
         c.weightx = 1.0f;
         c.gridwidth = 1;
         container.add(levelLabel, c);
@@ -66,7 +48,7 @@ public class PlayerPanel extends JInternalFrame {
         levelValueLabel.setHorizontalAlignment(SwingConstants.CENTER);
         c.fill = GridBagConstraints.HORIZONTAL;
         c.gridx = 1;
-        c.gridy = 2;
+        c.gridy = 1;
         c.weightx = 1.0f;
         c.gridwidth = 1;
         container.add(levelValueLabel, c);
@@ -74,7 +56,7 @@ public class PlayerPanel extends JInternalFrame {
         JLabel energyLabel = new JLabel("Energy:");
         c.fill = GridBagConstraints.HORIZONTAL;
         c.gridx = 2;
-        c.gridy = 2;
+        c.gridy = 1;
         c.weightx = 1.0f;
         c.gridwidth = 1;
         container.add(energyLabel, c);
@@ -83,7 +65,7 @@ public class PlayerPanel extends JInternalFrame {
         energyValueLabel.setHorizontalAlignment(SwingConstants.RIGHT);
         c.fill = GridBagConstraints.HORIZONTAL;
         c.gridx = 3;
-        c.gridy = 2;
+        c.gridy = 1;
         c.weightx = 1.0f;
         c.gridwidth = 1;
         container.add(energyValueLabel, c);
@@ -97,26 +79,28 @@ public class PlayerPanel extends JInternalFrame {
                 energyValueLabel.setText(Integer.toString(playerDefinition.getTotalEnergy()));
             }
         });
+        c.fill = GridBagConstraints.BOTH;
         c.gridx = 0;
-        c.gridy = 3;
+        c.gridy = 2;
         c.gridwidth = 4;
+        c.weighty = 1.0;
         container.add(levelSlider, c);
 
         levelSlider.setValue(playerDefinition.getLevel());
 
-        JButton saveButton = new JButton("Save");
+        JButton saveButton = new JButton("Save / Update");
+        saveButton.setMnemonic('s');
         saveButton.addActionListener(new AbstractAction() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                //playerDefinition.setIp(ipAddress.getText());
                 playerDefinition.write();
             }
         });
-        c.fill = GridBagConstraints.BOTH;
+        c.fill = GridBagConstraints.HORIZONTAL;
         c.gridx = 0;
-        c.gridy = 4;
+        c.gridy = 3;
         c.gridwidth = 4;
-        c.weighty = 1.0f;
+        c.weighty = 0;
         container.add(saveButton, c);
 
         pack();

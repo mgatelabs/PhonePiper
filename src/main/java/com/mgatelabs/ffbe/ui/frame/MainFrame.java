@@ -36,6 +36,9 @@ public class MainFrame extends JFrame {
     private MapperPanel mapperPanel;
     private ConnectionPanel connectionPanel;
 
+    private ComponentListPanel componentListPanel;
+    private ScreenListPanel screenListPanel;
+
     private LogPanel logPanel;
 
     private CustomHandler customHandler;
@@ -109,6 +112,8 @@ public class MainFrame extends JFrame {
         boolean showAdb = false;
         boolean showConnection = false;
         boolean showRunScript = false;
+        boolean showScreens = false;
+        boolean showComponents = false;
 
         switch (choices.getAction()) {
             case RUN: {
@@ -136,6 +141,8 @@ public class MainFrame extends JFrame {
                     break;
                     case VIEW: {
                         showConnection = true;
+                        showScreens = true;
+                        showComponents = true;
                     }
                     break;
                     case DEVICE: {
@@ -160,6 +167,13 @@ public class MainFrame extends JFrame {
                         showConnection = true;
                     }
                     break;
+                    case SCRIPT: {
+
+                    } break;
+                    case VIEW: {
+                        showScreens = true;
+                        showComponents = true;
+                    } break;
                 }
             }
             break;
@@ -177,13 +191,27 @@ public class MainFrame extends JFrame {
         }
 
         int column0Top = 0;
+        int column1Top = 0;
 
         if (showMap) {
             mapPanel = new MapPanel();
             mapPanel.setMap(mapDefinition);
-            mapPanel.setLocation(300, 0);
+            mapPanel.setLocation(300, column1Top);
+            column1Top += mapPanel.getHeight();
             desktopPane.add(mapPanel);
             mapPanel.setMap(mapDefinition);
+        }
+
+        if (showScreens) {
+            screenListPanel = new ScreenListPanel(viewDefinition, shell, this);
+            screenListPanel.setLocation(300, 0);
+            desktopPane.add(screenListPanel);
+        }
+
+        if (showComponents) {
+            componentListPanel = new ComponentListPanel(deviceDefinition ,viewDefinition, shell);
+            componentListPanel.setLocation(300 + screenListPanel.getWidth(), 0);
+            desktopPane.add(componentListPanel);
         }
 
         if (showConnection) {
@@ -214,7 +242,9 @@ public class MainFrame extends JFrame {
             desktopPane.add(mapperPanel);
         }
 
-        setContentPane(desktopPane);
+        JScrollPane jScrollPane = new JScrollPane(desktopPane);
+
+        setContentPane(jScrollPane);
 
         JMenuBar menuBar = new JMenuBar();
         this.setJMenuBar(menuBar);

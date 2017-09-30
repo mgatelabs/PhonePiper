@@ -95,85 +95,21 @@ public class StartupFrame extends JFrame {
 
             {
                 GridBagConstraints c = new GridBagConstraints();
-
-                // DEVICES
-
-                JLabel label = new JLabel("Devices");
-                c.gridx = 0;
-                c.gridy = 0;
-                c.ipadx = 4;
-                c.weightx = 0;
-                fieldPanel.add(label, c);
-
-                deviceComboBox = new JComboBox<>(listJsonFilesIn(new File("./devices")));
-                c.gridx = 1;
-                c.gridy = 0;
-                c.fill = GridBagConstraints.HORIZONTAL;
-                c.weightx = 1;
-                fieldPanel.add(deviceComboBox, c);
-
-                // VIEWS
-
-                label = new JLabel("Views");
-                c.gridx = 0;
-                c.gridy = 1;
-                c.ipadx = 4;
-                c.weightx = 0;
-                fieldPanel.add(label, c);
-
-                viewComboBox = new JComboBox<>(listFoldersFilesIn(new File("./views")));
-                c.gridx = 1;
-                c.gridy = 1;
-                c.fill = GridBagConstraints.HORIZONTAL;
-                c.weightx = 1;
-                fieldPanel.add(viewComboBox, c);
-
-                // SCRIPTS
-
-                label = new JLabel("Scripts");
-                c.gridx = 0;
-                c.gridy = 2;
-                c.ipadx = 4;
-                c.weightx = 0;
-                fieldPanel.add(label, c);
-
-                scriptComboBox = new JComboBox<>(listJsonFilesIn(new File("./scripts")));
-
-                c.gridx = 1;
-                c.gridy = 2;
-                c.fill = GridBagConstraints.HORIZONTAL;
-                c.weightx = 1;
-                fieldPanel.add(scriptComboBox, c);
-
-                // MAPS
-
-                label = new JLabel("Maps");
-                c.gridx = 0;
-                c.gridy = 3;
-                c.ipadx = 4;
-                c.weightx = 0;
-                fieldPanel.add(label, c);
-
-                mapComboBox = new JComboBox<>(listJsonFilesIn(new File("./maps")));
-                c.gridx = 1;
-                c.gridy = 3;
-                c.fill = GridBagConstraints.HORIZONTAL;
-                c.weightx = 1;
-                fieldPanel.add(mapComboBox, c);
+                JLabel label;
 
                 // MODE
 
                 label = new JLabel("Mode");
                 c.gridx = 0;
-                c.gridy = 4;
+                c.gridy = 0;
                 c.ipadx = 4;
                 c.weightx = 0;
                 fieldPanel.add(label, c);
 
-                String[] modeArray = new String[]{Constants.MODE_SCRIPT, Constants.MODE_MAP, Constants.MODE_DEVICE};
+                String[] modeArray = new String[]{Constants.MODE_SCRIPT, Constants.MODE_MAP, Constants.MODE_DEVICE, Constants.MODE_VIEW};
                 modeComboBox = new JComboBox<>(modeArray);
                 c.gridx = 1;
-                c.gridy = 4;
+                c.gridy = 0;
                 c.fill = GridBagConstraints.HORIZONTAL;
                 c.weightx = 1;
                 fieldPanel.add(modeComboBox, c);
@@ -182,7 +118,7 @@ public class StartupFrame extends JFrame {
 
                 label = new JLabel("Action");
                 c.gridx = 0;
-                c.gridy = 5;
+                c.gridy = 1;
                 c.ipadx = 4;
                 c.weightx = 0;
                 fieldPanel.add(label, c);
@@ -190,11 +126,75 @@ public class StartupFrame extends JFrame {
                 String[] actionArray = new String[]{Constants.ACTION_RUN, Constants.ACTION_EDIT, Constants.ACTION_CREATE, Constants.ACTION_DELETE};
                 actionComboBox = new JComboBox<>(actionArray);
                 c.gridx = 1;
-                c.gridy = 5;
+                c.gridy = 1;
                 c.fill = GridBagConstraints.HORIZONTAL;
                 c.weightx = 1;
                 fieldPanel.add(actionComboBox, c);
 
+                // DEVICES
+
+                label = new JLabel("Devices");
+                c.gridx = 0;
+                c.gridy = 2;
+                c.ipadx = 4;
+                c.weightx = 0;
+                fieldPanel.add(label, c);
+
+                deviceComboBox = new JComboBox<>(listJsonFilesIn(new File("./devices")));
+                c.gridx = 1;
+                c.gridy = 2;
+                c.fill = GridBagConstraints.HORIZONTAL;
+                c.weightx = 1;
+                fieldPanel.add(deviceComboBox, c);
+
+                // VIEWS
+
+                label = new JLabel("Views");
+                c.gridx = 0;
+                c.gridy = 3;
+                c.ipadx = 4;
+                c.weightx = 0;
+                fieldPanel.add(label, c);
+
+                viewComboBox = new JComboBox<>(listFoldersFilesIn(new File("./views")));
+                c.gridx = 1;
+                c.gridy = 3;
+                c.fill = GridBagConstraints.HORIZONTAL;
+                c.weightx = 1;
+                fieldPanel.add(viewComboBox, c);
+
+                // SCRIPTS
+
+                label = new JLabel("Scripts");
+                c.gridx = 0;
+                c.gridy = 4;
+                c.ipadx = 4;
+                c.weightx = 0;
+                fieldPanel.add(label, c);
+
+                scriptComboBox = new JComboBox<>(listJsonFilesIn(new File("./scripts")));
+
+                c.gridx = 1;
+                c.gridy = 4;
+                c.fill = GridBagConstraints.HORIZONTAL;
+                c.weightx = 1;
+                fieldPanel.add(scriptComboBox, c);
+
+                // MAPS
+
+                label = new JLabel("Maps");
+                c.gridx = 0;
+                c.gridy = 5;
+                c.ipadx = 4;
+                c.weightx = 0;
+                fieldPanel.add(label, c);
+
+                mapComboBox = new JComboBox<>(listJsonFilesIn(new File("./maps")));
+                c.gridx = 1;
+                c.gridy = 5;
+                c.fill = GridBagConstraints.HORIZONTAL;
+                c.weightx = 1;
+                fieldPanel.add(mapComboBox, c);
             }
 
             // Actions

@@ -54,4 +54,14 @@ public class PngImageWrapper implements ImageWrapper {
             return false;
         }
     }
+
+    public static ImageWrapper getPngImage(File path) {
+        if (!path.exists()) return null;
+        try {
+            final BufferedImage bufferedImage = ImageIO.read(path);
+            return new PngImageWrapper(bufferedImage);
+        } catch (Exception ex) {
+            return null;
+        }
+    }
 }

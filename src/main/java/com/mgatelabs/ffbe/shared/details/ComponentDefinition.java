@@ -67,4 +67,9 @@ public class ComponentDefinition {
     public static File getPreviewPath(String viewId, String componentId) {
         return new File("views/" + viewId + "/c-" + componentId + ".png");
     }
+
+    @Override
+    public String toString() {
+        return  componentId + " - " + name;
+    }
 }

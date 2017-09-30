@@ -10,6 +10,7 @@ import com.mgatelabs.ffbe.ui.frame.MainFrame;
 import com.mgatelabs.ffbe.ui.frame.StartupFrame;
 
 import javax.swing.*;
+import java.util.regex.Pattern;
 
 /**
  * Created by @mgatelabs (Michael Fuller) on 8/27/2017.
@@ -55,6 +56,20 @@ public class Runner {
                     if (startupFrame.getSelectedAction() != null && startupFrame.getSelectedMode() != null) {
 
                         FrameChoices frameChoices = new FrameChoices(startupFrame.getSelectedAction(), startupFrame.getSelectedMode(), playerDefinition, startupFrame.getSelectedMap(), startupFrame.getSelectedScript(), startupFrame.getSelectedDevice(), startupFrame.getSelectedView());
+
+                        if (frameChoices.getAction() == FrameChoices.Action.CREATE) {
+                            String inputValue = JOptionPane.showInputDialog("Please input a " + frameChoices.getMode().name());
+                            Pattern pattern = Pattern.compile("^[a-zA-Z0-9-_]+$");
+                            if (inputValue == null || inputValue.trim().length() == 0) {
+                                continue;
+                            } else if (!pattern.matcher(inputValue).matches()) {
+                                JOptionPane.showMessageDialog(null, "Invalid string format, only allow a-z A-Z 0-9 - _");
+                                continue;
+                            } else if (!frameChoices.canCreate(inputValue)) {
+                                JOptionPane.showMessageDialog(null, "Invalid name.  File may already exist.");
+                                continue;
+                            }
+                        }
 
                         if (frameChoices.isValid()) {
                             MainFrame frame = new MainFrame(frameChoices, imageIcon);

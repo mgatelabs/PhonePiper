@@ -1,10 +1,10 @@
 package com.mgatelabs.ffbe.shared.details;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.SerializationConfig;
-import com.fasterxml.jackson.databind.SerializationFeature;
+import com.google.common.collect.Lists;
 import com.mgatelabs.ffbe.shared.util.JsonTool;
 
 import java.io.File;
@@ -16,10 +16,26 @@ import java.util.List;
  */
 public class ViewDefinition {
 
+    @JsonIgnore
+    private String viewId;
     private List<ScreenDefinition> screens;
     private List<ComponentDefinition> components;
 
     public ViewDefinition() {
+    }
+
+    public ViewDefinition(String viewId) {
+        this.viewId = viewId;
+        screens = Lists.newArrayList();
+        components = Lists.newArrayList();
+    }
+
+    public String getViewId() {
+        return viewId;
+    }
+
+    public void setViewId(String viewId) {
+        this.viewId = viewId;
     }
 
     public List<ScreenDefinition> getScreens() {
@@ -43,7 +59,9 @@ public class ViewDefinition {
         if (viewFile.exists()) {
             ObjectMapper objectMapper = JsonTool.INSTANCE;
             try {
-                return objectMapper.readValue(viewFile, ViewDefinition.class);
+                ViewDefinition viewDefinition = objectMapper.readValue(viewFile, ViewDefinition.class);
+                viewDefinition.setViewId(viewName);
+                return viewDefinition;
             } catch (JsonParseException e) {
                 e.printStackTrace();
             } catch (JsonMappingException e) {
@@ -55,10 +73,17 @@ public class ViewDefinition {
         return null;
     }
 
-    public boolean save(String viewName) {
-        File viewFile = new File("views/" + viewName + "/definition.json");
+    public static File getFileFor(String viewName) {
+        return new File("views/" + viewName + "/definition.json");
+    }
 
-        ObjectMapper objectMapper = JsonTool.INSTANCE;
+    public static boolean exists(String viewName) {
+        return getFileFor(viewName).exists();
+    }
+
+    public boolean save() {
+        File viewFile =getFileFor(viewId);
+        final ObjectMapper objectMapper = JsonTool.INSTANCE;
         try {
             objectMapper.writeValue(viewFile, this);
             return true;

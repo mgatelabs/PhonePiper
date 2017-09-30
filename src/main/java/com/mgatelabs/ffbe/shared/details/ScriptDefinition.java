@@ -1,5 +1,6 @@
 package com.mgatelabs.ffbe.shared.details;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -17,8 +18,16 @@ import java.util.Map;
  */
 public class ScriptDefinition {
 
+    @JsonIgnore
+    private String scriptId;
     private List<VarDefinition> vars;
     private Map<String, StateDefinition> states;
+
+    public ScriptDefinition(String scriptId) {
+        this.scriptId = scriptId;
+        vars = Lists.newArrayList();
+        states = Maps.newHashMap();
+    }
 
     public Map<String, StateDefinition> getStates() {
         return states;
@@ -36,17 +45,33 @@ public class ScriptDefinition {
         this.vars = vars;
     }
 
+    public String getScriptId() {
+        return scriptId;
+    }
+
+    public void setScriptId(String scriptId) {
+        this.scriptId = scriptId;
+    }
+
+    public static File getFileFor(String viewName) {
+        return new File("scripts/" + viewName + ".json");
+    }
+
+    public static boolean exists(String viewName) {
+        return getFileFor(viewName).exists();
+    }
+
     public static ScriptDefinition read(String scriptName) {
-        File deviceFile = new File("scripts/" + scriptName + ".json");
+        final File deviceFile = getFileFor(scriptName);
         if (deviceFile.exists()) {
-            ObjectMapper objectMapper = JsonTool.INSTANCE;
+            final ObjectMapper objectMapper = JsonTool.INSTANCE;
             try {
                 ScriptDefinition scriptDefinition = objectMapper.readValue(deviceFile, ScriptDefinition.class);
-
+                scriptDefinition.setScriptId(scriptName);
                 if (scriptDefinition.getStates() == null) {
                     scriptDefinition.setStates(Maps.newHashMap());
                 } else {
-                    for (Map.Entry<String, StateDefinition> entry: scriptDefinition.getStates().entrySet()) {
+                    for (Map.Entry<String, StateDefinition> entry : scriptDefinition.getStates().entrySet()) {
                         entry.getValue().setId(entry.getKey());
                     }
                 }

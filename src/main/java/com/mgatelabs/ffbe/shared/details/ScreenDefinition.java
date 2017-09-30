@@ -46,4 +46,9 @@ public class ScreenDefinition {
     public static File getPreviewPath(String viewId, String screenId) {
         return new File("views/" + viewId + "/s-" + screenId + ".png");
     }
+
+    @Override
+    public String toString() {
+        return  screenId + " - " + name;
+    }
 }

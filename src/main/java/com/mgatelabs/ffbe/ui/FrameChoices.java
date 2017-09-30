@@ -13,11 +13,11 @@ import com.mgatelabs.ffbe.ui.utils.Constants;
  */
 public class FrameChoices {
 
-    private final PlayerDefinition playerDefinition;
-    private final MapDefinition mapDefinition;
-    private final ScriptDefinition scriptDefinition;
-    private final DeviceDefinition deviceDefinition;
-    private final ViewDefinition viewDefinition;
+    private PlayerDefinition playerDefinition;
+    private MapDefinition mapDefinition;
+    private ScriptDefinition scriptDefinition;
+    private DeviceDefinition deviceDefinition;
+    private ViewDefinition viewDefinition;
 
     private final String deviceName;
     private final String scriptName;
@@ -186,6 +186,43 @@ public class FrameChoices {
             }
         }
         return false;
+    }
+
+    public boolean canCreate(String name) {
+        switch (action) {
+            case CREATE: {
+
+                switch (mode) {
+                    case DEVICE: {
+                        if (DeviceDefinition.exists(name)) {
+                            return false;
+                        }
+                        deviceDefinition = new DeviceDefinition(deviceName);
+                        return true;
+                    }
+                    case MAP: {
+                        return false;
+                    }
+                    case VIEW: {
+                        if (ViewDefinition.exists(name)) {
+                            return false;
+                        }
+                        viewDefinition = new ViewDefinition(deviceName);
+                    } break;
+                    case SCRIPT: {
+                        if (ScriptDefinition.exists(name)) {
+                            return false;
+                        }
+                        scriptDefinition = new ScriptDefinition(deviceName);
+                    } break;
+                }
+
+            } break;
+            default:
+                return false;
+        }
+
+        return true;
     }
 
     public String getDeviceName() {

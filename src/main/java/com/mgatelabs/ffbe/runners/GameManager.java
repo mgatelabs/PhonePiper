@@ -40,7 +40,7 @@ public class GameManager {
     }
 
     private void save() {
-        viewDefinition.save(deviceDefinition.getViewId());
+        viewDefinition.save();
     }
 
     ///////////////////////////////////////////////////////////////////////////
@@ -211,7 +211,7 @@ public class GameManager {
         List<SamplePoint> samples = new ArrayList<>();
 
         while (true) {
-            ImagePixelPickerDialog imagePixelPickerDialog = new ImagePixelPickerDialog(ImagePixelPickerDialog.Mode.PIXELS);
+            ImagePixelPickerDialog imagePixelPickerDialog = new ImagePixelPickerDialog(ImagePixelPickerDialog.Mode.PIXELS, null);
             imagePixelPickerDialog.setup(imageReader, samples);
             imagePixelPickerDialog.start();
 
@@ -416,7 +416,7 @@ public class GameManager {
         copy.addAll(screenDefinition.getPoints());
 
         while (true) {
-            ImagePixelPickerDialog imagePixelPickerDialog = new ImagePixelPickerDialog(ImagePixelPickerDialog.Mode.PIXELS);
+            ImagePixelPickerDialog imagePixelPickerDialog = new ImagePixelPickerDialog(ImagePixelPickerDialog.Mode.PIXELS, null);
             imagePixelPickerDialog.setup(imageWrapper, copy);
             imagePixelPickerDialog.start();
 
@@ -570,7 +570,7 @@ public class GameManager {
         componentDefinition.setName(name);
 
         while (true) {
-            ImagePixelPickerDialog imagePixelPickerDialog = new ImagePixelPickerDialog(ImagePixelPickerDialog.Mode.BOX);
+            ImagePixelPickerDialog imagePixelPickerDialog = new ImagePixelPickerDialog(ImagePixelPickerDialog.Mode.BOX, null);
             imagePixelPickerDialog.setup(imageReader, new ArrayList<>());
             imagePixelPickerDialog.start();
 
@@ -729,7 +729,7 @@ public class GameManager {
         }
 
         while (true) {
-            ImagePixelPickerDialog imagePixelPickerDialog = new ImagePixelPickerDialog(ImagePixelPickerDialog.Mode.BOX);
+            ImagePixelPickerDialog imagePixelPickerDialog = new ImagePixelPickerDialog(ImagePixelPickerDialog.Mode.BOX, null);
             imagePixelPickerDialog.setup(imageWrapper, componentDefinition.getX(), componentDefinition.getY(), componentDefinition.getW(), componentDefinition.getH());
             imagePixelPickerDialog.start();
 

@@ -23,6 +23,7 @@ public class ScriptDefinition {
     private List<VarDefinition> vars;
     private Map<String, StateDefinition> states;
 
+    @SuppressWarnings("unused")
     public ScriptDefinition() {
     }
 

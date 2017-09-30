@@ -23,6 +23,9 @@ public class ScriptDefinition {
     private List<VarDefinition> vars;
     private Map<String, StateDefinition> states;
 
+    public ScriptDefinition() {
+    }
+
     public ScriptDefinition(String scriptId) {
         this.scriptId = scriptId;
         vars = Lists.newArrayList();
@@ -53,21 +56,21 @@ public class ScriptDefinition {
         this.scriptId = scriptId;
     }
 
-    public static File getFileFor(String viewName) {
-        return new File("scripts/" + viewName + ".json");
+    public static File getFileFor(String scriptId) {
+        return new File("scripts/" + scriptId + ".json");
     }
 
     public static boolean exists(String viewName) {
         return getFileFor(viewName).exists();
     }
 
-    public static ScriptDefinition read(String scriptName) {
-        final File deviceFile = getFileFor(scriptName);
+    public static ScriptDefinition read(String scriptId) {
+        final File deviceFile = getFileFor(scriptId);
         if (deviceFile.exists()) {
             final ObjectMapper objectMapper = JsonTool.INSTANCE;
             try {
                 ScriptDefinition scriptDefinition = objectMapper.readValue(deviceFile, ScriptDefinition.class);
-                scriptDefinition.setScriptId(scriptName);
+                scriptDefinition.setScriptId(scriptId);
                 if (scriptDefinition.getStates() == null) {
                     scriptDefinition.setStates(Maps.newHashMap());
                 } else {

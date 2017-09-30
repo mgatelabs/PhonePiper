@@ -140,7 +140,7 @@ public class MainFrame extends JFrame {
                     }
                     break;
                     case VIEW: {
-                        showConnection = true;
+                        showConnection = false;
                         showScreens = true;
                         showComponents = true;
                     }
@@ -193,10 +193,20 @@ public class MainFrame extends JFrame {
         int column0Top = 0;
         int column1Top = 0;
 
+        int column0Left = 0;
+
+        if (showConnection) {
+            connectionPanel = new ConnectionPanel(connectionDefinition);
+            connectionPanel.setLocation(0, column0Top);
+            column0Top += connectionPanel.getHeight();
+            column0Left = 300;
+            desktopPane.add(connectionPanel);
+        }
+
         if (showMap) {
             mapPanel = new MapPanel();
             mapPanel.setMap(mapDefinition);
-            mapPanel.setLocation(300, column1Top);
+            mapPanel.setLocation(column0Left, column1Top);
             column1Top += mapPanel.getHeight();
             desktopPane.add(mapPanel);
             mapPanel.setMap(mapDefinition);
@@ -204,21 +214,14 @@ public class MainFrame extends JFrame {
 
         if (showScreens) {
             screenListPanel = new ScreenListPanel(viewDefinition, shell, this);
-            screenListPanel.setLocation(300, 0);
+            screenListPanel.setLocation(column0Left, 0);
             desktopPane.add(screenListPanel);
         }
 
         if (showComponents) {
-            componentListPanel = new ComponentListPanel(deviceDefinition ,viewDefinition, shell);
-            componentListPanel.setLocation(300 + screenListPanel.getWidth(), 0);
+            componentListPanel = new ComponentListPanel(deviceDefinition ,viewDefinition, shell, this);
+            componentListPanel.setLocation(column0Left + screenListPanel.getWidth(), 0);
             desktopPane.add(componentListPanel);
-        }
-
-        if (showConnection) {
-            connectionPanel = new ConnectionPanel(connectionDefinition);
-            connectionPanel.setLocation(0, column0Top);
-            column0Top += connectionPanel.getHeight();
-            desktopPane.add(connectionPanel);
         }
 
         if (showPlayer) {

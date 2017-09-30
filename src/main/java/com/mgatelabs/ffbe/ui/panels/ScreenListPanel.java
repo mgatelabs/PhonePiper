@@ -10,6 +10,7 @@ import com.mgatelabs.ffbe.shared.image.SamplePoint;
 import com.mgatelabs.ffbe.shared.util.AdbShell;
 import com.mgatelabs.ffbe.shared.util.AdbUtils;
 import com.mgatelabs.ffbe.ui.ImagePixelPickerDialog;
+import com.mgatelabs.ffbe.ui.utils.Constants;
 import com.mgatelabs.ffbe.ui.utils.RefreshableListModel;
 
 import javax.swing.*;
@@ -84,6 +85,67 @@ public class ScreenListPanel extends JInternalFrame {
 
         JMenuBar menuBar = new JMenuBar();
 
+        listMenu = new JMenu("List");
+        menuBar.add(listMenu);
+
+        {
+            JMenuItem newMenuItem = new JMenuItem("New");
+            newMenuItem.addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    String input = JOptionPane.showInputDialog(owner, "Screen ID (a-z A-Z 0-9 - _)");
+                    if (input != null && Constants.ID_PATTERN.matcher(input).matches()) {
+
+                        for (ScreenDefinition screenDefinition: viewDefinition.getScreens()) {
+                            if (screenDefinition.getScreenId().equals(input)) {
+                                info("Screen with same ID already exists");
+                                return;
+                            }
+                        }
+
+                        ScreenDefinition screenDefinition = new ScreenDefinition();
+                        screenDefinition.setScreenId(input);
+                        screenDefinition.setName(input);
+
+                        ImageWrapper imageReader = AdbUtils.getScreen();
+
+                        if (imageReader != null && imageReader.isReady()) {
+
+                            List<SamplePoint> samples = new ArrayList<>();
+
+                            ImagePixelPickerDialog imagePixelPickerDialog = new ImagePixelPickerDialog(ImagePixelPickerDialog.Mode.PIXELS, owner);
+                            imagePixelPickerDialog.setup(imageReader, samples);
+                            imagePixelPickerDialog.start();
+
+                            if (!imagePixelPickerDialog.isOk()) {
+                                return;
+                            } else if (imagePixelPickerDialog.getPoints().isEmpty()) {
+                                info("You did not select any samples");
+                                return;
+                            } else {
+                                samples.addAll(imagePixelPickerDialog.getPoints());
+                            }
+
+                            screenDefinition.setPoints(samples);
+
+                            imageReader.savePng(ScreenDefinition.getPreviewPath(viewDefinition.getViewId(), screenDefinition.getScreenId()));
+
+                            deSelect();
+
+                            viewDefinition.getScreens().add(screenDefinition);
+
+                            viewDefinition.sort();
+
+                            viewDefinition.save();
+
+                            itemModel.refresh();
+                        }
+                    }
+                }
+            });
+            listMenu.add(newMenuItem);
+        }
+
         editMenu = new JMenu("Edit");
         editMenu.setEnabled(false);
         menuBar.add(editMenu);
@@ -96,6 +158,8 @@ public class ScreenListPanel extends JInternalFrame {
                     if (nameField.getText() != null && nameField.getText().trim().length() > 0) {
                         selectedItem.setName(nameField.getText().trim());
                         viewDefinition.save();
+
+                        itemModel.refresh();
                     } else {
                         nameField.setText(selectedItem.getName());
                     }
@@ -139,7 +203,7 @@ public class ScreenListPanel extends JInternalFrame {
 
                     List<SamplePoint> newPoints = Lists.newArrayList();
 
-                    for (SamplePoint oldPoint: selectedItem.getPoints()) {
+                    for (SamplePoint oldPoint : selectedItem.getPoints()) {
                         if (SamplePoint.validate(ImmutableList.of(oldPoint), imageWrapper, false)) {
                             newPoints.add(oldPoint);
                         }
@@ -212,6 +276,29 @@ public class ScreenListPanel extends JInternalFrame {
             editMenu.add(updatePointsMenuItem);
         }
 
+        editMenu.addSeparator();
+
+        {
+            JMenuItem saveMenuItem = new JMenuItem("Delete");
+            saveMenuItem.addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    if (JOptionPane.showConfirmDialog(owner, "Are you sure, delete (" + selectedItem.getScreenId() + ")") == JOptionPane.YES_OPTION) {
+                        viewDefinition.getScreens().remove(selectedIndex);
+
+                        deSelect();
+
+                        viewDefinition.save();
+
+                        itemModel.refresh();
+
+                        info("Deleted");
+                    }
+                }
+            });
+            editMenu.add(saveMenuItem);
+        }
+
         testMenu = new JMenu("Test");
         testMenu.setEnabled(false);
         menuBar.add(testMenu);
@@ -267,6 +354,13 @@ public class ScreenListPanel extends JInternalFrame {
         setVisible(true);
     }
 
+    private void deSelect() {
+        selectedIndex = -1;
+        selectedItem = null;
+        itemList.clearSelection();
+        updateForm();
+    }
+
     private void info(String msg) {
         JOptionPane.showMessageDialog(this, msg);
     }
@@ -291,6 +385,7 @@ public class ScreenListPanel extends JInternalFrame {
     private ScreenDefinition selectedItem;
     private JTextField idField;
     private JTextField nameField;
+    JMenu listMenu;
     JMenu editMenu;
     JMenu testMenu;
 

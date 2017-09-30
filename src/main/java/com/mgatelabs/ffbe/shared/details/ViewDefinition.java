@@ -9,6 +9,8 @@ import com.mgatelabs.ffbe.shared.util.JsonTool;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 /**
@@ -95,5 +97,20 @@ public class ViewDefinition {
             e.printStackTrace();
         }
         return false;
+    }
+
+    public void sort() {
+        Collections.sort(getScreens(), new Comparator<ScreenDefinition>() {
+            @Override
+            public int compare(ScreenDefinition o1, ScreenDefinition o2) {
+                return o1.getScreenId().compareTo(o2.getScreenId());
+            }
+        });
+        Collections.sort(getComponents(), new Comparator<ComponentDefinition>() {
+            @Override
+            public int compare(ComponentDefinition o1, ComponentDefinition o2) {
+                return o1.getComponentId().compareTo(o2.getComponentId());
+            }
+        });
     }
 }

@@ -8,6 +8,7 @@ import com.mgatelabs.ffbe.shared.util.ConsoleInput;
 import com.mgatelabs.ffbe.ui.FrameChoices;
 import com.mgatelabs.ffbe.ui.frame.MainFrame;
 import com.mgatelabs.ffbe.ui.frame.StartupFrame;
+import com.mgatelabs.ffbe.ui.utils.Constants;
 
 import javax.swing.*;
 import java.util.regex.Pattern;
@@ -59,10 +60,9 @@ public class Runner {
 
                         if (frameChoices.getAction() == FrameChoices.Action.CREATE) {
                             String inputValue = JOptionPane.showInputDialog("Please input a " + frameChoices.getMode().name());
-                            Pattern pattern = Pattern.compile("^[a-zA-Z0-9-_]+$");
                             if (inputValue == null || inputValue.trim().length() == 0) {
                                 continue;
-                            } else if (!pattern.matcher(inputValue).matches()) {
+                            } else if (!Constants.ID_PATTERN.matcher(inputValue).matches()) {
                                 JOptionPane.showMessageDialog(null, "Invalid string format, only allow a-z A-Z 0-9 - _");
                                 continue;
                             } else if (!frameChoices.canCreate(inputValue)) {

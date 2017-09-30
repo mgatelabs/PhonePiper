@@ -4,8 +4,12 @@ import com.mgatelabs.ffbe.shared.details.ActionType;
 import com.mgatelabs.ffbe.shared.details.ComponentDefinition;
 import com.mgatelabs.ffbe.shared.details.DeviceDefinition;
 import com.mgatelabs.ffbe.shared.details.ViewDefinition;
+import com.mgatelabs.ffbe.shared.image.ImageWrapper;
+import com.mgatelabs.ffbe.shared.image.PngImageWrapper;
 import com.mgatelabs.ffbe.shared.util.AdbShell;
 import com.mgatelabs.ffbe.shared.util.AdbUtils;
+import com.mgatelabs.ffbe.ui.ImagePixelPickerDialog;
+import com.mgatelabs.ffbe.ui.utils.Constants;
 import com.mgatelabs.ffbe.ui.utils.RefreshableListModel;
 
 import javax.swing.*;
@@ -14,6 +18,8 @@ import javax.swing.event.ListSelectionListener;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.File;
+import java.util.ArrayList;
 
 /**
  * Created by @mgatelabs (Michael Fuller) on 9/29/2017.
@@ -22,17 +28,19 @@ public class ComponentListPanel extends JInternalFrame {
 
     private DeviceDefinition deviceDefinition;
     private ViewDefinition viewDefinition;
+    private final JFrame owner;
 
     private final AdbShell shell;
 
     private JList<ComponentDefinition> itemList;
     private RefreshableListModel<ComponentDefinition> itemModel;
 
-    public ComponentListPanel(DeviceDefinition deviceDefinition, ViewDefinition viewDefinition, AdbShell shell) {
+    public ComponentListPanel(DeviceDefinition deviceDefinition, ViewDefinition viewDefinition, AdbShell shell, JFrame owner) {
         super("Components", true, false, false, false);
         this.deviceDefinition = deviceDefinition;
         this.viewDefinition = viewDefinition;
         this.shell = shell;
+        this.owner = owner;
 
         build();
     }
@@ -81,6 +89,92 @@ public class ComponentListPanel extends JInternalFrame {
 
         JMenuBar menuBar = new JMenuBar();
 
+        listMenu = new JMenu("List");
+        menuBar.add(listMenu);
+
+
+        {
+            JMenuItem newMenuItem = new JMenuItem("New");
+            newMenuItem.addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    String input = JOptionPane.showInputDialog(owner, "Component ID (a-z A-Z 0-9 - _)");
+                    if (input != null && Constants.ID_PATTERN.matcher(input).matches()) {
+
+                        for (ComponentDefinition componentDefinition: viewDefinition.getComponents()) {
+                            if (componentDefinition.getComponentId().equals(input)) {
+                                info("Screen with same ID already exists");
+                                return;
+                            }
+                        }
+
+                        ComponentDefinition componentDefinition = new ComponentDefinition();
+                        componentDefinition.setComponentId(input);
+                        componentDefinition.setName(input);
+
+                        ImageWrapper imageReader = AdbUtils.getScreen();
+
+                        if (imageReader != null && imageReader.isReady()) {
+
+                            ImagePixelPickerDialog imagePixelPickerDialog = new ImagePixelPickerDialog(ImagePixelPickerDialog.Mode.BOX, owner);
+                            imagePixelPickerDialog.setup(imageReader, new ArrayList<>());
+                            imagePixelPickerDialog.start();
+
+                            if (!imagePixelPickerDialog.isOk()) {
+                                return;
+                            } else if (imagePixelPickerDialog.getPoints().isEmpty()) {
+                                info("You did not select any samples, try again: (y/n)");
+                                return;
+                            } else if (imagePixelPickerDialog.getPoints().size() != 2) {
+                                info("You must select 2 points");
+                                return;
+                            } else {
+
+                                int x1 = imagePixelPickerDialog.getPoints().get(0).getX();
+                                int x2 = imagePixelPickerDialog.getPoints().get(1).getX();
+                                int y1 = imagePixelPickerDialog.getPoints().get(0).getY();
+                                int y2 = imagePixelPickerDialog.getPoints().get(1).getY();
+
+                                if (x1 > x2) {
+                                    int temp = x1;
+                                    x1 = x2;
+                                    x2 = temp;
+                                }
+
+                                if (y1 > y2) {
+                                    int temp = y1;
+                                    y1 = y2;
+                                    y2 = temp;
+                                }
+
+                                componentDefinition.setX(x1);
+                                componentDefinition.setY(y1);
+                                componentDefinition.setW(x2 - x1);
+                                componentDefinition.setH(y2 - y1);
+
+                                imageReader.savePng(ComponentDefinition.getPreviewPath(deviceDefinition.getViewId(), componentDefinition.getComponentId()));
+
+                                selectedIndex = -1;
+                                selectedItem = null;
+                                itemList.clearSelection();
+                                updateForm();
+
+                                viewDefinition.getComponents().add(componentDefinition);
+
+                                viewDefinition.sort();
+
+                                viewDefinition.save();
+
+                                itemModel.refresh();
+                            }
+
+                        }
+                    }
+                }
+            });
+            listMenu.add(newMenuItem);
+        }
+
         editMenu = new JMenu("Edit");
         editMenu.setEnabled(false);
         menuBar.add(editMenu);
@@ -93,6 +187,7 @@ public class ComponentListPanel extends JInternalFrame {
                     if (nameField.getText() != null && nameField.getText().trim().length() > 0) {
                         selectedItem.setName(nameField.getText().trim());
                         viewDefinition.save();
+                        itemModel.refresh();
                     } else {
                         nameField.setText(selectedItem.getName());
                     }
@@ -100,6 +195,107 @@ public class ComponentListPanel extends JInternalFrame {
             });
             editMenu.add(saveMenuItem);
         }
+
+        {
+            JMenuItem updatePointsMenuItem = new JMenuItem("Update Points");
+            updatePointsMenuItem.addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+
+                    ImageWrapper imageWrapper = PngImageWrapper.getPngImage(ComponentDefinition.getPreviewPath(viewDefinition.getViewId(), selectedItem.getComponentId()));
+
+                    if (imageWrapper == null) {
+                        info("Local preview missing");
+                        return;
+                    }
+
+                    ImagePixelPickerDialog imagePixelPickerDialog = new ImagePixelPickerDialog(ImagePixelPickerDialog.Mode.BOX, null);
+                    imagePixelPickerDialog.setup(imageWrapper, selectedItem.getX(), selectedItem.getY(), selectedItem.getW(), selectedItem.getH());
+                    imagePixelPickerDialog.start();
+
+                    if (!imagePixelPickerDialog.isOk()) {
+                        System.out.println("Stopping");
+                        return;
+                    }
+
+                    if (imagePixelPickerDialog.getPoints().isEmpty()) {
+                        info("You did not select any samples");
+                        return;
+                    } else if (imagePixelPickerDialog.getPoints().size() != 2) {
+                        info("You must select 2 points");
+                    } else {
+
+                        int x1 = imagePixelPickerDialog.getPoints().get(0).getX();
+                        int x2 = imagePixelPickerDialog.getPoints().get(1).getX();
+                        int y1 = imagePixelPickerDialog.getPoints().get(0).getY();
+                        int y2 = imagePixelPickerDialog.getPoints().get(1).getY();
+
+                        if (x1 > x2) {
+                            int temp = x1;
+                            x1 = x2;
+                            x2 = temp;
+                        }
+
+                        if (y1 > y2) {
+                            int temp = y1;
+                            y1 = y2;
+                            y2 = temp;
+                        }
+
+                        selectedItem.setX(x1);
+                        selectedItem.setY(y1);
+                        selectedItem.setW(x2 - x1);
+                        selectedItem.setH(y2 - y1);
+
+                        info(viewDefinition.save() ? "Saved" : "Failed");
+                    }
+                }
+            });
+            editMenu.add(updatePointsMenuItem);
+        }
+
+        {
+            JMenuItem testMenuItem = new JMenuItem("Update Image");
+            testMenuItem.addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    ImageWrapper wrapper = AdbUtils.getScreen();
+                    if (wrapper != null && wrapper.isReady()) {
+                        File previewPath = ComponentDefinition.getPreviewPath(viewDefinition.getViewId(), selectedItem.getComponentId());
+                        if (!wrapper.savePng(previewPath)) {
+                            info("Failed to update image");
+                        } else {
+                            info("Image Updated");
+                        }
+                    } else {
+                        info("Could not obtain image from device");
+                    }
+                }
+            });
+            editMenu.add(testMenuItem);
+        }
+
+        editMenu.addSeparator();
+
+        {
+            JMenuItem saveMenuItem = new JMenuItem("Delete");
+            saveMenuItem.addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    if (JOptionPane.showConfirmDialog(owner, "Are you sure, delete (" + selectedItem.getComponentId() + ")") == JOptionPane.YES_OPTION) {
+                        viewDefinition.getComponents().remove(selectedIndex);
+                        itemList.clearSelection();
+                        selectedItem = null;
+                        selectedIndex = -1;
+                        updateForm();
+                        viewDefinition.save();
+                        info("Deleted");
+                    }
+                }
+            });
+            editMenu.add(saveMenuItem);
+        }
+
 
         testMenu = new JMenu("Test");
         testMenu.setEnabled(false);
@@ -161,6 +357,10 @@ public class ComponentListPanel extends JInternalFrame {
         setVisible(true);
     }
 
+    private void info(String msg) {
+        JOptionPane.showMessageDialog(this, msg);
+    }
+
     private void updateForm() {
         if (selectedItem != null) {
             idField.setText(selectedItem.getComponentId());
@@ -181,6 +381,7 @@ public class ComponentListPanel extends JInternalFrame {
     private ComponentDefinition selectedItem;
     private JTextField idField;
     private JTextField nameField;
+    JMenu listMenu;
     JMenu editMenu;
     JMenu testMenu;
 

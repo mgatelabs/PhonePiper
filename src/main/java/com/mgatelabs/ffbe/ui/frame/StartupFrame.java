@@ -1,7 +1,11 @@
 package com.mgatelabs.ffbe.ui.frame;
 
+import com.fasterxml.jackson.core.JsonParseException;
+import com.fasterxml.jackson.databind.JsonMappingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.common.collect.Lists;
 import com.mgatelabs.ffbe.shared.details.PlayerDefinition;
+import com.mgatelabs.ffbe.shared.util.JsonTool;
 import com.mgatelabs.ffbe.ui.utils.Constants;
 
 import javax.swing.*;
@@ -11,6 +15,7 @@ import java.awt.event.ActionListener;
 import java.io.File;
 import java.io.FileFilter;
 import java.io.FilenameFilter;
+import java.io.IOException;
 import java.util.Collections;
 import java.util.List;
 
@@ -226,6 +231,18 @@ public class StartupFrame extends JFrame {
                     selectedMap = (String) mapComboBox.getSelectedItem();
                     selectedAction = (String) actionComboBox.getSelectedItem();
                     selectedMode = (String) modeComboBox.getSelectedItem();
+
+                    final StartSelections selections = new StartSelections();
+
+                    selections.setSelectedScript(nullToEmpty(selectedScript));
+                    selections.setSelectedDevice(nullToEmpty(selectedDevice));
+                    selections.setSelectedView(nullToEmpty(selectedView));
+                    selections.setSelectedMap(nullToEmpty(selectedMap));
+                    selections.setSelectedAction(nullToEmpty(selectedAction));
+                    selections.setSelectedMode(nullToEmpty(selectedMode));
+
+                    selections.save();
+
                     frame.dispose();
                 }
             });
@@ -235,6 +252,17 @@ public class StartupFrame extends JFrame {
 
         }
 
+        StartSelections startSelections = StartSelections.read();
+
+        if (startSelections != null) {
+            updateList(modeComboBox, nullToEmpty(startSelections.getSelectedMode()));
+            updateList(actionComboBox, nullToEmpty(startSelections.getSelectedAction()));
+            updateList(deviceComboBox, nullToEmpty(startSelections.getSelectedDevice()));
+            updateList(viewComboBox, nullToEmpty(startSelections.getSelectedView()));
+            updateList(scriptComboBox, nullToEmpty(startSelections.getSelectedScript()));
+            updateList(mapComboBox, nullToEmpty(startSelections.getSelectedMap()));
+        }
+
         pack();
 
         setLocationRelativeTo(null);
@@ -242,8 +270,17 @@ public class StartupFrame extends JFrame {
         setVisible(true);
     }
 
+    private void updateList(JComboBox<String> list, String selection) {
+        list.setSelectedItem(selection);
+    }
+
+    private static String nullToEmpty(String s) {
+        return s == null ? "" : s;
+    }
+
     private String[] listJsonFilesIn(File dir) {
         List<String> itemList = Lists.newArrayList();
+        itemList.add("");
         for (File f : dir.listFiles(new FilenameFilter() {
             @Override
             public boolean accept(File dir, String name) {
@@ -261,6 +298,7 @@ public class StartupFrame extends JFrame {
 
     private String[] listFoldersFilesIn(File dir) {
         List<String> itemList = Lists.newArrayList();
+        itemList.add("");
         for (File f : dir.listFiles(new FileFilter() {
             @Override
             public boolean accept(File pathname) {
@@ -273,5 +311,104 @@ public class StartupFrame extends JFrame {
         String[] itemArray = new String[itemList.size()];
         itemList.toArray(itemArray);
         return itemArray;
+    }
+
+    public static class StartSelections {
+
+        private String selectedView;
+        private String selectedDevice;
+        private String selectedScript;
+        private String selectedMap;
+        private String selectedMode;
+        private String selectedAction;
+
+        public String getSelectedView() {
+            return selectedView;
+        }
+
+        public void setSelectedView(String selectedView) {
+            this.selectedView = selectedView;
+        }
+
+        public String getSelectedDevice() {
+            return selectedDevice;
+        }
+
+        public void setSelectedDevice(String selectedDevice) {
+            this.selectedDevice = selectedDevice;
+        }
+
+        public String getSelectedScript() {
+            return selectedScript;
+        }
+
+        public void setSelectedScript(String selectedScript) {
+            this.selectedScript = selectedScript;
+        }
+
+        public String getSelectedMap() {
+            return selectedMap;
+        }
+
+        public void setSelectedMap(String selectedMap) {
+            this.selectedMap = selectedMap;
+        }
+
+        public String getSelectedMode() {
+            return selectedMode;
+        }
+
+        public void setSelectedMode(String selectedMode) {
+            this.selectedMode = selectedMode;
+        }
+
+        public String getSelectedAction() {
+            return selectedAction;
+        }
+
+        public void setSelectedAction(String selectedAction) {
+            this.selectedAction = selectedAction;
+        }
+
+        public static StartSelections read() {
+            File selectionFile = getFileFor();
+            if (selectionFile.exists()) {
+                ObjectMapper objectMapper = JsonTool.INSTANCE;
+                try {
+                    return objectMapper.readValue(selectionFile, StartSelections.class);
+                } catch (JsonParseException e) {
+                    e.printStackTrace();
+                } catch (JsonMappingException e) {
+                    e.printStackTrace();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+            return null;
+        }
+
+        public static File getFileFor() {
+            return new File("./selections.json");
+        }
+
+        public static boolean exists() {
+            return getFileFor().exists();
+        }
+
+        public boolean save() {
+            File selectionFile = getFileFor();
+            final ObjectMapper objectMapper = JsonTool.INSTANCE;
+            try {
+                objectMapper.writeValue(selectionFile, this);
+                return true;
+            } catch (JsonParseException e) {
+                e.printStackTrace();
+            } catch (JsonMappingException e) {
+                e.printStackTrace();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            return false;
+        }
     }
 }

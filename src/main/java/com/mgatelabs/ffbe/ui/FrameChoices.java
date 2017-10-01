@@ -112,7 +112,7 @@ public class FrameChoices {
             case RUN: {
                 switch (mode) {
                     case SCRIPT: {
-                        return true;
+                        return isNotNullString(deviceName) && isNotNullString(scriptName);
                     }
                     default:
                         return false;
@@ -129,6 +129,10 @@ public class FrameChoices {
             }
         }
         return false;
+    }
+
+    public boolean isNotNullString(String s) {
+        return s != null && s.trim().length() > 0;
     }
 
     public boolean canMap(Action action, Mode mode) {
@@ -208,16 +212,19 @@ public class FrameChoices {
                             return false;
                         }
                         viewDefinition = new ViewDefinition(deviceName);
-                    } break;
+                    }
+                    break;
                     case SCRIPT: {
                         if (ScriptDefinition.exists(name)) {
                             return false;
                         }
                         scriptDefinition = new ScriptDefinition(deviceName);
-                    } break;
+                    }
+                    break;
                 }
 
-            } break;
+            }
+            break;
             default:
                 return false;
         }

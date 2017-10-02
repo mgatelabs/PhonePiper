@@ -83,16 +83,17 @@ public class Runner {
                             }
 
                             if (!frame.isReturnRequested()) {
-                                return;
+                                break;
                             }
                         } else {
 
                         }
                     } else {
-                        return;
+                        break;
                     }
                 }
 
+                System.exit(0);
                 //new MainFrame().setVisible(true);
             } else if ("frame".equalsIgnoreCase(args[0])) {
 

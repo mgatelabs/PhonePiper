@@ -2,7 +2,8 @@
   "vars": [
     {"name":"loops", "value":"0", "type":"INT"},
     {"name":"setup", "value":"0", "type":"INT"},
-    {"name":"items", "value":"1000", "type":"INT"}
+    {"name":"items", "value":"1000", "type":"INT"},
+    {"name":"runs", "value":"0", "type":"INT"}
   ],
   "states": {
     "main": {
@@ -140,6 +141,15 @@
               "value": "0"
             },
             {
+              "type": "ADD",
+              "var": "runs",
+              "value": "1"
+            },
+            {
+              "type": "MSG",
+              "value": "Starting run ${runs}"
+            },
+            {
               "type": "SWAP",
               "value": "game-battle"
             }
@@ -164,12 +174,43 @@
               "value": ""
             }
           ]
-        }, {
-          "condition": {"is":"BOOLEAN", "value":"true"},
+        },
+        {
+          "condition": {
+            "var": "loops",
+            "is": "GREATER",
+            "value": "600"
+          },
           "actions": [
             {
               "type": "MSG",
-              "value": "No-Op"
+              "value": "Too many cycles, stopping run"
+            },
+            {
+              "type": "STOP",
+              "value": ""
+            }
+          ]
+        },
+
+        {
+          "condition": {
+            "is": "BOOLEAN",
+            "value": "true"
+          },
+          "actions": [
+            {
+              "type": "ADD",
+              "value": "1",
+              "var": "loops"
+            },
+            {
+              "type": "MSG",
+              "value": "No-Op ${loops}"
+            },
+            {
+              "type": "REPEAT",
+              "value": ""
             }
           ]
         }
@@ -263,6 +304,11 @@
             {
               "type": "MSG",
               "value": "Unit setup and Repeat"
+            },
+            {
+              "type": "SET",
+              "var": "loops",
+              "value": "0"
             },
             {
               "type": "SET",
@@ -418,6 +464,11 @@
               "value": "2"
             },
             {
+              "type": "SET",
+              "var": "loops",
+              "value": "0"
+            },
+            {
               "type": "SWAP",
               "value": "menu-results"
             }
@@ -457,6 +508,24 @@
 
         {
           "condition": {
+            "var": "loops",
+            "is": "GREATER",
+            "value": "600"
+          },
+          "actions": [
+            {
+              "type": "MSG",
+              "value": "Too many cycles, stopping run"
+            },
+            {
+              "type": "STOP",
+              "value": ""
+            }
+          ]
+        },
+
+        {
+          "condition": {
             "is": "BOOLEAN",
             "value": "true"
           },
@@ -465,6 +534,10 @@
               "type": "ADD",
               "value": "1",
               "var": "loops"
+            },
+            {
+              "type": "MSG",
+              "value": "No-Op ${loops}"
             },
             {
               "type": "REPEAT",
@@ -600,6 +673,10 @@
           },
           "actions": [
             {
+              "type": "MSG",
+              "value": "Ending run ${runs}"
+            },
+            {
               "type": "SWAP",
               "value": "main"
             }
@@ -610,6 +687,45 @@
             {
               "type": "MSG",
               "value": "No-Op"
+            }
+          ]
+        },
+        {
+          "condition": {
+            "var": "loops",
+            "is": "GREATER",
+            "value": "600"
+          },
+          "actions": [
+            {
+              "type": "MSG",
+              "value": "Too many cycles, stopping run"
+            },
+            {
+              "type": "STOP",
+              "value": ""
+            }
+          ]
+        },
+
+        {
+          "condition": {
+            "is": "BOOLEAN",
+            "value": "true"
+          },
+          "actions": [
+            {
+              "type": "ADD",
+              "value": "1",
+              "var": "loops"
+            },
+            {
+              "type": "MSG",
+              "value": "No-Op ${loops}"
+            },
+            {
+              "type": "REPEAT",
+              "value": ""
             }
           ]
         }

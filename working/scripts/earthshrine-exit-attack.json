@@ -177,6 +177,26 @@
         },
         {
           "condition": {
+            "is": "SCREEN",
+            "value": "menu-connection_error_2"
+          },
+          "actions": [
+            {
+              "type": "TAP",
+              "value": "menu-connection_error_2-ok"
+            },
+            {
+              "type": "WAIT",
+              "value": "1500"
+            },
+            {
+              "type": "REPEAT",
+              "value": ""
+            }
+          ]
+        },
+        {
+          "condition": {
             "var": "loops",
             "is": "GREATER",
             "value": "600"
@@ -455,6 +475,26 @@
         {
           "condition": {
             "is": "SCREEN",
+            "value": "menu-connection_error_2"
+          },
+          "actions": [
+            {
+              "type": "TAP",
+              "value": "menu-connection_error_2-ok"
+            },
+            {
+              "type": "WAIT",
+              "value": "1500"
+            },
+            {
+              "type": "REPEAT",
+              "value": ""
+            }
+          ]
+        },
+        {
+          "condition": {
+            "is": "SCREEN",
             "value": "menu-results-points"
           },
           "actions": [
@@ -629,6 +669,26 @@
         {
           "condition": {
             "is": "SCREEN",
+            "value": "menu-connection_error_2"
+          },
+          "actions": [
+            {
+              "type": "TAP",
+              "value": "menu-connection_error_2-ok"
+            },
+            {
+              "type": "WAIT",
+              "value": "1500"
+            },
+            {
+              "type": "REPEAT",
+              "value": ""
+            }
+          ]
+        },
+        {
+          "condition": {
+            "is": "SCREEN",
             "value": "menu-friend_request"
           },
           "actions": [
@@ -669,7 +729,11 @@
         {
           "condition": {
             "is": "SCREEN",
-            "value": "es-mission-select"
+            "value": "es-mission-select",
+            "or": {
+              "is": "SCREEN",
+              "value": "menu-goal_list"
+            }
           },
           "actions": [
             {

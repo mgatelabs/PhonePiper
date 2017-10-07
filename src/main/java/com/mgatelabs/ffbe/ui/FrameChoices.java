@@ -99,12 +99,18 @@ public class FrameChoices {
             this.deviceDefinition = null;
         }
 
-        if (canView(action, mode) && viewId != null) {
-            this.viewDefinition = ViewDefinition.read(viewId);
+        if (canView(action, mode)) {
+            if (viewId != null) {
+                this.viewDefinition = ViewDefinition.read(viewId);
+            } else if (deviceDefinition != null && deviceDefinition.getViewId() != null) {
+                this.viewDefinition = ViewDefinition.read(deviceDefinition.getViewId());
+            }
+            if (viewDefinition != null && deviceDefinition != null) {
+                deviceDefinition.setViewId(viewId);
+            }
         } else {
             this.viewDefinition = null;
         }
-
     }
 
     public boolean isValid() {
@@ -168,7 +174,7 @@ public class FrameChoices {
         if (action == Action.CREATE) return false;
         switch (mode) {
             case VIEW:
-                return false;
+                return true;
             case MAP:
             case SCRIPT:
             case DEVICE:

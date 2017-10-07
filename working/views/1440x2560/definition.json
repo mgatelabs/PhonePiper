@@ -10156,6 +10156,13 @@
     "w" : 369,
     "h" : 108
   }, {
+    "name" : "menu-connection_error_2-ok",
+    "componentId" : "menu-connection_error_2-ok",
+    "x" : 570,
+    "y" : 1470,
+    "w" : 300,
+    "h" : 45
+  }, {
     "name" : "Menu - Daily - Close",
     "componentId" : "menu-daily-close",
     "x" : 225,

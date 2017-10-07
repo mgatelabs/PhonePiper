@@ -383,7 +383,25 @@ public class ScriptRunner {
                 for (ActionDefinition actionDefinition : statementDefinition.getActions()) {
                     switch (actionDefinition.getType()) {
                         case MSG: {
-                            logger.info("MSG: " + actionDefinition.getValue());
+
+                            String msg = actionDefinition.getValue();
+                            int startindex;
+                            while ((startindex = msg.indexOf("${")) >= 0){
+                                int endIndex =msg.indexOf('}', startindex);
+                                if (endIndex > startindex + 2) {
+                                    String varName = msg.substring(startindex += 2, endIndex).trim();
+                                    if (varName.length() > 0) {
+                                        if (vars.containsKey(varName)) {
+                                            msg = msg.substring(0, startindex - 2) + vars.get(varName) + msg.substring(endIndex + 1);
+                                        } else {
+                                            break;
+                                        }
+                                    }
+                                } else {
+                                    break;
+                                }
+                            }
+                            logger.info("MSG: " + msg);
                         }
                         break;
                         case BATCH: {

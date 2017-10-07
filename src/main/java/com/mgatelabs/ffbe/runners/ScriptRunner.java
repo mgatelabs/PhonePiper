@@ -73,7 +73,7 @@ public class ScriptRunner {
 
         logger.addHandler(customHandler);
 
-        logger.info("Extracting Variables");
+        logger.finer("Extracting Variables");
 
         for (VarDefinition varDefinition : scriptDefinition.getVars()) {
             if (varDefinition.getType() == VarType.INT) {
@@ -81,14 +81,14 @@ public class ScriptRunner {
             }
         }
 
-        logger.info("Extracting Screens");
+        logger.finer("Extracting Screens");
 
         screens = Maps.newHashMap();
         for (ScreenDefinition screenDefinition : viewDefinition.getScreens()) {
             screens.put(screenDefinition.getScreenId(), screenDefinition);
         }
 
-        logger.info("Extracting Components");
+        logger.finer("Extracting Components");
 
         components = Maps.newHashMap();
         for (ComponentDefinition componentDefinition : viewDefinition.getComponents()) {
@@ -105,7 +105,7 @@ public class ScriptRunner {
             entry.getValue().setId(entry.getKey());
         }
 
-        logger.info("Generating State Info");
+        logger.finer("Generating State Info");
 
         transferStateMap = Maps.newHashMap();
         transferStateMap.putAll(generateStateInfo());
@@ -273,7 +273,7 @@ public class ScriptRunner {
                 lastImageDate = new Date();
                 lastImageDuration = ((float) dif / 1000000000.0f);
 
-                logger.fine("Image Persisted");
+                logger.finest("Image Persisted");
 
                 imageWrapper = null;
             } else {
@@ -292,7 +292,7 @@ public class ScriptRunner {
                     waitFor(250);
                     continue;
                 } else {
-                    logger.fine("Image Persisted");
+                    logger.finest("Image Persisted");
                 }
             }
 
@@ -303,7 +303,7 @@ public class ScriptRunner {
 
                 if (deviceHelper != null) {
 
-                    logger.info("Helper: /check/" + stateDefinition.getId());
+                    logger.finer("Helper: /check/" + stateDefinition.getId());
 
                     validScreenIds = deviceHelper.check(stateDefinition.getId());
                 }
@@ -369,12 +369,12 @@ public class ScriptRunner {
             waitFor(1000);
         }
 
-        logger.info("Script Stopped");
+        logger.fine("Script Stopped");
     }
 
     private StateResult state(final StateDefinition stateDefinition, final ImageWrapper imageWrapper) {
 
-        logger.info("Running State: " + stateDefinition.getName());
+        logger.fine("Running State: " + stateDefinition.getName());
 
         boolean batchCmds = false;
 

@@ -312,6 +312,7 @@ public class ScriptRunner {
 
                 switch (result.getType()) {
                     case STOP: {
+                        this.status = Status.PAUSED;
                         return;
                     }
                     case POP:

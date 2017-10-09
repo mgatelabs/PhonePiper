@@ -464,6 +464,8 @@ public class ScriptRunner {
                         case REPEAT: {
                             return StateResult.REPEAT;
                         }
+                        case STOP:
+                            return StateResult.STOP;
                     }
                 }
             }

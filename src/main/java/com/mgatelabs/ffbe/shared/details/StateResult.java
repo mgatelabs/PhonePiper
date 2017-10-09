@@ -17,6 +17,7 @@ public class StateResult {
 
     private final String value;
 
+    public static final StateResult STOP = new StateResult(Type.STOP, "");
     public static final StateResult POP = new StateResult(Type.POP, "");
     public static final StateResult REPEAT = new StateResult(Type.REPEAT, "");
 

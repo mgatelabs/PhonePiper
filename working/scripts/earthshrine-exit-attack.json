@@ -132,6 +132,26 @@
         {
           "condition": {
             "is": "SCREEN",
+            "value": "menu-energy_recovery"
+          },
+          "actions": [
+            {
+              "type": "TAP",
+              "value": "menu-energy_recovery-back"
+            },
+            {
+              "type": "WAIT",
+              "value": "1500"
+            },
+            {
+              "type": "REPEAT",
+              "value": ""
+            }
+          ]
+        },
+        {
+          "condition": {
+            "is": "SCREEN",
             "value": "game-battle"
           },
           "actions": [

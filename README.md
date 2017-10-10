@@ -1,5 +1,5 @@
 # FFBExecute
-Set of scripts to control FFBE for TMR farming
+Set of scripts to control FFBE for TMR/Esper farming
 
 This is a bit of a weekend project, but I learned of the power of ADB and I thought, its time to get those TMRs i'm missing.
 You will need android studio and android debgging tools in order for this to function.
@@ -11,7 +11,9 @@ This is currently built for my phone, the Axon7 and will not work with any other
 0. Have a Axon7 phone & Android Studio with Debug tools.  Make sure you phone has developer options enabled.
 1. The source code comes with a working folder, you should point your working folder to this one.
 2. Open FFBE and navigate to the Earth Shrine mission list.
-3. run with the arguments "script earthshrine-exit-attack"
+3. run com.mgatelabs.ffbe.Runner without any arguments
+4. Select "Script", "Run", "Your Device", "Leave View empty", and choose the script "earthshrine-exit-attack", then hit Start
+5. In the frame, type in you're phone's IP address, player level and hit Start script
 
 It is highly recommended to have IntelliJ Community edition to run this app.  You only need android studio, so you can have access to ADB.
 
@@ -22,30 +24,6 @@ It is highly recommended to have IntelliJ Community edition to run this app.  Yo
 2. Grabbing the current screen
 3. Handle conditions and execute actions
 
-## Run options
-
-### Earthshrine Missions
-
-#### Command (3 Attack)
-script earthshrine-exit-attack
-
-#### Command (Auto Attack)
-script earthshrine-exit-auto
-
-#### Command (Farm Items & Attack)
-script earthshrine-exit-attack-item
-
-### Manager
-
-#### Command
-manager [phoneName]
-
-### GUI
-
-#### Command (WIP)
-gui
-
 ## What needs to happen
 
 1. Map parsing
-2. Gui functions

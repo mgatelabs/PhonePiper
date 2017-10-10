@@ -774,10 +774,12 @@
           "condition": {
             "is": "SCREEN",
             "value": "es-mission-select",
-            "or": {
+            "or": [
+              {
               "is": "SCREEN",
               "value": "menu-goal_list"
-            }
+              }
+            ]
           },
           "actions": [
             {

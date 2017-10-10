@@ -33,6 +33,14 @@ public class ScriptDefinition {
         states = Maps.newHashMap();
     }
 
+    public void fix() {
+        for (StateDefinition stateDefinition: states.values()) {
+            for (StatementDefinition statementDefinition: stateDefinition.getStatements()) {
+                statementDefinition.getCondition().fix();
+            }
+        }
+    }
+
     public Map<String, StateDefinition> getStates() {
         return states;
     }
@@ -71,7 +79,9 @@ public class ScriptDefinition {
             final ObjectMapper objectMapper = JsonTool.INSTANCE;
             try {
                 ScriptDefinition scriptDefinition = objectMapper.readValue(deviceFile, ScriptDefinition.class);
+
                 scriptDefinition.setScriptId(scriptId);
+
                 if (scriptDefinition.getStates() == null) {
                     scriptDefinition.setStates(Maps.newHashMap());
                 } else {
@@ -83,6 +93,8 @@ public class ScriptDefinition {
                 if (scriptDefinition.getVars() == null) {
                     scriptDefinition.setVars(Lists.newArrayList());
                 }
+
+                scriptDefinition.fix();
 
                 return scriptDefinition;
             } catch (JsonParseException e) {

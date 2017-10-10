@@ -1,9 +1,25 @@
 {
   "vars": [
-    {"name":"loops", "value":"0", "type":"INT"},
-    {"name":"setup", "value":"0", "type":"INT"},
-    {"name":"items", "value":"1000", "type":"INT"},
-    {"name":"runs", "value":"0", "type":"INT"}
+    {
+      "name": "loops",
+      "value": "0",
+      "type": "INT"
+    },
+    {
+      "name": "setup",
+      "value": "0",
+      "type": "INT"
+    },
+    {
+      "name": "items",
+      "value": "1000",
+      "type": "INT"
+    },
+    {
+      "name": "runs",
+      "value": "0",
+      "type": "INT"
+    }
   ],
   "states": {
     "main": {
@@ -13,10 +29,12 @@
           "condition": {
             "is": "SCREEN",
             "value": "es-mission-select",
-            "and": {
-              "is": "ENERGY",
-              "value": "3"
-            }
+            "and": [
+              {
+                "is": "ENERGY",
+                "value": "3"
+              }
+            ]
           },
           "actions": [
             {
@@ -41,10 +59,12 @@
           "condition": {
             "is": "SCREEN",
             "value": "es-mission-select",
-            "and": {
-              "is": "ENERGY",
-              "value": "3"
-            }
+            "and": [
+              {
+                "is": "ENERGY",
+                "value": "3"
+              }
+            ]
           },
           "actions": [
             {
@@ -69,10 +89,12 @@
           "condition": {
             "is": "SCREEN",
             "value": "menu-goal_list",
-            "and": {
-              "is": "SCREEN",
-              "value": "menu-goal_list-next"
-            }
+            "and": [
+              {
+                "is": "SCREEN",
+                "value": "menu-goal_list-next"
+              }
+            ]
           },
           "actions": [
             {
@@ -232,7 +254,6 @@
             }
           ]
         },
-
         {
           "condition": {
             "is": "BOOLEAN",
@@ -263,19 +284,21 @@
           "condition": {
             "is": "SCREEN",
             "value": "game-battle",
-            "and": {
-              "is": "SCREEN",
-              "value": "game-battle-auto_off",
-              "and": {
+            "and": [
+              {
                 "is": "SCREEN",
-                "value": "battle-unit-0_ready",
-                "and": {
-                  "is": "EQUAL",
-                  "var":"setup",
-                  "value": "2"
-                }
+                "value": "game-battle-auto_off"
+              },
+              {
+                "is": "SCREEN",
+                "value": "battle-unit-0_ready"
+              },
+              {
+                "is": "EQUAL",
+                "var": "setup",
+                "value": "2"
               }
-            }
+            ]
           },
           "actions": [
             {
@@ -319,26 +342,27 @@
               "type": "REPEAT",
               "value": ""
             }
-
           ]
         },
         {
           "condition": {
             "is": "SCREEN",
             "value": "game-battle",
-            "and": {
-              "is": "SCREEN",
-              "value": "game-battle-auto_off",
-              "and": {
+            "and": [
+              {
                 "is": "SCREEN",
-                "value": "battle-unit-0_ready",
-                "and": {
-                  "is": "EQUAL",
-                  "var":"setup",
-                  "value": "0"
-                }
+                "value": "game-battle-auto_off"
+              },
+              {
+                "is": "SCREEN",
+                "value": "battle-unit-0_ready"
+              },
+              {
+                "is": "EQUAL",
+                "var": "setup",
+                "value": "0"
               }
-            }
+            ]
           },
           "actions": [
             {
@@ -419,26 +443,27 @@
               "type": "REPEAT",
               "value": ""
             }
-
           ]
         },
         {
           "condition": {
             "is": "SCREEN",
             "value": "game-battle",
-            "and": {
-              "is": "SCREEN",
-              "value": "game-battle-auto_off",
-              "and": {
+            "and": [
+              {
                 "is": "SCREEN",
-                "value": "battle-unit-0_ready",
-                "and": {
-                  "is": "EQUAL",
-                  "var":"setup",
-                  "value": "1"
-                }
+                "value": "game-battle-auto_off"
+              },
+              {
+                "is": "SCREEN",
+                "value": "battle-unit-0_ready"
+              },
+              {
+                "is": "EQUAL",
+                "var": "setup",
+                "value": "1"
               }
-            }
+            ]
           },
           "actions": [
             {
@@ -534,16 +559,17 @@
             }
           ]
         },
-
         {
           "condition": {
             "var": "loops",
             "is": "GREATER",
             "value": "20",
-            "and": {
+            "and": [
+              {
               "is": "SCREEN",
               "value": "game-battle-auto_off"
-            }
+              }
+            ]
           },
           "actions": [
             {
@@ -565,7 +591,6 @@
             }
           ]
         },
-
         {
           "condition": {
             "var": "loops",
@@ -583,7 +608,6 @@
             }
           ]
         },
-
         {
           "condition": {
             "is": "BOOLEAN",
@@ -803,7 +827,6 @@
             }
           ]
         },
-
         {
           "condition": {
             "is": "BOOLEAN",

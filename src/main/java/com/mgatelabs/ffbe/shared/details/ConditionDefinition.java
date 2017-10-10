@@ -1,7 +1,9 @@
 package com.mgatelabs.ffbe.shared.details;
 
+import com.google.common.collect.Lists;
 import com.google.common.collect.Sets;
 
+import java.util.List;
 import java.util.Set;
 
 /**
@@ -12,8 +14,8 @@ public class ConditionDefinition {
     private String value;
     private String var;
 
-    private ConditionDefinition and;
-    private ConditionDefinition or;
+    private List<ConditionDefinition> and;
+    private List<ConditionDefinition> or;
 
     public ConditionType getIs() {
         return is;
@@ -31,19 +33,36 @@ public class ConditionDefinition {
         this.value = value;
     }
 
-    public ConditionDefinition getAnd() {
+    public void fix() {
+        if (and == null) {
+            and = Lists.newArrayList();
+        } else {
+            for (ConditionDefinition conditionDefinition : and) {
+                conditionDefinition.fix();
+            }
+        }
+        if (or == null) {
+            or = Lists.newArrayList();
+        } else {
+            for (ConditionDefinition conditionDefinition : or) {
+                conditionDefinition.fix();
+            }
+        }
+    }
+
+    public List<ConditionDefinition> getAnd() {
         return and;
     }
 
-    public void setAnd(ConditionDefinition and) {
+    public void setAnd(List<ConditionDefinition> and) {
         this.and = and;
     }
 
-    public ConditionDefinition getOr() {
+    public List<ConditionDefinition> getOr() {
         return or;
     }
 
-    public void setOr(ConditionDefinition or) {
+    public void setOr(List<ConditionDefinition> or) {
         this.or = or;
     }
 
@@ -63,11 +82,15 @@ public class ConditionDefinition {
         }
 
         if (and != null) {
-            screenIds.addAll(and.determineScreenIds());
+            for (ConditionDefinition conditionDefinition : and) {
+                screenIds.addAll(conditionDefinition.determineScreenIds());
+            }
         }
 
         if (or != null) {
-            screenIds.addAll(or.determineScreenIds());
+            for (ConditionDefinition conditionDefinition : or) {
+                screenIds.addAll(conditionDefinition.determineScreenIds());
+            }
         }
 
         return screenIds;

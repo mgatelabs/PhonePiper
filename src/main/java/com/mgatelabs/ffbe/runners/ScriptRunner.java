@@ -556,24 +556,37 @@ public class ScriptRunner {
             }
             break;
             case NOT: {
-                if (conditionDefinition.getAnd() == null) {
-                    logger.log(Level.SEVERE, "is (NOT) requires a AND value");
-                    throw new RuntimeException("is (NOT) requires a AND value");
+                if (conditionDefinition.getAnd().size() != 1) {
+                    logger.log(Level.SEVERE, "is (NOT) requires one AND value");
+                    throw new RuntimeException("is (NOT) requires one AND value");
+                } else if (conditionDefinition.getOr().size() != 0) {
+                    logger.log(Level.SEVERE, "is (NOT) requires no OR value");
+                    throw new RuntimeException("is (NOT) requires no OR value");
                 }
                 checkAnd = false;
-                result = !check(conditionDefinition.getAnd(), imageWrapper);
+                result = !check(conditionDefinition.getAnd().get(0), imageWrapper);
             }
             break;
         }
 
         // If we have a AND handle it
-        if (result && checkAnd && conditionDefinition.getAnd() != null) {
-            result = check(conditionDefinition.getAnd(), imageWrapper);
+        if (result && checkAnd && !conditionDefinition.getAnd().isEmpty()) {
+            for (ConditionDefinition sub: conditionDefinition.getAnd()) {
+                if (!check(sub, imageWrapper)) {
+                    result = false;
+                    break;
+                }
+            }
         }
 
         // If we failed, but have a OR, check the OR
-        if (!result && conditionDefinition.getOr() != null) {
-            result = check(conditionDefinition.getOr(), imageWrapper);
+        if (!result && !conditionDefinition.getOr().isEmpty()) {
+            for (ConditionDefinition sub: conditionDefinition.getOr()) {
+                if (check(sub, imageWrapper)) {
+                    result = true;
+                    break;
+                }
+            }
         }
 
         return result;

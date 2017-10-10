@@ -15,7 +15,7 @@
             "value": "es-mission-select",
             "and": {
               "is": "ENERGY",
-              "value": "4"
+              "value": "3"
             }
           },
           "actions": [
@@ -219,7 +219,7 @@
           "condition": {
             "var": "loops",
             "is": "GREATER",
-            "value": "600"
+            "value": "900"
           },
           "actions": [
             {
@@ -570,7 +570,7 @@
           "condition": {
             "var": "loops",
             "is": "GREATER",
-            "value": "600"
+            "value": "900"
           },
           "actions": [
             {
@@ -761,16 +761,8 @@
               "value": "Ending run ${runs}"
             },
             {
-              "type": "SWAP",
+              "type": "MOVE",
               "value": "main"
-            }
-          ]
-        }, {
-          "condition": {"is":"BOOLEAN", "value":"true"},
-          "actions": [
-            {
-              "type": "MSG",
-              "value": "No-Op"
             }
           ]
         },
@@ -798,7 +790,7 @@
           "condition": {
             "var": "loops",
             "is": "GREATER",
-            "value": "600"
+            "value": "900"
           },
           "actions": [
             {

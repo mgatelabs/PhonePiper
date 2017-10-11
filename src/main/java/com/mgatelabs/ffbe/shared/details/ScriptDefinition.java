@@ -41,6 +41,10 @@ public class ScriptDefinition {
         }
     }
 
+    public void validate() {
+
+    }
+
     public Map<String, StateDefinition> getStates() {
         return states;
     }
@@ -95,6 +99,8 @@ public class ScriptDefinition {
                 }
 
                 scriptDefinition.fix();
+
+                scriptDefinition.validate();
 
                 return scriptDefinition;
             } catch (JsonParseException e) {

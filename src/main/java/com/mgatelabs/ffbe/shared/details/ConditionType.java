@@ -7,7 +7,6 @@ public enum ConditionType {
     SCREEN,
     ENERGY,
     BOOLEAN,
-    NOT,
     GREATER,
     LESS,
     EQUAL

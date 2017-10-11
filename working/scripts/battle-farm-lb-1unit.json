@@ -25,14 +25,8 @@
                 "value": "battle-unit-0_ready"
               },
               {
-                "is": "NOT",
-                "value": "",
-                "and": [
-                  {
-                    "is": "SCREEN",
-                    "value": "battle-esper-notfull"
-                  }
-                ]
+                "not": "SCREEN",
+                "value": "battle-esper-notfull"
               }
             ]
           },
@@ -62,14 +56,8 @@
                 "value": "battle-unit-0_ready"
               },
               {
-                "is": "NOT",
-                "value": "",
-                "and": [
-                  {
-                    "is": "SCREEN",
-                    "value": "battle-unit-0_notfull"
-                  }
-                ]
+                "not": "SCREEN",
+                "value": "battle-unit-0_notfull"
               }
             ]
           },

@@ -3,27 +3,24 @@
     "main": {
       "name": "Waiting",
       "statements": [
-
         {
           "condition": {
             "is": "SCREEN",
             "value": "game-battle-repeat",
-            "and": {
-              "is": "SCREEN",
-              "value": "battle-unit-0_ready",
-              "and": {
+            "and": [
+              {
                 "is": "SCREEN",
-                "value": "battle-unit-1_ready",
-                "and": {
-                  "is": "NOT",
-                  "value": "",
-                  "and": {
-                    "is":"SCREEN",
-                    "value":"battle-esper-notfull"
-                  }
-                }
+                "value": "battle-unit-0_ready"
+              },
+              {
+                "is": "SCREEN",
+                "value": "battle-unit-1_ready"
+              },
+              {
+                "not": "SCREEN",
+                "value": "battle-esper-notfull"
               }
-            }
+            ]
           },
           "actions": [
             {
@@ -36,27 +33,24 @@
             }
           ]
         },
-
         {
           "condition": {
             "is": "SCREEN",
             "value": "game-battle-repeat",
-            "and": {
-              "is": "SCREEN",
-              "value": "battle-unit-0_ready",
-              "and": {
+            "and": [
+              {
                 "is": "SCREEN",
-                "value": "battle-unit-1_ready",
-                "and": {
-                  "is": "NOT",
-                  "value": "",
-                  "and": {
-                    "is":"SCREEN",
-                    "value":"battle-unit-0_notfull"
-                  }
-                }
+                "value": "battle-unit-0_ready"
+              },
+              {
+                "is": "SCREEN",
+                "value": "battle-unit-1_ready"
+              },
+              {
+                "not": "SCREEN",
+                "value": "battle-unit-0_notfull"
               }
-            }
+            ]
           },
           "actions": [
             {
@@ -73,10 +67,12 @@
           "condition": {
             "is": "SCREEN",
             "value": "game-battle-repeat",
-            "and": {
-              "is": "SCREEN",
-              "value": "battle-unit-0_ready"
-            }
+            "and": [
+              {
+                "is": "SCREEN",
+                "value": "battle-unit-0_ready"
+              }
+            ]
           },
           "actions": [
             {
@@ -108,7 +104,8 @@
               "value": "END"
             }
           ]
-        },{
+        },
+        {
           "condition": {
             "is": "BOOLEAN",
             "value": "true"
@@ -122,7 +119,6 @@
         }
       ]
     },
-
     "lb": {
       "name": "Limit Burst Release",
       "statements": [
@@ -169,7 +165,8 @@
               "value": "END"
             }
           ]
-        },{
+        },
+        {
           "condition": {
             "is": "BOOLEAN",
             "value": "true"
@@ -191,7 +188,6 @@
         }
       ]
     },
-
     "esper": {
       "name": "Esper Release",
       "statements": [
@@ -238,7 +234,8 @@
               "value": "END"
             }
           ]
-        },{
+        },
+        {
           "condition": {
             "is": "BOOLEAN",
             "value": "true"
@@ -260,6 +257,5 @@
         }
       ]
     }
-
   }
 }

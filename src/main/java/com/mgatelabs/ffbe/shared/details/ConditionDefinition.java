@@ -1,5 +1,6 @@
 package com.mgatelabs.ffbe.shared.details;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Sets;
 
@@ -11,6 +12,7 @@ import java.util.Set;
  */
 public class ConditionDefinition {
     private ConditionType is;
+    private ConditionType not;
     private String value;
     private String var;
 
@@ -23,6 +25,32 @@ public class ConditionDefinition {
 
     public void setIs(ConditionType is) {
         this.is = is;
+    }
+
+    public ConditionType getNot() {
+        return not;
+    }
+
+    public void setNot(ConditionType not) {
+        this.not = not;
+    }
+
+    @JsonIgnore
+    public ConditionType getUsedCondition() {
+        if (is != null && not == null) {
+            return is;
+        } else if (is == null && not != null) {
+            return not;
+        } else if (is == null && not == null) {
+            throw new RuntimeException("Condition is missing a is or not condition");
+        } else {
+            throw new RuntimeException("Condition has a is and not condition, you can only use one, not both");
+        }
+    }
+
+    @JsonIgnore
+    public boolean isReversed() {
+        return not != null;
     }
 
     public String getValue() {
@@ -77,7 +105,7 @@ public class ConditionDefinition {
     public Set<String> determineScreenIds() {
         Set<String> screenIds = Sets.newHashSet();
 
-        if (is == ConditionType.SCREEN) {
+        if (getUsedCondition() == ConditionType.SCREEN) {
             screenIds.add(value);
         }
 

@@ -487,7 +487,7 @@ public class ScriptRunner {
         boolean result = false;
         boolean checkAnd = true;
 
-        switch (conditionDefinition.getIs()) {
+        switch (conditionDefinition.getUsedCondition()) {
             case BOOLEAN: {
                 result = "true".equalsIgnoreCase(conditionDefinition.getValue());
             }
@@ -555,18 +555,10 @@ public class ScriptRunner {
                 }
             }
             break;
-            case NOT: {
-                if (conditionDefinition.getAnd().size() != 1) {
-                    logger.log(Level.SEVERE, "is (NOT) requires one AND value");
-                    throw new RuntimeException("is (NOT) requires one AND value");
-                } else if (conditionDefinition.getOr().size() != 0) {
-                    logger.log(Level.SEVERE, "is (NOT) requires no OR value");
-                    throw new RuntimeException("is (NOT) requires no OR value");
-                }
-                checkAnd = false;
-                result = !check(conditionDefinition.getAnd().get(0), imageWrapper);
-            }
-            break;
+        }
+
+        if (conditionDefinition.isReversed()) {
+            result = !result;
         }
 
         // If we have a AND handle it

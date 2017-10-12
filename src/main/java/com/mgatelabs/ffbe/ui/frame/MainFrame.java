@@ -38,6 +38,7 @@ public class MainFrame extends JFrame {
 
     private ComponentListPanel componentListPanel;
     private ScreenListPanel screenListPanel;
+    private StatePanel statePanel;
 
     private LogPanel logPanel;
 
@@ -107,20 +108,19 @@ public class MainFrame extends JFrame {
 
         boolean showMap = false;
         boolean showPlayer = false;
-        boolean showStates = false;
         boolean showMapper = false;
         boolean showAdb = false;
         boolean showConnection = false;
         boolean showRunScript = false;
         boolean showScreens = false;
         boolean showComponents = false;
+        boolean showStates = false;
 
         switch (choices.getAction()) {
             case RUN: {
                 // Make sure the view is ready
                 viewDefinition = ViewDefinition.read(deviceDefinition.getViewId());
 
-                showStates = true;
                 showPlayer = true;
                 showMap = true;
                 showAdb = true;
@@ -132,7 +132,7 @@ public class MainFrame extends JFrame {
             case EDIT: {
                 switch (choices.getMode()) {
                     case SCRIPT: {
-
+                        showStates = true;
                     }
                     break;
                     case MAP: {
@@ -222,6 +222,12 @@ public class MainFrame extends JFrame {
             componentListPanel = new ComponentListPanel(deviceDefinition ,viewDefinition, shell, this);
             componentListPanel.setLocation(column0Left + screenListPanel.getWidth(), 0);
             desktopPane.add(componentListPanel);
+        }
+
+        if (showStates) {
+            statePanel = new StatePanel(viewDefinition, scriptDefinition);
+            statePanel.setLocation(column0Left, 0);
+            desktopPane.add(statePanel);
         }
 
         if (showPlayer) {

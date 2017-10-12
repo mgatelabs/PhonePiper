@@ -123,4 +123,61 @@ public class ConditionDefinition {
 
         return screenIds;
     }
+
+    public String toString() {
+
+        StringBuilder stringBuilder = new StringBuilder();
+
+        if (!or.isEmpty()) {
+            stringBuilder.append("( ");
+        }
+
+        if (!and.isEmpty()) {
+            stringBuilder.append("( ");
+        }
+
+        ConditionType conditionType = getUsedCondition();
+
+        switch (conditionType) {
+            case LESS:{
+                stringBuilder.append(not != null ? "!" : "").append(var).append( not != null ? " >= " : " < ").append(value);
+            } break;
+
+            case EQUAL:{
+                stringBuilder.append(var).append( not != null ? " != " : " == ").append(value);
+            } break;
+
+            case SCREEN:{
+                stringBuilder.append(not != null ? "!" : "").append("isScreen(").append(value).append(")");
+            } break;
+
+            case GREATER: {
+                stringBuilder.append(var).append( not != null ? " <= " : " > ").append(value);
+            } break;
+            case ENERGY: {
+                stringBuilder.append(not != null ? "!" : "").append("isEnergy(").append(value).append(")");
+            } break;
+            case BOOLEAN: {
+                stringBuilder.append(value).append(" == ").append(not != null ? "false" : "true");
+            } break;
+        }
+
+        if (!and.isEmpty()) {
+            for (ConditionDefinition subCondition: and) {
+                stringBuilder.append(" && ");
+                stringBuilder.append(subCondition.toString());
+            }
+            stringBuilder.append(" )");
+        }
+
+        if (!or.isEmpty()) {
+            for (ConditionDefinition subCondition: or) {
+                stringBuilder.append(" || ");
+                stringBuilder.append(subCondition.toString());
+            }
+            stringBuilder.append(" )");
+        }
+
+        return stringBuilder.toString();
+    }
 }

@@ -58,36 +58,6 @@
         {
           "condition": {
             "is": "SCREEN",
-            "value": "es-mission-select",
-            "and": [
-              {
-                "is": "ENERGY",
-                "value": "3"
-              }
-            ]
-          },
-          "actions": [
-            {
-              "type": "MSG",
-              "value": "No energy"
-            },
-            {
-              "type": "TAP",
-              "value": "menu-level"
-            },
-            {
-              "type": "WAIT",
-              "value": "3000"
-            },
-            {
-              "type": "REPEAT",
-              "value": ""
-            }
-          ]
-        },
-        {
-          "condition": {
-            "is": "SCREEN",
             "value": "menu-goal_list",
             "and": [
               {

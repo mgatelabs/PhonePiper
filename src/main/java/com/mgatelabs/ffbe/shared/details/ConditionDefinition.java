@@ -148,17 +148,18 @@ public class ConditionDefinition {
             } break;
 
             case SCREEN:{
-                stringBuilder.append(not != null ? "!" : "").append("isScreen(").append(value).append(")");
+                stringBuilder.append(not != null ? "!" : "").append("hasScreen('").append(value).append("')");
             } break;
 
             case GREATER: {
                 stringBuilder.append(var).append( not != null ? " <= " : " > ").append(value);
             } break;
             case ENERGY: {
-                stringBuilder.append(not != null ? "!" : "").append("isEnergy(").append(value).append(")");
+                stringBuilder.append(not != null ? "!" : "").append("hasEnergy('").append(value).append("')");
             } break;
             case BOOLEAN: {
-                stringBuilder.append(value).append(" == ").append(not != null ? "false" : "true");
+                final boolean booleanValue = "true".equalsIgnoreCase(value);
+                stringBuilder.append(not != null ? !booleanValue : booleanValue);
             } break;
         }
 

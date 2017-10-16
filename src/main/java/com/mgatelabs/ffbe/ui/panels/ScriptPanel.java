@@ -3,6 +3,9 @@ package com.mgatelabs.ffbe.ui.panels;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 import com.mgatelabs.ffbe.shared.details.*;
+import com.mgatelabs.ffbe.ui.panels.utils.CommonNode;
+import com.mgatelabs.ffbe.ui.panels.utils.NodeType;
+import com.mgatelabs.ffbe.ui.panels.utils.TreeUtils;
 import com.mgatelabs.ffbe.ui.utils.Constants;
 
 import javax.swing.*;
@@ -22,7 +25,7 @@ import java.util.Map;
  * @author <a href="mailto:mfuller@acteksoft.com">Michael Fuller</a>
  * Creation Date: 10/12/2017
  */
-public class StatePanel extends JInternalFrame {
+public class ScriptPanel extends JInternalFrame {
 
     private final ViewDefinition viewDefinition;
     private final ScriptDefinition scriptDefinition;
@@ -48,7 +51,7 @@ public class StatePanel extends JInternalFrame {
     JPopupMenu statementItemMenu;
 
 
-    public StatePanel(JFrame parent, ViewDefinition viewDefinition, ScriptDefinition scriptDefinition) {
+    public ScriptPanel(JFrame parent, ViewDefinition viewDefinition, ScriptDefinition scriptDefinition) {
         super("States", true, false, true, false);
         this.parent = parent;
         this.viewDefinition = viewDefinition;
@@ -315,7 +318,7 @@ public class StatePanel extends JInternalFrame {
 
         fillItems();
 
-        expandAllNodes(objectTree, 0, objectTree.getRowCount());
+        TreeUtils.expandAllNodes(objectTree, 0, objectTree.getRowCount());
 
         this.pack();
 
@@ -389,6 +392,13 @@ public class StatePanel extends JInternalFrame {
                     if (menu != null) {
                         if (SwingUtilities.isRightMouseButton(e)) {
                             menu.show(objectTree, e.getX(), e.getY());
+                        } else {
+                            if (menu == statementItemMenu) {
+                                StatementDefinition statementDefinition = getSelectedValue(StatementDefinition.class);
+                                if (statementDefinition != null) {
+                                    scriptDetailComponent.setupForStatement(statementDefinition);
+                                }
+                            }
                         }
                     }
                 }
@@ -463,44 +473,6 @@ public class StatePanel extends JInternalFrame {
             }
         }
 
-    }
-
-    private void expandAllNodes(JTree tree, int startingIndex, int rowCount) {
-        for (int i = startingIndex; i < rowCount; ++i) {
-            tree.expandRow(i);
-        }
-
-        if (tree.getRowCount() != rowCount) {
-            expandAllNodes(tree, rowCount, tree.getRowCount());
-        }
-    }
-
-    public static enum NodeType {
-        ROOT,
-        VARIABLE,
-        VARIABLE_ITEM,
-        STATE,
-        STATE_ITEM,
-        STATEMENT,
-        STATEMENT_ITEM
-    }
-
-    public static class CommonNode<T> extends DefaultMutableTreeNode {
-        private final NodeType type;
-
-        public CommonNode(NodeType type, T value) {
-            super(value);
-            this.type = type;
-        }
-
-        public NodeType getType() {
-            return type;
-        }
-
-        @Override
-        public T getUserObject() {
-            return (T) super.getUserObject();
-        }
     }
 
     public static class CommonBlockNode extends CommonNode<Object> {

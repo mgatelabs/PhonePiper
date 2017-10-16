@@ -38,7 +38,7 @@ public class MainFrame extends JFrame {
 
     private ComponentListPanel componentListPanel;
     private ScreenListPanel screenListPanel;
-    private StatePanel statePanel;
+    private ScriptPanel scriptPanel;
 
     private LogPanel logPanel;
 
@@ -225,9 +225,9 @@ public class MainFrame extends JFrame {
         }
 
         if (showStates) {
-            statePanel = new StatePanel(this, viewDefinition, scriptDefinition);
-            statePanel.setLocation(column0Left, 0);
-            desktopPane.add(statePanel);
+            scriptPanel = new ScriptPanel(this, viewDefinition, scriptDefinition);
+            scriptPanel.setLocation(column0Left, 0);
+            desktopPane.add(scriptPanel);
         }
 
         if (showPlayer) {

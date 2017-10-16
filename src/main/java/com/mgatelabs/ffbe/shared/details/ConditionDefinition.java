@@ -136,32 +136,7 @@ public class ConditionDefinition {
             stringBuilder.append("( ");
         }
 
-        ConditionType conditionType = getUsedCondition();
-
-        switch (conditionType) {
-            case LESS:{
-                stringBuilder.append(not != null ? "!" : "").append(var).append( not != null ? " >= " : " < ").append(value);
-            } break;
-
-            case EQUAL:{
-                stringBuilder.append(var).append( not != null ? " != " : " == ").append(value);
-            } break;
-
-            case SCREEN:{
-                stringBuilder.append(not != null ? "!" : "").append("hasScreen('").append(value).append("')");
-            } break;
-
-            case GREATER: {
-                stringBuilder.append(var).append( not != null ? " <= " : " > ").append(value);
-            } break;
-            case ENERGY: {
-                stringBuilder.append(not != null ? "!" : "").append("hasEnergy('").append(value).append("')");
-            } break;
-            case BOOLEAN: {
-                final boolean booleanValue = "true".equalsIgnoreCase(value);
-                stringBuilder.append(not != null ? !booleanValue : booleanValue);
-            } break;
-        }
+        stringBuilder.append(getConditionString(this));
 
         if (!and.isEmpty()) {
             for (ConditionDefinition subCondition: and) {
@@ -177,6 +152,42 @@ public class ConditionDefinition {
                 stringBuilder.append(subCondition.toString());
             }
             stringBuilder.append(" )");
+        }
+
+        return stringBuilder.toString();
+    }
+
+    public static String getConditionString(ConditionDefinition definition) {
+        StringBuilder stringBuilder = new StringBuilder();
+
+        if (definition == null) return "NULL";
+
+        ConditionType conditionType = definition.getUsedCondition();
+
+
+        switch (conditionType) {
+            case LESS:{
+                stringBuilder.append(definition.getNot() != null ? "!" : "").append(definition.getVar()).append( definition.getNot() != null ? " >= " : " < ").append(definition.getValue());
+            } break;
+
+            case EQUAL:{
+                stringBuilder.append(definition.getVar()).append( definition.getNot() != null ? " != " : " == ").append(definition.getValue());
+            } break;
+
+            case SCREEN:{
+                stringBuilder.append(definition.getNot() != null ? "!" : "").append("hasScreen('").append(definition.getValue()).append("')");
+            } break;
+
+            case GREATER: {
+                stringBuilder.append(definition.getVar()).append( definition.getNot() != null ? " <= " : " > ").append(definition.getValue());
+            } break;
+            case ENERGY: {
+                stringBuilder.append(definition.getNot() != null ? "!" : "").append("hasEnergy('").append(definition.getValue()).append("')");
+            } break;
+            case BOOLEAN: {
+                final boolean booleanValue = "true".equalsIgnoreCase(definition.getValue());
+                stringBuilder.append(definition.getNot() != null ? !booleanValue : booleanValue);
+            } break;
         }
 
         return stringBuilder.toString();

@@ -1,5 +1,6 @@
 package com.mgatelabs.ffbe.ui.panels;
 
+import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 import com.mgatelabs.ffbe.shared.details.*;
 import com.mgatelabs.ffbe.ui.utils.Constants;
@@ -8,6 +9,7 @@ import javax.swing.*;
 import javax.swing.event.TreeSelectionEvent;
 import javax.swing.event.TreeSelectionListener;
 import javax.swing.tree.DefaultMutableTreeNode;
+import javax.swing.tree.DefaultTreeModel;
 import javax.swing.tree.TreePath;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -93,11 +95,23 @@ public class StatePanel extends JInternalFrame {
         }
         varItemMenu = new JPopupMenu("Variable");
         {
-            JMenuItem item = new JMenuItem("Change Name");
-            varItemMenu.add(item);
-        }
-        {
             JMenuItem item = new JMenuItem("Edit Value");
+            item.addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    CommonNode node = getSelectedNode();
+                    VarDefinition varDefinition = getSelectedValue(VarDefinition.class);
+                    if (node != null && varDefinition != null) {
+                        if (varDefinition.getType() == VarType.INT) {
+                            String newValue = showChangeIntValuePopup(varDefinition.getName(), varDefinition.getValue());
+                            if (newValue.length() > 0) {
+                                varDefinition.setValue(newValue);
+                                issueNodeRefresh(node);
+                            }
+                        }
+                    }
+                }
+            });
             varItemMenu.add(item);
         }
         varItemMenu.addSeparator();
@@ -108,11 +122,40 @@ public class StatePanel extends JInternalFrame {
 
         /////
 
-        stateMenu = new JPopupMenu("State");
+        stateMenu = new JPopupMenu("States");
         {
             JMenuItem item = new JMenuItem("New State");
+            item.addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    String stateId = showNewIdPopup("State");
+                    if (stateId.length() == 0) return;
+
+                    for (String existingStateId : scriptDefinition.getStates().keySet()) {
+                        if (existingStateId.equals(stateId)) {
+                            showMessage("Duplicate State", "A State with the Id: " + stateId + " already exists!");
+                            return;
+                        }
+                    }
+
+                    StateDefinition stateDefinition = new StateDefinition();
+                    stateDefinition.setId(stateId);
+                    stateDefinition.setName(stateId);
+                    stateDefinition.setStatements(Lists.newArrayList());
+
+                    scriptDefinition.getStates().put(stateId, stateDefinition);
+
+                    StateNode node = new StateNode(stateDefinition);
+
+                    stateNodes.put(stateId, node);
+                    stateNode.add(node);
+
+                    issueNewChild(node, stateNode);
+                }
+            });
             stateMenu.add(item);
         }
+
         stateItemMenu = new JPopupMenu("State");
         {
             JMenuItem item = new JMenuItem("New Statement");
@@ -120,6 +163,20 @@ public class StatePanel extends JInternalFrame {
         }
         {
             JMenuItem item = new JMenuItem("Change Name");
+            item.addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    StateDefinition stateDefinition = getSelectedValue(StateDefinition.class);
+                    if (stateDefinition != null) {
+                        String newName = showChangeNamePopup("State", stateDefinition.getName());
+                        if (newName.length() > 0) {
+                            stateDefinition.setName(newName);
+                            DefaultTreeModel model = (DefaultTreeModel) objectTree.getModel();
+                            model.nodeChanged(stateNodes.get(stateDefinition.getId()));
+                        }
+                    }
+                }
+            });
             stateItemMenu.add(item);
         }
         stateItemMenu.addSeparator();
@@ -172,9 +229,43 @@ public class StatePanel extends JInternalFrame {
         }
     }
 
+    private void issueNewChild(CommonNode newNode, CommonNode parentNode) {
+        DefaultTreeModel model = (DefaultTreeModel) objectTree.getModel();
+        int lastIndex = parentNode.getChildCount();
+        if (lastIndex > 0) lastIndex--;
+        model.insertNodeInto(newNode, parentNode, lastIndex);
+    }
+
+    private void issueNodeRefresh(CommonNode node) {
+        DefaultTreeModel model = (DefaultTreeModel) objectTree.getModel();
+        model.nodeChanged(node);
+    }
+
     private String showNewIdPopup(String type) {
         String value = JOptionPane.showInputDialog(parent, "Id for new " + type + ":");
         if (value != null && Constants.ID_PATTERN.matcher(value).matches()) {
+            return value;
+        }
+        return "";
+    }
+
+    private String showChangeNamePopup(String type, String oldValue) {
+        String value = JOptionPane.showInputDialog(parent, "Name for " + type + ":", oldValue);
+        if (value != null && value.trim().length() > 0) {
+            return value.trim();
+        }
+        return "";
+    }
+
+    private String showChangeIntValuePopup(String varName, String oldValue) {
+        String value = JOptionPane.showInputDialog(parent, "New Integer value for " + varName + ":", oldValue);
+        if (value != null && value.trim().length() > 0) {
+            value = value.trim();
+            try {
+                Integer.parseInt(value);
+            } catch (Exception ex) {
+                return "";
+            }
             return value;
         }
         return "";
@@ -323,6 +414,29 @@ public class StatePanel extends JInternalFrame {
 
             }
         });
+    }
+
+    public CommonNode getSelectedNode() {
+        TreePath sel = objectTree.getSelectionPath();
+        if (sel == null) return null;
+        Object lastObject = sel.getLastPathComponent();
+        if (lastObject instanceof CommonNode) {
+            return (CommonNode) lastObject;
+        }
+        return null;
+    }
+
+    public <T> T getSelectedValue(Class<T> cls) {
+        TreePath sel = objectTree.getSelectionPath();
+        if (sel == null) return null;
+        Object lastObject = sel.getLastPathComponent();
+        if (lastObject instanceof CommonNode) {
+            CommonNode node = (CommonNode) lastObject;
+            if (node.getUserObject() != null && node.getUserObject().getClass().isAssignableFrom(cls)) {
+                return (T) node.getUserObject();
+            }
+        }
+        return null;
     }
 
     private void fillItems() {

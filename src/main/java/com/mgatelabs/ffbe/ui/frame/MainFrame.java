@@ -225,7 +225,7 @@ public class MainFrame extends JFrame {
         }
 
         if (showStates) {
-            statePanel = new StatePanel(viewDefinition, scriptDefinition);
+            statePanel = new StatePanel(this, viewDefinition, scriptDefinition);
             statePanel.setLocation(column0Left, 0);
             desktopPane.add(statePanel);
         }

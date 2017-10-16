@@ -34,15 +34,15 @@ public class ScriptDefinition {
     }
 
     public void fix() {
-        for (StateDefinition stateDefinition: states.values()) {
-            for (StatementDefinition statementDefinition: stateDefinition.getStatements()) {
+        for (StateDefinition stateDefinition : states.values()) {
+            for (StatementDefinition statementDefinition : stateDefinition.getStatements()) {
                 statementDefinition.getCondition().fix();
             }
         }
     }
 
-    public void validate() {
-
+    public boolean validate() {
+        return true;
     }
 
     public Map<String, StateDefinition> getStates() {
@@ -112,5 +112,21 @@ public class ScriptDefinition {
             }
         }
         return null;
+    }
+
+    public boolean save() {
+        File scriptFile = getFileFor(scriptId);
+        final ObjectMapper objectMapper = JsonTool.INSTANCE;
+        try {
+            objectMapper.writeValue(scriptFile, this);
+            return true;
+        } catch (JsonParseException e) {
+            e.printStackTrace();
+        } catch (JsonMappingException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return false;
     }
 }

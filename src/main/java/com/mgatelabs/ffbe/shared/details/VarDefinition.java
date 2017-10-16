@@ -35,4 +35,9 @@ public class VarDefinition {
     public void setType(VarType type) {
         this.type = type;
     }
+
+    @Override
+    public String toString() {
+        return name + " (" + type.name() + ")";
+    }
 }

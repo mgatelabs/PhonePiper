@@ -367,7 +367,7 @@ public class ScriptRunner {
 
             }
 
-            waitFor(1000);
+            waitFor(250);
         }
 
         logger.fine("Script Stopped");

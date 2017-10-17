@@ -1,17 +1,14 @@
 package com.mgatelabs.ffbe;
 
-import com.mgatelabs.ffbe.runners.GameManager;
-import com.mgatelabs.ffbe.shared.details.*;
+import com.mgatelabs.ffbe.shared.details.PlayerDefinition;
 import com.mgatelabs.ffbe.shared.util.AdbShell;
 import com.mgatelabs.ffbe.shared.util.AdbUtils;
-import com.mgatelabs.ffbe.shared.util.ConsoleInput;
 import com.mgatelabs.ffbe.ui.FrameChoices;
 import com.mgatelabs.ffbe.ui.frame.MainFrame;
 import com.mgatelabs.ffbe.ui.frame.StartupFrame;
 import com.mgatelabs.ffbe.ui.utils.Constants;
 
 import javax.swing.*;
-import java.util.regex.Pattern;
 
 /**
  * Created by @mgatelabs (Michael Fuller) on 8/27/2017.
@@ -80,21 +77,7 @@ public class Runner {
             System.exit(0);
             //new MainFrame().setVisible(true);
         } else if (args.length >= 1) {
-            if ("manage".equalsIgnoreCase(args[0]) || "manager".equalsIgnoreCase(args[0])) {
-                DeviceDefinition deviceDefinition = null;
-                if (args.length == 2) {
-                    deviceDefinition = DeviceDefinition.read(args[1]);
-                } else {
-                    deviceDefinition = DeviceDefinition.read("axon7");
-                }
-                if (deviceDefinition == null) {
-                    System.out.println("Could not find a device definition");
-                }
-
-                GameManager manager = new GameManager(deviceDefinition);
-
-                manager.manage();
-            } else if ("frame".equalsIgnoreCase(args[0])) {
+            if ("frame".equalsIgnoreCase(args[0])) {
 
                 long startTime = System.nanoTime();
                 AdbUtils.persistScreen(new AdbShell());

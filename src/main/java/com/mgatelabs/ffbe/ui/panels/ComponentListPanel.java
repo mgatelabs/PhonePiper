@@ -249,6 +249,8 @@ public class ComponentListPanel extends JInternalFrame {
                             y2 = temp;
                         }
 
+                        selectedItem.setEnabled(true);
+
                         selectedItem.setX(x1);
                         selectedItem.setY(y1);
                         selectedItem.setW(x2 - x1);
@@ -280,6 +282,21 @@ public class ComponentListPanel extends JInternalFrame {
                 }
             });
             editMenu.add(testMenuItem);
+        }
+
+        editMenu.addSeparator();
+
+        {
+            JMenuItem saveMenuItem = new JMenuItem("Disable");
+            saveMenuItem.addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    selectedItem.setEnabled(false);
+                    viewDefinition.save();
+                    itemModel.refresh();
+                }
+            });
+            editMenu.add(saveMenuItem);
         }
 
         editMenu.addSeparator();

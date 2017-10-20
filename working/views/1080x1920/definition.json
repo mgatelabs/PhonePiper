@@ -200,7 +200,8 @@
       "r" : 0,
       "g" : 0,
       "b" : 0
-    } ]
+    } ],
+    "enabled" : false
   }, {
     "name" : "Battle - Esper - Not Full",
     "screenId" : "battle-esper-notfull",
@@ -222,7 +223,8 @@
       "r" : 4,
       "g" : 20,
       "b" : 25
-    } ]
+    } ],
+    "enabled" : true
   }, {
     "name" : "Battle - Unit - 0 NotFull",
     "screenId" : "battle-unit-0_notfull",
@@ -238,7 +240,8 @@
       "r" : 0,
       "g" : 7,
       "b" : 79
-    } ]
+    } ],
+    "enabled" : true
   }, {
     "name" : "Battle - Unit - 0 Ready",
     "screenId" : "battle-unit-0_ready",
@@ -362,7 +365,8 @@
       "r" : 0,
       "g" : 0,
       "b" : 54
-    } ]
+    } ],
+    "enabled" : true
   }, {
     "name" : "Battle - Unit - 1 Ready",
     "screenId" : "battle-unit-1_ready",
@@ -402,7 +406,8 @@
       "r" : 76,
       "g" : 112,
       "b" : 163
-    } ]
+    } ],
+    "enabled" : false
   }, {
     "name" : "Dungeon - Message",
     "screenId" : "dungeon-message",
@@ -700,7 +705,8 @@
       "r" : 140,
       "g" : 143,
       "b" : 157
-    } ]
+    } ],
+    "enabled" : false
   }, {
     "name" : "Dungeon - Message - Leave",
     "screenId" : "dungeon-message-leave",
@@ -920,7 +926,8 @@
       "r" : 0,
       "g" : 13,
       "b" : 48
-    } ]
+    } ],
+    "enabled" : false
   }, {
     "name" : "Dungeon - Message - Yes No",
     "screenId" : "dungeon-message-yn",
@@ -1200,7 +1207,8 @@
       "r" : 0,
       "g" : 13,
       "b" : 48
-    } ]
+    } ],
+    "enabled" : false
   }, {
     "name" : "Dungeon - Mini Map",
     "screenId" : "dungeon-mini_map",
@@ -1426,7 +1434,8 @@
       "r" : 255,
       "g" : 255,
       "b" : 255
-    } ]
+    } ],
+    "enabled" : false
   }, {
     "name" : "Dungeon - Notice",
     "screenId" : "dungeon-notice",
@@ -1562,7 +1571,8 @@
       "r" : 140,
       "g" : 143,
       "b" : 158
-    } ]
+    } ],
+    "enabled" : false
   }, {
     "name" : "Menu - Missions",
     "screenId" : "menu-missions-select",
@@ -1866,791 +1876,181 @@
       "r" : 0,
       "g" : 16,
       "b" : 58
-    } ]
+    } ],
+    "enabled" : true
   }, {
     "name" : "Game - Battle",
     "screenId" : "game-battle",
     "points" : [ {
-      "x" : 1206,
-      "y" : 2522,
-      "r" : 0,
-      "g" : 29,
-      "b" : 114
-    }, {
-      "x" : 1220,
-      "y" : 2522,
-      "r" : 0,
-      "g" : 30,
-      "b" : 114
-    }, {
-      "x" : 1234,
-      "y" : 2522,
-      "r" : 0,
-      "g" : 29,
-      "b" : 113
-    }, {
-      "x" : 1251,
-      "y" : 2522,
-      "r" : 0,
-      "g" : 48,
-      "b" : 134
-    }, {
-      "x" : 1265,
-      "y" : 2522,
-      "r" : 0,
-      "g" : 62,
-      "b" : 145
-    }, {
-      "x" : 1275,
-      "y" : 2515,
-      "r" : 0,
-      "g" : 38,
-      "b" : 114
-    }, {
-      "x" : 1282,
-      "y" : 2508,
-      "r" : 0,
-      "g" : 17,
-      "b" : 68
-    }, {
-      "x" : 1287,
-      "y" : 2503,
-      "r" : 0,
-      "g" : 17,
-      "b" : 53
-    }, {
-      "x" : 1295,
-      "y" : 2503,
-      "r" : 0,
-      "g" : 17,
-      "b" : 51
-    }, {
-      "x" : 1301,
-      "y" : 2508,
-      "r" : 0,
-      "g" : 15,
-      "b" : 59
-    }, {
-      "x" : 1309,
-      "y" : 2503,
-      "r" : 0,
-      "g" : 17,
-      "b" : 51
-    }, {
-      "x" : 1320,
-      "y" : 2503,
-      "r" : 0,
-      "g" : 13,
-      "b" : 60
-    }, {
-      "x" : 1336,
-      "y" : 2505,
-      "r" : 0,
-      "g" : 17,
-      "b" : 51
-    }, {
-      "x" : 1350,
-      "y" : 2505,
-      "r" : 0,
-      "g" : 17,
-      "b" : 51
-    }, {
-      "x" : 1361,
-      "y" : 2501,
-      "r" : 0,
-      "g" : 17,
-      "b" : 51
-    }, {
-      "x" : 1368,
-      "y" : 2495,
-      "r" : 0,
-      "g" : 17,
-      "b" : 51
-    }, {
-      "x" : 1371,
-      "y" : 2488,
-      "r" : 0,
-      "g" : 17,
-      "b" : 51
-    }, {
-      "x" : 1372,
-      "y" : 2480,
-      "r" : 0,
-      "g" : 17,
-      "b" : 51
-    }, {
-      "x" : 1372,
-      "y" : 2470,
-      "r" : 0,
-      "g" : 17,
-      "b" : 51
-    }, {
-      "x" : 1372,
-      "y" : 2463,
-      "r" : 0,
-      "g" : 17,
-      "b" : 51
-    }, {
-      "x" : 1372,
-      "y" : 2454,
-      "r" : 0,
-      "g" : 17,
-      "b" : 51
-    }, {
-      "x" : 1372,
-      "y" : 2445,
-      "r" : 0,
-      "g" : 17,
-      "b" : 51
-    }, {
-      "x" : 1365,
-      "y" : 2436,
-      "r" : 0,
-      "g" : 17,
-      "b" : 51
-    }, {
-      "x" : 1355,
-      "y" : 2436,
-      "r" : 0,
-      "g" : 17,
-      "b" : 51
-    }, {
-      "x" : 1362,
-      "y" : 2447,
-      "r" : 255,
-      "g" : 255,
-      "b" : 255
-    }, {
-      "x" : 1362,
-      "y" : 2457,
-      "r" : 255,
-      "g" : 255,
-      "b" : 255
-    }, {
-      "x" : 1362,
-      "y" : 2465,
-      "r" : 255,
-      "g" : 255,
-      "b" : 255
-    }, {
-      "x" : 1362,
-      "y" : 2474,
-      "r" : 255,
-      "g" : 255,
-      "b" : 255
-    }, {
-      "x" : 1360,
-      "y" : 2486,
-      "r" : 255,
-      "g" : 255,
-      "b" : 255
-    }, {
-      "x" : 1354,
-      "y" : 2492,
-      "r" : 255,
-      "g" : 255,
-      "b" : 255
-    }, {
-      "x" : 1344,
-      "y" : 2495,
-      "r" : 255,
-      "g" : 255,
-      "b" : 255
-    }, {
-      "x" : 1335,
-      "y" : 2493,
-      "r" : 255,
-      "g" : 255,
-      "b" : 255
-    }, {
-      "x" : 1330,
-      "y" : 2488,
-      "r" : 255,
-      "g" : 255,
-      "b" : 255
-    }, {
-      "x" : 1327,
-      "y" : 2481,
-      "r" : 255,
-      "g" : 255,
-      "b" : 255
-    }, {
-      "x" : 1327,
-      "y" : 2473,
-      "r" : 255,
-      "g" : 255,
-      "b" : 255
-    }, {
-      "x" : 1327,
-      "y" : 2464,
-      "r" : 255,
-      "g" : 255,
-      "b" : 255
-    }, {
-      "x" : 1327,
-      "y" : 2455,
-      "r" : 255,
-      "g" : 255,
-      "b" : 255
-    }, {
-      "x" : 1327,
-      "y" : 2446,
-      "r" : 255,
-      "g" : 255,
-      "b" : 255
-    }, {
-      "x" : 1315,
-      "y" : 2446,
-      "r" : 0,
-      "g" : 17,
-      "b" : 51
-    }, {
-      "x" : 1315,
-      "y" : 2453,
-      "r" : 0,
-      "g" : 17,
-      "b" : 51
-    }, {
-      "x" : 1315,
-      "y" : 2463,
-      "r" : 0,
-      "g" : 17,
-      "b" : 51
-    }, {
-      "x" : 1315,
-      "y" : 2474,
-      "r" : 0,
-      "g" : 17,
-      "b" : 51
-    }, {
-      "x" : 1315,
-      "y" : 2485,
-      "r" : 0,
-      "g" : 17,
-      "b" : 51
-    }, {
-      "x" : 1315,
-      "y" : 2492,
-      "r" : 0,
-      "g" : 16,
-      "b" : 52
-    }, {
-      "x" : 1300,
-      "y" : 2492,
-      "r" : 255,
-      "g" : 255,
-      "b" : 255
-    }, {
-      "x" : 1301,
-      "y" : 2482,
-      "r" : 255,
-      "g" : 255,
-      "b" : 255
-    }, {
-      "x" : 1301,
-      "y" : 2472,
-      "r" : 255,
-      "g" : 255,
-      "b" : 255
-    }, {
-      "x" : 1301,
-      "y" : 2459,
-      "r" : 255,
-      "g" : 255,
-      "b" : 255
-    }, {
-      "x" : 1287,
-      "y" : 2476,
-      "r" : 255,
-      "g" : 255,
-      "b" : 255
-    }, {
-      "x" : 1281,
-      "y" : 2465,
-      "r" : 255,
-      "g" : 255,
-      "b" : 255
-    }, {
-      "x" : 1277,
-      "y" : 2456,
-      "r" : 255,
-      "g" : 255,
-      "b" : 255
-    }, {
-      "x" : 1270,
-      "y" : 2449,
-      "r" : 255,
-      "g" : 255,
-      "b" : 255
-    }, {
-      "x" : 1266,
-      "y" : 2449,
-      "r" : 255,
-      "g" : 255,
-      "b" : 255
-    }, {
-      "x" : 1267,
-      "y" : 2460,
-      "r" : 255,
-      "g" : 255,
-      "b" : 255
-    }, {
-      "x" : 1267,
-      "y" : 2468,
-      "r" : 255,
-      "g" : 255,
-      "b" : 255
-    }, {
-      "x" : 1267,
-      "y" : 2493,
-      "r" : 255,
-      "g" : 255,
-      "b" : 255
-    }, {
-      "x" : 1245,
-      "y" : 2493,
-      "r" : 255,
-      "g" : 255,
-      "b" : 255
-    }, {
-      "x" : 1234,
-      "y" : 2493,
-      "r" : 255,
-      "g" : 255,
-      "b" : 255
-    }, {
-      "x" : 1222,
-      "y" : 2493,
-      "r" : 255,
-      "g" : 255,
-      "b" : 255
-    }, {
-      "x" : 1216,
-      "y" : 2493,
-      "r" : 255,
-      "g" : 255,
-      "b" : 255
-    }, {
-      "x" : 1216,
-      "y" : 2485,
-      "r" : 255,
-      "g" : 255,
-      "b" : 255
-    }, {
-      "x" : 1216,
-      "y" : 2477,
-      "r" : 255,
-      "g" : 255,
-      "b" : 255
-    }, {
-      "x" : 1216,
-      "y" : 2469,
-      "r" : 255,
-      "g" : 255,
-      "b" : 255
-    }, {
-      "x" : 1224,
-      "y" : 2469,
-      "r" : 255,
-      "g" : 255,
-      "b" : 255
-    }, {
-      "x" : 1235,
-      "y" : 2469,
-      "r" : 255,
-      "g" : 255,
-      "b" : 255
-    }, {
-      "x" : 1239,
-      "y" : 2457,
-      "r" : 0,
-      "g" : 17,
-      "b" : 51
-    }, {
-      "x" : 1233,
-      "y" : 2457,
-      "r" : 0,
-      "g" : 17,
-      "b" : 51
-    }, {
-      "x" : 1239,
-      "y" : 2446,
-      "r" : 255,
-      "g" : 255,
-      "b" : 255
-    }, {
-      "x" : 1233,
-      "y" : 2446,
-      "r" : 255,
-      "g" : 255,
-      "b" : 255
-    }, {
-      "x" : 1225,
-      "y" : 2446,
-      "r" : 255,
-      "g" : 255,
-      "b" : 255
-    }, {
-      "x" : 1217,
-      "y" : 2446,
-      "r" : 255,
-      "g" : 255,
-      "b" : 255
-    }, {
-      "x" : 1216,
-      "y" : 2452,
-      "r" : 255,
-      "g" : 255,
-      "b" : 255
-    }, {
-      "x" : 1215,
-      "y" : 2457,
-      "r" : 255,
-      "g" : 255,
-      "b" : 255
-    }, {
-      "x" : 1204,
-      "y" : 2447,
-      "r" : 0,
-      "g" : 17,
-      "b" : 51
-    }, {
-      "x" : 1204,
-      "y" : 2454,
-      "r" : 0,
-      "g" : 17,
-      "b" : 51
-    }, {
-      "x" : 1204,
-      "y" : 2463,
-      "r" : 0,
-      "g" : 17,
-      "b" : 51
-    }, {
-      "x" : 1204,
-      "y" : 2471,
-      "r" : 0,
-      "g" : 17,
-      "b" : 51
-    }, {
-      "x" : 1204,
-      "y" : 2479,
-      "r" : 0,
-      "g" : 17,
-      "b" : 51
-    }, {
-      "x" : 1204,
-      "y" : 2486,
-      "r" : 0,
-      "g" : 17,
-      "b" : 51
-    }, {
-      "x" : 1204,
-      "y" : 2495,
-      "r" : 0,
-      "g" : 17,
-      "b" : 51
-    }, {
-      "x" : 1189,
-      "y" : 2493,
-      "r" : 255,
-      "g" : 255,
-      "b" : 255
-    }, {
-      "x" : 1189,
-      "y" : 2485,
-      "r" : 255,
-      "g" : 255,
-      "b" : 255
-    }, {
-      "x" : 1189,
-      "y" : 2478,
-      "r" : 255,
-      "g" : 255,
-      "b" : 255
-    }, {
-      "x" : 1189,
-      "y" : 2470,
-      "r" : 255,
-      "g" : 255,
-      "b" : 255
-    }, {
-      "x" : 1189,
-      "y" : 2461,
-      "r" : 255,
-      "g" : 255,
-      "b" : 255
-    }, {
-      "x" : 1189,
-      "y" : 2453,
-      "r" : 255,
-      "g" : 255,
-      "b" : 255
-    }, {
-      "x" : 1189,
-      "y" : 2446,
-      "r" : 255,
-      "g" : 255,
-      "b" : 255
-    }, {
-      "x" : 1184,
-      "y" : 2446,
-      "r" : 255,
-      "g" : 255,
-      "b" : 255
-    }, {
-      "x" : 1181,
-      "y" : 2452,
-      "r" : 255,
-      "g" : 255,
-      "b" : 255
-    }, {
-      "x" : 1178,
-      "y" : 2461,
-      "r" : 255,
-      "g" : 255,
-      "b" : 255
-    }, {
-      "x" : 1176,
-      "y" : 2471,
-      "r" : 255,
-      "g" : 255,
-      "b" : 255
-    }, {
-      "x" : 1173,
-      "y" : 2479,
-      "r" : 255,
-      "g" : 255,
-      "b" : 255
-    }, {
-      "x" : 1167,
-      "y" : 2492,
-      "r" : 255,
-      "g" : 255,
-      "b" : 255
-    }, {
-      "x" : 1162,
-      "y" : 2484,
-      "r" : 255,
-      "g" : 255,
-      "b" : 255
-    }, {
-      "x" : 1159,
-      "y" : 2475,
-      "r" : 255,
-      "g" : 255,
-      "b" : 255
-    }, {
-      "x" : 1157,
-      "y" : 2466,
-      "r" : 255,
-      "g" : 255,
-      "b" : 255
-    }, {
-      "x" : 1154,
-      "y" : 2458,
-      "r" : 255,
-      "g" : 255,
-      "b" : 255
-    }, {
-      "x" : 1148,
-      "y" : 2447,
-      "r" : 255,
-      "g" : 255,
-      "b" : 255
-    }, {
-      "x" : 1144,
-      "y" : 2451,
-      "r" : 255,
-      "g" : 255,
-      "b" : 255
-    }, {
-      "x" : 1144,
-      "y" : 2460,
-      "r" : 255,
-      "g" : 255,
-      "b" : 255
-    }, {
-      "x" : 1144,
-      "y" : 2470,
-      "r" : 255,
-      "g" : 255,
-      "b" : 255
-    }, {
-      "x" : 1144,
-      "y" : 2477,
-      "r" : 255,
-      "g" : 255,
-      "b" : 255
-    }, {
-      "x" : 1144,
-      "y" : 2483,
-      "r" : 255,
-      "g" : 255,
-      "b" : 255
-    }, {
-      "x" : 1144,
-      "y" : 2492,
-      "r" : 255,
-      "g" : 255,
-      "b" : 255
-    }, {
-      "x" : 1137,
-      "y" : 2502,
-      "r" : 0,
-      "g" : 17,
-      "b" : 51
-    }, {
-      "x" : 1144,
-      "y" : 2502,
-      "r" : 0,
-      "g" : 17,
-      "b" : 51
-    }, {
-      "x" : 1151,
-      "y" : 2502,
-      "r" : 0,
-      "g" : 17,
-      "b" : 51
-    }, {
-      "x" : 1159,
-      "y" : 2502,
-      "r" : 0,
-      "g" : 17,
-      "b" : 51
-    }, {
-      "x" : 1155,
-      "y" : 2496,
-      "r" : 0,
-      "g" : 17,
-      "b" : 51
-    }, {
-      "x" : 1135,
-      "y" : 2496,
-      "r" : 0,
-      "g" : 17,
-      "b" : 51
-    }, {
-      "x" : 1135,
-      "y" : 2488,
-      "r" : 0,
-      "g" : 17,
-      "b" : 51
-    }, {
-      "x" : 1135,
-      "y" : 2481,
-      "r" : 0,
-      "g" : 17,
-      "b" : 51
-    }, {
-      "x" : 1135,
-      "y" : 2471,
-      "r" : 0,
-      "g" : 17,
-      "b" : 51
-    }, {
-      "x" : 1135,
-      "y" : 2464,
-      "r" : 0,
-      "g" : 17,
-      "b" : 51
-    }, {
-      "x" : 1135,
-      "y" : 2455,
-      "r" : 0,
-      "g" : 17,
-      "b" : 51
-    }, {
-      "x" : 1135,
-      "y" : 2448,
-      "r" : 0,
-      "g" : 17,
-      "b" : 51
-    }, {
-      "x" : 1137,
-      "y" : 2440,
-      "r" : 0,
-      "g" : 17,
-      "b" : 51
-    }, {
-      "x" : 1141,
-      "y" : 2436,
-      "r" : 0,
-      "g" : 17,
-      "b" : 51
-    }, {
-      "x" : 1148,
-      "y" : 2436,
-      "r" : 0,
-      "g" : 17,
-      "b" : 51
-    }, {
-      "x" : 1156,
-      "y" : 2436,
-      "r" : 0,
-      "g" : 17,
-      "b" : 51
-    }, {
-      "x" : 1161,
-      "y" : 2441,
-      "r" : 0,
-      "g" : 17,
-      "b" : 51
-    }, {
-      "x" : 1162,
-      "y" : 2449,
-      "r" : 0,
-      "g" : 17,
-      "b" : 51
-    }, {
-      "x" : 1167,
-      "y" : 2444,
-      "r" : 0,
-      "g" : 22,
-      "b" : 65
-    }, {
-      "x" : 1167,
-      "y" : 2437,
-      "r" : 0,
-      "g" : 26,
-      "b" : 78
-    }, {
-      "x" : 1167,
-      "y" : 2429,
-      "r" : 0,
-      "g" : 33,
-      "b" : 95
-    }, {
-      "x" : 1153,
-      "y" : 2429,
-      "r" : 0,
-      "g" : 43,
-      "b" : 110
-    }, {
-      "x" : 1153,
-      "y" : 2397,
+      "x" : 287,
+      "y" : 1798,
+      "r" : 1,
+      "g" : 10,
+      "b" : 14
+    }, {
+      "x" : 283,
+      "y" : 1802,
+      "r" : 2,
+      "g" : 10,
+      "b" : 15
+    }, {
+      "x" : 274,
+      "y" : 1811,
+      "r" : 2,
+      "g" : 12,
+      "b" : 16
+    }, {
+      "x" : 274,
+      "y" : 1821,
+      "r" : 2,
+      "g" : 10,
+      "b" : 13
+    }, {
+      "x" : 277,
+      "y" : 1821,
       "r" : 0,
       "g" : 0,
       "b" : 0
     }, {
-      "x" : 1153,
-      "y" : 2389,
+      "x" : 277,
+      "y" : 1826,
       "r" : 0,
       "g" : 0,
       "b" : 0
     }, {
-      "x" : 1160,
-      "y" : 2389,
+      "x" : 274,
+      "y" : 1826,
+      "r" : 1,
+      "g" : 8,
+      "b" : 11
+    }, {
+      "x" : 277,
+      "y" : 1830,
       "r" : 0,
       "g" : 0,
       "b" : 0
     }, {
-      "x" : 1160,
-      "y" : 2397,
+      "x" : 274,
+      "y" : 1830,
+      "r" : 1,
+      "g" : 8,
+      "b" : 11
+    }, {
+      "x" : 540,
+      "y" : 1890,
+      "r" : 1,
+      "g" : 3,
+      "b" : 4
+    }, {
+      "x" : 544,
+      "y" : 1896,
+      "r" : 1,
+      "g" : 2,
+      "b" : 3
+    }, {
+      "x" : 549,
+      "y" : 1901,
+      "r" : 1,
+      "g" : 2,
+      "b" : 2
+    }, {
+      "x" : 554,
+      "y" : 1906,
+      "r" : 0,
+      "g" : 2,
+      "b" : 2
+    }, {
+      "x" : 558,
+      "y" : 1905,
       "r" : 0,
       "g" : 0,
       "b" : 0
-    } ]
+    }, {
+      "x" : 560,
+      "y" : 1899,
+      "r" : 0,
+      "g" : 0,
+      "b" : 0
+    }, {
+      "x" : 565,
+      "y" : 1899,
+      "r" : 0,
+      "g" : 0,
+      "b" : 0
+    }, {
+      "x" : 805,
+      "y" : 1813,
+      "r" : 2,
+      "g" : 10,
+      "b" : 13
+    }, {
+      "x" : 810,
+      "y" : 1813,
+      "r" : 0,
+      "g" : 0,
+      "b" : 0
+    }, {
+      "x" : 817,
+      "y" : 1813,
+      "r" : 0,
+      "g" : 0,
+      "b" : 0
+    }, {
+      "x" : 826,
+      "y" : 1813,
+      "r" : 0,
+      "g" : 68,
+      "b" : 164
+    }, {
+      "x" : 892,
+      "y" : 1870,
+      "r" : 255,
+      "g" : 255,
+      "b" : 255
+    }, {
+      "x" : 892,
+      "y" : 1858,
+      "r" : 255,
+      "g" : 255,
+      "b" : 255
+    }, {
+      "x" : 892,
+      "y" : 1846,
+      "r" : 255,
+      "g" : 255,
+      "b" : 255
+    }, {
+      "x" : 892,
+      "y" : 1834,
+      "r" : 255,
+      "g" : 255,
+      "b" : 255
+    }, {
+      "x" : 902,
+      "y" : 1834,
+      "r" : 0,
+      "g" : 17,
+      "b" : 51
+    }, {
+      "x" : 902,
+      "y" : 1846,
+      "r" : 0,
+      "g" : 17,
+      "b" : 51
+    }, {
+      "x" : 902,
+      "y" : 1858,
+      "r" : 0,
+      "g" : 17,
+      "b" : 51
+    }, {
+      "x" : 902,
+      "y" : 1870,
+      "r" : 0,
+      "g" : 17,
+      "b" : 51
+    } ],
+    "enabled" : true
   }, {
     "name" : "Game - Battle - Auto Off",
     "screenId" : "game-battle-auto_off",
@@ -2738,7 +2138,8 @@
       "r" : 0,
       "g" : 78,
       "b" : 107
-    } ]
+    } ],
+    "enabled" : true
   }, {
     "name" : "Game - Battle - Auto On",
     "screenId" : "game-battle-auto_on",
@@ -2790,7 +2191,8 @@
       "r" : 241,
       "g" : 255,
       "b" : 255
-    } ]
+    } ],
+    "enabled" : true
   }, {
     "name" : "Game - Battle - Repeat",
     "screenId" : "game-battle-repeat",
@@ -2890,7 +2292,8 @@
       "r" : 0,
       "g" : 110,
       "b" : 160
-    } ]
+    } ],
+    "enabled" : true
   }, {
     "name" : "Menu - Capacity",
     "screenId" : "menu-capacity",
@@ -2900,7 +2303,8 @@
       "r" : 0,
       "g" : 7,
       "b" : 24
-    } ]
+    } ],
+    "enabled" : false
   }, {
     "name" : "Menu - Companion Changed",
     "screenId" : "menu-companion-changed",
@@ -3630,7 +3034,8 @@
       "r" : 0,
       "g" : 33,
       "b" : 103
-    } ]
+    } ],
+    "enabled" : false
   }, {
     "name" : "Menu - Connection_error",
     "screenId" : "menu-connection_error",
@@ -3898,7 +3303,8 @@
       "r" : 125,
       "g" : 125,
       "b" : 125
-    } ]
+    } ],
+    "enabled" : false
   }, {
     "name" : "Menu - Connection error 2",
     "screenId" : "menu-connection_error_2",
@@ -3914,7 +3320,8 @@
       "r" : 255,
       "g" : 255,
       "b" : 255
-    } ]
+    } ],
+    "enabled" : false
   }, {
     "name" : "Menu - Daily Notice",
     "screenId" : "menu-daily-notice",
@@ -4206,7 +3613,8 @@
       "r" : 255,
       "g" : 255,
       "b" : 255
-    } ]
+    } ],
+    "enabled" : false
   }, {
     "name" : "Menu - Depart",
     "screenId" : "menu-depart",
@@ -4462,7 +3870,8 @@
       "r" : 0,
       "g" : 29,
       "b" : 43
-    } ]
+    } ],
+    "enabled" : true
   }, {
     "name" : "menu-energy_recovery",
     "screenId" : "menu-energy_recovery",
@@ -4832,7 +4241,8 @@
       "r" : 255,
       "g" : 255,
       "b" : 255
-    } ]
+    } ],
+    "enabled" : false
   }, {
     "name" : "Menu - Friend Request",
     "screenId" : "menu-friend_request",
@@ -5238,7 +4648,8 @@
       "r" : 193,
       "g" : 209,
       "b" : 235
-    } ]
+    } ],
+    "enabled" : false
   }, {
     "name" : "Menu - Friend Select",
     "screenId" : "menu-friend_select",
@@ -5417,24 +4828,6 @@
       "g" : 0,
       "b" : 0
     }, {
-      "x" : 34,
-      "y" : 549,
-      "r" : 0,
-      "g" : 0,
-      "b" : 0
-    }, {
-      "x" : 49,
-      "y" : 534,
-      "r" : 0,
-      "g" : 0,
-      "b" : 0
-    }, {
-      "x" : 57,
-      "y" : 534,
-      "r" : 0,
-      "g" : 0,
-      "b" : 0
-    }, {
       "x" : 971,
       "y" : 764,
       "r" : 0,
@@ -5512,7 +4905,8 @@
       "r" : 0,
       "g" : 85,
       "b" : 128
-    } ]
+    } ],
+    "enabled" : true
   }, {
     "name" : "menu-friend_select-bottom",
     "screenId" : "menu-friend_select-bottom",
@@ -5702,7 +5096,8 @@
       "r" : 0,
       "g" : 34,
       "b" : 106
-    } ]
+    } ],
+    "enabled" : true
   }, {
     "name" : "Menu - Goal List",
     "screenId" : "menu-goal_list",
@@ -5928,7 +5323,8 @@
       "r" : 1,
       "g" : 3,
       "b" : 37
-    } ]
+    } ],
+    "enabled" : true
   }, {
     "name" : "Menu - Goal List - Next",
     "screenId" : "menu-goal_list-next",
@@ -6064,7 +5460,8 @@
       "r" : 255,
       "g" : 255,
       "b" : 255
-    } ]
+    } ],
+    "enabled" : true
   }, {
     "name" : "Menu - Maintenance",
     "screenId" : "menu-maintenance",
@@ -6230,7 +5627,8 @@
       "r" : 0,
       "g" : 15,
       "b" : 52
-    } ]
+    } ],
+    "enabled" : false
   }, {
     "name" : "Menu - New Data",
     "screenId" : "menu-new_data",
@@ -6240,7 +5638,8 @@
       "r" : 0,
       "g" : 10,
       "b" : 33
-    } ]
+    } ],
+    "enabled" : false
   }, {
     "name" : "Menu - Results - Items",
     "screenId" : "menu-results-items",
@@ -6682,7 +6081,8 @@
       "r" : 0,
       "g" : 0,
       "b" : 0
-    } ]
+    } ],
+    "enabled" : true
   }, {
     "name" : "Menu - Results - Points",
     "screenId" : "menu-results-points",
@@ -6938,7 +6338,8 @@
       "r" : 0,
       "g" : 64,
       "b" : 139
-    } ]
+    } ],
+    "enabled" : true
   }, {
     "name" : "Menu - Results - Units",
     "screenId" : "menu-results-units",
@@ -7104,7 +6505,8 @@
       "r" : 0,
       "g" : 20,
       "b" : 30
-    } ]
+    } ],
+    "enabled" : true
   } ],
   "components" : [ {
     "name" : "Battle - Auto",
@@ -7112,230 +6514,263 @@
     "x" : 25,
     "y" : 1815,
     "w" : 216,
-    "h" : 74
+    "h" : 74,
+    "enabled" : true
   }, {
     "name" : "Battle - Menu",
     "componentId" : "battle-menu",
     "x" : 827,
     "y" : 1808,
     "w" : 225,
-    "h" : 87
+    "h" : 87,
+    "enabled" : true
   }, {
     "name" : "Battle - Repeat",
     "componentId" : "battle-repeat",
     "x" : 294,
     "y" : 1815,
     "w" : 214,
-    "h" : 73
+    "h" : 73,
+    "enabled" : true
   }, {
     "name" : "Battle - Unit 0",
     "componentId" : "battle-unit_0",
     "x" : 35,
     "y" : 1223,
     "w" : 483,
-    "h" : 138
+    "h" : 138,
+    "enabled" : true
   }, {
     "name" : "Battle - Unit 1",
     "componentId" : "battle-unit_1",
     "x" : 23,
     "y" : 1406,
     "w" : 492,
-    "h" : 149
+    "h" : 149,
+    "enabled" : true
   }, {
     "name" : "Battle - Unit 2",
     "componentId" : "battle-unit_2",
     "x" : 24,
     "y" : 1601,
     "w" : 495,
-    "h" : 152
+    "h" : 152,
+    "enabled" : true
   }, {
     "name" : "Battle - Unit 3",
     "componentId" : "battle-unit_3",
     "x" : 558,
     "y" : 1211,
     "w" : 492,
-    "h" : 150
+    "h" : 150,
+    "enabled" : true
   }, {
     "name" : "Battle - Unit 4",
     "componentId" : "battle-unit_4",
     "x" : 559,
     "y" : 1407,
     "w" : 491,
-    "h" : 148
+    "h" : 148,
+    "enabled" : true
   }, {
     "name" : "Battle - Unit 5",
     "componentId" : "battle-unit_5",
     "x" : 560,
     "y" : 1601,
     "w" : 492,
-    "h" : 149
+    "h" : 149,
+    "enabled" : true
   }, {
     "name" : "Dungeon - Message - No",
     "componentId" : "dungeon-message-no",
     "x" : 1070,
     "y" : 935,
     "w" : 89,
-    "h" : 58
+    "h" : 58,
+    "enabled" : false
   }, {
     "name" : "Dungeon - Message - Yes",
     "componentId" : "dungeon-message-yes",
     "x" : 1061,
     "y" : 658,
     "w" : 121,
-    "h" : 61
+    "h" : 61,
+    "enabled" : false
   }, {
     "name" : "Dungeon - Mini Map - Area",
     "componentId" : "dungeon-mini_map-area",
     "x" : 63,
     "y" : 145,
     "w" : 486,
-    "h" : 486
+    "h" : 486,
+    "enabled" : false
   }, {
     "name" : "Dungeon - Mini Map - Center",
     "componentId" : "dungeon-mini_map-center",
     "x" : 297,
     "y" : 379,
     "w" : 18,
-    "h" : 18
+    "h" : 18,
+    "enabled" : false
   }, {
     "name" : "Dungeon - Toggle Map",
     "componentId" : "dungeon-toggle_map",
     "x" : 1044,
     "y" : 2401,
     "w" : 103,
-    "h" : 111
+    "h" : 111,
+    "enabled" : false
   }, {
     "name" : "Menu - Connection Error - OK",
     "componentId" : "menu-connection_error-ok",
     "x" : 535,
     "y" : 1423,
     "w" : 369,
-    "h" : 108
+    "h" : 108,
+    "enabled" : false
   }, {
     "name" : "menu-connection_error_2-ok",
     "componentId" : "menu-connection_error_2-ok",
     "x" : 570,
     "y" : 1470,
     "w" : 300,
-    "h" : 45
+    "h" : 45,
+    "enabled" : false
   }, {
     "name" : "Menu - Daily - Close",
     "componentId" : "menu-daily-close",
     "x" : 225,
     "y" : 1538,
     "w" : 292,
-    "h" : 91
+    "h" : 91,
+    "enabled" : false
   }, {
     "name" : "Menu - Depart - Back",
     "componentId" : "menu-depart-back",
     "x" : 38,
     "y" : 338,
     "w" : 139,
-    "h" : 80
+    "h" : 80,
+    "enabled" : true
   }, {
     "name" : "Menu - Depart - Depart",
     "componentId" : "menu-depart-depart",
     "x" : 335,
     "y" : 1645,
     "w" : 409,
-    "h" : 83
+    "h" : 83,
+    "enabled" : true
   }, {
     "name" : "Menu - Energy Bar",
     "componentId" : "menu-energy_bar",
     "x" : 103,
     "y" : 179,
     "w" : 332,
-    "h" : 0
+    "h" : 0,
+    "enabled" : true
   }, {
     "name" : "menu-energy_recovery-back",
     "componentId" : "menu-energy_recovery-back",
     "x" : 537,
     "y" : 1530,
     "w" : 366,
-    "h" : 105
+    "h" : 105,
+    "enabled" : false
   }, {
     "name" : "Menu - Friend Request - No",
     "componentId" : "menu-friend_request-no",
     "x" : 96,
     "y" : 1811,
     "w" : 555,
-    "h" : 118
+    "h" : 118,
+    "enabled" : false
   }, {
     "name" : "Menu - Friend Select - Item 0",
     "componentId" : "menu-friend_select-item_0",
     "x" : 41,
     "y" : 541,
     "w" : 995,
-    "h" : 215
+    "h" : 215,
+    "enabled" : true
   }, {
     "name" : "menu-friend_select-item_4",
     "componentId" : "menu-friend_select-item_4",
     "x" : 44,
     "y" : 1679,
     "w" : 992,
-    "h" : 211
+    "h" : 211,
+    "enabled" : true
   }, {
     "name" : "menu-friend_select-list",
     "componentId" : "menu-friend_select-list",
     "x" : 43,
     "y" : 543,
     "w" : 993,
-    "h" : 1347
+    "h" : 1347,
+    "enabled" : true
   }, {
     "name" : "Menu - Goal List - Back",
     "componentId" : "menu-goal_list-back",
     "x" : 37,
     "y" : 338,
     "w" : 140,
-    "h" : 79
+    "h" : 79,
+    "enabled" : true
   }, {
     "name" : "Menu - Goal List - Next",
     "componentId" : "menu-goal_list-next",
     "x" : 439,
     "y" : 1646,
     "w" : 195,
-    "h" : 80
+    "h" : 80,
+    "enabled" : true
   }, {
     "name" : "Menu - Level",
     "componentId" : "menu-level",
     "x" : 659,
     "y" : 184,
     "w" : 113,
-    "h" : 94
+    "h" : 94,
+    "enabled" : false
   }, {
     "name" : "Menu - Mission List - Item 0",
     "componentId" : "menu-mission_list-item_0",
     "x" : 67,
     "y" : 579,
     "w" : 940,
-    "h" : 171
+    "h" : 171,
+    "enabled" : true
   }, {
     "name" : "Menu - Mission List - Item 1",
     "componentId" : "menu-mission_list-item_1",
     "x" : 65,
     "y" : 856,
     "w" : 942,
-    "h" : 178
+    "h" : 178,
+    "enabled" : true
   }, {
     "name" : "Menu - Mission List - Item 2",
     "componentId" : "menu-mission_list-item_2",
     "x" : 63,
     "y" : 1145,
     "w" : 945,
-    "h" : 173
+    "h" : 173,
+    "enabled" : true
   }, {
     "name" : "Menu - Results - Next",
     "componentId" : "menu-results-next",
     "x" : 443,
     "y" : 1647,
     "w" : 193,
-    "h" : 79
+    "h" : 79,
+    "enabled" : true
   }, {
     "name" : "Screen - Center",
     "componentId" : "screen-center",
     "x" : 195,
     "y" : 690,
     "w" : 690,
-    "h" : 855
+    "h" : 855,
+    "enabled" : true
   } ]
 }

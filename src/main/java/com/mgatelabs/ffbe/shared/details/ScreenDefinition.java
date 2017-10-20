@@ -16,7 +16,17 @@ public class ScreenDefinition {
 
     private List<SamplePoint> points;
 
+    private boolean enabled;
+
     public ScreenDefinition() {
+    }
+
+    public boolean isEnabled() {
+        return enabled;
+    }
+
+    public void setEnabled(boolean enabled) {
+        this.enabled = enabled;
     }
 
     public String getScreenId() {
@@ -49,6 +59,6 @@ public class ScreenDefinition {
 
     @Override
     public String toString() {
-        return  screenId + " - " + name;
+        return (enabled ? "" : "[X] - ") +  screenId + " - " + name;
     }
 }

@@ -1,6 +1,6 @@
 {
   "screens" : [ {
-    "name" : "Battle - Complete",
+    "enabled": "true", "name" : "Battle - Complete",
     "screenId" : "battle-complete",
     "points" : [ {
       "x" : 353,
@@ -202,7 +202,7 @@
       "b" : 0
     } ]
   }, {
-    "name" : "Battle - Esper - Not Full",
+    "enabled": "true", "name" : "Battle - Esper - Not Full",
     "screenId" : "battle-esper-notfull",
     "points" : [ {
       "x" : 1413,
@@ -236,7 +236,7 @@
       "b" : 27
     } ]
   }, {
-    "name" : "Battle - Unit - 0 NotFull",
+    "enabled": "true", "name" : "Battle - Unit - 0 NotFull",
     "screenId" : "battle-unit-0_notfull",
     "points" : [ {
       "x" : 681,
@@ -264,7 +264,7 @@
       "b" : 98
     } ]
   }, {
-    "name" : "Battle - Unit - 0 Ready",
+    "enabled": "true", "name" : "Battle - Unit - 0 Ready",
     "screenId" : "battle-unit-0_ready",
     "points" : [ {
       "x" : 187,
@@ -304,7 +304,7 @@
       "b" : 162
     } ]
   }, {
-    "name" : "Battle - Unit - 1 Ready",
+    "enabled": "true", "name" : "Battle - Unit - 1 Ready",
     "screenId" : "battle-unit-1_ready",
     "points" : [ {
       "x" : 174,
@@ -344,7 +344,7 @@
       "b" : 163
     } ]
   }, {
-    "name" : "Dungeon - Message",
+    "enabled": "true", "name" : "Dungeon - Message",
     "screenId" : "dungeon-message",
     "points" : [ {
       "x" : 5,
@@ -642,7 +642,7 @@
       "b" : 157
     } ]
   }, {
-    "name" : "Dungeon - Message - Leave",
+    "enabled": "true", "name" : "Dungeon - Message - Leave",
     "screenId" : "dungeon-message-leave",
     "points" : [ {
       "x" : 1095,
@@ -862,7 +862,7 @@
       "b" : 48
     } ]
   }, {
-    "name" : "Dungeon - Message - Yes No",
+    "enabled": "true", "name" : "Dungeon - Message - Yes No",
     "screenId" : "dungeon-message-yn",
     "points" : [ {
       "x" : 1103,
@@ -1142,7 +1142,7 @@
       "b" : 48
     } ]
   }, {
-    "name" : "Dungeon - Mini Map",
+    "enabled": "true", "name" : "Dungeon - Mini Map",
     "screenId" : "dungeon-mini_map",
     "points" : [ {
       "x" : 37,
@@ -1368,7 +1368,7 @@
       "b" : 255
     } ]
   }, {
-    "name" : "Dungeon - Notice",
+    "enabled": "true", "name" : "Dungeon - Notice",
     "screenId" : "dungeon-notice",
     "points" : [ {
       "x" : 1428,
@@ -1504,7 +1504,7 @@
       "b" : 158
     } ]
   }, {
-    "name" : "Earth Shrine - Mission Select",
+    "enabled": "true", "name" : "Earth Shrine - Mission Select",
     "screenId" : "menu-missions-select",
     "points" : [ {
       "x" : 132,
@@ -1766,7 +1766,7 @@
       "b" : 0
     } ]
   }, {
-    "name" : "Game - Battle",
+    "enabled": "true", "name" : "Game - Battle",
     "screenId" : "game-battle",
     "points" : [ {
       "x" : 1206,
@@ -2550,7 +2550,7 @@
       "b" : 0
     } ]
   }, {
-    "name" : "Game - Battle - Auto Off",
+    "enabled": "true", "name" : "Game - Battle - Auto Off",
     "screenId" : "game-battle-auto_off",
     "points" : [ {
       "x" : 122,
@@ -3166,7 +3166,7 @@
       "b" : 0
     } ]
   }, {
-    "name" : "Game - Battle - Auto On",
+    "enabled": "true", "name" : "Game - Battle - Auto On",
     "screenId" : "game-battle-auto_on",
     "points" : [ {
       "x" : 506,
@@ -3632,7 +3632,7 @@
       "b" : 38
     } ]
   }, {
-    "name" : "Game - Battle - Repeat",
+    "enabled": "true", "name" : "Game - Battle - Repeat",
     "screenId" : "game-battle-repeat",
     "points" : [ {
       "x" : 397,
@@ -3882,7 +3882,7 @@
       "b" : 255
     } ]
   }, {
-    "name" : "Menu - Capacity",
+    "enabled": "true", "name" : "Menu - Capacity",
     "screenId" : "menu-capacity",
     "points" : [ {
       "x" : 167,
@@ -3892,7 +3892,7 @@
       "b" : 24
     } ]
   }, {
-    "name" : "Menu - Companion Changed",
+    "enabled": "true", "name" : "Menu - Companion Changed",
     "screenId" : "menu-companion-changed",
     "points" : [ {
       "x" : 193,
@@ -4622,7 +4622,7 @@
       "b" : 103
     } ]
   }, {
-    "name" : "Menu - Connection_error",
+    "enabled": "true", "name" : "Menu - Connection_error",
     "screenId" : "menu-connection_error",
     "points" : [ {
       "x" : 1320,
@@ -4890,7 +4890,7 @@
       "b" : 125
     } ]
   }, {
-    "name" : "Menu - Connection error 2",
+    "enabled": "true", "name" : "Menu - Connection error 2",
     "screenId" : "menu-connection_error_2",
     "points" : [ {
       "x" : 671,
@@ -4906,7 +4906,7 @@
       "b" : 255
     } ]
   }, {
-    "name" : "Menu - Daily Notice",
+    "enabled": "true", "name" : "Menu - Daily Notice",
     "screenId" : "menu-daily-notice",
     "points" : [ {
       "x" : 727,
@@ -5198,7 +5198,7 @@
       "b" : 255
     } ]
   }, {
-    "name" : "Menu - Depart",
+    "enabled": "true", "name" : "Menu - Depart",
     "screenId" : "menu-depart",
     "points" : [ {
       "x" : 464,
@@ -6300,7 +6300,7 @@
       "b" : 154
     } ]
   }, {
-    "name" : "menu-energy_recovery",
+    "enabled": "true", "name" : "menu-energy_recovery",
     "screenId" : "menu-energy_recovery",
     "points" : [ {
       "x" : 185,
@@ -6670,7 +6670,7 @@
       "b" : 255
     } ]
   }, {
-    "name" : "Menu - Friend Request",
+    "enabled": "true", "name" : "Menu - Friend Request",
     "screenId" : "menu-friend_request",
     "points" : [ {
       "x" : 97,
@@ -7076,7 +7076,7 @@
       "b" : 235
     } ]
   }, {
-    "name" : "Menu - Friend Select",
+    "enabled": "true", "name" : "Menu - Friend Select",
     "screenId" : "menu-friend_select",
     "points" : [ {
       "x" : 95,
@@ -7890,7 +7890,7 @@
       "b" : 0
     } ]
   }, {
-    "name" : "menu-friend_select-bottom",
+    "enabled": "true", "name" : "menu-friend_select-bottom",
     "screenId" : "menu-friend_select-bottom",
     "points" : [ {
       "x" : 60,
@@ -8326,7 +8326,7 @@
       "b" : 40
     } ]
   }, {
-    "name" : "Menu - Goal List",
+    "enabled": "true", "name" : "Menu - Goal List",
     "screenId" : "menu-goal_list",
     "points" : [ {
       "x" : 286,
@@ -9308,7 +9308,7 @@
       "b" : 40
     } ]
   }, {
-    "name" : "Menu - Goal List - Next",
+    "enabled": "true", "name" : "Menu - Goal List - Next",
     "screenId" : "menu-goal_list-next",
     "points" : [ {
       "x" : 686,
@@ -9792,7 +9792,7 @@
       "b" : 98
     } ]
   }, {
-    "name" : "Menu - Maintenance",
+    "enabled": "true", "name" : "Menu - Maintenance",
     "screenId" : "menu-maintenance",
     "points" : [ {
       "x" : 166,
@@ -9958,7 +9958,7 @@
       "b" : 52
     } ]
   }, {
-    "name" : "Menu - New Data",
+    "enabled": "true", "name" : "Menu - New Data",
     "screenId" : "menu-new_data",
     "points" : [ {
       "x" : 150,
@@ -9968,7 +9968,7 @@
       "b" : 33
     } ]
   }, {
-    "name" : "Menu - Results - Items",
+    "enabled": "true", "name" : "Menu - Results - Items",
     "screenId" : "menu-results-items",
     "points" : [ {
       "x" : 585,
@@ -9984,7 +9984,7 @@
       "b" : 57
     } ]
   }, {
-    "name" : "Menu - Results - Points",
+    "enabled": "true", "name" : "Menu - Results - Points",
     "screenId" : "menu-results-points",
     "points" : [ {
       "x" : 316,
@@ -10480,7 +10480,7 @@
       "b" : 18
     } ]
   }, {
-    "name" : "Menu - Results - Units",
+    "enabled": "true", "name" : "Menu - Results - Units",
     "screenId" : "menu-results-units",
     "points" : [ {
       "x" : 356,
@@ -10857,231 +10857,231 @@
     } ]
   } ],
   "components" : [ {
-    "name" : "Battle - Auto",
+    "enabled": "true", "name" : "Battle - Auto",
     "componentId" : "battle-auto",
     "x" : 81,
     "y" : 2436,
     "w" : 204,
     "h" : 66
   }, {
-    "name" : "Battle - Menu",
+    "enabled": "true", "name" : "Battle - Menu",
     "componentId" : "battle-menu",
     "x" : 1130,
     "y" : 2433,
     "w" : 244,
     "h" : 78
   }, {
-    "name" : "Battle - Repeat",
+    "enabled": "true", "name" : "Battle - Repeat",
     "componentId" : "battle-repeat",
     "x" : 399,
     "y" : 2435,
     "w" : 268,
     "h" : 65
   }, {
-    "name" : "Battle - Unit 0",
+    "enabled": "true", "name" : "Battle - Unit 0",
     "componentId" : "battle-unit_0",
     "x" : 112,
     "y" : 1607,
     "w" : 585,
     "h" : 211
   }, {
-    "name" : "Battle - Unit 1",
+    "enabled": "true", "name" : "Battle - Unit 1",
     "componentId" : "battle-unit_1",
     "x" : 107,
     "y" : 1874,
     "w" : 573,
     "h" : 192
   }, {
-    "name" : "Battle - Unit 2",
+    "enabled": "true", "name" : "Battle - Unit 2",
     "componentId" : "battle-unit_2",
     "x" : 32,
     "y" : 2159,
     "w" : 652,
     "h" : 171
   }, {
-    "name" : "Battle - Unit 3",
+    "enabled": "true", "name" : "Battle - Unit 3",
     "componentId" : "battle-unit_3",
     "x" : 821,
     "y" : 1607,
     "w" : 577,
     "h" : 205
   }, {
-    "name" : "Battle - Unit 4",
+    "enabled": "true", "name" : "Battle - Unit 4",
     "componentId" : "battle-unit_4",
     "x" : 821,
     "y" : 1875,
     "w" : 576,
     "h" : 196
   }, {
-    "name" : "Battle - Unit 5",
+    "enabled": "true", "name" : "Battle - Unit 5",
     "componentId" : "battle-unit_5",
     "x" : 823,
     "y" : 2125,
     "w" : 575,
     "h" : 204
   }, {
-    "name" : "Dungeon - Message - No",
+    "enabled": "true", "name" : "Dungeon - Message - No",
     "componentId" : "dungeon-message-no",
     "x" : 1070,
     "y" : 935,
     "w" : 89,
     "h" : 58
   }, {
-    "name" : "Dungeon - Message - Yes",
+    "enabled": "true", "name" : "Dungeon - Message - Yes",
     "componentId" : "dungeon-message-yes",
     "x" : 1061,
     "y" : 658,
     "w" : 121,
     "h" : 61
   }, {
-    "name" : "Dungeon - Mini Map - Area",
+    "enabled": "true", "name" : "Dungeon - Mini Map - Area",
     "componentId" : "dungeon-mini_map-area",
     "x" : 63,
     "y" : 145,
     "w" : 486,
     "h" : 486
   }, {
-    "name" : "Dungeon - Mini Map - Center",
+    "enabled": "true", "name" : "Dungeon - Mini Map - Center",
     "componentId" : "dungeon-mini_map-center",
     "x" : 297,
     "y" : 379,
     "w" : 18,
     "h" : 18
   }, {
-    "name" : "Dungeon - Toggle Map",
+    "enabled": "true", "name" : "Dungeon - Toggle Map",
     "componentId" : "dungeon-toggle_map",
     "x" : 1044,
     "y" : 2401,
     "w" : 103,
     "h" : 111
   }, {
-    "name" : "Menu - Connection Error - OK",
+    "enabled": "true", "name" : "Menu - Connection Error - OK",
     "componentId" : "menu-connection_error-ok",
     "x" : 535,
     "y" : 1423,
     "w" : 369,
     "h" : 108
   }, {
-    "name" : "menu-connection_error_2-ok",
+    "enabled": "true", "name" : "menu-connection_error_2-ok",
     "componentId" : "menu-connection_error_2-ok",
     "x" : 570,
     "y" : 1470,
     "w" : 300,
     "h" : 45
   }, {
-    "name" : "Menu - Daily - Close",
+    "enabled": "true", "name" : "Menu - Daily - Close",
     "componentId" : "menu-daily-close",
     "x" : 225,
     "y" : 1538,
     "w" : 292,
     "h" : 91
   }, {
-    "name" : "Menu - Depart - Back",
+    "enabled": "true", "name" : "Menu - Depart - Back",
     "componentId" : "menu-depart-back",
     "x" : 50,
     "y" : 451,
     "w" : 188,
     "h" : 107
   }, {
-    "name" : "Menu - Depart - Depart",
+    "enabled": "true", "name" : "Menu - Depart - Depart",
     "componentId" : "menu-depart-depart",
     "x" : 450,
     "y" : 2199,
     "w" : 540,
     "h" : 106
   }, {
-    "name" : "Menu - Energy Bar",
+    "enabled": "true", "name" : "Menu - Energy Bar",
     "componentId" : "menu-energy_bar",
     "x" : 137,
     "y" : 238,
     "w" : 443,
     "h" : 1
   }, {
-    "name" : "menu-energy_recovery-back",
+    "enabled": "true", "name" : "menu-energy_recovery-back",
     "componentId" : "menu-energy_recovery-back",
     "x" : 537,
     "y" : 1530,
     "w" : 366,
     "h" : 105
   }, {
-    "name" : "Menu - Friend Request - No",
+    "enabled": "true", "name" : "Menu - Friend Request - No",
     "componentId" : "menu-friend_request-no",
     "x" : 96,
     "y" : 1811,
     "w" : 555,
     "h" : 118
   }, {
-    "name" : "Menu - Friend Select - Item 0",
+    "enabled": "true", "name" : "Menu - Friend Select - Item 0",
     "componentId" : "menu-friend_select-item_0",
     "x" : 335,
     "y" : 794,
     "w" : 775,
     "h" : 212
   }, {
-    "name" : "menu-friend_select-item_4",
+    "enabled": "true", "name" : "menu-friend_select-item_4",
     "componentId" : "menu-friend_select-item_4",
     "x" : 61,
     "y" : 2242,
     "w" : 1317,
     "h" : 276
   }, {
-    "name" : "menu-friend_select-list",
+    "enabled": "true", "name" : "menu-friend_select-list",
     "componentId" : "menu-friend_select-list",
     "x" : 11,
     "y" : 665,
     "w" : 1423,
     "h" : 1892
   }, {
-    "name" : "Menu - Goal List - Back",
+    "enabled": "true", "name" : "Menu - Goal List - Back",
     "componentId" : "menu-goal_list-back",
     "x" : 50,
     "y" : 450,
     "w" : 187,
     "h" : 108
   }, {
-    "name" : "Menu - Goal List - Next",
+    "enabled": "true", "name" : "Menu - Goal List - Next",
     "componentId" : "menu-goal_list-next",
     "x" : 584,
     "y" : 2194,
     "w" : 262,
     "h" : 108
   }, {
-    "name" : "Menu - Level",
+    "enabled": "true", "name" : "Menu - Level",
     "componentId" : "menu-level",
     "x" : 659,
     "y" : 184,
     "w" : 113,
     "h" : 94
   }, {
-    "name" : "Menu - Mission List - Item 0",
+    "enabled": "true", "name" : "Menu - Mission List - Item 0",
     "componentId" : "menu-mission_list-item_0",
     "x" : 92,
     "y" : 734,
     "w" : 1256,
     "h" : 271
   }, {
-    "name" : "Menu - Mission List - Item 1",
+    "enabled": "true", "name" : "Menu - Mission List - Item 1",
     "componentId" : "menu-mission_list-item_1",
     "x" : 86,
     "y" : 1115,
     "w" : 1262,
     "h" : 269
   }, {
-    "name" : "Menu - Mission List - Item 2",
+    "enabled": "true", "name" : "Menu - Mission List - Item 2",
     "componentId" : "menu-mission_list-item_2",
     "x" : 87,
     "y" : 1490,
     "w" : 1261,
     "h" : 273
   }, {
-    "name" : "Menu - Results - Next",
+    "enabled": "true", "name" : "Menu - Results - Next",
     "componentId" : "menu-results-next",
     "x" : 647,
     "y" : 2220,
     "w" : 147,
     "h" : 58
   }, {
-    "name" : "Screen - Center",
+    "enabled": "true", "name" : "Screen - Center",
     "componentId" : "screen-center",
     "x" : 585,
     "y" : 1035,

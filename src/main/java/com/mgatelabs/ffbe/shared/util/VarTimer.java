@@ -33,7 +33,7 @@ public class VarTimer {
         } else {
             float lastDiff = ((float) (end - last) / 1000000000.0f);
             float avgDiff = ((float) (end - start) / 1000000000.0f) / count;
-            return "Time: " + String.format("%2.2f", lastDiff)+ " Average: " + String.format("%2.2f", avgDiff);
+            return "Time: " + String.format("%2.2f", lastDiff)+ "s Average: " + String.format("%2.2f", avgDiff) + "s";
         }
     }
 }

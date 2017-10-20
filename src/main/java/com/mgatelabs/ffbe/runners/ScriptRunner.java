@@ -186,12 +186,34 @@ public class ScriptRunner {
 
             StateTransfer stateTransfer = new StateTransfer();
             stateTransfer.setStateId(stateEntry.getKey());
-            stateTransfer.setScreenIds(stateEntry.getValue().determineScreenIds());
+            List<String> determinedScreenIds = Lists.newArrayList();
+
+            List<String> tempScreenIds = stateEntry.getValue().determineScreenIds();
+            for (String screeId : tempScreenIds) {
+                ScreenDefinition screenDefinition = screens.get(screeId);
+                if (!screenDefinition.isEnabled()) {
+                    logger.log(Level.SEVERE, "Disabled Screen: " + screenDefinition.getScreenId());
+                    continue;
+                }
+                boolean valid = true;
+                for (SamplePoint point : screenDefinition.getPoints()) {
+                    if (point.getX() > deviceDefinition.getWidth() || point.getY() >= deviceDefinition.getHeight()) {
+                        valid = false;
+                        logger.log(Level.SEVERE, "Invalid Screen Point for Screen: " + screenDefinition.getScreenId());
+                        break;
+                    }
+                }
+                if (valid) {
+                    determinedScreenIds.add(screeId);
+                }
+            }
+            stateTransfer.setScreenIds(determinedScreenIds);
 
             // Collect every point
             List<PointTransfer> points = Lists.newArrayList();
             for (int i = 0; i < stateTransfer.getScreenIds().size(); i++) {
                 ScreenDefinition screenDefinition = screens.get(stateTransfer.getScreenIds().get(i));
+                if (!screenDefinition.isEnabled()) continue;
                 for (SamplePoint point : screenDefinition.getPoints()) {
                     points.add(new PointTransfer(RawImageWrapper.getOffsetFor(deviceDefinition.getWidth(), 12, point.getX(), point.getY(), RawImageWrapper.ImageFormats.RGBA), (byte) i, (byte) point.getR(), (byte) point.getG(), (byte) point.getB()));
                 }
@@ -401,8 +423,8 @@ public class ScriptRunner {
 
                             String msg = actionDefinition.getValue();
                             int startindex;
-                            while ((startindex = msg.indexOf("${")) >= 0){
-                                int endIndex =msg.indexOf('}', startindex);
+                            while ((startindex = msg.indexOf("${")) >= 0) {
+                                int endIndex = msg.indexOf('}', startindex);
                                 if (endIndex > startindex + 2) {
                                     String varName = msg.substring(startindex += 2, endIndex).trim();
                                     if (varName.length() > 0) {
@@ -583,7 +605,7 @@ public class ScriptRunner {
 
         // If we have a AND handle it
         if (result && checkAnd && !conditionDefinition.getAnd().isEmpty()) {
-            for (ConditionDefinition sub: conditionDefinition.getAnd()) {
+            for (ConditionDefinition sub : conditionDefinition.getAnd()) {
                 if (!check(sub, imageWrapper)) {
                     result = false;
                     break;
@@ -593,7 +615,7 @@ public class ScriptRunner {
 
         // If we failed, but have a OR, check the OR
         if (!result && !conditionDefinition.getOr().isEmpty()) {
-            for (ConditionDefinition sub: conditionDefinition.getOr()) {
+            for (ConditionDefinition sub : conditionDefinition.getOr()) {
                 if (check(sub, imageWrapper)) {
                     result = true;
                     break;

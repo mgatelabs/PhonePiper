@@ -16,6 +16,8 @@ public class ComponentDefinition {
     private int w;
     private int h;
 
+    private boolean enabled;
+
     public String getName() {
         return name;
     }
@@ -64,12 +66,20 @@ public class ComponentDefinition {
         this.h = h;
     }
 
+    public boolean isEnabled() {
+        return enabled;
+    }
+
+    public void setEnabled(boolean enabled) {
+        this.enabled = enabled;
+    }
+
     public static File getPreviewPath(String viewId, String componentId) {
         return new File("views/" + viewId + "/c-" + componentId + ".png");
     }
 
     @Override
     public String toString() {
-        return  componentId + " - " + name;
+        return (enabled ? "" : "[X] - ") + componentId + " - " + name;
     }
 }

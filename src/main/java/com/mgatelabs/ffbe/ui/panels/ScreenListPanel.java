@@ -160,6 +160,7 @@ public class ScreenListPanel extends JInternalFrame {
                 public void actionPerformed(ActionEvent e) {
                     if (nameField.getText() != null && nameField.getText().trim().length() > 0) {
                         selectedItem.setName(nameField.getText().trim());
+                        selectedItem.setEnabled(true);
                         viewDefinition.save();
 
                         itemModel.refresh();
@@ -191,6 +192,23 @@ public class ScreenListPanel extends JInternalFrame {
             });
             editMenu.add(testMenuItem);
         }
+
+        editMenu.addSeparator();
+
+        {
+            JMenuItem saveMenuItem = new JMenuItem("Disable");
+            saveMenuItem.addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    selectedItem.setEnabled(false);
+                    viewDefinition.save();
+                    itemModel.refresh();
+                }
+            });
+            editMenu.add(saveMenuItem);
+        }
+
+        editMenu.addSeparator();
 
         {
             JMenuItem testMenuItem = new JMenuItem("Fix Points");
@@ -231,6 +249,7 @@ public class ScreenListPanel extends JInternalFrame {
                         newPoints.addAll(imagePixelPickerDialog.getPoints());
                     }
 
+                    selectedItem.setEnabled(true);
                     selectedItem.getPoints().clear();
                     selectedItem.getPoints().addAll(newPoints);
 
@@ -273,6 +292,7 @@ public class ScreenListPanel extends JInternalFrame {
                         copy.addAll(imagePixelPickerDialog.getPoints());
                     }
 
+                    selectedItem.setEnabled(true);
                     selectedItem.getPoints().clear();
                     selectedItem.getPoints().addAll(copy);
 

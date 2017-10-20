@@ -148,6 +148,10 @@
           },
           "actions": [
             {
+              "type": "TIMER",
+              "value": "BATTLE"
+            },
+            {
               "type": "SET",
               "var": "loops",
               "value": "0"
@@ -536,8 +540,8 @@
             "value": "20",
             "and": [
               {
-              "is": "SCREEN",
-              "value": "game-battle-auto_off"
+                "is": "SCREEN",
+                "value": "game-battle-auto_off"
               }
             ]
           },
@@ -746,8 +750,8 @@
             "value": "menu-missions-select",
             "or": [
               {
-              "is": "SCREEN",
-              "value": "menu-goal_list"
+                "is": "SCREEN",
+                "value": "menu-goal_list"
               }
             ]
           },

@@ -21,6 +21,8 @@ public class AdbUtils {
     private static final SecureRandom RANDOM = new SecureRandom();
 
     public static void component(DeviceDefinition deviceDefinition, ComponentDefinition componentDefinition, ActionType type, final AdbShell shell, boolean batch) {
+        if (!componentDefinition.isEnabled()) return;
+
         final String cmd;
         switch (type) {
             case TAP: {

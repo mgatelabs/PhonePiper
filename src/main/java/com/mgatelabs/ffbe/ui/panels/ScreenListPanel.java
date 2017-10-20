@@ -2,6 +2,7 @@ package com.mgatelabs.ffbe.ui.panels;
 
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.Lists;
+import com.mgatelabs.ffbe.shared.details.DeviceDefinition;
 import com.mgatelabs.ffbe.shared.details.ScreenDefinition;
 import com.mgatelabs.ffbe.shared.details.ViewDefinition;
 import com.mgatelabs.ffbe.shared.image.ImageWrapper;
@@ -28,6 +29,7 @@ import java.util.List;
  */
 public class ScreenListPanel extends JInternalFrame {
 
+    private DeviceDefinition deviceDefinition;
     private ViewDefinition viewDefinition;
     private final AdbShell shell;
     private final JFrame owner;
@@ -35,8 +37,9 @@ public class ScreenListPanel extends JInternalFrame {
     private JList<ScreenDefinition> itemList;
     private RefreshableListModel<ScreenDefinition> itemModel;
 
-    public ScreenListPanel(ViewDefinition viewDefinition, AdbShell shell, JFrame owner) {
+    public ScreenListPanel(DeviceDefinition deviceDefinition, ViewDefinition viewDefinition, AdbShell shell, JFrame owner) {
         super("Screens", true, false, false, false);
+        this.deviceDefinition = deviceDefinition;
         this.viewDefinition = viewDefinition;
         this.shell = shell;
         this.owner = owner;
@@ -204,6 +207,9 @@ public class ScreenListPanel extends JInternalFrame {
                     List<SamplePoint> newPoints = Lists.newArrayList();
 
                     for (SamplePoint oldPoint : selectedItem.getPoints()) {
+                        if (oldPoint.getX() >= deviceDefinition.getWidth() || oldPoint.getY() >= deviceDefinition.getHeight()) {
+                            continue;
+                        }
                         if (SamplePoint.validate(ImmutableList.of(oldPoint), imageWrapper, false)) {
                             newPoints.add(oldPoint);
                         }

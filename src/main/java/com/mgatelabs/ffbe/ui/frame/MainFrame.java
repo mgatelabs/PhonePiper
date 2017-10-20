@@ -169,11 +169,13 @@ public class MainFrame extends JFrame {
                     break;
                     case SCRIPT: {
 
-                    } break;
+                    }
+                    break;
                     case VIEW: {
                         showScreens = true;
                         showComponents = true;
-                    } break;
+                    }
+                    break;
                 }
             }
             break;
@@ -213,13 +215,13 @@ public class MainFrame extends JFrame {
         }
 
         if (showScreens) {
-            screenListPanel = new ScreenListPanel(viewDefinition, shell, this);
+            screenListPanel = new ScreenListPanel(deviceDefinition, viewDefinition, shell, this);
             screenListPanel.setLocation(column0Left, 0);
             desktopPane.add(screenListPanel);
         }
 
         if (showComponents) {
-            componentListPanel = new ComponentListPanel(deviceDefinition ,viewDefinition, shell, this);
+            componentListPanel = new ComponentListPanel(deviceDefinition, viewDefinition, shell, this);
             componentListPanel.setLocation(column0Left + screenListPanel.getWidth(), 0);
             desktopPane.add(componentListPanel);
         }

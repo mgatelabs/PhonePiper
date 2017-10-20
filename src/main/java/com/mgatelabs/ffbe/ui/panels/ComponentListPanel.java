@@ -101,7 +101,7 @@ public class ComponentListPanel extends JInternalFrame {
                     String input = JOptionPane.showInputDialog(owner, "Component ID (a-z A-Z 0-9 - _)");
                     if (input != null && Constants.ID_PATTERN.matcher(input).matches()) {
 
-                        for (ComponentDefinition componentDefinition: viewDefinition.getComponents()) {
+                        for (ComponentDefinition componentDefinition : viewDefinition.getComponents()) {
                             if (componentDefinition.getComponentId().equals(input)) {
                                 info("Screen with same ID already exists");
                                 return;
@@ -210,7 +210,14 @@ public class ComponentListPanel extends JInternalFrame {
                     }
 
                     ImagePixelPickerDialog imagePixelPickerDialog = new ImagePixelPickerDialog(ImagePixelPickerDialog.Mode.BOX, null);
-                    imagePixelPickerDialog.setup(imageWrapper, selectedItem.getX(), selectedItem.getY(), selectedItem.getW(), selectedItem.getH());
+
+                    int x = selectedItem.getX() >= deviceDefinition.getWidth() ? 0 : selectedItem.getX();
+                    int y = selectedItem.getY() >= deviceDefinition.getHeight() ? 0 : selectedItem.getY();
+
+                    int w = (x + selectedItem.getW()) >= deviceDefinition.getWidth() ? 10 : selectedItem.getW();
+                    int h = (y + selectedItem.getH()) >= deviceDefinition.getHeight() ? 10 : selectedItem.getH();
+
+                    imagePixelPickerDialog.setup(imageWrapper, x, y, w, h);
                     imagePixelPickerDialog.start();
 
                     if (!imagePixelPickerDialog.isOk()) {

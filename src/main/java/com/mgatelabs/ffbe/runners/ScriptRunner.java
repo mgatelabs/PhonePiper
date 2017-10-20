@@ -11,6 +11,7 @@ import com.mgatelabs.ffbe.shared.helper.PointTransfer;
 import com.mgatelabs.ffbe.shared.image.*;
 import com.mgatelabs.ffbe.shared.util.AdbShell;
 import com.mgatelabs.ffbe.shared.util.AdbUtils;
+import com.mgatelabs.ffbe.shared.util.VarTimer;
 import com.mgatelabs.ffbe.ui.utils.CustomHandler;
 
 import java.text.SimpleDateFormat;
@@ -62,11 +63,14 @@ public class ScriptRunner {
 
     private Logger logger = Logger.getLogger("ScriptRunner");
 
+    private Map<String, VarTimer> timers;
+
     public ScriptRunner(PlayerDefinition playerDefinition, DeviceHelper deviceHelper, ScriptDefinition scriptDefinition, DeviceDefinition deviceDefinition, ViewDefinition viewDefinition, CustomHandler customHandler) {
         this.playerDefinition = playerDefinition;
         this.scriptDefinition = scriptDefinition;
         this.deviceDefinition = deviceDefinition;
         this.viewDefinition = viewDefinition;
+        timers = Maps.newHashMap();
         stack = new Stack<>();
         vars = Maps.newHashMap();
         shell = new AdbShell();
@@ -373,6 +377,16 @@ public class ScriptRunner {
         logger.fine("Script Stopped");
     }
 
+    private String timerEvent(String id) {
+        VarTimer timer = timers.get(id);
+        if (timer == null) {
+            timer = new VarTimer();
+            timers.put(id, timer);
+        }
+        timer.time();
+        return "Timer: " + id + " : " + timer.toString();
+    }
+
     private StateResult state(final StateDefinition stateDefinition, final ImageWrapper imageWrapper) {
 
         logger.fine("Running State: " + stateDefinition.getName());
@@ -418,6 +432,12 @@ public class ScriptRunner {
                             String varName = actionDefinition.getVar();
                             int value = Integer.parseInt(actionDefinition.getValue());
                             setVar(varName, value);
+                        }
+                        break;
+                        case TIMER: {
+                            String timerId = actionDefinition.getValue();
+                            timerId = (timerId == null || timerId.trim().length() == 0) ? "generic" : timerId.trim();
+                            logger.info(timerEvent(timerId));
                         }
                         break;
                         case ADD: {

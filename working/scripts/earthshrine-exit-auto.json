@@ -6,7 +6,7 @@
         {
           "condition": {
             "is": "SCREEN",
-            "value": "es-mission-select",
+            "value": "menu-missions-select",
             "and": {
               "is": "ENERGY",
               "value": "4"
@@ -49,7 +49,7 @@
         {
           "condition": {
             "is": "SCREEN",
-            "value": "es-mission-select",
+            "value": "menu-missions-select",
             "and": {
               "is": "ENERGY",
               "value": "3"
@@ -481,7 +481,7 @@
         {
           "condition": {
             "is": "SCREEN",
-            "value": "es-mission-select"
+            "value": "menu-missions-select"
           },
           "actions": [
             {

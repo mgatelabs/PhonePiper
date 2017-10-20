@@ -1505,7 +1505,7 @@
     } ]
   }, {
     "name" : "Earth Shrine - Mission Select",
-    "screenId" : "es-mission-select",
+    "screenId" : "menu-missions-select",
     "points" : [ {
       "x" : 132,
       "y" : 1229,

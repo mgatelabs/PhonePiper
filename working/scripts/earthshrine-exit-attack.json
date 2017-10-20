@@ -28,7 +28,7 @@
         {
           "condition": {
             "is": "SCREEN",
-            "value": "es-mission-select",
+            "value": "menu-missions-select",
             "and": [
               {
                 "is": "ENERGY",
@@ -743,7 +743,7 @@
         {
           "condition": {
             "is": "SCREEN",
-            "value": "es-mission-select",
+            "value": "menu-missions-select",
             "or": [
               {
               "is": "SCREEN",

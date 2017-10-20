@@ -36,6 +36,10 @@
               "value": "Switch to Esper"
             },
             {
+              "type": "TIMER",
+              "value": "ESPER"
+            },
+            {
               "type": "ADD",
               "var": "esper",
               "value": "1"
@@ -65,6 +69,10 @@
             {
               "type": "MSG",
               "value": "Switch to LB"
+            },
+            {
+              "type": "TIMER",
+              "value": "LB"
             },
             {
               "type": "ADD",

@@ -81,6 +81,16 @@ public class ImagePixelPickerDialog extends JDialog implements KeyListener {
     buttonPanel.add(moveButton);
     moveButton.addKeyListener(this);
 
+    JButton clearButton = new JButton("CLEAR");
+    buttonPanel.add(clearButton);
+    clearButton.addActionListener(new ActionListener() {
+      @Override
+      public void actionPerformed(ActionEvent e) {
+        drawPanel.clearPoints();
+        sampleModel.refresh();
+      }
+    });
+
     JButton okButton = new JButton("OK");
     buttonPanel.add(okButton);
     okButton.addActionListener(new ActionListener() {
@@ -453,6 +463,14 @@ public class ImagePixelPickerDialog extends JDialog implements KeyListener {
       } else {
         samples = new SamplePoint[0][0];
       }
+    }
+
+    public void clearPoints() {
+      for (SamplePoint point: points) {
+        samples[point.getY()][point.getX()] = null;
+      }
+      points.clear();
+      this.repaint();
     }
 
     public void togglePoint() {

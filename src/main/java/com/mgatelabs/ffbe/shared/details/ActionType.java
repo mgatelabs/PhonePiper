@@ -20,4 +20,5 @@ public enum ActionType {
     STOP, // Stop execution
     SET, // Zero a variable
     ADD, // Increment a variable
+    TIMER, // TIMER EVENT
 }

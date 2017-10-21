@@ -8,7 +8,7 @@ import com.mgatelabs.ffbe.shared.image.ImageWrapper;
 import com.mgatelabs.ffbe.shared.image.PngImageWrapper;
 import com.mgatelabs.ffbe.shared.util.AdbShell;
 import com.mgatelabs.ffbe.shared.util.AdbUtils;
-import com.mgatelabs.ffbe.ui.ImagePixelPickerDialog;
+import com.mgatelabs.ffbe.ui.dialogs.ImagePixelPickerDialog;
 import com.mgatelabs.ffbe.ui.utils.Constants;
 import com.mgatelabs.ffbe.ui.utils.RefreshableListModel;
 

@@ -151,6 +151,7 @@ public class ComponentListPanel extends JInternalFrame {
                                 componentDefinition.setY(y1);
                                 componentDefinition.setW(x2 - x1);
                                 componentDefinition.setH(y2 - y1);
+                                componentDefinition.setEnabled(true);
 
                                 imageReader.savePng(ComponentDefinition.getPreviewPath(deviceDefinition.getViewId(), componentDefinition.getComponentId()));
 

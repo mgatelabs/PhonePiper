@@ -130,6 +130,7 @@ public class ScreenListPanel extends JInternalFrame {
                             }
 
                             screenDefinition.setPoints(samples);
+                            screenDefinition.setEnabled(true);
 
                             imageReader.savePng(ScreenDefinition.getPreviewPath(viewDefinition.getViewId(), screenDefinition.getScreenId()));
 

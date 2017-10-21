@@ -217,6 +217,26 @@
         },
         {
           "condition": {
+            "is": "SCREEN",
+            "value": "menu-companion_changed"
+          },
+          "actions": [
+            {
+              "type": "TAP",
+              "value": "menu-companion_changed-ok"
+            },
+            {
+              "type": "WAIT",
+              "value": "1500"
+            },
+            {
+              "type": "REPEAT",
+              "value": ""
+            }
+          ]
+        },
+        {
+          "condition": {
             "var": "loops",
             "is": "GREATER",
             "value": "900"

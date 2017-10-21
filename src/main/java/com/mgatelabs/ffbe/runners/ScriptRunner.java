@@ -396,7 +396,7 @@ public class ScriptRunner {
             waitFor(250);
         }
 
-        logger.fine("Script Stopped");
+        logger.info("Script Stopped");
     }
 
     private String timerEvent(String id) {

@@ -3893,7 +3893,7 @@
     } ]
   }, {
     "enabled": "true", "name" : "Menu - Companion Changed",
-    "screenId" : "menu-companion-changed",
+    "screenId" : "menu-companion_changed",
     "points" : [ {
       "x" : 193,
       "y" : 1619,

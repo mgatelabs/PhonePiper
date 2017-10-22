@@ -254,6 +254,23 @@
         },
         {
           "condition": {
+            "var": "loops",
+            "is": "GREATER",
+            "value": "45"
+          },
+          "actions": [
+            {
+              "type": "TAP",
+              "value": "menu-level"
+            },
+            {
+              "type": "MSG",
+              "value": "No-Op ${loops}"
+            }
+          ]
+        },
+        {
+          "condition": {
             "is": "BOOLEAN",
             "value": "true"
           },
@@ -262,10 +279,6 @@
               "type": "ADD",
               "value": "1",
               "var": "loops"
-            },
-            {
-              "type": "MSG",
-              "value": "No-Op ${loops}"
             },
             {
               "type": "REPEAT",

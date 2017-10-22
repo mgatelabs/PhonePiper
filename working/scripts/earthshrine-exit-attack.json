@@ -11,11 +11,6 @@
       "type": "INT"
     },
     {
-      "name": "items",
-      "value": "1000",
-      "type": "INT"
-    },
-    {
       "name": "runs",
       "value": "0",
       "type": "INT"
@@ -128,26 +123,6 @@
         {
           "condition": {
             "is": "SCREEN",
-            "value": "menu-energy_recovery"
-          },
-          "actions": [
-            {
-              "type": "TAP",
-              "value": "menu-energy_recovery-back"
-            },
-            {
-              "type": "WAIT",
-              "value": "1500"
-            },
-            {
-              "type": "REPEAT",
-              "value": ""
-            }
-          ]
-        },
-        {
-          "condition": {
-            "is": "SCREEN",
             "value": "game-battle"
           },
           "actions": [
@@ -177,112 +152,13 @@
         },
         {
           "condition": {
-            "is": "SCREEN",
-            "value": "menu-connection_error"
-          },
-          "actions": [
-            {
-              "type": "TAP",
-              "value": "menu-connection_error-ok"
-            },
-            {
-              "type": "WAIT",
-              "value": "1500"
-            },
-            {
-              "type": "REPEAT",
-              "value": ""
-            }
-          ]
-        },
-        {
-          "condition": {
-            "is": "SCREEN",
-            "value": "menu-connection_error_2"
-          },
-          "actions": [
-            {
-              "type": "TAP",
-              "value": "menu-connection_error_2-ok"
-            },
-            {
-              "type": "WAIT",
-              "value": "1500"
-            },
-            {
-              "type": "REPEAT",
-              "value": ""
-            }
-          ]
-        },
-        {
-          "condition": {
-            "is": "SCREEN",
-            "value": "menu-companion_changed"
-          },
-          "actions": [
-            {
-              "type": "TAP",
-              "value": "menu-companion_changed-ok"
-            },
-            {
-              "type": "WAIT",
-              "value": "1500"
-            },
-            {
-              "type": "REPEAT",
-              "value": ""
-            }
-          ]
-        },
-        {
-          "condition": {
-            "var": "loops",
-            "is": "GREATER",
-            "value": "900"
-          },
-          "actions": [
-            {
-              "type": "MSG",
-              "value": "Too many cycles, stopping run"
-            },
-            {
-              "type": "STOP",
-              "value": ""
-            }
-          ]
-        },
-        {
-          "condition": {
-            "var": "loops",
-            "is": "GREATER",
-            "value": "45"
-          },
-          "actions": [
-            {
-              "type": "TAP",
-              "value": "menu-level"
-            },
-            {
-              "type": "MSG",
-              "value": "No-Op ${loops}"
-            }
-          ]
-        },
-        {
-          "condition": {
             "is": "BOOLEAN",
             "value": "true"
           },
           "actions": [
             {
-              "type": "ADD",
-              "value": "1",
-              "var": "loops"
-            },
-            {
-              "type": "REPEAT",
-              "value": ""
+              "type": "PUSH",
+              "value": "no-op"
             }
           ]
         }
@@ -511,46 +387,6 @@
         {
           "condition": {
             "is": "SCREEN",
-            "value": "menu-connection_error"
-          },
-          "actions": [
-            {
-              "type": "TAP",
-              "value": "menu-connection_error-ok"
-            },
-            {
-              "type": "WAIT",
-              "value": "1500"
-            },
-            {
-              "type": "REPEAT",
-              "value": ""
-            }
-          ]
-        },
-        {
-          "condition": {
-            "is": "SCREEN",
-            "value": "menu-connection_error_2"
-          },
-          "actions": [
-            {
-              "type": "TAP",
-              "value": "menu-connection_error_2-ok"
-            },
-            {
-              "type": "WAIT",
-              "value": "1500"
-            },
-            {
-              "type": "REPEAT",
-              "value": ""
-            }
-          ]
-        },
-        {
-          "condition": {
-            "is": "SCREEN",
             "value": "menu-results-points"
           },
           "actions": [
@@ -604,39 +440,13 @@
         },
         {
           "condition": {
-            "var": "loops",
-            "is": "GREATER",
-            "value": "900"
-          },
-          "actions": [
-            {
-              "type": "MSG",
-              "value": "Too many cycles, stopping run"
-            },
-            {
-              "type": "STOP",
-              "value": ""
-            }
-          ]
-        },
-        {
-          "condition": {
             "is": "BOOLEAN",
             "value": "true"
           },
           "actions": [
             {
-              "type": "ADD",
-              "value": "1",
-              "var": "loops"
-            },
-            {
-              "type": "MSG",
-              "value": "No-Op ${loops}"
-            },
-            {
-              "type": "REPEAT",
-              "value": ""
+              "type": "PUSH",
+              "value": "no-op"
             }
           ]
         }
@@ -704,72 +514,12 @@
         {
           "condition": {
             "is": "SCREEN",
-            "value": "menu-connection_error"
-          },
-          "actions": [
-            {
-              "type": "TAP",
-              "value": "menu-connection_error-ok"
-            },
-            {
-              "type": "WAIT",
-              "value": "1500"
-            },
-            {
-              "type": "REPEAT",
-              "value": ""
-            }
-          ]
-        },
-        {
-          "condition": {
-            "is": "SCREEN",
-            "value": "menu-connection_error_2"
-          },
-          "actions": [
-            {
-              "type": "TAP",
-              "value": "menu-connection_error_2-ok"
-            },
-            {
-              "type": "WAIT",
-              "value": "1500"
-            },
-            {
-              "type": "REPEAT",
-              "value": ""
-            }
-          ]
-        },
-        {
-          "condition": {
-            "is": "SCREEN",
             "value": "menu-friend_request"
           },
           "actions": [
             {
               "type": "TAP",
               "value": "menu-friend_request-no"
-            },
-            {
-              "type": "WAIT",
-              "value": "1500"
-            },
-            {
-              "type": "REPEAT",
-              "value": ""
-            }
-          ]
-        },
-        {
-          "condition": {
-            "is": "SCREEN",
-            "value": "menu-daily-notice"
-          },
-          "actions": [
-            {
-              "type": "TAP",
-              "value": "menu-daily-close"
             },
             {
               "type": "WAIT",
@@ -805,6 +555,83 @@
         },
         {
           "condition": {
+            "is": "BOOLEAN",
+            "value": "true"
+          },
+          "actions": [
+            {
+              "type": "PUSH",
+              "value": "no-op"
+            }
+          ]
+        }
+      ]
+    },
+    "no-op": {
+      "name": "No-Op (Common)",
+      "statements": [
+        {
+          "condition": {
+            "is": "SCREEN",
+            "value": "menu-connection_error"
+          },
+          "actions": [
+            {
+              "type": "TAP",
+              "value": "menu-connection_error-ok"
+            },
+            {
+              "type": "WAIT",
+              "value": "1500"
+            },
+            {
+              "type": "POP",
+              "value": ""
+            }
+          ]
+        },
+        {
+          "condition": {
+            "is": "SCREEN",
+            "value": "menu-connection_error_2"
+          },
+          "actions": [
+            {
+              "type": "TAP",
+              "value": "menu-connection_error_2-ok"
+            },
+            {
+              "type": "WAIT",
+              "value": "1500"
+            },
+            {
+              "type": "POP",
+              "value": ""
+            }
+          ]
+        },
+        {
+          "condition": {
+            "is": "SCREEN",
+            "value": "menu-daily-notice"
+          },
+          "actions": [
+            {
+              "type": "TAP",
+              "value": "menu-daily-close"
+            },
+            {
+              "type": "WAIT",
+              "value": "1500"
+            },
+            {
+              "type": "POP",
+              "value": ""
+            }
+          ]
+        },
+        {
+          "condition": {
             "is": "SCREEN",
             "value": "menu-energy_recovery"
           },
@@ -818,7 +645,27 @@
               "value": "1500"
             },
             {
-              "type": "REPEAT",
+              "type": "POP",
+              "value": ""
+            }
+          ]
+        },
+        {
+          "condition": {
+            "is": "SCREEN",
+            "value": "menu-companion_changed"
+          },
+          "actions": [
+            {
+              "type": "TAP",
+              "value": "menu-companion_changed-ok"
+            },
+            {
+              "type": "WAIT",
+              "value": "1500"
+            },
+            {
+              "type": "POP",
               "value": ""
             }
           ]
@@ -842,6 +689,23 @@
         },
         {
           "condition": {
+            "var": "loops",
+            "is": "GREATER",
+            "value": "45"
+          },
+          "actions": [
+            {
+              "type": "TAP",
+              "value": "menu-level"
+            },
+            {
+              "type": "MSG",
+              "value": "No-Op ${loops}"
+            }
+          ]
+        },
+        {
+          "condition": {
             "is": "BOOLEAN",
             "value": "true"
           },
@@ -852,12 +716,40 @@
               "var": "loops"
             },
             {
-              "type": "MSG",
-              "value": "No-Op ${loops}"
+              "type": "POP",
+              "value": ""
+            }
+          ]
+        }
+      ]
+    },
+    "reset": {
+      "name": "Reset",
+      "statements": [
+        {
+          "condition": {
+            "is": "BOOLEAN",
+            "value": "true"
+          },
+          "actions": [
+            {
+              "type": "SET",
+              "value": "0",
+              "var": "loops"
             },
             {
-              "type": "REPEAT",
-              "value": ""
+              "type": "SET",
+              "value": "0",
+              "var": "setup"
+            },
+            {
+              "type": "SET",
+              "value": "0",
+              "var": "runs"
+            },
+            {
+              "type": "MOVE",
+              "value": "main"
             }
           ]
         }

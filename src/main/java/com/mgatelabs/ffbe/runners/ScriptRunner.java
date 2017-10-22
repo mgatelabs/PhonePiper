@@ -365,7 +365,7 @@ public class ScriptRunner {
                     }
                     break;
                     case PUSH: {
-                        stack.push(stateDefinition.getName());
+                        stack.push(stateDefinition.getId());
                         stateDefinition = scriptDefinition.getStates().get(result.getValue());
                         if (stateDefinition == null) {
                             logger.log(Level.SEVERE, "Cannot find state with id: " + result.getValue());

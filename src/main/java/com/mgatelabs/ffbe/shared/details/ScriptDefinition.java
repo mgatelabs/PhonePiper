@@ -20,6 +20,7 @@ public class ScriptDefinition {
 
     @JsonIgnore
     private String scriptId;
+    private List<String> includes;
     private List<VarDefinition> vars;
     private Map<String, StateDefinition> states;
 
@@ -31,13 +32,16 @@ public class ScriptDefinition {
         this.scriptId = scriptId;
         vars = Lists.newArrayList();
         states = Maps.newHashMap();
+        includes = Lists.newArrayList();
     }
 
     public void fix() {
         for (StateDefinition stateDefinition : states.values()) {
-            for (StatementDefinition statementDefinition : stateDefinition.getStatements()) {
-                statementDefinition.getCondition().fix();
-            }
+            stateDefinition.fix();
+
+        }
+        if (includes == null) {
+            includes = Lists.newArrayList();
         }
     }
 
@@ -47,6 +51,16 @@ public class ScriptDefinition {
 
     public Map<String, StateDefinition> getStates() {
         return states;
+    }
+
+    public Map<String, StateDefinition> getFilteredStates() {
+        Map<String, StateDefinition> tempMap = Maps.newHashMap();
+        for (Map.Entry<String, StateDefinition> entry: states.entrySet()) {
+            if (!entry.getKey().startsWith("_")) {
+                tempMap.put(entry.getKey(), entry.getValue());
+            }
+        }
+        return tempMap;
     }
 
     public void setStates(Map<String, StateDefinition> states) {
@@ -75,6 +89,14 @@ public class ScriptDefinition {
 
     public static boolean exists(String viewName) {
         return getFileFor(viewName).exists();
+    }
+
+    public List<String> getIncludes() {
+        return includes;
+    }
+
+    public void setIncludes(List<String> includes) {
+        this.includes = includes;
     }
 
     public static ScriptDefinition read(String scriptId) {

@@ -79,6 +79,44 @@ public class ScriptRunner {
 
         logger.finer("Extracting Variables");
 
+        // Script Includes
+        for(String scriptIncludeId: scriptDefinition.getIncludes()) {
+            ScriptDefinition otherDefinition = ScriptDefinition.read(scriptIncludeId);
+            if (otherDefinition == null) {
+                logger.log(Level.SEVERE, "Could not find Script include: " + scriptIncludeId);
+            } else {
+                // Add all states to the script
+                scriptDefinition.getStates().putAll(otherDefinition.getStates());
+                // Add all vars
+                for (VarDefinition varDefinition: otherDefinition.getVars()) {
+                    boolean exists = false;
+                    for (VarDefinition currentDef : scriptDefinition.getVars()) {
+                        if (currentDef.getName().equals(varDefinition.getName())) {
+                            exists = true;
+                            break;
+                        }
+
+                    }
+                    if (!exists) {
+                        scriptDefinition.getVars().add(varDefinition);
+                    }
+                }
+            }
+        }
+
+        for (StateDefinition stateDefinition: scriptDefinition.getStates().values()) {
+            if (!stateDefinition.getIncludes().isEmpty()) {
+                for (String includeName: stateDefinition.getIncludes()) {
+                    if (scriptDefinition.getStates().containsKey(includeName)) {
+                        stateDefinition.getStatements().addAll(scriptDefinition.getStates().get(includeName).getStatements());
+                    } else {
+                        logger.log(Level.SEVERE, "Could not find statement include: " + includeName);
+                    }
+
+                }
+            }
+        }
+
         for (VarDefinition varDefinition : scriptDefinition.getVars()) {
             if (varDefinition.getType() == VarType.INT) {
                 addVar(varDefinition.getName(), Integer.parseInt(varDefinition.getValue()));
@@ -372,7 +410,7 @@ public class ScriptRunner {
                             throw new RuntimeException("Cannot find state with id: " + result.getValue());
                         }
                         currentStateId = stateDefinition.getId();
-                        keepRunning = false;
+                        keepRunning = true;
                     }
                     break;
                     case SWAP: {

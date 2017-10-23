@@ -16,9 +16,15 @@
       "type": "INT"
     }
   ],
+  "includes": [
+    "common-no_op"
+  ],
   "states": {
     "main": {
       "name": "Earth Shrine - Menu",
+      "includes": [
+        "_common-no_op"
+      ],
       "statements": [
         {
           "condition": {
@@ -149,23 +155,14 @@
               "value": "game-battle"
             }
           ]
-        },
-        {
-          "condition": {
-            "is": "BOOLEAN",
-            "value": "true"
-          },
-          "actions": [
-            {
-              "type": "PUSH",
-              "value": "no-op"
-            }
-          ]
         }
       ]
     },
     "game-battle": {
       "name": "Battle",
+      "includes": [
+        "_common-no_op"
+      ],
       "statements": [
         {
           "condition": {
@@ -437,23 +434,14 @@
               "value": ""
             }
           ]
-        },
-        {
-          "condition": {
-            "is": "BOOLEAN",
-            "value": "true"
-          },
-          "actions": [
-            {
-              "type": "PUSH",
-              "value": "no-op"
-            }
-          ]
         }
       ]
     },
     "menu-results": {
       "name": "Results",
+      "includes": [
+        "_common-no_op"
+      ],
       "statements": [
         {
           "condition": {
@@ -552,179 +540,14 @@
               "value": "main"
             }
           ]
-        },
-        {
-          "condition": {
-            "is": "BOOLEAN",
-            "value": "true"
-          },
-          "actions": [
-            {
-              "type": "PUSH",
-              "value": "no-op"
-            }
-          ]
-        }
-      ]
-    },
-    "no-op": {
-      "name": "No-Op (Common)",
-      "statements": [
-        {
-          "condition": {
-            "is": "SCREEN",
-            "value": "menu-connection_error"
-          },
-          "actions": [
-            {
-              "type": "TAP",
-              "value": "menu-connection_error-ok"
-            },
-            {
-              "type": "WAIT",
-              "value": "1500"
-            },
-            {
-              "type": "POP",
-              "value": ""
-            }
-          ]
-        },
-        {
-          "condition": {
-            "is": "SCREEN",
-            "value": "menu-connection_error_2"
-          },
-          "actions": [
-            {
-              "type": "TAP",
-              "value": "menu-connection_error_2-ok"
-            },
-            {
-              "type": "WAIT",
-              "value": "1500"
-            },
-            {
-              "type": "POP",
-              "value": ""
-            }
-          ]
-        },
-        {
-          "condition": {
-            "is": "SCREEN",
-            "value": "menu-daily-notice"
-          },
-          "actions": [
-            {
-              "type": "TAP",
-              "value": "menu-daily-close"
-            },
-            {
-              "type": "WAIT",
-              "value": "1500"
-            },
-            {
-              "type": "POP",
-              "value": ""
-            }
-          ]
-        },
-        {
-          "condition": {
-            "is": "SCREEN",
-            "value": "menu-energy_recovery"
-          },
-          "actions": [
-            {
-              "type": "TAP",
-              "value": "menu-energy_recovery-back"
-            },
-            {
-              "type": "WAIT",
-              "value": "1500"
-            },
-            {
-              "type": "POP",
-              "value": ""
-            }
-          ]
-        },
-        {
-          "condition": {
-            "is": "SCREEN",
-            "value": "menu-companion_changed"
-          },
-          "actions": [
-            {
-              "type": "TAP",
-              "value": "menu-companion_changed-ok"
-            },
-            {
-              "type": "WAIT",
-              "value": "1500"
-            },
-            {
-              "type": "POP",
-              "value": ""
-            }
-          ]
-        },
-        {
-          "condition": {
-            "var": "loops",
-            "is": "GREATER",
-            "value": "900"
-          },
-          "actions": [
-            {
-              "type": "MSG",
-              "value": "Too many cycles, stopping run"
-            },
-            {
-              "type": "STOP",
-              "value": ""
-            }
-          ]
-        },
-        {
-          "condition": {
-            "var": "loops",
-            "is": "GREATER",
-            "value": "45"
-          },
-          "actions": [
-            {
-              "type": "TAP",
-              "value": "menu-level"
-            },
-            {
-              "type": "MSG",
-              "value": "No-Op ${loops}"
-            }
-          ]
-        },
-        {
-          "condition": {
-            "is": "BOOLEAN",
-            "value": "true"
-          },
-          "actions": [
-            {
-              "type": "ADD",
-              "value": "1",
-              "var": "loops"
-            },
-            {
-              "type": "POP",
-              "value": ""
-            }
-          ]
         }
       ]
     },
     "reset": {
-      "name": "Reset",
+      "name": "Common - Reset",
+      "includes": [
+        "_common-reset"
+      ],
       "statements": [
         {
           "condition": {
@@ -732,11 +555,6 @@
             "value": "true"
           },
           "actions": [
-            {
-              "type": "SET",
-              "value": "0",
-              "var": "loops"
-            },
             {
               "type": "SET",
               "value": "0",
@@ -746,10 +564,6 @@
               "type": "SET",
               "value": "0",
               "var": "runs"
-            },
-            {
-              "type": "MOVE",
-              "value": "main"
             }
           ]
         }

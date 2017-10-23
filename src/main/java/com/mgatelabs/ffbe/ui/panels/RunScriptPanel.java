@@ -128,7 +128,8 @@ public class RunScriptPanel extends JInternalFrame {
                 return o1.getId().compareTo(o2.getId());
             }
         });
-        definitions.addAll(scriptDefinition.getStates().values());
+
+        definitions.addAll(scriptDefinition.getFilteredStates().values());
 
         int i = 0;
         for (StateDefinition stateDefinition: definitions) {

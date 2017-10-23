@@ -2,7 +2,9 @@ package com.mgatelabs.ffbe.shared.details;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.google.common.collect.ImmutableList;
+import com.google.common.collect.Lists;
 import com.google.common.collect.Sets;
+import com.sun.org.apache.xerces.internal.xs.LSInputList;
 
 import java.util.List;
 import java.util.Set;
@@ -16,6 +18,8 @@ public class StateDefinition {
     private String id;
 
     private List<StatementDefinition> statements;
+
+    private List<String> includes;
 
     public String getName() {
         return name;
@@ -47,6 +51,23 @@ public class StateDefinition {
             screenIds.addAll(statementDefinition.determineScreenIds());
         }
         return ImmutableList.copyOf(screenIds);
+    }
+
+    public List<String> getIncludes() {
+        return includes;
+    }
+
+    public void setIncludes(List<String> includes) {
+        this.includes = includes;
+    }
+
+    public void fix() {
+        if (includes == null) {
+            includes = Lists.newArrayList();
+        }
+        for (StatementDefinition statementDefinition : getStatements()) {
+            statementDefinition.getCondition().fix();
+        }
     }
 
     @Override

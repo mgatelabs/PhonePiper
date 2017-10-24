@@ -15,8 +15,8 @@ import java.io.IOException;
 public class PlayerDefinition {
 
     public static final int MIN_ENERGY = 1;
-    public static final int MAX_ENERGY = 165;
-    public static final int MAX_LEVEL = 150;
+    public static final int MAX_ENERGY = 190;
+    public static final int MAX_LEVEL = 200;
 
     private int level;
 

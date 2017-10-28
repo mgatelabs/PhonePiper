@@ -13,5 +13,8 @@ public enum NodeType {
     STATEMENT,
     STATEMENT_ITEM,
     CONDITION,
-    ACTION
+    ACTION,
+    ACTION_ITEM,
+    ACTION_VALUE,
+    ACTION_VAR_NAME
 }

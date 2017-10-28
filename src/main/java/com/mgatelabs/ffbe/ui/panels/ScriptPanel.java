@@ -306,7 +306,7 @@ public class ScriptPanel extends JInternalFrame {
         c.weightx = 1.0f;
         JScrollPane objectScrollPane = new JScrollPane(objectTree);
 
-        scriptDetailComponent = new ScriptDetailComponent(viewDefinition, scriptDefinition);
+        scriptDetailComponent = new ScriptDetailComponent(parent, viewDefinition, scriptDefinition);
 
         JSplitPane leftRightSplit = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, objectScrollPane, scriptDetailComponent);
         leftRightSplit.setDividerLocation(300);

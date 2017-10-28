@@ -35,32 +35,32 @@ public class ActionDefinition {
     @Override
     public String toString() {
         switch (type) {
-            case SWIPE_LEFT:{
+            case SWIPE_LEFT: {
                 return "Swipe Left: " + value;
             }
-            case SWIPE_DOWN:{
+            case SWIPE_DOWN: {
                 return "Swipe Down: " + value;
             }
-            case SWIPE_UP:{
+            case SWIPE_UP: {
                 return "Swipe Up: " + value;
             }
-            case SWIPE_RIGHT:{
+            case SWIPE_RIGHT: {
                 return "Swipe Right: " + value;
             }
-            case TAP:{
+            case TAP: {
                 return "Tap: " + value;
             }
             case ADD: {
-                return "Add: "+value+" to Var: " + var;
+                return "Add: " + value + " to Var: " + var;
             }
-            case MSG:{
+            case MSG: {
                 return "Msg: " + value;
             }
-            case POP:{
+            case POP: {
                 return "Pop State";
             }
             case SET: {
-                return "Set Var: " + var+ " to: " + value;
+                return "Set Var: " + var + " to: " + value;
             }
             case MOVE: {
                 return "Move to state: " + value;
@@ -74,14 +74,17 @@ public class ActionDefinition {
             case SWAP: {
                 return "Swap to state: " + value;
             }
-            case WAIT:{
+            case WAIT: {
                 return "Wait: " + value + "ms";
             }
-            case BATCH:{
+            case BATCH: {
                 return "Batch";
             }
             case REPEAT: {
                 return "Repeat";
+            }
+            case TIMER: {
+                return "Timer: " + value;
             }
         }
         return "???";

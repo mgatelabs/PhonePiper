@@ -1,12 +1,10 @@
 package com.mgatelabs.ffbe.ui;
 
-import com.google.common.collect.Maps;
 import com.mgatelabs.ffbe.shared.details.*;
 import com.mgatelabs.ffbe.shared.mapper.MapDefinition;
 import com.mgatelabs.ffbe.ui.utils.Constants;
 
 import java.io.File;
-import java.util.Map;
 
 /**
  * @author <a href="mailto:mfuller@acteksoft.com">Michael Fuller</a>
@@ -112,36 +110,15 @@ public class FrameChoices {
             if (viewDefinition != null && deviceDefinition != null) {
                 deviceDefinition.setViewId(viewId);
             }
+            if (viewDefinition != null) {
+                ViewDefinition otherDefinition = ViewDefinition.read("global");
+                if (otherDefinition != null) { // We want to add, but not overwrite
+                    ViewDefinition.merge(otherDefinition, viewDefinition, false);
+                }
+            }
             if (action == Action.RUN && viewId2 != null && viewId2.trim().length() > 0) {
                 ViewDefinition otherDefinition = ViewDefinition.read(viewId2);
-
-                Map<String, ScreenDefinition> tempScreens = Maps.newHashMap();
-                for (ScreenDefinition screenDefinition: viewDefinition.getScreens()) {
-                    tempScreens.put(screenDefinition.getScreenId(), screenDefinition);
-                }
-                for (ScreenDefinition screenDefinition: otherDefinition.getScreens()) {
-                    if (tempScreens.containsKey(screenDefinition.getScreenId())) {
-                        tempScreens.remove(screenDefinition.getScreenId());
-                        tempScreens.put(screenDefinition.getScreenId(), screenDefinition);
-                    } else {
-                        tempScreens.put(screenDefinition.getScreenId(), screenDefinition);
-                    }
-                }
-                this.viewDefinition.getScreens().clear();
-                this.viewDefinition.getScreens().addAll(tempScreens.values());
-
-                Map<String, ComponentDefinition> tempComponents = Maps.newHashMap();
-                for (ComponentDefinition componentDefinition: viewDefinition.getComponents()) {
-                    tempComponents.put(componentDefinition.getComponentId(), componentDefinition);
-                }
-                for (ComponentDefinition componentDefinition: otherDefinition.getComponents()) {
-                    if (tempComponents.containsKey(componentDefinition.getComponentId())) {
-                        tempScreens.remove(componentDefinition.getComponentId());
-                        tempComponents.put(componentDefinition.getComponentId(), componentDefinition);
-                    }
-                }
-                this.viewDefinition.getComponents().clear();
-                this.viewDefinition.getComponents().addAll(tempComponents.values());
+                ViewDefinition.merge(otherDefinition, viewDefinition, true);
             }
         } else {
             this.viewDefinition = null;

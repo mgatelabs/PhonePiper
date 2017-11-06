@@ -99,7 +99,7 @@ public class ScreenListPanel extends JInternalFrame {
                     String input = JOptionPane.showInputDialog(owner, "Screen ID (a-z A-Z 0-9 - _)");
                     if (input != null && Constants.ID_PATTERN.matcher(input).matches()) {
 
-                        for (ScreenDefinition screenDefinition: viewDefinition.getScreens()) {
+                        for (ScreenDefinition screenDefinition : viewDefinition.getScreens()) {
                             if (screenDefinition.getScreenId().equals(input)) {
                                 info("Screen with same ID already exists");
                                 return;
@@ -144,6 +144,43 @@ public class ScreenListPanel extends JInternalFrame {
 
                             itemModel.refresh();
                         }
+                    }
+                }
+            });
+            listMenu.add(newMenuItem);
+        }
+
+        {
+            JMenuItem newMenuItem = new JMenuItem("Stub");
+            newMenuItem.addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    String input = JOptionPane.showInputDialog(owner, "Screen ID (a-z A-Z 0-9 - _)");
+                    if (input != null && Constants.ID_PATTERN.matcher(input).matches()) {
+
+                        for (ScreenDefinition screenDefinition : viewDefinition.getScreens()) {
+                            if (screenDefinition.getScreenId().equals(input)) {
+                                info("Screen with same ID already exists");
+                                return;
+                            }
+                        }
+
+                        ScreenDefinition screenDefinition = new ScreenDefinition();
+                        screenDefinition.setScreenId(input);
+                        screenDefinition.setName(input);
+
+                        screenDefinition.setPoints(Lists.newArrayList());
+                        screenDefinition.setEnabled(false);
+
+                        deSelect();
+
+                        viewDefinition.getScreens().add(screenDefinition);
+
+                        viewDefinition.sort();
+
+                        viewDefinition.save();
+
+                        itemModel.refresh();
                     }
                 }
             });

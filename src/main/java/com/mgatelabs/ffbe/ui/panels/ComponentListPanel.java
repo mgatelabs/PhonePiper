@@ -176,6 +176,49 @@ public class ComponentListPanel extends JInternalFrame {
             listMenu.add(newMenuItem);
         }
 
+        {
+            JMenuItem newMenuItem = new JMenuItem("Stub");
+            newMenuItem.addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    String input = JOptionPane.showInputDialog(owner, "Component ID (a-z A-Z 0-9 - _)");
+                    if (input != null && Constants.ID_PATTERN.matcher(input).matches()) {
+
+                        for (ComponentDefinition componentDefinition : viewDefinition.getComponents()) {
+                            if (componentDefinition.getComponentId().equals(input)) {
+                                info("Screen with same ID already exists");
+                                return;
+                            }
+                        }
+
+                        ComponentDefinition componentDefinition = new ComponentDefinition();
+                        componentDefinition.setComponentId(input);
+                        componentDefinition.setName(input);
+
+                        componentDefinition.setX(0);
+                        componentDefinition.setY(0);
+                        componentDefinition.setW(1);
+                        componentDefinition.setH(1);
+                        componentDefinition.setEnabled(false);
+
+                        selectedIndex = -1;
+                        selectedItem = null;
+                        itemList.clearSelection();
+                        updateForm();
+
+                        viewDefinition.getComponents().add(componentDefinition);
+
+                        viewDefinition.sort();
+
+                        viewDefinition.save();
+
+                        itemModel.refresh();
+                    }
+                }
+            });
+            listMenu.add(newMenuItem);
+        }
+
         editMenu = new JMenu("Edit");
         editMenu.setEnabled(false);
         menuBar.add(editMenu);

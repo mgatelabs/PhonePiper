@@ -119,7 +119,8 @@ public class MainFrame extends JFrame {
         switch (choices.getAction()) {
             case RUN: {
                 // Make sure the view is ready
-                viewDefinition = ViewDefinition.read(deviceDefinition.getViewId());
+                if (viewDefinition == null)
+                    viewDefinition = ViewDefinition.read(deviceDefinition.getViewId());
 
                 showPlayer = true;
                 showMap = true;

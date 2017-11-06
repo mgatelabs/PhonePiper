@@ -56,6 +56,10 @@ public class ViewDefinition {
         this.components = components;
     }
 
+    public static File folderPath(String viewName) {
+        return new File("views/" + viewName + "/");
+    }
+
     public static ViewDefinition read(String viewName) {
         File viewFile = new File("views/" + viewName + "/definition.json");
         if (viewFile.exists()) {

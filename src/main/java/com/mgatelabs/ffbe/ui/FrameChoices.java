@@ -1,11 +1,12 @@
 package com.mgatelabs.ffbe.ui;
 
-import com.mgatelabs.ffbe.shared.details.DeviceDefinition;
-import com.mgatelabs.ffbe.shared.details.PlayerDefinition;
-import com.mgatelabs.ffbe.shared.details.ScriptDefinition;
-import com.mgatelabs.ffbe.shared.details.ViewDefinition;
+import com.google.common.collect.Maps;
+import com.mgatelabs.ffbe.shared.details.*;
 import com.mgatelabs.ffbe.shared.mapper.MapDefinition;
 import com.mgatelabs.ffbe.ui.utils.Constants;
+
+import java.io.File;
+import java.util.Map;
 
 /**
  * @author <a href="mailto:mfuller@acteksoft.com">Michael Fuller</a>
@@ -41,7 +42,7 @@ public class FrameChoices {
     private final Mode mode;
     private final Action action;
 
-    public FrameChoices(String actionId, String modeId, PlayerDefinition playerDefinition, String mapId, String scriptId, String deviceId, String viewId) {
+    public FrameChoices(String actionId, String modeId, PlayerDefinition playerDefinition, String mapId, String scriptId, String scriptId2, String deviceId, String viewId, String viewId2) {
         this.playerDefinition = playerDefinition;
 
         switch (modeId) {
@@ -89,6 +90,9 @@ public class FrameChoices {
 
         if (canScript(action, mode) && scriptId != null) {
             this.scriptDefinition = ScriptDefinition.read(scriptId);
+            if (action == Action.RUN && scriptId2 != null && scriptId2.trim().length() > 0) {
+                scriptDefinition.getIncludes().add(scriptId2);
+            }
         } else {
             this.scriptDefinition = null;
         }
@@ -107,6 +111,37 @@ public class FrameChoices {
             }
             if (viewDefinition != null && deviceDefinition != null) {
                 deviceDefinition.setViewId(viewId);
+            }
+            if (action == Action.RUN && viewId2 != null && viewId2.trim().length() > 0) {
+                ViewDefinition otherDefinition = ViewDefinition.read(viewId2);
+
+                Map<String, ScreenDefinition> tempScreens = Maps.newHashMap();
+                for (ScreenDefinition screenDefinition: viewDefinition.getScreens()) {
+                    tempScreens.put(screenDefinition.getScreenId(), screenDefinition);
+                }
+                for (ScreenDefinition screenDefinition: otherDefinition.getScreens()) {
+                    if (tempScreens.containsKey(screenDefinition.getScreenId())) {
+                        tempScreens.remove(screenDefinition.getScreenId());
+                        tempScreens.put(screenDefinition.getScreenId(), screenDefinition);
+                    } else {
+                        tempScreens.put(screenDefinition.getScreenId(), screenDefinition);
+                    }
+                }
+                this.viewDefinition.getScreens().clear();
+                this.viewDefinition.getScreens().addAll(tempScreens.values());
+
+                Map<String, ComponentDefinition> tempComponents = Maps.newHashMap();
+                for (ComponentDefinition componentDefinition: viewDefinition.getComponents()) {
+                    tempComponents.put(componentDefinition.getComponentId(), componentDefinition);
+                }
+                for (ComponentDefinition componentDefinition: otherDefinition.getComponents()) {
+                    if (tempComponents.containsKey(componentDefinition.getComponentId())) {
+                        tempScreens.remove(componentDefinition.getComponentId());
+                        tempComponents.put(componentDefinition.getComponentId(), componentDefinition);
+                    }
+                }
+                this.viewDefinition.getComponents().clear();
+                this.viewDefinition.getComponents().addAll(tempComponents.values());
             }
         } else {
             this.viewDefinition = null;
@@ -186,6 +221,7 @@ public class FrameChoices {
     public boolean canView(Action action, Mode mode) {
         if (action == Action.DELETE) return false;
         if (action == Action.CREATE) return false;
+        if (mode == Mode.SCRIPT && action == Action.RUN) return true;
         switch (mode) {
             case MAP:
             case SCRIPT:
@@ -207,7 +243,7 @@ public class FrameChoices {
                         if (DeviceDefinition.exists(name)) {
                             return false;
                         }
-                        deviceDefinition = new DeviceDefinition(deviceName);
+                        deviceDefinition = new DeviceDefinition(name);
                         return true;
                     }
                     case MAP: {
@@ -217,14 +253,20 @@ public class FrameChoices {
                         if (ViewDefinition.exists(name)) {
                             return false;
                         }
-                        viewDefinition = new ViewDefinition(deviceName);
+                        File folder = ViewDefinition.folderPath(name);
+                        if (!folder.exists()) {
+                            folder.mkdirs();
+                        } else {
+                            return false;
+                        }
+                        viewDefinition = new ViewDefinition(name);
                     }
                     break;
                     case SCRIPT: {
                         if (ScriptDefinition.exists(name)) {
                             return false;
                         }
-                        scriptDefinition = new ScriptDefinition(deviceName);
+                        scriptDefinition = new ScriptDefinition(name);
                     }
                     break;
                 }

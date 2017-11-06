@@ -7,6 +7,26 @@
     }
   ],
   "states": {
+    "recovery": {
+      "name":"Common - Recovery",
+      "statements": [
+        {
+          "condition": {
+            "is": "BOOLEAN",
+            "value": "true"
+          },
+          "actions": [
+            {
+              "type": "MSG",
+              "value": "Default recovery operation stops operations"
+            },
+            {
+              "type": "STOP"
+            }
+          ]
+        }
+      ]
+    },
     "_common-no_op": {
       "name": "Common - No-Op",
       "statements": [
@@ -107,6 +127,22 @@
             {
               "type": "REPEAT",
               "value": ""
+            }
+          ]
+        },
+        {
+          "condition": {
+            "is": "SCREEN",
+            "value": "os-home"
+          },
+          "actions": [
+            {
+              "type": "MSG",
+              "value": "Home screen detected, attempting recovery"
+            },
+            {
+              "type": "PUSH",
+              "value": "recovery"
             }
           ]
         },

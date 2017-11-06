@@ -28,15 +28,19 @@ public class StartupFrame extends JFrame {
     final JFrame frame;
     private JComboBox<String> deviceComboBox;
     private JComboBox<String> viewComboBox;
+    private JComboBox<String> recoveryComboBox;
     private JComboBox<String> scriptComboBox;
+    private JComboBox<String> script2ComboBox;
     private JComboBox<String> mapComboBox;
     private JComboBox<String> modeComboBox;
     private JComboBox<String> actionComboBox;
     private final PlayerDefinition playerDefinition;
 
     private String selectedView;
+    private String selectedView2;
     private String selectedDevice;
     private String selectedScript;
+    private String selectedScript2;
     private String selectedMap;
     private String selectedMode;
     private String selectedAction;
@@ -60,8 +64,24 @@ public class StartupFrame extends JFrame {
         return selectedView;
     }
 
+    public String getSelectedView2() {
+        return selectedView2;
+    }
+
+    public void setSelectedView2(String selectedView2) {
+        this.selectedView2 = selectedView2;
+    }
+
     public String getSelectedScript() {
         return selectedScript;
+    }
+
+    public String getSelectedScript2() {
+        return selectedScript2;
+    }
+
+    public void setSelectedScript2(String selectedScript2) {
+        this.selectedScript2 = selectedScript2;
     }
 
     public String getSelectedMap() {
@@ -108,6 +128,7 @@ public class StartupFrame extends JFrame {
                 c.gridx = 0;
                 c.gridy = 0;
                 c.ipadx = 4;
+                c.gridwidth = 1;
                 c.weightx = 0;
                 fieldPanel.add(label, c);
 
@@ -115,6 +136,7 @@ public class StartupFrame extends JFrame {
                 modeComboBox = new JComboBox<>(modeArray);
                 c.gridx = 1;
                 c.gridy = 0;
+                c.gridwidth = 2;
                 c.fill = GridBagConstraints.HORIZONTAL;
                 c.weightx = 1;
                 fieldPanel.add(modeComboBox, c);
@@ -125,6 +147,7 @@ public class StartupFrame extends JFrame {
                 c.gridx = 0;
                 c.gridy = 1;
                 c.ipadx = 4;
+                c.gridwidth = 1;
                 c.weightx = 0;
                 fieldPanel.add(label, c);
 
@@ -132,6 +155,7 @@ public class StartupFrame extends JFrame {
                 actionComboBox = new JComboBox<>(actionArray);
                 c.gridx = 1;
                 c.gridy = 1;
+                c.gridwidth = 2;
                 c.fill = GridBagConstraints.HORIZONTAL;
                 c.weightx = 1;
                 fieldPanel.add(actionComboBox, c);
@@ -142,6 +166,7 @@ public class StartupFrame extends JFrame {
                 c.gridx = 0;
                 c.gridy = 2;
                 c.ipadx = 4;
+                c.gridwidth = 1;
                 c.weightx = 0;
                 fieldPanel.add(label, c);
 
@@ -149,6 +174,7 @@ public class StartupFrame extends JFrame {
                 c.gridx = 1;
                 c.gridy = 2;
                 c.fill = GridBagConstraints.HORIZONTAL;
+                c.gridwidth = 2;
                 c.weightx = 1;
                 fieldPanel.add(deviceComboBox, c);
 
@@ -158,6 +184,7 @@ public class StartupFrame extends JFrame {
                 c.gridx = 0;
                 c.gridy = 3;
                 c.ipadx = 4;
+                c.gridwidth = 1;
                 c.weightx = 0;
                 fieldPanel.add(label, c);
 
@@ -165,8 +192,17 @@ public class StartupFrame extends JFrame {
                 c.gridx = 1;
                 c.gridy = 3;
                 c.fill = GridBagConstraints.HORIZONTAL;
+                c.gridwidth = 1;
                 c.weightx = 1;
                 fieldPanel.add(viewComboBox, c);
+
+                recoveryComboBox = new JComboBox<>(listFoldersFilesIn(new File("./views")));
+                c.gridx = 2;
+                c.gridy = 3;
+                c.fill = GridBagConstraints.HORIZONTAL;
+                c.gridwidth = 1;
+                c.weightx = 1;
+                fieldPanel.add(recoveryComboBox, c);
 
                 // SCRIPTS
 
@@ -174,6 +210,7 @@ public class StartupFrame extends JFrame {
                 c.gridx = 0;
                 c.gridy = 4;
                 c.ipadx = 4;
+                c.gridwidth = 1;
                 c.weightx = 0;
                 fieldPanel.add(label, c);
 
@@ -182,8 +219,17 @@ public class StartupFrame extends JFrame {
                 c.gridx = 1;
                 c.gridy = 4;
                 c.fill = GridBagConstraints.HORIZONTAL;
+                c.gridwidth = 1;
                 c.weightx = 1;
                 fieldPanel.add(scriptComboBox, c);
+
+                script2ComboBox = new JComboBox<>(listJsonFilesIn(new File("./scripts")));
+                c.gridx = 2;
+                c.gridy = 4;
+                c.fill = GridBagConstraints.HORIZONTAL;
+                c.gridwidth = 1;
+                c.weightx = 1;
+                fieldPanel.add(script2ComboBox, c);
 
                 // MAPS
 
@@ -191,6 +237,7 @@ public class StartupFrame extends JFrame {
                 c.gridx = 0;
                 c.gridy = 5;
                 c.ipadx = 4;
+                c.gridwidth = 1;
                 c.weightx = 0;
                 fieldPanel.add(label, c);
 
@@ -198,6 +245,7 @@ public class StartupFrame extends JFrame {
                 c.gridx = 1;
                 c.gridy = 5;
                 c.fill = GridBagConstraints.HORIZONTAL;
+                c.gridwidth = 2;
                 c.weightx = 1;
                 fieldPanel.add(mapComboBox, c);
             }
@@ -226,8 +274,10 @@ public class StartupFrame extends JFrame {
                 @Override
                 public void actionPerformed(ActionEvent e) {
                     selectedScript = (String) scriptComboBox.getSelectedItem();
+                    selectedScript2 = (String) script2ComboBox.getSelectedItem();
                     selectedDevice = (String) deviceComboBox.getSelectedItem();
                     selectedView = (String) viewComboBox.getSelectedItem();
+                    selectedView2 = (String) recoveryComboBox.getSelectedItem();
                     selectedMap = (String) mapComboBox.getSelectedItem();
                     selectedAction = (String) actionComboBox.getSelectedItem();
                     selectedMode = (String) modeComboBox.getSelectedItem();
@@ -235,8 +285,10 @@ public class StartupFrame extends JFrame {
                     final StartSelections selections = new StartSelections();
 
                     selections.setSelectedScript(nullToEmpty(selectedScript));
+                    selections.setSelectedScript2(nullToEmpty(selectedScript2));
                     selections.setSelectedDevice(nullToEmpty(selectedDevice));
                     selections.setSelectedView(nullToEmpty(selectedView));
+                    selections.setSelectedView2(nullToEmpty(selectedView2));
                     selections.setSelectedMap(nullToEmpty(selectedMap));
                     selections.setSelectedAction(nullToEmpty(selectedAction));
                     selections.setSelectedMode(nullToEmpty(selectedMode));
@@ -259,7 +311,9 @@ public class StartupFrame extends JFrame {
             updateList(actionComboBox, nullToEmpty(startSelections.getSelectedAction()));
             updateList(deviceComboBox, nullToEmpty(startSelections.getSelectedDevice()));
             updateList(viewComboBox, nullToEmpty(startSelections.getSelectedView()));
+            updateList(recoveryComboBox, nullToEmpty(startSelections.getSelectedView2()));
             updateList(scriptComboBox, nullToEmpty(startSelections.getSelectedScript()));
+            updateList(script2ComboBox, nullToEmpty(startSelections.getSelectedScript2()));
             updateList(mapComboBox, nullToEmpty(startSelections.getSelectedMap()));
         }
 
@@ -316,14 +370,24 @@ public class StartupFrame extends JFrame {
     public static class StartSelections {
 
         private String selectedView;
+        private String selectedView2;
         private String selectedDevice;
         private String selectedScript;
+        private String selectedScript2;
         private String selectedMap;
         private String selectedMode;
         private String selectedAction;
 
         public String getSelectedView() {
             return selectedView;
+        }
+
+        public String getSelectedView2() {
+            return selectedView2;
+        }
+
+        public void setSelectedView2(String selectedView2) {
+            this.selectedView2 = selectedView2;
         }
 
         public void setSelectedView(String selectedView) {
@@ -344,6 +408,14 @@ public class StartupFrame extends JFrame {
 
         public void setSelectedScript(String selectedScript) {
             this.selectedScript = selectedScript;
+        }
+
+        public String getSelectedScript2() {
+            return selectedScript2;
+        }
+
+        public void setSelectedScript2(String selectedScript2) {
+            this.selectedScript2 = selectedScript2;
         }
 
         public String getSelectedMap() {

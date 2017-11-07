@@ -4816,6 +4816,11 @@
     } ],
     "enabled" : false
   }, {
+    "name" : "menu-home",
+    "screenId" : "menu-home",
+    "points" : [ ],
+    "enabled" : false
+  }, {
     "name" : "Menu - Maintenance",
     "screenId" : "menu-maintenance",
     "points" : [ {
@@ -6118,6 +6123,21 @@
     } ],
     "enabled" : false
   }, {
+    "name" : "menu-white",
+    "screenId" : "menu-white",
+    "points" : [ ],
+    "enabled" : false
+  }, {
+    "name" : "menu-worlds",
+    "screenId" : "menu-worlds",
+    "points" : [ ],
+    "enabled" : false
+  }, {
+    "name" : "menu-worlds-sub",
+    "screenId" : "menu-worlds-sub",
+    "points" : [ ],
+    "enabled" : false
+  }, {
     "name" : "os-home",
     "screenId" : "os-home",
     "points" : [ {
@@ -6388,12 +6408,36 @@
     "h" : 80,
     "enabled" : false
   }, {
+    "name" : "menu-island-grandshelt",
+    "componentId" : "menu-island-grandshelt",
+    "x" : 0,
+    "y" : 0,
+    "w" : 1,
+    "h" : 1,
+    "enabled" : false
+  }, {
+    "name" : "menu-island-grandshelt_isles",
+    "componentId" : "menu-island-grandshelt_isles",
+    "x" : 0,
+    "y" : 0,
+    "w" : 1,
+    "h" : 1,
+    "enabled" : false
+  }, {
     "name" : "Menu - Level",
     "componentId" : "menu-level",
     "x" : 476,
     "y" : 153,
     "w" : 130,
     "h" : 58,
+    "enabled" : false
+  }, {
+    "name" : "menu-location-earthshrine",
+    "componentId" : "menu-location-earthshrine",
+    "x" : 0,
+    "y" : 0,
+    "w" : 1,
+    "h" : 1,
     "enabled" : false
   }, {
     "name" : "Menu - Mission List - Item 0",
@@ -6426,6 +6470,22 @@
     "y" : 1647,
     "w" : 193,
     "h" : 79,
+    "enabled" : false
+  }, {
+    "name" : "menu-worlds",
+    "componentId" : "menu-worlds",
+    "x" : 0,
+    "y" : 0,
+    "w" : 1,
+    "h" : 1,
+    "enabled" : false
+  }, {
+    "name" : "os-app-icon",
+    "componentId" : "os-app-icon",
+    "x" : 0,
+    "y" : 0,
+    "w" : 1,
+    "h" : 1,
     "enabled" : false
   }, {
     "name" : "Screen - Center",

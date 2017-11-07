@@ -85,8 +85,13 @@ public class ScriptRunner {
             if (otherDefinition == null) {
                 logger.log(Level.SEVERE, "Could not find Script include: " + scriptIncludeId);
             } else {
-                // Add all states to the script
-                scriptDefinition.getStates().putAll(otherDefinition.getStates());
+                // Add Replace any existing state with states from the includes
+                for (Map.Entry<String, StateDefinition> otherState: otherDefinition.getStates().entrySet()) {
+                    if (scriptDefinition.getStates().containsKey(otherState.getKey())) {
+                        scriptDefinition.getStates().remove(otherState.getKey());
+                    }
+                    scriptDefinition.getStates().put(otherState.getKey(), otherState.getValue());
+                }
                 // Add all vars
                 for (VarDefinition varDefinition: otherDefinition.getVars()) {
                     boolean exists = false;

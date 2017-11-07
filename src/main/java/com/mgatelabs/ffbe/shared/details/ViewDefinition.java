@@ -42,7 +42,8 @@ public class ViewDefinition {
         }
         for (ScreenDefinition screenDefinition : source.getScreens()) {
             if (tempScreens.containsKey(screenDefinition.getScreenId())) {
-                if (overwrite) {
+                if (overwrite && !tempScreens.get(screenDefinition.getScreenId()).isEnabled()) {
+                    // Only replace items that are not enabled
                     tempScreens.remove(screenDefinition.getScreenId());
                     tempScreens.put(screenDefinition.getScreenId(), screenDefinition);
                 }
@@ -59,7 +60,8 @@ public class ViewDefinition {
         }
         for (ComponentDefinition componentDefinition : source.getComponents()) {
             if (tempComponents.containsKey(componentDefinition.getComponentId())) {
-                if (overwrite) {
+                if (overwrite && !tempComponents.get(componentDefinition.getComponentId()).isEnabled()) {
+                    // Only replace items that are not enabled
                     tempScreens.remove(componentDefinition.getComponentId());
                     tempComponents.put(componentDefinition.getComponentId(), componentDefinition);
                 }

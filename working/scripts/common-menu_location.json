@@ -1,0 +1,301 @@
+{
+  "vars": [
+    {
+      "name": "min-energy",
+      "value": "1",
+      "type": "INT"
+    }
+  ],
+  "states": {
+
+
+    "_common-ml-mission_0": {
+      "name": "Common - Missions - Item 0",
+      "statements": [
+        {
+          "condition": {
+            "is": "SCREEN",
+            "value": "menu-missions-select",
+            "and": [
+              {
+                "is": "ENERGY",
+                "var": "min-energy"
+              }
+            ]
+          },
+          "actions": [
+            {
+              "type": "MSG",
+              "value": "Clicking Mission Item 0"
+            },
+            {
+              "type": "TAP",
+              "value": "menu-mission_list-item_0"
+            },
+            {
+              "type": "WAIT",
+              "value": "3000"
+            },
+            {
+              "type": "REPEAT",
+              "value": ""
+            }
+          ]
+        }
+      ]
+    },
+
+    "_common-ml-mission_1": {
+      "name": "Common - Missions - Item 1",
+      "statements": [
+        {
+          "condition": {
+            "is": "SCREEN",
+            "value": "menu-missions-select",
+            "and": [
+              {
+                "is": "ENERGY",
+                "var": "min-energy"
+              }
+            ]
+          },
+          "actions": [
+            {
+              "type": "MSG",
+              "value": "Clicking Mission Item 1"
+            },
+            {
+              "type": "TAP",
+              "value": "menu-mission_list-item_1"
+            },
+            {
+              "type": "WAIT",
+              "value": "3000"
+            },
+            {
+              "type": "REPEAT",
+              "value": ""
+            }
+          ]
+        }
+      ]
+    },
+
+    "_common-ml-mission_2": {
+      "name": "Common - Missions - Item 2",
+      "statements": [
+        {
+          "condition": {
+            "is": "SCREEN",
+            "value": "menu-missions-select",
+            "and": [
+              {
+                "is": "ENERGY",
+                "var": "min-energy"
+              }
+            ]
+          },
+          "actions": [
+            {
+              "type": "MSG",
+              "value": "Clicking Mission Item 2"
+            },
+            {
+              "type": "TAP",
+              "value": "menu-mission_list-item_2"
+            },
+            {
+              "type": "WAIT",
+              "value": "3000"
+            },
+            {
+              "type": "REPEAT",
+              "value": ""
+            }
+          ]
+        }
+      ]
+    },
+
+    "_common-ml-mission_3": {
+      "name": "Common - Missions - Item 3",
+      "statements": [
+        {
+          "condition": {
+            "is": "SCREEN",
+            "value": "menu-missions-select",
+            "and": [
+              {
+                "is": "ENERGY",
+                "var": "min-energy"
+              }
+            ]
+          },
+          "actions": [
+            {
+              "type": "MSG",
+              "value": "Clicking Mission Item 3"
+            },
+            {
+              "type": "TAP",
+              "value": "menu-mission_list-item_3"
+            },
+            {
+              "type": "WAIT",
+              "value": "3000"
+            },
+            {
+              "type": "REPEAT",
+              "value": ""
+            }
+          ]
+        }
+      ]
+    },
+
+    "_common-ml-goals": {
+      "name": "Common - Goals",
+      "statements": [
+        {
+          "condition": {
+            "is": "SCREEN",
+            "value": "menu-goal_list",
+            "and": [
+              {
+                "is": "SCREEN",
+                "value": "menu-goal_list-next"
+              },
+              {
+                "is": "ENERGY",
+                "var": "min-energy"
+              }
+            ]
+          },
+          "actions": [
+            {
+              "type": "TAP",
+              "value": "menu-goal_list-next"
+            },
+            {
+              "type": "WAIT",
+              "value": "1500"
+            },
+            {
+              "type": "REPEAT",
+              "value": ""
+            }
+          ]
+        }
+      ]
+    },
+
+    "_common-ml-friend_0": {
+      "name": "Common - Friend Select 0",
+      "statements": [
+        {
+          "condition": {
+            "is": "SCREEN",
+            "value": "menu-friend_select"
+          },
+          "actions": [
+            {
+              "type": "TAP",
+              "value": "menu-friend_select-item_0"
+            },
+            {
+              "type": "WAIT",
+              "value": "1500"
+            },
+            {
+              "type": "REPEAT",
+              "value": ""
+            }
+          ]
+        }
+      ]
+    },
+
+    "_common-ml-friend_last": {
+      "name": "Common - Friend Select Last",
+      "statements": [
+        {
+          "condition": {
+            "is": "SCREEN",
+            "value": "menu-friend_select"
+          },
+          "actions": [
+            {
+              "type": "BATCH",
+              "value": "START"
+            },
+            {
+              "type": "SWIPE_UP",
+              "value": "screen-center"
+            },
+            {
+              "type": "SWIPE_UP",
+              "value": "screen-center"
+            },
+            {
+              "type": "SWIPE_UP",
+              "value": "screen-center"
+            },
+            {
+              "type": "SWIPE_UP",
+              "value": "screen-center"
+            },
+            {
+              "type": "SWIPE_UP",
+              "value": "screen-center"
+            },
+            {
+              "type": "TAP",
+              "value": "menu-friend_select-item_4"
+            },
+            {
+              "type": "BATCH",
+              "value": "END"
+            },
+            {
+              "type": "WAIT",
+              "value": "1500"
+            },
+            {
+              "type": "REPEAT",
+              "value": ""
+            }
+          ]
+        }
+      ]
+    },
+
+
+    "_common-ml-depart": {
+      "name": "Common - Depart",
+      "statements": [
+        {
+          "condition": {
+            "is": "SCREEN",
+            "value": "menu-depart"
+          },
+          "actions": [
+            {
+              "type": "TAP",
+              "value": "menu-depart-depart"
+            },
+            {
+              "type": "WAIT",
+              "value": "1500"
+            },
+            {
+              "type": "REPEAT",
+              "value": ""
+            }
+          ]
+        }
+      ]
+    }
+
+
+  }
+}

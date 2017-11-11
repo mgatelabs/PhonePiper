@@ -13,6 +13,7 @@ import com.mgatelabs.ffbe.shared.util.AdbShell;
 import com.mgatelabs.ffbe.shared.util.AdbUtils;
 import com.mgatelabs.ffbe.shared.util.VarTimer;
 import com.mgatelabs.ffbe.ui.utils.CustomHandler;
+import groovyjarjarantlr.StringUtils;
 
 import java.text.SimpleDateFormat;
 import java.util.*;
@@ -613,7 +614,12 @@ public class ScriptRunner {
             }
             break;
             case ENERGY: {
-                int energy = Integer.parseInt(conditionDefinition.getValue());
+                int energy;
+                if (conditionDefinition.getVar() != null && conditionDefinition.getVar().trim().length() > 0) {
+                    energy = getVar(conditionDefinition.getVar());
+                } else {
+                    energy = Integer.parseInt(conditionDefinition.getValue());
+                }
                 if (energy >= PlayerDefinition.MIN_ENERGY && energy <= PlayerDefinition.MAX_ENERGY) {
                     float requiredPercent = ((float) energy / (float) playerDefinition.getTotalEnergy());
                     int requiredPixel = ((int) (energyBar.getW() * requiredPercent) + 1);

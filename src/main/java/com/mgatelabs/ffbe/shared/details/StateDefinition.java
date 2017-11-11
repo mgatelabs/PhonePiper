@@ -65,6 +65,9 @@ public class StateDefinition {
         if (includes == null) {
             includes = Lists.newArrayList();
         }
+        if (statements == null) {
+            statements = Lists.newArrayList();
+        }
         for (StatementDefinition statementDefinition : getStatements()) {
             statementDefinition.getCondition().fix();
         }

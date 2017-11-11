@@ -24,67 +24,13 @@
     "main": {
       "name": "Main",
       "includes": [
-        "_battle",
+        "_to-results",
+        "_to-battle",
+        "_to-menu",
         "_common-no_op"
-      ],
-      "statements": [
-
-        {
-          "condition": {
-            "is": "SCREEN",
-            "value": "game-battle"
-          },
-          "actions": [
-            {
-              "type": "TIMER",
-              "value": "BATTLE"
-            },
-            {
-              "type": "SET",
-              "var": "loops",
-              "value": "0"
-            },
-            {
-              "type": "ADD",
-              "var": "runs",
-              "value": "1"
-            },
-            {
-              "type": "MSG",
-              "value": "Starting run ${runs}"
-            },
-            {
-              "type": "SWAP",
-              "value": "battle"
-            }
-          ]
-        },
-
-        {
-          "condition": {
-            "is": "SCREEN",
-            "value": "menu-missions-select",
-            "or": [
-              {
-                "is": "SCREEN",
-                "value": "menu-goal_list"
-              }
-            ]
-          },
-          "actions": [
-            {
-              "type": "MSG",
-              "value": "Ending run ${runs}"
-            },
-            {
-              "type": "MOVE",
-              "value": "menu"
-            }
-          ]
-        }
-
       ]
     },
+
     "menu": {
       "name": "Menu",
       "includes": [
@@ -92,11 +38,12 @@
         "_common-ml-goals",
         "_common-ml-friend_last",
         "_common-ml-depart",
-        "_menu",
+        "_to-battle",
         "_common-no_op"
       ]
     },
-    "_menu": {
+
+    "_to-battle": {
       "name": "Menu Ending Include",
       "statements": [
         {
@@ -131,10 +78,11 @@
         }
       ]
     },
+
     "battle": {
       "name": "Battle",
       "includes": [
-        "_battle",
+        "_to-results",
         "_common-no_op"
       ],
       "statements": [
@@ -257,7 +205,7 @@
       ]
     },
 
-    "_battle": {
+    "_to-results": {
       "name": "Battle Include",
       "statements": [
         {
@@ -407,6 +355,7 @@
     "results": {
       "name": "Results",
       "includes": [
+        "_to-menu",
         "_common-no_op"
       ],
       "statements": [
@@ -485,7 +434,13 @@
               "value": ""
             }
           ]
-        },
+        }
+      ]
+    },
+
+    "_to-menu": {
+      "name": "Battle Include",
+      "statements": [
         {
           "condition": {
             "is": "SCREEN",
@@ -509,7 +464,7 @@
           ]
         }
       ]
-    }
+    },
 
   }
 }

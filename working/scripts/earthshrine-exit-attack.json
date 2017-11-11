@@ -17,115 +17,19 @@
     }
   ],
   "includes": [
-    "common-no_op"
+    "common-no_op",
+    "common-menu_location"
   ],
   "states": {
+
     "main": {
-      "name": "Earth Shrine - Menu",
+      "name": "Main",
       "includes": [
+        "_battle",
         "_common-no_op"
       ],
       "statements": [
-        {
-          "condition": {
-            "is": "SCREEN",
-            "value": "menu-missions-select",
-            "and": [
-              {
-                "is": "ENERGY",
-                "value": "1"
-              }
-            ]
-          },
-          "actions": [
-            {
-              "type": "MSG",
-              "value": "Starting ACTION"
-            },
-            {
-              "type": "TAP",
-              "value": "menu-mission_list-item_2"
-            },
-            {
-              "type": "WAIT",
-              "value": "3000"
-            },
-            {
-              "type": "REPEAT",
-              "value": ""
-            }
-          ]
-        },
-        {
-          "condition": {
-            "is": "SCREEN",
-            "value": "menu-goal_list",
-            "and": [
-              {
-                "is": "SCREEN",
-                "value": "menu-goal_list-next"
-              },
-              {
-                "is": "ENERGY",
-                "value": "1"
-              }
-            ]
-          },
-          "actions": [
-            {
-              "type": "TAP",
-              "value": "menu-goal_list-next"
-            },
-            {
-              "type": "WAIT",
-              "value": "1500"
-            },
-            {
-              "type": "REPEAT",
-              "value": ""
-            }
-          ]
-        },
-        {
-          "condition": {
-            "is": "SCREEN",
-            "value": "menu-friend_select"
-          },
-          "actions": [
-            {
-              "type": "TAP",
-              "value": "menu-friend_select-item_0"
-            },
-            {
-              "type": "WAIT",
-              "value": "1500"
-            },
-            {
-              "type": "REPEAT",
-              "value": ""
-            }
-          ]
-        },
-        {
-          "condition": {
-            "is": "SCREEN",
-            "value": "menu-depart"
-          },
-          "actions": [
-            {
-              "type": "TAP",
-              "value": "menu-depart-depart"
-            },
-            {
-              "type": "WAIT",
-              "value": "1500"
-            },
-            {
-              "type": "REPEAT",
-              "value": ""
-            }
-          ]
-        },
+
         {
           "condition": {
             "is": "SCREEN",
@@ -152,15 +56,89 @@
             },
             {
               "type": "SWAP",
-              "value": "game-battle"
+              "value": "battle"
+            }
+          ]
+        },
+
+        {
+          "condition": {
+            "is": "SCREEN",
+            "value": "menu-missions-select",
+            "or": [
+              {
+                "is": "SCREEN",
+                "value": "menu-goal_list"
+              }
+            ]
+          },
+          "actions": [
+            {
+              "type": "MSG",
+              "value": "Ending run ${runs}"
+            },
+            {
+              "type": "MOVE",
+              "value": "menu"
+            }
+          ]
+        }
+
+      ]
+    },
+
+    "menu": {
+      "name": "Menu",
+      "includes": [
+        "_common-ml-mission_2",
+        "_common-ml-goals",
+        "_common-ml-friend_0",
+        "_common-ml-depart",
+        "_menu",
+        "_common-no_op"
+      ]
+    },
+
+    "_menu": {
+      "name": "Menu Ending Include",
+      "statements": [
+        {
+          "condition": {
+            "is": "SCREEN",
+            "value": "game-battle"
+          },
+          "actions": [
+            {
+              "type": "TIMER",
+              "value": "BATTLE"
+            },
+            {
+              "type": "SET",
+              "var": "loops",
+              "value": "0"
+            },
+            {
+              "type": "ADD",
+              "var": "runs",
+              "value": "1"
+            },
+            {
+              "type": "MSG",
+              "value": "Starting run ${runs}"
+            },
+            {
+              "type": "SWAP",
+              "value": "battle"
             }
           ]
         }
       ]
     },
-    "game-battle": {
+
+    "battle": {
       "name": "Battle",
       "includes": [
+        "_battle",
         "_common-no_op"
       ],
       "statements": [
@@ -383,28 +361,6 @@
         },
         {
           "condition": {
-            "is": "SCREEN",
-            "value": "menu-results-points"
-          },
-          "actions": [
-            {
-              "type": "SET",
-              "var": "setup",
-              "value": "2"
-            },
-            {
-              "type": "SET",
-              "var": "loops",
-              "value": "0"
-            },
-            {
-              "type": "SWAP",
-              "value": "menu-results"
-            }
-          ]
-        },
-        {
-          "condition": {
             "var": "loops",
             "is": "GREATER",
             "value": "20",
@@ -437,7 +393,31 @@
         }
       ]
     },
-    "menu-results": {
+
+    "_battle": {
+      "name": "Battle Include",
+      "statements": [
+        {
+          "condition": {
+            "is": "SCREEN",
+            "value": "menu-results-points"
+          },
+          "actions": [
+            {
+              "type": "SET",
+              "var": "loops",
+              "value": "0"
+            },
+            {
+              "type": "SWAP",
+              "value": "results"
+            }
+          ]
+        }
+      ]
+    },
+
+    "results": {
       "name": "Results",
       "includes": [
         "_common-no_op"
@@ -537,12 +517,13 @@
             },
             {
               "type": "MOVE",
-              "value": "main"
+              "value": "menu"
             }
           ]
         }
       ]
     },
+
     "reset": {
       "name": "Common - Reset",
       "includes": [

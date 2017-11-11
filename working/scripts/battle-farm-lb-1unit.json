@@ -43,42 +43,6 @@
       ]
     },
 
-    "_to-battle": {
-      "name": "Menu Ending Include",
-      "statements": [
-        {
-          "condition": {
-            "is": "SCREEN",
-            "value": "game-battle"
-          },
-          "actions": [
-            {
-              "type": "TIMER",
-              "value": "BATTLE"
-            },
-            {
-              "type": "SET",
-              "var": "loops",
-              "value": "0"
-            },
-            {
-              "type": "ADD",
-              "var": "runs",
-              "value": "1"
-            },
-            {
-              "type": "MSG",
-              "value": "Starting run ${runs}"
-            },
-            {
-              "type": "SWAP",
-              "value": "battle"
-            }
-          ]
-        }
-      ]
-    },
-
     "battle": {
       "name": "Battle",
       "includes": [
@@ -199,29 +163,6 @@
             {
               "type": "REPEAT",
               "value": ""
-            }
-          ]
-        }
-      ]
-    },
-
-    "_to-results": {
-      "name": "Battle Include",
-      "statements": [
-        {
-          "condition": {
-            "is": "SCREEN",
-            "value": "menu-results-points"
-          },
-          "actions": [
-            {
-              "type": "SET",
-              "var": "loops",
-              "value": "0"
-            },
-            {
-              "type": "SWAP",
-              "value": "results"
             }
           ]
         }
@@ -465,6 +406,65 @@
         }
       ]
     },
+
+    "_to-battle": {
+      "name": "Menu Ending Include",
+      "statements": [
+        {
+          "condition": {
+            "is": "SCREEN",
+            "value": "game-battle"
+          },
+          "actions": [
+            {
+              "type": "TIMER",
+              "value": "BATTLE"
+            },
+            {
+              "type": "SET",
+              "var": "loops",
+              "value": "0"
+            },
+            {
+              "type": "ADD",
+              "var": "runs",
+              "value": "1"
+            },
+            {
+              "type": "MSG",
+              "value": "Starting run ${runs}"
+            },
+            {
+              "type": "SWAP",
+              "value": "battle"
+            }
+          ]
+        }
+      ]
+    },
+
+    "_to-results": {
+      "name": "Battle Include",
+      "statements": [
+        {
+          "condition": {
+            "is": "SCREEN",
+            "value": "menu-results-points"
+          },
+          "actions": [
+            {
+              "type": "SET",
+              "var": "loops",
+              "value": "0"
+            },
+            {
+              "type": "SWAP",
+              "value": "results"
+            }
+          ]
+        }
+      ]
+    }
 
   }
 }

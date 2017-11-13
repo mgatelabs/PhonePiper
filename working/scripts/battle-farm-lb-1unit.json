@@ -14,6 +14,11 @@
       "name": "runs",
       "value": "0",
       "type": "INT"
+    },
+    {
+      "name": "loops",
+      "value": "0",
+      "type": "INT"
     }
   ],
   "includes": [
@@ -153,18 +158,6 @@
               "value": "END"
             }
           ]
-        },
-        {
-          "condition": {
-            "is": "BOOLEAN",
-            "value": "true"
-          },
-          "actions": [
-            {
-              "type": "REPEAT",
-              "value": ""
-            }
-          ]
         }
       ]
     },
@@ -178,6 +171,11 @@
             "value": "true"
           },
           "actions": [
+            {
+              "type": "SET",
+              "value": "0",
+              "var": "loops"
+            },
             {
               "type": "MSG",
               "value": "Unit 0 - LB (${lb})"
@@ -240,6 +238,11 @@
             "value": "true"
           },
           "actions": [
+            {
+              "type": "SET",
+              "value": "0",
+              "var": "loops"
+            },
             {
               "type": "MSG",
               "value": "Unit 0 - Esper (${esper})"
@@ -380,7 +383,7 @@
     },
 
     "_to-menu": {
-      "name": "Battle Include",
+      "name": "To The Menu",
       "statements": [
         {
           "condition": {
@@ -408,7 +411,7 @@
     },
 
     "_to-battle": {
-      "name": "Menu Ending Include",
+      "name": "To The Battle",
       "statements": [
         {
           "condition": {
@@ -444,7 +447,7 @@
     },
 
     "_to-results": {
-      "name": "Battle Include",
+      "name": "To the Results",
       "statements": [
         {
           "condition": {

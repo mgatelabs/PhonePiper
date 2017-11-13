@@ -13,7 +13,6 @@ import com.mgatelabs.ffbe.shared.util.AdbShell;
 import com.mgatelabs.ffbe.shared.util.AdbUtils;
 import com.mgatelabs.ffbe.shared.util.VarTimer;
 import com.mgatelabs.ffbe.ui.utils.CustomHandler;
-import groovyjarjarantlr.StringUtils;
 
 import java.text.SimpleDateFormat;
 import java.util.*;

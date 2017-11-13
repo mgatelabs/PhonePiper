@@ -1,7 +1,60 @@
 {
+  "vars": [
+    {
+      "name": "lb",
+      "value": "0",
+      "type": "INT"
+    },
+    {
+      "name": "esper",
+      "value": "0",
+      "type": "INT"
+    },
+    {
+      "name": "runs",
+      "value": "0",
+      "type": "INT"
+    },
+    {
+      "name": "loops",
+      "value": "0",
+      "type": "INT"
+    }
+  ],
+  "includes": [
+    "common-no_op",
+    "common-menu_location",
+    "common-menu_results"
+  ],
   "states": {
     "main": {
-      "name": "Waiting",
+      "name": "Main",
+      "includes": [
+        "_to-results",
+        "_to-battle",
+        "_to-menu",
+        "_common-no_op"
+      ]
+    },
+
+    "menu": {
+      "name": "Menu",
+      "includes": [
+        "_common-ml-mission_2",
+        "_common-ml-goals",
+        "_common-ml-friend_last",
+        "_common-ml-depart",
+        "_to-battle",
+        "_common-no_op"
+      ]
+    },
+
+    "battle": {
+      "name": "Battle",
+      "includes": [
+        "_to-results",
+        "_common-no_op"
+      ],
       "statements": [
         {
           "condition": {
@@ -13,10 +66,6 @@
                 "value": "battle-unit-0_ready"
               },
               {
-                "is": "SCREEN",
-                "value": "battle-unit-1_ready"
-              },
-              {
                 "not": "SCREEN",
                 "value": "battle-esper-notfull"
               }
@@ -26,6 +75,15 @@
             {
               "type": "MSG",
               "value": "Switch to Esper"
+            },
+            {
+              "type": "TIMER",
+              "value": "ESPER"
+            },
+            {
+              "type": "ADD",
+              "var": "esper",
+              "value": "1"
             },
             {
               "type": "SWAP",
@@ -43,10 +101,6 @@
                 "value": "battle-unit-0_ready"
               },
               {
-                "is": "SCREEN",
-                "value": "battle-unit-1_ready"
-              },
-              {
                 "not": "SCREEN",
                 "value": "battle-unit-0_notfull"
               }
@@ -56,6 +110,15 @@
             {
               "type": "MSG",
               "value": "Switch to LB"
+            },
+            {
+              "type": "TIMER",
+              "value": "LB"
+            },
+            {
+              "type": "ADD",
+              "var": "lb",
+              "value": "1"
             },
             {
               "type": "SWAP",
@@ -92,33 +155,14 @@
               "value": "battle-unit_0"
             },
             {
-              "type": "SWIPE_DOWN",
-              "value": "battle-unit_1"
-            },
-            {
-              "type": "TAP",
-              "value": "battle-unit_1"
-            },
-            {
               "type": "BATCH",
               "value": "END"
-            }
-          ]
-        },
-        {
-          "condition": {
-            "is": "BOOLEAN",
-            "value": "true"
-          },
-          "actions": [
-            {
-              "type": "REPEAT",
-              "value": ""
             }
           ]
         }
       ]
     },
+
     "lb": {
       "name": "Limit Burst Release",
       "statements": [
@@ -129,8 +173,13 @@
           },
           "actions": [
             {
+              "type": "SET",
+              "value": "0",
+              "var": "loops"
+            },
+            {
               "type": "MSG",
-              "value": "Unit 0 - LB"
+              "value": "Unit 0 - LB (${lb})"
             },
             {
               "type": "BATCH",
@@ -153,14 +202,6 @@
               "value": "battle-unit_0"
             },
             {
-              "type": "SWIPE_DOWN",
-              "value": "battle-unit_1"
-            },
-            {
-              "type": "TAP",
-              "value": "battle-unit_1"
-            },
-            {
               "type": "BATCH",
               "value": "END"
             }
@@ -174,7 +215,7 @@
           "actions": [
             {
               "type": "MSG",
-              "value": "Move to Main"
+              "value": "Move to Battle"
             },
             {
               "type": "WAIT",
@@ -182,12 +223,13 @@
             },
             {
               "type": "MOVE",
-              "value": "main"
+              "value": "battle"
             }
           ]
         }
       ]
     },
+
     "esper": {
       "name": "Esper Release",
       "statements": [
@@ -198,8 +240,13 @@
           },
           "actions": [
             {
+              "type": "SET",
+              "value": "0",
+              "var": "loops"
+            },
+            {
               "type": "MSG",
-              "value": "Unit 0 - Esper"
+              "value": "Unit 0 - Esper (${esper})"
             },
             {
               "type": "BATCH",
@@ -222,14 +269,6 @@
               "value": "battle-unit_0"
             },
             {
-              "type": "SWIPE_DOWN",
-              "value": "battle-unit_1"
-            },
-            {
-              "type": "TAP",
-              "value": "battle-unit_1"
-            },
-            {
               "type": "BATCH",
               "value": "END"
             }
@@ -243,7 +282,7 @@
           "actions": [
             {
               "type": "MSG",
-              "value": "Move to Main"
+              "value": "Move to Battle"
             },
             {
               "type": "WAIT",
@@ -251,11 +290,114 @@
             },
             {
               "type": "MOVE",
-              "value": "main"
+              "value": "battle"
+            }
+          ]
+        }
+      ]
+    },
+
+    "results": {
+      "name": "Results",
+      "includes": [
+        "_common-mr-points",
+        "_common-mr-units",
+        "_common-mr-items",
+        "_common-mr-friend_request",
+        "_to-menu",
+        "_common-no_op"
+      ],
+      "statements": [
+
+      ]
+    },
+
+    "_to-menu": {
+      "name": "To The Menu",
+      "statements": [
+        {
+          "condition": {
+            "is": "SCREEN",
+            "value": "menu-missions-select",
+            "or": [
+              {
+                "is": "SCREEN",
+                "value": "menu-goal_list"
+              }
+            ]
+          },
+          "actions": [
+            {
+              "type": "MSG",
+              "value": "Ending run ${runs}"
+            },
+            {
+              "type": "MOVE",
+              "value": "menu"
+            }
+          ]
+        }
+      ]
+    },
+
+    "_to-battle": {
+      "name": "To The Battle",
+      "statements": [
+        {
+          "condition": {
+            "is": "SCREEN",
+            "value": "game-battle"
+          },
+          "actions": [
+            {
+              "type": "TIMER",
+              "value": "BATTLE"
+            },
+            {
+              "type": "SET",
+              "var": "loops",
+              "value": "0"
+            },
+            {
+              "type": "ADD",
+              "var": "runs",
+              "value": "1"
+            },
+            {
+              "type": "MSG",
+              "value": "Starting run ${runs}"
+            },
+            {
+              "type": "SWAP",
+              "value": "battle"
+            }
+          ]
+        }
+      ]
+    },
+
+    "_to-results": {
+      "name": "To the Results",
+      "statements": [
+        {
+          "condition": {
+            "is": "SCREEN",
+            "value": "menu-results-points"
+          },
+          "actions": [
+            {
+              "type": "SET",
+              "var": "loops",
+              "value": "0"
+            },
+            {
+              "type": "SWAP",
+              "value": "results"
             }
           ]
         }
       ]
     }
+
   }
 }

@@ -6,11 +6,6 @@
       "type": "INT"
     },
     {
-      "name": "esper",
-      "value": "0",
-      "type": "INT"
-    },
-    {
       "name": "runs",
       "value": "0",
       "type": "INT"
@@ -23,7 +18,8 @@
   ],
   "includes": [
     "common-no_op",
-    "common-menu_location"
+    "common-menu_location",
+    "common-menu_results"
   ],
   "states": {
     "main": {
@@ -55,41 +51,6 @@
         "_common-no_op"
       ],
       "statements": [
-        {
-          "condition": {
-            "is": "SCREEN",
-            "value": "game-battle-repeat",
-            "and": [
-              {
-                "is": "SCREEN",
-                "value": "battle-unit-0_ready"
-              },
-              {
-                "not": "SCREEN",
-                "value": "battle-esper-notfull"
-              }
-            ]
-          },
-          "actions": [
-            {
-              "type": "MSG",
-              "value": "Switch to Esper"
-            },
-            {
-              "type": "TIMER",
-              "value": "ESPER"
-            },
-            {
-              "type": "ADD",
-              "var": "esper",
-              "value": "1"
-            },
-            {
-              "type": "SWAP",
-              "value": "esper"
-            }
-          ]
-        },
         {
           "condition": {
             "is": "SCREEN",
@@ -229,156 +190,18 @@
       ]
     },
 
-    "esper": {
-      "name": "Esper Release",
-      "statements": [
-        {
-          "condition": {
-            "is": "BOOLEAN",
-            "value": "true"
-          },
-          "actions": [
-            {
-              "type": "SET",
-              "value": "0",
-              "var": "loops"
-            },
-            {
-              "type": "MSG",
-              "value": "Unit 0 - Esper (${esper})"
-            },
-            {
-              "type": "BATCH",
-              "value": "START"
-            },
-            {
-              "type": "SWIPE_RIGHT",
-              "value": "battle-unit_0"
-            },
-            {
-              "type": "TAP",
-              "value": "battle-unit_3"
-            },
-            {
-              "type": "TAP",
-              "value": "battle-unit_0"
-            },
-            {
-              "type": "TAP",
-              "value": "battle-unit_0"
-            },
-            {
-              "type": "BATCH",
-              "value": "END"
-            }
-          ]
-        },
-        {
-          "condition": {
-            "is": "BOOLEAN",
-            "value": "true"
-          },
-          "actions": [
-            {
-              "type": "MSG",
-              "value": "Move to Battle"
-            },
-            {
-              "type": "WAIT",
-              "value": "2000"
-            },
-            {
-              "type": "MOVE",
-              "value": "battle"
-            }
-          ]
-        }
-      ]
-    },
-
     "results": {
       "name": "Results",
       "includes": [
+        "_common-mr-points",
+        "_common-mr-units",
+        "_common-mr-items",
+        "_common-mr-friend_request",
         "_to-menu",
         "_common-no_op"
       ],
       "statements": [
-        {
-          "condition": {
-            "is": "SCREEN",
-            "value": "menu-results-points"
-          },
-          "actions": [
-            {
-              "type": "TAP",
-              "value": "menu-results-next"
-            },
-            {
-              "type": "REPEAT",
-              "value": ""
-            }
-          ]
-        },
-        {
-          "condition": {
-            "is": "SCREEN",
-            "value": "menu-results-units"
-          },
-          "actions": [
-            {
-              "type": "TAP",
-              "value": "menu-results-next"
-            },
-            {
-              "type": "WAIT",
-              "value": "500"
-            },
-            {
-              "type": "REPEAT",
-              "value": ""
-            }
-          ]
-        },
-        {
-          "condition": {
-            "is": "SCREEN",
-            "value": "menu-results-items"
-          },
-          "actions": [
-            {
-              "type": "TAP",
-              "value": "menu-results-next"
-            },
-            {
-              "type": "WAIT",
-              "value": "500"
-            },
-            {
-              "type": "REPEAT",
-              "value": ""
-            }
-          ]
-        },
-        {
-          "condition": {
-            "is": "SCREEN",
-            "value": "menu-friend_request"
-          },
-          "actions": [
-            {
-              "type": "TAP",
-              "value": "menu-friend_request-no"
-            },
-            {
-              "type": "WAIT",
-              "value": "1500"
-            },
-            {
-              "type": "REPEAT",
-              "value": ""
-            }
-          ]
-        }
+
       ]
     },
 

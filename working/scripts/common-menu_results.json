@@ -1,0 +1,109 @@
+{
+  "vars": [
+
+  ],
+  "states": {
+
+    "_common-mr-points": {
+      "name": "Common - Menu Result - Points",
+      "statements": [
+        {
+          "condition": {
+            "is": "SCREEN",
+            "value": "menu-results-points"
+          },
+          "actions": [
+            {
+              "type": "TAP",
+              "value": "menu-results-next"
+            },
+            {
+              "type": "REPEAT",
+              "value": ""
+            }
+          ]
+        }
+      ]
+    },
+
+    "_common-mr-units": {
+      "name": "Common - Menu Result - Units",
+      "statements": [
+        {
+          "condition": {
+            "is": "SCREEN",
+            "value": "menu-results-units"
+          },
+          "actions": [
+            {
+              "type": "TAP",
+              "value": "menu-results-next"
+            },
+            {
+              "type": "WAIT",
+              "value": "500"
+            },
+            {
+              "type": "REPEAT",
+              "value": ""
+            }
+          ]
+        }
+      ]
+    },
+
+    "_common-mr-items": {
+      "name": "Common - Menu Result - Items",
+      "statements": [
+        {
+          "condition": {
+            "is": "SCREEN",
+            "value": "menu-results-items"
+          },
+          "actions": [
+            {
+              "type": "TAP",
+              "value": "menu-results-next"
+            },
+            {
+              "type": "WAIT",
+              "value": "500"
+            },
+            {
+              "type": "REPEAT",
+              "value": ""
+            }
+          ]
+        }
+      ]
+    },
+
+    "_common-mr-friend_request": {
+      "name": "Common - Menu Result - Friend Request",
+      "statements": [
+        {
+          "condition": {
+            "is": "SCREEN",
+            "value": "menu-friend_request"
+          },
+          "actions": [
+            {
+              "type": "TAP",
+              "value": "menu-friend_request-no"
+            },
+            {
+              "type": "WAIT",
+              "value": "1500"
+            },
+            {
+              "type": "REPEAT",
+              "value": ""
+            }
+          ]
+        }
+      ]
+    }
+
+
+  }
+}

@@ -89,6 +89,10 @@ public class ScriptRunner {
                 // Add Replace any existing state with states from the includes
                 for (Map.Entry<String, StateDefinition> otherState: otherDefinition.getStates().entrySet()) {
                     if (scriptDefinition.getStates().containsKey(otherState.getKey())) {
+                        if (otherState.getKey().startsWith("_")) {
+                            // This is a non-primary state, key the already defined state
+                            continue;
+                        }
                         scriptDefinition.getStates().remove(otherState.getKey());
                     }
                     scriptDefinition.getStates().put(otherState.getKey(), otherState.getValue());
@@ -227,6 +231,9 @@ public class ScriptRunner {
         Map<String, StateTransfer> results = Maps.newHashMap();
 
         for (Map.Entry<String, StateDefinition> stateEntry : scriptDefinition.getStates().entrySet()) {
+
+            // Skip all include states
+            if (stateEntry.getKey().startsWith("_")) continue;
 
             StateTransfer stateTransfer = new StateTransfer();
             stateTransfer.setStateId(stateEntry.getKey());

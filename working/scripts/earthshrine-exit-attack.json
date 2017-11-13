@@ -18,72 +18,18 @@
   ],
   "includes": [
     "common-no_op",
-    "common-menu_location"
+    "common-menu_location",
+    "common-menu_results"
   ],
   "states": {
 
     "main": {
       "name": "Main",
       "includes": [
-        "_battle",
+        "_to_results",
+        "_to_menu",
+        "_to_battle",
         "_common-no_op"
-      ],
-      "statements": [
-
-        {
-          "condition": {
-            "is": "SCREEN",
-            "value": "game-battle"
-          },
-          "actions": [
-            {
-              "type": "TIMER",
-              "value": "BATTLE"
-            },
-            {
-              "type": "SET",
-              "var": "loops",
-              "value": "0"
-            },
-            {
-              "type": "ADD",
-              "var": "runs",
-              "value": "1"
-            },
-            {
-              "type": "MSG",
-              "value": "Starting run ${runs}"
-            },
-            {
-              "type": "SWAP",
-              "value": "battle"
-            }
-          ]
-        },
-
-        {
-          "condition": {
-            "is": "SCREEN",
-            "value": "menu-missions-select",
-            "or": [
-              {
-                "is": "SCREEN",
-                "value": "menu-goal_list"
-              }
-            ]
-          },
-          "actions": [
-            {
-              "type": "MSG",
-              "value": "Ending run ${runs}"
-            },
-            {
-              "type": "MOVE",
-              "value": "menu"
-            }
-          ]
-        }
-
       ]
     },
 
@@ -138,7 +84,7 @@
     "battle": {
       "name": "Battle",
       "includes": [
-        "_battle",
+        "_to_results",
         "_common-no_op"
       ],
       "statements": [
@@ -394,7 +340,7 @@
       ]
     },
 
-    "_battle": {
+    "_to_results": {
       "name": "Battle Include",
       "statements": [
         {
@@ -420,85 +366,18 @@
     "results": {
       "name": "Results",
       "includes": [
+        "_common-mr-points",
+        "_common-mr-units",
+        "_common-mr-items",
+        "_common-mr-friend_request",
+        "_to_menu",
         "_common-no_op"
-      ],
+      ]
+    },
+
+    "_to_menu": {
+      "name": "To Menu",
       "statements": [
-        {
-          "condition": {
-            "is": "SCREEN",
-            "value": "menu-results-points"
-          },
-          "actions": [
-            {
-              "type": "TAP",
-              "value": "menu-results-next"
-            },
-            {
-              "type": "REPEAT",
-              "value": ""
-            }
-          ]
-        },
-        {
-          "condition": {
-            "is": "SCREEN",
-            "value": "menu-results-units"
-          },
-          "actions": [
-            {
-              "type": "TAP",
-              "value": "menu-results-next"
-            },
-            {
-              "type": "WAIT",
-              "value": "500"
-            },
-            {
-              "type": "REPEAT",
-              "value": ""
-            }
-          ]
-        },
-        {
-          "condition": {
-            "is": "SCREEN",
-            "value": "menu-results-items"
-          },
-          "actions": [
-            {
-              "type": "TAP",
-              "value": "menu-results-next"
-            },
-            {
-              "type": "WAIT",
-              "value": "500"
-            },
-            {
-              "type": "REPEAT",
-              "value": ""
-            }
-          ]
-        },
-        {
-          "condition": {
-            "is": "SCREEN",
-            "value": "menu-friend_request"
-          },
-          "actions": [
-            {
-              "type": "TAP",
-              "value": "menu-friend_request-no"
-            },
-            {
-              "type": "WAIT",
-              "value": "1500"
-            },
-            {
-              "type": "REPEAT",
-              "value": ""
-            }
-          ]
-        },
         {
           "condition": {
             "is": "SCREEN",
@@ -518,6 +397,42 @@
             {
               "type": "MOVE",
               "value": "menu"
+            }
+          ]
+        }
+      ]
+    },
+
+    "_to_battle": {
+      "name": "To Battle",
+      "statements": [
+        {
+          "condition": {
+            "is": "SCREEN",
+            "value": "game-battle"
+          },
+          "actions": [
+            {
+              "type": "TIMER",
+              "value": "BATTLE"
+            },
+            {
+              "type": "SET",
+              "var": "loops",
+              "value": "0"
+            },
+            {
+              "type": "ADD",
+              "var": "runs",
+              "value": "1"
+            },
+            {
+              "type": "MSG",
+              "value": "Starting run ${runs}"
+            },
+            {
+              "type": "SWAP",
+              "value": "battle"
             }
           ]
         }

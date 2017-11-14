@@ -308,6 +308,8 @@ public class ScriptRunner {
         currentStateId = stateName;
         this.status = Status.RUNNING;
 
+        initHelper();
+
         ImageWrapper imageWrapper;
 
         StateDefinition stateDefinition = scriptDefinition.getStates().get(stateName);

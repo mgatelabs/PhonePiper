@@ -85,7 +85,6 @@ public class RunScriptPanel extends JInternalFrame {
                     scriptThread = null;
                     startStopButton.setText("Start Script");
                 } else if (scriptRunner.getStatus() != ScriptRunner.Status.PAUSED) {
-                    scriptRunner.initHelper();
                     scriptThread = new ScriptThread(scriptRunner, ((StateDefinition)stateCombo.getSelectedItem()).getId());
                     scriptThread.start();
                     timer.start();

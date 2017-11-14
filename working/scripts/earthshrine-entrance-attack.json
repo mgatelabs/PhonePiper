@@ -341,12 +341,22 @@
     },
 
     "_to_results": {
-      "name": "Battle Include",
+      "name": "To Results",
       "statements": [
         {
           "condition": {
             "is": "SCREEN",
-            "value": "menu-results-points"
+            "value": "menu-results-points",
+            "or": [
+              {
+                "is": "SCREEN",
+                "value": "menu-results-units"
+              },
+              {
+                "is": "SCREEN",
+                "value": "menu-results-items"
+              }
+            ]
           },
           "actions": [
             {
@@ -386,6 +396,14 @@
               {
                 "is": "SCREEN",
                 "value": "menu-goal_list"
+              },
+              {
+                "is": "SCREEN",
+                "value": "menu-friend_select"
+              },
+              {
+                "is": "SCREEN",
+                "value": "menu-depart"
               }
             ]
           },

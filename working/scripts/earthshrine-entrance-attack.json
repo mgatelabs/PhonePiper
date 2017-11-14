@@ -84,7 +84,7 @@
     "battle": {
       "name": "Battle",
       "includes": [
-        "_to_results",
+        "_from_battle_to_results",
         "_common-no_op"
       ],
       "statements": [
@@ -334,6 +334,44 @@
             {
               "type": "REPEAT",
               "value": ""
+            }
+          ]
+        }
+      ]
+    },
+
+    "_from_battle_to_results": {
+      "name": "From Battle To Results",
+      "statements": [
+        {
+          "condition": {
+            "is": "SCREEN",
+            "value": "menu-results-points",
+            "or": [
+              {
+                "is": "SCREEN",
+                "value": "menu-results-units"
+              },
+              {
+                "is": "SCREEN",
+                "value": "menu-results-items"
+              }
+            ]
+          },
+          "actions": [
+            {
+              "type": "SET",
+              "var": "loops",
+              "value": "0"
+            },
+            {
+              "type": "SET",
+              "var": "setup",
+              "value": "2"
+            },
+            {
+              "type": "SWAP",
+              "value": "results"
             }
           ]
         }

@@ -15,7 +15,7 @@ import java.util.logging.LogRecord;
 /**
  * Created by @mgatelabs (Michael Fuller) on 9/25/2017.
  */
-public class LogPanel extends JInternalFrame {
+public class LogPanel extends JPanel {
 
     private CustomHandler customHandler;
 
@@ -28,7 +28,7 @@ public class LogPanel extends JInternalFrame {
     public static final SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 
     public LogPanel(CustomHandler customHandler) {
-        super("Log", true, false, true, true);
+        super();
         this.customHandler = customHandler;
 
         build();
@@ -57,8 +57,6 @@ public class LogPanel extends JInternalFrame {
         JScrollPane jScrollPane = new JScrollPane(table);
 
         this.add(jScrollPane, c);
-
-        this.pack();
 
         this.setVisible(true);
 

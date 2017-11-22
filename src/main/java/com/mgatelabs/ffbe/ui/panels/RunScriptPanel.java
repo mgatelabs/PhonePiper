@@ -20,7 +20,7 @@ import java.util.TreeSet;
 /**
  * Created by @mgatelabs (Michael Fuller) on 9/20/2017.
  */
-public class RunScriptPanel extends JInternalFrame {
+public class RunScriptPanel extends JToolBar {
 
     private DeviceHelper helper;
     private AdbShell shell;
@@ -45,7 +45,8 @@ public class RunScriptPanel extends JInternalFrame {
     private SimpleDateFormat simpleDateFormat = new SimpleDateFormat("HH:mm:ss");
 
     public RunScriptPanel(DeviceHelper helper, PlayerDefinition playerDefinition, AdbShell shell, DeviceDefinition deviceDefinition, ViewDefinition viewDefinition, ScriptDefinition scriptDefinition, MapPanel mapPanel, CustomHandler customHandler) {
-        super("Script Runner", true, false, true, false);
+        super("Run", JToolBar.HORIZONTAL);
+
         this.helper = helper;
         this.shell = shell;
         this.viewDefinition = viewDefinition;
@@ -64,52 +65,58 @@ public class RunScriptPanel extends JInternalFrame {
     }
 
     private void build() {
-        setMinimumSize(new Dimension(300,125));
+        setMinimumSize(new Dimension(400,64));
         setPreferredSize(getMinimumSize());
 
         setLayout(new GridBagLayout());
         GridBagConstraints c = new GridBagConstraints();
 
-        startStopButton = new JButton("Start Script");
-        c.fill = GridBagConstraints.HORIZONTAL;
+        startStopButton = new JButton("Start");
+        startStopButton.setPreferredSize(new Dimension(64,64));
+        startStopButton.setMinimumSize(new Dimension(64,64));
+        startStopButton.setMaximumSize(new Dimension(64,64));
+        c.fill = GridBagConstraints.VERTICAL;
         c.gridx = 0;
         c.gridy = 0;
-        c.gridwidth = 2;
-        c.weightx = 1.0f;
-        c.insets = new Insets(3, 5, 3, 5);
+        c.gridwidth = 1;
+        c.gridheight = 2;
+        c.weightx = 0;
+        c.weighty = 1.0;
+        c.insets = new Insets(2, 2, 2, 5);
         startStopButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 if (scriptRunner.getStatus() == ScriptRunner.Status.RUNNING) {
                     scriptRunner.setStatus(ScriptRunner.Status.PAUSED);
                     scriptThread = null;
-                    startStopButton.setText("Start Script");
+                    startStopButton.setText("Start");
                 } else if (scriptRunner.getStatus() != ScriptRunner.Status.PAUSED) {
                     scriptThread = new ScriptThread(scriptRunner, ((StateDefinition)stateCombo.getSelectedItem()).getId());
                     scriptThread.start();
                     timer.start();
-                    startStopButton.setText("Pause  Script");
+                    startStopButton.setText("Pause");
                 } else if (scriptRunner.getStatus() == ScriptRunner.Status.PAUSED) {
                     scriptThread = new ScriptThread(scriptRunner, ((StateDefinition)stateCombo.getSelectedItem()).getId());
                     scriptThread.start();
                     timer.start();
-                    startStopButton.setText("Pause Script");
+                    startStopButton.setText("Pause");
                 }
             }
         });
         this.add(startStopButton, c);
 
-        JLabel tempLabel = new JLabel("State:");
+        JLabel tempLabel = new JLabel("Current State:");
         c.fill = GridBagConstraints.HORIZONTAL;
-        c.gridx = 0;
-        c.gridy = 1;
+        c.gridx = 2;
+        c.gridy = 0;
+        c.gridheight = 1;
         c.weightx = 0;
         c.gridwidth = 1;
         add(tempLabel, c);
 
         stateCombo = new JComboBox<>();
         c.fill = GridBagConstraints.HORIZONTAL;
-        c.gridx = 1;
+        c.gridx = 2;
         c.gridy = 1;
         c.gridwidth = 1;
         c.weightx = 1.0f;
@@ -136,26 +143,24 @@ public class RunScriptPanel extends JInternalFrame {
             stateToIntegerMap.put(stateDefinition.getId(), i++);
         }
 
-        tempLabel = new JLabel("Image:");
+        tempLabel = new JLabel("Image Timing:");
         c.fill = GridBagConstraints.HORIZONTAL;
-        c.gridx = 0;
-        c.gridy = 2;
+        c.gridx = 3;
+        c.gridy = 0;
         c.weightx = 0;
         c.gridwidth = 1;
         add(tempLabel, c);
 
         lastImageTimeLabel = new JLabel("?");
         c.fill = GridBagConstraints.HORIZONTAL;
-        c.gridx = 1;
-        c.gridy = 2;
+        c.gridx = 3;
+        c.gridy = 1;
         c.gridwidth = 1;
         c.weightx = 1.0f;
         //c.insets = new Insets(5, 5, 5, 5);
         this.add(lastImageTimeLabel, c);
 
-        pack();
-
-        setVisible(true);
+        //setVisible(true);
 
         timer = new Timer(500, new AbstractAction() {
             @Override
@@ -171,7 +176,7 @@ public class RunScriptPanel extends JInternalFrame {
                 }
                 if (scriptRunner.getStatus() != ScriptRunner.Status.RUNNING) {
                     timer.stop();
-                    startStopButton.setText("Start Script");
+                    startStopButton.setText("Start");
                     scriptThread = null;
                 }
             }
@@ -183,7 +188,7 @@ public class RunScriptPanel extends JInternalFrame {
             scriptRunner.setStatus(ScriptRunner.Status.PAUSED);
         }
         scriptThread = null;
-        startStopButton.setText("Start Script");
+        startStopButton.setText("Start");
     }
 
     private static class ScriptThread extends Thread {

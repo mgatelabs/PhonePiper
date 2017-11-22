@@ -44,6 +44,8 @@ public class MainFrame extends JFrame {
 
     private CustomHandler customHandler;
 
+    private JSplitPane logSplit;
+
     private boolean returnRequested;
 
     public MainFrame(FrameChoices choices, ImageIcon icon) throws HeadlessException {
@@ -52,6 +54,9 @@ public class MainFrame extends JFrame {
         setMinimumSize(new Dimension(800, 600));
         setPreferredSize(new Dimension(1024, 768));
         setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
+
+        JPanel holder = new JPanel();
+        holder.setLayout(new BorderLayout());
 
         addWindowListener(new WindowListener() {
             @Override
@@ -185,13 +190,6 @@ public class MainFrame extends JFrame {
         desktopPane = new JDesktopPane();
 
         logPanel = new LogPanel(customHandler);
-        desktopPane.add(logPanel);
-
-        try {
-            logPanel.setIcon(true);
-        } catch (PropertyVetoException e) {
-            e.printStackTrace();
-        }
 
         int column0Top = 0;
         int column1Top = 0;
@@ -242,9 +240,11 @@ public class MainFrame extends JFrame {
 
         if (showRunScript) {
             runScriptPanel = new RunScriptPanel(connectionPanel.getDeviceHelper(), playerDefinition, shell, deviceDefinition, viewDefinition, scriptDefinition, mapPanel, customHandler);
-            runScriptPanel.setLocation(0, column0Top);
-            column0Top += runScriptPanel.getHeight();
-            desktopPane.add(runScriptPanel);
+            //runScriptPanel.setLocation(0, column0Top);
+            //column0Top += runScriptPanel.getHeight();
+
+            holder.add(runScriptPanel, BorderLayout.PAGE_START);
+            //desktopPane.add(runScriptPanel);
         }
 
         if (showMapper) {
@@ -256,7 +256,12 @@ public class MainFrame extends JFrame {
 
         JScrollPane jScrollPane = new JScrollPane(desktopPane);
 
-        setContentPane(jScrollPane);
+        logSplit = new JSplitPane(JSplitPane.VERTICAL_SPLIT, false, jScrollPane, logPanel);
+        logSplit.setOneTouchExpandable(true);
+
+        holder.add(logSplit, BorderLayout.CENTER);
+
+        setContentPane(holder);
 
         JMenuBar menuBar = new JMenuBar();
         this.setJMenuBar(menuBar);
@@ -284,6 +289,8 @@ public class MainFrame extends JFrame {
         menuBar.add(returnMenuItem);
 
         this.pack();
+
+        logSplit.setDividerLocation(.75);
 
         setLocationRelativeTo(null);
 

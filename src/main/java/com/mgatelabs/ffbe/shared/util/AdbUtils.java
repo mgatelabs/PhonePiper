@@ -60,6 +60,38 @@ public class AdbUtils {
         }
     }
 
+    public static boolean event(final String eventId, final AdbShell shell, final boolean batch) {
+        final String cmd;
+        final int event;
+        switch (eventId.toLowerCase()) {
+            case "power": {
+                event = 26;
+            }
+            break;
+            case "camera": {
+                event = 27;
+            }
+            break;
+            case "call": {
+                event = 5;
+            }
+            break;
+            case "back": {
+                event = 4;
+            }
+            break;
+            default:
+                return false;
+        }
+        cmd = "input keyevent " + event;
+        if (batch) {
+            shell.batch(cmd);
+        } else {
+            shell.exec(cmd);
+        }
+        return true;
+    }
+
     private static int getStartX(ComponentDefinition componentDefinition, ActionType type) {
         int x = componentDefinition.getX();
         switch (type) {

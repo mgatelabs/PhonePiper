@@ -4,10 +4,76 @@
       "name": "loops",
       "value": "0",
       "type": "INT"
+    },
+    {
+      "name": "_screen_saver",
+      "value": "0",
+      "type": "INT"
     }
   ],
   "states": {
 
+    "_common-screen_saver": {
+      "name":"Common - Screen Saver",
+      "statements": [
+        {
+          "condition": {
+            "is": "BOOLEAN",
+            "value": "true"
+          },
+          "actions": [
+            {
+              "type": "ADD",
+              "value": "1",
+              "var": "_screen_saver"
+            }
+          ]
+        },
+
+        {
+          "condition": {
+            "var": "_screen_saver",
+            "is": "GREATER",
+            "value": "500"
+          },
+          "actions": [
+            {
+              "type": "SET",
+              "value": "0",
+              "var": "_screen_saver"
+            },
+            {
+              "type": "MSG",
+              "value": "Screen saver activated"
+            },
+            {
+              "type": "TIMER",
+              "value": "SCREEN_SAVER"
+            },
+            {
+              "type": "EVENT",
+              "value": "camera"
+            },
+            {
+              "type": "WAIT",
+              "value": "5000"
+            },
+            {
+              "type": "EVENT",
+              "value": "back"
+            },
+            {
+              "type": "WAIT",
+              "value": "5000"
+            },
+            {
+              "type": "REPEAT",
+              "value": ""
+            }
+          ]
+        }
+      ]
+    },
 
     "recovery": {
       "name":"Common - Recovery",
@@ -20,7 +86,11 @@
           "actions": [
             {
               "type": "MSG",
-              "value": "Default recovery operation stops operations"
+              "value": "Default recovery operation stops operations and locks the device"
+            },
+            {
+              "type": "EVENT",
+              "value": "power"
             },
             {
               "type": "STOP"

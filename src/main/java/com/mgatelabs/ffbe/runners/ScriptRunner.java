@@ -533,6 +533,12 @@ public class ScriptRunner {
                             AdbUtils.component(deviceDefinition, componentDefinition, actionDefinition.getType(), shell, batchCmds);
                         }
                         break;
+                        case EVENT: {
+                            if(!AdbUtils.event(actionDefinition.getValue(), shell, batchCmds)) {
+                                logger.log(Level.SEVERE, "Unknown event id: " + actionDefinition.getValue());
+                                throw new RuntimeException("Unknown event id: " + actionDefinition.getValue());
+                            }
+                        } break;
                         case WAIT: {
                             long time = Long.parseLong(actionDefinition.getValue());
                             if (time > 0) {

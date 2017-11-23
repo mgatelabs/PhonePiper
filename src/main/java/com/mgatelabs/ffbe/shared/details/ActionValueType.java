@@ -10,6 +10,7 @@ public enum ActionValueType {
     SCREEN_ID,
     COMPONENT_ID,
     STATE_ID,
+    EVENT_ID,
     NONE,
     START_STOP,
 }

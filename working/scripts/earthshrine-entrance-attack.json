@@ -36,6 +36,7 @@
     "menu": {
       "name": "Menu",
       "includes": [
+        "_common-screen_saver",
         "_common-ml-mission_2",
         "_common-ml-goals",
         "_common-ml-friend_0",
@@ -84,6 +85,7 @@
     "battle": {
       "name": "Battle",
       "includes": [
+        "_common-screen_saver",
         "_from_battle_to_results",
         "_common-no_op"
       ],
@@ -414,6 +416,7 @@
     "results": {
       "name": "Results",
       "includes": [
+        "_common-screen_saver",
         "_common-mr-points",
         "_common-mr-units",
         "_common-mr-items",

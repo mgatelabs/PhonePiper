@@ -20,7 +20,8 @@ public enum ActionType {
     STOP(ActionValueType.NONE, false), // Stop execution
     SET(ActionValueType.INT, true), // Zero a variable
     ADD(ActionValueType.INT, true), // Increment a variable
-    TIMER(ActionValueType.ID, false); // TIMER EVENT
+    TIMER(ActionValueType.ID, false), // TIMER EVENT
+    EVENT(ActionValueType.EVENT_ID, false); // EVENT
 
     private final ActionValueType valueType;
 

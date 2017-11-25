@@ -86,6 +86,8 @@ public class ActionDefinition {
             case TIMER: {
                 return "Timer: " + value;
             }
+            case EVENT:
+                return "Event: " + value;
         }
         return "???";
     }

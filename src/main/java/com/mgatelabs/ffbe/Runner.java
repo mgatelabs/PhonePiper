@@ -7,6 +7,7 @@ import com.mgatelabs.ffbe.ui.FrameChoices;
 import com.mgatelabs.ffbe.ui.frame.MainFrame;
 import com.mgatelabs.ffbe.ui.frame.StartupFrame;
 import com.mgatelabs.ffbe.ui.utils.Constants;
+import org.apache.commons.lang3.StringUtils;
 
 import javax.swing.*;
 
@@ -14,18 +15,38 @@ import javax.swing.*;
  * Created by @mgatelabs (Michael Fuller) on 8/27/2017.
  */
 public class Runner {
-    public static void main(String[] args) {
+    public static void main(final String[] args) {
 
-        boolean showHelp = false;
+        if (args.length >= 1 && "frame".equalsIgnoreCase(args[0])) {
 
-        if ((args.length >= 1 && "gui".equalsIgnoreCase(args[0])) || args.length == 0) {
+            long startTime = System.nanoTime();
+            AdbUtils.persistScreen(new AdbShell());
+            long endTime = System.nanoTime();
+
+            long dif = endTime - startTime;
+
+            System.out.println("Frame captured in: " + ((float) dif / 1000000000.0) + "s");
+
+            return;
+        } else {
 
             PlayerDefinition playerDefinition = PlayerDefinition.read();
 
             final ImageIcon imageIcon = new ImageIcon(playerDefinition.getClass().getResource("/icon.png"));
 
             while (true) {
-                StartupFrame startupFrame = new StartupFrame(playerDefinition, imageIcon);
+
+                String postfix = null;
+                for (int i = 0; i < args.length - 1; i++) {
+                    if (StringUtils.equalsIgnoreCase(args[i], "-postfix")) {
+                        if (i + 1 < args.length && Constants.ID_PATTERN.matcher(args[i+1]).matches()) {
+                            postfix = args[i + 1];
+                            break;
+                        }
+                    }
+                }
+
+                StartupFrame startupFrame = new StartupFrame(playerDefinition, imageIcon, postfix);
 
                 while (startupFrame.isShowing()) {
                     try {
@@ -75,33 +96,6 @@ public class Runner {
             }
 
             System.exit(0);
-            //new MainFrame().setVisible(true);
-        } else if (args.length >= 1) {
-            if ("frame".equalsIgnoreCase(args[0])) {
-
-                long startTime = System.nanoTime();
-                AdbUtils.persistScreen(new AdbShell());
-                long endTime = System.nanoTime();
-
-                long dif = endTime - startTime;
-
-                System.out.println("Frame captured in: " + ((float) dif / 1000000000.0) + "s");
-
-                return;
-            }
-        } else {
-            showHelp = true;
-        }
-
-        if (showHelp) {
-            System.out.println("How to use:");
-            System.out.println();
-            System.out.println("script (scriptName) [deviceName]");
-            System.out.println("\tRun a script for a given device.  Will default to Axon7 device.");
-            System.out.println("manage [deviceName]");
-            System.out.println("\tEdit a device's screens and components.  Will default to Axon7 device.");
-            System.out.println("frame");
-            System.out.println("\tCapture the current frame to your device for later inspection");
         }
     }
 }

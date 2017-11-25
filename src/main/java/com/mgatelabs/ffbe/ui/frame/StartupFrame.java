@@ -1,5 +1,6 @@
 package com.mgatelabs.ffbe.ui.frame;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -7,6 +8,7 @@ import com.google.common.collect.Lists;
 import com.mgatelabs.ffbe.shared.details.PlayerDefinition;
 import com.mgatelabs.ffbe.shared.util.JsonTool;
 import com.mgatelabs.ffbe.ui.utils.Constants;
+import org.apache.commons.lang3.StringUtils;
 
 import javax.swing.*;
 import java.awt.*;
@@ -45,10 +47,13 @@ public class StartupFrame extends JFrame {
     private String selectedMode;
     private String selectedAction;
 
-    public StartupFrame(PlayerDefinition playerDefinition, ImageIcon icon) throws HeadlessException {
+    private String postfix;
+
+    public StartupFrame(PlayerDefinition playerDefinition, ImageIcon icon, String postfix) throws HeadlessException {
         super("FFBExecute");
         setIconImage(icon.getImage());
         frame = this;
+        this.postfix = postfix;
         this.playerDefinition = playerDefinition;
         setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
         setResizable(false);
@@ -284,6 +289,8 @@ public class StartupFrame extends JFrame {
 
                     final StartSelections selections = new StartSelections();
 
+                    selections.setPostfix(postfix);
+
                     selections.setSelectedScript(nullToEmpty(selectedScript));
                     selections.setSelectedScript2(nullToEmpty(selectedScript2));
                     selections.setSelectedDevice(nullToEmpty(selectedDevice));
@@ -304,7 +311,7 @@ public class StartupFrame extends JFrame {
 
         }
 
-        StartSelections startSelections = StartSelections.read();
+        StartSelections startSelections = StartSelections.read(postfix);
 
         if (startSelections != null) {
             updateList(modeComboBox, nullToEmpty(startSelections.getSelectedMode()));
@@ -378,6 +385,17 @@ public class StartupFrame extends JFrame {
         private String selectedMode;
         private String selectedAction;
 
+        @JsonIgnore
+        private String postfix;
+
+        public String getPostfix() {
+            return postfix;
+        }
+
+        public void setPostfix(String postfix) {
+            this.postfix = postfix;
+        }
+
         public String getSelectedView() {
             return selectedView;
         }
@@ -442,12 +460,14 @@ public class StartupFrame extends JFrame {
             this.selectedAction = selectedAction;
         }
 
-        public static StartSelections read() {
-            File selectionFile = getFileFor();
+        public static StartSelections read(final String postfix) {
+            File selectionFile = getFileFor(postfix);
             if (selectionFile.exists()) {
                 ObjectMapper objectMapper = JsonTool.INSTANCE;
                 try {
-                    return objectMapper.readValue(selectionFile, StartSelections.class);
+                    final StartSelections selection = objectMapper.readValue(selectionFile, StartSelections.class);
+                    selection.setPostfix(postfix);
+                    return selection;
                 } catch (JsonParseException e) {
                     e.printStackTrace();
                 } catch (JsonMappingException e) {
@@ -459,16 +479,16 @@ public class StartupFrame extends JFrame {
             return null;
         }
 
-        public static File getFileFor() {
-            return new File("./selections.json");
+        public static File getFileFor(final String postfix) {
+            return new File("./selections"+ (StringUtils.isNotBlank(postfix) ? ("-" + postfix) : "") +".json");
         }
 
-        public static boolean exists() {
-            return getFileFor().exists();
+        public static boolean exists(final String postfix) {
+            return getFileFor(postfix).exists();
         }
 
         public boolean save() {
-            File selectionFile = getFileFor();
+            File selectionFile = getFileFor(getPostfix());
             final ObjectMapper objectMapper = JsonTool.INSTANCE;
             try {
                 objectMapper.writeValue(selectionFile, this);

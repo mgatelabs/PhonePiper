@@ -1,5 +1,6 @@
 /working/*.png
 /working/player.json
 /working/connection.json
-/working/selections.json
+/working/selections*.json
 /working/views/*recovery*
+*.db

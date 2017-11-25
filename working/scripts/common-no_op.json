@@ -23,6 +23,13 @@
       "includes": ["_common-recovery_os"]
     },
 
+    "reset": {
+      "name": "Common - Reset",
+      "includes": [
+        "_common-reset"
+      ]
+    },
+
     "_common-screen_saver": {
       "name":"Common - Screen Saver",
       "statements": [

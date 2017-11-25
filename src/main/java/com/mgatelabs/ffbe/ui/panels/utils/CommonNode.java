@@ -18,6 +18,10 @@ public class CommonNode<T> extends DefaultMutableTreeNode {
         return type;
     }
 
+    public void refresh() {
+
+    }
+
     @Override
     public T getUserObject() {
         return (T) super.getUserObject();

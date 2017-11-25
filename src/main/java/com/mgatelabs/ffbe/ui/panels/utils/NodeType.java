@@ -10,6 +10,8 @@ public enum NodeType {
     VARIABLE_ITEM,
     STATE,
     STATE_ITEM,
+    STATE_INCLUDE,
+    STATE_INCLUDE_ITEM,
     STATEMENT,
     STATEMENT_ITEM,
     CONDITION,

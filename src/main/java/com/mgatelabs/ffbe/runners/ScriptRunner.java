@@ -80,24 +80,24 @@ public class ScriptRunner {
         logger.finer("Extracting Variables");
 
         // Script Includes
-        for(String scriptIncludeId: scriptDefinition.getIncludes()) {
+        for (String scriptIncludeId : scriptDefinition.getIncludes()) {
             ScriptDefinition otherDefinition = ScriptDefinition.read(scriptIncludeId);
             if (otherDefinition == null) {
                 logger.log(Level.SEVERE, "Could not find Script include: " + scriptIncludeId);
             } else {
                 // Add Replace any existing state with states from the includes
-                for (Map.Entry<String, StateDefinition> otherState: otherDefinition.getStates().entrySet()) {
+                for (Map.Entry<String, StateDefinition> otherState : otherDefinition.getStates().entrySet()) {
                     if (scriptDefinition.getStates().containsKey(otherState.getKey())) {
-                        if (otherState.getKey().startsWith("_")) {
-                            // This is a non-primary state, key the already defined state
-                            continue;
-                        }
-                        scriptDefinition.getStates().remove(otherState.getKey());
+                        //if (otherState.getKey().startsWith("_")) {
+                        // This is a non-primary state, key the already defined state
+                        continue;
+                        //}
+                        //scriptDefinition.getStates().remove(otherState.getKey());
                     }
                     scriptDefinition.getStates().put(otherState.getKey(), otherState.getValue());
                 }
                 // Add all vars
-                for (VarDefinition varDefinition: otherDefinition.getVars()) {
+                for (VarDefinition varDefinition : otherDefinition.getVars()) {
                     boolean exists = false;
                     for (VarDefinition currentDef : scriptDefinition.getVars()) {
                         if (currentDef.getName().equals(varDefinition.getName())) {
@@ -113,9 +113,9 @@ public class ScriptRunner {
             }
         }
 
-        for (StateDefinition stateDefinition: scriptDefinition.getStates().values()) {
+        for (StateDefinition stateDefinition : scriptDefinition.getStates().values()) {
             if (!stateDefinition.getIncludes().isEmpty()) {
-                for (String includeName: stateDefinition.getIncludes()) {
+                for (String includeName : stateDefinition.getIncludes()) {
                     if (scriptDefinition.getStates().containsKey(includeName)) {
                         stateDefinition.getStatements().addAll(scriptDefinition.getStates().get(includeName).getStatements());
                     } else {
@@ -534,11 +534,12 @@ public class ScriptRunner {
                         }
                         break;
                         case EVENT: {
-                            if(!AdbUtils.event(actionDefinition.getValue(), shell, batchCmds)) {
+                            if (!AdbUtils.event(actionDefinition.getValue(), shell, batchCmds)) {
                                 logger.log(Level.SEVERE, "Unknown event id: " + actionDefinition.getValue());
                                 throw new RuntimeException("Unknown event id: " + actionDefinition.getValue());
                             }
-                        } break;
+                        }
+                        break;
                         case WAIT: {
                             long time = Long.parseLong(actionDefinition.getValue());
                             if (time > 0) {

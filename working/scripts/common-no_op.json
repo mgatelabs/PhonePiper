@@ -101,7 +101,7 @@
           "actions": [
             {
               "type": "MSG",
-              "value": "Default recovery operation stops operations and locks the device"
+              "value": "Default operation stops operations and locks the device"
             },
             {
               "type": "EVENT",

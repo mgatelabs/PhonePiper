@@ -13,6 +13,16 @@
   ],
   "states": {
 
+    "main": {
+      "name":"Common - Main Template",
+      "includes": ["_common-power_down"]
+    },
+
+    "recovery": {
+      "name":"Common - Recovery Template",
+      "includes": ["_common-recovery_os"]
+    },
+
     "_common-screen_saver": {
       "name":"Common - Screen Saver",
       "statements": [
@@ -75,8 +85,13 @@
       ]
     },
 
-    "recovery": {
-      "name":"Common - Recovery",
+    "_common-recovery_os": {
+      "name":"Common - Power Device Down",
+      "includes": ["_common-power_down"]
+    },
+
+    "_common-power_down": {
+      "name": "Common - Power Down",
       "statements": [
         {
           "condition": {
@@ -214,7 +229,7 @@
               "value": "Home screen detected, attempting recovery"
             },
             {
-              "type": "PUSH",
+              "type": "MOVE",
               "value": "recovery"
             }
           ]
@@ -272,6 +287,7 @@
         }
       ]
     },
+
     "_common-reset": {
       "name": "Common - Reset",
       "statements": [
@@ -294,5 +310,6 @@
         }
       ]
     }
+
   }
 }

@@ -44,6 +44,9 @@ public class RunScriptPanel extends JToolBar {
 
     private SimpleDateFormat simpleDateFormat = new SimpleDateFormat("HH:mm:ss");
 
+    private final Icon playIcon;
+    private final Icon pauseIcon;
+
     public RunScriptPanel(DeviceHelper helper, PlayerDefinition playerDefinition, AdbShell shell, DeviceDefinition deviceDefinition, ViewDefinition viewDefinition, ScriptDefinition scriptDefinition, MapPanel mapPanel, CustomHandler customHandler) {
         super("Run", JToolBar.HORIZONTAL);
 
@@ -61,6 +64,9 @@ public class RunScriptPanel extends JToolBar {
 
         stateToIntegerMap = Maps.newHashMap();
 
+        playIcon = new ImageIcon( this.getClass().getClassLoader().getResource("play.png"));
+        pauseIcon = new ImageIcon(this.getClass().getClassLoader().getResource("pause.png"));
+
         build();
     }
 
@@ -71,7 +77,7 @@ public class RunScriptPanel extends JToolBar {
         setLayout(new GridBagLayout());
         GridBagConstraints c = new GridBagConstraints();
 
-        startStopButton = new JButton("Start");
+        startStopButton = new JButton();
         startStopButton.setPreferredSize(new Dimension(64,64));
         startStopButton.setMinimumSize(new Dimension(64,64));
         startStopButton.setMaximumSize(new Dimension(64,64));
@@ -89,21 +95,23 @@ public class RunScriptPanel extends JToolBar {
                 if (scriptRunner.getStatus() == ScriptRunner.Status.RUNNING) {
                     scriptRunner.setStatus(ScriptRunner.Status.PAUSED);
                     scriptThread = null;
-                    startStopButton.setText("Start");
+                    changeIcon(true);
                 } else if (scriptRunner.getStatus() != ScriptRunner.Status.PAUSED) {
                     scriptThread = new ScriptThread(scriptRunner, ((StateDefinition)stateCombo.getSelectedItem()).getId());
                     scriptThread.start();
                     timer.start();
-                    startStopButton.setText("Pause");
+                    changeIcon(false);
                 } else if (scriptRunner.getStatus() == ScriptRunner.Status.PAUSED) {
                     scriptThread = new ScriptThread(scriptRunner, ((StateDefinition)stateCombo.getSelectedItem()).getId());
                     scriptThread.start();
                     timer.start();
-                    startStopButton.setText("Pause");
+                    changeIcon(false);
                 }
             }
         });
         this.add(startStopButton, c);
+
+        changeIcon(true);
 
         JLabel tempLabel = new JLabel("Current State:");
         c.fill = GridBagConstraints.HORIZONTAL;
@@ -176,11 +184,15 @@ public class RunScriptPanel extends JToolBar {
                 }
                 if (scriptRunner.getStatus() != ScriptRunner.Status.RUNNING) {
                     timer.stop();
-                    startStopButton.setText("Start");
+                    changeIcon(true);
                     scriptThread = null;
                 }
             }
         });
+    }
+
+    public void changeIcon(boolean isPlay) {
+        startStopButton.setIcon(isPlay ? playIcon : pauseIcon);
     }
 
     public void stop() {
@@ -188,7 +200,7 @@ public class RunScriptPanel extends JToolBar {
             scriptRunner.setStatus(ScriptRunner.Status.PAUSED);
         }
         scriptThread = null;
-        startStopButton.setText("Start");
+        changeIcon(true);
     }
 
     private static class ScriptThread extends Thread {

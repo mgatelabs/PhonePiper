@@ -4452,6 +4452,11 @@
     } ],
     "enabled" : false
   }, {
+    "name" : "menu-friend_select-empty",
+    "screenId" : "menu-friend_select-empty",
+    "points" : [ ],
+    "enabled" : false
+  }, {
     "name" : "Menu - Goal List",
     "screenId" : "menu-goal_list",
     "points" : [ {

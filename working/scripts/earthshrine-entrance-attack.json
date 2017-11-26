@@ -40,6 +40,7 @@
         "_common-ml-mission_2",
         "_common-ml-goals",
         "_common-ml-friend_0",
+        "_common-ml-friend_none",
         "_common-ml-depart",
         "_menu",
         "_common-no_op"
@@ -441,6 +442,10 @@
               {
                 "is": "SCREEN",
                 "value": "menu-friend_select"
+              },
+              {
+                "is": "SCREEN",
+                "value": "menu-friend_select-empty"
               },
               {
                 "is": "SCREEN",

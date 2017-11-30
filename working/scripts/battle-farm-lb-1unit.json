@@ -14,6 +14,11 @@
       "name": "loops",
       "value": "0",
       "type": "INT"
+    },
+    {
+      "name": "last_action",
+      "value": "0",
+      "type": "INT"
     }
   ],
   "includes": [
@@ -57,6 +62,11 @@
             "value": "game-battle-repeat",
             "and": [
               {
+                "is": "EQUAL",
+                "var": "last_action",
+                "value": "1"
+              },
+              {
                 "is": "SCREEN",
                 "value": "battle-unit-0_ready"
               },
@@ -92,12 +102,22 @@
             "value": "game-battle-repeat",
             "and": [
               {
+                "is":"EQUAL",
+                "var": "last_action",
+                "value": "0"
+              },
+              {
                 "is": "SCREEN",
                 "value": "battle-unit-0_ready"
               }
             ]
           },
           "actions": [
+            {
+              "type": "SET",
+              "var": "last_action",
+              "value": "1"
+            },
             {
               "type": "MSG",
               "value": "Unit Wait"
@@ -119,6 +139,29 @@
               "value": "END"
             }
           ]
+        },
+        {
+          "condition": {
+            "is": "SCREEN",
+            "value": "game-battle-repeat",
+            "and": [
+              {
+                "is":"EQUAL",
+                "var": "last_action",
+                "value": "1"
+              },
+              {
+                "is": "SCREEN",
+                "value": "battle-unit-0_ready"
+              }
+            ]
+          },
+          "actions": [
+            {
+              "type": "SWIPE_DOWN",
+              "value": "battle-repeat"
+            }
+          ]
         }
       ]
     },
@@ -136,6 +179,11 @@
               "type": "SET",
               "value": "0",
               "var": "loops"
+            },
+            {
+              "type": "SET",
+              "var": "last_action",
+              "value": "0"
             },
             {
               "type": "MSG",

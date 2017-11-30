@@ -24,6 +24,12 @@ It is highly recommended to have IntelliJ Community edition to run this app.  Yo
 2. Grabbing the current screen
 3. Handle conditions and execute actions
 
+## Required Apps
+
+1. The helper app https://github.com/mgatelabs/ImageReaderApp
+2. Android Studio, so you have access to ADB & install helper app
+3. Intellij Community Edition, might as well use the best IDE thats free
+
 ## What needs to happen
 
 1. Map parsing

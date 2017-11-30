@@ -168,6 +168,46 @@
         {
           "condition": {
             "is": "SCREEN",
+            "value": "menu-logo"
+          },
+          "actions": [
+            {
+              "type": "TAP",
+              "value": "screen-center"
+            },
+            {
+              "type": "WAIT",
+              "value": "1500"
+            },
+            {
+              "type": "REPEAT",
+              "value": ""
+            }
+          ]
+        },
+        {
+          "condition": {
+            "is": "SCREEN",
+            "value": "menu-play_mission"
+          },
+          "actions": [
+            {
+              "type": "TAP",
+              "value": "menu-play_mission-yes"
+            },
+            {
+              "type": "WAIT",
+              "value": "1500"
+            },
+            {
+              "type": "REPEAT",
+              "value": ""
+            }
+          ]
+        },
+        {
+          "condition": {
+            "is": "SCREEN",
             "value": "menu-daily-notice"
           },
           "actions": [

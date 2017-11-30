@@ -4826,6 +4826,11 @@
     "points" : [ ],
     "enabled" : false
   }, {
+    "name" : "menu-logo",
+    "screenId" : "menu-logo",
+    "points" : [ ],
+    "enabled" : false
+  }, {
     "name" : "Menu - Maintenance",
     "screenId" : "menu-maintenance",
     "points" : [ {
@@ -5307,6 +5312,11 @@
       "g" : 10,
       "b" : 33
     } ],
+    "enabled" : false
+  }, {
+    "name" : "menu-play_mission",
+    "screenId" : "menu-play_mission",
+    "points" : [ ],
     "enabled" : false
   }, {
     "name" : "Menu - Results - Items",
@@ -6467,6 +6477,22 @@
     "y" : 1145,
     "w" : 945,
     "h" : 173,
+    "enabled" : false
+  }, {
+    "name" : "menu-play_mission-no",
+    "componentId" : "menu-play_mission-no",
+    "x" : 0,
+    "y" : 0,
+    "w" : 1,
+    "h" : 1,
+    "enabled" : false
+  }, {
+    "name" : "menu-play_mission-yes",
+    "componentId" : "menu-play_mission-yes",
+    "x" : 0,
+    "y" : 0,
+    "w" : 1,
+    "h" : 1,
     "enabled" : false
   }, {
     "name" : "Menu - Results - Next",

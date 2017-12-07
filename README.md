@@ -27,7 +27,11 @@ It is highly recommended to have IntelliJ Community edition to run this app.  Yo
 ## Required Apps
 
 1. The helper app https://github.com/mgatelabs/ImageReaderApp
-2. Android Studio, so you have access to ADB & install helper app
+2. Android Studio or Android Tools
+* https://developer.android.com/studio/index.html
+- The full package, with it you can also deploy to your phone
+* https://developer.android.com/studio/releases/platform-tools.html
+- Just the tools, like ADB
 3. Intellij Community Edition, might as well use the best IDE thats free
 
 ## What needs to happen

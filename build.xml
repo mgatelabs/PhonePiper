@@ -1,0 +1,12 @@
+<?xml version = "1.0"?>
+<project name = "Release Builder" default = "info">
+    <target name = "info">
+        <echo>Hello World - Welcome to Apache Ant!</echo>
+    </target>
+    <target name="release">
+        <delete verbose="true">
+            <fileset dir="${artifact.output.path}" includes="*.json"/>
+            <fileset dir="${artifact.output.path}/views" includes="**/*.png"/>
+        </delete>
+    </target>
+</project>

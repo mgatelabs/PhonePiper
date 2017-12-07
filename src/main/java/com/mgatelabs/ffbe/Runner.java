@@ -3,6 +3,7 @@ package com.mgatelabs.ffbe;
 import com.mgatelabs.ffbe.shared.details.PlayerDefinition;
 import com.mgatelabs.ffbe.shared.util.AdbShell;
 import com.mgatelabs.ffbe.shared.util.AdbUtils;
+import com.mgatelabs.ffbe.shared.util.Closer;
 import com.mgatelabs.ffbe.ui.FrameChoices;
 import com.mgatelabs.ffbe.ui.frame.MainFrame;
 import com.mgatelabs.ffbe.ui.frame.StartupFrame;
@@ -10,11 +11,31 @@ import com.mgatelabs.ffbe.ui.utils.Constants;
 import org.apache.commons.lang3.StringUtils;
 
 import javax.swing.*;
+import java.io.BufferedInputStream;
 
 /**
  * Created by @mgatelabs (Michael Fuller) on 8/27/2017.
  */
 public class Runner {
+
+    public static final String VERSION;
+
+    static {
+        BufferedInputStream bui = new BufferedInputStream(Runner.class.getClassLoader().getResourceAsStream("version.txt"));
+        StringBuilder sb = new StringBuilder();
+        try {
+            int c;
+            while ((c = bui.read()) != -1) {
+                sb.append((char) c);
+            }
+        } catch (Exception ex) {
+            sb.append("??");
+        } finally {
+            Closer.close(bui);
+        }
+        VERSION = sb.toString();
+    }
+
     public static void main(final String[] args) {
 
         if (args.length >= 1 && "frame".equalsIgnoreCase(args[0])) {

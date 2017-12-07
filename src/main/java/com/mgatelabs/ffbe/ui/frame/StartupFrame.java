@@ -5,6 +5,7 @@ import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.common.collect.Lists;
+import com.mgatelabs.ffbe.Runner;
 import com.mgatelabs.ffbe.shared.details.PlayerDefinition;
 import com.mgatelabs.ffbe.shared.util.JsonTool;
 import com.mgatelabs.ffbe.ui.utils.Constants;
@@ -50,7 +51,8 @@ public class StartupFrame extends JFrame {
     private String postfix;
 
     public StartupFrame(PlayerDefinition playerDefinition, ImageIcon icon, String postfix) throws HeadlessException {
-        super("FFBExecute");
+        super();
+        this.setTitle("FFBExecute - " + Runner.VERSION);
         setIconImage(icon.getImage());
         frame = this;
         this.postfix = postfix;
@@ -480,7 +482,7 @@ public class StartupFrame extends JFrame {
         }
 
         public static File getFileFor(final String postfix) {
-            return new File("./selections"+ (StringUtils.isNotBlank(postfix) ? ("-" + postfix) : "") +".json");
+            return new File("./selections" + (StringUtils.isNotBlank(postfix) ? ("-" + postfix) : "") + ".json");
         }
 
         public static boolean exists(final String postfix) {

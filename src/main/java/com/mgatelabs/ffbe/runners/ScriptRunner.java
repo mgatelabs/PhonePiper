@@ -182,6 +182,10 @@ public class ScriptRunner {
     }
 
     public boolean initHelper() {
+        if (deviceHelper == null) {
+            logger.log(Level.SEVERE, "Phone Helper connection is down, please restart app");
+            return false;
+        }
         if (deviceHelper.ready()) {
             InfoTransfer infoTransfer = new InfoTransfer();
             infoTransfer.setStates(transferStateMap);

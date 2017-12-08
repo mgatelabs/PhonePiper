@@ -1,12 +1,16 @@
 <?xml version = "1.0"?>
 <project name = "Release Builder" default = "info">
     <target name = "info">
-        <echo>Hello World - Welcome to Apache Ant!</echo>
+        <echo>For use with Intellij to build the release zip file</echo>
     </target>
     <target name="release">
         <delete verbose="true">
+            <fileset dir="${artifact.output.path}" includes="*.zip"/>
             <fileset dir="${artifact.output.path}" includes="*.json"/>
             <fileset dir="${artifact.output.path}/views" includes="**/*.png"/>
         </delete>
+        <zip destfile="${artifact.output.path}/release.zip">
+            <fileset dir="${artifact.output.path}" includes="**/*"/>
+        </zip>
     </target>
 </project>

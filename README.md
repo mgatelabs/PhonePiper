@@ -15,7 +15,7 @@ Some scripts are a bit outdated, and need to be re-evaluated again.
 0. Have the right phone
 * Axon7
 * Samsung S7 (1080P)
-* More devices are possible, but until I have a definition file
+* More devices are possible, but I only have those two phone.  If I was provided screen shots for every needed screen, I could build another definition.
 1. Install Java 8
 * http://www.oracle.com/technetwork/java/javase/downloads/index.html
 * JRE is to only run the app

@@ -6,9 +6,10 @@ Some scripts are a bit outdated, and need to be re-evaluated again.
 ## Features
 * Scriptable, simple JSON language
 * Device agnostic, the script is seperate from the view
-* Loggin, it prints what it's doing
+* Logging, it prints what it's doing
 * Editing, built in method to make or edit views
 * Extensible, views are built upon other views
+* Screen saver.  Every 500 iterations, it switches to the Camera and then back again, so avoid screen burn-in.
 
 ## Getting Started
 

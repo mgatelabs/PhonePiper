@@ -1,21 +1,97 @@
 # FFBExecute
-Set of scripts to control FFBE for TMR/Esper farming
+Set of user editable scripts to control FFBE for TMR/LB/Esper farming.
 
-This is a bit of a weekend project, but I learned of the power of ADB and I thought, its time to get those TMRs i'm missing.
-You will need android studio and android debgging tools in order for this to function.
+Some scripts are a bit outdated, and need to be re-evaluated again.
 
-This is currently built for my phone, the Axon7 and will not work with any other device.  It has support for othe devices, but you will need generate the required device configuration file.
+## Features
+* Scriptable, simple JSON language
+* Device agnostic, the script is seperate from the view
+* Loggin, it prints what it's doing
+* Editing, built in method to make or edit views
+* Extensible, views are built upon other views
 
-## Example
+## Getting Started
 
-0. Have a Axon7 phone & Android Studio with Debug tools.  Make sure you phone has developer options enabled.
-1. The source code comes with a working folder, you should point your working folder to this one.
-2. Open FFBE and navigate to the Earth Shrine mission list.
-3. run com.mgatelabs.ffbe.Runner without any arguments
-4. Select "Script", "Run", "Your Device", "Leave View empty", and choose the script "earthshrine-exit-attack", then hit Start
-5. In the frame, type in you're phone's IP address, player level and hit Start script
+0. Have the right phone
+* Axon7
+* Samsung S7 (1080P)
+* More devices are possible, but until I have a definition file
+1. Install Java 8
+* http://www.oracle.com/technetwork/java/javase/downloads/index.html
+* JRE is to only run the app
+* SDK lets you develop your own code, or build from source
+2. Install a way to communicate with your Android device
+* Android Tools (Basic) Use this just to connect
+* https://developer.android.com/studio/releases/platform-tools.html
+* Android Studio (Advanced) This lets you also deploy from src, the helper app
+* https://developer.android.com/studio/index.html
+3. Get the helper app, and install it onto your device
+* Released version
+* https://github.com/mgatelabs/ImageReaderApp/releases
+* Build from source
+* https://github.com/mgatelabs/ImageReaderApp
+4. Get this app
+* Release version
+* https://github.com/mgatelabs/FFBExecute/releases
+* Build from source (Use Intellij Community edition)
+5. Make sure ADB works
+* Plug in your device
+* Enable developer mode
+* https://developer.android.com/studio/debug/dev-options.html
+* Open a cmd window
+* type "adb device-state", press enter and see what is returned.  If it's working you should see "device"
+6. Run the app
+* From intellij you need to setup a Java 8 configuration to execute "com.mgatelabs.ffbe.Runner"
+* From windows, double click FFBExecute.jar to start the app.
 
-It is highly recommended to have IntelliJ Community edition to run this app.  You only need android studio, so you can have access to ADB.
+## Common Configurations
+
+## TMR farming
+Make sure your already at the earth shrine, entrance, at the depart screen.  Make sure your TMR team is selected.
+
+1. Setup
+* Mode: script
+* Action: run
+* Device: Samsung-S7-1080
+* Views: 1080x1920
+* Scripts: earthshrine-entrance-attack
+* Maps: Leave blank
+2. Hit start
+3. Check the screen, make sure your player level is right, and the phone's IP address is entered.
+4. Make sure the phone helper is running
+5. Hit the play button and look at the log, if the log says, "BAD SHELL", try pressing play/pause again
+
+ and press the play button
+
+## LB farming (Non-destructive)
+Make sure your already at the earth shrine, entrance, at the depart screen, with no friend.  Make sure your single LB farming unit is in slot 1.  The unit should have gear that constantly fills the LB guage and heals.
+
+1. Setup
+* Mode: script
+* Action: run
+* Device: Samsung-S7-1080
+* Views: 1080x1920
+* Scripts: battle-farm-lb-1unit
+* Maps: Leave blank
+2. Hit start
+3. Check the screen, make sure your player level is right, and the phone's IP address is entered.
+4. Make sure the phone helper is running
+5. Hit the play button and look at the log, if the log says, "BAD SHELL", try pressing play/pause again
+
+## ESPER farming (Non-destructive)
+Make sure your already at the earth shrine, entrance, at the depart screen, with no friend.  Make sure your single unit is Rydia in slot 1.  The unit should have gear that constantly fills the LB guage and heals.  When you get the esper achievement, Rydia's LB level should be maxed.
+
+1. Setup
+* Mode: script
+* Action: run
+* Device: Samsung-S7-1080
+* Views: 1080x1920
+* Scripts: battle-farm-esper-1unit
+* Maps: Leave blank
+2. Hit start
+3. Check the screen, make sure your player level is right, and the phone's IP address is entered.
+4. Make sure the phone helper is running
+5. Hit the play button and look at the log, if the log says, "BAD SHELL", try pressing play/pause again
 
 ## What is it doing
 
@@ -24,17 +100,7 @@ It is highly recommended to have IntelliJ Community edition to run this app.  Yo
 2. Grabbing the current screen
 3. Handle conditions and execute actions
 
-## Required Apps
-
-1. The helper app https://github.com/mgatelabs/ImageReaderApp
-2. Android Studio or Android Tools
-* https://developer.android.com/studio/index.html
-* The full package, with it you can also deploy to your phone
-* https://developer.android.com/studio/releases/platform-tools.html
-* Just the tools, like ADB
-3. Intellij Community Edition, might as well use the best IDE thats free
-* https://www.jetbrains.com/idea/
-
 ## What needs to happen
 
 1. Map parsing
+2. Finish built-in script editor

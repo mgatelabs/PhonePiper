@@ -1,5 +1,6 @@
 package com.mgatelabs.ffbe;
 
+import com.mgatelabs.ffbe.server.ServerRunner;
 import com.mgatelabs.ffbe.shared.details.PlayerDefinition;
 import com.mgatelabs.ffbe.shared.util.AdbShell;
 import com.mgatelabs.ffbe.shared.util.AdbUtils;
@@ -9,6 +10,7 @@ import com.mgatelabs.ffbe.ui.frame.MainFrame;
 import com.mgatelabs.ffbe.ui.frame.StartupFrame;
 import com.mgatelabs.ffbe.ui.utils.Constants;
 import org.apache.commons.lang3.StringUtils;
+import org.springframework.boot.SpringApplication;
 
 import javax.swing.*;
 import java.io.BufferedInputStream;
@@ -37,8 +39,9 @@ public class Runner {
     }
 
     public static void main(final String[] args) {
-
-        if (args.length >= 1 && "frame".equalsIgnoreCase(args[0])) {
+        if (args.length == 1 && "server".equalsIgnoreCase(args[0])) {
+            SpringApplication.run(ServerRunner.class, args);
+        } else if (args.length >= 1 && "frame".equalsIgnoreCase(args[0])) {
 
             long startTime = System.nanoTime();
             AdbUtils.persistScreen(new AdbShell());

@@ -3,7 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <title>FFBExecute - Web Interface</title>
+
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+
     <script type="text/javascript" src="http://code.jquery.com/jquery-3.3.1.min.js"></script>
+
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+
     <script type="text/javascript">
         $(function(){
 
@@ -37,30 +43,53 @@
     </script>
 </head>
 <body>
-    <div id="controls">
 
-        <div>
-        <label for="device">Device:</label>
-        <select id="device"></select>
-        </div>
-
-        <div>
-        <label for="view">View:</label>
-        <select id="view"></select>
-
-        <label for="view2">Extra View:</label>
-        <select id="view2"></select>
-        </div>
-
-        <div>
-        <label for="script">Script:</label>
-        <select id="script"></select>
-
-        <label for="script2">Extra Script:</label>
-        <select id="script2"></select>
+    <div class="container-fluid">
+        <div class="row">
+            <form id="setting-form" class="col-sm-4">
+                <h3>Run</h3>
+                <div class="form-group">
+                    <label for="device">Device</label>
+                    <select class="form-control" id="device"></select>
+                </div>
+                <div class="form-group">
+                    <label for="view">Primary View</label>
+                    <select class="form-control" id="view"></select>
+                </div>
+                <div class="form-group">
+                    <label for="view2">Extra View</label>
+                    <select class="form-control" id="view2"></select>
+                </div>
+                <div class="form-group">
+                    <label for="script">Primary Script</label>
+                    <select class="form-control" id="script"></select>
+                </div>
+                <div class="form-group">
+                    <label for="script2">Extra Script</label>
+                    <select class="form-control" id="script2"></select>
+                </div>
+            </form>
+            <form id="player-form" class="col-sm-3 offset-sm-1">
+                <h3>Player</h3>
+                <div class="form-group">
+                    <label for="player-level">Device</label>
+                    <input type="number" class="form-control" id="player-level"></input>
+                </div>
+            </form>
+            <form id="device-form" class="col-sm-3 offset-sm-1">
+                <h3>Device</h3>
+                <div class="form-group">
+                    <label for="device-ip">Device</label>
+                    <input type="text" class="form-control" id="device-ip"></input>
+                </div>
+            </form>
         </div>
 
     </div>
+
+
+
+
     <div id="log">
 
 

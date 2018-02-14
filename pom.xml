@@ -94,6 +94,20 @@
             <version>1.5.10.RELEASE</version>
         </dependency>
 
+        <!-- https://mvnrepository.com/artifact/com.sun.jersey/jersey-core
+        <dependency>
+            <groupId>com.sun.jersey</groupId>
+            <artifactId>jersey-core</artifactId>
+            <version>1.19.4</version>
+        </dependency>-->
+
+        <!-- https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter-jersey -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-jersey</artifactId>
+            <version>1.5.10.RELEASE</version>
+        </dependency>
+
 
     </dependencies>
 

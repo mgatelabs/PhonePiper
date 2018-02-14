@@ -11,13 +11,10 @@ import com.mgatelabs.ffbe.ui.FrameChoices;
 import com.mgatelabs.ffbe.ui.frame.StartupFrame;
 import com.mgatelabs.ffbe.ui.utils.Constants;
 import com.mgatelabs.ffbe.ui.utils.CustomHandler;
-import org.springframework.http.MediaType;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
-import sun.font.ScriptRun;
+import org.springframework.web.bind.annotation.*;
 
+import javax.ws.rs.*;
+import javax.ws.rs.core.Response;
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
@@ -27,8 +24,7 @@ import java.util.Map;
 /**
  * Created by @mgatelabs (Michael Fuller) on 2/13/2018.
  */
-@RestController
-@RequestMapping("/ffbe")
+@Path("/ffbe")
 public class WebResource {
 
     // This can change
@@ -46,7 +42,9 @@ public class WebResource {
         handler = new CustomHandler();
     }
 
-    @RequestMapping(value = "/control", method = RequestMethod.GET, produces = MediaType.TEXT_HTML_VALUE)
+    @GET
+    @Path("/")
+    @Produces("text/html")
     public String control() {
 
         URL url = Resources.getResource("pages/index.html");
@@ -59,7 +57,9 @@ public class WebResource {
         }
     }
 
-    @RequestMapping(value = "/process/prep", method =  RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
+    @POST
+    @Path("/process/prep")
+    @Produces("application/json")
     public Map<String, String> prepProcess(@RequestBody Map<String, String> values) {
         Map<String, String> result = Maps.newHashMap();
 
@@ -75,7 +75,9 @@ public class WebResource {
         return result;
     }
 
-    @RequestMapping(value = "/settings/list", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+    @GET
+    @Path("/settings/list")
+    @Produces("application/json")
     public Map<String, List<String>> listSettings() {
         Map<String, List<String>> values = Maps.newHashMap();
         values.put("devices", StartupFrame.arrayToList(StartupFrame.listJsonFilesIn(new File(StartupFrame.PATH_DEVICES))));
@@ -84,9 +86,21 @@ public class WebResource {
         return values;
     }
 
-    @RequestMapping(value = "/test", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
-    public String test() {
-        return "Hello";
+    @GET
+    @Path("/resource/{filename}")
+    public Response resource(@PathParam("filename") String path) {
+        URL url = Resources.getResource(path);
+        String contentType;
+        if (path.toLowerCase().endsWith(".png")) {
+            contentType = "image/png";
+        } else {
+             return Response.status(404).build();
+        }
+        try {
+            return Response.status(200).header("content-type", contentType).entity(Resources.toByteArray(url)).build();
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            return Response.status(500).build();
+        }
     }
-
 }

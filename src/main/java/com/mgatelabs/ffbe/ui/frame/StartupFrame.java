@@ -19,6 +19,7 @@ import java.io.File;
 import java.io.FileFilter;
 import java.io.FilenameFilter;
 import java.io.IOException;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
@@ -38,6 +39,10 @@ public class StartupFrame extends JFrame {
     private JComboBox<String> modeComboBox;
     private JComboBox<String> actionComboBox;
     private final PlayerDefinition playerDefinition;
+
+    public static final String PATH_DEVICES = "./devices";
+    public static final String PATH_VIEWS = "./views";
+    public static final String PATH_SCRIPTS = "./scripts";
 
     private String selectedView;
     private String selectedView2;
@@ -341,7 +346,7 @@ public class StartupFrame extends JFrame {
         return s == null ? "" : s;
     }
 
-    private String[] listJsonFilesIn(File dir) {
+    public static String[] listJsonFilesIn(File dir) {
         List<String> itemList = Lists.newArrayList();
         itemList.add("");
         for (File f : dir.listFiles(new FilenameFilter() {
@@ -359,7 +364,7 @@ public class StartupFrame extends JFrame {
     }
 
 
-    private String[] listFoldersFilesIn(File dir) {
+    public static String[] listFoldersFilesIn(File dir) {
         List<String> itemList = Lists.newArrayList();
         itemList.add("");
         for (File f : dir.listFiles(new FileFilter() {
@@ -374,6 +379,14 @@ public class StartupFrame extends JFrame {
         String[] itemArray = new String[itemList.size()];
         itemList.toArray(itemArray);
         return itemArray;
+    }
+
+    public static List<String> arrayToList(String [] items) {
+        List<String> list = Lists.newArrayList();
+        for (String item: items) {
+            list.add(item);
+        }
+        return list;
     }
 
     public static class StartSelections {

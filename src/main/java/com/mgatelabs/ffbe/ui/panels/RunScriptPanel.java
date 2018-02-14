@@ -203,7 +203,7 @@ public class RunScriptPanel extends JToolBar {
         changeIcon(true);
     }
 
-    private static class ScriptThread extends Thread {
+    public static class ScriptThread extends Thread {
         ScriptRunner runner;
         String state;
         public ScriptThread(ScriptRunner scriptRunner, String state) {

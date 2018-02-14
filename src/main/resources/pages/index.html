@@ -4,9 +4,61 @@
     <meta charset="UTF-8">
     <title>FFBExecute - Web Interface</title>
     <script type="text/javascript" src="http://code.jquery.com/jquery-3.3.1.min.js"></script>
+    <script type="text/javascript">
+        $(function(){
+
+            var device = $('#device');
+            var view = $('#view');
+            var view2 = $('#view2');
+            var script = $('#script');
+            var script2 = $('#script2');
+
+            function populateSelect(select, items) {
+                var i = 0;
+                select.empty();
+                for (i = 0; i < items.length; i++) {
+                    select.append($('<option></option>').text(items[i]).attr('value', items[i]));
+                }
+            }
+
+            $.getJSON({
+              url: '/ffbe/settings/list',
+              data: {},
+              success: function(data){
+                populateSelect(device, data.devices || []);
+                populateSelect(view, data.views || []);
+                populateSelect(view2, data.views || []);
+                populateSelect(script, data.scripts || []);
+                populateSelect(script2, data.scripts || []);
+              }
+            });
+
+        });
+    </script>
 </head>
 <body>
     <div id="controls">
+
+        <div>
+        <label for="device">Device:</label>
+        <select id="device"></select>
+        </div>
+
+        <div>
+        <label for="view">View:</label>
+        <select id="view"></select>
+
+        <label for="view2">Extra View:</label>
+        <select id="view2"></select>
+        </div>
+
+        <div>
+        <label for="script">Script:</label>
+        <select id="script"></select>
+
+        <label for="script2">Extra Script:</label>
+        <select id="script2"></select>
+        </div>
 
     </div>
     <div id="log">

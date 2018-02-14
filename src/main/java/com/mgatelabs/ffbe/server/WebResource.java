@@ -9,6 +9,7 @@ import com.mgatelabs.ffbe.shared.details.PlayerDefinition;
 import com.mgatelabs.ffbe.shared.helper.DeviceHelper;
 import com.mgatelabs.ffbe.ui.FrameChoices;
 import com.mgatelabs.ffbe.ui.frame.StartupFrame;
+import com.mgatelabs.ffbe.ui.panels.RunScriptPanel;
 import com.mgatelabs.ffbe.ui.utils.Constants;
 import com.mgatelabs.ffbe.ui.utils.CustomHandler;
 import org.springframework.web.bind.annotation.*;
@@ -29,18 +30,12 @@ public class WebResource {
 
     // This can change
     private static ScriptRunner runner;
+    private static RunScriptPanel.ScriptThread thread;
 
     // These don't change
-    private static final DeviceHelper deviceHelper;
-    private static final PlayerDefinition playerDefinition;
-    private static final CustomHandler handler;
-
-    static {
-        playerDefinition = PlayerDefinition.read();
-        ConnectionDefinition connectionDefinition = ConnectionDefinition.read();
-        deviceHelper = new DeviceHelper(connectionDefinition.getIp());
-        handler = new CustomHandler();
-    }
+    private static DeviceHelper deviceHelper;
+    private static PlayerDefinition playerDefinition;
+    private static CustomHandler handler;
 
     @GET
     @Path("/")
@@ -55,6 +50,33 @@ public class WebResource {
             e.printStackTrace();
             return "";
         }
+    }
+
+    @GET
+    @Path("/status")
+    @Produces("application/json")
+    public StatusResult status() {
+        StatusResult result = new StatusResult();
+
+        if (playerDefinition == null) {
+            playerDefinition = PlayerDefinition.read();
+            ConnectionDefinition connectionDefinition = ConnectionDefinition.read();
+            deviceHelper = new DeviceHelper(connectionDefinition.getIp());
+            handler = new CustomHandler();
+            result.setStatus(StatusResult.Status.READY);
+        } else {
+            if (runner == null) {
+                result.setStatus(StatusResult.Status.READY);
+            } else {
+                if (thread == null) {
+                    result.setStatus(StatusResult.Status.STOPPED);
+                } else {
+                    result.setStatus(StatusResult.Status.RUNNING);
+                }
+            }
+        }
+
+        return result;
     }
 
     @POST

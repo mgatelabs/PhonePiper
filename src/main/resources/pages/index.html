@@ -29,19 +29,19 @@
 
             var logs = $('#logs');
             var states = $('#states');
+            var components = $('#components');
 
             var playerLevel = $('#player-level');
             var deviceIp = $('#device-ip');
 
-            var playPauseButtonWrap = $('#controlPlayPause');
             var playPauseButton = $('#controlPlayPause a');
-            var unloadButtonWrap = $('#controlUnload');
             var unloadButton = $('#controlUnload a');
             var loadButton = $('#controlLoad');
             var controlPlayerSave = $('#controlPlayerSave');
             var controlDeviceSave = $('#controlDeviceSave');
 
             var settingForm = $('#setting-form');
+            var loadedForm = $('#loaded-form');
 
             var logItems = [];
 
@@ -84,12 +84,11 @@
               }
             });
 
-            setInterval(
-                function(){
-                    $.getJSON({
-                      url: '/ffbe/status',
-                      data: {},
-                      success: function(data){
+            function statusCheck() {
+                $.getJSON({
+                    url: '/ffbe/status',
+                    data: {},
+                    success: function(data){
 
                         var i = 0, item, div;
 
@@ -97,27 +96,31 @@
 
                         switch(data.status) {
                             case 'INIT': {
-                                playPauseButtonWrap.addClass('disabled');
-                                unloadButtonWrap.addClass('disabled');
+                                playPauseButton.addClass('disabled');
+                                unloadButton.addClass('disabled');
                                 settingForm.show();
+                                loadedForm.hide();
                                 states.prop('disabled', true);
                             } break;
                             case 'READY': {
-                                playPauseButtonWrap.removeClass('disabled');
-                                unloadButtonWrap.removeClass('disabled');
+                                playPauseButton.removeClass('disabled');
+                                unloadButton.removeClass('disabled');
                                 settingForm.hide();
+                                loadedForm.show();
                                 states.prop('disabled', false);
                             } break;
                             case 'STOPPED': {
-                                playPauseButtonWrap.removeClass('disabled');
-                                unloadButtonWrap.removeClass('disabled');
+                                playPauseButton.removeClass('disabled');
+                                unloadButton.removeClass('disabled');
                                 settingForm.hide();
+                                loadedForm.show();
                                 states.prop('disabled', true);
                             } break;
                             case 'RUNNING': {
-                                playPauseButtonWrap.removeClass('disabled');
-                                unloadButtonWrap.removeClass('disabled');
+                                playPauseButton.removeClass('disabled');
+                                unloadButton.removeClass('disabled');
                                 settingForm.hide();
+                                loadedForm.show();
                                 states.prop('disabled', true);
                             } break;
                         }
@@ -141,16 +144,21 @@
                             item = logItems.splice(0,1);
                             item.detach();
                         }
-                      }
-                    });
+                    }
+                });
+            }
+
+            setInterval(
+                function(){
+                    statusCheck();
                 },
                 3000
             );
-
+            statusCheck();
 
 
             playPauseButton.click(function(){
-                if (!playPauseButtonWrap.hasClass('disabled')) {
+                if (!playPauseButton.hasClass('disabled')) {
                     $.ajax({
                       type: "POST",
                       url: '/ffbe/process/playPause',
@@ -165,7 +173,7 @@
             });
 
             unloadButton.click(function(){
-                if (!unloadButtonWrap.hasClass('disabled')) {
+                if (!unloadButton.hasClass('disabled')) {
                     $.ajax({
                       type: "POST",
                       url: '/ffbe/process/unload',
@@ -211,11 +219,13 @@
                     },
                   success: function(result){
                     states.empty();
-                    var stateValueArray = result.stateValues.split('^');
-                    var stateNameArray = result.stateNames.split('^');
+                    components.empty();
                     var i;
-                    for (i = 0; i < stateValueArray.length; i++) {
-                        states.append($('<option></option>').attr('value', stateValueArray[i]).text(stateNameArray[i]));
+                    for (i = 0; i < result.states.length; i++) {
+                    states.append($('<option></option>').attr('value', result.states[i].value).text(result.states[i].name));
+                    }
+                    for (i = 0; i < result.components.length; i++) {
+                    components.append($('<option></option>').attr('value', result.components[i].value).text(result.components[i].name));
                     }
                   },
                   dataType: 'json'
@@ -233,28 +243,10 @@
 
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
         <a class="navbar-brand" href="#" id="statusName">???</a>
-
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-        </button>
-
-        <div class="collapse navbar-collapse" id="navbarSupportedContent">
-            <ul class="navbar-nav mr-auto">
-                <li class="nav-item" id="controlPlayPause">
-                    <a class="nav-link" href="#">Play/Pause</a>
-                </li>
-                <li class="nav-item" id="controlUnload">
-                    <a class="nav-link" href="#">Unload</a>
-                </li>
-            </ul>
-            <form class="form-inline my-2 my-lg-0">
-                <select id="states" class="form-control mr-sm-2"></select>
-            </form>
-        </div>
     </nav>
 
     <div class="row">
-        <form id="setting-form" class="col-sm-4">
+        <form id="setting-form" class="col-sm-4" style="display:none;">
             <h3>Run</h3>
             <div class="form-group">
                 <label for="device">Device</label>
@@ -278,6 +270,28 @@
             </div>
             <div class="form-group">
                 <button type="button" id="controlLoad" class="btn btn-primary">Load</button>
+            </div>
+        </form>
+        <form id="loaded-form" class="col-sm-4" style="display:none;">
+            <h3>Run</h3>
+            <div class="form-group">
+                <label for="states">State</label>
+                <select id="states" class="form-control"></select>
+            </div>
+            <div class="form-group">
+                <button type="button" id="controlPlayPause" class="btn btn-primary">Play/Pause</button>
+                <button type="button" id="controlUnload" class="btn  btn-danger">Unload</button>
+            </div>
+            <div class="form-group">
+                <label for="view">Components</label>
+                <select id="components" class="form-control"></select>
+            </div>
+            <div class="form-group">
+                <button type="button" id="controlTap" class="btn btn-info">Tap</button>
+                <button type="button" id="controlSwipeUp" class="btn btn-info">Up</button>
+                <button type="button" id="controlSwipeRight" class="btn btn-info">Right</button>
+                <button type="button" id="controlSwipeDown" class="btn btn-info">Down</button>
+                <button type="button" id="controlSwipeLeft" class="btn btn-info">Left</button>
             </div>
         </form>
         <form id="player-form" class="col-sm-3 offset-sm-1">

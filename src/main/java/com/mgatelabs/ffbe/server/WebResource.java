@@ -1,12 +1,11 @@
 package com.mgatelabs.ffbe.server;
 
 import com.google.common.base.Charsets;
-import com.google.common.base.Joiner;
 import com.google.common.collect.ImmutableList;
-import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 import com.google.common.io.Resources;
 import com.mgatelabs.ffbe.runners.ScriptRunner;
+import com.mgatelabs.ffbe.shared.details.ComponentDefinition;
 import com.mgatelabs.ffbe.shared.details.ConnectionDefinition;
 import com.mgatelabs.ffbe.shared.details.PlayerDefinition;
 import com.mgatelabs.ffbe.shared.details.StateDefinition;
@@ -186,16 +185,16 @@ public class WebResource {
     @Path("/process/prep")
     @Consumes("application/json")
     @Produces("application/json")
-    public Map<String, String> prepProcess(@RequestBody Map<String, String> values) {
-        Map<String, String> result = Maps.newHashMap();
+    public PrepResult prepProcess(@RequestBody Map<String, String> values) {
 
-        FrameChoices frameChoices = new FrameChoices(Constants.ACTION_RUN, Constants.MODE_SCRIPT, playerDefinition, "", values.get("script"), values.get("script2"), values.get("device"), values.get("view"), values.get("view2"));
+        final FrameChoices frameChoices = new FrameChoices(Constants.ACTION_RUN, Constants.MODE_SCRIPT, playerDefinition, "", values.get("script"), values.get("script2"), values.get("device"), values.get("view"), values.get("view2"));
 
         if (frameChoices.isValid()) {
-            result.put("status", "true");
+            final PrepResult result = new PrepResult(StatusEnum.OK);
+
             runner = new ScriptRunner(playerDefinition, deviceHelper, frameChoices.getScriptDefinition(), frameChoices.getDeviceDefinition(), frameChoices.getViewDefinition(), handler);
 
-            SortedSet<StateDefinition> definitions = new TreeSet<>(new Comparator<StateDefinition>() {
+            final SortedSet<StateDefinition> stateDefinitions = new TreeSet<>(new Comparator<StateDefinition>() {
                 @Override
                 public int compare(StateDefinition o1, StateDefinition o2) {
                     if (o1.getId().equals("main")) {
@@ -207,24 +206,30 @@ public class WebResource {
                 }
             });
 
-            definitions.addAll(frameChoices.getScriptDefinition().getFilteredStates().values());
+            stateDefinitions.addAll(frameChoices.getScriptDefinition().getFilteredStates().values());
 
-            List<String> stateValues = Lists.newArrayList();
-            List<String> stateNames = Lists.newArrayList();
-
-            for (StateDefinition definition: definitions) {
-                stateValues.add(definition.getId());
-                stateNames.add(definition.getName());
+            for (StateDefinition definition : stateDefinitions) {
+                result.getStates().add(new NamedValueItem(definition.getName(), definition.getId()));
             }
 
-            result.put("stateValues", Joiner.on("^").join(stateValues).toString());
-            result.put("stateNames", Joiner.on("^").join(stateNames).toString());
+            final SortedSet<ComponentDefinition> componentDefinitions = new TreeSet<>(new Comparator<ComponentDefinition>() {
+                @Override
+                public int compare(ComponentDefinition o1, ComponentDefinition o2) {
+                    return o1.getName().compareTo(o2.getName());
+                }
+            });
+
+            componentDefinitions.addAll(frameChoices.getViewDefinition().getComponents());
+
+            for (ComponentDefinition definition : componentDefinitions) {
+                result.getComponents().add(new NamedValueItem(definition.getName(), definition.getComponentId()));
+            }
+
+            return result;
 
         } else {
-            result.put("status", "false");
+            return new PrepResult(StatusEnum.FAIL);
         }
-
-        return result;
     }
 
     @GET

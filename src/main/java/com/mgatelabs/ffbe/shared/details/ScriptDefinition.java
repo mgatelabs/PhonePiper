@@ -6,6 +6,7 @@ import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
+import com.mgatelabs.ffbe.Runner;
 import com.mgatelabs.ffbe.shared.util.JsonTool;
 
 import java.io.File;
@@ -84,7 +85,7 @@ public class ScriptDefinition {
     }
 
     public static File getFileFor(String scriptId) {
-        return new File("scripts/" + scriptId + ".json");
+        return new File(Runner.WORKING_DIRECTORY,"scripts/" + scriptId + ".json");
     }
 
     public static boolean exists(String viewName) {

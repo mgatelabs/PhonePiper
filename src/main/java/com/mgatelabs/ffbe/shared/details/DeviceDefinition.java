@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.mgatelabs.ffbe.Runner;
 import com.mgatelabs.ffbe.shared.util.JsonTool;
 
 import java.io.File;
@@ -72,7 +73,7 @@ public class DeviceDefinition {
     }
 
     public static File getFileFor(String deviceName) {
-        return new File("devices/" + deviceName + ".json");
+        return new File(Runner.WORKING_DIRECTORY,"devices/" + deviceName + ".json");
     }
 
     public static boolean exists(String viewName) {

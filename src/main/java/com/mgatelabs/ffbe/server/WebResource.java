@@ -4,6 +4,7 @@ import com.google.common.base.Charsets;
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.Maps;
 import com.google.common.io.Resources;
+import com.mgatelabs.ffbe.Runner;
 import com.mgatelabs.ffbe.runners.ScriptRunner;
 import com.mgatelabs.ffbe.shared.details.ComponentDefinition;
 import com.mgatelabs.ffbe.shared.details.ConnectionDefinition;
@@ -237,9 +238,9 @@ public class WebResource {
     @Produces("application/json")
     public Map<String, List<String>> listSettings() {
         Map<String, List<String>> values = Maps.newHashMap();
-        values.put("devices", StartupFrame.arrayToList(StartupFrame.listJsonFilesIn(new File(StartupFrame.PATH_DEVICES))));
-        values.put("views", StartupFrame.arrayToList(StartupFrame.listFoldersFilesIn(new File(StartupFrame.PATH_VIEWS))));
-        values.put("scripts", StartupFrame.arrayToList(StartupFrame.listJsonFilesIn(new File(StartupFrame.PATH_SCRIPTS))));
+        values.put("devices", StartupFrame.arrayToList(StartupFrame.listJsonFilesIn(new File(Runner.WORKING_DIRECTORY,StartupFrame.PATH_DEVICES))));
+        values.put("views", StartupFrame.arrayToList(StartupFrame.listFoldersFilesIn(new File(Runner.WORKING_DIRECTORY,StartupFrame.PATH_VIEWS))));
+        values.put("scripts", StartupFrame.arrayToList(StartupFrame.listJsonFilesIn(new File(Runner.WORKING_DIRECTORY,StartupFrame.PATH_SCRIPTS))));
         return values;
     }
 

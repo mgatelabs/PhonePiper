@@ -1,5 +1,6 @@
 package com.mgatelabs.ffbe.shared.details;
 
+import com.mgatelabs.ffbe.Runner;
 import com.mgatelabs.ffbe.shared.image.SamplePoint;
 
 import java.io.File;
@@ -54,7 +55,7 @@ public class ScreenDefinition {
     }
 
     public static File getPreviewPath(String viewId, String screenId) {
-        return new File("views/" + viewId + "/s-" + screenId + ".png");
+        return new File(Runner.WORKING_DIRECTORY,"views/" + viewId + "/s-" + screenId + ".png");
     }
 
     @Override

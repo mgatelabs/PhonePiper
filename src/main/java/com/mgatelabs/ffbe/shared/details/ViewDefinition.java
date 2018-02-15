@@ -6,6 +6,7 @@ import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
+import com.mgatelabs.ffbe.Runner;
 import com.mgatelabs.ffbe.shared.util.JsonTool;
 
 import java.io.File;
@@ -98,11 +99,11 @@ public class ViewDefinition {
     }
 
     public static File folderPath(String viewName) {
-        return new File("views/" + viewName + "/");
+        return new File(Runner.WORKING_DIRECTORY,"views/" + viewName + "/");
     }
 
     public static ViewDefinition read(String viewName) {
-        File viewFile = new File("views/" + viewName + "/definition.json");
+        File viewFile = new File(Runner.WORKING_DIRECTORY,"views/" + viewName + "/definition.json");
         if (viewFile.exists()) {
             ObjectMapper objectMapper = JsonTool.INSTANCE;
             try {
@@ -121,7 +122,7 @@ public class ViewDefinition {
     }
 
     public static File getFileFor(String viewName) {
-        return new File("views/" + viewName + "/definition.json");
+        return new File(Runner.WORKING_DIRECTORY,"views/" + viewName + "/definition.json");
     }
 
     public static boolean exists(String viewName) {

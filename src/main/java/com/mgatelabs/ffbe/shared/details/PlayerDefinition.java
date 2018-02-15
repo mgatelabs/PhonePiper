@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.mgatelabs.ffbe.Runner;
 import com.mgatelabs.ffbe.shared.util.JsonTool;
 
 import java.io.File;
@@ -42,7 +43,7 @@ public class PlayerDefinition {
     }
 
     public static PlayerDefinition read() {
-        File playerFile = new File("player.json");
+        File playerFile = new File(Runner.WORKING_DIRECTORY,"player.json");
         if (playerFile.exists()) {
             ObjectMapper objectMapper = JsonTool.INSTANCE;
             try {
@@ -59,7 +60,7 @@ public class PlayerDefinition {
     }
 
     public boolean write() {
-        File playerFile = new File("player.json");
+        File playerFile = new File(Runner.WORKING_DIRECTORY,"player.json");
         ObjectMapper objectMapper = JsonTool.INSTANCE;
         try {
             objectMapper.writeValue(playerFile, this);

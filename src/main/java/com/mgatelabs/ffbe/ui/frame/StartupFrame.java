@@ -109,9 +109,9 @@ public class StartupFrame extends JFrame {
     }
 
     private boolean setup() {
-        File devices = new File("./devices");
-        File scripts = new File("./scripts");
-        File views = new File("./views");
+        File devices = new File(Runner.WORKING_DIRECTORY,"./devices");
+        File scripts = new File(Runner.WORKING_DIRECTORY,"./scripts");
+        File views = new File(Runner.WORKING_DIRECTORY,"./views");
         return (devices.exists() && scripts.exists() && views.exists());
     }
 
@@ -182,7 +182,7 @@ public class StartupFrame extends JFrame {
                 c.weightx = 0;
                 fieldPanel.add(label, c);
 
-                deviceComboBox = new JComboBox<>(listJsonFilesIn(new File("./devices")));
+                deviceComboBox = new JComboBox<>(listJsonFilesIn(new File(Runner.WORKING_DIRECTORY,"./devices")));
                 c.gridx = 1;
                 c.gridy = 2;
                 c.fill = GridBagConstraints.HORIZONTAL;
@@ -200,7 +200,7 @@ public class StartupFrame extends JFrame {
                 c.weightx = 0;
                 fieldPanel.add(label, c);
 
-                viewComboBox = new JComboBox<>(listFoldersFilesIn(new File("./views")));
+                viewComboBox = new JComboBox<>(listFoldersFilesIn(new File(Runner.WORKING_DIRECTORY,"./views")));
                 c.gridx = 1;
                 c.gridy = 3;
                 c.fill = GridBagConstraints.HORIZONTAL;
@@ -208,7 +208,7 @@ public class StartupFrame extends JFrame {
                 c.weightx = 1;
                 fieldPanel.add(viewComboBox, c);
 
-                recoveryComboBox = new JComboBox<>(listFoldersFilesIn(new File("./views")));
+                recoveryComboBox = new JComboBox<>(listFoldersFilesIn(new File(Runner.WORKING_DIRECTORY,"./views")));
                 c.gridx = 2;
                 c.gridy = 3;
                 c.fill = GridBagConstraints.HORIZONTAL;
@@ -226,7 +226,7 @@ public class StartupFrame extends JFrame {
                 c.weightx = 0;
                 fieldPanel.add(label, c);
 
-                scriptComboBox = new JComboBox<>(listJsonFilesIn(new File("./scripts")));
+                scriptComboBox = new JComboBox<>(listJsonFilesIn(new File(Runner.WORKING_DIRECTORY,"./scripts")));
 
                 c.gridx = 1;
                 c.gridy = 4;
@@ -235,7 +235,7 @@ public class StartupFrame extends JFrame {
                 c.weightx = 1;
                 fieldPanel.add(scriptComboBox, c);
 
-                script2ComboBox = new JComboBox<>(listJsonFilesIn(new File("./scripts")));
+                script2ComboBox = new JComboBox<>(listJsonFilesIn(new File(Runner.WORKING_DIRECTORY,"./scripts")));
                 c.gridx = 2;
                 c.gridy = 4;
                 c.fill = GridBagConstraints.HORIZONTAL;
@@ -253,7 +253,7 @@ public class StartupFrame extends JFrame {
                 c.weightx = 0;
                 fieldPanel.add(label, c);
 
-                mapComboBox = new JComboBox<>(listJsonFilesIn(new File("./maps")));
+                mapComboBox = new JComboBox<>(listJsonFilesIn(new File(Runner.WORKING_DIRECTORY,"./maps")));
                 c.gridx = 1;
                 c.gridy = 5;
                 c.fill = GridBagConstraints.HORIZONTAL;
@@ -495,7 +495,7 @@ public class StartupFrame extends JFrame {
         }
 
         public static File getFileFor(final String postfix) {
-            return new File("./selections" + (StringUtils.isNotBlank(postfix) ? ("-" + postfix) : "") + ".json");
+            return new File(Runner.WORKING_DIRECTORY,"./selections" + (StringUtils.isNotBlank(postfix) ? ("-" + postfix) : "") + ".json");
         }
 
         public static boolean exists(final String postfix) {

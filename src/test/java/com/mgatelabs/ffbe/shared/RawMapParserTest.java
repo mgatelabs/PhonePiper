@@ -1,5 +1,6 @@
 package com.mgatelabs.ffbe.shared;
 
+import com.mgatelabs.ffbe.Runner;
 import com.mgatelabs.ffbe.shared.image.Sampler;
 import org.junit.Test;
 
@@ -46,7 +47,7 @@ public class RawMapParserTest {
         }
 
         try {
-            fileInputStream = new FileInputStream(new File("framebuffer-dungeon.raw"));
+            fileInputStream = new FileInputStream(new File(Runner.WORKING_DIRECTORY,"framebuffer-dungeon.raw"));
 
             fileInputStream.skip(startOffset);
 

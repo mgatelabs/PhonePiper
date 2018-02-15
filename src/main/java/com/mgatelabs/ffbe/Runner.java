@@ -14,6 +14,7 @@ import org.springframework.boot.SpringApplication;
 
 import javax.swing.*;
 import java.io.BufferedInputStream;
+import java.io.File;
 
 /**
  * Created by @mgatelabs (Michael Fuller) on 8/27/2017.
@@ -21,6 +22,8 @@ import java.io.BufferedInputStream;
 public class Runner {
 
     public static final String VERSION;
+
+    public static File WORKING_DIRECTORY = new File(".");
 
     static {
         BufferedInputStream bui = new BufferedInputStream(Runner.class.getClassLoader().getResourceAsStream("version.txt"));
@@ -38,8 +41,22 @@ public class Runner {
         VERSION = sb.toString();
     }
 
+    public static void handleStaticArgs(final String[] args) {
+        for (int i = 0; i < args.length - 1; i++) {
+            if (StringUtils.equalsIgnoreCase(args[i], "-working")) {
+                WORKING_DIRECTORY = new File(args[i + 1]);
+                break;
+            }
+        }
+    }
+
     public static void main(final String[] args) {
-        if (args.length == 1 && "server".equalsIgnoreCase(args[0])) {
+
+        handleStaticArgs(args);
+
+        System.out.println("Working Directory: " + WORKING_DIRECTORY.getAbsolutePath());
+
+        if (args.length >= 1 && "server".equalsIgnoreCase(args[0])) {
             SpringApplication.run(ServerRunner.class, args);
         } else if (args.length >= 1 && "frame".equalsIgnoreCase(args[0])) {
 
@@ -63,7 +80,7 @@ public class Runner {
                 String postfix = null;
                 for (int i = 0; i < args.length - 1; i++) {
                     if (StringUtils.equalsIgnoreCase(args[i], "-postfix")) {
-                        if (i + 1 < args.length && Constants.ID_PATTERN.matcher(args[i+1]).matches()) {
+                        if (i + 1 < args.length && Constants.ID_PATTERN.matcher(args[i + 1]).matches()) {
                             postfix = args[i + 1];
                             break;
                         }

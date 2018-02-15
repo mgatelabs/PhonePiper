@@ -1,5 +1,7 @@
 package com.mgatelabs.ffbe.shared.details;
 
+import com.mgatelabs.ffbe.Runner;
+
 import java.io.File;
 
 /**
@@ -75,7 +77,7 @@ public class ComponentDefinition {
     }
 
     public static File getPreviewPath(String viewId, String componentId) {
-        return new File("views/" + viewId + "/c-" + componentId + ".png");
+        return new File(Runner.WORKING_DIRECTORY, "views/" + viewId + "/c-" + componentId + ".png");
     }
 
     @Override

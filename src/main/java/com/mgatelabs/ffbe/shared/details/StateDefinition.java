@@ -4,7 +4,6 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Sets;
-import com.sun.org.apache.xerces.internal.xs.LSInputList;
 
 import java.util.List;
 import java.util.Set;
@@ -47,7 +46,7 @@ public class StateDefinition {
 
     public List<String> determineScreenIds() {
         Set<String> screenIds = Sets.newHashSet();
-        for (StatementDefinition statementDefinition: statements) {
+        for (StatementDefinition statementDefinition : statements) {
             screenIds.addAll(statementDefinition.determineScreenIds());
         }
         return ImmutableList.copyOf(screenIds);
@@ -75,6 +74,6 @@ public class StateDefinition {
 
     @Override
     public String toString() {
-        return id + " - " +  name;
+        return id + " - " + name;
     }
 }

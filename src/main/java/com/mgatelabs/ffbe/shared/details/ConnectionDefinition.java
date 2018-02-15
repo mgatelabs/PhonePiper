@@ -3,6 +3,7 @@ package com.mgatelabs.ffbe.shared.details;
 import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.mgatelabs.ffbe.Runner;
 import com.mgatelabs.ffbe.shared.util.JsonTool;
 
 import java.io.File;
@@ -24,7 +25,7 @@ public class ConnectionDefinition {
     }
 
     public static ConnectionDefinition read() {
-        File localFile = new File("connection.json");
+        File localFile = new File(Runner.WORKING_DIRECTORY,"connection.json");
         if (localFile.exists()) {
             ObjectMapper objectMapper = JsonTool.INSTANCE;
             try {
@@ -41,7 +42,7 @@ public class ConnectionDefinition {
     }
 
     public boolean write() {
-        File localFile = new File("connection.json");
+        File localFile = new File(Runner.WORKING_DIRECTORY,"connection.json");
         ObjectMapper objectMapper = JsonTool.INSTANCE;
         try {
             objectMapper.writeValue(localFile, this);

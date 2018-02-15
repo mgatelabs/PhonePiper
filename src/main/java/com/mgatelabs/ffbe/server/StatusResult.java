@@ -11,6 +11,7 @@ import java.util.List;
 public class StatusResult {
 
     public enum Status {
+        INIT,
         READY,
         STOPPED,
         RUNNING
@@ -18,10 +19,12 @@ public class StatusResult {
 
     private Status status;
 
-    private List<String> log;
+    private String state;
+
+    private List<StatusLog> logs;
 
     public StatusResult() {
-        log = Lists.newArrayList();
+        logs = Lists.newArrayList();
     }
 
     public Status getStatus() {
@@ -32,11 +35,19 @@ public class StatusResult {
         this.status = status;
     }
 
-    public List<String> getLog() {
-        return log;
+    public List<StatusLog> getLogs() {
+        return logs;
     }
 
-    public void setLog(List<String> log) {
-        this.log = log;
+    public void setLogs(List<StatusLog> logs) {
+        this.logs = logs;
+    }
+
+    public String getState() {
+        return state;
+    }
+
+    public void setState(String state) {
+        this.state = state;
     }
 }

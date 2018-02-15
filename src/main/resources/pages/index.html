@@ -8,11 +8,14 @@
           type="image/png"
           href="/ffbe/resource/icon.png">
 
-    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
 
     <script type="text/javascript" src="http://code.jquery.com/jquery-3.3.1.min.js"></script>
 
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
+            integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+            crossorigin="anonymous"></script>
 
     <script type="text/javascript">
         $(function(){
@@ -22,6 +25,25 @@
             var view2 = $('#view2');
             var script = $('#script');
             var script2 = $('#script2');
+            var statusName = $('#statusName');
+
+            var logs = $('#logs');
+            var states = $('#states');
+
+            var playerLevel = $('#player-level');
+            var deviceIp = $('#device-ip');
+
+            var playPauseButtonWrap = $('#controlPlayPause');
+            var playPauseButton = $('#controlPlayPause a');
+            var unloadButtonWrap = $('#controlUnload');
+            var unloadButton = $('#controlUnload a');
+            var loadButton = $('#controlLoad');
+            var controlPlayerSave = $('#controlPlayerSave');
+            var controlDeviceSave = $('#controlDeviceSave');
+
+            var settingForm = $('#setting-form');
+
+            var logItems = [];
 
             function populateSelect(select, items) {
                 var i = 0;
@@ -40,63 +62,252 @@
                 populateSelect(view2, data.views || []);
                 populateSelect(script, data.scripts || []);
                 populateSelect(script2, data.scripts || []);
+
+                $.getJSON({
+                      url: '/ffbe/player/level',
+                      data: {},
+                      success: function(data){
+                        playerLevel.val(data.value);
+                      }
+                  }
+                );
+
+                $.getJSON({
+                      url: '/ffbe/device/ip',
+                      data: {},
+                      success: function(data){
+                        deviceIp.val(data.value);
+                      }
+                  }
+                );
+
               }
             });
 
+            setInterval(
+                function(){
+                    $.getJSON({
+                      url: '/ffbe/status',
+                      data: {},
+                      success: function(data){
+
+                        var i = 0, item, div;
+
+                        statusName.text(data.status);
+
+                        switch(data.status) {
+                            case 'INIT': {
+                                playPauseButtonWrap.addClass('disabled');
+                                unloadButtonWrap.addClass('disabled');
+                                settingForm.show();
+                                states.prop('disabled', true);
+                            } break;
+                            case 'READY': {
+                                playPauseButtonWrap.removeClass('disabled');
+                                unloadButtonWrap.removeClass('disabled');
+                                settingForm.hide();
+                                states.prop('disabled', false);
+                            } break;
+                            case 'STOPPED': {
+                                playPauseButtonWrap.removeClass('disabled');
+                                unloadButtonWrap.removeClass('disabled');
+                                settingForm.hide();
+                                states.prop('disabled', true);
+                            } break;
+                            case 'RUNNING': {
+                                playPauseButtonWrap.removeClass('disabled');
+                                unloadButtonWrap.removeClass('disabled');
+                                settingForm.hide();
+                                states.prop('disabled', true);
+                            } break;
+                        }
+
+                        if (data.state) {
+                            states.val(data.state);
+                        }
+
+                        for (i = 0; i < data.logs.length; i++) {
+                            item = data.logs[i];
+                            div = $('<div class="row"></div>')
+                            div.append($('<div class="col-sm-2"></div>').text(item.source));
+                            div.append($('<div class="col-sm-2"></div>').text(item.timestamp));
+                            div.append($('<div class="col-sm-2"></div>').text(item.level));
+                            div.append($('<div class="col-sm-6"></div>').text(item.message));
+                            logItems.push(div);
+                            logs.prepend(div);
+                        }
+
+                        while (logItems.length > 50) {
+                            item = logItems.splice(0,1);
+                            item.detach();
+                        }
+                      }
+                    });
+                },
+                3000
+            );
+
+
+
+            playPauseButton.click(function(){
+                if (!playPauseButtonWrap.hasClass('disabled')) {
+                    $.ajax({
+                      type: "POST",
+                      url: '/ffbe/process/playPause',
+                      data: {
+                        stateId: states.val()
+                      },
+                      success: function(result){
+
+                      }
+                    });
+                }
+            });
+
+            unloadButton.click(function(){
+                if (!unloadButtonWrap.hasClass('disabled')) {
+                    $.ajax({
+                      type: "POST",
+                      url: '/ffbe/process/unload',
+                      success: function(result){
+
+                      }
+                    });
+                }
+            });
+
+            controlPlayerSave.click(function(){
+                $.ajax({
+                  type: "POST",
+                  url: '/ffbe/player/level',
+                  data: {value: playerLevel.val()}
+                });
+            });
+
+            controlDeviceSave.click(function(){
+                $.ajax({
+                  type: "POST",
+                  url: '/ffbe/device/ip',
+                  data: {value: deviceIp.val()}
+                });
+            });
+
+            loadButton.click(function(){
+
+                var blob = {
+                    device: device.val(),
+                    view: view.val(),
+                    view2: view2.val(),
+                    script: script.val(),
+                    script2: script2.val(),
+                };
+
+                $.ajax({
+                  type: "POST",
+                  url: '/ffbe/process/prep',
+                  data: JSON.stringify(blob),
+                  headers: {
+                        'Content-Type': 'application/json'
+                    },
+                  success: function(result){
+                    states.empty();
+                    var stateValueArray = result.stateValues.split('^');
+                    var stateNameArray = result.stateNames.split('^');
+                    var i;
+                    for (i = 0; i < stateValueArray.length; i++) {
+                        states.append($('<option></option>').attr('value', stateValueArray[i]).text(stateNameArray[i]));
+                    }
+                  },
+                  dataType: 'json'
+                });
+
+            });
+
         });
+
     </script>
 </head>
 <body>
 
-    <div class="container-fluid">
-        <div class="row">
-            <form id="setting-form" class="col-sm-4">
-                <h3>Run</h3>
-                <div class="form-group">
-                    <label for="device">Device</label>
-                    <select class="form-control" id="device"></select>
-                </div>
-                <div class="form-group">
-                    <label for="view">Primary View</label>
-                    <select class="form-control" id="view"></select>
-                </div>
-                <div class="form-group">
-                    <label for="view2">Extra View</label>
-                    <select class="form-control" id="view2"></select>
-                </div>
-                <div class="form-group">
-                    <label for="script">Primary Script</label>
-                    <select class="form-control" id="script"></select>
-                </div>
-                <div class="form-group">
-                    <label for="script2">Extra Script</label>
-                    <select class="form-control" id="script2"></select>
-                </div>
-            </form>
-            <form id="player-form" class="col-sm-3 offset-sm-1">
-                <h3>Player</h3>
-                <div class="form-group">
-                    <label for="player-level">Device</label>
-                    <input type="number" class="form-control" id="player-level"></input>
-                </div>
-            </form>
-            <form id="device-form" class="col-sm-3 offset-sm-1">
-                <h3>Device</h3>
-                <div class="form-group">
-                    <label for="device-ip">Device</label>
-                    <input type="text" class="form-control" id="device-ip"></input>
-                </div>
+<div class="container-fluid">
+
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <a class="navbar-brand" href="#" id="statusName">???</a>
+
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav mr-auto">
+                <li class="nav-item" id="controlPlayPause">
+                    <a class="nav-link" href="#">Play/Pause</a>
+                </li>
+                <li class="nav-item" id="controlUnload">
+                    <a class="nav-link" href="#">Unload</a>
+                </li>
+            </ul>
+            <form class="form-inline my-2 my-lg-0">
+                <select id="states" class="form-control mr-sm-2"></select>
             </form>
         </div>
+    </nav>
 
+    <div class="row">
+        <form id="setting-form" class="col-sm-4">
+            <h3>Run</h3>
+            <div class="form-group">
+                <label for="device">Device</label>
+                <select class="form-control" id="device"></select>
+            </div>
+            <div class="form-group">
+                <label for="view">Primary View</label>
+                <select class="form-control" id="view"></select>
+            </div>
+            <div class="form-group">
+                <label for="view2">Extra View</label>
+                <select class="form-control" id="view2"></select>
+            </div>
+            <div class="form-group">
+                <label for="script">Primary Script</label>
+                <select class="form-control" id="script"></select>
+            </div>
+            <div class="form-group">
+                <label for="script2">Extra Script</label>
+                <select class="form-control" id="script2"></select>
+            </div>
+            <div class="form-group">
+                <button type="button" id="controlLoad" class="btn btn-primary">Load</button>
+            </div>
+        </form>
+        <form id="player-form" class="col-sm-3 offset-sm-1">
+            <h3>Player</h3>
+            <div class="form-group">
+                <label for="player-level">Level</label>
+                <input type="number" class="form-control" id="player-level"></input>
+            </div>
+            <div class="form-group">
+                <button type="button" id="controlPlayerSave" class="btn btn-primary">Save</button>
+            </div>
+        </form>
+        <form id="device-form" class="col-sm-3 offset-sm-1">
+            <h3>Device</h3>
+            <div class="form-group">
+                <label for="device-ip">I.P. Address</label>
+                <input type="text" class="form-control" id="device-ip"></input>
+            </div>
+            <div class="form-group">
+                <button type="button" id="controlDeviceSave" class="btn btn-primary">Save</button>
+            </div>
+        </form>
     </div>
 
+</div>
 
 
+<div id="logs" class="container-fluid">
 
-    <div id="log">
 
-
-    </div>
+</div>
 </body>
 </html>

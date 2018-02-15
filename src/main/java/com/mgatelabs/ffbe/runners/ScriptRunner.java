@@ -326,19 +326,14 @@ public class ScriptRunner {
         while (isRunning()) {
 
             if (!shell.isReady()) {
-                logger.log(Level.WARNING, "Bad Shell: Starting again");
+                logger.log(Level.WARNING, "Bad Shell: Stopping");
                 try {
                     shell.shutdown();
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
-                try {
-                    shell = new AdbShell();
-                    wait(1000);
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
-                continue;
+                this.status = Status.PAUSED;
+                return;
             }
 
             if (deviceHelper != null && deviceHelper.getFailures() > 20) {

@@ -60,7 +60,7 @@ Make sure your already at the earth shrine, entrance, at the depart screen.  Mak
 2. Hit start
 3. Check the screen, make sure your player level is right, and the phone's IP address is entered.
 4. Make sure the phone helper is running
-5. Hit the play button and look at the log, if the log says, "BAD SHELL", try pressing play/pause again
+5. Hit the play button and look at the logs, if the logs says, "BAD SHELL", try pressing play/pause again
 
  and press the play button
 
@@ -77,7 +77,7 @@ Make sure your already at the earth shrine, entrance, at the depart screen, with
 2. Hit start
 3. Check the screen, make sure your player level is right, and the phone's IP address is entered.
 4. Make sure the phone helper is running
-5. Hit the play button and look at the log, if the log says, "BAD SHELL", try pressing play/pause again
+5. Hit the play button and look at the logs, if the logs says, "BAD SHELL", try pressing play/pause again
 
 ## ESPER farming (Non-destructive)
 Make sure your already at the earth shrine, entrance, at the depart screen, with no friend.  Make sure your single unit is Rydia in slot 1.  The unit should have gear that constantly fills the LB guage and heals.  When you get the esper achievement, Rydia's LB level should be maxed.
@@ -92,7 +92,7 @@ Make sure your already at the earth shrine, entrance, at the depart screen, with
 2. Hit start
 3. Check the screen, make sure your player level is right, and the phone's IP address is entered.
 4. Make sure the phone helper is running
-5. Hit the play button and look at the log, if the log says, "BAD SHELL", try pressing play/pause again
+5. Hit the play button and look at the logs, if the logs says, "BAD SHELL", try pressing play/pause again
 
 ## What is it doing
 

@@ -16,7 +16,7 @@ public class AdbShell {
 
     private ProcessBuilder builder;
     private Process adb;
-    private static final byte[] LS = new byte [0x0a];
+    private static final byte[] LS = new byte [] {0x0a, 0x0d};
     private static final byte[] ECHO = "doesnotexist".getBytes();
 
     //private char[] ECHO_KEY = {'9', '8', '7', '6', '1', '2', '3', '4'};

@@ -387,10 +387,14 @@ public class ScriptRunner {
                 }
             }
 
+            logger.log(Level.INFO, "After Persist Calls");
+
             boolean keepRunning = true;
 
             while (keepRunning && isRunning()) {
                 keepRunning = false;
+
+                logger.log(Level.INFO, "Inner Run");
 
                 if (deviceHelper != null) {
 

@@ -334,6 +334,8 @@ public class ScriptRunner {
 
         while (isRunning()) {
 
+            logger.log(Level.INFO, "Loop");
+
             if (!shell.isReady()) {
                 logger.log(Level.WARNING, "Bad Shell: Stopping");
                 try {
@@ -349,6 +351,8 @@ public class ScriptRunner {
                 deviceHelper = null;
                 logger.log(Level.SEVERE, "Stopping device helper");
             }
+
+            logger.log(Level.INFO, "Persist Calls");
 
             if (deviceHelper != null) {
                 long startTime = System.nanoTime();

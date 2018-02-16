@@ -82,7 +82,7 @@ public class AdbShell {
         }
         final long startTime = System.nanoTime();
         try {
-            //System.out.println("\n\nWorking On: " + adbCommand);
+            System.out.println("\n\nWorking On: " + adbCommand);
 
             processInput.write(adbCommand.getBytes());
             processInput.write(LS);

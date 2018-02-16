@@ -187,11 +187,15 @@ public class ScriptRunner {
             return false;
         }
         if (deviceHelper.ready()) {
+            logger.log(Level.SEVERE, "Phone Helper is ready @ " + deviceHelper.getIpAddress());
             InfoTransfer infoTransfer = new InfoTransfer();
             infoTransfer.setStates(transferStateMap);
             infoTransfer.setMap(transferMap);
             if (deviceHelper.setup(infoTransfer)) {
+                logger.log(Level.SEVERE, "Phone Helper is configured");
                 return true;
+            } else {
+                logger.log(Level.SEVERE, "Phone Helper is not configured");
             }
         } else {
             logger.log(Level.SEVERE, "Phone Helper is not configured");

@@ -40,6 +40,7 @@ public class WebResource {
 
     // These don't change
     private static ConnectionDefinition connectionDefinition;
+    private static FrameChoices frameChoices;
     private static DeviceHelper deviceHelper;
     private static PlayerDefinition playerDefinition;
     private static CustomHandler handler;
@@ -164,6 +165,9 @@ public class WebResource {
     @Path("/process/playPause/{stateId}")
     @Produces("application/json")
     public Map<String, String> prepProcess(@PathParam("stateId") String stateId) {
+
+        checkInitialState();
+
         Map<String, String> result = Maps.newHashMap();
 
         if (runner != null) {
@@ -186,6 +190,9 @@ public class WebResource {
     @Path("/process/unload")
     @Produces("application/json")
     public Map<String, String> unloadProcess(@PathParam("stateId") String stateId) {
+
+        checkInitialState();
+
         Map<String, String> result = Maps.newHashMap();
 
         if (runner != null) {
@@ -206,12 +213,32 @@ public class WebResource {
     @Produces("application/json")
     public PrepResult prepProcess(@RequestBody Map<String, String> values) {
 
-        final FrameChoices frameChoices = new FrameChoices(Constants.ACTION_RUN, Constants.MODE_SCRIPT, playerDefinition, "", values.get("script"), values.get("script2"), values.get("device"), values.get("view"), values.get("view2"));
+        checkInitialState();
+
+        frameChoices = new FrameChoices(Constants.ACTION_RUN, Constants.MODE_SCRIPT, playerDefinition, "", values.get("script"), values.get("script2"), values.get("device"), values.get("view"), values.get("view2"));
 
         if (frameChoices.isValid()) {
             final PrepResult result = new PrepResult(StatusEnum.OK);
 
             runner = new ScriptRunner(playerDefinition, deviceHelper, frameChoices.getScriptDefinition(), frameChoices.getDeviceDefinition(), frameChoices.getViewDefinition(), handler);
+
+            return result;
+
+        } else {
+            return new PrepResult(StatusEnum.FAIL);
+        }
+    }
+
+    @GET
+    @Path("/process/info")
+    @Consumes("application/json")
+    @Produces("application/json")
+    public PrepResult infoProcess(@RequestBody Map<String, String> values) {
+
+        checkInitialState();
+
+        if (frameChoices != null) {
+            final PrepResult result = new PrepResult(StatusEnum.OK);
 
             final SortedSet<StateDefinition> stateDefinitions = new TreeSet<>(new Comparator<StateDefinition>() {
                 @Override
@@ -255,6 +282,8 @@ public class WebResource {
     @Path("/settings/list")
     @Produces("application/json")
     public Map<String, List<String>> listSettings() {
+        checkInitialState();
+
         Map<String, List<String>> values = Maps.newHashMap();
         values.put("devices", StartupFrame.arrayToList(StartupFrame.listJsonFilesIn(new File(Runner.WORKING_DIRECTORY,StartupFrame.PATH_DEVICES))));
         values.put("views", StartupFrame.arrayToList(StartupFrame.listFoldersFilesIn(new File(Runner.WORKING_DIRECTORY,StartupFrame.PATH_VIEWS))));
@@ -265,6 +294,8 @@ public class WebResource {
     @GET
     @Path("/resource/{filename}")
     public Response resource(@PathParam("filename") String path) {
+        checkInitialState();
+
         URL url = Resources.getResource(path);
         String contentType;
         if (path.toLowerCase().endsWith(".png")) {

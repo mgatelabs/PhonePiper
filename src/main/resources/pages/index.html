@@ -197,6 +197,29 @@
                 });
             });
 
+            function loadProcessInfo() {
+                $.ajax({
+                  type: "GET",
+                  url: '/ffbe/process/info',
+                  success: function(result){
+                    if (result.status == 'OK') {
+                        states.empty();
+                        components.empty();
+                        var i;
+                        for (i = 0; i < result.states.length; i++) {
+                        states.append($('<option></option>').attr('value', result.states[i].value).text(result.states[i].name));
+                        }
+                        for (i = 0; i < result.components.length; i++) {
+                        components.append($('<option></option>').attr('value', result.components[i].value).text(result.components[i].name));
+                        }
+                    }
+                  },
+                  dataType: 'json'
+                });
+            }
+
+            loadProcessInfo();
+
             loadButton.click(function(){
 
                 var blob = {
@@ -215,14 +238,8 @@
                         'Content-Type': 'application/json'
                     },
                   success: function(result){
-                    states.empty();
-                    components.empty();
-                    var i;
-                    for (i = 0; i < result.states.length; i++) {
-                    states.append($('<option></option>').attr('value', result.states[i].value).text(result.states[i].name));
-                    }
-                    for (i = 0; i < result.components.length; i++) {
-                    components.append($('<option></option>').attr('value', result.components[i].value).text(result.components[i].name));
+                    if (result.status == 'OK') {
+                        loadProcessInfo();
                     }
                   },
                   dataType: 'json'

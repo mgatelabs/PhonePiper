@@ -19,7 +19,7 @@ public class AdbShell {
 
     private ProcessBuilder builder;
     private Process adb;
-    private static final byte[] LS = "\n".getBytes();
+    private static final byte[] LS = new byte [0x0a];
     private static final byte[] ECHO = "doesnotexist".getBytes();
 
     //private char[] ECHO_KEY = {'9', '8', '7', '6', '1', '2', '3', '4'};
@@ -38,8 +38,13 @@ public class AdbShell {
         batch = Lists.newArrayList();
 
         builder = new ProcessBuilder("adb", "shell");
+        builder.redirectErrorStream(true);
         try {
             adb = builder.start();
+            if (adb.isAlive()) {
+                ready = false;
+                return;
+            }
             ready = true;
 
             // reads from the process output

@@ -3,10 +3,7 @@ package com.mgatelabs.ffbe.shared.util;
 import com.google.common.base.Joiner;
 import com.google.common.collect.Lists;
 
-import java.io.ByteArrayOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
+import java.io.*;
 import java.util.List;
 import java.util.logging.Logger;
 
@@ -48,10 +45,10 @@ public class AdbShell {
             ready = true;
 
             // reads from the process output
-            processInput = adb.getOutputStream();
+            processInput = new BufferedOutputStream(adb.getOutputStream());
 
             // sends to process's input
-            processOutput = adb.getInputStream();
+            processOutput = new BufferedInputStream(adb.getInputStream());
 
         } catch (IOException e) {
             e.printStackTrace();
@@ -86,6 +83,13 @@ public class AdbShell {
             System.out.println("Not Ready");
             return;
         }
+
+        if (!adb.isAlive()) {
+            System.out.println("Exit Code: " + adb.exitValue());
+            ready = false;
+            return;
+        }
+
         final long startTime = System.nanoTime();
         try {
             System.out.println("\n\nWorking On: " + adbCommand);

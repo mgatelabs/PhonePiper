@@ -16,7 +16,7 @@ public class AdbShell {
 
     private ProcessBuilder builder;
     private Process adb;
-    private static final byte[] LS = new byte [] {0x0a, 0x0d};
+    private static final byte[] LS = new byte [] {0x0a};
     private static final byte[] ECHO = "doesnotexist".getBytes();
 
     //private char[] ECHO_KEY = {'9', '8', '7', '6', '1', '2', '3', '4'};
@@ -94,7 +94,7 @@ public class AdbShell {
 
         final long startTime = System.nanoTime();
         try {
-            System.out.println("\n\nWorking On: " + adbCommand);
+            //System.out.println("\n\nWorking On: " + adbCommand);
 
             ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
 
@@ -113,13 +113,13 @@ public class AdbShell {
             int index = 0;
             boolean exitFound = false;
             while (!exitFound && (c = processOutput.read(buffer)) != -1) {
-                System.out.println("Reading: " + c);
+                //System.out.println("Reading: " + c);
                 for (int i = 0; i < buffer.length; i++) {
                     if (buffer[i] == ECHO_KEY.charAt(index)) {
-                        System.out.println("KEY");
+                        //System.out.println("KEY");
                         index++;
                         if (index >= ECHO_KEY.length()) {
-                            System.out.println("END KEY");
+                            //System.out.println("END KEY");
                             exitFound = true;
                             break;
                         }

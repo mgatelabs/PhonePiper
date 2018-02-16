@@ -318,7 +318,7 @@ public class ScriptRunner {
         currentStateId = stateName;
         this.status = Status.RUNNING;
 
-        logger.log(Level.INFO, "Init Helper");
+        logger.log(Level.FINE, "Init Helper");
         initHelper();
 
         ImageWrapper imageWrapper;
@@ -329,12 +329,12 @@ public class ScriptRunner {
             logger.log(Level.SEVERE, "Cannot find state with id: " + stateName);
             throw new RuntimeException("Cannot find state with id: " + stateName);
         } else {
-            logger.log(Level.INFO, "Found initial state with id: " + stateName);
+            logger.log(Level.FINE, "Found initial state with id: " + stateName);
         }
 
         while (isRunning()) {
 
-            logger.log(Level.INFO, "Loop");
+            //logger.log(Level.INFO, "Loop");
 
             if (!shell.isReady()) {
                 logger.log(Level.WARNING, "Bad Shell: Stopping");
@@ -352,7 +352,7 @@ public class ScriptRunner {
                 logger.log(Level.SEVERE, "Stopping device helper");
             }
 
-            logger.log(Level.INFO, "Persist Calls");
+            //logger.log(Level.INFO, "Persist Calls");
 
             if (deviceHelper != null) {
                 long startTime = System.nanoTime();
@@ -387,14 +387,14 @@ public class ScriptRunner {
                 }
             }
 
-            logger.log(Level.INFO, "After Persist Calls");
+            //logger.log(Level.INFO, "After Persist Calls");
 
             boolean keepRunning = true;
 
             while (keepRunning && isRunning()) {
                 keepRunning = false;
 
-                logger.log(Level.INFO, "Inner Run");
+                //logger.log(Level.INFO, "Inner Run");
 
                 if (deviceHelper != null) {
 

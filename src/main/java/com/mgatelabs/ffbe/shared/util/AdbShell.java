@@ -38,10 +38,10 @@ public class AdbShell {
         batch = Lists.newArrayList();
 
         builder = new ProcessBuilder("adb", "shell");
-        builder.redirectErrorStream(true);
         try {
             adb = builder.start();
-            if (adb.isAlive()) {
+            if (!adb.isAlive()) {
+                System.out.println("Exit Code: " + adb.exitValue());
                 ready = false;
                 return;
             }

@@ -144,6 +144,8 @@ public class WebResource {
             String sourceName;
             if (record.getSourceClassName() != null && record.getSourceClassName().lastIndexOf('.') > 0) {
                 sourceName = record.getSourceClassName().substring(record.getSourceClassName().lastIndexOf('.'));
+            } else if (record.getLoggerName() != null) {
+                sourceName = record.getLoggerName();
             } else {
                 sourceName = "Unknown";
             }
@@ -285,9 +287,9 @@ public class WebResource {
         checkInitialState();
 
         Map<String, List<String>> values = Maps.newHashMap();
-        values.put("devices", StartupFrame.arrayToList(StartupFrame.listJsonFilesIn(new File(Runner.WORKING_DIRECTORY,StartupFrame.PATH_DEVICES))));
-        values.put("views", StartupFrame.arrayToList(StartupFrame.listFoldersFilesIn(new File(Runner.WORKING_DIRECTORY,StartupFrame.PATH_VIEWS))));
-        values.put("scripts", StartupFrame.arrayToList(StartupFrame.listJsonFilesIn(new File(Runner.WORKING_DIRECTORY,StartupFrame.PATH_SCRIPTS))));
+        values.put("devices", StartupFrame.arrayToList(StartupFrame.listJsonFilesIn(new File(Runner.WORKING_DIRECTORY, StartupFrame.PATH_DEVICES))));
+        values.put("views", StartupFrame.arrayToList(StartupFrame.listFoldersFilesIn(new File(Runner.WORKING_DIRECTORY, StartupFrame.PATH_VIEWS))));
+        values.put("scripts", StartupFrame.arrayToList(StartupFrame.listJsonFilesIn(new File(Runner.WORKING_DIRECTORY, StartupFrame.PATH_SCRIPTS))));
         return values;
     }
 

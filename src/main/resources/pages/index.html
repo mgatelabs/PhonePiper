@@ -41,6 +41,8 @@
             var controlDeviceSave = $('#controlDeviceSave');
 
             var settingForm = $('#setting-form');
+            var playerForm = $('#player-form');
+            var deviceForm = $('#device-form');
             var loadedForm = $('#loaded-form');
 
             var logItems = [];
@@ -52,37 +54,6 @@
                     select.append($('<option></option>').text(items[i]).attr('value', items[i]));
                 }
             }
-
-            $.getJSON({
-              url: '/ffbe/settings/list',
-              data: {},
-              success: function(data){
-                populateSelect(device, data.devices || []);
-                populateSelect(view, data.views || []);
-                populateSelect(view2, data.views || []);
-                populateSelect(script, data.scripts || []);
-                populateSelect(script2, data.scripts || []);
-
-                $.getJSON({
-                      url: '/ffbe/player/level',
-                      data: {},
-                      success: function(data){
-                        playerLevel.val(data.value);
-                      }
-                  }
-                );
-
-                $.getJSON({
-                      url: '/ffbe/device/ip',
-                      data: {},
-                      success: function(data){
-                        deviceIp.val(data.value);
-                      }
-                  }
-                );
-
-              }
-            });
 
             function statusCheck() {
                 $.getJSON({
@@ -109,19 +80,15 @@
                                 loadedForm.show();
                                 states.prop('disabled', false);
                             } break;
+                            case 'RUNNING':
                             case 'STOPPED': {
                                 playPauseButton.removeClass('disabled');
                                 unloadButton.removeClass('disabled');
                                 settingForm.hide();
                                 loadedForm.show();
                                 states.prop('disabled', true);
-                            } break;
-                            case 'RUNNING': {
-                                playPauseButton.removeClass('disabled');
-                                unloadButton.removeClass('disabled');
-                                settingForm.hide();
-                                loadedForm.show();
-                                states.prop('disabled', true);
+
+                                setTimeout(statusCheck, 3000);
                             } break;
                         }
 
@@ -148,22 +115,13 @@
                 });
             }
 
-            setInterval(
-                function(){
-                    statusCheck();
-                },
-                3000
-            );
-            statusCheck();
-
-
             playPauseButton.click(function(){
                 if (!playPauseButton.hasClass('disabled')) {
                     $.ajax({
                       type: "POST",
                       url: '/ffbe/process/playPause/' + states.val(),
                       success: function(result){
-
+                        statusCheck();
                       }
                     });
                 }
@@ -175,7 +133,7 @@
                       type: "POST",
                       url: '/ffbe/process/unload',
                       success: function(result){
-
+                        statusCheck();
                       }
                     });
                 }
@@ -218,7 +176,7 @@
                 });
             }
 
-            loadProcessInfo();
+
 
             loadButton.click(function(){
 
@@ -240,6 +198,7 @@
                   success: function(result){
                     if (result.status == 'OK') {
                         loadProcessInfo();
+                        statusCheck();
                     }
                   },
                   dataType: 'json'
@@ -247,6 +206,45 @@
 
             });
 
+            function firstTimeLoad() {
+
+                $.getJSON({
+                  url: '/ffbe/settings/list',
+                  data: {},
+                  success: function(data){
+                    populateSelect(device, data.devices || []);
+                    populateSelect(view, data.views || []);
+                    populateSelect(view2, data.views || []);
+                    populateSelect(script, data.scripts || []);
+                    populateSelect(script2, data.scripts || []);
+                  }
+                });
+
+                $.getJSON({
+                      url: '/ffbe/player/level',
+                      data: {},
+                      success: function(data){
+                        playerLevel.val(data.value);
+                        playerForm.show();
+                      }
+                  }
+                );
+
+                $.getJSON({
+                      url: '/ffbe/device/ip',
+                      data: {},
+                      success: function(data){
+                        deviceIp.val(data.value);
+                        deviceForm.show();
+                      }
+                  }
+                );
+
+                statusCheck();
+                loadProcessInfo();
+            }
+
+            setTimeout(firstTimeLoad, 100);
         });
 
     </script>
@@ -256,12 +254,12 @@
 <div class="container-fluid">
 
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
-        <a class="navbar-brand" href="#" id="statusName">???</a>
+        <a class="navbar-brand" href="#" id="statusName">CHECKING</a>
     </nav>
 
     <div class="row">
         <form id="setting-form" class="col-sm-4" style="display:none;">
-            <h3>Run</h3>
+            <h3>Loader</h3>
             <div class="form-group">
                 <label for="device">Device</label>
                 <select class="form-control" id="device"></select>
@@ -308,7 +306,7 @@
                 <button type="button" id="controlSwipeLeft" class="btn btn-info">Left</button>
             </div>
         </form>
-        <form id="player-form" class="col-sm-3 offset-sm-1">
+        <form id="player-form" class="col-sm-3 offset-sm-1" style="display:none;">
             <h3>Player</h3>
             <div class="form-group">
                 <label for="player-level">Level</label>
@@ -318,7 +316,7 @@
                 <button type="button" id="controlPlayerSave" class="btn btn-primary">Save</button>
             </div>
         </form>
-        <form id="device-form" class="col-sm-3 offset-sm-1">
+        <form id="device-form" class="col-sm-3 offset-sm-1" style="display:none;">
             <h3>Device</h3>
             <div class="form-group">
                 <label for="device-ip">I.P. Address</label>

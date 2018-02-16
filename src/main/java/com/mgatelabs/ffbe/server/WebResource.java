@@ -161,9 +161,9 @@ public class WebResource {
     }
 
     @POST
-    @Path("/process/playPause")
+    @Path("/process/playPause/{stateId}")
     @Produces("application/json")
-    public Map<String, String> prepProcess(@FormParam("stateId") String stateId) {
+    public Map<String, String> prepProcess(@PathParam("stateId") String stateId) {
         Map<String, String> result = Maps.newHashMap();
 
         if (runner != null) {

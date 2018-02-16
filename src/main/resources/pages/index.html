@@ -34,8 +34,8 @@
             var playerLevel = $('#player-level');
             var deviceIp = $('#device-ip');
 
-            var playPauseButton = $('#controlPlayPause a');
-            var unloadButton = $('#controlUnload a');
+            var playPauseButton = $('#controlPlayPause');
+            var unloadButton = $('#controlUnload');
             var loadButton = $('#controlLoad');
             var controlPlayerSave = $('#controlPlayerSave');
             var controlDeviceSave = $('#controlDeviceSave');
@@ -161,10 +161,7 @@
                 if (!playPauseButton.hasClass('disabled')) {
                     $.ajax({
                       type: "POST",
-                      url: '/ffbe/process/playPause',
-                      data: {
-                        stateId: states.val()
-                      },
+                      url: '/ffbe/process/playPause/' + states.val(),
                       success: function(result){
 
                       }

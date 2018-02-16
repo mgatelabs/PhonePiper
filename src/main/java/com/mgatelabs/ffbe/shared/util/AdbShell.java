@@ -35,6 +35,8 @@ public class AdbShell {
         batch = Lists.newArrayList();
 
         builder = new ProcessBuilder("adb", "shell");
+        builder.redirectOutput(ProcessBuilder.Redirect.INHERIT);
+        builder.redirectError(ProcessBuilder.Redirect.INHERIT);
         try {
             adb = builder.start();
             if (!adb.isAlive()) {

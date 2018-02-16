@@ -17,12 +17,12 @@ public class AdbShell {
     private ProcessBuilder builder;
     private Process adb;
     private static final byte[] LS = new byte [] {0x0a};
-    private static final byte[] ECHO = "doesnotexist".getBytes();
+    private static final byte[] ECHO = "toolbox".getBytes();
 
     //private char[] ECHO_KEY = {'9', '8', '7', '6', '1', '2', '3', '4'};
     //ailsa_ii:/
 
-    private String ECHO_KEY = "doesnotexist: not found";
+    private String ECHO_KEY = "Toolbox!";
 
     private OutputStream processInput;
     private InputStream processOutput;
@@ -35,7 +35,7 @@ public class AdbShell {
         batch = Lists.newArrayList();
 
         builder = new ProcessBuilder("adb", "shell");
-        builder.redirectOutput(ProcessBuilder.Redirect.INHERIT);
+        builder.redirectOutput(ProcessBuilder.Redirect.PIPE);
         builder.redirectError(ProcessBuilder.Redirect.INHERIT);
         try {
             adb = builder.start();

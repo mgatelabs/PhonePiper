@@ -97,7 +97,7 @@ public class AdbShell {
             int index = 0;
             boolean exitFound = false;
             while (!exitFound && (c = processOutput.read(buffer)) != -1) {
-                System.out.println(c);
+                System.out.println("Reading: " + c);
                 for (int i = 0; i < buffer.length; i++) {
                     if (buffer[i] == ECHO_KEY.charAt(index)) {
                         System.out.println("KEY");

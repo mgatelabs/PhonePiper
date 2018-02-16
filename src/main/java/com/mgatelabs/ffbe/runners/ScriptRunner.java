@@ -193,6 +193,8 @@ public class ScriptRunner {
             if (deviceHelper.setup(infoTransfer)) {
                 return true;
             }
+        } else {
+            logger.log(Level.SEVERE, "Phone Helper is not configured");
         }
         return false;
     }
@@ -312,6 +314,7 @@ public class ScriptRunner {
         currentStateId = stateName;
         this.status = Status.RUNNING;
 
+        logger.log(Level.INFO, "Init Helper");
         initHelper();
 
         ImageWrapper imageWrapper;

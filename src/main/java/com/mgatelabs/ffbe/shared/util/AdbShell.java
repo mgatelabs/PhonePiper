@@ -3,6 +3,7 @@ package com.mgatelabs.ffbe.shared.util;
 import com.google.common.base.Joiner;
 import com.google.common.collect.Lists;
 
+import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
@@ -84,10 +85,14 @@ public class AdbShell {
         try {
             System.out.println("\n\nWorking On: " + adbCommand);
 
-            processInput.write(adbCommand.getBytes());
-            processInput.write(LS);
-            processInput.write(ECHO);
-            processInput.write(LS);
+            ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
+
+            byteArrayOutputStream.write(adbCommand.getBytes());
+            byteArrayOutputStream.write(LS);
+            byteArrayOutputStream.write(ECHO);
+            byteArrayOutputStream.write(LS);
+
+            processInput.write(byteArrayOutputStream.toByteArray());
             processInput.flush();
 
             // The idea is to run a command and a failing command.  The failure will result in a message, which can easily be picked up when executed.

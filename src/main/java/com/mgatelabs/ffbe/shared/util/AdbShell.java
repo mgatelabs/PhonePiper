@@ -97,10 +97,13 @@ public class AdbShell {
             int index = 0;
             boolean exitFound = false;
             while (!exitFound && (c = processOutput.read(buffer)) != -1) {
+                System.out.println(c);
                 for (int i = 0; i < buffer.length; i++) {
                     if (buffer[i] == ECHO_KEY.charAt(index)) {
+                        System.out.println("KEY");
                         index++;
                         if (index >= ECHO_KEY.length()) {
+                            System.out.println("END KEY");
                             exitFound = true;
                             break;
                         }

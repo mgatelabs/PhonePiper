@@ -328,6 +328,8 @@ public class ScriptRunner {
         if (stateDefinition == null) {
             logger.log(Level.SEVERE, "Cannot find state with id: " + stateName);
             throw new RuntimeException("Cannot find state with id: " + stateName);
+        } else {
+            logger.log(Level.INFO, "Found initial state with id: " + stateName);
         }
 
         while (isRunning()) {
@@ -345,6 +347,7 @@ public class ScriptRunner {
 
             if (deviceHelper != null && deviceHelper.getFailures() > 20) {
                 deviceHelper = null;
+                logger.log(Level.SEVERE, "Stopping device helper");
             }
 
             if (deviceHelper != null) {

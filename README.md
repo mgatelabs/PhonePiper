@@ -101,6 +101,16 @@ Make sure your already at the earth shrine, entrance, at the depart screen, with
 2. Grabbing the current screen
 3. Handle conditions and execute actions
 
+## Server setup
+
+For running on an Raspberry PI
+
+0. git clone https://github.com/mgatelabs/FFBExecute.git
+1. cd FFBExecute
+2. mvn clean package
+3. cd working
+4. java -jar ../target/FFBExecute-0.0.5-SNAPSHOT.jar server
+
 ## What needs to happen
 
 1. Map parsing

@@ -22,6 +22,9 @@ public class CustomHandler extends Handler {
     public void publish(LogRecord record) {
         //record.ge
         synchronized (events) {
+            while (events.size() >= 100) {
+                events.poll();
+            }
             events.add(record);
         }
     }

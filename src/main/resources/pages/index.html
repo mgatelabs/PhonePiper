@@ -45,6 +45,8 @@
             var deviceForm = $('#device-form');
             var loadedForm = $('#loaded-form');
 
+            var notWhileRunning = $('.notWhileRunning');
+
             var logItems = [];
 
             function populateSelect(select, items) {
@@ -79,6 +81,7 @@
                                 settingForm.hide();
                                 loadedForm.show();
                                 states.prop('disabled', false);
+                                notWhileRunning.prop('disabled', false);
                             } break;
                             case 'RUNNING':
                             case 'STOPPED': {
@@ -87,7 +90,7 @@
                                 settingForm.hide();
                                 loadedForm.show();
                                 states.prop('disabled', true);
-
+                                notWhileRunning.prop('disabled', true);
                                 setTimeout(statusCheck, 3000);
                             } break;
                         }
@@ -108,8 +111,7 @@
                         }
 
                         while (logItems.length > 50) {
-                            item = logItems.splice(0,1);
-                            item.detach();
+                            logItems.splice(0,1)[0].detach();
                         }
                     }
                 });
@@ -175,7 +177,6 @@
                   dataType: 'json'
                 });
             }
-
 
 
             loadButton.click(function(){
@@ -296,14 +297,14 @@
             </div>
             <div class="form-group">
                 <label for="view">Components</label>
-                <select id="components" class="form-control"></select>
+                <select id="components" class="form-control notWhileRunning"></select>
             </div>
             <div class="form-group">
-                <button type="button" id="controlTap" class="btn btn-info">Tap</button>
-                <button type="button" id="controlSwipeUp" class="btn btn-info">Up</button>
-                <button type="button" id="controlSwipeRight" class="btn btn-info">Right</button>
-                <button type="button" id="controlSwipeDown" class="btn btn-info">Down</button>
-                <button type="button" id="controlSwipeLeft" class="btn btn-info">Left</button>
+                <button type="button" id="controlTap" class="btn btn-info notWhileRunning">Tap</button>
+                <button type="button" id="controlSwipeUp" class="btn btn-info notWhileRunning">Up</button>
+                <button type="button" id="controlSwipeRight" class="btn btn-info notWhileRunning">Right</button>
+                <button type="button" id="controlSwipeDown" class="btn btn-info notWhileRunning">Down</button>
+                <button type="button" id="controlSwipeLeft" class="btn btn-info notWhileRunning">Left</button>
             </div>
         </form>
         <form id="player-form" class="col-sm-3 offset-sm-1" style="display:none;">

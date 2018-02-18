@@ -128,7 +128,7 @@
                 <artifactId>spring-boot-maven-plugin</artifactId>
                 <configuration>
                     <fork>true</fork>
-                    <mainClass>dz.lab.jpmtask.App</mainClass>
+                    <mainClass>com.mgatelabs.ffbe.Runner</mainClass>
                 </configuration>
                 <executions>
                     <execution>

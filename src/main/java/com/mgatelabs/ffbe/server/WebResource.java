@@ -61,7 +61,7 @@ public class WebResource {
     @Produces("text/html")
     public String control() {
 
-        URL url = Resources.getResource("pages/index.html");
+        URL url = Resources.getResource("web/pages/index.html");
 
         try {
             return Resources.toString(url, Charsets.UTF_8);
@@ -298,10 +298,18 @@ public class WebResource {
     public Response resource(@PathParam("filename") String path) {
         checkInitialState();
 
-        URL url = Resources.getResource(path);
+        URL url = Resources.getResource("web/resources/" + path);
         String contentType;
         if (path.toLowerCase().endsWith(".png")) {
             contentType = "image/png";
+        } else if (path.toLowerCase().endsWith(".svg")) {
+            contentType = "image/svg";
+        } else if (path.toLowerCase().endsWith(".ico")) {
+            contentType = "image/x-icon";
+        } else if (path.toLowerCase().endsWith(".xml")) {
+            contentType = "text/xml";
+        } else if (path.toLowerCase().endsWith(".webmanifest")) {
+            contentType = "application/manifest+json";
         } else {
             return Response.status(404).build();
         }

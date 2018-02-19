@@ -114,10 +114,10 @@
                         for (i = 0; i < data.logs.length; i++) {
                             item = data.logs[i];
                             div = $('<div class="row"></div>')
-                            div.append($('<div class="col-sm-2"></div>').text(item.source));
-                            div.append($('<div class="col-sm-2"></div>').text(item.timestamp));
-                            div.append($('<div class="col-sm-2"></div>').text(item.level));
-                            div.append($('<div class="col-sm-6"></div>').text(item.message));
+                            div.append($('<div class="col-sm-2 col-md-2 d-none d-sm-block"></div>').text(item.source));
+                            div.append($('<div class="col-sm-4 col-md-2"></div>').text(item.timestamp));
+                            div.append($('<div class="col-sm-2 col-md-2 d-none d-sm-block"></div>').text(item.level));
+                            div.append($('<div class="col-sm-8 col-md-6"></div>').text(item.message));
                             logItems.push(div);
                             logs.prepend(div);
                         }

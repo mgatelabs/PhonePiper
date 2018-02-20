@@ -191,7 +191,7 @@ public class WebResource {
     @POST
     @Path("/process/unload")
     @Produces("application/json")
-    public Map<String, String> unloadProcess(@PathParam("stateId") String stateId) {
+    public Map<String, String> unloadProcess() {
 
         checkInitialState();
 
@@ -214,8 +214,9 @@ public class WebResource {
     @Consumes("application/json")
     @Produces("application/json")
     public PrepResult prepProcess(@RequestBody Map<String, String> values) {
-
         checkInitialState();
+
+        thread = null;
 
         frameChoices = new FrameChoices(Constants.ACTION_RUN, Constants.MODE_SCRIPT, playerDefinition, "", values.get("script"), values.get("script2"), values.get("device"), values.get("view"), values.get("view2"));
 

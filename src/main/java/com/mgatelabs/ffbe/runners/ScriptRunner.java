@@ -75,6 +75,7 @@ public class ScriptRunner {
         vars = Maps.newHashMap();
         shell = new AdbShell();
 
+        logger.removeHandler(customHandler);
         logger.addHandler(customHandler);
 
         logger.finer("Extracting Variables");
@@ -327,6 +328,7 @@ public class ScriptRunner {
 
         if (stateDefinition == null) {
             logger.log(Level.SEVERE, "Cannot find state with id: " + stateName);
+            setStatus(Status.INIT);
             throw new RuntimeException("Cannot find state with id: " + stateName);
         } else {
             logger.log(Level.FINE, "Found initial state with id: " + stateName);

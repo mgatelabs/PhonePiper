@@ -39,7 +39,11 @@ public class ScriptDefinition {
     public void fix() {
         for (StateDefinition stateDefinition : states.values()) {
             stateDefinition.fix();
-
+        }
+        for (VarDefinition varDefinition: getVars()) {
+            if (varDefinition.getModify() == null) {
+                varDefinition.setModify(VarModify.HIDDEN);
+            }
         }
         if (includes == null) {
             includes = Lists.newArrayList();

@@ -8,6 +8,7 @@ public class VarDefinition {
     private String name;
     private String value;
     private VarType type;
+    private VarModify modify;
 
     public VarDefinition() {
     }
@@ -34,6 +35,14 @@ public class VarDefinition {
 
     public void setType(VarType type) {
         this.type = type;
+    }
+
+    public VarModify getModify() {
+        return modify;
+    }
+
+    public void setModify(VarModify modify) {
+        this.modify = modify;
     }
 
     @Override

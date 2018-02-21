@@ -60,6 +60,7 @@ public class WebResource {
     @Path("/")
     @Produces("text/html")
     public String control() {
+        checkInitialState();
 
         URL url = Resources.getResource("web/pages/index.html");
 

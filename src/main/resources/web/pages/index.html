@@ -206,14 +206,7 @@
 
                                 $('<input type="text" class="form-control notWhileRunning"/>').val(item.value).attr('id', 'var_' + item.name).appendTo(grp);
 
-                                $('<div class="input-group-append"></div>').append($('<button class="btn btn-outline-secondary" type="button">Update</button>').attr('for', 'var_' + item.name)).appendTo(grp);
-
-                                //button = $('<button type="button" class="btn btn-primary">Update</button>').attr('for', 'var_' + item.name).appendTo(grp);
-
-                                //grp = $('<div class="form-group"></div>').appendTo(variableContainer);
-                                //label = $('<label></label>').attr('for', 'var_' + item.name).text(item.name).appendTo(grp);
-                                //input = $('<input type="text" class="form-control notWhileRunning"/>').val(item.value).attr('id', 'var_' + item.name).appendTo(grp);
-                                //button = $('<button type="button" class="btn btn-primary">Update</button>').attr('for', 'var_' + item.name).appendTo(grp);
+                                $('<div class="input-group-append"></div>').append($('<button class="btn btn-outline-secondary notWhileRunning" type="button">Update</button>').attr('for', 'var_' + item.name)).appendTo(grp);
                             }
                         } else {
                             variableForm.hide();
@@ -376,7 +369,7 @@
                 <div class="input-group-prepend">
                     <span class="input-group-text">Player Level</span>
                 </div>
-                <input type="number" class="form-control" id="player-level"></input>
+                <input type="number" class="form-control" id="player-level"/>
                 <div class="input-group-append">
                     <button type="button" id="controlPlayerSave" class="btn btn-primary">Update</button>
                 </div>
@@ -386,7 +379,7 @@
                 <div class="input-group-prepend">
                     <span class="input-group-text">Device I.P.</span>
                 </div>
-                <input class="form-control" id="device-ip"></input>
+                <input class="form-control" id="device-ip"/>
                 <div class="input-group-append">
                     <button type="button" id="controlDeviceSave" class="btn btn-primary">Update</button>
                 </div>

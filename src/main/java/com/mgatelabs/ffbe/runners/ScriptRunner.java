@@ -708,4 +708,22 @@ public class ScriptRunner {
 
         return result;
     }
+
+    public List<VarDefinition> getVariables() {
+        List<VarDefinition> vars = Lists.newArrayList();
+        for (VarDefinition varDefinition : scriptDefinition.getVars()) {
+            switch (varDefinition.getModify()) {
+                case HIDDEN:
+                    continue;
+                case VISIBLE:
+                case EDITABLE: {
+                    if (varDefinition.getType() == VarType.INT) {
+                        vars.add(new VarDefinition(varDefinition.getName(), Integer.toString(getVar(varDefinition.getName())), varDefinition.getType(), varDefinition.getModify()));
+                    }
+                }
+                break;
+            }
+        }
+        return vars;
+    }
 }

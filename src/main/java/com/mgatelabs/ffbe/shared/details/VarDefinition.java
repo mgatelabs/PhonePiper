@@ -13,6 +13,13 @@ public class VarDefinition {
     public VarDefinition() {
     }
 
+    public VarDefinition(String name, String value, VarType type, VarModify modify) {
+        this.name = name;
+        this.value = value;
+        this.type = type;
+        this.modify = modify;
+    }
+
     public String getName() {
         return name;
     }

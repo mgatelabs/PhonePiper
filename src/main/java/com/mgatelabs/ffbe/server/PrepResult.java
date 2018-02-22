@@ -1,6 +1,7 @@
 package com.mgatelabs.ffbe.server;
 
 import com.google.common.collect.Lists;
+import com.mgatelabs.ffbe.shared.details.VarDefinition;
 
 import java.util.List;
 
@@ -14,11 +15,13 @@ public class PrepResult {
 
     private List<NamedValueItem> states;
     private List<NamedValueItem> components;
+    private List<VarDefinition> variables;
 
     public PrepResult(StatusEnum status) {
         this.status = status;
         states = Lists.newArrayList();
         components = Lists.newArrayList();
+        variables = Lists.newArrayList();
     }
 
     public void setStatus(StatusEnum status) {
@@ -35,5 +38,9 @@ public class PrepResult {
 
     public List<NamedValueItem> getComponents() {
         return components;
+    }
+
+    public List<VarDefinition> getVariables() {
+        return variables;
     }
 }

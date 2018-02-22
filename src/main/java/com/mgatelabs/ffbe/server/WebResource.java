@@ -275,8 +275,9 @@ public class WebResource {
                 result.getComponents().add(new NamedValueItem(definition.getName(), definition.getComponentId()));
             }
 
-            return result;
+            result.getVariables().addAll(runner.getVariables());
 
+            return result;
         } else {
             return new PrepResult(StatusEnum.FAIL);
         }

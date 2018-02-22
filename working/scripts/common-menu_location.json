@@ -3,7 +3,8 @@
     {
       "name": "min-energy",
       "value": "1",
-      "type": "INT"
+      "type": "INT",
+      "modify":"EDITABLE"
     }
   ],
   "states": {

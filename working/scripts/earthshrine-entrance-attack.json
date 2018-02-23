@@ -3,7 +3,8 @@
     {
       "name": "loops",
       "value": "0",
-      "type": "INT"
+      "type": "INT",
+      "modify":"VISIBLE"
     },
     {
       "name": "setup",

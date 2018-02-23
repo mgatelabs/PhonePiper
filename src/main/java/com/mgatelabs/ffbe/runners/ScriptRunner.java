@@ -726,4 +726,9 @@ public class ScriptRunner {
         }
         return vars;
     }
+
+    public void updateVariable(String key, String value) {
+        int v = Integer.parseInt(value);
+        vars.put(key, v);
+    }
 }

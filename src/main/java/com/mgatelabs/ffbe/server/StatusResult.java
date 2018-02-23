@@ -1,6 +1,7 @@
 package com.mgatelabs.ffbe.server;
 
 import com.google.common.collect.Lists;
+import com.mgatelabs.ffbe.shared.details.VarDefinition;
 
 import java.util.List;
 
@@ -23,8 +24,11 @@ public class StatusResult {
 
     private List<StatusLog> logs;
 
+    private List<VarDefinition> variables;
+
     public StatusResult() {
         logs = Lists.newArrayList();
+        variables = Lists.newArrayList();
     }
 
     public Status getStatus() {
@@ -49,5 +53,13 @@ public class StatusResult {
 
     public void setState(String state) {
         this.state = state;
+    }
+
+    public List<VarDefinition> getVariables() {
+        return variables;
+    }
+
+    public void setVariables(List<VarDefinition> variables) {
+        this.variables = variables;
     }
 }

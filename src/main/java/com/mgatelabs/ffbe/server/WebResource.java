@@ -112,6 +112,16 @@ public class WebResource {
         connectionDefinition.write();
     }
 
+    @POST
+    @Path("/variable")
+    @Produces(MediaType.APPLICATION_JSON)
+    public synchronized void setDeviceIp(@FormParam("key") String key, @FormParam("value") String value) {
+        checkInitialState();
+        if (runner != null) {
+            runner.updateVariable(key, value);
+        }
+    }
+
     @GET
     @Path("/status")
     @Produces("application/json")
@@ -136,6 +146,10 @@ public class WebResource {
                     }
                 }
             }
+        }
+
+        if (runner != null)  {
+            result.getVariables().addAll(runner.getVariables());
         }
 
         final ImmutableList<LogRecord> records = handler.getEvents();

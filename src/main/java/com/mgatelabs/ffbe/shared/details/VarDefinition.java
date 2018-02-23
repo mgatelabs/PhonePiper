@@ -6,6 +6,7 @@ package com.mgatelabs.ffbe.shared.details;
 public class VarDefinition {
 
     private String name;
+    private String display;
     private String value;
     private VarType type;
     private VarModify modify;
@@ -13,8 +14,9 @@ public class VarDefinition {
     public VarDefinition() {
     }
 
-    public VarDefinition(String name, String value, VarType type, VarModify modify) {
+    public VarDefinition(String name, String display, String value, VarType type, VarModify modify) {
         this.name = name;
+        this.display = display;
         this.value = value;
         this.type = type;
         this.modify = modify;
@@ -26,6 +28,14 @@ public class VarDefinition {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public String getDisplay() {
+        return display;
+    }
+
+    public void setDisplay(String display) {
+        this.display = display;
     }
 
     public String getValue() {

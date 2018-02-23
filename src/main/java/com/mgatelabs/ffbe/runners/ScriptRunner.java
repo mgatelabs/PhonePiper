@@ -718,7 +718,7 @@ public class ScriptRunner {
                 case VISIBLE:
                 case EDITABLE: {
                     if (varDefinition.getType() == VarType.INT) {
-                        vars.add(new VarDefinition(varDefinition.getName(), Integer.toString(getVar(varDefinition.getName())), varDefinition.getType(), varDefinition.getModify()));
+                        vars.add(new VarDefinition(varDefinition.getName(), varDefinition.getDisplay(), Integer.toString(getVar(varDefinition.getName())), varDefinition.getType(), varDefinition.getModify()));
                     }
                 }
                 break;

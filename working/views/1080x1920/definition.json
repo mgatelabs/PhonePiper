@@ -376,6 +376,17 @@
     } ],
     "enabled" : true
   }, {
+    "name" : "Menu - Results - Units 2 - Pop",
+    "screenId" : "menu-results-units_2-pop",
+    "points" : [ {
+      "x" : 958,
+      "y" : 884,
+      "r" : 0,
+      "g" : 255,
+      "b" : 0
+    } ],
+    "enabled" : true
+  }, {
     "name" : "Battle - Complete",
     "screenId" : "battle-complete",
     "points" : [ {
@@ -2137,6 +2148,17 @@
     } ],
     "enabled" : true
   }, {
+    "name" : "Menu - Results - Units 0 - Pop",
+    "screenId" : "menu-results-units_0-pop",
+    "points" : [ {
+      "x" : 958,
+      "y" : 333,
+      "r" : 0,
+      "g" : 255,
+      "b" : 0
+    } ],
+    "enabled" : true
+  }, {
     "name" : "Dungeon - Message - Leave",
     "screenId" : "dungeon-message-leave",
     "points" : [ {
@@ -2603,6 +2625,17 @@
     } ],
     "enabled" : true
   }, {
+    "name" : "Menu - Results - Units 3 - Pop",
+    "screenId" : "menu-results-units_3-pop",
+    "points" : [ {
+      "x" : 958,
+      "y" : 1159,
+      "r" : 0,
+      "g" : 255,
+      "b" : 0
+    } ],
+    "enabled" : true
+  }, {
     "name" : "Menu - Goal List",
     "screenId" : "menu-goal_list",
     "points" : [ {
@@ -2851,6 +2884,17 @@
       "b" : 24
     } ],
     "enabled" : false
+  }, {
+    "name" : "Menu - Results - Units 4 - Pop",
+    "screenId" : "menu-results-units_4-pop",
+    "points" : [ {
+      "x" : 958,
+      "y" : 1435,
+      "r" : 0,
+      "g" : 255,
+      "b" : 0
+    } ],
+    "enabled" : true
   }, {
     "name" : "Game - Battle",
     "screenId" : "game-battle",
@@ -5771,6 +5815,17 @@
       "r" : 0,
       "g" : 85,
       "b" : 128
+    } ],
+    "enabled" : true
+  }, {
+    "name" : "Menu - Results - Units 1 - Pop",
+    "screenId" : "menu-results-units_1-pop",
+    "points" : [ {
+      "x" : 958,
+      "y" : 608,
+      "r" : 0,
+      "g" : 255,
+      "b" : 0
     } ],
     "enabled" : true
   }, {

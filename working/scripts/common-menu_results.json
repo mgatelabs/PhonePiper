@@ -1,6 +1,40 @@
 {
   "vars": [
-
+    {
+      "name": "unit_0_tmr",
+      "display": "Unit 1 TMR+",
+      "value": "0",
+      "type": "INT",
+      "modify":"VISIBLE"
+    },
+    {
+      "name": "unit_1_tmr",
+      "display": "Unit 2 TMR+",
+      "value": "0",
+      "type": "INT",
+      "modify":"VISIBLE"
+    },
+    {
+      "name": "unit_2_tmr",
+      "display": "Unit 3 TMR+",
+      "value": "0",
+      "type": "INT",
+      "modify":"VISIBLE"
+    },
+    {
+      "name": "unit_3_tmr",
+      "display": "Unit 4 TMR+",
+      "value": "0",
+      "type": "INT",
+      "modify":"VISIBLE"
+    },
+    {
+      "name": "unit_4_tmr",
+      "display": "Unit 5 TMR+",
+      "value": "0",
+      "type": "INT",
+      "modify":"VISIBLE"
+    }
   ],
   "states": {
 
@@ -18,6 +52,10 @@
               "value": "menu-results-next"
             },
             {
+              "type": "WAIT",
+              "value": "3000"
+            },
+            {
               "type": "REPEAT",
               "value": ""
             }
@@ -29,6 +67,98 @@
     "_common-mr-units": {
       "name": "Common - Menu Result - Units",
       "statements": [
+
+        {
+          "condition": {
+            "is": "SCREEN",
+            "value": "menu-results-units",
+            "and": [
+              {
+                "is": "SCREEN",
+                "value": "menu-results-units_0-pop"
+              }
+            ]
+          },
+          "actions": [
+            {
+              "type": "ADD",
+              "value": "1",
+              "var": "unit_0_tmr"
+            }
+          ]
+        },{
+          "condition": {
+            "is": "SCREEN",
+            "value": "menu-results-units",
+            "and": [
+              {
+                "is": "SCREEN",
+                "value": "menu-results-units_1-pop"
+              }
+            ]
+          },
+          "actions": [
+            {
+              "type": "ADD",
+              "value": "1",
+              "var": "unit_1_tmr"
+            }
+          ]
+        },{
+          "condition": {
+            "is": "SCREEN",
+            "value": "menu-results-units",
+            "and": [
+              {
+                "is": "SCREEN",
+                "value": "menu-results-units_2-pop"
+              }
+            ]
+          },
+          "actions": [
+            {
+              "type": "ADD",
+              "value": "1",
+              "var": "unit_2_tmr"
+            }
+          ]
+        },{
+          "condition": {
+            "is": "SCREEN",
+            "value": "menu-results-units",
+            "and": [
+              {
+                "is": "SCREEN",
+                "value": "menu-results-units_3-pop"
+              }
+            ]
+          },
+          "actions": [
+            {
+              "type": "ADD",
+              "value": "1",
+              "var": "unit_3_tmr"
+            }
+          ]
+        },{
+          "condition": {
+            "is": "SCREEN",
+            "value": "menu-results-units",
+            "and": [
+              {
+                "is": "SCREEN",
+                "value": "menu-results-units_4-pop"
+              }
+            ]
+          },
+          "actions": [
+            {
+              "type": "ADD",
+              "value": "1",
+              "var": "unit_4_tmr"
+            }
+          ]
+        },
         {
           "condition": {
             "is": "SCREEN",

@@ -41,6 +41,9 @@ public class ScriptDefinition {
             stateDefinition.fix();
         }
         for (VarDefinition varDefinition: getVars()) {
+            if (varDefinition.getDisplay() == null) {
+                varDefinition.setDisplay(varDefinition.getName());
+            }
             if (varDefinition.getModify() == null) {
                 varDefinition.setModify(VarModify.HIDDEN);
             }

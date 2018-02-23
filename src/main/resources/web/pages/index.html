@@ -213,7 +213,7 @@
 
                                 grp = $('<div class="input-group mb-3"></div>').appendTo(variableContainer);
 
-                                $('<div class="input-group-prepend"></div>').append($('<span class="input-group-text" id=""></span>').text(item.name)).appendTo(grp);
+                                $('<div class="input-group-prepend"></div>').append($('<span class="input-group-text" id=""></span>').text(item.display)).appendTo(grp);
 
                                 linkedVariables[item.name] = $('<input type="text" class="form-control notWhileRunning"/>').data('key', item.name).val(item.value).attr('id', 'var_' + item.name).appendTo(grp);
                                 switch(item.modify) {

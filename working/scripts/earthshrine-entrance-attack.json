@@ -3,8 +3,7 @@
     {
       "name": "loops",
       "value": "0",
-      "type": "INT",
-      "modify":"VISIBLE"
+      "type": "INT"
     },
     {
       "name": "setup",
@@ -13,23 +12,26 @@
     },
     {
       "name": "runs",
+      "display": "Battles",
       "value": "0",
-      "type": "INT"
+      "type": "INT",
+      "modify":"VISIBLE"
     }
   ],
   "includes": [
     "common-no_op",
     "common-menu_location",
-    "common-menu_results"
+    "common-menu_results",
+    "common-battle"
   ],
   "states": {
 
     "main": {
       "name": "Main",
       "includes": [
-        "_to_results",
-        "_to_menu",
-        "_to_battle",
+        "_es-to_results",
+        "_es-to_menu",
+        "_es-to_battle",
         "_common-no_op"
       ]
     },
@@ -43,12 +45,12 @@
         "_common-ml-friend_0",
         "_common-ml-friend_none",
         "_common-ml-depart",
-        "_menu",
+        "_es-menu",
         "_common-no_op"
       ]
     },
 
-    "_menu": {
+    "_es-menu": {
       "name": "Menu Ending Include",
       "statements": [
         {
@@ -87,264 +89,14 @@
     "battle": {
       "name": "Battle",
       "includes": [
+        "_common_battle-three_attack",
         "_common-screen_saver",
-        "_from_battle_to_results",
+        "_es-from_battle_to_results",
         "_common-no_op"
-      ],
-      "statements": [
-        {
-          "condition": {
-            "is": "SCREEN",
-            "value": "game-battle",
-            "and": [
-              {
-                "is": "SCREEN",
-                "value": "game-battle-auto_off"
-              },
-              {
-                "is": "SCREEN",
-                "value": "battle-unit-0_ready"
-              },
-              {
-                "is": "EQUAL",
-                "var": "setup",
-                "value": "2"
-              }
-            ]
-          },
-          "actions": [
-            {
-              "type": "MSG",
-              "value": "Unit 5 setup and Repeat"
-            },
-            {
-              "type": "SET",
-              "var": "setup",
-              "value": "1"
-            },
-            {
-              "type": "BATCH",
-              "value": "START"
-            },
-            {
-              "type": "SWIPE_DOWN",
-              "value": "battle-unit_5"
-            },
-            {
-              "type": "TAP",
-              "value": "battle-unit_5"
-            },
-            {
-              "type": "TAP",
-              "value": "battle-unit_5"
-            },
-            {
-              "type": "TAP",
-              "value": "battle-repeat"
-            },
-            {
-              "type": "BATCH",
-              "value": "END"
-            },
-            {
-              "type": "WAIT",
-              "value": "1000"
-            },
-            {
-              "type": "REPEAT",
-              "value": ""
-            }
-          ]
-        },
-        {
-          "condition": {
-            "is": "SCREEN",
-            "value": "game-battle",
-            "and": [
-              {
-                "is": "SCREEN",
-                "value": "game-battle-auto_off"
-              },
-              {
-                "is": "SCREEN",
-                "value": "battle-unit-0_ready"
-              },
-              {
-                "is": "EQUAL",
-                "var": "setup",
-                "value": "0"
-              }
-            ]
-          },
-          "actions": [
-            {
-              "type": "MSG",
-              "value": "Unit setup and Repeat"
-            },
-            {
-              "type": "SET",
-              "var": "loops",
-              "value": "0"
-            },
-            {
-              "type": "SET",
-              "var": "setup",
-              "value": "1"
-            },
-            {
-              "type": "BATCH",
-              "value": "START"
-            },
-            {
-              "type": "SWIPE_DOWN",
-              "value": "battle-unit_3"
-            },
-            {
-              "type": "TAP",
-              "value": "battle-unit_3"
-            },
-            {
-              "type": "TAP",
-              "value": "battle-unit_3"
-            },
-            {
-              "type": "SWIPE_DOWN",
-              "value": "battle-unit_4"
-            },
-            {
-              "type": "TAP",
-              "value": "battle-unit_4"
-            },
-            {
-              "type": "TAP",
-              "value": "battle-unit_4"
-            },
-            {
-              "type": "SWIPE_DOWN",
-              "value": "battle-unit_5"
-            },
-            {
-              "type": "TAP",
-              "value": "battle-unit_5"
-            },
-            {
-              "type": "TAP",
-              "value": "battle-unit_5"
-            },
-            {
-              "type": "TAP",
-              "value": "battle-unit_0"
-            },
-            {
-              "type": "TAP",
-              "value": "battle-unit_1"
-            },
-            {
-              "type": "TAP",
-              "value": "battle-unit_2"
-            },
-            {
-              "type": "BATCH",
-              "value": "END"
-            },
-            {
-              "type": "WAIT",
-              "value": "1000"
-            },
-            {
-              "type": "REPEAT",
-              "value": ""
-            }
-          ]
-        },
-        {
-          "condition": {
-            "is": "SCREEN",
-            "value": "game-battle",
-            "and": [
-              {
-                "is": "SCREEN",
-                "value": "game-battle-auto_off"
-              },
-              {
-                "is": "SCREEN",
-                "value": "battle-unit-0_ready"
-              },
-              {
-                "is": "EQUAL",
-                "var": "setup",
-                "value": "1"
-              }
-            ]
-          },
-          "actions": [
-            {
-              "type": "MSG",
-              "value": "Repeat"
-            },
-            {
-              "type": "SET",
-              "var": "loops",
-              "value": "0"
-            },
-            {
-              "type": "BATCH",
-              "value": "START"
-            },
-            {
-              "type": "TAP",
-              "value": "battle-repeat"
-            },
-            {
-              "type": "BATCH",
-              "value": "END"
-            },
-            {
-              "type": "WAIT",
-              "value": "1000"
-            },
-            {
-              "type": "REPEAT",
-              "value": ""
-            }
-          ]
-        },
-        {
-          "condition": {
-            "var": "loops",
-            "is": "GREATER",
-            "value": "20",
-            "and": [
-              {
-                "is": "SCREEN",
-                "value": "game-battle-auto_off"
-              }
-            ]
-          },
-          "actions": [
-            {
-              "type": "TAP",
-              "value": "battle-auto"
-            },
-            {
-              "type": "WAIT",
-              "value": "1000"
-            },
-            {
-              "type": "SET",
-              "var": "loops",
-              "value": "0"
-            },
-            {
-              "type": "REPEAT",
-              "value": ""
-            }
-          ]
-        }
       ]
     },
 
-    "_from_battle_to_results": {
+    "_es-from_battle_to_results": {
       "name": "From Battle To Results",
       "statements": [
         {
@@ -382,7 +134,7 @@
       ]
     },
 
-    "_to_results": {
+    "_es-to_results": {
       "name": "To Results",
       "statements": [
         {
@@ -419,16 +171,16 @@
       "name": "Results",
       "includes": [
         "_common-screen_saver",
-        "_common-mr-points",
-        "_common-mr-units",
-        "_common-mr-items",
-        "_common-mr-friend_request",
-        "_to_menu",
+        "_common_mr-points",
+        "_common_mr-units",
+        "_common_mr-items",
+        "_common_mr-friend_request",
+        "_es-to_menu",
         "_common-no_op"
       ]
     },
 
-    "_to_menu": {
+    "_es-to_menu": {
       "name": "To Menu",
       "statements": [
         {
@@ -468,7 +220,7 @@
       ]
     },
 
-    "_to_battle": {
+    "_es-to_battle": {
       "name": "To Battle",
       "statements": [
         {
@@ -504,11 +256,8 @@
       ]
     },
 
-    "reset": {
-      "name": "Common - Reset",
-      "includes": [
-        "_common-reset"
-      ],
+    "_es-reset": {
+      "name": "Earthshrine - Reset",
       "statements": [
         {
           "condition": {
@@ -529,6 +278,16 @@
           ]
         }
       ]
+    },
+
+    "reset": {
+      "name": "Common - Reset",
+      "includes": [
+        "_es-reset",
+        "_common_mr-reset",
+        "_common-reset"
+      ]
     }
+
   }
 }

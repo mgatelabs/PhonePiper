@@ -241,10 +241,10 @@
     "results": {
       "name": "Results",
       "includes": [
-        "_common-mr-points",
-        "_common-mr-units",
-        "_common-mr-items",
-        "_common-mr-friend_request",
+        "_common_mr-points",
+        "_common_mr-units",
+        "_common_mr-items",
+        "_common_mr-friend_request",
         "_to-menu",
         "_common-no_op"
       ],

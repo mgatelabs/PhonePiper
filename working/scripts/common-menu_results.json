@@ -38,7 +38,7 @@
   ],
   "states": {
 
-    "_common-mr-points": {
+    "_common_mr-points": {
       "name": "Common - Menu Result - Points",
       "statements": [
         {
@@ -64,7 +64,7 @@
       ]
     },
 
-    "_common-mr-units": {
+    "_common_mr-units": {
       "name": "Common - Menu Result - Units",
       "statements": [
 
@@ -182,7 +182,7 @@
       ]
     },
 
-    "_common-mr-items": {
+    "_common_mr-items": {
       "name": "Common - Menu Result - Items",
       "statements": [
         {
@@ -208,7 +208,7 @@
       ]
     },
 
-    "_common-mr-friend_request": {
+    "_common_mr-friend_request": {
       "name": "Common - Menu Result - Friend Request",
       "statements": [
         {
@@ -232,8 +232,46 @@
           ]
         }
       ]
-    }
+    },
 
+    "_common_mr-reset": {
+      "name": "Common - Reset",
+      "statements": [
+        {
+          "condition": {
+            "is": "BOOLEAN",
+            "value": "true"
+          },
+          "actions": [
+            {
+              "type": "SET",
+              "value": "0",
+              "var": "unit_0_tmr"
+            },
+            {
+              "type": "SET",
+              "value": "0",
+              "var": "unit_1_tmr"
+            },
+            {
+              "type": "SET",
+              "value": "0",
+              "var": "unit_2_tmr"
+            },
+            {
+              "type": "SET",
+              "value": "0",
+              "var": "unit_3_tmr"
+            },
+            {
+              "type": "SET",
+              "value": "0",
+              "var": "unit_4_tmr"
+            }
+          ]
+        }
+      ]
+    }
 
   }
 }

@@ -1080,6 +1080,83 @@
     } ],
     "enabled" : true
   }, {
+    "name" : "menu-raid_screen",
+    "screenId" : "menu-raid_screen",
+    "points" : [ {
+      "x" : 74,
+      "y" : 822,
+      "r" : 3,
+      "g" : 4,
+      "b" : 3
+    }, {
+      "x" : 77,
+      "y" : 822,
+      "r" : 6,
+      "g" : 5,
+      "b" : 4
+    }, {
+      "x" : 84,
+      "y" : 813,
+      "r" : 5,
+      "g" : 7,
+      "b" : 7
+    }, {
+      "x" : 93,
+      "y" : 816,
+      "r" : 3,
+      "g" : 4,
+      "b" : 5
+    }, {
+      "x" : 94,
+      "y" : 826,
+      "r" : 5,
+      "g" : 4,
+      "b" : 3
+    }, {
+      "x" : 101,
+      "y" : 824,
+      "r" : 4,
+      "g" : 4,
+      "b" : 3
+    }, {
+      "x" : 753,
+      "y" : 434,
+      "r" : 2,
+      "g" : 1,
+      "b" : 2
+    }, {
+      "x" : 754,
+      "y" : 438,
+      "r" : 4,
+      "g" : 4,
+      "b" : 0
+    }, {
+      "x" : 740,
+      "y" : 442,
+      "r" : 0,
+      "g" : 0,
+      "b" : 0
+    }, {
+      "x" : 1019,
+      "y" : 869,
+      "r" : 1,
+      "g" : 1,
+      "b" : 1
+    }, {
+      "x" : 1019,
+      "y" : 881,
+      "r" : 1,
+      "g" : 1,
+      "b" : 1
+    }, {
+      "x" : 1027,
+      "y" : 875,
+      "r" : 2,
+      "g" : 1,
+      "b" : 1
+    } ],
+    "enabled" : true
+  }, {
     "name" : "Dungeon - Notice",
     "screenId" : "dungeon-notice",
     "points" : [ {
@@ -4385,6 +4462,53 @@
     } ],
     "enabled" : true
   }, {
+    "name" : "menu-raid_orbs",
+    "screenId" : "menu-raid_orbs",
+    "points" : [ {
+      "x" : 865,
+      "y" : 536,
+      "r" : 89,
+      "g" : 234,
+      "b" : 42
+    }, {
+      "x" : 855,
+      "y" : 527,
+      "r" : 254,
+      "g" : 255,
+      "b" : 254
+    }, {
+      "x" : 866,
+      "y" : 527,
+      "r" : 36,
+      "g" : 123,
+      "b" : 15
+    }, {
+      "x" : 856,
+      "y" : 544,
+      "r" : 32,
+      "g" : 79,
+      "b" : 23
+    }, {
+      "x" : 857,
+      "y" : 526,
+      "r" : 254,
+      "g" : 255,
+      "b" : 254
+    }, {
+      "x" : 856,
+      "y" : 528,
+      "r" : 254,
+      "g" : 255,
+      "b" : 254
+    }, {
+      "x" : 856,
+      "y" : 526,
+      "r" : 254,
+      "g" : 255,
+      "b" : 254
+    } ],
+    "enabled" : true
+  }, {
     "name" : "Dungeon - Message - Yes No",
     "screenId" : "dungeon-message-yn",
     "points" : [ {
@@ -5194,12 +5318,6 @@
       "r" : 0,
       "g" : 1,
       "b" : 2
-    }, {
-      "x" : 493,
-      "y" : 1577,
-      "r" : 255,
-      "g" : 255,
-      "b" : 255
     }, {
       "x" : 497,
       "y" : 1577,
@@ -7236,6 +7354,14 @@
     "h" : 180,
     "enabled" : true
   }, {
+    "name" : "menu-home_vortex",
+    "componentId" : "menu-home_vortex",
+    "x" : 220,
+    "y" : 830,
+    "w" : 170,
+    "h" : 120,
+    "enabled" : true
+  }, {
     "name" : "menu-island-grandshelt",
     "componentId" : "menu-island-grandshelt",
     "x" : 380,
@@ -7308,6 +7434,14 @@
     "h" : 79,
     "enabled" : true
   }, {
+    "name" : "menu-raid_2",
+    "componentId" : "menu-raid_2",
+    "x" : 0,
+    "y" : 0,
+    "w" : 1,
+    "h" : 1,
+    "enabled" : false
+  }, {
     "name" : "Battle - Unit 3",
     "componentId" : "battle-unit_3",
     "x" : 558,
@@ -7323,6 +7457,14 @@
     "w" : 150,
     "h" : 120,
     "enabled" : true
+  }, {
+    "name" : "menu-raid_1",
+    "componentId" : "menu-raid_1",
+    "x" : 0,
+    "y" : 0,
+    "w" : 1,
+    "h" : 1,
+    "enabled" : false
   }, {
     "name" : "Battle - Unit 4",
     "componentId" : "battle-unit_4",
@@ -7450,6 +7592,14 @@
     "y" : 1646,
     "w" : 195,
     "h" : 80,
+    "enabled" : true
+  }, {
+    "name" : "menu-home_special",
+    "componentId" : "menu-home_special",
+    "x" : 87,
+    "y" : 484,
+    "w" : 446,
+    "h" : 159,
     "enabled" : true
   }, {
     "name" : "Menu - Results - Next",

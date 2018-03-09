@@ -5319,6 +5319,16 @@
     "points" : [ ],
     "enabled" : false
   }, {
+    "name" : "menu-raid_orbs",
+    "screenId" : "menu-raid_orbs",
+    "points" : [ ],
+    "enabled" : false
+  }, {
+    "name" : "menu-raid_screen",
+    "screenId" : "menu-raid_screen",
+    "points" : [ ],
+    "enabled" : false
+  }, {
     "name" : "Menu - Results - Items",
     "screenId" : "menu-results-items",
     "points" : [ {
@@ -6448,6 +6458,22 @@
     "h" : 80,
     "enabled" : false
   }, {
+    "name" : "menu-home_special",
+    "componentId" : "menu-home_special",
+    "x" : 0,
+    "y" : 0,
+    "w" : 1,
+    "h" : 1,
+    "enabled" : false
+  }, {
+    "name" : "menu-home_vortex",
+    "componentId" : "menu-home_vortex",
+    "x" : 0,
+    "y" : 0,
+    "w" : 1,
+    "h" : 1,
+    "enabled" : false
+  }, {
     "name" : "menu-island-grandshelt",
     "componentId" : "menu-island-grandshelt",
     "x" : 0,
@@ -6514,6 +6540,22 @@
   }, {
     "name" : "menu-play_mission-yes",
     "componentId" : "menu-play_mission-yes",
+    "x" : 0,
+    "y" : 0,
+    "w" : 1,
+    "h" : 1,
+    "enabled" : false
+  }, {
+    "name" : "menu-raid_1",
+    "componentId" : "menu-raid_1",
+    "x" : 0,
+    "y" : 0,
+    "w" : 1,
+    "h" : 1,
+    "enabled" : false
+  }, {
+    "name" : "menu-raid_2",
+    "componentId" : "menu-raid_2",
     "x" : 0,
     "y" : 0,
     "w" : 1,

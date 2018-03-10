@@ -55,12 +55,9 @@
             "value": "menu-missions-select",
             "and": [
               {
-                "is": "ENERGY",
-                "value": "5"
-              },
-              {
-                "not": "ENERGY",
-                "value": "10"
+                "is": "GREATER",
+                "value": "16320",
+                "var": "_seconds"
               }
             ]
           },
@@ -68,6 +65,32 @@
             {
               "type": "MOVE",
               "value": "to_home"
+            }
+          ]
+        },
+        {
+          "condition": {
+            "is": "SCREEN",
+            "value": "menu-depart",
+            "and": [
+              {
+                "not": "SCREEN",
+                "value": "menu-depart-team_1"
+              }
+            ]
+          },
+          "actions": [
+            {
+              "type": "SWIPE_RIGHT",
+              "value": "menu-depart-units"
+            },
+            {
+              "type": "WAIT",
+              "value": "1500"
+            },
+            {
+              "type": "REPEAT",
+              "value": ""
             }
           ]
         }

@@ -3411,6 +3411,11 @@
     "points" : [ ],
     "enabled" : false
   }, {
+    "name" : "menu-depart-team_1",
+    "screenId" : "menu-depart-team_1",
+    "points" : [ ],
+    "enabled" : false
+  }, {
     "name" : "menu-energy_recovery",
     "screenId" : "menu-energy_recovery",
     "points" : [ {
@@ -6171,22 +6176,22 @@
     "name" : "Menu - Results - Units 0 - Pop",
     "screenId" : "menu-results-units_0-pop",
     "points" : [ ],
-    "enabled" : true
+    "enabled" : false
   }, {
     "name" : "Menu - Results - Units 1 - Pop",
     "screenId" : "menu-results-units_1-pop",
     "points" : [ ],
-    "enabled" : true
+    "enabled" : false
   }, {
     "name" : "Menu - Results - Units 2 - Pop",
     "screenId" : "menu-results-units_2-pop",
     "points" : [ ],
-    "enabled" : true
+    "enabled" : false
   }, {
     "name" : "Menu - Results - Units 3 - Pop",
     "screenId" : "menu-results-units_3-pop",
     "points" : [ ],
-    "enabled" : true
+    "enabled" : false
   }, {
     "name" : "Menu - Results - Units 4 - Pop",
     "screenId" : "menu-results-units_4-pop",

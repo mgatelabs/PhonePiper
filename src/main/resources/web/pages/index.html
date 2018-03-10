@@ -73,6 +73,14 @@
                 }
             }
 
+            view.change(function(){
+                view2.prop('disabled', !view.val());
+            });
+
+            script.change(function(){
+                script2.prop('disabled', !script.val());
+            });
+
             function createGroup(name, field, button) {
                 var grp = $('<div class="input-group mb-3"></div>').appendTo(variableContainer);
                 $('<div class="input-group-prepend"></div>').append($('<span class="input-group-text" id=""></span>').text(name)).appendTo(grp);
@@ -342,7 +350,7 @@
                 <div class="input-group-prepend">
                     <span class="input-group-text">Extra View</span>
                 </div>
-                <select class="form-control" id="view2"></select>
+                <select class="form-control" id="view2" disabled></select>
             </div>
             <br/>
             <div class="input-group">
@@ -356,7 +364,7 @@
                 <div class="input-group-prepend">
                     <span class="input-group-text">Extra Script</span>
                 </div>
-                <select class="form-control" id="script2"></select>
+                <select class="form-control" id="script2" disabled></select>
             </div>
             <br/>
             <div class="form-group">

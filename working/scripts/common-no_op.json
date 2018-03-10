@@ -349,6 +349,10 @@
               "type": "SET",
               "value": "0",
               "var": "loops"
+            },{
+              "type": "SET",
+              "value": "0",
+              "var": "_seconds"
             },
             {
               "type": "MOVE",

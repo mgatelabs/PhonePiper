@@ -16,6 +16,7 @@ import com.mgatelabs.ffbe.ui.utils.CustomHandler;
 
 import java.text.SimpleDateFormat;
 import java.util.*;
+import java.util.concurrent.TimeUnit;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -65,6 +66,10 @@ public class ScriptRunner {
 
     private Map<String, VarTimer> timers;
 
+    private static final String VAR_SECONDS = "_seconds";
+
+    private long elapsedTime;
+
     public ScriptRunner(PlayerDefinition playerDefinition, DeviceHelper deviceHelper, ScriptDefinition scriptDefinition, DeviceDefinition deviceDefinition, ViewDefinition viewDefinition, CustomHandler customHandler) {
         this.playerDefinition = playerDefinition;
         this.scriptDefinition = scriptDefinition;
@@ -80,6 +85,8 @@ public class ScriptRunner {
 
         logger.finer("Extracting Variables");
 
+        elapsedTime = 0;
+
         // Script Includes
         for (String scriptIncludeId : scriptDefinition.getIncludes()) {
             ScriptDefinition otherDefinition = ScriptDefinition.read(scriptIncludeId);
@@ -89,11 +96,7 @@ public class ScriptRunner {
                 // Add Replace any existing state with states from the includes
                 for (Map.Entry<String, StateDefinition> otherState : otherDefinition.getStates().entrySet()) {
                     if (scriptDefinition.getStates().containsKey(otherState.getKey())) {
-                        //if (otherState.getKey().startsWith("_")) {
-                        // This is a non-primary state, key the already defined state
                         continue;
-                        //}
-                        //scriptDefinition.getStates().remove(otherState.getKey());
                     }
                     scriptDefinition.getStates().put(otherState.getKey(), otherState.getValue());
                 }
@@ -126,6 +129,8 @@ public class ScriptRunner {
                 }
             }
         }
+
+        scriptDefinition.getVars().add(new VarDefinition(VAR_SECONDS, "Elapsed Seconds", "0", VarType.INT, VarModify.VISIBLE));
 
         for (VarDefinition varDefinition : scriptDefinition.getVars()) {
             if (varDefinition.getType() == VarType.INT) {
@@ -221,6 +226,11 @@ public class ScriptRunner {
     }
 
     private void setVar(String name, int value) {
+        if (name.startsWith("_")) {
+            if (name.equalsIgnoreCase(VAR_SECONDS) && value == 0) {
+                elapsedTime = value;
+            }
+        }
         vars.put(name, value);
     }
 
@@ -334,9 +344,17 @@ public class ScriptRunner {
             logger.log(Level.FINE, "Found initial state with id: " + stateName);
         }
 
+        long lastTime = System.nanoTime();
+
         while (isRunning()) {
 
-            //logger.log(Level.INFO, "Loop");
+            long timeNow = System.nanoTime();
+
+            elapsedTime += (timeNow - lastTime);
+
+            lastTime = timeNow;
+
+            vars.put(VAR_SECONDS, (int) TimeUnit.NANOSECONDS.toSeconds(elapsedTime));
 
             if (!shell.isReady()) {
                 logger.log(Level.WARNING, "Bad Shell: Stopping");

@@ -3186,6 +3186,29 @@
     } ],
     "enabled" : true
   }, {
+    "name" : "menu-depart-team_1",
+    "screenId" : "menu-depart-team_1",
+    "points" : [ {
+      "x" : 864,
+      "y" : 550,
+      "r" : 0,
+      "g" : 190,
+      "b" : 238
+    }, {
+      "x" : 858,
+      "y" : 548,
+      "r" : 250,
+      "g" : 252,
+      "b" : 253
+    }, {
+      "x" : 863,
+      "y" : 551,
+      "r" : 0,
+      "g" : 187,
+      "b" : 240
+    } ],
+    "enabled" : true
+  }, {
     "name" : "Menu - Connection_error",
     "screenId" : "menu-connection_error",
     "points" : [ {

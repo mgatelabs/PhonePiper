@@ -15,7 +15,6 @@
     "common-no_op"
   ],
   "states": {
-
     "_common_battle-three_attack": {
       "name": "Common Battle - Three Attack",
       "statements": [
@@ -269,7 +268,46 @@
           ]
         }
       ]
-    }
+    },
+
+  "_common_battle-auto":{"name": "Common Battle - Auto",
+    "statements": [
+      {
+        "condition": {
+          "is": "SCREEN",
+          "value": "game-battle",
+          "and": [
+            {
+              "is": "SCREEN",
+              "value": "game-battle-auto_off"
+            },
+            {
+              "is": "SCREEN",
+              "value": "battle-unit-0_ready"
+            }
+          ]
+        },
+        "actions": [
+          {
+            "type": "MSG",
+            "value": "Auto-Attack"
+          },
+          {
+            "type": "TAP",
+            "value": "battle-auto"
+          },
+          {
+            "type": "WAIT",
+            "value": "1000"
+          },
+          {
+            "type": "REPEAT",
+            "value": ""
+          }
+        ]
+      }
+    ]
+  }
 
   }
 }

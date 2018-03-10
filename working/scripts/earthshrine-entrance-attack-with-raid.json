@@ -1,0 +1,606 @@
+{
+  "vars": [
+    {
+      "name": "loops",
+      "value": "0",
+      "type": "INT"
+    },
+    {
+      "name": "setup",
+      "value": "0",
+      "type": "INT"
+    },
+    {
+      "name": "runs",
+      "display": "Battles",
+      "value": "0",
+      "type": "INT",
+      "modify":"VISIBLE"
+    }
+  ],
+  "includes": [
+    "common-no_op",
+    "common-menu_location",
+    "common-menu_results",
+    "common-battle"
+  ],
+  "states": {
+
+    "main": {
+      "name": "Main",
+      "includes": [
+        "_es-to_results",
+        "_es-to_menu",
+        "_es-to_battle",
+        "_common-no_op"
+      ]
+    },
+
+    "menu": {
+      "name": "Menu",
+      "includes": [
+        "_common-screen_saver",
+        "_common-ml-mission_2",
+        "_common-ml-goals",
+        "_common-ml-friend_0",
+        "_common-ml-friend_none",
+        "_common-ml-depart",
+        "_es-menu",
+        "_common-no_op"
+      ],
+      "statements": [
+        {
+          "condition": {
+            "is": "SCREEN",
+            "value": "menu-missions-select",
+            "and": [
+              {
+                "is": "ENERGY",
+                "value": "5"
+              },
+              {
+                "not": "ENERGY",
+                "value": "10"
+              }
+            ]
+          },
+          "actions": [
+            {
+              "type": "MOVE",
+              "value": "to_home"
+            }
+          ]
+        }
+      ]
+    },
+
+    "_es-menu": {
+      "name": "Menu Ending Include",
+      "statements": [
+        {
+          "condition": {
+            "is": "SCREEN",
+            "value": "game-battle"
+          },
+          "actions": [
+            {
+              "type": "TIMER",
+              "value": "BATTLE"
+            },
+            {
+              "type": "SET",
+              "var": "loops",
+              "value": "0"
+            },
+            {
+              "type": "ADD",
+              "var": "runs",
+              "value": "1"
+            },
+            {
+              "type": "MSG",
+              "value": "Starting run ${runs}"
+            },
+            {
+              "type": "SWAP",
+              "value": "battle"
+            }
+          ]
+        }
+      ]
+    },
+
+    "battle": {
+      "name": "Battle",
+      "includes": [
+        "_common_battle-three_attack",
+        "_common-screen_saver",
+        "_es-from_battle_to_results",
+        "_common-no_op"
+      ]
+    },
+
+    "_es-from_battle_to_results": {
+      "name": "From Battle To Results",
+      "statements": [
+        {
+          "condition": {
+            "is": "SCREEN",
+            "value": "menu-results-points",
+            "or": [
+              {
+                "is": "SCREEN",
+                "value": "menu-results-units"
+              },
+              {
+                "is": "SCREEN",
+                "value": "menu-results-items"
+              }
+            ]
+          },
+          "actions": [
+            {
+              "type": "SET",
+              "var": "loops",
+              "value": "0"
+            },
+            {
+              "type": "SET",
+              "var": "setup",
+              "value": "2"
+            },
+            {
+              "type": "SWAP",
+              "value": "results"
+            }
+          ]
+        }
+      ]
+    },
+
+    "_es-to_results": {
+      "name": "To Results",
+      "statements": [
+        {
+          "condition": {
+            "is": "SCREEN",
+            "value": "menu-results-points",
+            "or": [
+              {
+                "is": "SCREEN",
+                "value": "menu-results-units"
+              },
+              {
+                "is": "SCREEN",
+                "value": "menu-results-items"
+              }
+            ]
+          },
+          "actions": [
+            {
+              "type": "SET",
+              "var": "loops",
+              "value": "0"
+            },
+            {
+              "type": "SWAP",
+              "value": "results"
+            }
+          ]
+        }
+      ]
+    },
+
+    "results": {
+      "name": "Results",
+      "includes": [
+        "_common-screen_saver",
+        "_common_mr-points",
+        "_common_mr-units",
+        "_common_mr-items",
+        "_common_mr-friend_request",
+        "_es-to_menu",
+        "_common-no_op"
+      ]
+    },
+
+    "_es-to_menu": {
+      "name": "To Menu",
+      "statements": [
+        {
+          "condition": {
+            "is": "SCREEN",
+            "value": "menu-missions-select",
+            "or": [
+              {
+                "is": "SCREEN",
+                "value": "menu-goal_list"
+              },
+              {
+                "is": "SCREEN",
+                "value": "menu-friend_select"
+              },
+              {
+                "is": "SCREEN",
+                "value": "menu-friend_select-empty"
+              },
+              {
+                "is": "SCREEN",
+                "value": "menu-depart"
+              }
+            ]
+          },
+          "actions": [
+            {
+              "type": "MSG",
+              "value": "Ending run ${runs}"
+            },
+            {
+              "type": "MOVE",
+              "value": "menu"
+            }
+          ]
+        }
+      ]
+    },
+
+    "_es-to_battle": {
+      "name": "To Battle",
+      "statements": [
+        {
+          "condition": {
+            "is": "SCREEN",
+            "value": "game-battle"
+          },
+          "actions": [
+            {
+              "type": "TIMER",
+              "value": "BATTLE"
+            },
+            {
+              "type": "SET",
+              "var": "loops",
+              "value": "0"
+            },
+            {
+              "type": "ADD",
+              "var": "runs",
+              "value": "1"
+            },
+            {
+              "type": "MSG",
+              "value": "Starting run ${runs}"
+            },
+            {
+              "type": "SWAP",
+              "value": "battle"
+            }
+          ]
+        }
+      ]
+    },
+
+    "_es-reset": {
+      "name": "Earthshrine - Reset",
+      "statements": [
+        {
+          "condition": {
+            "is": "BOOLEAN",
+            "value": "true"
+          },
+          "actions": [
+            {
+              "type": "SET",
+              "value": "0",
+              "var": "setup"
+            },
+            {
+              "type": "SET",
+              "value": "0",
+              "var": "runs"
+            }
+          ]
+        }
+      ]
+    },
+
+    "reset": {
+      "name": "Common - Reset",
+      "includes": [
+        "_es-reset",
+        "_common_mr-reset",
+        "_common-reset"
+      ]
+    },
+
+    "raid-home": {
+      "name": "Raid Home",
+      "includes": [
+        "_common-ml-goals",
+        "_common-ml-friend_0",
+        "_common-ml-friend_none",
+        "_raid-to_battle",
+        "_common-no_op"
+      ],
+      "statements": [
+        {
+          "condition": {
+            "is": "SCREEN",
+            "value": "menu-raid_screen",
+            "and": [
+              {
+                "is": "SCREEN",
+                "value": "menu-raid_orbs"
+              }
+            ]
+          },
+          "actions": [
+            {
+              "type": "MSG",
+              "value": "Found Orb, Starting Missing 2"
+            },
+            {
+              "type": "TAP",
+              "value": "menu-raid_1"
+            },
+            {
+              "type": "WAIT",
+              "value": "3000"
+            }
+          ]
+        },
+        {
+          "condition": {
+            "is": "SCREEN",
+            "value": "menu-depart",
+            "and": [
+              {
+                "is": "SCREEN",
+                "value": "menu-depart-team_0"
+              }
+            ]
+          },
+          "actions": [
+            {
+              "type": "TAP",
+              "value": "menu-depart-depart"
+            },
+            {
+              "type": "WAIT",
+              "value": "1500"
+            },
+            {
+              "type": "REPEAT",
+              "value": ""
+            }
+          ]
+        },
+        {
+          "condition": {
+            "is": "SCREEN",
+            "value": "menu-depart",
+            "and": [
+              {
+                "not": "SCREEN",
+                "value": "menu-depart-team_0"
+              }
+            ]
+          },
+          "actions": [
+            {
+              "type": "SWIPE_RIGHT",
+              "value": "menu-depart-units"
+            },
+            {
+              "type": "WAIT",
+              "value": "1500"
+            },
+            {
+              "type": "REPEAT",
+              "value": ""
+            }
+          ]
+        }
+      ]
+    },
+
+    "_raid-to_battle": {
+      "name": "To Raid Battle",
+      "statements": [
+        {
+          "condition": {
+            "is": "SCREEN",
+            "value": "game-battle"
+          },
+          "actions": [
+            {
+              "type": "TIMER",
+              "value": "BATTLE"
+            },
+            {
+              "type": "SET",
+              "var": "loops",
+              "value": "0"
+            },
+            {
+              "type": "ADD",
+              "var": "runs",
+              "value": "1"
+            },
+            {
+              "type": "MSG",
+              "value": "Starting run ${runs}"
+            },
+            {
+              "type": "SWAP",
+              "value": "raid-battle"
+            }
+          ]
+        }
+      ]
+    },
+
+    "raid-battle": {
+      "name": "Raid - Battle",
+      "includes": [
+        "_common_battle-auto",
+        "_raid-to_results",
+        "_common-no_op"
+      ]
+    },
+
+    "_raid-to_results": {
+      "name": "To Raid Results",
+      "statements": [
+        {
+          "condition": {
+            "is": "SCREEN",
+            "value": "menu-results-points",
+            "or": [
+              {
+                "is": "SCREEN",
+                "value": "menu-results-units"
+              },
+              {
+                "is": "SCREEN",
+                "value": "menu-results-items"
+              },
+              {
+                "is": "SCREEN",
+                "value": "menu-results-points_raid"
+              }
+            ]
+          },
+          "actions": [
+            {
+              "type": "SET",
+              "var": "loops",
+              "value": "0"
+            },
+            {
+              "type": "SWAP",
+              "value": "raid-results"
+            }
+          ]
+        }
+      ]
+    },
+
+    "raid-results": {
+      "name": "Raid - Result",
+      "includes": [
+        "_common_mr-raid_points",
+        "_common_mr-raid_damage",
+        "_common_mr-units",
+        "_common_mr-missions",
+        "_common_mr-items",
+        "_common_mr-friend_request",
+        "_raid-to_home",
+        "_common-no_op"
+      ]
+    },
+
+    "_raid-to_home": {
+      "name": "To Raid Screen",
+      "statements": [
+        {
+          "condition": {
+            "is": "SCREEN",
+            "value": "menu-raid_screen"
+          },
+          "actions": [
+            {
+              "type": "MSG",
+              "value": "Ending run ${runs}"
+            },
+            {
+              "type": "MOVE",
+              "value": "raid-home"
+            }
+          ]
+        }
+      ]
+    },
+
+    "to_home": {
+      "name": "To Home Screen",
+      "statements": [
+        {
+          "condition": {
+            "is": "SCREEN",
+            "value": "menu-home"
+          },
+          "actions": [
+            {
+              "type": "MSG",
+              "value": "Going to Vortex"
+            },
+            {
+              "type": "SET",
+              "var": "loops",
+              "value": "0"
+            },
+            {
+              "type": "TAP",
+              "value": "menu-home_special"
+            },
+            {
+              "type": "WAIT",
+              "value": "10000"
+            },
+            {
+              "type": "REPEAT",
+              "value": ""
+            }
+          ]
+        },
+        {
+          "condition": {
+            "is": "SCREEN",
+            "value": "menu-raid_screen"
+          },
+          "actions": [
+            {
+              "type": "MSG",
+              "value": "Ending run ${runs}"
+            },
+            {
+              "type": "MOVE",
+              "value": "raid-home"
+            }
+          ]
+        },
+        {
+          "condition": {
+            "not": "SCREEN",
+            "value": "menu-home"
+          },
+          "actions": [
+            {
+              "type": "MSG",
+              "value": "Backing Up"
+            },
+            {
+              "type": "SET",
+              "var": "loops",
+              "value": "0"
+            },
+            {
+              "type": "EVENT",
+              "value": "back"
+            },
+            {
+              "type": "WAIT",
+              "value": "5000"
+            },
+            {
+              "type": "REPEAT",
+              "value": ""
+            }
+          ]
+        }
+      ]
+    }
+
+  }
+}

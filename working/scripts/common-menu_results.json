@@ -64,6 +64,110 @@
       ]
     },
 
+    "_common_mr-raid_points": {
+      "name": "Common - Menu Result - Raid Points",
+      "statements": [
+        {
+          "condition": {
+            "is": "SCREEN",
+            "value": "menu-results-points_raid"
+          },
+          "actions": [
+            {
+              "type": "TAP",
+              "value": "menu-results-next"
+            },
+            {
+              "type": "WAIT",
+              "value": "3000"
+            },
+            {
+              "type": "REPEAT",
+              "value": ""
+            }
+          ]
+        }
+      ]
+    },
+
+    "_common_mr-raid_points": {
+      "name": "Common - Menu Result - Raid Points",
+      "statements": [
+        {
+          "condition": {
+            "is": "SCREEN",
+            "value": "menu-results-points_raid"
+          },
+          "actions": [
+            {
+              "type": "TAP",
+              "value": "menu-results-next"
+            },
+            {
+              "type": "WAIT",
+              "value": "3000"
+            },
+            {
+              "type": "REPEAT",
+              "value": ""
+            }
+          ]
+        }
+      ]
+    },
+
+    "_common_mr-raid_damage": {
+      "name": "Common - Menu Result - Raid Damage",
+      "statements": [
+        {
+          "condition": {
+            "is": "SCREEN",
+            "value": "menu-results-damage"
+          },
+          "actions": [
+            {
+              "type": "TAP",
+              "value": "menu-results-next"
+            },
+            {
+              "type": "WAIT",
+              "value": "3000"
+            },
+            {
+              "type": "REPEAT",
+              "value": ""
+            }
+          ]
+        }
+      ]
+    },
+
+    "_common_mr-missions": {
+      "name": "Common - Menu Result - Missions",
+      "statements": [
+        {
+          "condition": {
+            "is": "SCREEN",
+            "value": "menu-results-missions"
+          },
+          "actions": [
+            {
+              "type": "TAP",
+              "value": "menu-results-next"
+            },
+            {
+              "type": "WAIT",
+              "value": "3000"
+            },
+            {
+              "type": "REPEAT",
+              "value": ""
+            }
+          ]
+        }
+      ]
+    },
+
     "_common_mr-units": {
       "name": "Common - Menu Result - Units",
       "statements": [

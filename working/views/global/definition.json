@@ -3406,6 +3406,11 @@
     } ],
     "enabled" : false
   }, {
+    "name" : "menu-depart-team_0",
+    "screenId" : "menu-depart-team_0",
+    "points" : [ ],
+    "enabled" : false
+  }, {
     "name" : "menu-energy_recovery",
     "screenId" : "menu-energy_recovery",
     "points" : [ {
@@ -5329,6 +5334,11 @@
     "points" : [ ],
     "enabled" : false
   }, {
+    "name" : "menu-results-damage",
+    "screenId" : "menu-results-damage",
+    "points" : [ ],
+    "enabled" : false
+  }, {
     "name" : "Menu - Results - Items",
     "screenId" : "menu-results-items",
     "points" : [ {
@@ -5724,6 +5734,11 @@
     } ],
     "enabled" : false
   }, {
+    "name" : "menu-results-missions",
+    "screenId" : "menu-results-missions",
+    "points" : [ ],
+    "enabled" : false
+  }, {
     "name" : "Menu - Results - Points",
     "screenId" : "menu-results-points",
     "points" : [ {
@@ -5979,6 +5994,11 @@
       "g" : 64,
       "b" : 139
     } ],
+    "enabled" : false
+  }, {
+    "name" : "menu-results-points_raid",
+    "screenId" : "menu-results-points_raid",
+    "points" : [ ],
     "enabled" : false
   }, {
     "name" : "Menu - Results - Units",
@@ -6376,6 +6396,14 @@
     "y" : 1645,
     "w" : 409,
     "h" : 83,
+    "enabled" : false
+  }, {
+    "name" : "menu-depart-units",
+    "componentId" : "menu-depart-units",
+    "x" : 0,
+    "y" : 0,
+    "w" : 1,
+    "h" : 1,
     "enabled" : false
   }, {
     "name" : "Menu - Energy Bar",

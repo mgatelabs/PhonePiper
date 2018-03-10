@@ -524,6 +524,9 @@
 
     "to_home": {
       "name": "To Home Screen",
+      "includes": [
+        "_common-no_op"
+      ],
       "statements": [
         {
           "condition": {

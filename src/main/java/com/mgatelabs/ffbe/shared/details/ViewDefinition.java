@@ -94,6 +94,17 @@ public class ViewDefinition {
         return components;
     }
 
+    @JsonIgnore
+    public List<ComponentDefinition> getSortedComponents() {
+        components.sort(new Comparator<ComponentDefinition>() {
+            @Override
+            public int compare(ComponentDefinition o1, ComponentDefinition o2) {
+                return o1.getComponentId().compareTo(o2.getComponentId());
+            }
+        });
+        return components;
+    }
+
     public void setComponents(List<ComponentDefinition> components) {
         this.components = components;
     }

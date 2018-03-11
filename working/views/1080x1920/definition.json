@@ -7779,10 +7779,10 @@
   }, {
     "name" : "menu-location-earthshrine",
     "componentId" : "menu-location-earthshrine",
-    "x" : 600,
-    "y" : 1450,
-    "w" : 150,
-    "h" : 120,
+    "x" : 641,
+    "y" : 1440,
+    "w" : 83,
+    "h" : 81,
     "enabled" : true
   }, {
     "name" : "menu-raid_1",

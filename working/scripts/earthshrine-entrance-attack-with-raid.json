@@ -11,6 +11,11 @@
       "type": "INT"
     },
     {
+      "name": "logic",
+      "value": "0",
+      "type": "INT"
+    },
+    {
       "name": "runs",
       "display": "Battles",
       "value": "0",
@@ -63,8 +68,17 @@
           },
           "actions": [
             {
+              "type": "MSG",
+              "value": "Time limit hit, switching to ORB farming"
+            },
+            {
+              "type": "SET",
+              "value": "0",
+              "var": "_seconds"
+            },
+            {
               "type": "MOVE",
-              "value": "to_home"
+              "value": "farm_to_home_to_raid"
             }
           ]
         },
@@ -371,6 +385,27 @@
               "value": "3000"
             }
           ]
+        },{
+          "condition": {
+            "is": "SCREEN",
+            "value": "menu-raid_screen",
+            "and": [
+              {
+                "not": "SCREEN",
+                "value": "menu-raid_orbs"
+              }
+            ]
+          },
+          "actions": [
+            {
+              "type": "MSG",
+              "value": "Out of Orbs, Resuming farming"
+            },
+            {
+              "type": "MOVE",
+              "value": "raid_to_home_to_farm"
+            }
+          ]
         },
         {
           "condition": {
@@ -545,10 +580,11 @@
       ]
     },
 
-    "to_home": {
-      "name": "To Home Screen",
+    "farm_to_home_to_raid": {
+      "name": "Farm > Home > Raid",
       "includes": [
-        "_common-no_op"
+        "_common-no_op",
+        "_not_home_back"
       ],
       "statements": [
         {
@@ -588,14 +624,96 @@
           "actions": [
             {
               "type": "MSG",
-              "value": "Ending run ${runs}"
+              "value": "Found Raid Screen"
             },
             {
               "type": "MOVE",
               "value": "raid-home"
             }
           ]
-        },
+        }
+      ]
+    },
+
+    "raid_to_home_to_farm": {
+      "name": "Raid > Home > Farm",
+      "includes": [
+        "_es-to_menu",
+        "_common-no_op",
+        "_not_home_back"
+      ],
+      "statements": [
+        {
+          "condition": {
+            "is": "SCREEN",
+            "value": "menu-home"
+          },
+          "actions": [
+            {
+              "type": "MSG",
+              "value": "Going to World"
+            },
+            {
+              "type": "SET",
+              "var": "loops",
+              "value": "0"
+            },
+            {
+              "type": "TAP",
+              "value": "menu-worlds"
+            },
+            {
+              "type": "WAIT",
+              "value": "5000"
+            },
+            {
+              "type": "MSG",
+              "value": "Fixing Location"
+            },
+            {
+              "type": "SWIPE_RIGHT",
+              "value": "screen-center"
+            },
+            {
+              "type": "SWIPE_DOWN",
+              "value": "screen-center"
+            },
+            {
+              "type": "WAIT",
+              "value": "5000"
+            },
+            {
+              "type": "SWIPE_LEFT",
+              "value": "menu-island-grandshelt_isles"
+            },
+            {
+              "type": "WAIT",
+              "value": "5000"
+            },
+            {
+              "type": "MSG",
+              "value": "Tapping Earthshrine"
+            },
+            {
+              "type": "TAP",
+              "value": "menu-location-earthshrine"
+            },
+            {
+              "type": "WAIT",
+              "value": "5000"
+            },
+            {
+              "type": "MOVE",
+              "value": "menu"
+            }
+          ]
+        }
+      ]
+    },
+
+    "_not_home_back": {
+      "name": "Not Home, Back down",
+      "statements": [
         {
           "condition": {
             "not": "SCREEN",

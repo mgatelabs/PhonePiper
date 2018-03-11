@@ -326,10 +326,6 @@
               "type": "ADD",
               "value": "1",
               "var": "loops"
-            },
-            {
-              "type": "REPEAT",
-              "value": ""
             }
           ]
         }

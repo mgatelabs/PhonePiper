@@ -262,6 +262,11 @@
               "value": "0"
             },
             {
+              "type": "SET",
+              "value": "0",
+              "var": "setup"
+            },
+            {
               "type": "REPEAT",
               "value": ""
             }
@@ -295,6 +300,11 @@
           {
             "type": "TAP",
             "value": "battle-auto"
+          },
+          {
+            "type": "SET",
+            "value": "0",
+            "var": "setup"
           },
           {
             "type": "WAIT",

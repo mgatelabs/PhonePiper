@@ -374,11 +374,11 @@
           "actions": [
             {
               "type": "MSG",
-              "value": "Found Orb, Starting Missing 2"
+              "value": "Found Orb, Starting Missing 0 - ELT"
             },
             {
               "type": "TAP",
-              "value": "menu-raid_1"
+              "value": "menu-raid_0"
             },
             {
               "type": "WAIT",

@@ -6579,7 +6579,15 @@
     "h" : 1,
     "enabled" : false
   }, {
-    "name" : "menu-raid_1",
+    "name" : "Menu - Raid Level 0 (Top)",
+    "componentId" : "menu-raid_0",
+    "x" : 0,
+    "y" : 0,
+    "w" : 1,
+    "h" : 1,
+    "enabled" : false
+  }, {
+    "name" : "Menu - Raid Level 1",
     "componentId" : "menu-raid_1",
     "x" : 0,
     "y" : 0,
@@ -6587,7 +6595,7 @@
     "h" : 1,
     "enabled" : false
   }, {
-    "name" : "menu-raid_2",
+    "name" : "Menu - Raid Level 2",
     "componentId" : "menu-raid_2",
     "x" : 0,
     "y" : 0,

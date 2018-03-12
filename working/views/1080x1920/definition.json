@@ -7761,14 +7761,6 @@
     "h" : 79,
     "enabled" : true
   }, {
-    "name" : "menu-raid_2",
-    "componentId" : "menu-raid_2",
-    "x" : 67,
-    "y" : 1583,
-    "w" : 933,
-    "h" : 156,
-    "enabled" : true
-  }, {
     "name" : "Battle - Unit 3",
     "componentId" : "battle-unit_3",
     "x" : 558,
@@ -7785,12 +7777,28 @@
     "h" : 81,
     "enabled" : true
   }, {
-    "name" : "menu-raid_1",
+    "name" : "Menu - Raid Level 0 (Top)",
+    "componentId" : "menu-raid_0",
+    "x" : 100,
+    "y" : 1018,
+    "w" : 890,
+    "h" : 120,
+    "enabled" : true
+  }, {
+    "name" : "Menu - Raid Level 1",
     "componentId" : "menu-raid_1",
     "x" : 100,
     "y" : 1300,
     "w" : 890,
     "h" : 120,
+    "enabled" : true
+  }, {
+    "name" : "Menu - Raid Level 2",
+    "componentId" : "menu-raid_2",
+    "x" : 67,
+    "y" : 1583,
+    "w" : 933,
+    "h" : 156,
     "enabled" : true
   }, {
     "name" : "Battle - Unit 4",

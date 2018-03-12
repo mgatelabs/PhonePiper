@@ -526,6 +526,14 @@
               {
                 "is": "SCREEN",
                 "value": "menu-results-points_raid"
+              },
+              {
+                "is": "SCREEN",
+                "value": "menu-results-damage"
+              },
+              {
+                "is": "SCREEN",
+                "value": "menu-results-missions"
               }
             ]
           },

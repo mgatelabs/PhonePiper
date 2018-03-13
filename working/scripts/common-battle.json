@@ -315,6 +315,25 @@
             "value": ""
           }
         ]
+      },
+      {
+        "condition": {
+          "is": "SCREEN",
+          "value": "game-battle",
+          "and": [
+            {
+              "NOT": "SCREEN",
+              "value": "game-battle-auto_off"
+            }
+          ]
+        },
+        "actions": [
+          {
+            "type": "SET",
+            "value": "0",
+            "var": "loops"
+          }
+        ]
       }
     ]
   }

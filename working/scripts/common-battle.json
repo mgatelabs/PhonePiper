@@ -275,7 +275,8 @@
       ]
     },
 
-  "_common_battle-auto":{"name": "Common Battle - Auto",
+  "_common_battle-auto":{
+    "name": "Common Battle - Auto",
     "statements": [
       {
         "condition": {
@@ -322,7 +323,7 @@
           "value": "game-battle",
           "and": [
             {
-              "NOT": "SCREEN",
+              "not": "SCREEN",
               "value": "game-battle-auto_off"
             }
           ]

@@ -21,6 +21,20 @@
       "value": "0",
       "type": "INT",
       "modify":"VISIBLE"
+    },
+    {
+      "name": "force-auto",
+      "display": "Force Auto Battle",
+      "value": "0",
+      "type": "INT",
+      "modify":"EDITABLE"
+    },
+    {
+      "name": "allow-raid",
+      "display": "Enable Raid",
+      "value": "1",
+      "type": "INT",
+      "modify":"EDITABLE"
     }
   ],
   "includes": [
@@ -63,7 +77,13 @@
                 "is": "GREATER",
                 "value": "16320",
                 "var": "_seconds"
+              },
+              {
+                "is": "GREATER",
+                "value": "1",
+                "var": "allow-raid"
               }
+
             ]
           },
           "actions": [
@@ -117,7 +137,14 @@
         {
           "condition": {
             "is": "SCREEN",
-            "value": "game-battle"
+            "value": "game-battle",
+            "and": [
+              {
+                "not": "EQUAL",
+                "var": "force-auto",
+                "value": "1"
+              }
+            ]
           },
           "actions": [
             {
@@ -140,17 +167,64 @@
             },
             {
               "type": "SWAP",
-              "value": "battle"
+              "value": "farm-battle"
+            }
+          ]
+        },
+        {
+          "condition": {
+            "is": "SCREEN",
+            "value": "game-battle",
+            "and": [
+              {
+                "is": "EQUAL",
+                "var": "force-auto",
+                "value": "1"
+              }
+            ]
+          },
+          "actions": [
+            {
+              "type": "TIMER",
+              "value": "BATTLE"
+            },
+            {
+              "type": "SET",
+              "var": "loops",
+              "value": "0"
+            },
+            {
+              "type": "ADD",
+              "var": "runs",
+              "value": "1"
+            },
+            {
+              "type": "MSG",
+              "value": "Starting run ${runs}"
+            },
+            {
+              "type": "SWAP",
+              "value": "farm-battle-auto"
             }
           ]
         }
       ]
     },
 
-    "battle": {
-      "name": "Battle",
+    "farm-battle": {
+      "name": "Farm - Battle",
       "includes": [
         "_common_battle-three_attack",
+        "_common-screen_saver",
+        "_es-from_battle_to_results",
+        "_common-no_op"
+      ]
+    },
+
+    "farm-battle-auto": {
+      "name": "Farm - Battle - Auto",
+      "includes": [
+        "_common_battle-auto",
         "_common-screen_saver",
         "_es-from_battle_to_results",
         "_common-no_op"
@@ -310,7 +384,7 @@
             },
             {
               "type": "SWAP",
-              "value": "battle"
+              "value": "farm-battle"
             }
           ]
         }

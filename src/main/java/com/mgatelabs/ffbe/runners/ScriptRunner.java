@@ -636,7 +636,7 @@ public class ScriptRunner {
                 int value = Integer.parseInt(conditionDefinition.getValue());
                 String varName = conditionDefinition.getVar();
                 int currentValue = getVar(varName);
-                switch (conditionDefinition.getIs()) {
+                switch (conditionDefinition.getUsedCondition()) {
                     case GREATER: {
                         result = currentValue > value;
                     }

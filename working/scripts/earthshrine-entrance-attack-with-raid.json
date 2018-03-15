@@ -59,7 +59,7 @@
       "name": "Menu",
       "includes": [
         "_common-screen_saver",
-        "_common-ml-mission_2",
+        "_common-ml-mission_1",
         "_common-ml-goals",
         "_common-ml-friend_0",
         "_common-ml-friend_none",

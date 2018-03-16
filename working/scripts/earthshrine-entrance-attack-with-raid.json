@@ -79,7 +79,7 @@
                 "var": "_seconds"
               },
               {
-                "is": "GREATER",
+                "is": "EQUAL",
                 "value": "1",
                 "var": "allow-raid"
               }

@@ -83,14 +83,20 @@
               {
                 "is": "GREATER",
                 "value": "$raid-timer",
-                "var": "_seconds"
+                "var": "_seconds",
+                "or": [
+                  {
+                    "is": "EQUAL",
+                    "value": "$raid-timer",
+                    "var": "_seconds"
+                  }
+                ]
               },
               {
                 "is": "EQUAL",
                 "value": "1",
                 "var": "allow-raid"
               }
-
             ]
           },
           "actions": [

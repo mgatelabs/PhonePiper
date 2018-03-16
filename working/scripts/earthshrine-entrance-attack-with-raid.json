@@ -35,6 +35,13 @@
       "value": "1",
       "type": "INT",
       "modify":"EDITABLE"
+    },
+    {
+      "name": "raid-timer",
+      "display": "Raid Timer",
+      "value": "16320",
+      "type": "INT",
+      "modify":"EDITABLE"
     }
   ],
   "includes": [
@@ -75,7 +82,7 @@
             "and": [
               {
                 "is": "GREATER",
-                "value": "16320",
+                "value": "$raid-timer",
                 "var": "_seconds"
               },
               {

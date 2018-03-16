@@ -633,7 +633,12 @@ public class ScriptRunner {
             case GREATER:
             case LESS:
             case EQUAL: {
-                int value = Integer.parseInt(conditionDefinition.getValue());
+                int value;
+                if (conditionDefinition.getValue().startsWith("$")) {
+                    value = getVar(conditionDefinition.getValue().substring(1));
+                } else {
+                    value = Integer.parseInt(conditionDefinition.getValue());
+                }
                 String varName = conditionDefinition.getVar();
                 int currentValue = getVar(varName);
                 switch (conditionDefinition.getUsedCondition()) {

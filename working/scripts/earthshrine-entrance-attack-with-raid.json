@@ -48,6 +48,7 @@
     "common-no_op",
     "common-menu_location",
     "common-menu_results",
+    "common-menu_vortex",
     "common-battle"
   ],
   "states": {
@@ -678,6 +679,7 @@
     "farm_to_home_to_raid": {
       "name": "Farm > Home > Raid",
       "includes": [
+        "_common-vtx-items",
         "_common-no_op",
         "_not_home_back"
       ],
@@ -699,7 +701,7 @@
             },
             {
               "type": "TAP",
-              "value": "menu-home_special"
+              "value": "menu-home-vortex"
             },
             {
               "type": "WAIT",

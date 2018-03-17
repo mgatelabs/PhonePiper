@@ -1,0 +1,113 @@
+{
+  "vars": [
+    {
+      "name": "vortex-item",
+      "display": "Raid Vortex Item",
+      "value": "1",
+      "type": "INT",
+      "modify":"EDITABLE"
+    }
+  ],
+  "states": {
+
+    "_common-vtx-items": {
+      "name": "Common - Vortex - Items",
+      "statements": [
+        {
+          "condition": {
+            "is": "SCREEN",
+            "value": "menu-vortex",
+            "and": [
+              {
+                "is": "EQUAL",
+                "var": "vortex-item",
+                "value": "0"
+              }
+            ]
+          },
+          "actions": [
+            {
+              "type": "MSG",
+              "value": "Clicking Vortex Item 0"
+            },
+            {
+              "type": "TAP",
+              "value": "menu-vortex-item_0"
+            },
+            {
+              "type": "WAIT",
+              "value": "5000"
+            },
+            {
+              "type": "REPEAT",
+              "value": ""
+            }
+          ]
+        },
+        {
+          "condition": {
+            "is": "SCREEN",
+            "value": "menu-vortex",
+            "and": [
+              {
+                "is": "EQUAL",
+                "var": "vortex-item",
+                "value": "1"
+              }
+            ]
+          },
+          "actions": [
+            {
+              "type": "MSG",
+              "value": "Clicking Vortex Item 1"
+            },
+            {
+              "type": "TAP",
+              "value": "menu-vortex-item_1"
+            },
+            {
+              "type": "WAIT",
+              "value": "5000"
+            },
+            {
+              "type": "REPEAT",
+              "value": ""
+            }
+          ]
+        },
+        {
+          "condition": {
+            "is": "SCREEN",
+            "value": "menu-vortex",
+            "and": [
+              {
+                "is": "EQUAL",
+                "var": "vortex-item",
+                "value": "2"
+              }
+            ]
+          },
+          "actions": [
+            {
+              "type": "MSG",
+              "value": "Clicking Vortex Item 2"
+            },
+            {
+              "type": "TAP",
+              "value": "menu-vortex-item_2"
+            },
+            {
+              "type": "WAIT",
+              "value": "5000"
+            },
+            {
+              "type": "REPEAT",
+              "value": ""
+            }
+          ]
+        }
+      ]
+    }
+
+  }
+}

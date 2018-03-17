@@ -214,6 +214,245 @@
     } ],
     "enabled" : false
   }, {
+    "name" : "menu-vortex",
+    "screenId" : "menu-vortex",
+    "points" : [ {
+      "x" : 34,
+      "y" : 91,
+      "r" : 0,
+      "g" : 82,
+      "b" : 177
+    }, {
+      "x" : 44,
+      "y" : 82,
+      "r" : 0,
+      "g" : 74,
+      "b" : 182
+    }, {
+      "x" : 169,
+      "y" : 166,
+      "r" : 0,
+      "g" : 33,
+      "b" : 126
+    }, {
+      "x" : 179,
+      "y" : 156,
+      "r" : 0,
+      "g" : 40,
+      "b" : 133
+    }, {
+      "x" : 752,
+      "y" : 214,
+      "r" : 0,
+      "g" : 0,
+      "b" : 0
+    }, {
+      "x" : 760,
+      "y" : 214,
+      "r" : 0,
+      "g" : 0,
+      "b" : 0
+    }, {
+      "x" : 767,
+      "y" : 214,
+      "r" : 0,
+      "g" : 0,
+      "b" : 0
+    }, {
+      "x" : 767,
+      "y" : 233,
+      "r" : 17,
+      "g" : 61,
+      "b" : 120
+    }, {
+      "x" : 760,
+      "y" : 233,
+      "r" : 17,
+      "g" : 55,
+      "b" : 114
+    }, {
+      "x" : 751,
+      "y" : 233,
+      "r" : 17,
+      "g" : 58,
+      "b" : 117
+    }, {
+      "x" : 929,
+      "y" : 216,
+      "r" : 0,
+      "g" : 0,
+      "b" : 0
+    }, {
+      "x" : 924,
+      "y" : 216,
+      "r" : 0,
+      "g" : 0,
+      "b" : 0
+    }, {
+      "x" : 919,
+      "y" : 216,
+      "r" : 0,
+      "g" : 0,
+      "b" : 0
+    }, {
+      "x" : 919,
+      "y" : 230,
+      "r" : 11,
+      "g" : 43,
+      "b" : 97
+    }, {
+      "x" : 924,
+      "y" : 230,
+      "r" : 11,
+      "g" : 41,
+      "b" : 95
+    }, {
+      "x" : 929,
+      "y" : 230,
+      "r" : 11,
+      "g" : 40,
+      "b" : 92
+    }, {
+      "x" : 929,
+      "y" : 204,
+      "r" : 0,
+      "g" : 0,
+      "b" : 0
+    }, {
+      "x" : 933,
+      "y" : 191,
+      "r" : 0,
+      "g" : 0,
+      "b" : 0
+    }, {
+      "x" : 906,
+      "y" : 191,
+      "r" : 4,
+      "g" : 30,
+      "b" : 91
+    }, {
+      "x" : 905,
+      "y" : 204,
+      "r" : 5,
+      "g" : 30,
+      "b" : 89
+    }, {
+      "x" : 904,
+      "y" : 216,
+      "r" : 7,
+      "g" : 36,
+      "b" : 94
+    }, {
+      "x" : 904,
+      "y" : 230,
+      "r" : 11,
+      "g" : 41,
+      "b" : 94
+    }, {
+      "x" : 140,
+      "y" : 329,
+      "r" : 255,
+      "g" : 255,
+      "b" : 255
+    }, {
+      "x" : 140,
+      "y" : 339,
+      "r" : 255,
+      "g" : 255,
+      "b" : 255
+    }, {
+      "x" : 140,
+      "y" : 351,
+      "r" : 255,
+      "g" : 255,
+      "b" : 255
+    }, {
+      "x" : 148,
+      "y" : 346,
+      "r" : 102,
+      "g" : 76,
+      "b" : 1
+    }, {
+      "x" : 148,
+      "y" : 334,
+      "r" : 104,
+      "g" : 78,
+      "b" : 0
+    }, {
+      "x" : 248,
+      "y" : 136,
+      "r" : 39,
+      "g" : 66,
+      "b" : 57
+    }, {
+      "x" : 256,
+      "y" : 136,
+      "r" : 41,
+      "g" : 69,
+      "b" : 59
+    }, {
+      "x" : 262,
+      "y" : 136,
+      "r" : 39,
+      "g" : 66,
+      "b" : 57
+    }, {
+      "x" : 222,
+      "y" : 174,
+      "r" : 7,
+      "g" : 11,
+      "b" : 7
+    }, {
+      "x" : 228,
+      "y" : 174,
+      "r" : 8,
+      "g" : 13,
+      "b" : 8
+    }, {
+      "x" : 233,
+      "y" : 174,
+      "r" : 11,
+      "g" : 16,
+      "b" : 10
+    }, {
+      "x" : 229,
+      "y" : 152,
+      "r" : 23,
+      "g" : 35,
+      "b" : 32
+    }, {
+      "x" : 229,
+      "y" : 156,
+      "r" : 18,
+      "g" : 23,
+      "b" : 22
+    }, {
+      "x" : 229,
+      "y" : 160,
+      "r" : 13,
+      "g" : 17,
+      "b" : 15
+    }, {
+      "x" : 217,
+      "y" : 160,
+      "r" : 12,
+      "g" : 15,
+      "b" : 14
+    }, {
+      "x" : 217,
+      "y" : 156,
+      "r" : 13,
+      "g" : 17,
+      "b" : 16
+    }, {
+      "x" : 217,
+      "y" : 152,
+      "r" : 19,
+      "g" : 29,
+      "b" : 26
+    } ],
+    "enabled" : true
+  }, {
     "name" : "Dungeon - Notice",
     "screenId" : "dungeon-notice",
     "points" : [ {
@@ -7585,30 +7824,6 @@
     "h" : 240,
     "enabled" : true
   }, {
-    "name" : "Menu - Friend Select - Item 0",
-    "componentId" : "menu-friend_select-item_0",
-    "x" : 41,
-    "y" : 541,
-    "w" : 995,
-    "h" : 215,
-    "enabled" : true
-  }, {
-    "name" : "menu-friend_select-item_4",
-    "componentId" : "menu-friend_select-item_4",
-    "x" : 44,
-    "y" : 1679,
-    "w" : 992,
-    "h" : 211,
-    "enabled" : true
-  }, {
-    "name" : "Battle - Menu",
-    "componentId" : "battle-menu",
-    "x" : 827,
-    "y" : 1808,
-    "w" : 225,
-    "h" : 87,
-    "enabled" : true
-  }, {
     "name" : "Dungeon - Mini Map - Center",
     "componentId" : "dungeon-mini_map-center",
     "x" : 297,
@@ -7616,30 +7831,6 @@
     "w" : 18,
     "h" : 18,
     "enabled" : false
-  }, {
-    "name" : "Dungeon - Toggle Map",
-    "componentId" : "dungeon-toggle_map",
-    "x" : 1044,
-    "y" : 2401,
-    "w" : 103,
-    "h" : 111,
-    "enabled" : false
-  }, {
-    "name" : "menu-depart-units",
-    "componentId" : "menu-depart-units",
-    "x" : 20,
-    "y" : 630,
-    "w" : 1040,
-    "h" : 210,
-    "enabled" : true
-  }, {
-    "name" : "Menu - Daily - Close",
-    "componentId" : "menu-daily-close",
-    "x" : 166,
-    "y" : 1154,
-    "w" : 224,
-    "h" : 67,
-    "enabled" : true
   }, {
     "name" : "Dungeon - Mini Map - Area",
     "componentId" : "dungeon-mini_map-area",
@@ -7657,14 +7848,6 @@
     "h" : 78,
     "enabled" : true
   }, {
-    "name" : "Menu - Mission List - Item 2",
-    "componentId" : "menu-mission_list-item_2",
-    "x" : 63,
-    "y" : 1145,
-    "w" : 945,
-    "h" : 173,
-    "enabled" : true
-  }, {
     "name" : "Battle - Repeat",
     "componentId" : "battle-repeat",
     "x" : 294,
@@ -7673,44 +7856,12 @@
     "h" : 73,
     "enabled" : true
   }, {
-    "name" : "menu-worlds",
-    "componentId" : "menu-worlds",
-    "x" : 410,
-    "y" : 1310,
-    "w" : 250,
-    "h" : 180,
-    "enabled" : true
-  }, {
-    "name" : "menu-home_vortex",
-    "componentId" : "menu-home_vortex",
-    "x" : 220,
-    "y" : 830,
-    "w" : 170,
-    "h" : 120,
-    "enabled" : true
-  }, {
     "name" : "menu-island-grandshelt",
     "componentId" : "menu-island-grandshelt",
     "x" : 380,
     "y" : 620,
     "w" : 280,
     "h" : 340,
-    "enabled" : true
-  }, {
-    "name" : "Menu - Mission List - Item 1",
-    "componentId" : "menu-mission_list-item_1",
-    "x" : 65,
-    "y" : 856,
-    "w" : 942,
-    "h" : 178,
-    "enabled" : true
-  }, {
-    "name" : "Menu - Mission List - Item 0",
-    "componentId" : "menu-mission_list-item_0",
-    "x" : 67,
-    "y" : 579,
-    "w" : 940,
-    "h" : 171,
     "enabled" : true
   }, {
     "name" : "menu-energy_recovery-lapis",
@@ -7727,14 +7878,6 @@
     "y" : 338,
     "w" : 140,
     "h" : 79,
-    "enabled" : true
-  }, {
-    "name" : "Menu - Connection Error - OK",
-    "componentId" : "menu-connection_error-ok",
-    "x" : 401,
-    "y" : 1068,
-    "w" : 276,
-    "h" : 80,
     "enabled" : true
   }, {
     "name" : "menu-play_mission-yes",
@@ -7775,30 +7918,6 @@
     "y" : 1440,
     "w" : 83,
     "h" : 81,
-    "enabled" : true
-  }, {
-    "name" : "Menu - Raid Level 0 (Top)",
-    "componentId" : "menu-raid_0",
-    "x" : 100,
-    "y" : 1018,
-    "w" : 890,
-    "h" : 120,
-    "enabled" : true
-  }, {
-    "name" : "Menu - Raid Level 1",
-    "componentId" : "menu-raid_1",
-    "x" : 100,
-    "y" : 1300,
-    "w" : 890,
-    "h" : 120,
-    "enabled" : true
-  }, {
-    "name" : "Menu - Raid Level 2",
-    "componentId" : "menu-raid_2",
-    "x" : 67,
-    "y" : 1583,
-    "w" : 933,
-    "h" : 156,
     "enabled" : true
   }, {
     "name" : "Battle - Unit 4",
@@ -7857,14 +7976,6 @@
     "h" : 60,
     "enabled" : true
   }, {
-    "name" : "Menu - Depart - Depart",
-    "componentId" : "menu-depart-depart",
-    "x" : 335,
-    "y" : 1645,
-    "w" : 409,
-    "h" : 83,
-    "enabled" : true
-  }, {
     "name" : "menu-friend_request-yes",
     "componentId" : "menu-friend_request-yes",
     "x" : 714,
@@ -7881,14 +7992,6 @@
     "h" : 74,
     "enabled" : true
   }, {
-    "name" : "os-app-icon",
-    "componentId" : "os-app-icon",
-    "x" : 0,
-    "y" : 0,
-    "w" : 1,
-    "h" : 1,
-    "enabled" : false
-  }, {
     "name" : "Menu - Friend Request - No",
     "componentId" : "menu-friend_request-no",
     "x" : 70,
@@ -7897,12 +8000,164 @@
     "h" : 81,
     "enabled" : true
   }, {
+    "name" : "Menu - Level",
+    "componentId" : "menu-level",
+    "x" : 476,
+    "y" : 153,
+    "w" : 130,
+    "h" : 58,
+    "enabled" : true
+  }, {
+    "name" : "Menu - Friend Select - Item 0",
+    "componentId" : "menu-friend_select-item_0",
+    "x" : 41,
+    "y" : 541,
+    "w" : 995,
+    "h" : 215,
+    "enabled" : true
+  }, {
+    "name" : "menu-friend_select-item_4",
+    "componentId" : "menu-friend_select-item_4",
+    "x" : 44,
+    "y" : 1679,
+    "w" : 992,
+    "h" : 211,
+    "enabled" : true
+  }, {
+    "name" : "Battle - Menu",
+    "componentId" : "battle-menu",
+    "x" : 827,
+    "y" : 1808,
+    "w" : 225,
+    "h" : 87,
+    "enabled" : true
+  }, {
+    "name" : "Dungeon - Toggle Map",
+    "componentId" : "dungeon-toggle_map",
+    "x" : 1044,
+    "y" : 2401,
+    "w" : 103,
+    "h" : 111,
+    "enabled" : false
+  }, {
+    "name" : "menu-depart-units",
+    "componentId" : "menu-depart-units",
+    "x" : 20,
+    "y" : 630,
+    "w" : 1040,
+    "h" : 210,
+    "enabled" : true
+  }, {
+    "name" : "Menu - Daily - Close",
+    "componentId" : "menu-daily-close",
+    "x" : 166,
+    "y" : 1154,
+    "w" : 224,
+    "h" : 67,
+    "enabled" : true
+  }, {
+    "name" : "Menu - Mission List - Item 2",
+    "componentId" : "menu-mission_list-item_2",
+    "x" : 63,
+    "y" : 1145,
+    "w" : 945,
+    "h" : 173,
+    "enabled" : true
+  }, {
+    "name" : "menu-worlds",
+    "componentId" : "menu-worlds",
+    "x" : 410,
+    "y" : 1310,
+    "w" : 250,
+    "h" : 180,
+    "enabled" : true
+  }, {
+    "name" : "menu-home-vortex",
+    "componentId" : "menu-home-vortex",
+    "x" : 220,
+    "y" : 830,
+    "w" : 170,
+    "h" : 120,
+    "enabled" : true
+  }, {
+    "name" : "Menu - Mission List - Item 1",
+    "componentId" : "menu-mission_list-item_1",
+    "x" : 65,
+    "y" : 856,
+    "w" : 942,
+    "h" : 178,
+    "enabled" : true
+  }, {
+    "name" : "Menu - Mission List - Item 0",
+    "componentId" : "menu-mission_list-item_0",
+    "x" : 67,
+    "y" : 579,
+    "w" : 940,
+    "h" : 171,
+    "enabled" : true
+  }, {
+    "name" : "Menu - Connection Error - OK",
+    "componentId" : "menu-connection_error-ok",
+    "x" : 401,
+    "y" : 1068,
+    "w" : 276,
+    "h" : 80,
+    "enabled" : true
+  }, {
+    "name" : "Menu - Raid Level 2",
+    "componentId" : "menu-raid_2",
+    "x" : 67,
+    "y" : 1583,
+    "w" : 933,
+    "h" : 156,
+    "enabled" : true
+  }, {
+    "name" : "Menu - Raid Level 1",
+    "componentId" : "menu-raid_1",
+    "x" : 100,
+    "y" : 1300,
+    "w" : 890,
+    "h" : 120,
+    "enabled" : true
+  }, {
+    "name" : "Menu - Raid Level 0 (Top)",
+    "componentId" : "menu-raid_0",
+    "x" : 100,
+    "y" : 1018,
+    "w" : 890,
+    "h" : 120,
+    "enabled" : true
+  }, {
+    "name" : "Menu - Depart - Depart",
+    "componentId" : "menu-depart-depart",
+    "x" : 335,
+    "y" : 1645,
+    "w" : 409,
+    "h" : 83,
+    "enabled" : true
+  }, {
+    "name" : "os-app-icon",
+    "componentId" : "os-app-icon",
+    "x" : 0,
+    "y" : 0,
+    "w" : 1,
+    "h" : 1,
+    "enabled" : false
+  }, {
     "name" : "menu-energy_recovery-back",
     "componentId" : "menu-energy_recovery-back",
     "x" : 402,
     "y" : 1146,
     "w" : 276,
     "h" : 80,
+    "enabled" : true
+  }, {
+    "name" : "menu-vortex-item_1",
+    "componentId" : "menu-vortex-item_1",
+    "x" : 59,
+    "y" : 982,
+    "w" : 942,
+    "h" : 227,
     "enabled" : true
   }, {
     "name" : "Menu - Depart - Back",
@@ -7929,6 +8184,22 @@
     "h" : 80,
     "enabled" : true
   }, {
+    "name" : "menu-vortex-item_2",
+    "componentId" : "menu-vortex-item_2",
+    "x" : 81,
+    "y" : 1445,
+    "w" : 879,
+    "h" : 205,
+    "enabled" : true
+  }, {
+    "name" : "menu-vortex-item_0",
+    "componentId" : "menu-vortex-item_0",
+    "x" : 90,
+    "y" : 470,
+    "w" : 900,
+    "h" : 240,
+    "enabled" : true
+  }, {
     "name" : "menu-home_special",
     "componentId" : "menu-home_special",
     "x" : 87,
@@ -7943,14 +8214,6 @@
     "y" : 1647,
     "w" : 193,
     "h" : 79,
-    "enabled" : true
-  }, {
-    "name" : "Menu - Level",
-    "componentId" : "menu-level",
-    "x" : 476,
-    "y" : 153,
-    "w" : 130,
-    "h" : 58,
     "enabled" : true
   }, {
     "name" : "Menu - Energy Bar",

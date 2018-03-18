@@ -214,7 +214,7 @@
     } ],
     "enabled" : false
   }, {
-    "name" : "menu-vortex",
+    "name" : "Menu - vortex",
     "screenId" : "menu-vortex",
     "points" : [ {
       "x" : 34,
@@ -715,36 +715,12 @@
     } ],
     "enabled" : true
   }, {
-    "name" : "os-home",
+    "name" : "OS - Home",
     "screenId" : "os-home",
-    "points" : [ {
-      "x" : 109,
-      "y" : 303,
-      "r" : 95,
-      "g" : 142,
-      "b" : 253
-    }, {
-      "x" : 117,
-      "y" : 299,
-      "r" : 250,
-      "g" : 250,
-      "b" : 250
-    }, {
-      "x" : 131,
-      "y" : 293,
-      "r" : 250,
-      "g" : 250,
-      "b" : 250
-    }, {
-      "x" : 138,
-      "y" : 289,
-      "r" : 96,
-      "g" : 144,
-      "b" : 255
-    } ],
+    "points" : [ ],
     "enabled" : false
   }, {
-    "name" : "menu-play_mission",
+    "name" : "Menu - Play Mission",
     "screenId" : "menu-play_mission",
     "points" : [ {
       "x" : 195,
@@ -1250,6 +1226,161 @@
     } ],
     "enabled" : true
   }, {
+    "name" : "OS - Unable to access data",
+    "screenId" : "os-unable_to_access_data",
+    "points" : [ {
+      "x" : 168,
+      "y" : 416,
+      "r" : 250,
+      "g" : 250,
+      "b" : 250
+    }, {
+      "x" : 168,
+      "y" : 420,
+      "r" : 37,
+      "g" : 37,
+      "b" : 37
+    }, {
+      "x" : 161,
+      "y" : 420,
+      "r" : 250,
+      "g" : 250,
+      "b" : 250
+    }, {
+      "x" : 174,
+      "y" : 420,
+      "r" : 250,
+      "g" : 250,
+      "b" : 250
+    }, {
+      "x" : 168,
+      "y" : 427,
+      "r" : 37,
+      "g" : 37,
+      "b" : 37
+    }, {
+      "x" : 168,
+      "y" : 446,
+      "r" : 37,
+      "g" : 37,
+      "b" : 37
+    }, {
+      "x" : 168,
+      "y" : 451,
+      "r" : 250,
+      "g" : 250,
+      "b" : 250
+    }, {
+      "x" : 158,
+      "y" : 451,
+      "r" : 37,
+      "g" : 37,
+      "b" : 37
+    }, {
+      "x" : 156,
+      "y" : 458,
+      "r" : 250,
+      "g" : 250,
+      "b" : 250
+    }, {
+      "x" : 179,
+      "y" : 458,
+      "r" : 250,
+      "g" : 250,
+      "b" : 250
+    }, {
+      "x" : 177,
+      "y" : 451,
+      "r" : 37,
+      "g" : 37,
+      "b" : 37
+    }, {
+      "x" : 184,
+      "y" : 451,
+      "r" : 250,
+      "g" : 250,
+      "b" : 250
+    }, {
+      "x" : 191,
+      "y" : 451,
+      "r" : 37,
+      "g" : 37,
+      "b" : 37
+    }, {
+      "x" : 200,
+      "y" : 451,
+      "r" : 250,
+      "g" : 250,
+      "b" : 250
+    }, {
+      "x" : 200,
+      "y" : 455,
+      "r" : 250,
+      "g" : 250,
+      "b" : 250
+    }, {
+      "x" : 195,
+      "y" : 455,
+      "r" : 37,
+      "g" : 37,
+      "b" : 37
+    }, {
+      "x" : 896,
+      "y" : 1564,
+      "r" : 73,
+      "g" : 158,
+      "b" : 189
+    }, {
+      "x" : 891,
+      "y" : 1564,
+      "r" : 250,
+      "g" : 250,
+      "b" : 250
+    }, {
+      "x" : 885,
+      "y" : 1564,
+      "r" : 250,
+      "g" : 250,
+      "b" : 250
+    }, {
+      "x" : 880,
+      "y" : 1564,
+      "r" : 73,
+      "g" : 158,
+      "b" : 189
+    }, {
+      "x" : 875,
+      "y" : 1564,
+      "r" : 250,
+      "g" : 250,
+      "b" : 250
+    }, {
+      "x" : 902,
+      "y" : 1564,
+      "r" : 250,
+      "g" : 250,
+      "b" : 250
+    }, {
+      "x" : 908,
+      "y" : 1564,
+      "r" : 73,
+      "g" : 158,
+      "b" : 189
+    }, {
+      "x" : 915,
+      "y" : 1564,
+      "r" : 73,
+      "g" : 158,
+      "b" : 189
+    }, {
+      "x" : 922,
+      "y" : 1564,
+      "r" : 250,
+      "g" : 250,
+      "b" : 250
+    } ],
+    "enabled" : true
+  }, {
     "name" : "Menu - Maintenance",
     "screenId" : "menu-maintenance",
     "points" : [ {
@@ -1417,7 +1548,7 @@
     } ],
     "enabled" : false
   }, {
-    "name" : "menu-worlds-sub",
+    "name" : "Menu - worlds-sub",
     "screenId" : "menu-worlds-sub",
     "points" : [ ],
     "enabled" : false
@@ -2245,7 +2376,7 @@
     } ],
     "enabled" : true
   }, {
-    "name" : "menu-raid_orbs",
+    "name" : "Menu - raid_orbs",
     "screenId" : "menu-raid_orbs",
     "points" : [ {
       "x" : 865,
@@ -2800,7 +2931,7 @@
     } ],
     "enabled" : false
   }, {
-    "name" : "menu-results-damage",
+    "name" : "Menu - results-damage",
     "screenId" : "menu-results-damage",
     "points" : [ {
       "x" : 305,
@@ -2889,7 +3020,7 @@
     } ],
     "enabled" : true
   }, {
-    "name" : "menu-home",
+    "name" : "Menu - home",
     "screenId" : "menu-home",
     "points" : [ {
       "x" : 470,
@@ -3002,7 +3133,7 @@
     } ],
     "enabled" : true
   }, {
-    "name" : "menu-friend_select-bottom",
+    "name" : "Menu - friend_select-bottom",
     "screenId" : "menu-friend_select-bottom",
     "points" : [ {
       "x" : 35,
@@ -3425,7 +3556,7 @@
     } ],
     "enabled" : true
   }, {
-    "name" : "menu-depart-team_1",
+    "name" : "Menu - depart-team_1",
     "screenId" : "menu-depart-team_1",
     "points" : [ {
       "x" : 864,
@@ -3999,7 +4130,7 @@
     } ],
     "enabled" : true
   }, {
-    "name" : "menu-depart-team_0",
+    "name" : "Menu - depart-team_0",
     "screenId" : "menu-depart-team_0",
     "points" : [ {
       "x" : 827,
@@ -4218,7 +4349,7 @@
     } ],
     "enabled" : true
   }, {
-    "name" : "menu-energy_recovery",
+    "name" : "Menu - energy_recovery",
     "screenId" : "menu-energy_recovery",
     "points" : [ {
       "x" : 99,
@@ -4594,7 +4725,7 @@
     } ],
     "enabled" : true
   }, {
-    "name" : "menu-worlds",
+    "name" : "Menu - worlds",
     "screenId" : "menu-worlds",
     "points" : [ {
       "x" : 43,
@@ -5084,7 +5215,7 @@
     } ],
     "enabled" : true
   }, {
-    "name" : "menu-raid_screen",
+    "name" : "Menu - raid_screen",
     "screenId" : "menu-raid_screen",
     "points" : [ {
       "x" : 74,
@@ -5556,7 +5687,7 @@
     } ],
     "enabled" : true
   }, {
-    "name" : "menu-friend_select-empty",
+    "name" : "Menu - friend_select-empty",
     "screenId" : "menu-friend_select-empty",
     "points" : [ {
       "x" : 48,
@@ -6335,7 +6466,7 @@
     } ],
     "enabled" : true
   }, {
-    "name" : "menu-logo",
+    "name" : "Menu - logo",
     "screenId" : "menu-logo",
     "points" : [ {
       "x" : 604,
@@ -6603,7 +6734,7 @@
     } ],
     "enabled" : true
   }, {
-    "name" : "menu-results-missions",
+    "name" : "Menu - results-missions",
     "screenId" : "menu-results-missions",
     "points" : [ {
       "x" : 451,
@@ -7020,7 +7151,7 @@
     } ],
     "enabled" : true
   }, {
-    "name" : "menu-results-points_raid",
+    "name" : "Menu - results-points_raid",
     "screenId" : "menu-results-points_raid",
     "points" : [ {
       "x" : 367,
@@ -7730,7 +7861,7 @@
     } ],
     "enabled" : true
   }, {
-    "name" : "menu-white",
+    "name" : "Menu - white",
     "screenId" : "menu-white",
     "points" : [ {
       "x" : 30,
@@ -7816,7 +7947,7 @@
     "h" : 61,
     "enabled" : false
   }, {
-    "name" : "menu-island-grandshelt_isles",
+    "name" : "Menu - island-grandshelt_isles",
     "componentId" : "menu-island-grandshelt_isles",
     "x" : 640,
     "y" : 720,
@@ -7856,7 +7987,7 @@
     "h" : 73,
     "enabled" : true
   }, {
-    "name" : "menu-island-grandshelt",
+    "name" : "Menu - island-grandshelt",
     "componentId" : "menu-island-grandshelt",
     "x" : 380,
     "y" : 620,
@@ -7864,7 +7995,7 @@
     "h" : 340,
     "enabled" : true
   }, {
-    "name" : "menu-energy_recovery-lapis",
+    "name" : "Menu - energy_recovery-lapis",
     "componentId" : "menu-energy_recovery-lapis",
     "x" : 615,
     "y" : 944,
@@ -7880,7 +8011,7 @@
     "h" : 79,
     "enabled" : true
   }, {
-    "name" : "menu-play_mission-yes",
+    "name" : "Menu - play_mission-yes",
     "componentId" : "menu-play_mission-yes",
     "x" : 619,
     "y" : 1040,
@@ -7896,7 +8027,7 @@
     "h" : 152,
     "enabled" : true
   }, {
-    "name" : "menu-play_mission-no",
+    "name" : "Menu - play_mission-no",
     "componentId" : "menu-play_mission-no",
     "x" : 189,
     "y" : 1041,
@@ -7912,7 +8043,7 @@
     "h" : 150,
     "enabled" : true
   }, {
-    "name" : "menu-location-earthshrine",
+    "name" : "Menu - location-earthshrine",
     "componentId" : "menu-location-earthshrine",
     "x" : 641,
     "y" : 1440,
@@ -7944,6 +8075,14 @@
     "h" : 149,
     "enabled" : true
   }, {
+    "name" : "Menu - Home - Vortex",
+    "componentId" : "menu-home-vortex",
+    "x" : 220,
+    "y" : 830,
+    "w" : 170,
+    "h" : 120,
+    "enabled" : true
+  }, {
     "name" : "Battle - Unit 0",
     "componentId" : "battle-unit_0",
     "x" : 35,
@@ -7968,7 +8107,7 @@
     "h" : 58,
     "enabled" : false
   }, {
-    "name" : "menu-connection_error_2-ok",
+    "name" : "Menu - Connection Error 2 - OK",
     "componentId" : "menu-connection_error_2-ok",
     "x" : 410,
     "y" : 1030,
@@ -7976,7 +8115,7 @@
     "h" : 60,
     "enabled" : true
   }, {
-    "name" : "menu-friend_request-yes",
+    "name" : "Menu - Friend Request - Yes",
     "componentId" : "menu-friend_request-yes",
     "x" : 714,
     "y" : 1345,
@@ -8016,7 +8155,7 @@
     "h" : 215,
     "enabled" : true
   }, {
-    "name" : "menu-friend_select-item_4",
+    "name" : "Menu - friend_select-item_4",
     "componentId" : "menu-friend_select-item_4",
     "x" : 44,
     "y" : 1679,
@@ -8040,7 +8179,7 @@
     "h" : 111,
     "enabled" : false
   }, {
-    "name" : "menu-depart-units",
+    "name" : "Menu - Depart - Units",
     "componentId" : "menu-depart-units",
     "x" : 20,
     "y" : 630,
@@ -8064,20 +8203,12 @@
     "h" : 173,
     "enabled" : true
   }, {
-    "name" : "menu-worlds",
+    "name" : "Menu - Worlds",
     "componentId" : "menu-worlds",
     "x" : 410,
     "y" : 1310,
     "w" : 250,
     "h" : 180,
-    "enabled" : true
-  }, {
-    "name" : "menu-home-vortex",
-    "componentId" : "menu-home-vortex",
-    "x" : 220,
-    "y" : 830,
-    "w" : 170,
-    "h" : 120,
     "enabled" : true
   }, {
     "name" : "Menu - Mission List - Item 1",
@@ -8136,7 +8267,7 @@
     "h" : 83,
     "enabled" : true
   }, {
-    "name" : "os-app-icon",
+    "name" : "OS - App - Icon",
     "componentId" : "os-app-icon",
     "x" : 0,
     "y" : 0,
@@ -8144,7 +8275,7 @@
     "h" : 1,
     "enabled" : false
   }, {
-    "name" : "menu-energy_recovery-back",
+    "name" : "Menu - Energy Recovery - Back",
     "componentId" : "menu-energy_recovery-back",
     "x" : 402,
     "y" : 1146,
@@ -8152,7 +8283,7 @@
     "h" : 80,
     "enabled" : true
   }, {
-    "name" : "menu-vortex-item_1",
+    "name" : "Menu - Vortex - Item 1",
     "componentId" : "menu-vortex-item_1",
     "x" : 59,
     "y" : 982,
@@ -8168,7 +8299,7 @@
     "h" : 80,
     "enabled" : true
   }, {
-    "name" : "menu-friend_select-list",
+    "name" : "Menu - Friend Select - List",
     "componentId" : "menu-friend_select-list",
     "x" : 43,
     "y" : 543,
@@ -8184,7 +8315,7 @@
     "h" : 80,
     "enabled" : true
   }, {
-    "name" : "menu-vortex-item_2",
+    "name" : "Menu - Vortex - Item 2",
     "componentId" : "menu-vortex-item_2",
     "x" : 81,
     "y" : 1445,
@@ -8192,7 +8323,7 @@
     "h" : 205,
     "enabled" : true
   }, {
-    "name" : "menu-vortex-item_0",
+    "name" : "Menu - Vortex - Item 0",
     "componentId" : "menu-vortex-item_0",
     "x" : 90,
     "y" : 470,
@@ -8200,12 +8331,20 @@
     "h" : 240,
     "enabled" : true
   }, {
-    "name" : "menu-home_special",
-    "componentId" : "menu-home_special",
+    "name" : "Menu - Home - Special",
+    "componentId" : "menu-home-special",
     "x" : 87,
     "y" : 484,
     "w" : 446,
     "h" : 159,
+    "enabled" : true
+  }, {
+    "name" : "OS - Unable to access data - OK",
+    "componentId" : "os-unable_to_access_data-ok",
+    "x" : 875,
+    "y" : 1544,
+    "w" : 53,
+    "h" : 36,
     "enabled" : true
   }, {
     "name" : "Menu - Results - Next",

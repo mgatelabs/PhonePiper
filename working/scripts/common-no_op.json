@@ -229,6 +229,26 @@
         {
           "condition": {
             "is": "SCREEN",
+            "value": "os-unable_to_access_data"
+          },
+          "actions": [
+            {
+              "type": "TAP",
+              "value": "os-unable_to_access_data-ok"
+            },
+            {
+              "type": "WAIT",
+              "value": "4000"
+            },
+            {
+              "type": "REPEAT",
+              "value": ""
+            }
+          ]
+        },
+        {
+          "condition": {
+            "is": "SCREEN",
             "value": "menu-energy_recovery"
           },
           "actions": [

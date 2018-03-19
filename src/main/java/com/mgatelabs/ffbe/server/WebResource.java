@@ -6,10 +6,7 @@ import com.google.common.collect.Maps;
 import com.google.common.io.Resources;
 import com.mgatelabs.ffbe.Runner;
 import com.mgatelabs.ffbe.runners.ScriptRunner;
-import com.mgatelabs.ffbe.shared.details.ComponentDefinition;
-import com.mgatelabs.ffbe.shared.details.ConnectionDefinition;
-import com.mgatelabs.ffbe.shared.details.PlayerDefinition;
-import com.mgatelabs.ffbe.shared.details.StateDefinition;
+import com.mgatelabs.ffbe.shared.details.*;
 import com.mgatelabs.ffbe.shared.helper.DeviceHelper;
 import com.mgatelabs.ffbe.ui.FrameChoices;
 import com.mgatelabs.ffbe.ui.frame.StartupFrame;
@@ -122,6 +119,21 @@ public class WebResource {
         }
     }
 
+    @POST
+    @Path("/button")
+    @Produces(MediaType.APPLICATION_JSON)
+    public synchronized ValueResult buttonPress(@FormParam("componentId") String componentId, @FormParam("buttonId") String buttonId) {
+        checkInitialState();
+        final ValueResult valueResult = new ValueResult();
+        try {
+            runner.pressComponent(componentId, ActionType.valueOf(buttonId));
+            valueResult.setStatus("OK");
+        } catch (Exception ex) {
+            valueResult.setStatus("FAIL");
+        }
+        return valueResult;
+    }
+
     @GET
     @Path("/status")
     @Produces("application/json")
@@ -148,7 +160,7 @@ public class WebResource {
             }
         }
 
-        if (runner != null)  {
+        if (runner != null) {
             result.getVariables().addAll(runner.getVariables());
         }
 

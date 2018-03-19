@@ -754,4 +754,21 @@ public class ScriptRunner {
         int v = Integer.parseInt(value);
         vars.put(key, v);
     }
+
+    public void pressComponent(String componentId, ActionType actionType) {
+        switch (actionType) {
+            case SWIPE_UP:
+            case SWIPE_DOWN:
+            case SWIPE_LEFT:
+            case SWIPE_RIGHT:
+            case TAP:{
+                ComponentDefinition componentDefinition = components.get(componentId);
+                if (componentDefinition == null) {
+                    throw new RuntimeException("Cannot find component with id: " + componentId);
+                }
+                AdbUtils.component(deviceDefinition, componentDefinition, actionType, shell, false);
+            } break;
+        }
+
+    }
 }

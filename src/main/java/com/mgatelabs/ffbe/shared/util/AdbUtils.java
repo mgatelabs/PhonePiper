@@ -65,7 +65,7 @@ public class AdbUtils {
         final int event;
         switch (eventId.toLowerCase()) {
             case "power": {
-                event = 26;
+                event = 223;
             }
             break;
             case "camera": {

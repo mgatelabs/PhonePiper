@@ -197,6 +197,15 @@
                 });
             });
 
+            $('.controlButton').click(function(){
+                var ref= $(this), button = ref.attr('controlButton'), componentId = $('#components').val();
+                $.ajax({
+                    type: "POST",
+                    url: '/ffbe/button',
+                    data: {buttonId: button, componentId: componentId}
+                });
+            });
+
             function loadProcessInfo() {
                 $.ajax({
                   type: "GET",
@@ -386,11 +395,11 @@
                 <select id="components" class="form-control notWhileRunning"></select>
             </div>
             <div class="form-group">
-                <button type="button" id="controlTap" class="btn btn-info notWhileRunning">Tap</button>
-                <button type="button" id="controlSwipeUp" class="btn btn-info notWhileRunning">Up</button>
-                <button type="button" id="controlSwipeRight" class="btn btn-info notWhileRunning">Right</button>
-                <button type="button" id="controlSwipeDown" class="btn btn-info notWhileRunning">Down</button>
-                <button type="button" id="controlSwipeLeft" class="btn btn-info notWhileRunning">Left</button>
+                <button type="button" id="controlTap" controlButton="TAP" class="btn btn-info notWhileRunning controlButton">Tap</button>
+                <button type="button" id="controlSwipeUp" controlButton="SWIPE_UP" class="btn btn-info notWhileRunning controlButton">Up</button>
+                <button type="button" id="controlSwipeRight" controlButton="SWIPE_RIGHT" class="btn btn-info notWhileRunning controlButton">Right</button>
+                <button type="button" id="controlSwipeDown" controlButton="SWIPE_DOWN" class="btn btn-info notWhileRunning controlButton">Down</button>
+                <button type="button" id="controlSwipeLeft" controlButton="SWIPE_LEFT" class="btn btn-info notWhileRunning controlButton">Left</button>
             </div>
         </form>
         <form id="player-form" class="col-sm-3 offset-sm-1" style="display:none;">

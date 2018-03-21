@@ -262,8 +262,8 @@ public class ScriptRunner {
             List<String> tempScreenIds = stateEntry.getValue().determineScreenIds();
             for (String screeId : tempScreenIds) {
                 ScreenDefinition screenDefinition = screens.get(screeId);
-                if (!screenDefinition.isEnabled()) {
-                    logger.log(Level.SEVERE, "Disabled Screen: " + screenDefinition.getScreenId());
+                if (!screenDefinition.isEnabled() || screenDefinition.getPoints() == null || screenDefinition.getPoints().isEmpty()) {
+                    logger.log(Level.SEVERE, "Disabled Screen: " + screenDefinition.getScreenId() + " for state: " + stateEntry.getValue().getId());
                     continue;
                 }
                 boolean valid = true;
@@ -624,6 +624,7 @@ public class ScriptRunner {
 
         boolean result = false;
         boolean checkAnd = true;
+        boolean failure = false;
 
         switch (conditionDefinition.getUsedCondition()) {
             case BOOLEAN: {
@@ -658,15 +659,20 @@ public class ScriptRunner {
             }
             break;
             case SCREEN: {
-                if (deviceHelper != null) {
-                    result = validScreenIds.contains(conditionDefinition.getValue());
+                ScreenDefinition screenDefinition = screens.get(conditionDefinition.getValue());
+                if (screenDefinition == null || !screenDefinition.isEnabled() || screenDefinition.getPoints() == null || screenDefinition.getPoints().isEmpty()) {
+                    failure = true;
                 } else {
-                    ScreenDefinition screenDefinition = screens.get(conditionDefinition.getValue());
-                    if (screenDefinition == null) {
-                        logger.log(Level.SEVERE, "Cannot find screen with id: " + conditionDefinition.getValue());
-                        throw new RuntimeException("Cannot find screen with id: " + conditionDefinition.getValue());
+                    if (deviceHelper != null) {
+                        result = validScreenIds.contains(conditionDefinition.getValue());
+                    } else {
+
+                        if (screenDefinition == null) {
+                            logger.log(Level.SEVERE, "Cannot find screen with id: " + conditionDefinition.getValue());
+                            throw new RuntimeException("Cannot find screen with id: " + conditionDefinition.getValue());
+                        }
+                        result = SamplePoint.validate(screenDefinition.getPoints(), imageWrapper, false);
                     }
-                    result = SamplePoint.validate(screenDefinition.getPoints(), imageWrapper, false);
                 }
             }
             break;
@@ -710,13 +716,17 @@ public class ScriptRunner {
         }
 
         // If we have a AND handle it
-        if (result && checkAnd && !conditionDefinition.getAnd().isEmpty()) {
+        if (!failure && result && checkAnd && !conditionDefinition.getAnd().isEmpty()) {
             for (ConditionDefinition sub : conditionDefinition.getAnd()) {
                 if (!check(sub, imageWrapper)) {
                     result = false;
                     break;
                 }
             }
+        }
+
+        if (failure) {
+            result = false;
         }
 
         // If we failed, but have a OR, check the OR

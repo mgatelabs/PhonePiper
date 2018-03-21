@@ -54,7 +54,7 @@
   "states": {
 
     "main": {
-      "name": "Main",
+      "name": "Farm - Main",
       "includes": [
         "_es-to_results",
         "_es-to_menu",
@@ -64,7 +64,7 @@
     },
 
     "menu": {
-      "name": "Menu",
+      "name": "Farm - Menu",
       "includes": [
         "_common-screen_saver",
         "_common-ml-mission_1",
@@ -146,7 +146,7 @@
     },
 
     "_es-menu": {
-      "name": "Menu Ending Include",
+      "name": "Farm - Menu Ending Include",
       "statements": [
         {
           "condition": {
@@ -246,7 +246,7 @@
     },
 
     "_es-from_battle_to_results": {
-      "name": "From Battle To Results",
+      "name": "TMR - From Battle To Results",
       "statements": [
         {
           "condition": {
@@ -284,7 +284,7 @@
     },
 
     "_es-to_results": {
-      "name": "To Results",
+      "name": "TMR - To Results",
       "statements": [
         {
           "condition": {
@@ -317,7 +317,7 @@
     },
 
     "results": {
-      "name": "Results",
+      "name": "TMR - Results",
       "includes": [
         "_common-screen_saver",
         "_common_mr-points",
@@ -439,7 +439,7 @@
     },
 
     "raid-home": {
-      "name": "Raid Home",
+      "name": "Raid - Home",
       "includes": [
         "_common-ml-goals",
         "_common-ml-friend_0",
@@ -677,7 +677,7 @@
     },
 
     "farm_to_home_to_raid": {
-      "name": "Farm > Home > Raid",
+      "name": "Farm - Home > Raid",
       "includes": [
         "_common-vtx-items",
         "_common-no_op",
@@ -733,13 +733,46 @@
     },
 
     "raid_to_home_to_farm": {
-      "name": "Raid > Home > Farm",
+      "name": "Raid - Home > Farm",
       "includes": [
         "_es-to_menu",
         "_common-no_op",
         "_not_home_back"
       ],
       "statements": [
+        {
+          "condition": {
+            "is": "SCREEN",
+            "value": "battle-menu"
+          },
+          "actions": [
+            {
+              "type": "MSG",
+              "value": "Returning to Battle"
+            },
+            {
+              "type": "SET",
+              "var": "loops",
+              "value": "0"
+            },
+            {
+              "type": "TAP",
+              "value": "battle-menu-back"
+            },
+            {
+              "type": "WAIT",
+              "value": "5000"
+            },
+            {
+              "type": "SWAP",
+              "value": "raid-battle"
+            },
+            {
+              "type": "REPEAT",
+              "value": ""
+            }
+          ]
+        },
         {
           "condition": {
             "is": "SCREEN",

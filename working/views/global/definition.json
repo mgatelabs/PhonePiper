@@ -10,6 +10,11 @@
     "points" : [ ],
     "enabled" : false
   }, {
+    "name" : "battle-menu",
+    "screenId" : "battle-menu",
+    "points" : [ ],
+    "enabled" : false
+  }, {
     "name" : "Battle - Unit - 0 NotFull",
     "screenId" : "battle-unit-0_notfull",
     "points" : [ ],
@@ -57,7 +62,7 @@
   }, {
     "name" : "Game - Battle - Auto Off",
     "screenId" : "game-battle-auto_off",
-    "points" : [  ],
+    "points" : [ ],
     "enabled" : false
   }, {
     "name" : "Game - Battle - Auto On",
@@ -92,7 +97,7 @@
   }, {
     "name" : "Menu - Daily Notice",
     "screenId" : "menu-daily-notice",
-    "points" : [  ],
+    "points" : [ ],
     "enabled" : false
   }, {
     "name" : "Menu - Depart",
@@ -117,17 +122,17 @@
   }, {
     "name" : "Menu - Friend Request",
     "screenId" : "menu-friend_request",
-    "points" : [  ],
+    "points" : [ ],
     "enabled" : false
   }, {
     "name" : "Menu - Friend Select",
     "screenId" : "menu-friend_select",
-    "points" : [  ],
+    "points" : [ ],
     "enabled" : false
   }, {
     "name" : "Menu - Friend Select - Bottom",
     "screenId" : "menu-friend_select-bottom",
-    "points" : [  ],
+    "points" : [ ],
     "enabled" : false
   }, {
     "name" : "Menu - Friend Select - Empty",
@@ -198,7 +203,7 @@
   }, {
     "name" : "Menu - Results - Items",
     "screenId" : "menu-results-items",
-    "points" : [  ],
+    "points" : [ ],
     "enabled" : false
   }, {
     "name" : "Menu - Results - Missions",
@@ -208,7 +213,7 @@
   }, {
     "name" : "Menu - Results - Points",
     "screenId" : "menu-results-points",
-    "points" : [  ],
+    "points" : [ ],
     "enabled" : false
   }, {
     "name" : "Menu - Results - Points (Raid)",
@@ -218,7 +223,7 @@
   }, {
     "name" : "Menu - Results - Units",
     "screenId" : "menu-results-units",
-    "points" : [  ],
+    "points" : [ ],
     "enabled" : false
   }, {
     "name" : "Menu - Results - Units 0 - Pop",
@@ -268,7 +273,7 @@
   }, {
     "name" : "OS - Home",
     "screenId" : "os-home",
-    "points" : [  ],
+    "points" : [ ],
     "enabled" : false
   }, {
     "name" : "OS - Unable to access data",
@@ -291,6 +296,14 @@
     "y" : 1808,
     "w" : 225,
     "h" : 87,
+    "enabled" : false
+  }, {
+    "name" : "battle-menu-back",
+    "componentId" : "battle-menu-back",
+    "x" : 0,
+    "y" : 0,
+    "w" : 1,
+    "h" : 1,
     "enabled" : false
   }, {
     "name" : "Battle - Repeat",

@@ -82,7 +82,7 @@
             },
             {
               "type": "WAIT",
-              "value": "5000"
+              "value": "15000"
             },
             {
               "type": "REPEAT",

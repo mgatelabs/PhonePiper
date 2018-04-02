@@ -24,7 +24,7 @@
     },
     {
       "name": "menu-item",
-      "display": "Menu Item",
+      "display": "Farm Menu Item",
       "value": "1",
       "type": "INT",
       "modify":"EDITABLE"
@@ -253,7 +253,7 @@
     },
 
     "_es-from_battle_to_results": {
-      "name": "FARM - From Battle To Results",
+      "name": "Farm - From Battle To Results",
       "statements": [
         {
           "condition": {
@@ -291,7 +291,7 @@
     },
 
     "_es-to_results": {
-      "name": "FARM - To Results",
+      "name": "Farm - To Results",
       "statements": [
         {
           "condition": {
@@ -324,7 +324,7 @@
     },
 
     "results": {
-      "name": "FARM - Results",
+      "name": "Farm - Results",
       "includes": [
         "_common-screen_saver",
         "_common_mr-points",

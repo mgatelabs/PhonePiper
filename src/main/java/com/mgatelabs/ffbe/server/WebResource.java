@@ -108,6 +108,9 @@ public class WebResource {
         checkInitialState();
         connectionDefinition.setIp(value);
         connectionDefinition.write();
+        if (deviceHelper != null) {
+            deviceHelper.setIpAddress(connectionDefinition.getIp());
+        }
     }
 
     @POST

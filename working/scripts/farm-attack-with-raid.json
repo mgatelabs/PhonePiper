@@ -23,6 +23,13 @@
       "modify":"VISIBLE"
     },
     {
+      "name": "menu-item",
+      "display": "Menu Item",
+      "value": "1",
+      "type": "INT",
+      "modify":"EDITABLE"
+    },
+    {
       "name": "force-auto",
       "display": "Force Auto Battle",
       "value": "0",
@@ -32,7 +39,7 @@
     {
       "name": "allow-raid",
       "display": "Enable Raid",
-      "value": "1",
+      "value": "0",
       "type": "INT",
       "modify":"EDITABLE"
     },
@@ -67,7 +74,7 @@
       "name": "Farm - Menu",
       "includes": [
         "_common-screen_saver",
-        "_common-ml-mission_1",
+        "_common-ml-mission",
         "_common-ml-goals",
         "_common-ml-friend_0",
         "_common-ml-friend_none",
@@ -246,7 +253,7 @@
     },
 
     "_es-from_battle_to_results": {
-      "name": "TMR - From Battle To Results",
+      "name": "FARM - From Battle To Results",
       "statements": [
         {
           "condition": {
@@ -284,7 +291,7 @@
     },
 
     "_es-to_results": {
-      "name": "TMR - To Results",
+      "name": "FARM - To Results",
       "statements": [
         {
           "condition": {
@@ -317,7 +324,7 @@
     },
 
     "results": {
-      "name": "TMR - Results",
+      "name": "FARM - Results",
       "includes": [
         "_common-screen_saver",
         "_common_mr-points",

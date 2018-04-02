@@ -8,6 +8,7 @@ import com.mgatelabs.ffbe.Runner;
 import com.mgatelabs.ffbe.runners.ScriptRunner;
 import com.mgatelabs.ffbe.shared.details.*;
 import com.mgatelabs.ffbe.shared.helper.DeviceHelper;
+import com.mgatelabs.ffbe.shared.util.AdbShell;
 import com.mgatelabs.ffbe.ui.FrameChoices;
 import com.mgatelabs.ffbe.ui.frame.StartupFrame;
 import com.mgatelabs.ffbe.ui.panels.LogPanel;
@@ -129,6 +130,68 @@ public class WebResource {
             runner.pressComponent(componentId, ActionType.valueOf(buttonId));
             valueResult.setStatus("OK");
         } catch (Exception ex) {
+            valueResult.setStatus("FAIL");
+        }
+        return valueResult;
+    }
+
+    @POST
+    @Path("/adb/usb")
+    @Produces(MediaType.APPLICATION_JSON)
+    public synchronized ValueResult adbUseUSB() {
+        checkInitialState();
+        final ValueResult valueResult = new ValueResult();
+        if (runner != null) {
+            try {
+                runner.stopShell();
+                AdbShell.enableUsb();
+                runner.restartShell();
+                valueResult.setStatus("OK");
+            } catch (Exception ex) {
+                valueResult.setStatus("FAIL");
+            }
+        } else {
+            valueResult.setStatus("FAIL");
+        }
+        return valueResult;
+    }
+
+    @POST
+    @Path("/adb/restart")
+    @Produces(MediaType.APPLICATION_JSON)
+    public synchronized ValueResult adbRestart() {
+        checkInitialState();
+        final ValueResult valueResult = new ValueResult();
+        if (runner != null) {
+            try {
+                runner.restartShell();
+                valueResult.setStatus("OK");
+            } catch (Exception ex) {
+                valueResult.setStatus("FAIL");
+            }
+        } else {
+            valueResult.setStatus("FAIL");
+        }
+        return valueResult;
+    }
+
+    @POST
+    @Path("/adb/remote")
+    @Produces(MediaType.APPLICATION_JSON)
+    public synchronized ValueResult adbUseRemote() {
+        checkInitialState();
+        final ValueResult valueResult = new ValueResult();
+        if (runner != null) {
+            try {
+                runner.stopShell();
+                AdbShell.enableRemote();
+                AdbShell.connect(deviceHelper.getIpAddress());
+                runner.restartShell();
+                valueResult.setStatus("OK");
+            } catch (Exception ex) {
+                valueResult.setStatus("FAIL");
+            }
+        } else {
             valueResult.setStatus("FAIL");
         }
         return valueResult;

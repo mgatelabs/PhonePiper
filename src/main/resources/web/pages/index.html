@@ -59,6 +59,8 @@
             var variableContainer = $('#variable-container');
             var loadedForm = $('#loaded-form');
 
+            var controlAdb = $('.controlAdb');
+
             var linkedVariables = {};
 
             var notWhileRunning = $('.notWhileRunning');
@@ -186,6 +188,14 @@
                   type: "POST",
                   url: '/ffbe/player/level',
                   data: {value: playerLevel.val()}
+                });
+            });
+
+            controlAdb.click(function(){
+                $.ajax({
+                  type: "POST",
+                  url: '/ffbe/adb/' + $(this).attr('adb'),
+                  data: {}
                 });
             });
 
@@ -423,6 +433,20 @@
                 <input class="form-control" id="device-ip"/>
                 <div class="input-group-append">
                     <button type="button" id="controlDeviceSave" class="btn btn-primary">Update</button>
+                    <button type="button" class="btn controlAdb btn-info" adb="usb">USB</button>
+                    <button type="button" class="btn controlAdb btn-info" adb="remote">Remote</button>
+                </div>
+            </div>
+            <br/>
+            <div class="input-group">
+                <div class="input-group-prepend">
+                    <span class="input-group-text">ADB</span>
+                </div>
+                <input class="form-control" id="adb-info"/>
+                <div class="input-group-append">
+                    <button type="button" class="btn controlAdb btn-info notWhileRunning" adb="restart">Restart</button>
+                    <button type="button" class="btn controlAdb btn-info notWhileRunning" adb="usb">USB</button>
+                    <button type="button" class="btn controlAdb btn-info notWhileRunning" adb="remote">Remote</button>
                 </div>
             </div>
 

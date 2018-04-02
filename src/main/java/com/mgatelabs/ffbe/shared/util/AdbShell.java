@@ -31,6 +31,54 @@ public class AdbShell {
 
     private List<String> batch;
 
+    public static boolean enableRemote() {
+        ProcessBuilder processBuilder = new ProcessBuilder("adb","tcpip", "5555");
+        processBuilder.redirectOutput(ProcessBuilder.Redirect.PIPE);
+        processBuilder.redirectError(ProcessBuilder.Redirect.INHERIT);
+
+        try {
+            Process temp = processBuilder.start();
+            temp.waitFor();
+            return true;
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
+
+    public static boolean connect(final String address) {
+        ProcessBuilder processBuilder = new ProcessBuilder("adb", "connect", address);
+        processBuilder.redirectOutput(ProcessBuilder.Redirect.PIPE);
+        processBuilder.redirectError(ProcessBuilder.Redirect.INHERIT);
+
+        try {
+            Process temp = processBuilder.start();
+            temp.waitFor();
+            return true;
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
+
+    public static boolean enableUsb() {
+        ProcessBuilder processBuilder = new ProcessBuilder("adb","usb");
+        try {
+            Process temp = processBuilder.start();
+            temp.waitFor();
+            return true;
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
+
     public AdbShell() {
         batch = Lists.newArrayList();
 

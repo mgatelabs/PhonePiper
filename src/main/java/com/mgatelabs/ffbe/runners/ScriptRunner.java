@@ -179,6 +179,28 @@ public class ScriptRunner {
         status = Status.INIT;
     }
 
+    public void stopShell() {
+        if (shell != null) {
+            try {
+                shell.shutdown();
+            } catch (Exception ex) {
+                ex.printStackTrace();
+            }
+            shell = null;
+        }
+    }
+
+    public void restartShell() {
+        if (shell != null) {
+            try {
+                shell.shutdown();
+            } catch (Exception ex) {
+                ex.printStackTrace();
+            }
+        }
+        shell = new AdbShell();
+    }
+
     public Date getLastImageDate() {
         return lastImageDate;
     }
@@ -358,11 +380,7 @@ public class ScriptRunner {
 
             if (!shell.isReady()) {
                 logger.log(Level.WARNING, "Bad Shell: Stopping");
-                try {
-                    shell.shutdown();
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
+                restartShell();
                 this.status = Status.PAUSED;
                 return;
             }

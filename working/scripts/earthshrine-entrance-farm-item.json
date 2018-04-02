@@ -131,7 +131,7 @@
           "actions": [
             {
               "type": "SET",
-              "var": "loops",
+              "var": "_loops",
               "value": "0"
             },
             {
@@ -236,7 +236,7 @@
           "actions": [
             {
               "type": "SET",
-              "var": "loops",
+              "var": "_loops",
               "value": "0"
             },
             {
@@ -304,7 +304,7 @@
 
         {
           "condition": {
-            "var": "loops",
+            "var": "_loops",
             "is": "GREATER",
             "value": "20",
             "and": {
@@ -323,7 +323,7 @@
             },
             {
               "type": "SET",
-              "var": "loops",
+              "var": "_loops",
               "value": "0"
             },
             {
@@ -342,7 +342,7 @@
             {
               "type": "ADD",
               "value": "1",
-              "var": "loops"
+              "var": "_loops"
             },
             {
               "type": "REPEAT",

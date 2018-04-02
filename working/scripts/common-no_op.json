@@ -1,12 +1,6 @@
 {
   "vars": [
     {
-      "name": "loops",
-      "value": "0",
-      "type": "INT",
-      "modify":"VISIBLE"
-    },
-    {
       "name": "_screen_saver",
       "value": "0",
       "type": "INT"
@@ -304,7 +298,7 @@
         },
         {
           "condition": {
-            "var": "loops",
+            "var": "_loops",
             "is": "GREATER",
             "value": "900"
           },
@@ -321,7 +315,7 @@
         },
         {
           "condition": {
-            "var": "loops",
+            "var": "_loops",
             "is": "GREATER",
             "value": "45"
           },
@@ -345,7 +339,7 @@
             {
               "type": "ADD",
               "value": "1",
-              "var": "loops"
+              "var": "_loops"
             }
           ]
         }
@@ -364,7 +358,7 @@
             {
               "type": "SET",
               "value": "0",
-              "var": "loops"
+              "var": "_loops"
             },{
               "type": "SET",
               "value": "0",

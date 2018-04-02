@@ -14,11 +14,6 @@
       "name": "runs",
       "value": "0",
       "type": "INT"
-    },
-    {
-      "name": "loops",
-      "value": "0",
-      "type": "INT"
     }
   ],
   "includes": [
@@ -175,7 +170,7 @@
             {
               "type": "SET",
               "value": "0",
-              "var": "loops"
+              "var": "_loops"
             },
             {
               "type": "MSG",
@@ -242,7 +237,7 @@
             {
               "type": "SET",
               "value": "0",
-              "var": "loops"
+              "var": "_loops"
             },
             {
               "type": "MSG",
@@ -355,7 +350,7 @@
             },
             {
               "type": "SET",
-              "var": "loops",
+              "var": "_loops",
               "value": "0"
             },
             {
@@ -387,7 +382,7 @@
           "actions": [
             {
               "type": "SET",
-              "var": "loops",
+              "var": "_loops",
               "value": "0"
             },
             {

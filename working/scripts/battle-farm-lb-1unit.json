@@ -11,11 +11,6 @@
       "type": "INT"
     },
     {
-      "name": "loops",
-      "value": "0",
-      "type": "INT"
-    },
-    {
       "name": "last_action",
       "value": "0",
       "type": "INT"
@@ -178,7 +173,7 @@
             {
               "type": "SET",
               "value": "0",
-              "var": "loops"
+              "var": "_loops"
             },
             {
               "type": "SET",
@@ -296,7 +291,7 @@
             },
             {
               "type": "SET",
-              "var": "loops",
+              "var": "_loops",
               "value": "0"
             },
             {
@@ -328,7 +323,7 @@
           "actions": [
             {
               "type": "SET",
-              "var": "loops",
+              "var": "_loops",
               "value": "0"
             },
             {

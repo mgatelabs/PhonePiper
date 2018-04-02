@@ -67,6 +67,7 @@ public class ScriptRunner {
     private Map<String, VarTimer> timers;
 
     private static final String VAR_SECONDS = "_seconds";
+    private static final String VAR_LOOPS = "_loops";
 
     private long elapsedTime;
 
@@ -131,6 +132,7 @@ public class ScriptRunner {
         }
 
         scriptDefinition.getVars().add(new VarDefinition(VAR_SECONDS, "Elapsed Seconds", "0", VarType.INT, VarModify.VISIBLE));
+        scriptDefinition.getVars().add(new VarDefinition(VAR_LOOPS, "Loops", "0", VarType.INT, VarModify.HIDDEN));
 
         for (VarDefinition varDefinition : scriptDefinition.getVars()) {
             if (varDefinition.getType() == VarType.INT) {
@@ -365,6 +367,9 @@ public class ScriptRunner {
         } else {
             logger.log(Level.FINE, "Found initial state with id: " + stateName);
         }
+
+        // Always reset the loop counter
+        setVar(VAR_LOOPS, 0);
 
         long lastTime = System.nanoTime();
 

@@ -1,11 +1,6 @@
 {
   "vars": [
     {
-      "name": "loops",
-      "value": "0",
-      "type": "INT"
-    },
-    {
       "name": "setup",
       "value": "0",
       "type": "INT"
@@ -65,7 +60,7 @@
             },
             {
               "type": "SET",
-              "var": "loops",
+              "var": "_loops",
               "value": "0"
             },
             {
@@ -117,7 +112,7 @@
           "actions": [
             {
               "type": "SET",
-              "var": "loops",
+              "var": "_loops",
               "value": "0"
             },
             {
@@ -155,7 +150,7 @@
           "actions": [
             {
               "type": "SET",
-              "var": "loops",
+              "var": "_loops",
               "value": "0"
             },
             {
@@ -235,7 +230,7 @@
             },
             {
               "type": "SET",
-              "var": "loops",
+              "var": "_loops",
               "value": "0"
             },
             {

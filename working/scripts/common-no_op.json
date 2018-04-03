@@ -326,7 +326,7 @@
             },
             {
               "type": "MSG",
-              "value": "No-Op ${loops}"
+              "value": "No-Op ${_loops}"
             }
           ]
         },

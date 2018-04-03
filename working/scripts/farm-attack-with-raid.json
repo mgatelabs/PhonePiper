@@ -278,7 +278,7 @@
             },
             {
               "type": "SWAP",
-              "value": "results"
+              "value": "farm-results"
             }
           ]
         }
@@ -311,14 +311,14 @@
             },
             {
               "type": "SWAP",
-              "value": "results"
+              "value": "farm-results"
             }
           ]
         }
       ]
     },
 
-    "results": {
+    "farm-results": {
       "name": "Farm - Results",
       "includes": [
         "_common-screen_saver",

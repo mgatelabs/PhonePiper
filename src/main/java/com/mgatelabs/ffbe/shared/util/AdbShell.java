@@ -44,10 +44,10 @@ public class AdbShell {
         return commonHandler(new ProcessBuilder("adb", "usb"));
     }
 
-    public static String getErrorStream(Process process) {
+    public static String getStreamAsString(InputStream inputStream) {
         try {
-            if (process.getErrorStream().available() > 0) {
-                BufferedInputStream bufferedInputStream = new BufferedInputStream(process.getErrorStream());
+            if (inputStream.available() > 0) {
+                BufferedInputStream bufferedInputStream = new BufferedInputStream(inputStream);
                 StringBuilder stringBuilder = new StringBuilder();
                 while (bufferedInputStream.available() > 0) {
                     stringBuilder.append((char) bufferedInputStream.read());
@@ -66,7 +66,10 @@ public class AdbShell {
         try {
             Process temp = processBuilder.start();
             temp.waitFor();
-            return getErrorStream(temp);
+            String errorString = getStreamAsString(temp.getErrorStream());
+            String normalString = getStreamAsString(temp.getInputStream());
+            return  normalString.replaceAll("\n", "|").replaceAll("\r", "") + errorString.replaceAll("\n", "|").replaceAll("\r", "");
+
         } catch (IOException e) {
             e.printStackTrace();
             return e.getLocalizedMessage();

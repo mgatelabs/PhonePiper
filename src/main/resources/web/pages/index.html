@@ -60,7 +60,7 @@
             var loadedForm = $('#loaded-form');
 
             var controlAdb = $('.controlAdb');
-
+            var adbInfo = $('#adb-info');
             var linkedVariables = {};
 
             var notWhileRunning = $('.notWhileRunning');
@@ -193,9 +193,12 @@
 
             controlAdb.click(function(){
                 $.ajax({
-                  type: "POST",
-                  url: '/ffbe/adb/' + $(this).attr('adb'),
-                  data: {}
+                    type: "POST",
+                    url: '/ffbe/adb/' + $(this).attr('adb'),
+                    data: {},
+                    success: function(result){
+                        adbInfo.val(result.value);
+                    }
                 });
             });
 
@@ -465,12 +468,13 @@
                     <span class="input-group-text">ADB</span>
                 </div>
                 <input class="form-control" id="adb-info"/>
-                <div class="input-group-append">
+            </div>
+
+            <div class="input-group">
                     <button type="button" class="btn controlAdb btn-info notWhileRunning" adb="restart">Restart</button>
                     <button type="button" class="btn controlAdb btn-info notWhileRunning" adb="usb">USB</button>
                     <button type="button" class="btn controlAdb btn-info notWhileRunning" adb="remote">Remote</button>
                     <button type="button" class="btn controlAdb btn-info notWhileRunning" adb="connect">Connect</button>
-                </div>
             </div>
 
         </form>

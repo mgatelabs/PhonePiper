@@ -2,6 +2,7 @@ package com.mgatelabs.ffbe.shared.util;
 
 import com.google.common.base.Joiner;
 import com.google.common.collect.Lists;
+import org.apache.commons.lang3.StringUtils;
 
 import java.io.*;
 import java.util.List;
@@ -16,7 +17,7 @@ public class AdbShell {
 
     private ProcessBuilder builder;
     private Process adb;
-    private static final byte[] LS = new byte [] {0x0a};
+    private static final byte[] LS = new byte[]{0x0a};
     private static final byte[] ECHO = "toolbox".getBytes();
 
     //private char[] ECHO_KEY = {'9', '8', '7', '6', '1', '2', '3', '4'};
@@ -31,52 +32,48 @@ public class AdbShell {
 
     private List<String> batch;
 
-    public static boolean enableRemote() {
-        ProcessBuilder processBuilder = new ProcessBuilder("adb","tcpip", "5555");
-        processBuilder.redirectOutput(ProcessBuilder.Redirect.PIPE);
-        processBuilder.redirectError(ProcessBuilder.Redirect.INHERIT);
-
-        try {
-            Process temp = processBuilder.start();
-            temp.waitFor();
-            return true;
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
-        return false;
+    public static String enableRemote() {
+        return commonHandler(new ProcessBuilder("adb", "tcpip", "5555"));
     }
 
-    public static boolean connect(final String address) {
-        ProcessBuilder processBuilder = new ProcessBuilder("adb", "connect", address);
-        processBuilder.redirectOutput(ProcessBuilder.Redirect.PIPE);
-        processBuilder.redirectError(ProcessBuilder.Redirect.INHERIT);
-
-        try {
-            Process temp = processBuilder.start();
-            temp.waitFor();
-            return true;
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
-        return false;
+    public static String connect(final String address) {
+        return commonHandler(new ProcessBuilder("adb", "connect", address));
     }
 
-    public static boolean enableUsb() {
-        ProcessBuilder processBuilder = new ProcessBuilder("adb","usb");
+    public static String enableUsb() {
+        return commonHandler(new ProcessBuilder("adb", "usb"));
+    }
+
+    public static String getErrorStream(Process process) {
+        try {
+            if (process.getErrorStream().available() > 0) {
+                BufferedInputStream bufferedInputStream = new BufferedInputStream(process.getErrorStream());
+                StringBuilder stringBuilder = new StringBuilder();
+                while (bufferedInputStream.available() > 0) {
+                    stringBuilder.append((char) bufferedInputStream.read());
+                }
+                return StringUtils.trim(stringBuilder.toString());
+            }
+        } catch (IOException i) {
+
+        }
+        return "";
+    }
+
+    public static String commonHandler(ProcessBuilder processBuilder) {
+        processBuilder.redirectOutput(ProcessBuilder.Redirect.PIPE);
+        processBuilder.redirectError(ProcessBuilder.Redirect.INHERIT);
         try {
             Process temp = processBuilder.start();
             temp.waitFor();
-            return true;
+            return getErrorStream(temp);
         } catch (IOException e) {
             e.printStackTrace();
+            return e.getLocalizedMessage();
         } catch (InterruptedException e) {
             e.printStackTrace();
+            return e.getLocalizedMessage();
         }
-        return false;
     }
 
     public AdbShell() {

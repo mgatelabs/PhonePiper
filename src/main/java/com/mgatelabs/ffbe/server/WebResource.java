@@ -190,13 +190,15 @@ public class WebResource {
             if (runner != null) {
                 runner.stopShell();
             }
-            AdbShell.enableRemote();
+            String s =AdbShell.enableRemote();
             if (runner != null) {
                 runner.restartShell();
             }
+            valueResult.setValue(s);
             valueResult.setStatus("OK");
         } catch (Exception ex) {
             valueResult.setStatus("FAIL");
+            valueResult.setValue(ex.getLocalizedMessage());
             ex.printStackTrace();
         }
         return valueResult;
@@ -212,13 +214,15 @@ public class WebResource {
             if (runner != null) {
                 runner.stopShell();
             }
-            AdbShell.connect(deviceHelper.getIpAddress());
+            String s =AdbShell.connect(deviceHelper.getIpAddress());
             if (runner != null) {
                 runner.restartShell();
             }
+            valueResult.setValue(s);
             valueResult.setStatus("OK");
         } catch (Exception ex) {
             valueResult.setStatus("FAIL");
+            valueResult.setValue(ex.getLocalizedMessage());
             ex.printStackTrace();
         }
         return valueResult;

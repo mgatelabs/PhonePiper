@@ -151,7 +151,7 @@
                         if (data.variables.length > 0) {
                             for (i = 0; i < data.variables.length; i++) {
                                 item = data.variables[i];
-                                linkedVariables[item.name].val(item.value);
+                                linkedVariables[item.name].val(formatVariable(item));
                             }
                         }
 
@@ -216,6 +216,30 @@
                 });
             });
 
+            function doubleWide(numb) {
+                if (numb < 10) {
+                    return "0" + numb;
+                }
+                return numb;
+            }
+
+            function formatVariable(varDef) {
+                switch(varDef.displayType) {
+                    case 'STANDARD':
+                        return varDef.value;
+                    case 'TENTH': {
+                        return ((varDef.value - 0) / 10.0).toFixed(1) + "%";
+                    } break;
+                    case 'SECONDS': {
+                        var total = varDef.value - 0;
+                        var hours = Math.floor(total / (60 * 60));
+                        var minutes = Math.floor((total - (hours * 60)) / 60);
+                        var seconds = total % 60;
+                        return doubleWide(hours) + ":" + doubleWide(minutes) + ":" + doubleWide(seconds);
+                    } break;
+                }
+            }
+
             function loadProcessInfo() {
                 $.ajax({
                   type: "GET",
@@ -242,7 +266,7 @@
 
                                 $('<div class="input-group-prepend"></div>').append($('<span class="input-group-text" id=""></span>').text(item.display)).appendTo(grp);
 
-                                linkedVariables[item.name] = $('<input type="text" class="form-control notWhileRunning"/>').data('key', item.name).val(item.value).attr('id', 'var_' + item.name).appendTo(grp);
+                                linkedVariables[item.name] = $('<input type="text" class="form-control notWhileRunning"/>').data('key', item.name).val(formatVariable(item)).attr('id', 'var_' + item.name).appendTo(grp);
                                 switch(item.modify) {
                                     case 'EDITABLE': {
                                         $('<div class="input-group-append"></div>').append($('<button class="btn btn-secondary updateVariable notWhileRunning" type="button">Update</button>').data('key', item.name).attr('for', 'var_' + item.name)).appendTo(grp);
@@ -445,6 +469,7 @@
                     <button type="button" class="btn controlAdb btn-info notWhileRunning" adb="restart">Restart</button>
                     <button type="button" class="btn controlAdb btn-info notWhileRunning" adb="usb">USB</button>
                     <button type="button" class="btn controlAdb btn-info notWhileRunning" adb="remote">Remote</button>
+                    <button type="button" class="btn controlAdb btn-info notWhileRunning" adb="connect">Connect</button>
                 </div>
             </div>
 

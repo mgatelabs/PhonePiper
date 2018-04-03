@@ -6,6 +6,7 @@ import com.google.common.collect.Maps;
 import com.google.common.io.Resources;
 import com.mgatelabs.ffbe.Runner;
 import com.mgatelabs.ffbe.runners.ScriptRunner;
+import com.mgatelabs.ffbe.server.entities.*;
 import com.mgatelabs.ffbe.shared.details.*;
 import com.mgatelabs.ffbe.shared.helper.DeviceHelper;
 import com.mgatelabs.ffbe.shared.util.AdbShell;
@@ -171,6 +172,7 @@ public class WebResource {
                 valueResult.setStatus("OK");
             } catch (Exception ex) {
                 valueResult.setStatus("FAIL");
+                ex.printStackTrace();
             }
         } else {
             valueResult.setStatus("FAIL");
@@ -184,18 +186,40 @@ public class WebResource {
     public synchronized ValueResult adbUseRemote() {
         checkInitialState();
         final ValueResult valueResult = new ValueResult();
-        if (runner != null) {
-            try {
+        try {
+            if (runner != null) {
                 runner.stopShell();
-                AdbShell.enableRemote();
-                AdbShell.connect(deviceHelper.getIpAddress());
-                runner.restartShell();
-                valueResult.setStatus("OK");
-            } catch (Exception ex) {
-                valueResult.setStatus("FAIL");
             }
-        } else {
+            AdbShell.enableRemote();
+            if (runner != null) {
+                runner.restartShell();
+            }
+            valueResult.setStatus("OK");
+        } catch (Exception ex) {
             valueResult.setStatus("FAIL");
+            ex.printStackTrace();
+        }
+        return valueResult;
+    }
+
+    @POST
+    @Path("/adb/connect")
+    @Produces(MediaType.APPLICATION_JSON)
+    public synchronized ValueResult adbConnectRemote() {
+        checkInitialState();
+        final ValueResult valueResult = new ValueResult();
+        try {
+            if (runner != null) {
+                runner.stopShell();
+            }
+            AdbShell.connect(deviceHelper.getIpAddress());
+            if (runner != null) {
+                runner.restartShell();
+            }
+            valueResult.setStatus("OK");
+        } catch (Exception ex) {
+            valueResult.setStatus("FAIL");
+            ex.printStackTrace();
         }
         return valueResult;
     }

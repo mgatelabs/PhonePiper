@@ -5,35 +5,40 @@
       "display": "Unit 1 TMR+",
       "value": "0",
       "type": "INT",
-      "modify":"VISIBLE"
+      "modify":"VISIBLE",
+      "displayType":"TENTH"
     },
     {
       "name": "unit_1_tmr",
       "display": "Unit 2 TMR+",
       "value": "0",
       "type": "INT",
-      "modify":"VISIBLE"
+      "modify":"VISIBLE",
+      "displayType":"TENTH"
     },
     {
       "name": "unit_2_tmr",
       "display": "Unit 3 TMR+",
       "value": "0",
       "type": "INT",
-      "modify":"VISIBLE"
+      "modify":"VISIBLE",
+      "displayType":"TENTH"
     },
     {
       "name": "unit_3_tmr",
       "display": "Unit 4 TMR+",
       "value": "0",
       "type": "INT",
-      "modify":"VISIBLE"
+      "modify":"VISIBLE",
+      "displayType":"TENTH"
     },
     {
       "name": "unit_4_tmr",
       "display": "Unit 5 TMR+",
       "value": "0",
       "type": "INT",
-      "modify":"VISIBLE"
+      "modify":"VISIBLE",
+      "displayType":"TENTH"
     }
   ],
   "states": {

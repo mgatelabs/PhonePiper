@@ -1,4 +1,4 @@
-package com.mgatelabs.ffbe.server;
+package com.mgatelabs.ffbe.server.entities;
 
 import com.google.common.collect.Lists;
 import com.mgatelabs.ffbe.shared.details.VarDefinition;

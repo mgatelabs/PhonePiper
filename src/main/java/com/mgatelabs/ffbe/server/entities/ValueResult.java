@@ -1,4 +1,4 @@
-package com.mgatelabs.ffbe.server;
+package com.mgatelabs.ffbe.server.entities;
 
 /**
  * Created by @mgatelabs (Michael Fuller) on 2/14/2018.

@@ -131,8 +131,8 @@ public class ScriptRunner {
             }
         }
 
-        scriptDefinition.getVars().add(new VarDefinition(VAR_SECONDS, "Elapsed Seconds", "0", VarType.INT, VarModify.VISIBLE));
-        scriptDefinition.getVars().add(new VarDefinition(VAR_LOOPS, "Loops", "0", VarType.INT, VarModify.HIDDEN));
+        scriptDefinition.getVars().add(new VarDefinition(VAR_SECONDS, "Elapsed Seconds", "0", VarType.INT, VarDisplay.SECONDS, VarModify.VISIBLE));
+        scriptDefinition.getVars().add(new VarDefinition(VAR_LOOPS, "Loops", "0", VarType.INT, VarDisplay.STANDARD, VarModify.HIDDEN));
 
         for (VarDefinition varDefinition : scriptDefinition.getVars()) {
             if (varDefinition.getType() == VarType.INT) {
@@ -774,7 +774,7 @@ public class ScriptRunner {
                 case VISIBLE:
                 case EDITABLE: {
                     if (varDefinition.getType() == VarType.INT) {
-                        vars.add(new VarDefinition(varDefinition.getName(), varDefinition.getDisplay(), Integer.toString(getVar(varDefinition.getName())), varDefinition.getType(), varDefinition.getModify()));
+                        vars.add(new VarDefinition(varDefinition.getName(), varDefinition.getDisplay(), Integer.toString(getVar(varDefinition.getName())), varDefinition.getType(), varDefinition.getDisplayType(), varDefinition.getModify()));
                     }
                 }
                 break;

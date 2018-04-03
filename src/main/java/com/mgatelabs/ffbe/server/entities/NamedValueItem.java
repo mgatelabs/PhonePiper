@@ -1,4 +1,4 @@
-package com.mgatelabs.ffbe.server;
+package com.mgatelabs.ffbe.server.entities;
 
 /**
  * @author <a href="mailto:mfuller@acteksoft.com">Michael Fuller</a>

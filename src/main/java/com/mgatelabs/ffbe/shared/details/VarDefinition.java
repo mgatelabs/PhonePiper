@@ -10,16 +10,18 @@ public class VarDefinition {
     private String value;
     private VarType type;
     private VarModify modify;
+    private VarDisplay displayType;
 
     public VarDefinition() {
     }
 
-    public VarDefinition(String name, String display, String value, VarType type, VarModify modify) {
+    public VarDefinition(String name, String display, String value, VarType type, VarDisplay displayType, VarModify modify) {
         this.name = name;
         this.display = display;
         this.value = value;
         this.type = type;
         this.modify = modify;
+        this.displayType = displayType;
     }
 
     public String getName() {
@@ -52,6 +54,14 @@ public class VarDefinition {
 
     public void setType(VarType type) {
         this.type = type;
+    }
+
+    public VarDisplay getDisplayType() {
+        return displayType;
+    }
+
+    public void setDisplayType(VarDisplay displayType) {
+        this.displayType = displayType;
     }
 
     public VarModify getModify() {

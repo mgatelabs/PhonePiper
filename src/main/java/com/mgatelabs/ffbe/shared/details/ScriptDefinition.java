@@ -47,6 +47,9 @@ public class ScriptDefinition {
             if (varDefinition.getModify() == null) {
                 varDefinition.setModify(VarModify.HIDDEN);
             }
+            if (varDefinition.getDisplayType() == null) {
+                varDefinition.setDisplayType(VarDisplay.STANDARD);
+            }
         }
         if (includes == null) {
             includes = Lists.newArrayList();

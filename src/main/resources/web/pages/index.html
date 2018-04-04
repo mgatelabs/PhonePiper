@@ -463,11 +463,10 @@
                 </div>
             </div>
             <br/>
-            <div class="input-group">
-                <div class="input-group-prepend">
-                    <span class="input-group-text">ADB</span>
-                </div>
-                <input class="form-control" id="adb-info"/>
+
+            <div class="form-group">
+                <label for="adb-info">ADB</label>
+                <textarea class="form-control" id="adb-info" rows="3"></textarea>
             </div>
 
             <div class="input-group">
@@ -475,6 +474,7 @@
                     <button type="button" class="btn controlAdb btn-info notWhileRunning" adb="usb">USB</button>
                     <button type="button" class="btn controlAdb btn-info notWhileRunning" adb="remote">Remote</button>
                     <button type="button" class="btn controlAdb btn-info notWhileRunning" adb="connect">Connect</button>
+                    <button type="button" class="btn controlAdb btn-info notWhileRunning" adb="devices">Devices</button>
             </div>
 
         </form>

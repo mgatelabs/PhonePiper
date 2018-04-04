@@ -40,6 +40,10 @@ public class AdbShell {
         return commonHandler(new ProcessBuilder("adb", "connect", address));
     }
 
+    public static String devices() {
+        return commonHandler(new ProcessBuilder("adb", "devices"));
+    }
+
     public static String enableUsb() {
         return commonHandler(new ProcessBuilder("adb", "usb"));
     }
@@ -61,15 +65,17 @@ public class AdbShell {
     }
 
     public static String commonHandler(ProcessBuilder processBuilder) {
+        processBuilder.inheritIO();
         processBuilder.redirectOutput(ProcessBuilder.Redirect.PIPE);
-        processBuilder.redirectError(ProcessBuilder.Redirect.INHERIT);
+        processBuilder.redirectError(ProcessBuilder.Redirect.PIPE);
         try {
             Process temp = processBuilder.start();
             temp.waitFor();
-            String errorString = getStreamAsString(temp.getErrorStream());
             String normalString = getStreamAsString(temp.getInputStream());
-            return  normalString.replaceAll("\n", "|").replaceAll("\r", "") + errorString.replaceAll("\n", "|").replaceAll("\r", "");
+            String errorString = getStreamAsString(temp.getErrorStream());
 
+
+            return  normalString.replaceAll("\n", "|").replaceAll("\r", "") + errorString.replaceAll("\n", "|").replaceAll("\r", "");
         } catch (IOException e) {
             e.printStackTrace();
             return e.getLocalizedMessage();

@@ -29,21 +29,24 @@
       "display": "Force Auto Battle",
       "value": "0",
       "type": "INT",
-      "modify":"EDITABLE"
+      "modify":"EDITABLE",
+      "displayType":"BOOLEAN"
     },
     {
       "name": "allow-raid",
       "display": "Enable Raid",
       "value": "0",
       "type": "INT",
-      "modify":"EDITABLE"
+      "modify":"EDITABLE",
+      "displayType":"BOOLEAN"
     },
     {
       "name": "raid-timer",
       "display": "Raid Timer",
       "value": "16320",
       "type": "INT",
-      "modify":"EDITABLE"
+      "modify":"EDITABLE",
+      "displayType":"SECONDS"
     }
   ],
   "includes": [

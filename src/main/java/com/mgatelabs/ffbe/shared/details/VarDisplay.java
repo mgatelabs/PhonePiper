@@ -7,5 +7,6 @@ package com.mgatelabs.ffbe.shared.details;
 public enum VarDisplay {
     STANDARD,
     SECONDS,
+    BOOLEAN,
     TENTH
 }

@@ -233,6 +233,9 @@
                     case 'TENTH': {
                         return ((varDef.value - 0) / 10.0).toFixed(1) + "%";
                     } break;
+                    case 'BOOLEAN': {
+                        return varDef.value - 0;
+                    } break;
                     case 'SECONDS': {
                         var total = varDef.value - 0;
                         var hours = Math.floor(total / (3600));
@@ -270,7 +273,13 @@
 
                                 $('<div class="input-group-prepend"></div>').append($('<span class="input-group-text" id=""></span>').text(item.display)).appendTo(grp);
 
-                                linkedVariables[item.name] = $('<input type="text" class="form-control notWhileRunning"/>').data('key', item.name).val(formatVariable(item)).attr('id', 'var_' + item.name).appendTo(grp);
+                                if (item.displayType == 'BOOLEAN') {
+                                    linkedVariables[item.name] = $('<select class="form-control notWhileRunning"><option value="0">False</option><option value="1">True</option></select>')
+                                } else {
+                                    linkedVariables[item.name] = $('<input type="text" class="form-control notWhileRunning"/>');
+                                }
+
+                                linkedVariables[item.name].data('key', item.name).val(formatVariable(item)).attr('id', 'var_' + item.name).appendTo(grp);
                                 switch(item.modify) {
                                     case 'EDITABLE': {
                                         $('<div class="input-group-append"></div>').append($('<button class="btn btn-secondary updateVariable notWhileRunning" type="button">Update</button>').data('key', item.name).attr('for', 'var_' + item.name)).appendTo(grp);
@@ -288,7 +297,7 @@
 
             variableContainer.on('click', 'button.updateVariable', function(){
                 var ref = $(this), key = ref.data('key'), input = linkedVariables[key];
-                if (input.val() && (input.val() - 0) >= 0) {
+                if (input.val()) {
                     $.ajax({
                       type: "POST",
                       url: '/ffbe/variable',

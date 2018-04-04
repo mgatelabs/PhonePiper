@@ -783,9 +783,48 @@ public class ScriptRunner {
         return vars;
     }
 
+    private VarDefinition getVarDefinition(String name) {
+        for (VarDefinition varDefinition : scriptDefinition.getVars()) {
+            if (varDefinition.getName().equals(name)) {
+                return varDefinition;
+            }
+        }
+        return null;
+    }
+
     public void updateVariable(String key, String value) {
-        int v = Integer.parseInt(value);
-        vars.put(key, v);
+        VarDefinition definition = getVarDefinition(key);
+
+        if (definition != null) {
+            int v;
+            switch (definition.getDisplayType()) {
+                case BOOLEAN:
+                case STANDARD: {
+                    v = Integer.parseInt(value);
+                }
+                break;
+                case TENTH: {
+
+                }
+                return;
+                case SECONDS: {
+                    String[] parts = value.split(":");
+                    int multiply = 1;
+                    v = 0;
+                    for (int i = parts.length - 1; i >= 0; i--) {
+                        int part = Integer.parseInt(parts[i]) * multiply;
+                        v += part;
+                        multiply *= 60;
+                    }
+                }
+                break;
+                default:
+                    return;
+            }
+
+
+            vars.put(key, v);
+        }
     }
 
     public void pressComponent(String componentId, ActionType actionType) {
@@ -794,13 +833,14 @@ public class ScriptRunner {
             case SWIPE_DOWN:
             case SWIPE_LEFT:
             case SWIPE_RIGHT:
-            case TAP:{
+            case TAP: {
                 ComponentDefinition componentDefinition = components.get(componentId);
                 if (componentDefinition == null) {
                     throw new RuntimeException("Cannot find component with id: " + componentId);
                 }
                 AdbUtils.component(deviceDefinition, componentDefinition, actionType, shell, false);
-            } break;
+            }
+            break;
         }
 
     }

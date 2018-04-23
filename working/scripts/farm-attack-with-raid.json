@@ -18,6 +18,13 @@
       "modify":"VISIBLE"
     },
     {
+      "name": "raid-runs",
+      "display": "Raids",
+      "value": "0",
+      "type": "INT",
+      "modify":"VISIBLE"
+    },
+    {
       "name": "menu-item",
       "display": "Farm Menu Item",
       "value": "1",
@@ -428,7 +435,13 @@
               "type": "SET",
               "value": "0",
               "var": "runs"
+            },
+            {
+              "type": "SET",
+              "value": "0",
+              "var": "raid-runs"
             }
+
           ]
         }
       ]
@@ -572,6 +585,11 @@
               "type": "SET",
               "var": "_loops",
               "value": "0"
+            },
+            {
+              "type": "ADD",
+              "var": "raid-runs",
+              "value": "1"
             },
             {
               "type": "ADD",

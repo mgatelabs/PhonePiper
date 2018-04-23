@@ -2,8 +2,8 @@
   "vars": [
     {
       "name": "vortex-item",
-      "display": "Raid Vortex Item",
-      "value": "1",
+      "display": "Raid - Vortex Index",
+      "value": "0",
       "type": "INT",
       "modify":"EDITABLE"
     }

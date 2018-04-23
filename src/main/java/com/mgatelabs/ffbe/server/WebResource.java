@@ -121,6 +121,16 @@ public class WebResource {
         checkInitialState();
         if (runner != null) {
             runner.updateVariable(key, value);
+
+            VarStateDefinition varStateDefinition = new VarStateDefinition();
+            for (VarDefinition varDefinition: runner.getVariables()) {
+                if (varDefinition.getModify() == VarModify.EDITABLE) {
+                    varStateDefinition.addItem(varDefinition);
+                }
+            }
+            if (varStateDefinition.getItems().size() > 0) {
+                varStateDefinition.save(frameChoices.getScriptName());
+            }
         }
     }
 
@@ -364,6 +374,13 @@ public class WebResource {
             final PrepResult result = new PrepResult(StatusEnum.OK);
 
             runner = new ScriptRunner(playerDefinition, deviceHelper, frameChoices.getScriptDefinition(), frameChoices.getDeviceDefinition(), frameChoices.getViewDefinition(), handler);
+
+            if (VarStateDefinition.exists(frameChoices.getScriptName())) {
+                VarStateDefinition varStateDefinition = VarStateDefinition.read(frameChoices.getScriptName());
+                for (VarDefinition varDefinition: varStateDefinition.getItems()) {
+                    runner.updateVariable(varDefinition.getName(), varDefinition.getValue());
+                }
+            }
 
             return result;
 

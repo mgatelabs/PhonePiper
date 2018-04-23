@@ -783,6 +783,24 @@ public class ScriptRunner {
         return vars;
     }
 
+    public List<VarDefinition> getRawEditVariables() {
+        List<VarDefinition> vars = Lists.newArrayList();
+        for (VarDefinition varDefinition : scriptDefinition.getVars()) {
+            switch (varDefinition.getModify()) {
+                case HIDDEN:
+                    continue;
+                case VISIBLE:
+                case EDITABLE: {
+                    if (varDefinition.getType() == VarType.INT) {
+                        vars.add(new VarDefinition(varDefinition.getName(), varDefinition.getDisplay(), Integer.toString(getVar(varDefinition.getName())), varDefinition.getType(), varDefinition.getDisplayType(), varDefinition.getModify()));
+                    }
+                }
+                break;
+            }
+        }
+        return vars;
+    }
+
     private VarDefinition getVarDefinition(String name) {
         for (VarDefinition varDefinition : scriptDefinition.getVars()) {
             if (varDefinition.getName().equals(name)) {

@@ -3,5 +3,6 @@
 /working/connection.json
 /working/selections*.json
 /working/views/*recovery*
+/working/state/*.json
 /.idea/*
 *.db

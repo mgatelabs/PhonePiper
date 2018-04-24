@@ -192,6 +192,33 @@ public class WebResource {
     }
 
     @POST
+    @Path("/adb/kill")
+    @Produces(MediaType.APPLICATION_JSON)
+    public synchronized ValueResult adbKill() {
+        checkInitialState();
+        final ValueResult valueResult = new ValueResult();
+        if (runner != null) {
+            try {
+                if (runner != null) {
+                    runner.stopShell();
+                }
+                String s = AdbShell.killServer();
+                if (runner != null) {
+                    runner.restartShell();
+                }
+                valueResult.setValue(s);
+                valueResult.setStatus("OK");
+            } catch (Exception ex) {
+                valueResult.setStatus("FAIL");
+                ex.printStackTrace();
+            }
+        } else {
+            valueResult.setStatus("FAIL");
+        }
+        return valueResult;
+    }
+
+    @POST
     @Path("/adb/remote")
     @Produces(MediaType.APPLICATION_JSON)
     public synchronized ValueResult adbUseRemote() {

@@ -36,6 +36,10 @@ public class AdbShell {
         return commonHandler(new ProcessBuilder("adb", "tcpip", "5555"));
     }
 
+    public static String killServer() {
+        return commonHandler(new ProcessBuilder("adb", "kill-server"));
+    }
+
     public static String connect(final String address) {
         return commonHandler(new ProcessBuilder("adb", "connect", address));
     }

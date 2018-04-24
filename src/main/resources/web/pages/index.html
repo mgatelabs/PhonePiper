@@ -192,12 +192,13 @@
             });
 
             controlAdb.click(function(){
+                adbInfo.val("Please Wait...");
                 $.ajax({
                     type: "POST",
                     url: '/ffbe/adb/' + $(this).attr('adb'),
                     data: {},
                     success: function(result){
-                        adbInfo.val(result.value);
+                        adbInfo.val(result.value || 'Done');
                     }
                 });
             });
@@ -483,6 +484,7 @@
                     <button type="button" class="btn controlAdb btn-info notWhileRunning" adb="restart">Restart</button>
                     <button type="button" class="btn controlAdb btn-info notWhileRunning" adb="usb">USB</button>
                     <button type="button" class="btn controlAdb btn-info notWhileRunning" adb="remote">Remote</button>
+                    <button type="button" class="btn controlAdb btn-info notWhileRunning" adb="kill">Kill</button>
                     <button type="button" class="btn controlAdb btn-info notWhileRunning" adb="connect">Connect</button>
                     <button type="button" class="btn controlAdb btn-info notWhileRunning" adb="devices">Devices</button>
             </div>

@@ -18,7 +18,7 @@
       "modify":"VISIBLE"
     },
     {
-      "name": "raid-runs",
+      "name": "raid_runs",
       "display": "Raids",
       "value": "0",
       "type": "INT",
@@ -439,7 +439,7 @@
             {
               "type": "SET",
               "value": "0",
-              "var": "raid-runs"
+              "var": "raid_runs"
             }
 
           ]
@@ -480,7 +480,7 @@
           "actions": [
             {
               "type": "MSG",
-              "value": "Found Orb, Starting Missing 0 - ELT"
+              "value": "Orb Available, Starting Mission 0 - ELT"
             },
             {
               "type": "TAP",
@@ -531,7 +531,7 @@
             },
             {
               "type": "WAIT",
-              "value": "1500"
+              "value": "8500"
             },
             {
               "type": "REPEAT",
@@ -588,17 +588,12 @@
             },
             {
               "type": "ADD",
-              "var": "raid-runs",
-              "value": "1"
-            },
-            {
-              "type": "ADD",
-              "var": "runs",
+              "var": "raid_runs",
               "value": "1"
             },
             {
               "type": "MSG",
-              "value": "Starting run ${runs}"
+              "value": "Starting raid ${raid_runs}"
             },
             {
               "type": "SWAP",

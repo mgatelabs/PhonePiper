@@ -521,6 +521,14 @@ public class ScriptRunner {
         return "Timer: " + id + " : " + timer.toString();
     }
 
+    private int valueHandler(String value) {
+        if (value.startsWith("$")) {
+            return getVar(value.substring(1));
+        } else {
+            return Integer.parseInt(value);
+        }
+    }
+
     private StateResult state(final StateDefinition stateDefinition, final ImageWrapper imageWrapper) {
 
         logger.fine("Running State: " + stateDefinition.getName());
@@ -564,7 +572,7 @@ public class ScriptRunner {
                         break;
                         case SET: {
                             String varName = actionDefinition.getVar();
-                            int value = Integer.parseInt(actionDefinition.getValue());
+                            int value = valueHandler(actionDefinition.getValue());
                             setVar(varName, value);
                         }
                         break;
@@ -576,7 +584,7 @@ public class ScriptRunner {
                         break;
                         case ADD: {
                             String varName = actionDefinition.getVar();
-                            int value = Integer.parseInt(actionDefinition.getValue());
+                            int value = valueHandler(actionDefinition.getValue());
                             addVar(varName, value);
                         }
                         break;
@@ -601,7 +609,7 @@ public class ScriptRunner {
                         }
                         break;
                         case WAIT: {
-                            long time = Long.parseLong(actionDefinition.getValue());
+                            int time = valueHandler(actionDefinition.getValue());
                             if (time > 0) {
                                 waitFor(time);
                             } else {

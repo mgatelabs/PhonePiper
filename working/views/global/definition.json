@@ -15,6 +15,11 @@
     "points" : [ ],
     "enabled" : false
   }, {
+    "name" : "battle-message",
+    "screenId" : "battle-message",
+    "points" : [ ],
+    "enabled" : false
+  }, {
     "name" : "Battle - Unit - 0 NotFull",
     "screenId" : "battle-unit-0_notfull",
     "points" : [ ],

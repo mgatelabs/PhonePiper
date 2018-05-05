@@ -613,8 +613,27 @@
       "name": "Raid - Battle",
       "includes": [
         "_common_battle-auto",
+        "_raid-battle-message",
         "_raid-to_results",
         "_common-no_op"
+      ]
+    },
+
+    "_raid-battle-message": {
+      "name": "To Raid Results",
+      "statements": [
+        {
+          "condition": {
+            "is": "SCREEN",
+            "value": "battle-message"
+          },
+          "actions": [
+            {
+              "type": "TAP",
+              "value": "menu-level"
+            }
+          ]
+        }
       ]
     },
 

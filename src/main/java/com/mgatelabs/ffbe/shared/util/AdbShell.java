@@ -18,12 +18,12 @@ public class AdbShell {
     private ProcessBuilder builder;
     private Process adb;
     private static final byte[] LS = new byte[]{0x0a};
-    private static final byte[] ECHO = "toolbox".getBytes();
+    private static final byte[] ECHO = "uptime".getBytes();
 
     //private char[] ECHO_KEY = {'9', '8', '7', '6', '1', '2', '3', '4'};
     //ailsa_ii:/
 
-    private String ECHO_KEY = "Toolbox!";
+    private String ECHO_KEY = "load average";
 
     private OutputStream processInput;
     private InputStream processOutput;
@@ -167,12 +167,12 @@ public class AdbShell {
             // The idea is to run a command and a failing command.  The failure will result in a message, which can easily be picked up when executed.
 
             int c;
-            byte[] buffer = new byte[32];
+            byte[] buffer = new byte[256];
             int index = 0;
             boolean exitFound = false;
             while (!exitFound && (c = processOutput.read(buffer)) != -1) {
                 //System.out.println("Reading: " + c);
-                for (int i = 0; i < buffer.length; i++) {
+                for (int i = 0; i < c; i++) {
                     if (buffer[i] == ECHO_KEY.charAt(index)) {
                         //System.out.println("KEY");
                         index++;

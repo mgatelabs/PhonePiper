@@ -135,6 +135,11 @@
     "points" : [ ],
     "enabled" : false
   }, {
+    "name" : "Menu - Friend Select (Alt)",
+    "screenId" : "menu-friend_select-alt",
+    "points" : [ ],
+    "enabled" : false
+  }, {
     "name" : "Menu - Friend Select - Bottom",
     "screenId" : "menu-friend_select-bottom",
     "points" : [ ],

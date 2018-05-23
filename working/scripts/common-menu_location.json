@@ -348,7 +348,13 @@
         {
           "condition": {
             "is": "SCREEN",
-            "value": "menu-friend_select"
+            "value": "menu-friend_select",
+            "or": [
+              {
+                "is": "SCREEN",
+                "value": "menu-friend_select-alt"
+              }
+            ]
           },
           "actions": [
             {
@@ -400,7 +406,13 @@
         {
           "condition": {
             "is": "SCREEN",
-            "value": "menu-friend_select"
+            "value": "menu-friend_select",
+            "or": [
+              {
+                "is": "SCREEN",
+                "value": "menu-friend_select-alt"
+              }
+            ]
           },
           "actions": [
             {

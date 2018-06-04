@@ -530,11 +530,6 @@
               "value": "menu-depart-depart"
             },
             {
-              "type": "ADD",
-              "var": "raid_runs",
-              "value": "1"
-            },
-            {
               "type": "WAIT",
               "value": "8500"
             },

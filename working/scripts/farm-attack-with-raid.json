@@ -26,7 +26,7 @@
     },
     {
       "name": "menu-item",
-      "display": "Farm Menu Item",
+      "display": "Farm Menu Index",
       "value": "1",
       "type": "INT",
       "modify":"EDITABLE"

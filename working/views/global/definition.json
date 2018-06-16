@@ -668,7 +668,7 @@
     "h" : 79,
     "enabled" : false
   }, {
-    "name" : "Menu - Vortex - Item 0",
+    "name" : "Menu - Vortex - Index 0",
     "componentId" : "menu-vortex-item_0",
     "x" : 0,
     "y" : 0,
@@ -676,7 +676,7 @@
     "h" : 1,
     "enabled" : false
   }, {
-    "name" : "Menu - Vortex - Item 1",
+    "name" : "Menu - Vortex - Index 1",
     "componentId" : "menu-vortex-item_1",
     "x" : 0,
     "y" : 0,
@@ -684,7 +684,7 @@
     "h" : 1,
     "enabled" : false
   }, {
-    "name" : "Menu - Vortex - Item 2",
+    "name" : "Menu - Vortex - Index 2",
     "componentId" : "menu-vortex-item_2",
     "x" : 0,
     "y" : 0,

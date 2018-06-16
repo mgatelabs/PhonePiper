@@ -28,7 +28,7 @@
           "actions": [
             {
               "type": "MSG",
-              "value": "Clicking Vortex Item 0"
+              "value": "Clicking Vortex Index 0"
             },
             {
               "type": "TAP",
@@ -59,7 +59,7 @@
           "actions": [
             {
               "type": "MSG",
-              "value": "Clicking Vortex Item 1"
+              "value": "Clicking Vortex Index 1"
             },
             {
               "type": "TAP",
@@ -90,7 +90,85 @@
           "actions": [
             {
               "type": "MSG",
-              "value": "Clicking Vortex Item 2"
+              "value": "Clicking Vortex Index 2"
+            },
+            {
+              "type": "TAP",
+              "value": "menu-vortex-item_2"
+            },
+            {
+              "type": "WAIT",
+              "value": "5000"
+            },
+            {
+              "type": "REPEAT",
+              "value": ""
+            }
+          ]
+        },
+        {
+          "condition": {
+            "is": "SCREEN",
+            "value": "menu-vortex",
+            "and": [
+              {
+                "is": "EQUAL",
+                "var": "vortex-item",
+                "value": "3"
+              }
+            ]
+          },
+          "actions": [
+            {
+              "type": "MSG",
+              "value": "Clicking Vortex Index 3"
+            },
+            {
+              "type": "SWIPE_UP",
+              "value": "menu-vortex-item_0"
+            },
+            {
+              "type": "WAIT",
+              "value": "1000"
+            },
+            {
+              "type": "TAP",
+              "value": "menu-vortex-item_1"
+            },
+            {
+              "type": "WAIT",
+              "value": "5000"
+            },
+            {
+              "type": "REPEAT",
+              "value": ""
+            }
+          ]
+        },
+        {
+          "condition": {
+            "is": "SCREEN",
+            "value": "menu-vortex",
+            "and": [
+              {
+                "is": "EQUAL",
+                "var": "vortex-item",
+                "value": "4"
+              }
+            ]
+          },
+          "actions": [
+            {
+              "type": "MSG",
+              "value": "Clicking Vortex Index 4"
+            },
+            {
+              "type": "SWIPE_UP",
+              "value": "menu-vortex-item_0"
+            },
+            {
+              "type": "WAIT",
+              "value": "1000"
             },
             {
               "type": "TAP",

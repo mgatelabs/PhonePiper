@@ -128,7 +128,7 @@
           },
           "actions": [
             {
-              "type": "TIMER",
+              "type": "LAP",
               "value": "BATTLE"
             },
             {

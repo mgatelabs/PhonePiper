@@ -9,11 +9,16 @@ public class VarTimer {
     private long last;
     private long end;
     private int count;
+    private boolean lapBased;
 
-    public VarTimer() {
+    public VarTimer(boolean lapBased) {
         start = 0;
         end = 0;
         count = -1;
+        this.lapBased = lapBased;
+        if (!lapBased) {
+            start = System.nanoTime();
+        }
     }
 
     public void time() {
@@ -27,8 +32,21 @@ public class VarTimer {
         count++;
     }
 
+    public void reset() {
+        start = System.nanoTime();
+        end = start;
+    }
+
+    public void forward() {
+        end = System.nanoTime();
+    }
+
+    public long getElapsed() {
+        return end - start;
+    }
+
     public String toString() {
-        if (count < 1) {
+        if (count < 1 && lapBased) {
             return "Not Ready";
         } else {
             float lastDiff = ((float) (end - last) / 1000000000.0f);

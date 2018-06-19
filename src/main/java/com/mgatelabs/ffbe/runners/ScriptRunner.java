@@ -66,7 +66,7 @@ public class ScriptRunner {
 
     private Map<String, VarTimer> timers;
 
-    private static final String VAR_SECONDS = "_seconds";
+    //private static final String VAR_SECONDS = "_seconds";
     private static final String VAR_LOOPS = "_loops";
 
     private long elapsedTime;
@@ -131,12 +131,15 @@ public class ScriptRunner {
             }
         }
 
-        scriptDefinition.getVars().add(new VarDefinition(VAR_SECONDS, "Elapsed Seconds", "0", VarType.INT, VarDisplay.SECONDS, VarModify.VISIBLE));
-        scriptDefinition.getVars().add(new VarDefinition(VAR_LOOPS, "Loops", "0", VarType.INT, VarDisplay.STANDARD, VarModify.HIDDEN));
+        //scriptDefinition.getVars().add(new VarDefinition(VAR_SECONDS, "Elapsed Seconds", "0", VarType.INT, VarDisplay.SECONDS, VarModify.VISIBLE));
+        //scriptDefinition.getVars().add(new VarDefinition(VAR_LOOPS, "Loops", "0", VarType.INT, VarDisplay.STANDARD, VarModify.HIDDEN));
 
         for (VarDefinition varDefinition : scriptDefinition.getVars()) {
             if (varDefinition.getType() == VarType.INT) {
                 addVar(varDefinition.getName(), Integer.parseInt(varDefinition.getValue()));
+            } else if (varDefinition.getType() == VarType.TIMER) {
+                addVar(varDefinition.getName(), Integer.parseInt(varDefinition.getValue()));
+                timers.put(varDefinition.getName(), new VarTimer(false));
             }
         }
 
@@ -250,12 +253,21 @@ public class ScriptRunner {
     }
 
     private void setVar(String name, int value) {
-        if (name.startsWith("_")) {
-            if (name.equalsIgnoreCase(VAR_SECONDS) && value == 0) {
-                elapsedTime = value;
+        final VarDefinition varDefinition = getVarDefinition(name);
+        switch (varDefinition.getType()) {
+            case TIMER: {
+                if (value == 0) {
+                    VarTimer timer = timers.get(varDefinition.getName());
+                    timer.reset();
+                    vars.put(name, value);
+                }
             }
+            break;
+            case INT: {
+                vars.put(name, value);
+            }
+            break;
         }
-        vars.put(name, value);
     }
 
     public static String getDateString() {
@@ -371,17 +383,23 @@ public class ScriptRunner {
         // Always reset the loop counter
         setVar(VAR_LOOPS, 0);
 
-        long lastTime = System.nanoTime();
+        //long lastTime = System.nanoTime();
 
         while (isRunning()) {
 
-            long timeNow = System.nanoTime();
+            for (VarDefinition varDefinition : getRawEditVariables()) {
+                if (varDefinition.getType() == VarType.TIMER) {
+                    final VarTimer timer = timers.get(varDefinition.getName());
+                    timer.forward();
+                    vars.put(varDefinition.getName(), (int) TimeUnit.NANOSECONDS.toSeconds(timer.getElapsed()));
+                }
+            }
 
-            elapsedTime += (timeNow - lastTime);
+            //long timeNow = System.nanoTime();
 
-            lastTime = timeNow;
+            //elapsedTime += (timeNow - lastTime);
 
-            vars.put(VAR_SECONDS, (int) TimeUnit.NANOSECONDS.toSeconds(elapsedTime));
+            //lastTime = timeNow;
 
             if (!shell.isReady()) {
                 logger.log(Level.WARNING, "Bad Shell: Stopping");
@@ -511,14 +529,14 @@ public class ScriptRunner {
         logger.info("Script Stopped");
     }
 
-    private String timerEvent(String id) {
+    private String lapEvent(String id) {
         VarTimer timer = timers.get(id);
         if (timer == null) {
-            timer = new VarTimer();
+            timer = new VarTimer(true);
             timers.put(id, timer);
         }
         timer.time();
-        return "Timer: " + id + " : " + timer.toString();
+        return "Lap: " + id + " : " + timer.toString();
     }
 
     private int valueHandler(String value) {
@@ -576,10 +594,10 @@ public class ScriptRunner {
                             setVar(varName, value);
                         }
                         break;
-                        case TIMER: {
+                        case LAP: {
                             String timerId = actionDefinition.getValue();
                             timerId = (timerId == null || timerId.trim().length() == 0) ? "generic" : timerId.trim();
-                            logger.info(timerEvent(timerId));
+                            logger.info(lapEvent(timerId));
                         }
                         break;
                         case ADD: {
@@ -781,7 +799,7 @@ public class ScriptRunner {
                     continue;
                 case VISIBLE:
                 case EDITABLE: {
-                    if (varDefinition.getType() == VarType.INT) {
+                    if (varDefinition.getType() == VarType.INT || varDefinition.getType() == VarType.TIMER) {
                         vars.add(new VarDefinition(varDefinition.getName(), varDefinition.getDisplay(), Integer.toString(getVar(varDefinition.getName())), varDefinition.getType(), varDefinition.getDisplayType(), varDefinition.getModify()));
                     }
                 }
@@ -800,6 +818,8 @@ public class ScriptRunner {
                 case VISIBLE:
                 case EDITABLE: {
                     if (varDefinition.getType() == VarType.INT) {
+                        vars.add(new VarDefinition(varDefinition.getName(), varDefinition.getDisplay(), Integer.toString(getVar(varDefinition.getName())), varDefinition.getType(), varDefinition.getDisplayType(), varDefinition.getModify()));
+                    } else if (varDefinition.getType() == VarType.TIMER) {
                         vars.add(new VarDefinition(varDefinition.getName(), varDefinition.getDisplay(), Integer.toString(getVar(varDefinition.getName())), varDefinition.getType(), varDefinition.getDisplayType(), varDefinition.getModify()));
                     }
                 }

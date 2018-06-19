@@ -83,8 +83,8 @@ public class ActionDefinition {
             case REPEAT: {
                 return "Repeat";
             }
-            case TIMER: {
-                return "Timer: " + value;
+            case LAP: {
+                return "Lap: " + value;
             }
             case EVENT:
                 return "Event: " + value;

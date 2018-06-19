@@ -5,5 +5,6 @@ package com.mgatelabs.ffbe.shared.details;
  */
 public enum VarType {
     STRING,
-    INT
+    INT,
+    TIMER
 }

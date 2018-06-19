@@ -77,7 +77,7 @@
               "value": "Switch to LB"
             },
             {
-              "type": "TIMER",
+              "type": "LAP",
               "value": "LB"
             },
             {
@@ -286,7 +286,7 @@
           },
           "actions": [
             {
-              "type": "TIMER",
+              "type": "LAP",
               "value": "BATTLE"
             },
             {

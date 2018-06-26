@@ -29,6 +29,12 @@
             integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
             crossorigin="anonymous"></script>
 
+    <style type="text/css">
+        .updatedValue {
+            background-color:#f7b2b2;
+        }
+    </style>
+
     <script type="text/javascript">
         $(function(){
 
@@ -296,8 +302,14 @@
                 });
             }
 
+            variableContainer.on('change', 'select, input', function(){
+                var ref = $(this);
+                ref.addClass('updatedValue');
+            });
+
             variableContainer.on('click', 'button.updateVariable', function(){
                 var ref = $(this), key = ref.data('key'), input = linkedVariables[key];
+                input.removeClass('updatedValue');
                 if (input.val()) {
                     $.ajax({
                       type: "POST",

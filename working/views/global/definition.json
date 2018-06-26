@@ -196,6 +196,11 @@
     "points" : [ ],
     "enabled" : false
   }, {
+    "name" : "Menu - Quest Restart",
+    "screenId" : "menu-quest_restart",
+    "points" : [ ],
+    "enabled" : false
+  }, {
     "name" : "Menu - Raid  Orbs",
     "screenId" : "menu-raid_orbs",
     "points" : [ ],
@@ -630,6 +635,14 @@
   }, {
     "name" : "Menu - Play Mission - Yes",
     "componentId" : "menu-play_mission-yes",
+    "x" : 0,
+    "y" : 0,
+    "w" : 1,
+    "h" : 1,
+    "enabled" : false
+  }, {
+    "name" : "Menu - Quest Restart - Yes",
+    "componentId" : "menu-quest_restart-yes",
     "x" : 0,
     "y" : 0,
     "w" : 1,

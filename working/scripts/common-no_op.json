@@ -140,6 +140,25 @@
               "value": ""
             }
           ]
+        },{
+          "condition": {
+            "is": "SCREEN",
+            "value": "menu-quest_restart"
+          },
+          "actions": [
+            {
+              "type": "TAP",
+              "value": "menu-quest_restart-yes"
+            },
+            {
+              "type": "WAIT",
+              "value": "1500"
+            },
+            {
+              "type": "REPEAT",
+              "value": ""
+            }
+          ]
         },
         {
           "condition": {

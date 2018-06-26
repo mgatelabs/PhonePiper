@@ -280,7 +280,13 @@
           "and": [
             {
               "is": "SCREEN",
-              "value": "game-battle-auto_off"
+              "value": "game-battle-auto_off",
+              "or" : [
+                {
+                  "is":"SCREEN",
+                  "value": "game-battle-repeat"
+                }
+              ]
             },
             {
               "is": "SCREEN",

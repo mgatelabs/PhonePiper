@@ -51,7 +51,7 @@
           "condition": {
             "var": "_screen_saver",
             "is": "GREATER",
-            "value": "300"
+            "value": "900"
           },
           "actions": [
             {
@@ -78,6 +78,10 @@
             {
               "type": "WAIT",
               "value": "15000"
+            },
+            {
+              "type": "MSG",
+              "value": "Returning"
             },
             {
               "type": "REPEAT",

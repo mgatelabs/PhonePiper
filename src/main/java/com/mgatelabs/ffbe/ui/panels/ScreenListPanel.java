@@ -5,6 +5,7 @@ import com.google.common.collect.Lists;
 import com.mgatelabs.ffbe.shared.details.DeviceDefinition;
 import com.mgatelabs.ffbe.shared.details.ScreenDefinition;
 import com.mgatelabs.ffbe.shared.details.ViewDefinition;
+import com.mgatelabs.ffbe.shared.helper.DeviceHelper;
 import com.mgatelabs.ffbe.shared.image.ImageWrapper;
 import com.mgatelabs.ffbe.shared.image.PngImageWrapper;
 import com.mgatelabs.ffbe.shared.image.SamplePoint;
@@ -36,13 +37,15 @@ public class ScreenListPanel extends JInternalFrame {
 
     private JList<ScreenDefinition> itemList;
     private RefreshableListModel<ScreenDefinition> itemModel;
+    private DeviceHelper deviceHelper;
 
-    public ScreenListPanel(DeviceDefinition deviceDefinition, ViewDefinition viewDefinition, AdbShell shell, JFrame owner) {
+    public ScreenListPanel(DeviceHelper helper, DeviceDefinition deviceDefinition, ViewDefinition viewDefinition, AdbShell shell, JFrame owner) {
         super("Screens", true, false, false, false);
         this.deviceDefinition = deviceDefinition;
         this.viewDefinition = viewDefinition;
         this.shell = shell;
         this.owner = owner;
+        deviceHelper = helper;
 
         build();
     }
@@ -137,9 +140,7 @@ public class ScreenListPanel extends JInternalFrame {
                             deSelect();
 
                             viewDefinition.getScreens().add(screenDefinition);
-
                             viewDefinition.sort();
-
                             viewDefinition.save();
 
                             itemModel.refresh();
@@ -215,7 +216,9 @@ public class ScreenListPanel extends JInternalFrame {
             testMenuItem.addActionListener(new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent e) {
-                    ImageWrapper wrapper = AdbUtils.getScreen();
+                    AdbUtils.persistScreen(shell);
+                    ImageWrapper wrapper = deviceHelper.download();
+                    //ImageWrapper wrapper = AdbUtils.getScreen();
                     if (wrapper != null && wrapper.isReady()) {
                         File previewPath = ScreenDefinition.getPreviewPath(viewDefinition.getViewId(), selectedItem.getScreenId());
                         if (!wrapper.savePng(previewPath)) {
@@ -372,7 +375,9 @@ public class ScreenListPanel extends JInternalFrame {
             testMenuItem.addActionListener(new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent e) {
-                    ImageWrapper wrapper = AdbUtils.getScreen();
+                    AdbUtils.persistScreen(shell);
+                    ImageWrapper wrapper = deviceHelper.download();
+                    //ImageWrapper wrapper = AdbUtils.getScreen();
                     if (wrapper != null && wrapper.isReady()) {
                         if (SamplePoint.validate(selectedItem.getPoints(), wrapper, false)) {
                             info("Validation: Success");
@@ -416,6 +421,8 @@ public class ScreenListPanel extends JInternalFrame {
         pack();
 
         setVisible(true);
+
+        itemModel.refresh();
     }
 
     private void deSelect() {

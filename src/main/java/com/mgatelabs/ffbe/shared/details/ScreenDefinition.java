@@ -9,7 +9,7 @@ import java.util.List;
 /**
  * Created by @mgatelabs (Michael Fuller) on 9/1/2017.
  */
-public class ScreenDefinition {
+public class ScreenDefinition implements Comparable<ScreenDefinition> {
 
     private String name;
 
@@ -61,5 +61,10 @@ public class ScreenDefinition {
     @Override
     public String toString() {
         return (enabled ? "" : "[X] - ") +  screenId + " - " + name;
+    }
+
+    @Override
+    public int compareTo(ScreenDefinition o) {
+        return screenId.compareTo(o.name);
     }
 }

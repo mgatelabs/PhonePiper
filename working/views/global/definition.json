@@ -165,6 +165,11 @@
     "points" : [ ],
     "enabled" : false
   }, {
+    "name" : "menu-log_in_again",
+    "screenId" : "menu-log_in_again",
+    "points" : [ ],
+    "enabled" : false
+  }, {
     "name" : "Menu - Logo",
     "screenId" : "menu-logo",
     "points" : [ ],
@@ -263,6 +268,11 @@
   }, {
     "name" : "Menu - Results - Units 4 - Pop",
     "screenId" : "menu-results-units_4-pop",
+    "points" : [ ],
+    "enabled" : false
+  }, {
+    "name" : "menu-title",
+    "screenId" : "menu-title",
     "points" : [ ],
     "enabled" : false
   }, {
@@ -595,6 +605,14 @@
   }, {
     "name" : "Menu - Location Earthshrine",
     "componentId" : "menu-location-earthshrine",
+    "x" : 0,
+    "y" : 0,
+    "w" : 1,
+    "h" : 1,
+    "enabled" : false
+  }, {
+    "name" : "menu-log_in_again-ok",
+    "componentId" : "menu-log_in_again-ok",
     "x" : 0,
     "y" : 0,
     "w" : 1,

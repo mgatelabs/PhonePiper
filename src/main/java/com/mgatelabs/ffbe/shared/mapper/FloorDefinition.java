@@ -3,7 +3,7 @@ package com.mgatelabs.ffbe.shared.mapper;
 /**
  * Created by @mgatelabs (Michael Fuller) on 9/10/2017.
  */
-public class FloorDefinition {
+public class FloorDefinition implements Comparable<FloorDefinition>{
 
     private TileDefinition [][] floor;
     private String floorId;
@@ -66,5 +66,10 @@ public class FloorDefinition {
             TileDefinition.calculate(floor, x, y);
         }
         return null;
+    }
+
+    @Override
+    public int compareTo(FloorDefinition o) {
+        return this.floorId.compareTo(o.floorId);
     }
 }

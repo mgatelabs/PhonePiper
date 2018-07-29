@@ -5,11 +5,17 @@ package com.mgatelabs.ffbe.shared.mapper;
  *
  * Created by @mgatelabs (Michael Fuller) on 9/10/2017.
  */
-public class MapSampleArea {
+public class MapSampleArea implements Comparable<MapSampleArea> {
 
     private TileDefinition area [][];
 
+    private static int INDEX = 0;
+
+    private int index;
+
     public MapSampleArea(String definition) {
+
+        index = INDEX++;
 
         final String [] lines = definition.split("-");
         area = new TileDefinition[lines.length][lines[0].length()];
@@ -64,5 +70,10 @@ public class MapSampleArea {
 
     public void setArea(TileDefinition[][] area) {
         this.area = area;
+    }
+
+    @Override
+    public int compareTo(MapSampleArea o) {
+        return Integer.compare(index, o.index);
     }
 }

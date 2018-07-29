@@ -2,6 +2,9 @@ package com.mgatelabs.ffbe.shared.helper;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.common.collect.ImmutableSet;
+import com.mgatelabs.ffbe.shared.image.ImageWrapper;
+import com.mgatelabs.ffbe.shared.image.RawImageWrapper;
+import com.mgatelabs.ffbe.shared.util.AdbUtils;
 import com.mgatelabs.ffbe.shared.util.JsonTool;
 import okhttp3.*;
 
@@ -107,6 +110,19 @@ public class DeviceHelper {
             }
             failures = 0;
             return deviceStatus.getPixels();
+        } catch (IOException ioEx) {
+            ioEx.printStackTrace();
+            failures++;
+            return null;
+        }
+    }
+
+    public ImageWrapper download() {
+        Request request = new Request.Builder()
+                .url("http://"+ipAddress+":8080/download").post( RequestBody.create(MediaType.parse("text/plain"), new byte [0]) )
+                .build();
+        try (Response response = client.newCall(request).execute()) {
+            return AdbUtils.getScreenFrom(response.body().bytes());
         } catch (IOException ioEx) {
             ioEx.printStackTrace();
             failures++;

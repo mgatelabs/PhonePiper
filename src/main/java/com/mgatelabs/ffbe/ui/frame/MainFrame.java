@@ -4,6 +4,7 @@ import com.mgatelabs.ffbe.Runner;
 import com.mgatelabs.ffbe.shared.details.*;
 import com.mgatelabs.ffbe.shared.mapper.MapDefinition;
 import com.mgatelabs.ffbe.shared.util.AdbShell;
+import com.mgatelabs.ffbe.shared.util.AdbUtils;
 import com.mgatelabs.ffbe.ui.FrameChoices;
 import com.mgatelabs.ffbe.ui.panels.*;
 import com.mgatelabs.ffbe.ui.utils.CustomHandler;
@@ -148,7 +149,7 @@ public class MainFrame extends JFrame {
                     }
                     break;
                     case VIEW: {
-                        showConnection = false;
+                        showConnection = true;
                         showScreens = true;
                         showComponents = true;
                     }
@@ -216,13 +217,13 @@ public class MainFrame extends JFrame {
         }
 
         if (showScreens) {
-            screenListPanel = new ScreenListPanel(deviceDefinition, viewDefinition, shell, this);
+            screenListPanel = new ScreenListPanel(connectionPanel.getDeviceHelper(), deviceDefinition, viewDefinition, shell, this);
             screenListPanel.setLocation(column0Left, 0);
             desktopPane.add(screenListPanel);
         }
 
         if (showComponents) {
-            componentListPanel = new ComponentListPanel(deviceDefinition, viewDefinition, shell, this);
+            componentListPanel = new ComponentListPanel(connectionPanel.getDeviceHelper(), deviceDefinition, viewDefinition, shell, this);
             componentListPanel.setLocation(column0Left + screenListPanel.getWidth(), 0);
             desktopPane.add(componentListPanel);
         }

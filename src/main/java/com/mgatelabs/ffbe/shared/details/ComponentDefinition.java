@@ -7,7 +7,7 @@ import java.io.File;
 /**
  * Created by @mgatelabs (Michael Fuller) on 9/1/2017.
  */
-public class ComponentDefinition {
+public class ComponentDefinition implements Comparable<ComponentDefinition> {
 
     private String name;
 
@@ -83,5 +83,10 @@ public class ComponentDefinition {
     @Override
     public String toString() {
         return (enabled ? "" : "[X] - ") + componentId + " - " + name;
+    }
+
+    @Override
+    public int compareTo(ComponentDefinition o) {
+        return this.componentId.compareTo(o.componentId);
     }
 }

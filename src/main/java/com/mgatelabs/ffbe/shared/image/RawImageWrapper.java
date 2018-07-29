@@ -132,6 +132,10 @@ public class RawImageWrapper implements ImageWrapper {
     public int getPixel(int x, int y) {
         int startIndex = dataOffset + ((y * width) * format.getBpp()) + (x * format.getBpp());
 
+        if (startIndex + format.bpp > data.length) {
+            return 0xFF000000;
+        }
+
         int mergedBytes = ((0xff & data[startIndex]) << 24) | ((0xff & data[startIndex + 1]) << 16) | ((0xff & data[startIndex + 2]) << 8) | (0xff & data[startIndex + 3]);
 
         // Extract the colors

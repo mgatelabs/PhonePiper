@@ -208,6 +208,25 @@ public class AdbUtils {
         return null;
     }
 
+    public static ImageWrapper getScreenFrom(byte [] bytes) {
+        try {
+            int w, h;
+            if (bytes.length > 12) { // Sanity
+                ByteBuffer byteBuffer = ByteBuffer.wrap(bytes);
+                byteBuffer.order(ByteOrder.LITTLE_ENDIAN);
+                w = byteBuffer.getInt();
+                h = byteBuffer.getInt();
+            } else {
+                w = 0;
+                h = 0;
+            }
+            return new RawImageWrapper(w, h, RawImageWrapper.ImageFormats.RGBA, 12, bytes);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
     private static boolean execWait(final String command) {
         try {
             Process myProcess = Runtime.getRuntime().exec(command);

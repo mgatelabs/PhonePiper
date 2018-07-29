@@ -4,6 +4,7 @@ import com.mgatelabs.ffbe.shared.details.ActionType;
 import com.mgatelabs.ffbe.shared.details.ComponentDefinition;
 import com.mgatelabs.ffbe.shared.details.DeviceDefinition;
 import com.mgatelabs.ffbe.shared.details.ViewDefinition;
+import com.mgatelabs.ffbe.shared.helper.DeviceHelper;
 import com.mgatelabs.ffbe.shared.image.ImageWrapper;
 import com.mgatelabs.ffbe.shared.image.PngImageWrapper;
 import com.mgatelabs.ffbe.shared.util.AdbShell;
@@ -34,14 +35,15 @@ public class ComponentListPanel extends JInternalFrame {
 
     private JList<ComponentDefinition> itemList;
     private RefreshableListModel<ComponentDefinition> itemModel;
+    private DeviceHelper deviceHelper;
 
-    public ComponentListPanel(DeviceDefinition deviceDefinition, ViewDefinition viewDefinition, AdbShell shell, JFrame owner) {
+    public ComponentListPanel(DeviceHelper helper, DeviceDefinition deviceDefinition, ViewDefinition viewDefinition, AdbShell shell, JFrame owner) {
         super("Components", true, false, false, false);
         this.deviceDefinition = deviceDefinition;
         this.viewDefinition = viewDefinition;
         this.shell = shell;
         this.owner = owner;
-
+        deviceHelper = helper;
         build();
     }
 
@@ -312,7 +314,9 @@ public class ComponentListPanel extends JInternalFrame {
             testMenuItem.addActionListener(new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent e) {
-                    ImageWrapper wrapper = AdbUtils.getScreen();
+                    AdbUtils.persistScreen(shell);
+                    ImageWrapper wrapper = deviceHelper.download();
+                    //ImageWrapper wrapper = AdbUtils.getScreen();
                     if (wrapper != null && wrapper.isReady()) {
                         File previewPath = ComponentDefinition.getPreviewPath(viewDefinition.getViewId(), selectedItem.getComponentId());
                         if (!wrapper.savePng(previewPath)) {

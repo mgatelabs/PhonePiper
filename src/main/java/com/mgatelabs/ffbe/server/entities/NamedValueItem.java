@@ -4,7 +4,7 @@ package com.mgatelabs.ffbe.server.entities;
  * @author <a href="mailto:mfuller@acteksoft.com">Michael Fuller</a>
  * Creation Date: 2/15/2018
  */
-public class NamedValueItem {
+public class NamedValueItem implements Comparable<NamedValueItem> {
     private String name;
     private String value;
 
@@ -27,5 +27,10 @@ public class NamedValueItem {
 
     public void setValue(String value) {
         this.value = value;
+    }
+
+    @Override
+    public int compareTo(NamedValueItem o) {
+        return value.compareTo(o.value);
     }
 }

@@ -33,28 +33,36 @@
         .updatedValue {
             background-color:#f7b2b2;
         }
+
+
     </style>
 
     <script type="text/javascript">
         $(function(){
 
-            var device = $('#device');
-            var view = $('#view');
+            var device1 = $('#device1');
+            var view1 = $('#view1');
             var view2 = $('#view2');
-            var script = $('#script');
+            var script1 = $('#script1');
             var script2 = $('#script2');
             var statusName = $('#statusName');
 
             var logs = $('#logs');
             var states = $('#states');
             var components = $('#components');
+            var editComponents = $('#edit-components');
+            var editScreens = $('#edit-screens');
+
+            var editForm = $('#edit-form');
 
             var playerLevel = $('#player-level');
             var deviceIp = $('#device-ip');
 
             var playPauseButton = $('#controlPlayPause');
             var unloadButton = $('#controlUnload');
+            var unloadEdit = $('#unloadEdit');
             var loadButton = $('#controlLoad');
+            var editViewButton = $('#controlEditView');
 
             var controlPlayerSave = $('#controlPlayerSave');
             var controlDeviceSave = $('#controlDeviceSave');
@@ -81,12 +89,12 @@
                 }
             }
 
-            view.change(function(){
-                view2.prop('disabled', !view.val());
+            view1.change(function(){
+                view2.prop('disabled', !view1.val());
             });
 
-            script.change(function(){
-                script2.prop('disabled', !script.val());
+            script1.change(function(){
+                script2.prop('disabled', !script1.val());
             });
 
             function createGroup(name, field, button) {
@@ -108,7 +116,13 @@
                         statusName.text(data.status);
 
                         switch(data.status) {
+                            case 'EDIT_VIEW': {
+                                editForm.show();
+                                settingForm.hide();
+
+                            } break;
                             case 'INIT': {
+                                editForm.hide();
                                 playPauseButton.addClass('disabled');
                                 unloadButton.addClass('disabled');
                                 settingForm.show();
@@ -116,6 +130,7 @@
                                 states.prop('disabled', true);
                             } break;
                             case 'READY': {
+                                editForm.hide();
                                 playPauseButton.removeClass('disabled');
                                 unloadButton.removeClass('disabled');
                                 settingForm.hide();
@@ -125,6 +140,7 @@
                             } break;
                             case 'RUNNING':
                             case 'STOPPED': {
+                                editForm.hide();
                                 playPauseButton.removeClass('disabled');
                                 unloadButton.removeClass('disabled');
                                 settingForm.hide();
@@ -182,6 +198,18 @@
                     $.ajax({
                       type: "POST",
                       url: '/ffbe/process/unload',
+                      success: function(result){
+                        statusCheck();
+                      }
+                    });
+                }
+            });
+
+            unloadEdit.click(function(){
+                if (!unloadEdit.hasClass('disabled')) {
+                    $.ajax({
+                      type: "POST",
+                      url: '/ffbe/edit/unload',
                       success: function(result){
                         statusCheck();
                       }
@@ -273,10 +301,17 @@
                         linkedVariables = {};
                         if (result.variables.length > 0) {
                             variableForm.show();
+
+                            var row;
+
                             for (i = 0; i < result.variables.length; i++) {
                                 item = result.variables[i];
 
-                                grp = $('<div class="input-group mb-3"></div>').appendTo(variableContainer);
+                                if (i % 3 == 0) {
+                                    row = $('<div class="row"></div>').appendTo(variableContainer);
+                                }
+
+                                grp = $('<div class="input-group mb-3 col-sm-4"></div>').appendTo(row);
 
                                 $('<div class="input-group-prepend"></div>').append($('<span class="input-group-text" id=""></span>').text(item.display)).appendTo(grp);
 
@@ -302,6 +337,27 @@
                 });
             }
 
+            function loadEditViewInfo() {
+                $.ajax({
+                  type: "GET",
+                  url: '/ffbe/edit/view/info',
+                  success: function(result){
+                    if (result.status == 'OK') {
+                        editScreens.empty();
+                        editComponents.empty();
+                        var i, item, grp, label, input, button;
+                        for (i = 0; i < result.screens.length; i++) {
+                            editScreens.append($('<option></option>').attr('value', result.screens[i].value).text(result.screens[i].name));
+                        }
+                        for (i = 0; i < result.components.length; i++) {
+                            editComponents.append($('<option></option>').attr('value', result.components[i].value).text(result.components[i].name));
+                        }
+                    }
+                  },
+                  dataType: 'json'
+                });
+            }
+
             variableContainer.on('change', 'select, input', function(){
                 var ref = $(this);
                 ref.addClass('updatedValue');
@@ -320,15 +376,13 @@
             });
 
             loadButton.click(function(){
-
                 var blob = {
-                    device: device.val(),
-                    view: view.val(),
+                    device: device1.val(),
+                    view: view1.val(),
                     view2: view2.val(),
-                    script: script.val(),
+                    script: script1.val(),
                     script2: script2.val(),
                 };
-
                 $.ajax({
                   type: "POST",
                   url: '/ffbe/process/prep',
@@ -340,6 +394,33 @@
                     if (result.status == 'OK') {
                         loadProcessInfo();
                         statusCheck();
+                        $('[href="#run"]').tab('show');
+                    }
+                  },
+                  dataType: 'json'
+                });
+            });
+
+            editViewButton.click(function(){
+                var blob = {
+                    device: device1.val(),
+                    view: view1.val(),
+                    view2: view2.val(),
+                    script: script1.val(),
+                    script2: script2.val(),
+                };
+                $.ajax({
+                  type: "POST",
+                  url: '/ffbe/edit/view',
+                  data: JSON.stringify(blob),
+                  headers: {
+                        'Content-Type': 'application/json'
+                    },
+                  success: function(result){
+                    if (result.status == 'OK') {
+                        loadEditViewInfo();
+                        statusCheck();
+                        $('[href="#edit"]').tab('show');
                     }
                   },
                   dataType: 'json'
@@ -353,10 +434,10 @@
                   url: '/ffbe/settings/list',
                   data: {},
                   success: function(data){
-                    populateSelect(device, data.devices || []);
-                    populateSelect(view, data.views || []);
+                    populateSelect(device1, data.devices || []);
+                    populateSelect(view1, data.views || []);
                     populateSelect(view2, data.views || []);
-                    populateSelect(script, data.scripts || []);
+                    populateSelect(script1, data.scripts || []);
                     populateSelect(script2, data.scripts || []);
                   }
                 });
@@ -382,10 +463,13 @@
 
                 statusCheck();
                 loadProcessInfo();
+                loadEditViewInfo();
             }
 
             setTimeout(firstTimeLoad, 100);
         });
+
+
 
     </script>
 </head>
@@ -393,130 +477,229 @@
 
 <div class="container-fluid">
 
-    <nav class="navbar navbar-expand-lg navbar-light bg-light">
-        <a class="navbar-brand" href="#" id="statusName">CHECKING</a>
-    </nav>
+    <ul class="nav nav-tabs" id="myTab" role="tablist">
+        <li class="nav-item">
+            <a class="nav-link active" id="config-tab" data-toggle="tab" href="#config" role="tab" aria-controls="config"
+               aria-selected="true">Config</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" id="run-tab" data-toggle="tab" href="#run" role="tab" aria-controls="run"
+               aria-selected="false">Run</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" id="vars-tab" data-toggle="tab" href="#vars" role="tab" aria-controls="vars"
+               aria-selected="false">Variables</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" id="device-tab" data-toggle="tab" href="#device" role="tab" aria-controls="device"
+               aria-selected="false">Device</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" id="edit-tab" data-toggle="tab" href="#edit" role="tab" aria-controls="edit"
+               aria-selected="false">Edit</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" id="console-tab" data-toggle="tab" href="#console" role="tab" aria-controls="console"
+               aria-selected="false">Console</a>
+        </li>
+    </ul>
 
-    <div class="row">
-        <form id="setting-form" class="col-sm-4" style="display:none;">
-            <h3>Loader</h3>
 
-            <div class="input-group">
-                <div class="input-group-prepend">
-                    <span class="input-group-text">Device</span>
-                </div>
-                <select class="form-control" id="device"></select>
-            </div>
-            <br/>
-            <div class="input-group">
-                <div class="input-group-prepend">
-                    <span class="input-group-text">Primary View</span>
-                </div>
-                <select class="form-control" id="view"></select>
-            </div>
-            <br/>
-            <div class="input-group">
-                <div class="input-group-prepend">
-                    <span class="input-group-text">Extra View</span>
-                </div>
-                <select class="form-control" id="view2" disabled></select>
-            </div>
-            <br/>
-            <div class="input-group">
-                <div class="input-group-prepend">
-                    <span class="input-group-text">Primary Script</span>
-                </div>
-                <select class="form-control" id="script"></select>
-            </div>
-            <br/>
-            <div class="input-group">
-                <div class="input-group-prepend">
-                    <span class="input-group-text">Extra Script</span>
-                </div>
-                <select class="form-control" id="script2" disabled></select>
-            </div>
-            <br/>
-            <div class="form-group">
-                <button type="button" id="controlLoad" class="btn btn-primary">Load</button>
-            </div>
-        </form>
-        <form id="loaded-form" class="col-sm-4" style="display:none;">
-            <h3>Run</h3>
-            <div class="form-group">
-                <label for="states">State</label>
-                <select id="states" class="form-control"></select>
-            </div>
-            <div class="form-group">
-                <button type="button" id="controlPlayPause" class="btn btn-primary">Play/Pause</button>
-                <button type="button" id="controlUnload" class="btn  btn-danger notWhileRunning">Unload</button>
-            </div>
-            <div class="form-group">
-                <label for="view">Components</label>
-                <select id="components" class="form-control notWhileRunning"></select>
-            </div>
-            <div class="form-group">
-                <button type="button" id="controlTap" controlButton="TAP" class="btn btn-info notWhileRunning controlButton">Tap</button>
-                <button type="button" id="controlSwipeUp" controlButton="SWIPE_UP" class="btn btn-info notWhileRunning controlButton">Up</button>
-                <button type="button" id="controlSwipeRight" controlButton="SWIPE_RIGHT" class="btn btn-info notWhileRunning controlButton">Right</button>
-                <button type="button" id="controlSwipeDown" controlButton="SWIPE_DOWN" class="btn btn-info notWhileRunning controlButton">Down</button>
-                <button type="button" id="controlSwipeLeft" controlButton="SWIPE_LEFT" class="btn btn-info notWhileRunning controlButton">Left</button>
-            </div>
-        </form>
-        <form id="player-form" class="col-sm-3 offset-sm-1" style="display:none;">
 
-            <h3>Settings</h3>
+    <div class="tab-content" id="myTabContent">
+        <div class="tab-pane fade show active" id="config" role="tabpanel" aria-labelledby="config-tab">
 
-            <div class="input-group">
-                <div class="input-group-prepend">
-                    <span class="input-group-text">Player Level</span>
-                </div>
-                <input type="number" class="form-control" id="player-level"/>
-                <div class="input-group-append">
-                    <button type="button" id="controlPlayerSave" class="btn btn-primary">Update</button>
-                </div>
-            </div>
-            <br/>
-            <div class="input-group">
-                <div class="input-group-prepend">
-                    <span class="input-group-text">Device I.P.</span>
-                </div>
-                <input class="form-control" id="device-ip"/>
-                <div class="input-group-append">
-                    <button type="button" id="controlDeviceSave" class="btn btn-primary">Update</button>
-                </div>
-            </div>
-            <br/>
+            <form id="setting-form" class="col-sm-4" style="display:none;">
+                <h3>Loader</h3>
 
-            <div class="form-group">
-                <label for="adb-info">ADB</label>
-                <textarea class="form-control" id="adb-info" rows="3"></textarea>
-            </div>
+                <div class="input-group">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text">Device</span>
+                    </div>
+                    <select class="form-control" id="device1"></select>
+                </div>
+                <br/>
+                <div class="input-group">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text">Primary View</span>
+                    </div>
+                    <select class="form-control" id="view1"></select>
+                </div>
+                <br/>
+                <div class="input-group">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text">Extra View</span>
+                    </div>
+                    <select class="form-control" id="view2" disabled></select>
+                </div>
+                <br/>
+                <div class="input-group">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text">Primary Script</span>
+                    </div>
+                    <select class="form-control" id="script1"></select>
+                </div>
+                <br/>
+                <div class="input-group">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text">Extra Script</span>
+                    </div>
+                    <select class="form-control" id="script2" disabled></select>
+                </div>
+                <br/>
+                <div class="form-group">
+                    <button type="button" id="controlLoad" class="btn btn-primary">Run Script</button>
+                    <button type="button" id="controlEditView" class="btn btn-secondary">Edit View</button>
+                </div>
+            </form>
 
-            <div class="input-group">
+        </div>
+        <div class="tab-pane fade" id="run" role="tabpanel" aria-labelledby="run-tab">
+
+            <nav class="navbar navbar-expand-lg navbar-light bg-light">
+                <a class="navbar-brand" href="#" id="statusName">CHECKING</a>
+            </nav>
+
+            <form id="loaded-form" class="col-sm-4" style="display:none;">
+                <h3>Run</h3>
+                <div class="form-group">
+                    <label for="states">State</label>
+                    <select id="states" class="form-control"></select>
+                </div>
+                <div class="form-group">
+                    <button type="button" id="controlPlayPause" class="btn btn-primary">Play/Pause</button>
+                    <button type="button" id="controlUnload" class="btn  btn-danger notWhileRunning">Unload</button>
+                </div>
+                <div class="form-group">
+                    <label for="components">Components</label>
+                    <select id="components" class="form-control notWhileRunning"></select>
+                </div>
+                <div class="form-group">
+                    <button type="button" id="controlTap" controlButton="TAP"
+                            class="btn btn-info notWhileRunning controlButton">Tap
+                    </button>
+                    <button type="button" id="controlSwipeUp" controlButton="SWIPE_UP"
+                            class="btn btn-info notWhileRunning controlButton">Up
+                    </button>
+                    <button type="button" id="controlSwipeRight" controlButton="SWIPE_RIGHT"
+                            class="btn btn-info notWhileRunning controlButton">Right
+                    </button>
+                    <button type="button" id="controlSwipeDown" controlButton="SWIPE_DOWN"
+                            class="btn btn-info notWhileRunning controlButton">Down
+                    </button>
+                    <button type="button" id="controlSwipeLeft" controlButton="SWIPE_LEFT"
+                            class="btn btn-info notWhileRunning controlButton">Left
+                    </button>
+                </div>
+            </form>
+
+        </div>
+
+        <div class="tab-pane fade" id="device" role="tabpanel" aria-labelledby="device-tab">
+
+            <form id="player-form" class="col-sm-4" style="display:none;">
+
+                <h3>Settings</h3>
+
+                <div class="input-group">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text">Player Level</span>
+                    </div>
+                    <input type="number" class="form-control" id="player-level"/>
+                    <div class="input-group-append">
+                        <button type="button" id="controlPlayerSave" class="btn btn-primary">Update</button>
+                    </div>
+                </div>
+                <br/>
+                <div class="input-group">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text">Device I.P.</span>
+                    </div>
+                    <input class="form-control" id="device-ip"/>
+                    <div class="input-group-append">
+                        <button type="button" id="controlDeviceSave" class="btn btn-primary">Update</button>
+                    </div>
+                </div>
+                <br/>
+
+                <div class="form-group">
+                    <label for="adb-info">ADB</label>
+                    <textarea class="form-control" id="adb-info" rows="3"></textarea>
+                </div>
+
+                <div class="input-group">
                     <button type="button" class="btn controlAdb btn-info notWhileRunning" adb="restart">Restart</button>
                     <button type="button" class="btn controlAdb btn-info notWhileRunning" adb="usb">USB</button>
                     <button type="button" class="btn controlAdb btn-info notWhileRunning" adb="remote">Remote</button>
                     <button type="button" class="btn controlAdb btn-info notWhileRunning" adb="kill">Kill</button>
                     <button type="button" class="btn controlAdb btn-info notWhileRunning" adb="connect">Connect</button>
                     <button type="button" class="btn controlAdb btn-info notWhileRunning" adb="devices">Devices</button>
+                </div>
+
+            </form>
+
+        </div>
+        <div class="tab-pane fade" id="edit" role="tabpanel" aria-labelledby="edit-tab">
+
+            <form id="edit-form" class="col-sm-4" style="display:none;">
+                <div class="form-group">
+                    <button type="button" id="unloadEdit" class="btn  btn-danger notWhileRunning">Unload</button>
+                </div>
+
+                <div class="form-group">
+                    <label for="edit-screens">Screens</label>
+                    <select id="edit-screens" class="form-control notWhileRunning"></select>
+                </div>
+
+                <div class="form-group">
+                    <button type="button" id="newScreen" class="btn btn-info">New</button>
+                    <button type="button" id="stubScreen" class="btn btn-info">Stub</button>
+                    <button type="button" id="editScreen" class="btn btn-info">Edit</button>
+                    <button type="button" id="fixScreen" class="btn btn-info">Fix</button>
+                    <button type="button" id="verifyScreen" class="btn btn-info">Verify</button>
+                    <button type="button" id="updateScreen" class="btn btn-info">Update</button>
+                </div>
+
+                <div class="form-group">
+                    <label for="edit-components">Components</label>
+                    <select id="edit-components" class="form-control notWhileRunning"></select>
+                </div>
+
+                <div class="form-group">
+                    <div class="form-group">
+                        <button type="button" id="newComponent" class="btn btn-info">New</button>
+                        <button type="button" id="stubComponent" class="btn btn-info">Stub</button>
+                        <button type="button" id="editComponent" class="btn btn-info">Edit</button>
+                        <button type="button" id="updateComponent" class="btn btn-info">Update</button>
+                    </div>
+                </div>
+
+
+            </form>
+
+        </div>
+        <div class="tab-pane fade" id="vars" role="tabpanel" aria-labelledby="vars-tab">
+
+            <div class="row">
+                <form id="variable-form" class="col-sm-12" style="display:none;">
+                    <h3>Variables</h3>
+                    <div id="variable-container" class="container-fluid">
+
+
+
+                    </div>
+                </form>
             </div>
 
-        </form>
-        <form id="variable-form"  class="col-sm-3 offset-sm-1" style="display:none;">
-            <h3>Variables</h3>
-            <div id="variable-container">
-
-
-            </div>
-        </form>
+        </div>
+        <div class="tab-pane fade" id="console" role="tabpanel" aria-labelledby="console-tab">
+            <div id="logs" class="container-fluid"></div>
+        </div>
     </div>
 
-</div>
-
-
-<div id="logs" class="container-fluid">
-
 
 </div>
+
+
 </body>
 </html>

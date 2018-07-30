@@ -15,6 +15,7 @@ public class StatusResult {
         INIT,
         READY,
         STOPPED,
+        EDIT_VIEW,
         RUNNING
     }
 

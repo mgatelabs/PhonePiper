@@ -16,12 +16,14 @@ public class PrepResult {
 
     private List<NamedValueItem> states;
     private List<NamedValueItem> components;
+    private List<NamedValueItem> screens;
     private List<VarDefinition> variables;
 
     public PrepResult(StatusEnum status) {
         this.status = status;
         states = Lists.newArrayList();
         components = Lists.newArrayList();
+        screens = Lists.newArrayList();
         variables = Lists.newArrayList();
     }
 
@@ -35,6 +37,10 @@ public class PrepResult {
 
     public List<NamedValueItem> getStates() {
         return states;
+    }
+
+    public List<NamedValueItem> getScreens() {
+        return screens;
     }
 
     public List<NamedValueItem> getComponents() {

@@ -37,6 +37,8 @@ public class WebResource {
     private static ScriptRunner runner;
     private static RunScriptPanel.ScriptThread thread;
 
+    private static EditHolder editHolder;
+
     // These don't change
     private static ConnectionDefinition connectionDefinition;
     private static FrameChoices frameChoices;
@@ -123,7 +125,7 @@ public class WebResource {
             runner.updateVariable(key, value);
 
             VarStateDefinition varStateDefinition = new VarStateDefinition();
-            for (VarDefinition varDefinition: runner.getVariables()) {
+            for (VarDefinition varDefinition : runner.getVariables()) {
                 if (varDefinition.getModify() == VarModify.EDITABLE) {
                     varStateDefinition.addItem(varDefinition);
                 }
@@ -293,7 +295,9 @@ public class WebResource {
         if (checkInitialState()) {
             result.setStatus(StatusResult.Status.INIT);
         } else {
-            if (runner == null) {
+            if (editHolder != null) {
+                result.setStatus(StatusResult.Status.EDIT_VIEW);
+            } else if (runner == null) {
                 result.setStatus(StatusResult.Status.INIT);
             } else {
                 result.setState(runner.getCurrentStateId());
@@ -400,11 +404,13 @@ public class WebResource {
         if (frameChoices.isValid()) {
             final PrepResult result = new PrepResult(StatusEnum.OK);
 
+            editHolder = null;
+
             runner = new ScriptRunner(playerDefinition, deviceHelper, frameChoices.getScriptDefinition(), frameChoices.getDeviceDefinition(), frameChoices.getViewDefinition(), handler);
 
             if (VarStateDefinition.exists(frameChoices.getScriptName())) {
                 VarStateDefinition varStateDefinition = VarStateDefinition.read(frameChoices.getScriptName());
-                for (VarDefinition varDefinition: varStateDefinition.getItems()) {
+                for (VarDefinition varDefinition : varStateDefinition.getItems()) {
                     runner.updateVariable(varDefinition.getName(), varDefinition.getValue());
                 }
             }
@@ -416,6 +422,47 @@ public class WebResource {
         }
     }
 
+    @POST
+    @Path("/edit/view")
+    @Consumes("application/json")
+    @Produces("application/json")
+    public PrepResult editView(@RequestBody Map<String, String> values) {
+        checkInitialState();
+
+        thread = null;
+
+        frameChoices = new FrameChoices(Constants.ACTION_EDIT, Constants.MODE_VIEW, playerDefinition, "", values.get("script"), values.get("script2"), values.get("device"), values.get("view"), values.get("view2"));
+
+        if (frameChoices.isValid()) {
+            final PrepResult result = new PrepResult(StatusEnum.OK);
+            if (runner != null) {
+                if (runner.isRunning()) {
+                    runner.setStatus(ScriptRunner.Status.PAUSED);
+                }
+                runner = null;
+            }
+            editHolder = new EditHolder(frameChoices.getScriptDefinition(), frameChoices.getMapDefinition(), frameChoices.getDeviceDefinition(), frameChoices.getViewDefinition(), null, new AdbShell(), deviceHelper);
+            return result;
+        } else {
+            return new PrepResult(StatusEnum.FAIL);
+        }
+    }
+
+    @POST
+    @Path("/edit/unload")
+    @Produces("application/json")
+    public Map<String, String> unloadEdit() {
+        checkInitialState();
+        Map<String, String> result = Maps.newHashMap();
+        if (editHolder != null) {
+            editHolder = null;
+            result.put("status", "true");
+        } else {
+            result.put("status", "false");
+        }
+        return result;
+    }
+
     @GET
     @Path("/process/info")
     @Consumes("application/json")
@@ -423,6 +470,10 @@ public class WebResource {
     public PrepResult infoProcess(@RequestBody Map<String, String> values) {
 
         checkInitialState();
+
+        if (editHolder != null) {
+            return new PrepResult(StatusEnum.OK);
+        }
 
         if (frameChoices != null) {
             final PrepResult result = new PrepResult(StatusEnum.OK);
@@ -461,6 +512,32 @@ public class WebResource {
             result.getVariables().addAll(runner.getVariables());
 
             return result;
+        } else {
+            return new PrepResult(StatusEnum.FAIL);
+        }
+    }
+
+    @GET
+    @Path("/edit/view/info")
+    @Consumes("application/json")
+    @Produces("application/json")
+    public PrepResult editViewInfo(@RequestBody Map<String, String> values) {
+        checkInitialState();
+        if (editHolder != null) {
+            PrepResult results = new PrepResult(StatusEnum.OK);
+
+            for(ScreenDefinition screenDefinition: editHolder.getViewDefinition().getScreens()) {
+                results.getScreens().add(new NamedValueItem(screenDefinition.getName(), screenDefinition.getScreenId()));
+            }
+            Collections.sort(results.getScreens());
+
+            for(ComponentDefinition screenDefinition: editHolder.getViewDefinition().getComponents()) {
+                results.getComponents().add(new NamedValueItem(screenDefinition.getName(), screenDefinition.getComponentId()));
+            }
+            Collections.sort(results.getComponents());
+
+            return results;
+
         } else {
             return new PrepResult(StatusEnum.FAIL);
         }

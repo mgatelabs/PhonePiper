@@ -37,17 +37,21 @@
           "condition": {
             "is": "SCREEN",
             "value": "units-select_base",
-            "and": [
+            "or": [
               {
                 "is": "SCREEN",
                 "value": "units-select_base-one_unit"
+              },
+              {
+                "is": "SCREEN",
+                "value": "units-select_base-two_unit"
               }
             ]
           },
           "actions": [
             {
               "type": "MSG",
-              "value": "Stopping, fused ${count} units"
+              "value": "Stopping for safety, fused ${count} units"
             },
             {
               "type": "STOP",

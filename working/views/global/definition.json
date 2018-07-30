@@ -305,6 +305,26 @@
     "screenId" : "os-unable_to_access_data",
     "points" : [ ],
     "enabled" : true
+  }, {
+    "name" : "units-enhance_units",
+    "screenId" : "units-enhance_units",
+    "points" : [ ],
+    "enabled" : false
+  }, {
+    "name" : "units-fuse",
+    "screenId" : "units-fuse",
+    "points" : [ ],
+    "enabled" : false
+  }, {
+    "name" : "units-material_units",
+    "screenId" : "units-material_units",
+    "points" : [ ],
+    "enabled" : false
+  }, {
+    "name" : "units-select_base",
+    "screenId" : "units-select_base",
+    "points" : [ ],
+    "enabled" : false
   } ],
   "components" : [ {
     "name" : "Battle - Auto",
@@ -753,6 +773,70 @@
     "y" : 690,
     "w" : 690,
     "h" : 855,
+    "enabled" : false
+  }, {
+    "name" : "units-enhance_units-back",
+    "componentId" : "units-enhance_units-back",
+    "x" : 0,
+    "y" : 0,
+    "w" : 1,
+    "h" : 1,
+    "enabled" : false
+  }, {
+    "name" : "units-enhance_units-fuse",
+    "componentId" : "units-enhance_units-fuse",
+    "x" : 0,
+    "y" : 0,
+    "w" : 1,
+    "h" : 1,
+    "enabled" : false
+  }, {
+    "name" : "units-enhance_units-tap",
+    "componentId" : "units-enhance_units-tap",
+    "x" : 0,
+    "y" : 0,
+    "w" : 1,
+    "h" : 1,
+    "enabled" : false
+  }, {
+    "name" : "units-fuse-skip",
+    "componentId" : "units-fuse-skip",
+    "x" : 0,
+    "y" : 0,
+    "w" : 1,
+    "h" : 1,
+    "enabled" : false
+  }, {
+    "name" : "units-material_units-back",
+    "componentId" : "units-material_units-back",
+    "x" : 0,
+    "y" : 0,
+    "w" : 1,
+    "h" : 1,
+    "enabled" : false
+  }, {
+    "name" : "units-material_units-choose",
+    "componentId" : "units-material_units-choose",
+    "x" : 0,
+    "y" : 0,
+    "w" : 1,
+    "h" : 1,
+    "enabled" : false
+  }, {
+    "name" : "units-material_units-ok",
+    "componentId" : "units-material_units-ok",
+    "x" : 0,
+    "y" : 0,
+    "w" : 1,
+    "h" : 1,
+    "enabled" : false
+  }, {
+    "name" : "units-select_base-choose",
+    "componentId" : "units-select_base-choose",
+    "x" : 0,
+    "y" : 0,
+    "w" : 1,
+    "h" : 1,
     "enabled" : false
   } ]
 }

@@ -1,0 +1,272 @@
+{
+  "vars": [
+    {
+      "name": "step",
+      "display": "Step",
+      "value": "0",
+      "type": "INT",
+      "modify": "VISIBLE"
+    },
+    {
+      "name": "count",
+      "display": "Count",
+      "value": "0",
+      "type": "INT",
+      "modify": "VISIBLE"
+    }
+  ],
+  "includes": [
+    "common-no_op"
+  ],
+  "states": {
+    "main": {
+      "name": "Fuse",
+      "includes": [
+        "_fuse-select_base",
+        "_fuse-enhance_units",
+        "_fuse-fuse",
+        "_common-no_op"
+      ]
+    },
+
+    "_fuse-select_base": {
+      "name": "Fuse - Select Base",
+      "statements": [
+
+        {
+          "condition": {
+            "is": "SCREEN",
+            "value": "units-select_base"
+          },
+          "actions": [
+            {
+              "type": "MSG",
+              "value": "Selecting Base"
+            },
+            {
+              "type": "SET",
+              "value": "0",
+              "var": "_seconds"
+            },
+            {
+              "type": "SET",
+              "value": "1",
+              "var": "step"
+            },
+            {
+              "type": "TAP",
+              "value": "units-select_base-choose"
+            },
+            {
+              "type": "REPEAT",
+              "value": ""
+            }
+          ]
+        }
+      ]
+    },
+
+    "_fuse-enhance_units": {
+      "name": "Fuse - Enhance Unit",
+      "statements": [
+
+        {
+          "condition": {
+            "is": "SCREEN",
+            "value": "units-enhance_units",
+            "and":[
+              {
+                "is": "EQUAL",
+                "var": "step",
+                "value":"1"
+              }
+            ]
+          },
+          "actions": [
+            {
+              "type": "MSG",
+              "value": "Choosing"
+            },
+            {
+              "type": "SET",
+              "value": "0",
+              "var": "_seconds"
+            },
+            {
+              "type": "SET",
+              "value": "2",
+              "var": "step"
+            },
+            {
+              "type": "TAP",
+              "value": "units-enhance_units-tap"
+            },
+            {
+              "type": "REPEAT",
+              "value": ""
+            }
+          ]
+        }, {
+          "condition": {
+            "is": "SCREEN",
+            "value": "units-material_units",
+            "and":[
+              {
+                "is": "EQUAL",
+                "var": "step",
+                "value":"2"
+              }
+            ]
+          },
+          "actions": [
+            {
+              "type": "MSG",
+              "value": "Choosing Unit"
+            },
+            {
+              "type": "SET",
+              "value": "0",
+              "var": "_seconds"
+            },
+            {
+              "type": "SET",
+              "value": "3",
+              "var": "step"
+            },
+            {
+              "type": "TAP",
+              "value": "units-material_units-choose"
+            },
+            {
+              "type": "TAP",
+              "value": "units-material_units-ok"
+            },
+            {
+              "type": "REPEAT",
+              "value": ""
+            }
+          ]
+        },
+        {
+          "condition": {
+            "is": "SCREEN",
+            "value": "units-enhance_units",
+            "and":[
+              {
+                "is": "EQUAL",
+                "var": "step",
+                "value":"3"
+              }
+            ]
+          },
+          "actions": [
+            {
+              "type": "MSG",
+              "value": "Fusing"
+            },
+            {
+              "type": "SET",
+              "value": "0",
+              "var": "_seconds"
+            },
+            {
+              "type": "SET",
+              "value": "4",
+              "var": "step"
+            },
+            {
+              "type": "TAP",
+              "value": "units-enhance_units-fuse"
+            },
+            {
+              "type": "REPEAT",
+              "value": ""
+            }
+          ]
+        }, {
+          "condition": {
+            "is": "SCREEN",
+            "value": "units-enhance_units",
+            "and":[
+              {
+                "is": "EQUAL",
+                "var": "step",
+                "value":"5"
+              }
+            ]
+          },
+          "actions": [
+            {
+              "type": "MSG",
+              "value": "Backing up"
+            },
+            {
+              "type": "SET",
+              "value": "0",
+              "var": "_seconds"
+            },
+            {
+              "type": "SET",
+              "value": "6",
+              "var": "step"
+            },
+            {
+              "type": "TAP",
+              "value": "units-enhance_units-back"
+            },
+            {
+              "type": "REPEAT",
+              "value": ""
+            }
+          ]
+        }
+      ]
+    },
+
+    "_fuse-fuse": {
+      "name": "Fuse - Fuse",
+      "statements": [
+
+        {
+          "condition": {
+            "is": "SCREEN",
+            "value": "units-fuse"
+          },
+          "actions": [
+            {
+              "type": "MSG",
+              "value": "Skiping"
+            },
+            {
+              "type": "SET",
+              "value": "0",
+              "var": "_seconds"
+            },
+            {
+              "type": "SET",
+              "value": "5",
+              "var": "step"
+            },
+            {
+              "type": "TAP",
+              "value": "units-fuse-skip"
+            },
+            {
+              "type": "TAP",
+              "value": "units-fuse-skip"
+            },
+            {
+              "type": "TAP",
+              "value": "units-fuse-skip"
+            },
+            {
+              "type": "REPEAT",
+              "value": ""
+            }
+          ]
+        }
+      ]
+    }
+
+  }
+}

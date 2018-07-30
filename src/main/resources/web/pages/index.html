@@ -200,6 +200,7 @@
                       url: '/ffbe/process/unload',
                       success: function(result){
                         statusCheck();
+                        $('[href="#config"]').tab('show');
                       }
                     });
                 }
@@ -212,6 +213,7 @@
                       url: '/ffbe/edit/unload',
                       success: function(result){
                         statusCheck();
+                        $('[href="#config"]').tab('show');
                       }
                     });
                 }

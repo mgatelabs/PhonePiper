@@ -37,6 +37,11 @@
       "includes": ["_common-recovery_os"]
     },
 
+    "log-in": {
+      "name":"Common - Recovery Login Template",
+      "includes": ["_common-power_down"]
+    },
+
     "reset": {
       "name": "Common - Reset",
       "includes": [
@@ -317,6 +322,22 @@
             {
               "type": "MOVE",
               "value": "recovery"
+            }
+          ]
+        },
+        {
+          "condition": {
+            "is": "SCREEN",
+            "value": "menu-log_in_again"
+          },
+          "actions": [
+            {
+              "type": "MSG",
+              "value": "Log in Required"
+            },
+            {
+              "type": "MOVE",
+              "value": "log-in"
             }
           ]
         },

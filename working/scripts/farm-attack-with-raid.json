@@ -25,6 +25,14 @@
       "modify":"VISIBLE"
     },
     {
+      "name": "is_raid",
+      "display": "Was Raiding",
+      "value": "0",
+      "type": "INT",
+      "modify":"VISIBLE",
+      "displayType":"BOOLEAN"
+    },
+    {
       "name": "menu-item",
       "display": "Farm Menu Index",
       "value": "1",
@@ -121,6 +129,11 @@
               "type": "SET",
               "value": "0",
               "var": "_seconds"
+            },
+            {
+              "type": "SET",
+              "value": "1",
+              "var": "is_raid"
             },
             {
               "type": "MOVE",
@@ -508,6 +521,11 @@
               "value": "Out of Orbs, Resuming farming"
             },
             {
+              "type": "SET",
+              "value": "0",
+              "var": "is_raid"
+            },
+            {
               "type": "MOVE",
               "value": "raid_to_home_to_farm"
             }
@@ -761,6 +779,11 @@
               "value": "Found Raid Screen"
             },
             {
+              "type": "SET",
+              "value": "1",
+              "var": "is_raid"
+            },
+            {
               "type": "MOVE",
               "value": "raid-home"
             }
@@ -789,8 +812,18 @@
             },
             {
               "type": "SET",
+              "value": "1",
+              "var": "is_raid"
+            },
+            {
+              "type": "SET",
               "var": "_loops",
               "value": "0"
+            },
+            {
+              "type": "ADD",
+              "var": "raid_runs",
+              "value": "1"
             },
             {
               "type": "TAP",
@@ -870,6 +903,11 @@
               "value": "5000"
             },
             {
+              "type": "SET",
+              "value": "0",
+              "var": "is_raid"
+            },
+            {
               "type": "MOVE",
               "value": "menu"
             }
@@ -906,6 +944,138 @@
             },
             {
               "type": "REPEAT",
+              "value": ""
+            }
+          ]
+        }
+      ]
+    },
+
+
+    "log-in": {
+      "name": "Common - Recovery Log In",
+      "statements": [
+        {
+          "condition": {
+            "is": "SCREEN",
+            "value": "menu-log_in_again"
+          },
+          "actions": [
+            {
+              "type": "MSG",
+              "value": "Tapping OK"
+            },
+            {
+              "type": "SET",
+              "var": "_loops",
+              "value": "0"
+            },
+            {
+              "type": "TAP",
+              "value": "menu-log_in_again-ok"
+            },
+            {
+              "type": "REPEAT",
+              "value": ""
+            }
+          ]
+        },
+        {
+          "condition": {
+            "is": "SCREEN",
+            "value": "menu-title"
+          },
+          "actions": [
+            {
+              "type": "MSG",
+              "value": "Tapping Screen Center"
+            },
+            {
+              "type": "SET",
+              "var": "_loops",
+              "value": "0"
+            },
+            {
+              "type": "TAP",
+              "value": "screen-center"
+            },
+            {
+              "type": "REPEAT",
+              "value": ""
+            }
+          ]
+        },
+        {
+          "condition": {
+            "is": "SCREEN",
+            "value": "menu-quest_restart",
+            "and": [
+              {
+                "is": "EQUAL",
+                "value": "0",
+                "var": "is_raid"
+              }
+            ]
+          },
+          "actions": [
+            {
+              "type": "MSG",
+              "value": "Found Quest Restart Screen, restarting..."
+            },
+            {
+              "type": "SET",
+              "var": "_loops",
+              "value": "0"
+            },
+            {
+              "type": "TAP",
+              "value": "menu-quest_restart-yes"
+            },
+            {
+              "type": "MOVE",
+              "value": "main"
+            }
+          ]
+        },
+        {
+          "condition": {
+            "is": "SCREEN",
+            "value": "menu-quest_restart",
+            "and": [
+              {
+                "is": "EQUAL",
+                "value": "1",
+                "var": "is_raid"
+              }
+            ]
+          },
+          "actions": [
+            {
+              "type": "MSG",
+              "value": "Previous action was RAID, stopping..."
+            },
+            {
+              "type": "STOP"
+            }
+          ]
+        },
+        {
+          "condition": {
+            "is": "SCREEN",
+            "value": "menu-home"
+          },
+          "actions": [
+            {
+              "type": "MSG",
+              "value": "Found Home Screen, stopping..."
+            },
+            {
+              "type": "SET",
+              "var": "_loops",
+              "value": "0"
+            },
+            {
+              "type": "STOP",
               "value": ""
             }
           ]

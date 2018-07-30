@@ -325,6 +325,11 @@
     "screenId" : "units-select_base",
     "points" : [ ],
     "enabled" : false
+  }, {
+    "name" : "units-select_base-one_unit",
+    "screenId" : "units-select_base-one_unit",
+    "points" : [ ],
+    "enabled" : false
   } ],
   "components" : [ {
     "name" : "Battle - Auto",

@@ -36,6 +36,28 @@
         {
           "condition": {
             "is": "SCREEN",
+            "value": "units-select_base",
+            "and": [
+              {
+                "is": "SCREEN",
+                "value": "units-select_base-one_unit"
+              }
+            ]
+          },
+          "actions": [
+            {
+              "type": "MSG",
+              "value": "Stopping, fused ${count} units"
+            },
+            {
+              "type": "STOP",
+              "value": ""
+            }
+          ]
+        },
+        {
+          "condition": {
+            "is": "SCREEN",
             "value": "units-select_base"
           },
           "actions": [
@@ -246,6 +268,11 @@
               "type": "SET",
               "value": "5",
               "var": "step"
+            },
+            {
+              "type": "ADD",
+              "value": "1",
+              "var": "count"
             },
             {
               "type": "TAP",

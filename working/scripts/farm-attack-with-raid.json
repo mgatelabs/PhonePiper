@@ -502,6 +502,10 @@
             {
               "type": "WAIT",
               "value": "10000"
+            },
+            {
+              "type": "REPEAT",
+              "value": ""
             }
           ]
         },{
@@ -731,8 +735,8 @@
       ]
     },
 
-    "farm_from_home_to_raid": {
-      "name": "Farm - Home > Raid",
+    "home_to_raid": {
+      "name": "Home - To Raid",
       "includes": [
         "_common-vtx-items",
         "_common-no_op"
@@ -791,8 +795,8 @@
       ]
     },
 
-    "raid_from_home_to_farm": {
-      "name": "Raid - Home > Farm",
+    "home_to_farm": {
+      "name": "Home - To Farm",
       "includes": [
         "_es-to_menu",
         "_common-no_op"
@@ -997,7 +1001,7 @@
           "actions": [
             {
               "type": "MOVE",
-              "value": "farm_from_home_to_raid"
+              "value": "home_to_raid"
             }
           ]
         },
@@ -1044,7 +1048,7 @@
           "actions": [
             {
               "type": "MOVE",
-              "value": "raid_from_home_to_farm"
+              "value": "home_to_farm"
             }
           ]
         },
@@ -1171,7 +1175,7 @@
             },
             {
               "type": "MOVE",
-              "value": "raid_from_home_to_farm"
+              "value": "home_to_farm"
             }
           ]
         }

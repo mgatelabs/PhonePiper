@@ -614,7 +614,7 @@
               "value": "Starting raid ${raid_runs}"
             },
             {
-              "type": "SWAP",
+              "type": "MOVE",
               "value": "raid-battle"
             }
           ]

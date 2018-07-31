@@ -137,7 +137,7 @@
             },
             {
               "type": "MOVE",
-              "value": "farm_to_home_to_raid"
+              "value": "farm_to_home"
             }
           ]
         },
@@ -527,7 +527,7 @@
             },
             {
               "type": "MOVE",
-              "value": "raid_to_home_to_farm"
+              "value": "raid_to_home"
             }
           ]
         },
@@ -731,12 +731,11 @@
       ]
     },
 
-    "farm_to_home_to_raid": {
+    "farm_from_home_to_raid": {
       "name": "Farm - Home > Raid",
       "includes": [
         "_common-vtx-items",
-        "_common-no_op",
-        "_not_home_back"
+        "_common-no_op"
       ],
       "statements": [
         {
@@ -792,12 +791,11 @@
       ]
     },
 
-    "raid_to_home_to_farm": {
+    "raid_from_home_to_farm": {
       "name": "Raid - Home > Farm",
       "includes": [
         "_es-to_menu",
-        "_common-no_op",
-        "_not_home_back"
+        "_common-no_op"
       ],
       "statements": [
         {
@@ -863,12 +861,30 @@
               "value": "menu-worlds"
             },
             {
-              "type": "WAIT",
-              "value": "5000"
+              "type": "SET",
+              "value": "0",
+              "var": "is_raid"
             },
             {
+              "type": "REPEAT",
+              "value": "false"
+            }
+          ]
+        },
+        {
+          "condition": {
+            "is": "SCREEN",
+            "value": "menu-world-grandshelt_isles"
+          },
+          "actions": [
+            {
               "type": "MSG",
-              "value": "Fixing Location"
+              "value": "Found Grandshelf Isles, looking for Earth Shrine"
+            },
+            {
+              "type": "SET",
+              "var": "_loops",
+              "value": "0"
             },
             {
               "type": "SWIPE_RIGHT",
@@ -903,22 +919,135 @@
               "value": "5000"
             },
             {
+              "type": "REPEAT",
+              "value": ""
+            }
+          ]
+        },{
+          "condition": {
+            "is": "SCREEN",
+            "value": "menu-world-lapis"
+          },
+          "actions": [
+            {
+              "type": "MSG",
+              "value": "Found Lapis"
+            },
+            {
               "type": "SET",
-              "value": "0",
-              "var": "is_raid"
+              "var": "_loops",
+              "value": "0"
+            },
+            {
+              "type": "SWIPE_LEFT",
+              "value": "menu-island-grandshelt_isles"
+            },
+            {
+              "type": "WAIT",
+              "value": "5000"
+            },
+            {
+              "type": "TAP",
+              "value": "menu-island-grandshelt"
+            },
+            {
+              "type": "WAIT",
+              "value": "5000"
+            },
+            {
+              "type": "TAP",
+              "value": "menu-island-grandshelt_isles"
+            },
+            {
+              "type": "WAIT",
+              "value": "5000"
+            },
+            {
+              "type": "REPEAT",
+              "value": ""
+            }
+          ]
+        }, {
+          "condition": {
+            "is": "SCREEN",
+            "value": "menu-missions-select"
+          },
+          "actions": [
+            {
+              "type": "MSG",
+              "value": "Found Map"
             },
             {
               "type": "MOVE",
-              "value": "menu"
+              "value": "main"
             }
           ]
         }
       ]
     },
 
-    "_not_home_back": {
-      "name": "Not Home, Back down",
+    "farm_to_home": {
+      "name": "Farm - To Home",
       "statements": [
+        {
+          "condition": {
+            "is": "SCREEN",
+            "value": "menu-home"
+          },
+          "actions": [
+            {
+              "type": "MOVE",
+              "value": "farm_from_home_to_raid"
+            }
+          ]
+        },
+        {
+          "condition": {
+            "not": "SCREEN",
+            "value": "menu-home"
+          },
+          "actions": [
+            {
+              "type": "MSG",
+              "value": "Backing Up"
+            },
+            {
+              "type": "SET",
+              "var": "_loops",
+              "value": "0"
+            },
+            {
+              "type": "EVENT",
+              "value": "back"
+            },
+            {
+              "type": "WAIT",
+              "value": "5000"
+            },
+            {
+              "type": "REPEAT",
+              "value": ""
+            }
+          ]
+        }
+      ]
+    },
+
+    "raid_to_home": {
+      "name": "Raid - To Home",
+      "statements": [
+        {
+          "condition": {
+            "is": "SCREEN",
+            "value": "menu-home"
+          },
+          "actions": [
+            {
+              "type": "MOVE",
+              "value": "raid_from_home_to_farm"
+            }
+          ]
+        },
         {
           "condition": {
             "not": "SCREEN",
@@ -1008,19 +1137,12 @@
         {
           "condition": {
             "is": "SCREEN",
-            "value": "menu-quest_restart",
-            "and": [
-              {
-                "is": "EQUAL",
-                "value": "0",
-                "var": "is_raid"
-              }
-            ]
+            "value": "menu-quest_restart"
           },
           "actions": [
             {
               "type": "MSG",
-              "value": "Found Quest Restart Screen, restarting..."
+              "value": "Found Quest Restart Screen, stopping quest, returning to Home..."
             },
             {
               "type": "SET",
@@ -1029,33 +1151,11 @@
             },
             {
               "type": "TAP",
-              "value": "menu-quest_restart-yes"
+              "value": "menu-quest_restart-no"
             },
             {
-              "type": "MOVE",
-              "value": "main"
-            }
-          ]
-        },
-        {
-          "condition": {
-            "is": "SCREEN",
-            "value": "menu-quest_restart",
-            "and": [
-              {
-                "is": "EQUAL",
-                "value": "1",
-                "var": "is_raid"
-              }
-            ]
-          },
-          "actions": [
-            {
-              "type": "MSG",
-              "value": "Previous action was RAID, stopping..."
-            },
-            {
-              "type": "STOP"
+              "type": "REPEAT",
+              "value": ""
             }
           ]
         },
@@ -1067,16 +1167,11 @@
           "actions": [
             {
               "type": "MSG",
-              "value": "Found Home Screen, stopping..."
+              "value": "Found Home Screen, attempting to recover..."
             },
             {
-              "type": "SET",
-              "var": "_loops",
-              "value": "0"
-            },
-            {
-              "type": "STOP",
-              "value": ""
+              "type": "MOVE",
+              "value": "raid_from_home_to_farm"
             }
           ]
         }

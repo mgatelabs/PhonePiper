@@ -286,6 +286,16 @@
     "points" : [ ],
     "enabled" : false
   }, {
+    "name" : "menu-world-grandshelt_isles",
+    "screenId" : "menu-world-grandshelt_isles",
+    "points" : [ ],
+    "enabled" : false
+  }, {
+    "name" : "menu-world-lapis",
+    "screenId" : "menu-world-lapis",
+    "points" : [ ],
+    "enabled" : false
+  }, {
     "name" : "Menu - Worlds",
     "screenId" : "menu-worlds",
     "points" : [ ],
@@ -304,7 +314,7 @@
     "name" : "OS - Unable to access data",
     "screenId" : "os-unable_to_access_data",
     "points" : [ ],
-    "enabled" : true
+    "enabled" : false
   }, {
     "name" : "units-enhance_units",
     "screenId" : "units-enhance_units",
@@ -691,6 +701,14 @@
   }, {
     "name" : "Menu - Quest Restart - Yes",
     "componentId" : "menu-quest_restart-yes",
+    "x" : 0,
+    "y" : 0,
+    "w" : 1,
+    "h" : 1,
+    "enabled" : false
+  }, {
+    "name" : "Menu - Quest Restart - No",
+    "componentId" : "menu-quest_restart-no",
     "x" : 0,
     "y" : 0,
     "w" : 1,

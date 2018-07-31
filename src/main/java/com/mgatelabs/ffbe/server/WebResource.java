@@ -486,7 +486,7 @@ public class WebResource {
                     } else if (o2.getId().equals("main")) {
                         return 1;
                     }
-                    return o1.getId().compareTo(o2.getId());
+                    return o1.getName().compareTo(o2.getName());
                 }
             });
 

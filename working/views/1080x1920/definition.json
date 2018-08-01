@@ -1255,8 +1255,8 @@
     "name" : "Menu - Results - Units 0 - Pop",
     "screenId" : "menu-results-units_0-pop",
     "points" : [ {
-      "x" : 958,
-      "y" : 333,
+      "x" : 957,
+      "y" : 335,
       "r" : 0,
       "g" : 255,
       "b" : 0

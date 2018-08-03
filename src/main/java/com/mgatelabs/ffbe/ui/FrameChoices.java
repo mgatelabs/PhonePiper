@@ -5,6 +5,7 @@ import com.mgatelabs.ffbe.shared.mapper.MapDefinition;
 import com.mgatelabs.ffbe.ui.utils.Constants;
 
 import java.io.File;
+import java.util.Map;
 
 /**
  * @author <a href="mailto:mfuller@acteksoft.com">Michael Fuller</a>
@@ -89,7 +90,11 @@ public class FrameChoices {
         if (canScript(action, mode) && scriptId != null) {
             this.scriptDefinition = ScriptDefinition.read(scriptId);
             if (action == Action.RUN && scriptId2 != null && scriptId2.trim().length() > 0) {
-                scriptDefinition.getIncludes().add(scriptId2);
+                ScriptDefinition scriptDefinition2 = ScriptDefinition.read(scriptId2);
+                for (Map.Entry<String, StateDefinition> other : scriptDefinition2.getStates().entrySet()) {
+                    this.scriptDefinition.getStates().remove(other.getKey());
+                    this.scriptDefinition.getStates().put(other.getKey(), other.getValue());
+                }
             }
         } else {
             this.scriptDefinition = null;

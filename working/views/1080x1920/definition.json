@@ -9611,6 +9611,14 @@
     "h" : 81,
     "enabled" : true
   }, {
+    "name" : "battle-skill-bottom-left",
+    "componentId" : "battle-skill-bottom-left",
+    "x" : 30,
+    "y" : 1554,
+    "w" : 477,
+    "h" : 143,
+    "enabled" : true
+  }, {
     "name" : "units-select_base-choose",
     "componentId" : "units-select_base-choose",
     "x" : 50,

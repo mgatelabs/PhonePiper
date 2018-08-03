@@ -1,0 +1,133 @@
+{
+  "vars": [
+  ],
+  "includes": [
+  ],
+  "states": {
+
+    "raid-battle": {
+      "name": "Raid - Battle",
+      "includes": [
+        "_raid_battle-auto",
+        "_raid-battle-message",
+        "_raid-to_results",
+        "_common-no_op"
+      ]
+    },
+
+    "_raid_battle-auto":{
+      "name": "Raid Battle - Auto",
+      "statements": [
+        {
+          "condition": {
+            "is": "SCREEN",
+            "value": "game-battle",
+            "and": [
+              {
+                "is": "SCREEN",
+                "value": "game-battle-auto_off",
+                "or" : [
+                  {
+                    "is":"SCREEN",
+                    "value": "game-battle-repeat"
+                  }
+                ]
+              },
+              {
+                "is": "SCREEN",
+                "value": "battle-unit-0_ready"
+              }
+            ]
+          },
+          "actions": [
+            {
+              "type": "MSG",
+              "value": "Nuking"
+            },
+            {
+              "type": "SWIPE_RIGHT",
+              "value": "battle-unit_0"
+            },
+            {
+              "type": "SWIPE_UP",
+              "value": "battle-unit_0"
+            },
+            {
+              "type": "SWIPE_UP",
+              "value": "battle-unit_0"
+            },
+            {
+              "type": "SWIPE_UP",
+              "value": "battle-unit_0"
+            },
+            {
+              "type": "SWIPE_UP",
+              "value": "battle-unit_0"
+            },
+            {
+              "type": "SWIPE_UP",
+              "value": "battle-unit_0"
+            },
+            {
+              "type": "SWIPE_UP",
+              "value": "battle-unit_0"
+            },
+            {
+              "type": "SWIPE_UP",
+              "value": "battle-unit_0"
+            },
+            {
+              "type": "SWIPE_UP",
+              "value": "battle-unit_0"
+            },
+            {
+              "type": "TAP",
+              "value": "battle-skill-bottom-left"
+            },
+            {
+              "type": "TAP",
+              "value": "battle-unit_0"
+            },
+            {
+              "type": "TAP",
+              "value": "battle-auto"
+            },
+            {
+              "type": "SET",
+              "value": "0",
+              "var": "setup"
+            },
+            {
+              "type": "WAIT",
+              "value": "10000"
+            },
+            {
+              "type": "REPEAT",
+              "value": ""
+            }
+          ]
+        },
+        {
+          "condition": {
+            "is": "SCREEN",
+            "value": "game-battle",
+            "and": [
+              {
+                "not": "SCREEN",
+                "value": "game-battle-auto_off"
+              }
+            ]
+          },
+          "actions": [
+            {
+              "type": "SET",
+              "value": "0",
+              "var": "_loops"
+            }
+          ]
+        }
+      ]
+    }
+
+  }
+}

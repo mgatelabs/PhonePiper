@@ -379,6 +379,14 @@
     "h" : 73,
     "enabled" : false
   }, {
+    "name" : "battle-skill-bottom-left",
+    "componentId" : "battle-skill-bottom-left",
+    "x" : 0,
+    "y" : 0,
+    "w" : 1,
+    "h" : 1,
+    "enabled" : false
+  }, {
     "name" : "Battle - Unit 0",
     "componentId" : "battle-unit_0",
     "x" : 35,
@@ -699,16 +707,16 @@
     "h" : 1,
     "enabled" : false
   }, {
-    "name" : "Menu - Quest Restart - Yes",
-    "componentId" : "menu-quest_restart-yes",
+    "name" : "Menu - Quest Restart - No",
+    "componentId" : "menu-quest_restart-no",
     "x" : 0,
     "y" : 0,
     "w" : 1,
     "h" : 1,
     "enabled" : false
   }, {
-    "name" : "Menu - Quest Restart - No",
-    "componentId" : "menu-quest_restart-no",
+    "name" : "Menu - Quest Restart - Yes",
+    "componentId" : "menu-quest_restart-yes",
     "x" : 0,
     "y" : 0,
     "w" : 1,

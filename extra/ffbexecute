@@ -1,0 +1,32 @@
+#!/bin/bash
+# /etc/init.d/ffbexecute
+
+### BEGIN INIT INFO
+# Default-Start:  2 3 4 5
+### END INIT INFO
+
+# Carry out specific functions when asked to by the system
+case "$1" in
+start)
+echo "Building FFBExecute"
+# Turn 0 on which keeps relay off
+#/home/pi/FFBExecute/server.sh &
+cd /home/pi/FFBExecute/
+git pull
+mvn compile package
+echo "Starting FFBExecute"
+cd /home/pi/FFBExecute/working
+java -jar "../target/android-control.jar" server &
+echo $! > /home/pi/ffbexecute.pid
+;;
+stop)
+echo "Stopping FFBExecute"
+cat /home/pi/ffbexecute.pid | xargs kill
+;;
+*)
+echo "Usage: /etc/init.d/ffbexecute {start|stop}"
+exit 1
+;;
+esac
+
+exit 0

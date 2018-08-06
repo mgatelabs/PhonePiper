@@ -1482,361 +1482,9 @@
         {
           "condition": {
             "is": "SCREEN",
-            "value": "game-battle-repeat",
-            "and": [
-              {
-                "is": "SCREEN",
-                "value": "battle-unit-3_ready"
-              }
-            ]
-          },
-          "actions": [
-            {
-              "type": "MSG",
-              "value": "Setting Up Ayaka"
-            },
-            {
-              "type": "SWIPE_RIGHT",
-              "value": "battle-unit_3"
-            },
-            {
-              "type": "WAIT",
-              "value": "200"
-            },
-            {
-              "type": "SLOW_UP",
-              "value": "battle-skill-top-slider"
-            },
-            {
-              "type": "SLOW_UP",
-              "value": "battle-skill-top-slider"
-            },
-            {
-              "type": "SLOW_UP",
-              "value": "battle-skill-top-slider"
-            },
-            {
-              "type": "SLOW_UP",
-              "value": "battle-skill-top-slider"
-            },
-            {
-              "type": "SLOW_UP",
-              "value": "battle-skill-top-slider"
-            },
-            {
-              "type": "SLOW_UP",
-              "value": "battle-skill-top-slider"
-            },
-            {
-              "type": "SLOW_UP",
-              "value": "battle-skill-top-slider"
-            },
-            {
-              "type": "SLOW_UP",
-              "value": "battle-skill-top-slider"
-            },
-            {
-              "type": "TAP",
-              "value": "battle-skill-top-5"
-            },
-            {
-              "type": "TAP",
-              "value": "battle-unit_3"
-            },
-            {
-              "type": "TAP",
-              "value": "battle-unit_3"
-            },
-            {
-              "type": "WAIT",
-              "value": "3000"
-            },
-            {
-              "type": "REPEAT",
-              "value": ""
-            }
-          ]
-        },
-
-        {
-          "condition": {
-            "is": "SCREEN",
-            "value": "game-battle-repeat",
-            "and": [
-              {
-                "is": "SCREEN",
-                "value": "battle-unit-1_ready"
-              }
-            ]
-          },
-          "actions": [
-            {
-              "type": "MSG",
-              "value": "Setting Up GLS"
-            },
-            {
-              "type": "SWIPE_RIGHT",
-              "value": "battle-unit_1"
-            },
-            {
-              "type": "WAIT",
-              "value": "200"
-            },
-            {
-              "type": "SLOW_UP",
-              "value": "battle-skill-top-slider"
-            },
-            {
-              "type": "SLOW_UP",
-              "value": "battle-skill-top-slider"
-            },
-            {
-              "type": "SLOW_UP",
-              "value": "battle-skill-top-slider"
-            },
-            {
-              "type": "SLOW_UP",
-              "value": "battle-skill-top-slider"
-            },
-            {
-              "type": "SLOW_UP",
-              "value": "battle-skill-top-slider"
-            },
-            {
-              "type": "SLOW_UP",
-              "value": "battle-skill-top-slider"
-            },
-            {
-              "type": "TAP",
-              "value": "battle-skill-top-5"
-            },
-            {
-              "type": "WAIT",
-              "value": "200"
-            },
-            {
-              "type": "TAP",
-              "value": "battle-skill-top-0"
-            },
-            {
-              "type": "TAP",
-              "value": "battle-skill-top-0"
-            }
-          ]
-        },
-
-        {
-          "condition": {
-            "is": "SCREEN",
-            "value": "game-battle-repeat",
-            "and": [
-              {
-                "is": "SCREEN",
-                "value": "battle-unit-4_ready"
-              }
-            ]
-          },
-          "actions": [
-            {
-              "type": "MSG",
-              "value": "Setting Up TT"
-            },
-            {
-              "type": "SWIPE_RIGHT",
-              "value": "battle-unit_4"
-            },
-            {
-              "type": "WAIT",
-              "value": "200"
-            },
-            {
-              "type": "SLOW_UP",
-              "value": "battle-skill-top-slider"
-            },
-            {
-              "type": "SLOW_UP",
-              "value": "battle-skill-top-slider"
-            },
-            {
-              "type": "SLOW_UP",
-              "value": "battle-skill-top-slider"
-            },
-            {
-              "type": "SLOW_UP",
-              "value": "battle-skill-top-slider"
-            },
-            {
-              "type": "SLOW_UP",
-              "value": "battle-skill-top-slider"
-            },
-            {
-              "type": "TAP",
-              "value": "battle-skill-top-5"
-            }
-          ]
-        },
-
-        {
-          "condition": {
-            "is": "SCREEN",
-            "value": "game-battle-repeat",
-            "and": [
-              {
-                "is": "SCREEN",
-                "value": "battle-unit-0_ready"
-              }
-            ]
-          },
-          "actions": [
-            {
-              "type": "MSG",
-              "value": "Setting Up ExAil"
-            },
-            {
-              "type": "SWIPE_RIGHT",
-              "value": "battle-unit_0"
-            },
-            {
-              "type": "WAIT",
-              "value": "200"
-            },
-            {
-              "type": "SLOW_UP",
-              "value": "battle-skill-top-slider"
-            },
-            {
-              "type": "SLOW_UP",
-              "value": "battle-skill-top-slider"
-            },
-            {
-              "type": "SLOW_UP",
-              "value": "battle-skill-top-slider"
-            },
-            {
-              "type": "SLOW_UP",
-              "value": "battle-skill-top-slider"
-            },
-            {
-              "type": "SLOW_UP",
-              "value": "battle-skill-top-slider"
-            },
-            {
-              "type": "SLOW_UP",
-              "value": "battle-skill-top-slider"
-            },
-            {
-              "type": "SLOW_UP",
-              "value": "battle-skill-top-slider"
-            },
-            {
-              "type": "SLOW_UP",
-              "value": "battle-skill-top-slider"
-            },
-            {
-              "type": "TAP",
-              "value": "battle-skill-top-5"
-            }
-          ]
-        },
-
-        {
-          "condition": {
-            "is": "SCREEN",
-            "value": "game-battle-repeat",
-            "and": [
-              {
-                "is": "SCREEN",
-                "value": "battle-unit-2_ready"
-              }
-            ]
-          },
-          "actions": [
-            {
-              "type": "MSG",
-              "value": "Setting Up N"
-            },
-            {
-              "type": "SWIPE_RIGHT",
-              "value": "battle-unit_2"
-            },
-            {
-              "type": "WAIT",
-              "value": "200"
-            },
-            {
-              "type": "SLOW_UP",
-              "value": "battle-skill-top-slider"
-            },
-            {
-              "type": "SLOW_UP",
-              "value": "battle-skill-top-slider"
-            },
-            {
-              "type": "SLOW_UP",
-              "value": "battle-skill-top-slider"
-            },
-            {
-              "type": "SLOW_UP",
-              "value": "battle-skill-top-slider"
-            },
-            {
-              "type": "SLOW_UP",
-              "value": "battle-skill-top-slider"
-            },
-            {
-              "type": "SLOW_UP",
-              "value": "battle-skill-top-slider"
-            },
-            {
-              "type": "SLOW_UP",
-              "value": "battle-skill-top-slider"
-            },
-            {
-              "type": "SLOW_UP",
-              "value": "battle-skill-top-slider"
-            },
-            {
-              "type": "TAP",
-              "value": "battle-skill-top-2"
-            }
-          ]
-        },
-
-        {
-          "condition": {
-            "is": "SCREEN",
             "value": "game-battle-repeat"
           },
           "actions": [
-
-            {
-              "type": "MSG",
-              "value": "Fighting"
-            },
-            {
-              "type": "BATCH",
-              "value": "start"
-            },
-            {
-              "type": "TAP",
-              "value": "battle-unit_4"
-            },
-            {
-              "type": "TAP",
-              "value": "battle-unit_1"
-            },
-            {
-              "type": "TAP",
-              "value": "battle-unit_0"
-            },
-            {
-              "type": "TAP",
-              "value": "battle-unit_2"
-            },
-            {
-              "type": "BATCH",
-              "value": "end"
-            },
             {
               "type": "MSG",
               "value": "Moving to Fight"
@@ -1853,10 +1501,10 @@
     "arena-battle-fight": {
       "name": "Arena - Battle - Fight",
       "includes": [
+        "_arena-battle-fight",
         "_common-no_op"
       ],
       "statements": [
-
         {
           "condition": {
             "is": "SCREEN",
@@ -1865,27 +1513,24 @@
           "actions": [
             {
               "type": "MSG",
-              "value": "Fighting"
+              "value": "Fighting (You shouod override this, auto isn't good)"
             },
             {
               "type": "TAP",
-              "value": "battle-reload"
-            },
-            {
-              "type": "TAP",
-              "value": "battle-unit_3"
-            },
-            {
-              "type": "TAP",
-              "value": "battle-repeat"
+              "value": "battle-auto"
             },
             {
               "type": "REPEAT",
               "value": ""
             }
           ]
-        },
+        }
+      ]
+    },
 
+    "_arena-battle-fight": {
+      "name": "Arena - Battle - Fight (Common)",
+      "statements": [
         {
           "condition": {
             "is": "SCREEN",
@@ -1909,8 +1554,8 @@
 
         {
           "condition": {
-          "is": "SCREEN",
-          "value": "game-battle-over"
+            "is": "SCREEN",
+            "value": "game-battle-over"
           },
           "actions": [
             {
@@ -1986,9 +1631,7 @@
             }
           ]
         }
-
-      ]
-    }
+      ]}
 
   }
 }

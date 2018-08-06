@@ -386,41 +386,71 @@ public class ComponentListPanel extends JInternalFrame {
 
         testMenu.addSeparator();
 
-        JMenuItem swipeUpMenuItem = new JMenuItem("Swipe Up");
-        swipeUpMenuItem.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                AdbUtils.component(deviceDefinition, selectedItem, ActionType.SWIPE_UP, shell, false);
-            }
-        });
-        testMenu.add(swipeUpMenuItem);
+        {
+            JMenuItem swipeUpMenuItem = new JMenuItem("Swipe Up");
+            swipeUpMenuItem.addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    AdbUtils.component(deviceDefinition, selectedItem, ActionType.SWIPE_UP, shell, false);
+                }
+            });
+            testMenu.add(swipeUpMenuItem);
+        }
 
-        JMenuItem swipeDownMenuItem = new JMenuItem("Swipe Down");
-        swipeDownMenuItem.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                AdbUtils.component(deviceDefinition, selectedItem, ActionType.SWIPE_DOWN, shell, false);
-            }
-        });
-        testMenu.add(swipeDownMenuItem);
+        {
+            JMenuItem swipeSlowUpMenuItem = new JMenuItem("Swipe Up (Slow)");
+            swipeSlowUpMenuItem.addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    AdbUtils.component(deviceDefinition, selectedItem, ActionType.SLOW_UP, shell, false);
+                }
+            });
+            testMenu.add(swipeSlowUpMenuItem);
+        }
 
-        JMenuItem swipeLeftMenuItem = new JMenuItem("Swipe Left");
-        swipeLeftMenuItem.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                AdbUtils.component(deviceDefinition, selectedItem, ActionType.SWIPE_LEFT, shell, false);
-            }
-        });
-        testMenu.add(swipeLeftMenuItem);
+        {
+            JMenuItem swipeDownMenuItem = new JMenuItem("Swipe Down");
+            swipeDownMenuItem.addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    AdbUtils.component(deviceDefinition, selectedItem, ActionType.SWIPE_DOWN, shell, false);
+                }
+            });
+            testMenu.add(swipeDownMenuItem);
+        }
 
-        JMenuItem swipeRightMenuItem = new JMenuItem("Swipe Right");
-        swipeRightMenuItem.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                AdbUtils.component(deviceDefinition, selectedItem, ActionType.SWIPE_RIGHT, shell, false);
-            }
-        });
-        testMenu.add(swipeRightMenuItem);
+        {
+            JMenuItem swipeSlowDownMenuItem = new JMenuItem("Swipe Down (Slow)");
+            swipeSlowDownMenuItem.addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    AdbUtils.component(deviceDefinition, selectedItem, ActionType.SLOW_DOWN, shell, false);
+                }
+            });
+            testMenu.add(swipeSlowDownMenuItem);
+        }
+
+        {
+            JMenuItem swipeLeftMenuItem = new JMenuItem("Swipe Left");
+            swipeLeftMenuItem.addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    AdbUtils.component(deviceDefinition, selectedItem, ActionType.SWIPE_LEFT, shell, false);
+                }
+            });
+            testMenu.add(swipeLeftMenuItem);
+        }
+
+        {
+            JMenuItem swipeRightMenuItem = new JMenuItem("Swipe Right");
+            swipeRightMenuItem.addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    AdbUtils.component(deviceDefinition, selectedItem, ActionType.SWIPE_RIGHT, shell, false);
+                }
+            });
+            testMenu.add(swipeRightMenuItem);
+        }
 
         setJMenuBar(menuBar);
 

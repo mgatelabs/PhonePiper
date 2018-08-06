@@ -17,6 +17,7 @@ public class ConditionDefinition {
     private String var;
 
     private List<ConditionDefinition> and;
+    private List<ConditionDefinition> andOr;
     private List<ConditionDefinition> or;
 
     public ConditionType getIs() {
@@ -76,6 +77,13 @@ public class ConditionDefinition {
                 conditionDefinition.fix();
             }
         }
+        if (andOr == null) {
+            andOr = Lists.newArrayList();
+        } else {
+            for (ConditionDefinition conditionDefinition : andOr) {
+                conditionDefinition.fix();
+            }
+        }
     }
 
     public List<ConditionDefinition> getAnd() {
@@ -92,6 +100,14 @@ public class ConditionDefinition {
 
     public void setOr(List<ConditionDefinition> or) {
         this.or = or;
+    }
+
+    public List<ConditionDefinition> getAndOr() {
+        return andOr;
+    }
+
+    public void setAndOr(List<ConditionDefinition> andOr) {
+        this.andOr = andOr;
     }
 
     public String getVar() {

@@ -99,7 +99,7 @@ public class Runner {
 
                 if (startupFrame.getSelectedAction() != null && startupFrame.getSelectedMode() != null) {
 
-                    FrameChoices frameChoices = new FrameChoices(startupFrame.getSelectedAction(), startupFrame.getSelectedMode(), playerDefinition, startupFrame.getSelectedMap(), startupFrame.getSelectedScript(), startupFrame.getSelectedScript2(), startupFrame.getSelectedDevice(), startupFrame.getSelectedView(), startupFrame.getSelectedView2());
+                    FrameChoices frameChoices = new FrameChoices(startupFrame.getSelectedAction(), startupFrame.getSelectedMode(), playerDefinition, startupFrame.getSelectedMap(), startupFrame.getSelectedScript(), startupFrame.getSelectedScript2(), null, startupFrame.getSelectedDevice(), startupFrame.getSelectedView(), startupFrame.getSelectedView2());
 
                     if (frameChoices.getAction() == FrameChoices.Action.CREATE) {
                         String inputValue = JOptionPane.showInputDialog("Please input a " + frameChoices.getMode().name());

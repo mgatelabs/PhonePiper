@@ -25,14 +25,6 @@
       "modify":"VISIBLE"
     },
     {
-      "name": "is_raid",
-      "display": "Was Raiding",
-      "value": "0",
-      "type": "INT",
-      "modify":"VISIBLE",
-      "displayType":"BOOLEAN"
-    },
-    {
       "name": "menu-item",
       "display": "Farm Menu Index",
       "value": "1",
@@ -50,6 +42,14 @@
     {
       "name": "allow-raid",
       "display": "Enable Raid",
+      "value": "0",
+      "type": "INT",
+      "modify":"EDITABLE",
+      "displayType":"BOOLEAN"
+    },
+    {
+      "name": "allow-arena",
+      "display": "Enable Arena",
       "value": "0",
       "type": "INT",
       "modify":"EDITABLE",
@@ -112,28 +112,30 @@
                     "var": "_seconds"
                   }
                 ]
-              },
+              }
+            ],
+            "andOr": [
               {
                 "is": "EQUAL",
                 "value": "1",
                 "var": "allow-raid"
+              },
+              {
+                "is": "EQUAL",
+                "value": "1",
+                "var": "allow-arena"
               }
             ]
           },
           "actions": [
             {
               "type": "MSG",
-              "value": "Time limit hit, switching to ORB farming"
+              "value": "Time limit hit, switching to home screen"
             },
             {
               "type": "SET",
               "value": "0",
               "var": "_seconds"
-            },
-            {
-              "type": "SET",
-              "value": "1",
-              "var": "is_raid"
             },
             {
               "type": "MOVE",
@@ -525,11 +527,6 @@
               "value": "Out of Orbs, Resuming farming"
             },
             {
-              "type": "SET",
-              "value": "0",
-              "var": "is_raid"
-            },
-            {
               "type": "MOVE",
               "value": "raid_to_home"
             }
@@ -782,13 +779,62 @@
               "value": "Found Raid Screen"
             },
             {
+              "type": "MOVE",
+              "value": "raid-home"
+            }
+          ]
+        }
+      ]
+    },
+
+    "home_to_arena": {
+      "name": "Home - To Arena",
+      "includes": [
+        "_common-no_op"
+      ],
+      "statements": [
+        {
+          "condition": {
+            "is": "SCREEN",
+            "value": "menu-home"
+          },
+          "actions": [
+            {
+              "type": "MSG",
+              "value": "Going to Arena"
+            },
+            {
               "type": "SET",
-              "value": "1",
-              "var": "is_raid"
+              "var": "_loops",
+              "value": "0"
+            },
+            {
+              "type": "TAP",
+              "value": "menu-home-arena"
+            },
+            {
+              "type": "WAIT",
+              "value": "10000"
+            },
+            {
+              "type": "REPEAT",
+              "value": ""
+            }
+          ]
+        },
+        {
+          "condition": {
+            "is": "SCREEN",
+            "value": "menu-arena_screen"
+          },
+          "actions": [
+            {
+              "type": "MSG",
+              "value": "Found Arena Screen"
             },
             {
               "type": "MOVE",
-              "value": "raid-home"
+              "value": "arena-home"
             }
           ]
         }
@@ -811,11 +857,6 @@
             {
               "type": "MSG",
               "value": "Returning to Battle"
-            },
-            {
-              "type": "SET",
-              "value": "1",
-              "var": "is_raid"
             },
             {
               "type": "SET",
@@ -863,11 +904,6 @@
             {
               "type": "TAP",
               "value": "menu-worlds"
-            },
-            {
-              "type": "SET",
-              "value": "0",
-              "var": "is_raid"
             },
             {
               "type": "REPEAT",
@@ -996,12 +1032,83 @@
         {
           "condition": {
             "is": "SCREEN",
-            "value": "menu-home"
+            "value": "menu-home",
+            "and": [
+              {
+                "is": "EQUAL",
+                "value": "1",
+                "var": "allow-raid"
+              }
+            ]
           },
           "actions": [
             {
               "type": "MOVE",
               "value": "home_to_raid"
+            }
+          ]
+        },{
+          "condition": {
+            "is": "SCREEN",
+            "value": "menu-home",
+            "and": [
+              {
+                "is": "EQUAL",
+                "value": "1",
+                "var": "allow-arena"
+              }
+            ]
+          },
+          "actions": [
+            {
+              "type": "MOVE",
+              "value": "home_to_arena"
+            }
+          ]
+        }, {
+          "condition": {
+            "not": "SCREEN",
+            "value": "menu-home"
+          },
+          "actions": [
+            {
+              "type": "MSG",
+              "value": "Backing Up"
+            },
+            {
+              "type": "SET",
+              "var": "_loops",
+              "value": "0"
+            },
+            {
+              "type": "EVENT",
+              "value": "back"
+            },
+            {
+              "type": "WAIT",
+              "value": "5000"
+            },
+            {
+              "type": "REPEAT",
+              "value": ""
+            }
+          ]
+        }
+      ]
+    },
+
+    "raid_to_home": {
+      "name": "Raid - To Home",
+      "statements": [
+        {
+          "condition": {
+            "is": "SCREEN",
+            "value": "menu-home"
+          },
+          "actions": [
+            {
+              "type": "MOVE",
+              "value": "home_to_farm"
             }
           ]
         },
@@ -1037,8 +1144,8 @@
       ]
     },
 
-    "raid_to_home": {
-      "name": "Raid - To Home",
+    "arena_to_home": {
+      "name": "Arena - To Home",
       "statements": [
         {
           "condition": {
@@ -1179,6 +1286,658 @@
             }
           ]
         }
+      ]
+    },
+
+    "arena-home": {
+      "name": "Arena - Home",
+      "includes": [
+        "_common-no_op"
+      ],
+      "statements": [
+        {
+          "condition": {
+            "is": "SCREEN",
+            "value": "menu-arena_screen",
+            "and": [
+              {
+                "is": "SCREEN",
+                "value": "menu-arena-orbs"
+              }
+            ]
+          },
+          "actions": [
+            {
+              "type": "MSG",
+              "value": "Orb Available, Starting Fight"
+            },
+            {
+              "type": "TAP",
+              "value": "menu-arena-setup"
+            },
+            {
+              "type": "WAIT",
+              "value": "5000"
+            },
+            {
+              "type": "REPEAT",
+              "value": ""
+            }
+          ]
+        },{
+          "condition": {
+            "is": "SCREEN",
+            "value": "menu-raid_screen",
+            "and": [
+              {
+                "not": "SCREEN",
+                "value": "menu-raid_orbs"
+              }
+            ]
+          },
+          "actions": [
+            {
+              "type": "MSG",
+              "value": "Out of Orbs, Resuming farming"
+            },
+            {
+              "type": "MOVE",
+              "value": "arena_to_home"
+            }
+          ]
+        },
+        {
+          "condition": {
+            "is": "SCREEN",
+            "value": "menu-arena-rules"
+          },
+          "actions": [
+            {
+              "type": "TAP",
+              "value": "menu-arena-ok"
+            },
+            {
+              "type": "WAIT",
+              "value": "5000"
+            },
+            {
+              "type": "REPEAT",
+              "value": ""
+            }
+          ]
+        },
+        {
+          "condition": {
+            "is": "SCREEN",
+            "value": "menu-arena-opponent_select"
+          },
+          "actions": [
+            {
+              "type": "TAP",
+              "value": "menu-arena-opponent_first"
+            },
+            {
+              "type": "WAIT",
+              "value": "5000"
+            },
+            {
+              "type": "REPEAT",
+              "value": ""
+            }
+          ]
+        },
+        {
+          "condition": {
+            "is": "SCREEN",
+            "value": "menu-arena-confirm_select"
+          },
+          "actions": [
+            {
+              "type": "TAP",
+              "value": "menu-arena-opponent_confirm-yes"
+            },
+            {
+              "type": "WAIT",
+              "value": "5000"
+            },
+            {
+              "type": "REPEAT",
+              "value": ""
+            }
+          ]
+        },
+        {
+          "condition": {
+            "is": "SCREEN",
+            "value": "menu-arena-begin"
+          },
+          "actions": [
+            {
+              "type": "TAP",
+              "value": "menu-arena-begin"
+            },
+            {
+              "type": "WAIT",
+              "value": "5000"
+            },
+            {
+              "type": "REPEAT",
+              "value": ""
+            }
+          ]
+        },
+        {
+          "condition": {
+            "is": "SCREEN",
+            "value": "game-battle"
+          },
+          "actions": [
+            {
+              "type": "MSG",
+              "value": "Battle Started"
+            },
+            {
+              "type": "MOVE",
+              "value": "arena-battle-setup"
+            }
+          ]
+        }
+      ]
+    },
+
+    "arena-battle-setup": {
+      "name": "Arena - Battle - Setup",
+      "includes": [
+        "_common-no_op"
+      ],
+      "statements": [
+        {
+          "condition": {
+            "is": "SCREEN",
+            "value": "game-battle-repeat",
+            "and": [
+              {
+                "is": "SCREEN",
+                "value": "battle-unit-3_ready"
+              }
+            ]
+          },
+          "actions": [
+            {
+              "type": "MSG",
+              "value": "Setting Up Ayaka"
+            },
+            {
+              "type": "SWIPE_RIGHT",
+              "value": "battle-unit_3"
+            },
+            {
+              "type": "WAIT",
+              "value": "200"
+            },
+            {
+              "type": "SLOW_UP",
+              "value": "battle-skill-top-slider"
+            },
+            {
+              "type": "SLOW_UP",
+              "value": "battle-skill-top-slider"
+            },
+            {
+              "type": "SLOW_UP",
+              "value": "battle-skill-top-slider"
+            },
+            {
+              "type": "SLOW_UP",
+              "value": "battle-skill-top-slider"
+            },
+            {
+              "type": "SLOW_UP",
+              "value": "battle-skill-top-slider"
+            },
+            {
+              "type": "SLOW_UP",
+              "value": "battle-skill-top-slider"
+            },
+            {
+              "type": "SLOW_UP",
+              "value": "battle-skill-top-slider"
+            },
+            {
+              "type": "SLOW_UP",
+              "value": "battle-skill-top-slider"
+            },
+            {
+              "type": "TAP",
+              "value": "battle-skill-top-5"
+            },
+            {
+              "type": "TAP",
+              "value": "battle-unit_3"
+            },
+            {
+              "type": "TAP",
+              "value": "battle-unit_3"
+            },
+            {
+              "type": "WAIT",
+              "value": "3000"
+            },
+            {
+              "type": "REPEAT",
+              "value": ""
+            }
+          ]
+        },
+
+        {
+          "condition": {
+            "is": "SCREEN",
+            "value": "game-battle-repeat",
+            "and": [
+              {
+                "is": "SCREEN",
+                "value": "battle-unit-1_ready"
+              }
+            ]
+          },
+          "actions": [
+            {
+              "type": "MSG",
+              "value": "Setting Up GLS"
+            },
+            {
+              "type": "SWIPE_RIGHT",
+              "value": "battle-unit_1"
+            },
+            {
+              "type": "WAIT",
+              "value": "200"
+            },
+            {
+              "type": "SLOW_UP",
+              "value": "battle-skill-top-slider"
+            },
+            {
+              "type": "SLOW_UP",
+              "value": "battle-skill-top-slider"
+            },
+            {
+              "type": "SLOW_UP",
+              "value": "battle-skill-top-slider"
+            },
+            {
+              "type": "SLOW_UP",
+              "value": "battle-skill-top-slider"
+            },
+            {
+              "type": "SLOW_UP",
+              "value": "battle-skill-top-slider"
+            },
+            {
+              "type": "SLOW_UP",
+              "value": "battle-skill-top-slider"
+            },
+            {
+              "type": "TAP",
+              "value": "battle-skill-top-5"
+            },
+            {
+              "type": "WAIT",
+              "value": "200"
+            },
+            {
+              "type": "TAP",
+              "value": "battle-skill-top-0"
+            },
+            {
+              "type": "TAP",
+              "value": "battle-skill-top-0"
+            }
+          ]
+        },
+
+        {
+          "condition": {
+            "is": "SCREEN",
+            "value": "game-battle-repeat",
+            "and": [
+              {
+                "is": "SCREEN",
+                "value": "battle-unit-4_ready"
+              }
+            ]
+          },
+          "actions": [
+            {
+              "type": "MSG",
+              "value": "Setting Up TT"
+            },
+            {
+              "type": "SWIPE_RIGHT",
+              "value": "battle-unit_4"
+            },
+            {
+              "type": "WAIT",
+              "value": "200"
+            },
+            {
+              "type": "SLOW_UP",
+              "value": "battle-skill-top-slider"
+            },
+            {
+              "type": "SLOW_UP",
+              "value": "battle-skill-top-slider"
+            },
+            {
+              "type": "SLOW_UP",
+              "value": "battle-skill-top-slider"
+            },
+            {
+              "type": "SLOW_UP",
+              "value": "battle-skill-top-slider"
+            },
+            {
+              "type": "SLOW_UP",
+              "value": "battle-skill-top-slider"
+            },
+            {
+              "type": "TAP",
+              "value": "battle-skill-top-5"
+            }
+          ]
+        },
+
+        {
+          "condition": {
+            "is": "SCREEN",
+            "value": "game-battle-repeat",
+            "and": [
+              {
+                "is": "SCREEN",
+                "value": "battle-unit-0_ready"
+              }
+            ]
+          },
+          "actions": [
+            {
+              "type": "MSG",
+              "value": "Setting Up ExAil"
+            },
+            {
+              "type": "SWIPE_RIGHT",
+              "value": "battle-unit_0"
+            },
+            {
+              "type": "WAIT",
+              "value": "200"
+            },
+            {
+              "type": "SLOW_UP",
+              "value": "battle-skill-top-slider"
+            },
+            {
+              "type": "SLOW_UP",
+              "value": "battle-skill-top-slider"
+            },
+            {
+              "type": "SLOW_UP",
+              "value": "battle-skill-top-slider"
+            },
+            {
+              "type": "SLOW_UP",
+              "value": "battle-skill-top-slider"
+            },
+            {
+              "type": "SLOW_UP",
+              "value": "battle-skill-top-slider"
+            },
+            {
+              "type": "SLOW_UP",
+              "value": "battle-skill-top-slider"
+            },
+            {
+              "type": "SLOW_UP",
+              "value": "battle-skill-top-slider"
+            },
+            {
+              "type": "SLOW_UP",
+              "value": "battle-skill-top-slider"
+            },
+            {
+              "type": "TAP",
+              "value": "battle-skill-top-5"
+            }
+          ]
+        },
+
+        {
+          "condition": {
+            "is": "SCREEN",
+            "value": "game-battle-repeat",
+            "and": [
+              {
+                "is": "SCREEN",
+                "value": "battle-unit-2_ready"
+              }
+            ]
+          },
+          "actions": [
+            {
+              "type": "MSG",
+              "value": "Setting Up N"
+            },
+            {
+              "type": "SWIPE_RIGHT",
+              "value": "battle-unit_2"
+            },
+            {
+              "type": "WAIT",
+              "value": "200"
+            },
+            {
+              "type": "SLOW_UP",
+              "value": "battle-skill-top-slider"
+            },
+            {
+              "type": "SLOW_UP",
+              "value": "battle-skill-top-slider"
+            },
+            {
+              "type": "SLOW_UP",
+              "value": "battle-skill-top-slider"
+            },
+            {
+              "type": "SLOW_UP",
+              "value": "battle-skill-top-slider"
+            },
+            {
+              "type": "SLOW_UP",
+              "value": "battle-skill-top-slider"
+            },
+            {
+              "type": "SLOW_UP",
+              "value": "battle-skill-top-slider"
+            },
+            {
+              "type": "SLOW_UP",
+              "value": "battle-skill-top-slider"
+            },
+            {
+              "type": "SLOW_UP",
+              "value": "battle-skill-top-slider"
+            },
+            {
+              "type": "TAP",
+              "value": "battle-skill-top-2"
+            }
+          ]
+        },
+
+        {
+          "condition": {
+            "is": "SCREEN",
+            "value": "game-battle-repeat"
+          },
+          "actions": [
+
+            {
+              "type": "MSG",
+              "value": "Fighting"
+            },
+            {
+              "type": "BATCH",
+              "value": "start"
+            },
+            {
+              "type": "TAP",
+              "value": "battle-unit_4"
+            },
+            {
+              "type": "TAP",
+              "value": "battle-unit_1"
+            },
+            {
+              "type": "TAP",
+              "value": "battle-unit_0"
+            },
+            {
+              "type": "TAP",
+              "value": "battle-unit_2"
+            },
+            {
+              "type": "BATCH",
+              "value": "end"
+            },
+            {
+              "type": "MSG",
+              "value": "Moving to Fight"
+            },
+            {
+              "type": "MOVE",
+              "value": "arena-battle-fight"
+            }
+          ]
+        }
+      ]
+    },
+
+    "arena-battle-fight": {
+      "name": "Arena - Battle - Fight",
+      "includes": [
+        "_common-no_op"
+      ],
+      "statements": [
+
+        {
+          "condition": {
+            "is": "SCREEN",
+            "value": "game-battle-repeat"
+          },
+          "actions": [
+            {
+              "type": "MSG",
+              "value": "Fighting"
+            },
+            {
+              "type": "TAP",
+              "value": "battle-reload"
+            },
+            {
+              "type": "TAP",
+              "value": "battle-unit_3"
+            },
+            {
+              "type": "TAP",
+              "value": "battle-repeat"
+            },
+            {
+              "type": "REPEAT",
+              "value": ""
+            }
+          ]
+        },
+
+        {
+          "condition": {
+          "is": "SCREEN",
+          "value": "game-battle-over"
+          },
+          "actions": [
+            {
+              "type": "MSG",
+              "value": "It's Over, Tapping"
+            },
+            {
+              "type": "TAP",
+              "value": "screen-center"
+            },
+            {
+              "type": "REPEAT",
+              "value": ""
+            }
+          ]
+        },
+
+        {
+          "condition": {
+            "is": "SCREEN",
+            "value": "menu-arena-results"
+          },
+          "actions": [
+            {
+              "type": "MSG",
+              "value": "Tapping OK"
+            },
+            {
+              "type": "TAP",
+              "value": "menu-arena-results-ok"
+            },
+            {
+              "type": "REPEAT",
+              "value": ""
+            }
+          ]
+        },
+
+        {
+          "condition": {
+            "is": "SCREEN",
+            "value": "menu-arena-rank_up"
+          },
+          "actions": [
+            {
+              "type": "MSG",
+              "value": "Tapping OK"
+            },
+            {
+              "type": "TAP",
+              "value": "menu-arena-rank_up-ok"
+            },
+            {
+              "type": "REPEAT",
+              "value": ""
+            }
+          ]
+        },
+
+        {
+          "condition": {
+            "is": "SCREEN",
+            "value": "menu-arena_screen"
+          },
+          "actions": [
+            {
+              "type": "MSG",
+              "value": "Restarting"
+            },
+            {
+              "type": "MOVE",
+              "value": "arena-home"
+            }
+          ]
+        }
+
       ]
     }
 

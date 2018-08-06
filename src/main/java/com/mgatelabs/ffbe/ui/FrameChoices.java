@@ -41,7 +41,7 @@ public class FrameChoices {
     private final Mode mode;
     private final Action action;
 
-    public FrameChoices(String actionId, String modeId, PlayerDefinition playerDefinition, String mapId, String scriptId, String scriptId2, String deviceId, String viewId, String viewId2) {
+    public FrameChoices(String actionId, String modeId, PlayerDefinition playerDefinition, String mapId, String scriptId, String scriptId2, String scriptId3, String deviceId, String viewId, String viewId2) {
         this.playerDefinition = playerDefinition;
 
         switch (modeId) {
@@ -90,8 +90,15 @@ public class FrameChoices {
         if (canScript(action, mode) && scriptId != null) {
             this.scriptDefinition = ScriptDefinition.read(scriptId);
             if (action == Action.RUN && scriptId2 != null && scriptId2.trim().length() > 0) {
-                ScriptDefinition scriptDefinition2 = ScriptDefinition.read(scriptId2);
-                for (Map.Entry<String, StateDefinition> other : scriptDefinition2.getStates().entrySet()) {
+                ScriptDefinition scriptDefinitionOther = ScriptDefinition.read(scriptId2);
+                for (Map.Entry<String, StateDefinition> other : scriptDefinitionOther.getStates().entrySet()) {
+                    this.scriptDefinition.getStates().remove(other.getKey());
+                    this.scriptDefinition.getStates().put(other.getKey(), other.getValue());
+                }
+            }
+            if (action == Action.RUN && scriptId3 != null && scriptId3.trim().length() > 0) {
+                ScriptDefinition scriptDefinitionOther = ScriptDefinition.read(scriptId3);
+                for (Map.Entry<String, StateDefinition> other : scriptDefinitionOther.getStates().entrySet()) {
                     this.scriptDefinition.getStates().remove(other.getKey());
                     this.scriptDefinition.getStates().put(other.getKey(), other.getValue());
                 }

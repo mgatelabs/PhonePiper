@@ -41,8 +41,14 @@ public class ActionDefinition {
             case SWIPE_DOWN: {
                 return "Swipe Down: " + value;
             }
+            case SLOW_DOWN: {
+                return "Slow Down: " + value;
+            }
             case SWIPE_UP: {
                 return "Swipe Up: " + value;
+            }
+            case SLOW_UP: {
+                return "Slow Up: " + value;
             }
             case SWIPE_RIGHT: {
                 return "Swipe Right: " + value;

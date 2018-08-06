@@ -152,7 +152,6 @@ public class AdbShell {
 
         final long startTime = System.nanoTime();
         try {
-            //System.out.println("\n\nWorking On: " + adbCommand);
 
             ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
 

@@ -298,6 +298,13 @@ public class ScriptRunner {
             List<String> tempScreenIds = stateEntry.getValue().determineScreenIds();
             for (String screeId : tempScreenIds) {
                 ScreenDefinition screenDefinition = screens.get(screeId);
+                if (screenDefinition == null) {
+                    System.out.println("Unknown Screen Id: " + screeId);
+                    logger.log(Level.SEVERE, "Unknown Screen Id: " + screeId);
+                } else if (screenDefinition.getPoints() == null) {
+                    System.out.println("Bad Screen Id: " + screeId);
+                    logger.log(Level.SEVERE, "Bad Screen Id: " + screeId);
+                }
                 if (!screenDefinition.isEnabled() || screenDefinition.getPoints() == null || screenDefinition.getPoints().isEmpty()) {
                     logger.log(Level.SEVERE, "Disabled Screen: " + screenDefinition.getScreenId() + " for state: " + stateEntry.getValue().getId());
                     continue;
@@ -608,7 +615,9 @@ public class ScriptRunner {
                         break;
                         case TAP:
                         case SWIPE_DOWN:
+                        case SLOW_DOWN:
                         case SWIPE_UP:
+                        case SLOW_UP:
                         case SWIPE_LEFT:
                         case SWIPE_RIGHT: {
                             ComponentDefinition componentDefinition = components.get(actionDefinition.getValue());
@@ -778,6 +787,17 @@ public class ScriptRunner {
             result = false;
         }
 
+        // If we succeed, but have a ANDOR, check the ORs
+        if (result && !conditionDefinition.getAndOr().isEmpty()) {
+            result = false; // force failure
+            for (ConditionDefinition sub : conditionDefinition.getAndOr()) {
+                if (check(sub, imageWrapper)) {
+                    result = true;
+                    break;
+                }
+            }
+        }
+
         // If we failed, but have a OR, check the OR
         if (!result && !conditionDefinition.getOr().isEmpty()) {
             for (ConditionDefinition sub : conditionDefinition.getOr()) {
@@ -876,7 +896,9 @@ public class ScriptRunner {
     public void pressComponent(String componentId, ActionType actionType) {
         switch (actionType) {
             case SWIPE_UP:
+            case SLOW_UP:
             case SWIPE_DOWN:
+            case SLOW_DOWN:
             case SWIPE_LEFT:
             case SWIPE_RIGHT:
             case TAP: {

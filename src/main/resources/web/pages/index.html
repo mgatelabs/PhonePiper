@@ -45,6 +45,7 @@
             var view2 = $('#view2');
             var script1 = $('#script1');
             var script2 = $('#script2');
+            var script3 = $('#script3');
             var statusName = $('#statusName');
 
             var logs = $('#logs');
@@ -95,6 +96,10 @@
 
             script1.change(function(){
                 script2.prop('disabled', !script1.val());
+            });
+
+            script2.change(function(){
+                script3.prop('disabled', !script1.val());
             });
 
             function createGroup(name, field, button) {
@@ -384,6 +389,7 @@
                     view2: view2.val(),
                     script: script1.val(),
                     script2: script2.val(),
+                    script3: script3.val()
                 };
                 $.ajax({
                   type: "POST",
@@ -410,6 +416,7 @@
                     view2: view2.val(),
                     script: script1.val(),
                     script2: script2.val(),
+                    script3: script3.val()
                 };
                 $.ajax({
                   type: "POST",
@@ -441,6 +448,7 @@
                     populateSelect(view2, data.views || []);
                     populateSelect(script1, data.scripts || []);
                     populateSelect(script2, data.scripts || []);
+                    populateSelect(script3, data.scripts || []);
                   }
                 });
 
@@ -547,6 +555,13 @@
                         <span class="input-group-text">Extra Script</span>
                     </div>
                     <select class="form-control" id="script2" disabled></select>
+                </div>
+                <br/>
+                <div class="input-group">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text">Extra Script</span>
+                    </div>
+                    <select class="form-control" id="script3" disabled></select>
                 </div>
                 <br/>
                 <div class="form-group">

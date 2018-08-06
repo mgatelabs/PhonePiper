@@ -35,6 +35,21 @@
     "points" : [ ],
     "enabled" : false
   }, {
+    "name" : "Battle - Unit - 2 Ready",
+    "screenId" : "battle-unit-2_ready",
+    "points" : [ ],
+    "enabled" : false
+  }, {
+    "name" : "Battle - Unit - 3 Ready",
+    "screenId" : "battle-unit-3_ready",
+    "points" : [ ],
+    "enabled" : false
+  }, {
+    "name" : "Battle - Unit - 4 Ready",
+    "screenId" : "battle-unit-4_ready",
+    "points" : [ ],
+    "enabled" : false
+  }, {
     "name" : "Dungeon - Message",
     "screenId" : "dungeon-message",
     "points" : [ ],
@@ -77,6 +92,21 @@
   }, {
     "name" : "Game - Battle - Repeat",
     "screenId" : "game-battle-repeat",
+    "points" : [ ],
+    "enabled" : false
+  }, {
+    "name" : "Game - Battle - Over",
+    "screenId" : "game-battle-over",
+    "points" : [ ],
+    "enabled" : false
+  }, {
+    "name" : "Menu - Arena - Results",
+    "screenId" : "menu-arena-results",
+    "points" : [ ],
+    "enabled" : false
+  }, {
+    "name" : "Menu - Arena - Rank Up",
+    "screenId" : "menu-arena-rank_up",
     "points" : [ ],
     "enabled" : false
   }, {
@@ -213,6 +243,36 @@
   }, {
     "name" : "Menu - Raid Screen",
     "screenId" : "menu-raid_screen",
+    "points" : [ ],
+    "enabled" : false
+  }, {
+    "name" : "Menu - Arena Screen",
+    "screenId" : "menu-arena_screen",
+    "points" : [ ],
+    "enabled" : false
+  }, {
+    "name" : "Menu - Arena - Rules",
+    "screenId" : "menu-arena-rules",
+    "points" : [ ],
+    "enabled" : false
+  }, {
+    "name" : "Menu - Arena - Begin",
+    "screenId" : "menu-arena-begin",
+    "points" : [ ],
+    "enabled" : false
+  }, {
+    "name" : "Menu - Arena - Opponent Select",
+    "screenId" : "menu-arena-opponent_select",
+    "points" : [ ],
+    "enabled" : false
+  }, {
+    "name" : "Menu - Arena - Confirm Select",
+    "screenId" : "menu-arena-confirm_select",
+    "points" : [ ],
+    "enabled" : false
+  }, {
+    "name" : "Menu - Arena Orbs",
+    "screenId" : "menu-arena-orbs",
     "points" : [ ],
     "enabled" : false
   }, {
@@ -379,8 +439,72 @@
     "h" : 73,
     "enabled" : false
   }, {
-    "name" : "battle-skill-bottom-left",
+    "name" : "Battle - Reload",
+    "componentId" : "battle-reload",
+    "x" : 294,
+    "y" : 1815,
+    "w" : 214,
+    "h" : 73,
+    "enabled" : false
+  }, {
     "componentId" : "battle-skill-bottom-left",
+    "name" : "Battle - Skill (Bottom) - Left",
+    "x" : 0,
+    "y" : 0,
+    "w" : 1,
+    "h" : 1,
+    "enabled" : false
+  }, {
+    "componentId" : "battle-skill-top-0",
+    "name" : "Battle - Skill (Top) - 0",
+    "x" : 0,
+    "y" : 0,
+    "w" : 1,
+    "h" : 1,
+    "enabled" : false
+  }, {
+    "componentId" : "battle-skill-top-1",
+    "name" : "Battle - Skill (Top) - 1",
+    "x" : 0,
+    "y" : 0,
+    "w" : 1,
+    "h" : 1,
+    "enabled" : false
+  }, {
+    "componentId" : "battle-skill-top-slider",
+    "name" : "Battle - Skill (Top) - Slider",
+    "x" : 0,
+    "y" : 0,
+    "w" : 1,
+    "h" : 1,
+    "enabled" : false
+  }, {
+    "componentId" : "battle-skill-top-2",
+    "name" : "Battle - Skill (Top) - 2",
+    "x" : 0,
+    "y" : 0,
+    "w" : 1,
+    "h" : 1,
+    "enabled" : false
+  }, {
+    "componentId" : "battle-skill-top-3",
+    "name" : "Battle - Skill (Top) - 3",
+    "x" : 0,
+    "y" : 0,
+    "w" : 1,
+    "h" : 1,
+    "enabled" : false
+  }, {
+    "componentId" : "battle-skill-top-4",
+    "name" : "Battle - Skill (Top) - 4",
+    "x" : 0,
+    "y" : 0,
+    "w" : 1,
+    "h" : 1,
+    "enabled" : false
+  }, {
+    "componentId" : "battle-skill-top-5",
+    "name" : "Battle - Skill (Top) - 5",
     "x" : 0,
     "y" : 0,
     "w" : 1,
@@ -627,6 +751,14 @@
     "h" : 1,
     "enabled" : false
   }, {
+    "name" : "Menu - Home Arena",
+    "componentId" : "menu-home-arena",
+    "x" : 0,
+    "y" : 0,
+    "w" : 1,
+    "h" : 1,
+    "enabled" : false
+  }, {
     "name" : "Menu - Island Grandshelt",
     "componentId" : "menu-island-grandshelt",
     "x" : 0,
@@ -725,6 +857,62 @@
   }, {
     "name" : "Menu - Raid Level 0 (Top)",
     "componentId" : "menu-raid_0",
+    "x" : 0,
+    "y" : 0,
+    "w" : 1,
+    "h" : 1,
+    "enabled" : false
+  }, {
+    "name" : "Menu - Arena - Setup",
+    "componentId" : "menu-arena-setup",
+    "x" : 0,
+    "y" : 0,
+    "w" : 1,
+    "h" : 1,
+    "enabled" : false
+  }, {
+    "name" : "Menu - Arena - Begin",
+    "componentId" : "menu-arena-begin",
+    "x" : 0,
+    "y" : 0,
+    "w" : 1,
+    "h" : 1,
+    "enabled" : false
+  }, {
+    "name" : "Menu - Arena - Results - OK",
+    "componentId" : "menu-arena-results-ok",
+    "x" : 0,
+    "y" : 0,
+    "w" : 1,
+    "h" : 1,
+    "enabled" : false
+  }, {
+    "name" : "Menu - Arena - Rank Up - OK",
+    "componentId" : "menu-arena-rank_up-ok",
+    "x" : 0,
+    "y" : 0,
+    "w" : 1,
+    "h" : 1,
+    "enabled" : false
+  }, {
+    "name" : "Menu - Arena - 1st Opponent",
+    "componentId" : "menu-arena-opponent_first",
+    "x" : 0,
+    "y" : 0,
+    "w" : 1,
+    "h" : 1,
+    "enabled" : false
+  }, {
+    "name" : "Menu - Arena - Opponent Confirm - Yes",
+    "componentId" : "menu-arena-opponent_confirm-yes",
+    "x" : 0,
+    "y" : 0,
+    "w" : 1,
+    "h" : 1,
+    "enabled" : false
+  }, {
+    "name" : "Menu - Arena - OK",
+    "componentId" : "menu-arena-ok",
     "x" : 0,
     "y" : 0,
     "w" : 1,

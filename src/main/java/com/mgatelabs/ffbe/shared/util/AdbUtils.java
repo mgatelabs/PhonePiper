@@ -48,6 +48,16 @@ public class AdbUtils {
                 cmd = ("input swipe " + x1 + " " + y1 + " " + x2 + " " + y2 + " " + time);
             }
             break;
+            case SLOW_DOWN:
+            case SLOW_UP: {
+                final int x1 = getStartX(componentDefinition, type);
+                final int y1 = getStartY(componentDefinition, type);
+                final int x2 = getEndX(deviceDefinition, componentDefinition, type);
+                final int y2 = getEndY(deviceDefinition, componentDefinition, type);
+                final int time = 2000;
+                cmd = ("input swipe " + x1 + " " + y1 + " " + x2 + " " + y2 + " " + time);
+            }
+            break;
             default: {
                 System.out.println("Unhandled component command: " + type.name());
             }
@@ -104,6 +114,8 @@ public class AdbUtils {
             }
             break;
             case SWIPE_UP:
+            case SLOW_UP:
+            case SLOW_DOWN:
             case SWIPE_DOWN: {
                 x += componentDefinition.getW() / 2;
             }
@@ -134,8 +146,15 @@ public class AdbUtils {
     private static int getStartY(ComponentDefinition componentDefinition, ActionType type) {
         int y = componentDefinition.getY();
         switch (type) {
+            case SLOW_UP: {
+                y += (componentDefinition.getH());
+            } break;
             case SWIPE_UP: {
                 y += (componentDefinition.getH() - (componentDefinition.getH() / 8));
+            }
+            break;
+            case SLOW_DOWN:{
+                y += 0;
             }
             break;
             case SWIPE_DOWN: {
@@ -158,8 +177,14 @@ public class AdbUtils {
     private static int getEndY(DeviceDefinition deviceDefinition, ComponentDefinition componentDefinition, ActionType type) {
         int y = componentDefinition.getY();
         switch (type) {
+            case SLOW_DOWN:{
+                return least(deviceDefinition.getHeight(), y + (componentDefinition.getH()));
+            }
             case SWIPE_DOWN: {
                 return least(deviceDefinition.getHeight(), y + (componentDefinition.getH() * 2));
+            }
+            case SLOW_UP: {
+                return greater(0, y);
             }
             case SWIPE_UP: {
                 return greater(0, y - (componentDefinition.getH() * 2));

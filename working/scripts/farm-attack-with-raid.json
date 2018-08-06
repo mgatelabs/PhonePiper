@@ -1327,7 +1327,7 @@
         },{
           "condition": {
             "is": "SCREEN",
-            "value": "menu-raid_screen",
+            "value": "menu-arena_screen",
             "and": [
               {
                 "not": "SCREEN",

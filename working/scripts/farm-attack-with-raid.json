@@ -1338,7 +1338,7 @@
           "actions": [
             {
               "type": "MSG",
-              "value": "Out of Orbs, Resuming farming"
+              "value": "Out of Orbs, Resuming home"
             },
             {
               "type": "MOVE",

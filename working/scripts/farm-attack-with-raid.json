@@ -524,7 +524,7 @@
           "actions": [
             {
               "type": "MSG",
-              "value": "Out of Orbs, Resuming farming"
+              "value": "Out of Orbs, going home"
             },
             {
               "type": "MOVE",
@@ -710,6 +710,52 @@
       ]
     },
 
+    "_home_daily_fixes": {
+      "name": "Home - Daily Fixes",
+      "statements": [
+        {
+          "condition": {
+            "is": "SCREEN",
+            "value": "menu-home-daily"
+          },
+          "actions": [
+            {
+              "type": "MSG",
+              "value": "Found Daily Login Reward, Claiming"
+            },
+            {
+              "type": "TAP",
+              "value": "menu-home-daily-claim"
+            },
+            {
+              "type": "REPEAT",
+              "value": ""
+            }
+          ]
+        },
+        {
+          "condition": {
+            "is": "SCREEN",
+            "value": "menu-home-login_bonus"
+          },
+          "actions": [
+            {
+              "type": "MSG",
+              "value": "Found Login Bonus, OK"
+            },
+            {
+              "type": "TAP",
+              "value": "menu-home-login_bonus-ok"
+            },
+            {
+              "type": "REPEAT",
+              "value": ""
+            }
+          ]
+        }
+      ]
+    },
+
     "_raid-to_home": {
       "name": "To Raid Screen",
       "statements": [
@@ -735,6 +781,7 @@
     "home_to_raid": {
       "name": "Home - To Raid",
       "includes": [
+        "_home_daily_fixes",
         "_common-vtx-items",
         "_common-no_op"
       ],
@@ -790,6 +837,7 @@
     "home_to_arena": {
       "name": "Home - To Arena",
       "includes": [
+        "_home_daily_fixes",
         "_common-no_op"
       ],
       "statements": [
@@ -844,6 +892,7 @@
     "home_to_farm": {
       "name": "Home - To Farm",
       "includes": [
+        "_home_daily_fixes",
         "_es-to_menu",
         "_common-no_op"
       ],
@@ -1028,6 +1077,10 @@
 
     "farm_to_home": {
       "name": "Farm - To Home",
+      "includes": [
+        "_home_daily_fixes",
+        "_backup_to_home"
+      ],
       "statements": [
         {
           "condition": {
@@ -1065,40 +1118,16 @@
               "value": "home_to_arena"
             }
           ]
-        }, {
-          "condition": {
-            "not": "SCREEN",
-            "value": "menu-home"
-          },
-          "actions": [
-            {
-              "type": "MSG",
-              "value": "Backing Up"
-            },
-            {
-              "type": "SET",
-              "var": "_loops",
-              "value": "0"
-            },
-            {
-              "type": "EVENT",
-              "value": "back"
-            },
-            {
-              "type": "WAIT",
-              "value": "5000"
-            },
-            {
-              "type": "REPEAT",
-              "value": ""
-            }
-          ]
         }
       ]
     },
 
     "raid_to_home": {
       "name": "Raid - To Home",
+      "includes": [
+        "_home_daily_fixes",
+        "_backup_to_home"
+      ],
       "statements": [
         {
           "condition": {
@@ -1129,7 +1158,13 @@
               "value": "home_to_farm"
             }
           ]
-        },
+        }
+      ]
+    },
+
+    "_backup_to_home": {
+      "name": "Backup to Home",
+      "statements": [
         {
           "condition": {
             "not": "SCREEN",
@@ -1164,6 +1199,10 @@
 
     "arena_to_home": {
       "name": "Arena - To Home",
+      "includes": [
+        "_home_daily_fixes",
+        "_backup_to_home"
+      ],
       "statements": [
         {
           "condition": {
@@ -1174,35 +1213,6 @@
             {
               "type": "MOVE",
               "value": "home_to_farm"
-            }
-          ]
-        },
-        {
-          "condition": {
-            "not": "SCREEN",
-            "value": "menu-home"
-          },
-          "actions": [
-            {
-              "type": "MSG",
-              "value": "Backing Up"
-            },
-            {
-              "type": "SET",
-              "var": "_loops",
-              "value": "0"
-            },
-            {
-              "type": "EVENT",
-              "value": "back"
-            },
-            {
-              "type": "WAIT",
-              "value": "5000"
-            },
-            {
-              "type": "REPEAT",
-              "value": ""
             }
           ]
         }

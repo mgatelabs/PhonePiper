@@ -1103,6 +1103,24 @@
         {
           "condition": {
             "is": "SCREEN",
+            "value": "menu-home",
+            "and": [
+              {
+                "is": "EQUAL",
+                "value": "1",
+                "var": "allow-arena"
+              }
+            ]
+          },
+          "actions": [
+            {
+              "type": "MOVE",
+              "value": "home_to_arena"
+            }
+          ]
+        },{
+          "condition": {
+            "is": "SCREEN",
             "value": "menu-home"
           },
           "actions": [

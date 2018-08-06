@@ -472,7 +472,7 @@
     },
 
     "raid-home": {
-      "name": "Raid - Home",
+      "name": "Raid - Menu",
       "includes": [
         "_common-ml-goals",
         "_common-ml-friend_0",
@@ -1318,7 +1318,7 @@
     },
 
     "arena-home": {
-      "name": "Arena - Home",
+      "name": "Arena - Menu",
       "includes": [
         "_common-no_op"
       ],

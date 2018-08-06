@@ -130,6 +130,11 @@
     "points" : [ ],
     "enabled" : false
   }, {
+    "name" : "menu-arena-rewards",
+    "screenId" : "menu-arena-rewards",
+    "points" : [ ],
+    "enabled" : false
+  }, {
     "name" : "Menu - Arena - Rules",
     "screenId" : "menu-arena-rules",
     "points" : [ ],
@@ -651,6 +656,14 @@
   }, {
     "name" : "Menu - Arena - Results - OK",
     "componentId" : "menu-arena-results-ok",
+    "x" : 0,
+    "y" : 0,
+    "w" : 1,
+    "h" : 1,
+    "enabled" : false
+  }, {
+    "name" : "menu-arena-rewards-ok",
+    "componentId" : "menu-arena-rewards-ok",
     "x" : 0,
     "y" : 0,
     "w" : 1,

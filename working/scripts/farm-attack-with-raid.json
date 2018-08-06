@@ -1888,6 +1888,27 @@
 
         {
           "condition": {
+            "is": "SCREEN",
+            "value": "menu-arena-rewards"
+          },
+          "actions": [
+            {
+              "type": "MSG",
+              "value": "Reward found - OK"
+            },
+            {
+              "type": "TAP",
+              "value": "menu-arena-rewards-ok"
+            },
+            {
+              "type": "REPEAT",
+              "value": ""
+            }
+          ]
+        },
+
+        {
+          "condition": {
           "is": "SCREEN",
           "value": "game-battle-over"
           },

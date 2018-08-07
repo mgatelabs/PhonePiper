@@ -1636,7 +1636,17 @@
         {
           "condition": {
             "is": "SCREEN",
-            "value": "menu-arena_screen"
+            "value": "menu-arena_screen",
+            "or": [
+              {
+                "is": "SCREEN",
+                "value": "menu-arena_screen-friends"
+              },
+              {
+                "is": "SCREEN",
+                "value": "menu-arena_screen-top"
+              }
+            ]
           },
           "actions": [
             {

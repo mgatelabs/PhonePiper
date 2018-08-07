@@ -101,6 +101,11 @@
               "value": "units-select_base-choose"
             },
             {
+              "type": "SET",
+              "var": "_loops",
+              "value": "0"
+            },
+            {
               "type": "REPEAT",
               "value": ""
             }

@@ -6,7 +6,7 @@
   "states": {
 
     "raid-battle": {
-      "name": "Raid - Battle",
+      "name": "Raid - Battle (Override)",
       "includes": [
         "_raid_battle-auto",
         "_raid-battle-message",
@@ -16,7 +16,7 @@
     },
 
     "_raid_battle-auto":{
-      "name": "Raid Battle - Auto",
+      "name": "Raid Battle - Auto (Override)",
       "statements": [
         {
           "condition": {

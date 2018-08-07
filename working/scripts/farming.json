@@ -1483,6 +1483,11 @@
               "value": "Battle Started"
             },
             {
+              "type": "SET",
+              "var": "_loops",
+              "value": "0"
+            },
+            {
               "type": "MOVE",
               "value": "arena-battle-setup"
             }

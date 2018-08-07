@@ -145,6 +145,16 @@
     "points" : [ ],
     "enabled" : false
   }, {
+    "name" : "Menu - Arena Screen (Friends)",
+    "screenId" : "menu-arena_screen-friends",
+    "points" : [ ],
+    "enabled" : false
+  }, {
+    "name" : "Menu - Arena Screen (Top)",
+    "screenId" : "menu-arena_screen-top",
+    "points" : [ ],
+    "enabled" : false
+  }, {
     "name" : "Menu - Capacity",
     "screenId" : "menu-capacity",
     "points" : [ ],

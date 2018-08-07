@@ -137,6 +137,12 @@ public class ConditionDefinition {
             }
         }
 
+        if (andOr != null) {
+            for (ConditionDefinition conditionDefinition : andOr) {
+                screenIds.addAll(conditionDefinition.determineScreenIds());
+            }
+        }
+
         return screenIds;
     }
 

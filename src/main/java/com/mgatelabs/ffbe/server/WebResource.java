@@ -399,7 +399,7 @@ public class WebResource {
 
         thread = null;
 
-        frameChoices = new FrameChoices(Constants.ACTION_RUN, Constants.MODE_SCRIPT, playerDefinition, "", values.get("script"), values.get("script2"), null, values.get("device"), values.get("view"), values.get("view2"));
+        frameChoices = new FrameChoices(Constants.ACTION_RUN, Constants.MODE_SCRIPT, playerDefinition, "", values.get("script"), values.get("script2"), values.get("script3"), values.get("device"), values.get("view"), values.get("view2"));
 
         if (frameChoices.isValid()) {
             final PrepResult result = new PrepResult(StatusEnum.OK);
@@ -431,7 +431,7 @@ public class WebResource {
 
         thread = null;
 
-        frameChoices = new FrameChoices(Constants.ACTION_EDIT, Constants.MODE_VIEW, playerDefinition, "", values.get("script"), values.get("script2"), null, values.get("device"), values.get("view"), values.get("view2"));
+        frameChoices = new FrameChoices(Constants.ACTION_EDIT, Constants.MODE_VIEW, playerDefinition, "", values.get("script"), values.get("script2"), values.get("script3"), values.get("device"), values.get("view"), values.get("view2"));
 
         if (frameChoices.isValid()) {
             final PrepResult result = new PrepResult(StatusEnum.OK);

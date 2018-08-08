@@ -976,24 +976,64 @@
               "value": "0"
             },
             {
-              "type": "SWIPE_RIGHT",
-              "value": "screen-center"
+              "type": "SLOW_RIGHT",
+              "value": "screen-center-large"
             },
             {
-              "type": "SWIPE_DOWN",
-              "value": "screen-center"
+              "type": "SLOW_RIGHT",
+              "value": "screen-center-large"
             },
             {
-              "type": "WAIT",
-              "value": "5000"
+              "type": "SLOW_RIGHT",
+              "value": "screen-center-large"
             },
             {
-              "type": "SWIPE_LEFT",
-              "value": "menu-island-grandshelt_isles"
+              "type": "SLOW_RIGHT",
+              "value": "screen-center-large"
             },
             {
-              "type": "WAIT",
-              "value": "5000"
+              "type": "SLOW_RIGHT",
+              "value": "screen-center-large"
+            },
+            {
+              "type": "SLOW_RIGHT",
+              "value": "screen-center-large"
+            },
+            {
+              "type": "SLOW_RIGHT",
+              "value": "screen-center-large"
+            },
+            {
+              "type": "SLOW_RIGHT",
+              "value": "screen-center-large"
+            },
+            {
+              "type": "SLOW_RIGHT",
+              "value": "screen-center-large"
+            },
+            {
+              "type": "SLOW_DOWN",
+              "value": "screen-center-large"
+            },
+            {
+              "type": "SLOW_DOWN",
+              "value": "screen-center-large"
+            },
+            {
+              "type": "SLOW_LEFT",
+              "value": "screen-center-large"
+            },
+            {
+              "type": "SLOW_LEFT",
+              "value": "screen-center-large"
+            },
+            {
+              "type": "SLOW_LEFT",
+              "value": "screen-center-large"
+            },
+            {
+              "type": "SLOW_LEFT",
+              "value": "screen-center-large"
             },
             {
               "type": "MSG",

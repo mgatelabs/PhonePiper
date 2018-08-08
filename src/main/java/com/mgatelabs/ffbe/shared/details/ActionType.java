@@ -11,6 +11,8 @@ public enum ActionType {
     SWIPE_RIGHT(ActionValueType.COMPONENT_ID, false), // Swipe
     SWIPE_DOWN(ActionValueType.COMPONENT_ID, false), // Swipe
     SLOW_DOWN(ActionValueType.COMPONENT_ID, false), // Swipe
+    SLOW_RIGHT(ActionValueType.COMPONENT_ID, false), // Swipe
+    SLOW_LEFT(ActionValueType.COMPONENT_ID, false), // Swipe
     SWIPE_LEFT(ActionValueType.COMPONENT_ID, false), // Swipe
     REPEAT(ActionValueType.NONE, false),
     SWAP(ActionValueType.STATE_ID, false), // Move to a new state, without taking a new image

@@ -1048,6 +1048,30 @@
     "h" : 855,
     "enabled" : false
   }, {
+    "name" : "Screen - Center - Small",
+    "componentId" : "screen-center-small",
+    "x" : 515,
+    "y" : 935,
+    "w" : 50,
+    "h" : 50,
+    "enabled" : false
+  }, {
+    "name" : "Screen - Center - Medium",
+    "componentId" : "screen-center-medium",
+    "x" : 490,
+    "y" : 910,
+    "w" : 100,
+    "h" : 100,
+    "enabled" : false
+  }, {
+    "name" : "Screen - Center - Large",
+    "componentId" : "screen-center-large",
+    "x" : 440,
+    "y" : 860,
+    "w" : 200,
+    "h" : 200,
+    "enabled" : false
+  }, {
     "name" : "units-enhance_units-back",
     "componentId" : "units-enhance_units-back",
     "x" : 0,

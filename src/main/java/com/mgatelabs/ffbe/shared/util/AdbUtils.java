@@ -49,7 +49,9 @@ public class AdbUtils {
             }
             break;
             case SLOW_DOWN:
-            case SLOW_UP: {
+            case SLOW_UP:
+            case SLOW_LEFT:
+            case SLOW_RIGHT: {
                 final int x1 = getStartX(componentDefinition, type);
                 final int y1 = getStartY(componentDefinition, type);
                 final int x2 = getEndX(deviceDefinition, componentDefinition, type);
@@ -109,8 +111,16 @@ public class AdbUtils {
                 x += (componentDefinition.getW() - (componentDefinition.getW() / 8));
             }
             break;
+            case SLOW_LEFT: {
+                x += (componentDefinition.getW());
+            }
+            break;
             case SWIPE_RIGHT: {
                 x += (componentDefinition.getW() / 8);
+            }
+            break;
+            case SLOW_RIGHT: {
+                x += 0;
             }
             break;
             case SWIPE_UP:
@@ -137,6 +147,12 @@ public class AdbUtils {
             case SWIPE_LEFT: {
                 return greater(0, x - (componentDefinition.getW()));
             }
+            case SLOW_RIGHT: {
+                return least(deviceDefinition.getWidth(), x + componentDefinition.getW());
+            }
+            case SLOW_LEFT: {
+                return greater(0, x);
+            }
             default: {
                 return getStartX(componentDefinition, type);
             }
@@ -148,12 +164,13 @@ public class AdbUtils {
         switch (type) {
             case SLOW_UP: {
                 y += (componentDefinition.getH());
-            } break;
+            }
+            break;
             case SWIPE_UP: {
                 y += (componentDefinition.getH() - (componentDefinition.getH() / 8));
             }
             break;
-            case SLOW_DOWN:{
+            case SLOW_DOWN: {
                 y += 0;
             }
             break;
@@ -161,6 +178,8 @@ public class AdbUtils {
                 y += (componentDefinition.getH() / 8);
             }
             break;
+            case SLOW_LEFT:
+            case SLOW_RIGHT:
             case SWIPE_LEFT:
             case SWIPE_RIGHT: {
                 y += componentDefinition.getH() / 2;
@@ -177,7 +196,7 @@ public class AdbUtils {
     private static int getEndY(DeviceDefinition deviceDefinition, ComponentDefinition componentDefinition, ActionType type) {
         int y = componentDefinition.getY();
         switch (type) {
-            case SLOW_DOWN:{
+            case SLOW_DOWN: {
                 return least(deviceDefinition.getHeight(), y + (componentDefinition.getH()));
             }
             case SWIPE_DOWN: {
@@ -233,7 +252,7 @@ public class AdbUtils {
         return null;
     }
 
-    public static ImageWrapper getScreenFrom(byte [] bytes) {
+    public static ImageWrapper getScreenFrom(byte[] bytes) {
         try {
             int w, h;
             if (bytes.length > 12) { // Sanity

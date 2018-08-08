@@ -616,6 +616,8 @@ public class ScriptRunner {
                         case TAP:
                         case SWIPE_DOWN:
                         case SLOW_DOWN:
+                        case SLOW_LEFT:
+                        case SLOW_RIGHT:
                         case SWIPE_UP:
                         case SLOW_UP:
                         case SWIPE_LEFT:
@@ -899,6 +901,8 @@ public class ScriptRunner {
             case SLOW_UP:
             case SWIPE_DOWN:
             case SLOW_DOWN:
+            case SLOW_LEFT:
+            case SLOW_RIGHT:
             case SWIPE_LEFT:
             case SWIPE_RIGHT:
             case TAP: {

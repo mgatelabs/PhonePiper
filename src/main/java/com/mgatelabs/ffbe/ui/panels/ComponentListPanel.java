@@ -442,11 +442,33 @@ public class ComponentListPanel extends JInternalFrame {
         }
 
         {
+            JMenuItem swipeLeftMenuItem = new JMenuItem("Swipe Left (Slow)");
+            swipeLeftMenuItem.addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    AdbUtils.component(deviceDefinition, selectedItem, ActionType.SLOW_LEFT, shell, false);
+                }
+            });
+            testMenu.add(swipeLeftMenuItem);
+        }
+
+        {
             JMenuItem swipeRightMenuItem = new JMenuItem("Swipe Right");
             swipeRightMenuItem.addActionListener(new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent e) {
                     AdbUtils.component(deviceDefinition, selectedItem, ActionType.SWIPE_RIGHT, shell, false);
+                }
+            });
+            testMenu.add(swipeRightMenuItem);
+        }
+
+        {
+            JMenuItem swipeRightMenuItem = new JMenuItem("Swipe Right (Slow)");
+            swipeRightMenuItem.addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    AdbUtils.component(deviceDefinition, selectedItem, ActionType.SLOW_RIGHT, shell, false);
                 }
             });
             testMenu.add(swipeRightMenuItem);

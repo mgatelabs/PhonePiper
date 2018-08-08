@@ -11242,10 +11242,10 @@
   }, {
     "name" : "Menu - location-earthshrine",
     "componentId" : "menu-location-earthshrine",
-    "x" : 641,
-    "y" : 1440,
-    "w" : 83,
-    "h" : 81,
+    "x" : 657,
+    "y" : 1406,
+    "w" : 52,
+    "h" : 52,
     "enabled" : true
   }, {
     "name" : "Battle - Unit 4",
@@ -11552,6 +11552,14 @@
     "h" : 79,
     "enabled" : true
   }, {
+    "name" : "Screen - Center - Large",
+    "componentId" : "screen-center-large",
+    "x" : 440,
+    "y" : 860,
+    "w" : 200,
+    "h" : 200,
+    "enabled" : true
+  }, {
     "name" : "Menu - Connection Error - OK",
     "componentId" : "menu-connection_error-ok",
     "x" : 401,
@@ -11592,6 +11600,14 @@
     "h" : 78,
     "enabled" : true
   }, {
+    "name" : "Screen - Center - Medium",
+    "componentId" : "screen-center-medium",
+    "x" : 490,
+    "y" : 910,
+    "w" : 100,
+    "h" : 100,
+    "enabled" : true
+  }, {
     "name" : "Menu - Depart - Depart",
     "componentId" : "menu-depart-depart",
     "x" : 335,
@@ -11606,6 +11622,14 @@
     "y" : 1512,
     "w" : 142,
     "h" : 105,
+    "enabled" : true
+  }, {
+    "name" : "Screen - Center - Small",
+    "componentId" : "screen-center-small",
+    "x" : 515,
+    "y" : 935,
+    "w" : 50,
+    "h" : 50,
     "enabled" : true
   }, {
     "name" : "OS - App - Icon",

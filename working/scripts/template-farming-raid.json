@@ -49,40 +49,36 @@
               "value": "battle-unit_0"
             },
             {
-              "type": "SWIPE_UP",
-              "value": "battle-unit_0"
+              "type": "WAIT",
+              "value": "200"
             },
             {
-              "type": "SWIPE_UP",
-              "value": "battle-unit_0"
+              "type": "SLOW_UP",
+              "value": "battle-skill-top-slider"
             },
             {
-              "type": "SWIPE_UP",
-              "value": "battle-unit_0"
+              "type": "SLOW_UP",
+              "value": "battle-skill-top-slider"
             },
             {
-              "type": "SWIPE_UP",
-              "value": "battle-unit_0"
+              "type": "SLOW_UP",
+              "value": "battle-skill-top-slider"
             },
             {
-              "type": "SWIPE_UP",
-              "value": "battle-unit_0"
+              "type": "SLOW_UP",
+              "value": "battle-skill-top-slider"
             },
             {
-              "type": "SWIPE_UP",
-              "value": "battle-unit_0"
-            },
-            {
-              "type": "SWIPE_UP",
-              "value": "battle-unit_0"
-            },
-            {
-              "type": "SWIPE_UP",
-              "value": "battle-unit_0"
+              "type": "SLOW_UP",
+              "value": "battle-skill-top-slider"
             },
             {
               "type": "TAP",
-              "value": "battle-skill-bottom-left"
+              "value": "battle-skill-top-2"
+            },
+            {
+              "type": "WAIT",
+              "value": "200"
             },
             {
               "type": "TAP",

@@ -143,6 +143,16 @@ public class ScriptRunner {
             }
         }
 
+        scriptDefinition.getVars().sort(new Comparator<VarDefinition>() {
+            @Override
+            public int compare(VarDefinition o1, VarDefinition o2) {
+                if (o1.getOrder() == o2.getOrder()) {
+                    return o1.getName().compareTo(o2.getName());
+                }
+                return Integer.compare(o1.getOrder(), o2.getOrder());
+            }
+        });
+
         logger.finer("Extracting Screens");
 
         screens = Maps.newHashMap();
@@ -822,7 +832,7 @@ public class ScriptRunner {
                 case VISIBLE:
                 case EDITABLE: {
                     if (varDefinition.getType() == VarType.INT || varDefinition.getType() == VarType.TIMER) {
-                        vars.add(new VarDefinition(varDefinition.getName(), varDefinition.getDisplay(), Integer.toString(getVar(varDefinition.getName())), varDefinition.getType(), varDefinition.getDisplayType(), varDefinition.getModify()));
+                        vars.add(new VarDefinition(varDefinition.getName(), varDefinition.getDisplay(), Integer.toString(getVar(varDefinition.getName())), varDefinition.getType(), varDefinition.getDisplayType(), varDefinition.getModify(), varDefinition.getOrder()));
                     }
                 }
                 break;
@@ -840,9 +850,9 @@ public class ScriptRunner {
                 case VISIBLE:
                 case EDITABLE: {
                     if (varDefinition.getType() == VarType.INT) {
-                        vars.add(new VarDefinition(varDefinition.getName(), varDefinition.getDisplay(), Integer.toString(getVar(varDefinition.getName())), varDefinition.getType(), varDefinition.getDisplayType(), varDefinition.getModify()));
+                        vars.add(new VarDefinition(varDefinition.getName(), varDefinition.getDisplay(), Integer.toString(getVar(varDefinition.getName())), varDefinition.getType(), varDefinition.getDisplayType(), varDefinition.getModify(), varDefinition.getOrder()));
                     } else if (varDefinition.getType() == VarType.TIMER) {
-                        vars.add(new VarDefinition(varDefinition.getName(), varDefinition.getDisplay(), Integer.toString(getVar(varDefinition.getName())), varDefinition.getType(), varDefinition.getDisplayType(), varDefinition.getModify()));
+                        vars.add(new VarDefinition(varDefinition.getName(), varDefinition.getDisplay(), Integer.toString(getVar(varDefinition.getName())), varDefinition.getType(), varDefinition.getDisplayType(), varDefinition.getModify(), varDefinition.getOrder()));
                     }
                 }
                 break;

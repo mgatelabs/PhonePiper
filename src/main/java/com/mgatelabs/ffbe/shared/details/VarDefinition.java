@@ -11,11 +11,13 @@ public class VarDefinition {
     private VarType type;
     private VarModify modify;
     private VarDisplay displayType;
+    private int order;
 
     public VarDefinition() {
+        order = 99;
     }
 
-    public VarDefinition(String name, String display, String value, VarType type, VarDisplay displayType, VarModify modify) {
+    public VarDefinition(String name, String display, String value, VarType type, VarDisplay displayType, VarModify modify, int order) {
         this.name = name;
         this.display = display;
         this.value = value;
@@ -70,6 +72,14 @@ public class VarDefinition {
 
     public void setModify(VarModify modify) {
         this.modify = modify;
+    }
+
+    public int getOrder() {
+        return order;
+    }
+
+    public void setOrder(int order) {
+        this.order = order;
     }
 
     @Override

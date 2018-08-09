@@ -362,7 +362,13 @@
           "condition": {
             "var": "_loops",
             "is": "GREATER",
-            "value": "45"
+            "value": "120",
+            "and": [
+              {
+                "type": "BOOLEAN",
+                "value": "false"
+              }
+            ]
           },
           "actions": [
             {

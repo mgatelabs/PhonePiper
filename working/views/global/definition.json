@@ -265,6 +265,11 @@
     "points" : [ ],
     "enabled" : false
   }, {
+    "name" : "menu-messages",
+    "screenId" : "menu-messages",
+    "points" : [ ],
+    "enabled" : false
+  }, {
     "name" : "Menu - Missions",
     "screenId" : "menu-missions-select",
     "points" : [ ],
@@ -904,6 +909,14 @@
     "h" : 1,
     "enabled" : false
   }, {
+    "name" : "menu-messages-back",
+    "componentId" : "menu-messages-back",
+    "x" : 0,
+    "y" : 0,
+    "w" : 1,
+    "h" : 1,
+    "enabled" : false
+  }, {
     "name" : "Menu - Mission List - Item 0",
     "componentId" : "menu-mission_list-item_0",
     "x" : 67,
@@ -1048,12 +1061,12 @@
     "h" : 855,
     "enabled" : false
   }, {
-    "name" : "Screen - Center - Small",
-    "componentId" : "screen-center-small",
-    "x" : 515,
-    "y" : 935,
-    "w" : 50,
-    "h" : 50,
+    "name" : "Screen - Center - Large",
+    "componentId" : "screen-center-large",
+    "x" : 440,
+    "y" : 860,
+    "w" : 200,
+    "h" : 200,
     "enabled" : false
   }, {
     "name" : "Screen - Center - Medium",
@@ -1064,12 +1077,12 @@
     "h" : 100,
     "enabled" : false
   }, {
-    "name" : "Screen - Center - Large",
-    "componentId" : "screen-center-large",
-    "x" : 440,
-    "y" : 860,
-    "w" : 200,
-    "h" : 200,
+    "name" : "Screen - Center - Small",
+    "componentId" : "screen-center-small",
+    "x" : 515,
+    "y" : 935,
+    "w" : 50,
+    "h" : 50,
     "enabled" : false
   }, {
     "name" : "units-enhance_units-back",

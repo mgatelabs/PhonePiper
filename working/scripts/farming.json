@@ -718,6 +718,7 @@
         "_common-no_op"
       ]
     },
+
     "_home_daily_fixes": {
       "name": "Home - Daily Fixes",
       "statements": [
@@ -754,6 +755,26 @@
             {
               "type": "TAP",
               "value": "menu-home-login_bonus-ok"
+            },
+            {
+              "type": "REPEAT",
+              "value": ""
+            }
+          ]
+        },
+        {
+          "condition": {
+            "is": "SCREEN",
+            "value": "menu-messages"
+          },
+          "actions": [
+            {
+              "type": "MSG",
+              "value": "Found Message Screen"
+            },
+            {
+              "type": "TAP",
+              "value": "menu-messages-back"
             },
             {
               "type": "REPEAT",

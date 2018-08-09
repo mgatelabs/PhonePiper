@@ -1262,6 +1262,7 @@
         }
       ]
     },
+
     "arena_to_home": {
       "name": "Arena - To Home",
       "includes": [
@@ -1283,8 +1284,12 @@
         }
       ]
     },
+
     "log-in": {
       "name": "Common - Recovery Log In",
+      "includes": [
+        "_home_daily_fixes"
+      ],
       "statements": [
         {
           "condition": {
@@ -1379,6 +1384,7 @@
         }
       ]
     },
+
     "arena-home": {
       "name": "Arena - Menu",
       "includes": [

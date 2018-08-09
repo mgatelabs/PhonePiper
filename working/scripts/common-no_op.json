@@ -365,7 +365,7 @@
             "value": "120",
             "and": [
               {
-                "type": "BOOLEAN",
+                "is": "BOOLEAN",
                 "value": "false"
               }
             ]

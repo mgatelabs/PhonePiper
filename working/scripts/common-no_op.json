@@ -343,6 +343,22 @@
         },
         {
           "condition": {
+            "is": "SCREEN",
+            "value": "menu-title"
+          },
+          "actions": [
+            {
+              "type": "MSG",
+              "value": "App Restarted"
+            },
+            {
+              "type": "MOVE",
+              "value": "log-in"
+            }
+          ]
+        },
+        {
+          "condition": {
             "var": "_loops",
             "is": "GREATER",
             "value": "900"

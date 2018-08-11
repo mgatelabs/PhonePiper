@@ -1141,6 +1141,7 @@
         }
       ]
     },
+
     "farm_to_home": {
       "name": "Farm - To Home",
       "includes": [
@@ -1181,6 +1182,11 @@
           },
           "actions": [
             {
+              "type": "SET",
+              "value": "0",
+              "var": "_screen_saver"
+            },
+            {
               "type": "MOVE",
               "value": "home_to_arena"
             }
@@ -1188,6 +1194,7 @@
         }
       ]
     },
+
     "raid_to_home": {
       "name": "Raid - To Home",
       "includes": [
@@ -1209,6 +1216,11 @@
           },
           "actions": [
             {
+              "type": "SET",
+              "value": "0",
+              "var": "_screen_saver"
+            },
+            {
               "type": "MOVE",
               "value": "home_to_arena"
             }
@@ -1221,42 +1233,13 @@
           },
           "actions": [
             {
+              "type": "SET",
+              "value": "0",
+              "var": "_screen_saver"
+            },
+            {
               "type": "MOVE",
               "value": "home_to_farm"
-            }
-          ]
-        }
-      ]
-    },
-    "_backup_to_home": {
-      "name": "Backup to Home",
-      "statements": [
-        {
-          "condition": {
-            "not": "SCREEN",
-            "value": "menu-home"
-          },
-          "actions": [
-            {
-              "type": "MSG",
-              "value": "Backing Up"
-            },
-            {
-              "type": "SET",
-              "var": "_loops",
-              "value": "0"
-            },
-            {
-              "type": "EVENT",
-              "value": "back"
-            },
-            {
-              "type": "WAIT",
-              "value": "5000"
-            },
-            {
-              "type": "REPEAT",
-              "value": ""
             }
           ]
         }
@@ -1277,8 +1260,53 @@
           },
           "actions": [
             {
+              "type": "SET",
+              "value": "0",
+              "var": "_screen_saver"
+            },
+            {
               "type": "MOVE",
               "value": "home_to_farm"
+            }
+          ]
+        }
+      ]
+    },
+
+    "_backup_to_home": {
+      "name": "Backup to Home",
+      "statements": [
+        {
+          "condition": {
+            "not": "SCREEN",
+            "value": "menu-home"
+          },
+          "actions": [
+            {
+              "type": "MSG",
+              "value": "Backing Up"
+            },
+            {
+              "type": "SET",
+              "var": "_loops",
+              "value": "0"
+            },
+            {
+              "type": "SET",
+              "value": "0",
+              "var": "_screen_saver"
+            },
+            {
+              "type": "EVENT",
+              "value": "back"
+            },
+            {
+              "type": "WAIT",
+              "value": "5000"
+            },
+            {
+              "type": "REPEAT",
+              "value": ""
             }
           ]
         }
@@ -1300,6 +1328,11 @@
             {
               "type": "MSG",
               "value": "Tapping OK"
+            },
+            {
+              "type": "SET",
+              "value": "0",
+              "var": "_screen_saver"
             },
             {
               "type": "SET",
@@ -1420,6 +1453,11 @@
               "value": "menu-arena-setup"
             },
             {
+              "type": "SET",
+              "value": "0",
+              "var": "_screen_saver"
+            },
+            {
               "type": "WAIT",
               "value": "5000"
             },
@@ -1452,6 +1490,11 @@
             {
               "type": "MSG",
               "value": "Out of Orbs, Resuming home"
+            },
+            {
+              "type": "SET",
+              "value": "0",
+              "var": "_screen_saver"
             },
             {
               "type": "MOVE",
@@ -1548,6 +1591,11 @@
             {
               "type": "MSG",
               "value": "Battle Started"
+            },
+            {
+              "type": "SET",
+              "value": "0",
+              "var": "_screen_saver"
             },
             {
               "type": "SET",

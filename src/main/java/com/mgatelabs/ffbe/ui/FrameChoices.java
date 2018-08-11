@@ -132,6 +132,9 @@ public class FrameChoices {
                 ViewDefinition otherDefinition = ViewDefinition.read(viewId2);
                 ViewDefinition.merge(otherDefinition, viewDefinition, true);
             }
+            if (viewDefinition != null) {
+                viewDefinition.sort();
+            }
         } else {
             this.viewDefinition = null;
         }

@@ -232,6 +232,7 @@ public class ComponentListPanel extends JInternalFrame {
                 public void actionPerformed(ActionEvent e) {
                     if (nameField.getText() != null && nameField.getText().trim().length() > 0) {
                         selectedItem.setName(nameField.getText().trim());
+                        viewDefinition.sort();
                         viewDefinition.save();
                         itemModel.refresh();
                     } else {
@@ -302,6 +303,7 @@ public class ComponentListPanel extends JInternalFrame {
                         selectedItem.setW(x2 - x1);
                         selectedItem.setH(y2 - y1);
 
+                        viewDefinition.sort();
                         info(viewDefinition.save() ? "Saved" : "Failed");
                     }
                 }
@@ -340,6 +342,7 @@ public class ComponentListPanel extends JInternalFrame {
                 @Override
                 public void actionPerformed(ActionEvent e) {
                     selectedItem.setEnabled(false);
+                    viewDefinition.sort();
                     viewDefinition.save();
                     itemModel.refresh();
                 }
@@ -360,6 +363,7 @@ public class ComponentListPanel extends JInternalFrame {
                         selectedItem = null;
                         selectedIndex = -1;
                         updateForm();
+                        viewDefinition.sort();
                         viewDefinition.save();
                         info("Deleted");
                     }

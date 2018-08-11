@@ -200,6 +200,7 @@ public class ScreenListPanel extends JInternalFrame {
                     if (nameField.getText() != null && nameField.getText().trim().length() > 0) {
                         selectedItem.setName(nameField.getText().trim());
                         selectedItem.setEnabled(true);
+                        viewDefinition.sort();
                         viewDefinition.save();
 
                         itemModel.refresh();
@@ -242,6 +243,7 @@ public class ScreenListPanel extends JInternalFrame {
                 @Override
                 public void actionPerformed(ActionEvent e) {
                     selectedItem.setEnabled(false);
+                    viewDefinition.sort();
                     viewDefinition.save();
                     itemModel.refresh();
                 }
@@ -294,8 +296,8 @@ public class ScreenListPanel extends JInternalFrame {
                     selectedItem.getPoints().clear();
                     selectedItem.getPoints().addAll(newPoints);
 
+                    viewDefinition.sort();
                     viewDefinition.save();
-
                 }
             });
             editMenu.add(testMenuItem);
@@ -336,7 +338,7 @@ public class ScreenListPanel extends JInternalFrame {
                     selectedItem.setEnabled(true);
                     selectedItem.getPoints().clear();
                     selectedItem.getPoints().addAll(copy);
-
+                    viewDefinition.sort();
                     viewDefinition.save();
                 }
             });
@@ -355,6 +357,7 @@ public class ScreenListPanel extends JInternalFrame {
 
                         deSelect();
 
+                        viewDefinition.sort();
                         viewDefinition.save();
 
                         itemModel.refresh();

@@ -19,6 +19,10 @@
               {
                 "is": "SCREEN",
                 "value": "battle-unit-3_ready"
+              },
+              {
+                "is": "SCREEN",
+                "value": "battle-unit-3_mp"
               }
             ]
           },
@@ -98,6 +102,10 @@
               {
                 "is": "SCREEN",
                 "value": "battle-unit-1_ready"
+              },
+              {
+                "is": "SCREEN",
+                "value": "battle-unit-1_mp"
               }
             ]
           },
@@ -165,6 +173,10 @@
               {
                 "is": "SCREEN",
                 "value": "battle-unit-4_ready"
+              },
+              {
+                "is": "SCREEN",
+                "value": "battle-unit-4_mp"
               }
             ]
           },
@@ -216,6 +228,10 @@
               {
                 "is": "SCREEN",
                 "value": "battle-unit-0_ready"
+              },
+              {
+                "is": "SCREEN",
+                "value": "battle-unit-0_mp"
               }
             ]
           },
@@ -279,6 +295,10 @@
               {
                 "is": "SCREEN",
                 "value": "battle-unit-2_ready"
+              },
+              {
+                "is": "SCREEN",
+                "value": "battle-unit-2_mp"
               }
             ]
           },
@@ -343,11 +363,15 @@
 
             {
               "type": "MSG",
-              "value": "Fighting"
+              "value": "Starting Fight"
             },
             {
               "type": "BATCH",
               "value": "start"
+            },
+            {
+              "type": "TAP",
+              "value": "battle-unit_3"
             },
             {
               "type": "TAP",
@@ -408,8 +432,36 @@
               "value": "battle-unit_3"
             },
             {
+              "type": "WAIT",
+              "value": "2000"
+            },
+            {
               "type": "TAP",
               "value": "battle-repeat"
+            },
+            {
+              "type": "BATCH",
+              "value": "start"
+            },
+            {
+              "type": "TAP",
+              "value": "battle-unit_4"
+            },
+            {
+              "type": "TAP",
+              "value": "battle-unit_1"
+            },
+            {
+              "type": "TAP",
+              "value": "battle-unit_0"
+            },
+            {
+              "type": "TAP",
+              "value": "battle-unit_2"
+            },
+            {
+              "type": "BATCH",
+              "value": "end"
             },
             {
               "type": "REPEAT",

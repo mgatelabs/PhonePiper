@@ -400,6 +400,7 @@
                     },
                   success: function(result){
                     if (result.status == 'OK') {
+                        saveSelection();
                         loadProcessInfo();
                         statusCheck();
                         $('[href="#run"]').tab('show');
@@ -449,6 +450,7 @@
                     populateSelect(script1, data.scripts || []);
                     populateSelect(script2, data.scripts || []);
                     populateSelect(script3, data.scripts || []);
+                    loadSelection();
                   }
                 });
 
@@ -474,6 +476,61 @@
                 statusCheck();
                 loadProcessInfo();
                 loadEditViewInfo();
+            }
+
+            function saveSelection() {
+
+                var device1 = $('#device1').val();
+                var view1 = $('#view1').val();
+                var view2 = $('#view2').val();
+                var script1 = $('#script1').val();
+                var script2 = $('#script2').val();
+                var script3 = $('#script3').val();
+
+                var data = {
+                    device: device1 || '',
+                    views: [],
+                    scripts: []
+                };
+                if (view1) data.views.push(view1);
+                if (view2) data.views.push(view2);
+                if (script1) data.scripts.push(script1);
+                if (script2) data.scripts.push(script2);
+                if (script3) data.scripts.push(script3);
+
+                localStorage.setItem("LAST", JSON.stringify(data));
+            }
+
+            function loadSelection() {
+                var lData = localStorage.getItem("LAST");
+                if (lData) {
+
+                    var device1 = $('#device1');
+                    var view1 = $('#view1');
+                    var view2 = $('#view2');
+                    var script1 = $('#script1');
+                    var script2 = $('#script2');
+                    var script3 = $('#script3');
+
+                    var j = JSON.parse(lData);
+                    if (j.device) device1.val(j.device);
+                    if (j.views && j.views.length > 0) {
+                        view1.val(j.views[0]);
+                        view2.prop('disabled', false);
+                    }
+                    if (j.views && j.views.length > 1)
+                        view2.val(j.views[1]);
+                    if (j.scripts && j.scripts.length > 0) {
+                        script1.val(j.scripts[0]);
+                        script2.prop('disabled', false);
+                    }
+                    if (j.scripts && j.scripts.length > 1) {
+                        script2.val(j.scripts[1]);
+                        script3.prop('disabled', false);
+                    }
+                    if (j.scripts && j.scripts.length > 2)
+                        script3.val(j.scripts[2]);
+                }
             }
 
             setTimeout(firstTimeLoad, 100);

@@ -77,6 +77,10 @@ public class AdbUtils {
         final int event;
         switch (eventId.toLowerCase()) {
             case "power": {
+                event = 26;
+            }
+            break;
+            case "sleep": {
                 event = 223;
             }
             break;
@@ -90,6 +94,14 @@ public class AdbUtils {
             break;
             case "back": {
                 event = 4;
+            }
+            break;
+            case "brighter": {
+                event = 221;
+            }
+            break;
+            case "darker": {
+                event = 220;
             }
             break;
             default:

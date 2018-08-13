@@ -1489,7 +1489,7 @@
           "actions": [
             {
               "type": "MSG",
-              "value": "Out of Orbs, Resuming home"
+              "value": "Out of Orbs, going home"
             },
             {
               "type": "SET",

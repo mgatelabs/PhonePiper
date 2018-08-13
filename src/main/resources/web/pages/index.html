@@ -144,6 +144,7 @@
                                 notWhileRunning.prop('disabled', false);
                             } break;
                             case 'RUNNING':
+                            case 'STOPPING':
                             case 'STOPPED': {
                                 editForm.hide();
                                 playPauseButton.removeClass('disabled');

@@ -29,7 +29,8 @@ public class ScriptRunner {
         INIT,
         READY,
         RUNNING,
-        PAUSED
+        PAUSED,
+        STOPPED
     }
 
     private PlayerDefinition playerDefinition;
@@ -368,6 +369,18 @@ public class ScriptRunner {
         return this.status == Status.RUNNING;
     }
 
+    public boolean isWorking() {
+        return this.status == Status.RUNNING || this.status == Status.STOPPED;
+    }
+
+    public boolean isStopping() {
+        return this.status == Status.PAUSED;
+    }
+
+    public boolean isStopped() {
+        return this.status == Status.STOPPED;
+    }
+
     private String currentStateId;
 
     public String getCurrentStateId() {
@@ -485,7 +498,7 @@ public class ScriptRunner {
 
                 switch (result.getType()) {
                     case STOP: {
-                        this.status = Status.PAUSED;
+                        this.status = Status.STOPPED;
                         return;
                     }
                     case POP:
@@ -542,6 +555,8 @@ public class ScriptRunner {
 
             waitFor(250);
         }
+
+        setStatus(Status.STOPPED);
 
         logger.info("Script Stopped");
     }

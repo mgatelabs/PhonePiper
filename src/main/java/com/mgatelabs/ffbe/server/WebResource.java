@@ -306,9 +306,11 @@ public class WebResource {
                 } else {
                     if (runner.isRunning()) {
                         result.setStatus(StatusResult.Status.RUNNING);
-                    } else {
+                    } else if (runner.isStopped()) {
                         result.setStatus(StatusResult.Status.STOPPED);
                         thread = null;
+                    } else {
+                        result.setStatus(StatusResult.Status.STOPPING);
                     }
                 }
             }
@@ -359,7 +361,6 @@ public class WebResource {
                 thread.start();
             } else {
                 runner.setStatus(ScriptRunner.Status.PAUSED);
-                thread = null;
             }
             result.put("status", "true");
         } else {

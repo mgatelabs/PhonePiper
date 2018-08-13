@@ -91,7 +91,8 @@
     "common-menu_location",
     "common-menu_results",
     "common-menu_vortex",
-    "common-battle"
+    "common-battle",
+    "common-utils"
   ],
   "states": {
     "main": {

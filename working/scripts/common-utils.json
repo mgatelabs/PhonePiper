@@ -1,0 +1,71 @@
+{
+  "states": {
+
+    "common_utils-brighter": {
+      "name": "Common - Brighten Screen",
+      "statements": [
+        {
+          "condition": {
+            "is": "BOOLEAN",
+            "value": "true"
+          },
+          "actions": [
+            {
+              "type": "EVENT",
+              "value": "brighter"
+            },{
+              "type": "EVENT",
+              "value": "brighter"
+            },{
+              "type": "EVENT",
+              "value": "brighter"
+            },{
+              "type": "EVENT",
+              "value": "brighter"
+            },{
+              "type": "TAP",
+              "value": "screen-center"
+            },{
+              "type": "STOP",
+              "value": "brighter"
+            }
+          ]
+        }
+      ]
+    },
+
+    "common_utils-darker": {
+      "name": "Common - Dim Screen",
+      "statements": [
+        {
+          "condition": {
+            "is": "BOOLEAN",
+            "value": "true"
+          },
+          "actions": [
+            {
+              "type": "EVENT",
+              "value": "darker"
+            },{
+              "type": "EVENT",
+              "value": "darker"
+            },{
+              "type": "EVENT",
+              "value": "darker"
+            },{
+              "type": "EVENT",
+              "value": "darker"
+            },{
+              "type": "TAP",
+              "value": "screen-center"
+            },{
+              "type": "STOP",
+              "value": "brighter"
+            }
+          ]
+        }
+      ]
+    }
+
+  }
+}

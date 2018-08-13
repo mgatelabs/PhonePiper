@@ -310,7 +310,7 @@
           },
           {
             "type": "WAIT",
-            "value": "20000"
+            "value": "15000"
           },
           {
             "type": "REPEAT",

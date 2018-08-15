@@ -20,6 +20,11 @@
     "points" : [ ],
     "enabled" : false
   }, {
+    "name" : "Battle - Unit - 0 - Has MP",
+    "screenId" : "battle-unit-0_mp",
+    "points" : [ ],
+    "enabled" : false
+  }, {
     "name" : "Battle - Unit - 0 NotFull",
     "screenId" : "battle-unit-0_notfull",
     "points" : [ ],
@@ -30,33 +35,13 @@
     "points" : [ ],
     "enabled" : false
   }, {
-    "name" : "Battle - Unit - 1 Ready",
-    "screenId" : "battle-unit-1_ready",
-    "points" : [ ],
-    "enabled" : false
-  }, {
-    "name" : "Battle - Unit - 2 Ready",
-    "screenId" : "battle-unit-2_ready",
-    "points" : [ ],
-    "enabled" : false
-  }, {
-    "name" : "Battle - Unit - 3 Ready",
-    "screenId" : "battle-unit-3_ready",
-    "points" : [ ],
-    "enabled" : false
-  }, {
-    "name" : "Battle - Unit - 4 Ready",
-    "screenId" : "battle-unit-4_ready",
-    "points" : [ ],
-    "enabled" : false
-  }, {
-    "name" : "Battle - Unit - 0 - Has MP",
-    "screenId" : "battle-unit-0_mp",
-    "points" : [ ],
-    "enabled" : false
-  }, {
     "name" : "Battle - Unit - 1 - Has MP",
     "screenId" : "battle-unit-1_mp",
+    "points" : [ ],
+    "enabled" : false
+  }, {
+    "name" : "Battle - Unit - 1 Ready",
+    "screenId" : "battle-unit-1_ready",
     "points" : [ ],
     "enabled" : false
   }, {
@@ -65,13 +50,28 @@
     "points" : [ ],
     "enabled" : false
   }, {
+    "name" : "Battle - Unit - 2 Ready",
+    "screenId" : "battle-unit-2_ready",
+    "points" : [ ],
+    "enabled" : false
+  }, {
     "name" : "Battle - Unit - 3 - Has MP",
     "screenId" : "battle-unit-3_mp",
     "points" : [ ],
     "enabled" : false
   }, {
+    "name" : "Battle - Unit - 3 Ready",
+    "screenId" : "battle-unit-3_ready",
+    "points" : [ ],
+    "enabled" : false
+  }, {
     "name" : "Battle - Unit - 4 - Has MP",
     "screenId" : "battle-unit-4_mp",
+    "points" : [ ],
+    "enabled" : false
+  }, {
+    "name" : "Battle - Unit - 4 Ready",
+    "screenId" : "battle-unit-4_ready",
     "points" : [ ],
     "enabled" : false
   }, {
@@ -672,6 +672,14 @@
   }, {
     "name" : "Menu - Arena - Opponent Confirm - Yes",
     "componentId" : "menu-arena-opponent_confirm-yes",
+    "x" : 0,
+    "y" : 0,
+    "w" : 1,
+    "h" : 1,
+    "enabled" : false
+  }, {
+    "name" : "menu-arena-opponent_drag",
+    "componentId" : "menu-arena-opponent_drag",
     "x" : 0,
     "y" : 0,
     "w" : 1,

@@ -1530,6 +1530,15 @@
           },
           "actions": [
             {
+              "type": "SLOW_UP",
+              "value": "menu-arena-opponent_drag"
+            },{
+              "type": "SLOW_UP",
+              "value": "menu-arena-opponent_drag"
+            },{
+              "type": "SLOW_UP",
+              "value": "menu-arena-opponent_drag"
+            }, {
               "type": "TAP",
               "value": "menu-arena-opponent_first"
             },

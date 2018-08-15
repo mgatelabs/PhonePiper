@@ -44,10 +44,6 @@
           "actions": [
             {
               "type": "SET",
-              "value": "0",
-              "var": "_seconds"
-            },{
-              "type": "SET",
               "value": "1",
               "var": "setup"
             },
@@ -75,10 +71,6 @@
           },
           "actions": [
             {
-              "type": "SET",
-              "value": "0",
-              "var": "_seconds"
-            },{
               "type": "SET",
               "value": "0",
               "var": "setup"
@@ -128,10 +120,6 @@
           "actions": [
             {
               "type": "SET",
-              "value": "0",
-              "var": "_seconds"
-            },{
-              "type": "SET",
               "value": "1",
               "var": "setup"
             },
@@ -159,10 +147,6 @@
           },
           "actions": [
             {
-              "type": "SET",
-              "value": "0",
-              "var": "_seconds"
-            },{
               "type": "SET",
               "value": "0",
               "var": "setup"

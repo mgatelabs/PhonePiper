@@ -11340,6 +11340,14 @@
     "h" : 79,
     "enabled" : true
   }, {
+    "name" : "menu-arena-opponent_drag",
+    "componentId" : "menu-arena-opponent_drag",
+    "x" : 231,
+    "y" : 1071,
+    "w" : 681,
+    "h" : 690,
+    "enabled" : true
+  }, {
     "name" : "Menu - Arena - 1st Opponent",
     "componentId" : "menu-arena-opponent_first",
     "x" : 43,

@@ -392,173 +392,163 @@ public class ScriptRunner {
     }
 
     public void run(String stateName) {
-        currentStateId = stateName;
-        this.status = Status.RUNNING;
+        try {
+            currentStateId = stateName;
+            this.status = Status.RUNNING;
 
-        logger.log(Level.FINE, "Init Helper");
-        initHelper();
+            logger.log(Level.FINE, "Init Helper");
+            initHelper();
 
-        ImageWrapper imageWrapper;
+            ImageWrapper imageWrapper;
 
-        StateDefinition stateDefinition = scriptDefinition.getStates().get(stateName);
+            StateDefinition stateDefinition = scriptDefinition.getStates().get(stateName);
 
-        if (stateDefinition == null) {
-            logger.log(Level.SEVERE, "Cannot find state with id: " + stateName);
-            setStatus(Status.INIT);
-            throw new RuntimeException("Cannot find state with id: " + stateName);
-        } else {
-            logger.log(Level.FINE, "Found initial state with id: " + stateName);
-        }
-
-        // Always reset the loop counter
-        setVar(VAR_LOOPS, 0);
-
-        //long lastTime = System.nanoTime();
-
-        while (isRunning()) {
-
-            for (VarDefinition varDefinition : getRawEditVariables()) {
-                if (varDefinition.getType() == VarType.TIMER) {
-                    final VarTimer timer = timers.get(varDefinition.getName());
-                    timer.forward();
-                    vars.put(varDefinition.getName(), (int) TimeUnit.NANOSECONDS.toSeconds(timer.getElapsed()));
-                }
-            }
-
-            //long timeNow = System.nanoTime();
-
-            //elapsedTime += (timeNow - lastTime);
-
-            //lastTime = timeNow;
-
-            if (!shell.isReady()) {
-                logger.log(Level.WARNING, "Bad Shell: Stopping");
-                restartShell();
-                this.status = Status.PAUSED;
-                return;
-            }
-
-            if (deviceHelper != null && deviceHelper.getFailures() > 20) {
-                deviceHelper = null;
-                logger.log(Level.SEVERE, "Stopping device helper");
-            }
-
-            //logger.log(Level.INFO, "Persist Calls");
-
-            if (deviceHelper != null) {
-                long startTime = System.nanoTime();
-                AdbUtils.persistScreen(shell);
-                long endTime = System.nanoTime();
-
-                long dif = endTime - startTime;
-
-                lastImageDate = new Date();
-                lastImageDuration = ((float) dif / 1000000000.0f);
-
-                logger.finest("Image Persisted");
-
-                imageWrapper = null;
+            if (stateDefinition == null) {
+                logger.log(Level.SEVERE, "Cannot find state with id: " + stateName);
+                setStatus(Status.INIT);
+                throw new RuntimeException("Cannot find state with id: " + stateName);
             } else {
-
-                long startTime = System.nanoTime();
-                imageWrapper = AdbUtils.getScreen();
-                long endTime = System.nanoTime();
-
-                long dif = endTime - startTime;
-
-                lastImageDate = new Date();
-                lastImageDuration = ((float) dif / 1000000000.0f);
-
-                if (imageWrapper == null || !imageWrapper.isReady()) {
-                    logger.warning("Image Failure");
-                    waitFor(250);
-                    continue;
-                } else {
-                    logger.finest("Image Persisted");
-                }
+                logger.log(Level.FINE, "Found initial state with id: " + stateName);
             }
 
-            //logger.log(Level.INFO, "After Persist Calls");
+            // Always reset the loop counter
+            setVar(VAR_LOOPS, 0);
 
-            boolean keepRunning = true;
+            while (isRunning()) {
 
-            while (keepRunning && isRunning()) {
-                keepRunning = false;
+                for (VarDefinition varDefinition : getRawEditVariables()) {
+                    if (varDefinition.getType() == VarType.TIMER) {
+                        final VarTimer timer = timers.get(varDefinition.getName());
+                        timer.forward();
+                        vars.put(varDefinition.getName(), (int) TimeUnit.NANOSECONDS.toSeconds(timer.getElapsed()));
+                    }
+                }
 
-                //logger.log(Level.INFO, "Inner Run");
+                if (!shell.isReady()) {
+                    logger.log(Level.WARNING, "Bad Shell: Stopping");
+                    restartShell();
+                    this.status = Status.PAUSED;
+                    return;
+                }
+
+                if (deviceHelper != null && deviceHelper.getFailures() > 20) {
+                    deviceHelper = null;
+                    logger.log(Level.SEVERE, "Stopping device helper");
+                }
+
+                //logger.log(Level.INFO, "Persist Calls");
 
                 if (deviceHelper != null) {
+                    long startTime = System.nanoTime();
+                    AdbUtils.persistScreen(shell);
+                    long endTime = System.nanoTime();
 
-                    logger.finer("Helper: /check/" + stateDefinition.getId());
+                    long dif = endTime - startTime;
 
-                    validScreenIds = deviceHelper.check(stateDefinition.getId());
+                    lastImageDate = new Date();
+                    lastImageDuration = ((float) dif / 1000000000.0f);
+
+                    logger.finest("Image Persisted");
+
+                    imageWrapper = null;
+                } else {
+
+                    long startTime = System.nanoTime();
+                    imageWrapper = AdbUtils.getScreen();
+                    long endTime = System.nanoTime();
+
+                    long dif = endTime - startTime;
+
+                    lastImageDate = new Date();
+                    lastImageDuration = ((float) dif / 1000000000.0f);
+
+                    if (imageWrapper == null || !imageWrapper.isReady()) {
+                        logger.warning("Image Failure");
+                        waitFor(250);
+                        continue;
+                    } else {
+                        logger.finest("Image Persisted");
+                    }
                 }
 
-                StateResult result = state(stateDefinition, imageWrapper);
+                boolean keepRunning = true;
 
-                switch (result.getType()) {
-                    case STOP: {
-                        this.status = Status.STOPPED;
-                        return;
+                while (keepRunning && isRunning()) {
+                    keepRunning = false;
+
+                    if (deviceHelper != null) {
+
+                        logger.finer("Helper: /check/" + stateDefinition.getId());
+
+                        validScreenIds = deviceHelper.check(stateDefinition.getId());
                     }
-                    case POP:
-                        if (stack.size() > 0) {
-                            final String oldState = stack.pop();
-                            stateDefinition = scriptDefinition.getStates().get(oldState);
-                            if (stateDefinition == null) {
-                                logger.log(Level.SEVERE, "Cannot find state with id: " + oldState);
-                                throw new RuntimeException("Cannot find state with id: " + oldState);
+
+                    StateResult result = state(stateDefinition, imageWrapper);
+
+                    switch (result.getType()) {
+                        case STOP: {
+                            this.status = Status.STOPPED;
+                            return;
+                        }
+                        case POP:
+                            if (stack.size() > 0) {
+                                final String oldState = stack.pop();
+                                stateDefinition = scriptDefinition.getStates().get(oldState);
+                                if (stateDefinition == null) {
+                                    logger.log(Level.SEVERE, "Cannot find state with id: " + oldState);
+                                    throw new RuntimeException("Cannot find state with id: " + oldState);
+                                }
+                                keepRunning = false;
+                            } else {
+                                throw new RuntimeException("Stack is empty");
                             }
+                            break;
+                        case MOVE: {
+                            stateDefinition = scriptDefinition.getStates().get(result.getValue());
+                            if (stateDefinition == null) {
+                                logger.log(Level.SEVERE, "Cannot find state with id: " + result.getValue());
+                                throw new RuntimeException("Cannot find state with id: " + result.getValue());
+                            }
+                            currentStateId = stateDefinition.getId();
                             keepRunning = false;
-                        } else {
-                            throw new RuntimeException("Stack is empty");
                         }
                         break;
-                    case MOVE: {
-                        stateDefinition = scriptDefinition.getStates().get(result.getValue());
-                        if (stateDefinition == null) {
-                            logger.log(Level.SEVERE, "Cannot find state with id: " + result.getValue());
-                            throw new RuntimeException("Cannot find state with id: " + result.getValue());
+                        case PUSH: {
+                            stack.push(stateDefinition.getId());
+                            stateDefinition = scriptDefinition.getStates().get(result.getValue());
+                            if (stateDefinition == null) {
+                                logger.log(Level.SEVERE, "Cannot find state with id: " + result.getValue());
+                                throw new RuntimeException("Cannot find state with id: " + result.getValue());
+                            }
+                            currentStateId = stateDefinition.getId();
+                            keepRunning = true;
                         }
-                        currentStateId = stateDefinition.getId();
-                        keepRunning = false;
-                    }
-                    break;
-                    case PUSH: {
-                        stack.push(stateDefinition.getId());
-                        stateDefinition = scriptDefinition.getStates().get(result.getValue());
-                        if (stateDefinition == null) {
-                            logger.log(Level.SEVERE, "Cannot find state with id: " + result.getValue());
-                            throw new RuntimeException("Cannot find state with id: " + result.getValue());
+                        break;
+                        case SWAP: {
+                            stateDefinition = scriptDefinition.getStates().get(result.getValue());
+                            if (stateDefinition == null) {
+                                logger.log(Level.SEVERE, "Cannot find state with id: " + result.getValue());
+                                throw new RuntimeException("Cannot find state with id: " + result.getValue());
+                            }
+                            currentStateId = stateDefinition.getId();
+                            keepRunning = true;
                         }
-                        currentStateId = stateDefinition.getId();
-                        keepRunning = true;
-                    }
-                    break;
-                    case SWAP: {
-                        stateDefinition = scriptDefinition.getStates().get(result.getValue());
-                        if (stateDefinition == null) {
-                            logger.log(Level.SEVERE, "Cannot find state with id: " + result.getValue());
-                            throw new RuntimeException("Cannot find state with id: " + result.getValue());
+                        break;
+                        case REPEAT: {
+                            keepRunning = false;
                         }
-                        currentStateId = stateDefinition.getId();
-                        keepRunning = true;
+                        break;
                     }
-                    break;
-                    case REPEAT: {
-                        keepRunning = false;
-                    }
-                    break;
+
                 }
 
+                waitFor(250);
             }
 
-            waitFor(250);
+        } finally {
+            setStatus(Status.STOPPED);
+            logger.info("Script Stopped");
         }
-
-        setStatus(Status.STOPPED);
-
-        logger.info("Script Stopped");
     }
 
     private String lapEvent(String id) {

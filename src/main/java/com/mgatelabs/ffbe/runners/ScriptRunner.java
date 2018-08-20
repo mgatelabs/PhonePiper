@@ -545,6 +545,9 @@ public class ScriptRunner {
                 waitFor(250);
             }
 
+        } catch (Exception ex) {
+          logger.log(Level.SEVERE, ex.getMessage());
+          ex.printStackTrace();
         } finally {
             setStatus(Status.STOPPED);
             logger.info("Script Stopped");
@@ -569,6 +572,10 @@ public class ScriptRunner {
         }
     }
 
+    private boolean stillRunning() {
+        return status == Status.RUNNING;
+    }
+
     private StateResult state(final StateDefinition stateDefinition, final ImageWrapper imageWrapper) {
 
         logger.fine("Running State: " + stateDefinition.getName());
@@ -578,107 +585,112 @@ public class ScriptRunner {
         for (StatementDefinition statementDefinition : stateDefinition.getStatements()) {
             if (check(statementDefinition.getCondition(), imageWrapper)) {
                 for (ActionDefinition actionDefinition : statementDefinition.getActions()) {
-                    switch (actionDefinition.getType()) {
-                        case MSG: {
-
-                            String msg = actionDefinition.getValue();
-                            int startindex;
-                            while ((startindex = msg.indexOf("${")) >= 0) {
-                                int endIndex = msg.indexOf('}', startindex);
-                                if (endIndex > startindex + 2) {
-                                    String varName = msg.substring(startindex += 2, endIndex).trim();
-                                    if (varName.length() > 0) {
-                                        if (vars.containsKey(varName)) {
-                                            msg = msg.substring(0, startindex - 2) + vars.get(varName) + msg.substring(endIndex + 1);
-                                        } else {
-                                            break;
+                    final int loopIndex = actionDefinition.getCount() <= 0 ? 1 : actionDefinition.getCount();
+                    for (int looper = 0; looper < loopIndex; looper++) {
+                        if (!stillRunning()) {
+                            return StateResult.STOP;
+                        }
+                        switch (actionDefinition.getType()) {
+                            case MSG: {
+                                String msg = actionDefinition.getValue();
+                                int startindex;
+                                while ((startindex = msg.indexOf("${")) >= 0) {
+                                    int endIndex = msg.indexOf('}', startindex);
+                                    if (endIndex > startindex + 2) {
+                                        String varName = msg.substring(startindex += 2, endIndex).trim();
+                                        if (varName.length() > 0) {
+                                            if (vars.containsKey(varName)) {
+                                                msg = msg.substring(0, startindex - 2) + vars.get(varName) + msg.substring(endIndex + 1);
+                                            } else {
+                                                break;
+                                            }
                                         }
+                                    } else {
+                                        break;
                                     }
-                                } else {
-                                    break;
+                                }
+                                logger.info("MSG: " + msg);
+                            }
+                            break;
+                            case BATCH: {
+                                if ("START".equalsIgnoreCase(actionDefinition.getValue())) {
+                                    batchCmds = true;
+                                } else if (batchCmds) {
+                                    batchCmds = false;
+                                    shell.exec();
                                 }
                             }
-                            logger.info("MSG: " + msg);
-                        }
-                        break;
-                        case BATCH: {
-                            if ("START".equalsIgnoreCase(actionDefinition.getValue())) {
-                                batchCmds = true;
-                            } else if (batchCmds) {
-                                batchCmds = false;
-                                shell.exec();
+                            break;
+                            case SET: {
+                                String varName = actionDefinition.getVar();
+                                int value = valueHandler(actionDefinition.getValue());
+                                setVar(varName, value);
                             }
-                        }
-                        break;
-                        case SET: {
-                            String varName = actionDefinition.getVar();
-                            int value = valueHandler(actionDefinition.getValue());
-                            setVar(varName, value);
-                        }
-                        break;
-                        case LAP: {
-                            String timerId = actionDefinition.getValue();
-                            timerId = (timerId == null || timerId.trim().length() == 0) ? "generic" : timerId.trim();
-                            logger.info(lapEvent(timerId));
-                        }
-                        break;
-                        case ADD: {
-                            String varName = actionDefinition.getVar();
-                            int value = valueHandler(actionDefinition.getValue());
-                            addVar(varName, value);
-                        }
-                        break;
-                        case TAP:
-                        case SWIPE_DOWN:
-                        case SLOW_DOWN:
-                        case SLOW_LEFT:
-                        case SLOW_RIGHT:
-                        case SWIPE_UP:
-                        case SLOW_UP:
-                        case SWIPE_LEFT:
-                        case SWIPE_RIGHT: {
-                            ComponentDefinition componentDefinition = components.get(actionDefinition.getValue());
-                            if (componentDefinition == null) {
-                                logger.log(Level.SEVERE, "Cannot find component with id: " + actionDefinition.getValue());
-                                throw new RuntimeException("Cannot find component with id: " + actionDefinition.getValue());
+                            break;
+                            case LAP: {
+                                String timerId = actionDefinition.getValue();
+                                timerId = (timerId == null || timerId.trim().length() == 0) ? "generic" : timerId.trim();
+                                logger.info(lapEvent(timerId));
                             }
-                            AdbUtils.component(deviceDefinition, componentDefinition, actionDefinition.getType(), shell, batchCmds);
-                        }
-                        break;
-                        case EVENT: {
-                            if (!AdbUtils.event(actionDefinition.getValue(), shell, batchCmds)) {
-                                logger.log(Level.SEVERE, "Unknown event id: " + actionDefinition.getValue());
-                                throw new RuntimeException("Unknown event id: " + actionDefinition.getValue());
+                            break;
+                            case ADD: {
+                                String varName = actionDefinition.getVar();
+                                int value = valueHandler(actionDefinition.getValue());
+                                addVar(varName, value);
                             }
-                        }
-                        break;
-                        case WAIT: {
-                            int time = valueHandler(actionDefinition.getValue());
-                            if (time > 0) {
-                                waitFor(time);
-                            } else {
-                                logger.log(Level.SEVERE, "Invalid wait time: " + actionDefinition.getValue());
-                                throw new RuntimeException("Invalid wait time: " + actionDefinition.getValue());
+                            break;
+                            case TAP:
+                            case SWIPE_DOWN:
+                            case SLOW_DOWN:
+                            case SLOW_LEFT:
+                            case SLOW_RIGHT:
+                            case SWIPE_UP:
+                            case SLOW_UP:
+                            case SWIPE_LEFT:
+                            case SWIPE_RIGHT: {
+                                ComponentDefinition componentDefinition = components.get(actionDefinition.getValue());
+                                if (componentDefinition == null) {
+                                    logger.log(Level.SEVERE, "Cannot find component with id: " + actionDefinition.getValue());
+                                    throw new RuntimeException("Cannot find component with id: " + actionDefinition.getValue());
+                                }
+                                AdbUtils.component(deviceDefinition, componentDefinition, actionDefinition.getType(), shell, batchCmds);
                             }
+                            break;
+                            case EVENT: {
+                                if (!AdbUtils.event(actionDefinition.getValue(), shell, batchCmds)) {
+                                    logger.log(Level.SEVERE, "Unknown event id: " + actionDefinition.getValue());
+                                    throw new RuntimeException("Unknown event id: " + actionDefinition.getValue());
+                                }
+                            }
+                            break;
+                            case WAIT: {
+                                int time = valueHandler(actionDefinition.getValue());
+                                if (time > 0) {
+                                    waitFor(time);
+                                } else {
+                                    logger.log(Level.SEVERE, "Invalid wait time: " + actionDefinition.getValue());
+                                    throw new RuntimeException("Invalid wait time: " + actionDefinition.getValue());
+                                }
+                            }
+                            break;
+                            case POP: {
+                                return StateResult.POP;
+                            }
+                            case PUSH: {
+                                return StateResult.push(actionDefinition.getValue());
+                            }
+                            case SWAP: {
+                                return StateResult.swap(actionDefinition.getValue());
+                            }
+                            case MOVE: {
+                                return StateResult.move(actionDefinition.getValue());
+                            }
+                            case REPEAT: {
+                                return StateResult.REPEAT;
+                            }
+                            case STOP:
+                                return StateResult.STOP;
                         }
-                        break;
-                        case POP: {
-                            return StateResult.POP;
-                        }
-                        case PUSH: {
-                            return StateResult.push(actionDefinition.getValue());
-                        }
-                        case SWAP: {
-                            return StateResult.swap(actionDefinition.getValue());
-                        }
-                        case MOVE: {
-                            return StateResult.move(actionDefinition.getValue());
-                        }
-                        case REPEAT: {
-                            return StateResult.REPEAT;
-                        }
-                        case STOP:
-                            return StateResult.STOP;
                     }
                 }
             }

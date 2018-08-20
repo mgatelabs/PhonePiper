@@ -7,6 +7,7 @@ public class ActionDefinition {
     private ActionType type;
     private String var;
     private String value;
+    private int count;
 
     public ActionType getType() {
         return type;
@@ -30,6 +31,14 @@ public class ActionDefinition {
 
     public void setValue(String value) {
         this.value = value;
+    }
+
+    public int getCount() {
+        return count;
+    }
+
+    public void setCount(int count) {
+        this.count = count;
     }
 
     @Override

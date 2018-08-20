@@ -41,39 +41,18 @@
             },
             {
               "type": "SLOW_UP",
-              "value": "battle-skill-top-slider"
-            },
-            {
-              "type": "SLOW_UP",
-              "value": "battle-skill-top-slider"
-            },
-            {
-              "type": "SLOW_UP",
-              "value": "battle-skill-top-slider"
-            },
-            {
-              "type": "SLOW_UP",
-              "value": "battle-skill-top-slider"
-            },
-            {
-              "type": "SLOW_UP",
-              "value": "battle-skill-top-slider"
-            },
-            {
-              "type": "SLOW_UP",
-              "value": "battle-skill-top-slider"
+              "value": "battle-skill-top-slider",
+              "count": "6"
             },
             {
               "type": "TAP",
-              "value": "battle-skill-top-2"
+              "value": "battle-skill-top-2",
+              "count": "1"
             },
             {
               "type": "TAP",
-              "value": "battle-unit_3"
-            },
-            {
-              "type": "TAP",
-              "value": "battle-unit_3"
+              "value": "battle-unit_3",
+              "count": "2"
             },
             {
               "type": "WAIT",
@@ -116,31 +95,8 @@
             },
             {
               "type": "SLOW_UP",
-              "value": "battle-skill-top-slider"
-            },
-            {
-              "type": "SLOW_UP",
-              "value": "battle-skill-top-slider"
-            },
-            {
-              "type": "SLOW_UP",
-              "value": "battle-skill-top-slider"
-            },
-            {
-              "type": "SLOW_UP",
-              "value": "battle-skill-top-slider"
-            },
-            {
-              "type": "SLOW_UP",
-              "value": "battle-skill-top-slider"
-            },
-            {
-              "type": "SLOW_UP",
-              "value": "battle-skill-top-slider"
-            },
-            {
-              "type": "SLOW_UP",
-              "value": "battle-skill-top-slider"
+              "value": "battle-skill-top-slider",
+              "count": "7"
             },
             {
               "type": "TAP",
@@ -156,11 +112,12 @@
             },
             {
               "type": "TAP",
-              "value": "battle-skill-top-3"
+              "value": "battle-skill-top-3",
+              "count": "2"
             },
             {
-              "type": "TAP",
-              "value": "battle-skill-top-3"
+              "type": "WAIT",
+              "value": "300"
             }
           ]
         },
@@ -195,39 +152,16 @@
             },
             {
               "type": "SLOW_UP",
-              "value": "battle-skill-top-slider"
-            },
-            {
-              "type": "SLOW_UP",
-              "value": "battle-skill-top-slider"
-            },
-            {
-              "type": "SLOW_UP",
-              "value": "battle-skill-top-slider"
-            },
-            {
-              "type": "SLOW_UP",
-              "value": "battle-skill-top-slider"
-            },
-            {
-              "type": "SLOW_UP",
-              "value": "battle-skill-top-slider"
-            },
-            {
-              "type": "SLOW_UP",
-              "value": "battle-skill-top-slider"
-            },
-            {
-              "type": "SLOW_UP",
-              "value": "battle-skill-top-slider"
-            },
-            {
-              "type": "SLOW_UP",
-              "value": "battle-skill-top-slider"
+              "value": "battle-skill-top-slider",
+              "count": "8"
             },
             {
               "type": "TAP",
               "value": "battle-skill-top-5"
+            },
+            {
+              "type": "WAIT",
+              "value": "300"
             }
           ]
         },
@@ -262,39 +196,16 @@
             },
             {
               "type": "SLOW_UP",
-              "value": "battle-skill-top-slider"
-            },
-            {
-              "type": "SLOW_UP",
-              "value": "battle-skill-top-slider"
-            },
-            {
-              "type": "SLOW_UP",
-              "value": "battle-skill-top-slider"
-            },
-            {
-              "type": "SLOW_UP",
-              "value": "battle-skill-top-slider"
-            },
-            {
-              "type": "SLOW_UP",
-              "value": "battle-skill-top-slider"
-            },
-            {
-              "type": "SLOW_UP",
-              "value": "battle-skill-top-slider"
-            },
-            {
-              "type": "SLOW_UP",
-              "value": "battle-skill-top-slider"
-            },
-            {
-              "type": "SLOW_UP",
-              "value": "battle-skill-top-slider"
+              "value": "battle-skill-top-slider",
+              "count": "8"
             },
             {
               "type": "TAP",
               "value": "battle-skill-top-2"
+            },
+            {
+              "type": "WAIT",
+              "value": "300"
             }
           ]
         },
@@ -329,35 +240,16 @@
             },
             {
               "type": "SLOW_UP",
-              "value": "battle-skill-top-slider"
-            },
-            {
-              "type": "SLOW_UP",
-              "value": "battle-skill-top-slider"
-            },
-            {
-              "type": "SLOW_UP",
-              "value": "battle-skill-top-slider"
-            },
-            {
-              "type": "SLOW_UP",
-              "value": "battle-skill-top-slider"
-            },
-            {
-              "type": "SLOW_UP",
-              "value": "battle-skill-top-slider"
-            },
-            {
-              "type": "SLOW_UP",
-              "value": "battle-skill-top-slider"
-            },
-            {
-              "type": "SLOW_UP",
-              "value": "battle-skill-top-slider"
+              "value": "battle-skill-top-slider",
+              "count": "7"
             },
             {
               "type": "TAP",
               "value": "battle-skill-top-2"
+            },
+            {
+              "type": "WAIT",
+              "value": "300"
             }
           ]
         },

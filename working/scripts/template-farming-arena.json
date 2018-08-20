@@ -64,16 +64,8 @@
               "value": "battle-skill-top-slider"
             },
             {
-              "type": "SLOW_UP",
-              "value": "battle-skill-top-slider"
-            },
-            {
-              "type": "SLOW_UP",
-              "value": "battle-skill-top-slider"
-            },
-            {
               "type": "TAP",
-              "value": "battle-skill-top-5"
+              "value": "battle-skill-top-2"
             },
             {
               "type": "TAP",
@@ -147,20 +139,28 @@
               "value": "battle-skill-top-slider"
             },
             {
+              "type": "SLOW_UP",
+              "value": "battle-skill-top-slider"
+            },
+            {
               "type": "TAP",
-              "value": "battle-skill-top-5"
+              "value": "battle-skill-top-2"
             },
             {
               "type": "WAIT",
               "value": "200"
             },
             {
-              "type": "TAP",
-              "value": "battle-skill-top-0"
+              "type": "SLOW_DOWN",
+              "value": "battle-skill-top-slider"
             },
             {
               "type": "TAP",
-              "value": "battle-skill-top-0"
+              "value": "battle-skill-top-3"
+            },
+            {
+              "type": "TAP",
+              "value": "battle-skill-top-3"
             }
           ]
         },
@@ -192,6 +192,18 @@
             {
               "type": "WAIT",
               "value": "200"
+            },
+            {
+              "type": "SLOW_UP",
+              "value": "battle-skill-top-slider"
+            },
+            {
+              "type": "SLOW_UP",
+              "value": "battle-skill-top-slider"
+            },
+            {
+              "type": "SLOW_UP",
+              "value": "battle-skill-top-slider"
             },
             {
               "type": "SLOW_UP",
@@ -282,7 +294,7 @@
             },
             {
               "type": "TAP",
-              "value": "battle-skill-top-5"
+              "value": "battle-skill-top-2"
             }
           ]
         },
@@ -305,7 +317,7 @@
           "actions": [
             {
               "type": "MSG",
-              "value": "Setting Up N"
+              "value": "Setting Up Olive"
             },
             {
               "type": "SWIPE_RIGHT",
@@ -314,10 +326,6 @@
             {
               "type": "WAIT",
               "value": "200"
-            },
-            {
-              "type": "SLOW_UP",
-              "value": "battle-skill-top-slider"
             },
             {
               "type": "SLOW_UP",

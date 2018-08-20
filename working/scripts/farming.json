@@ -499,6 +499,8 @@
         "_common-ml-goals",
         "_common-ml-friend_0",
         "_common-ml-friend_none",
+        "_raid-find_depart_team",
+        "_raid-depart",
         "_raid-to_battle",
         "_common-no_op"
       ],
@@ -554,33 +556,12 @@
               "value": "raid_to_home"
             }
           ]
-        },
-        {
-          "condition": {
-            "is": "SCREEN",
-            "value": "menu-depart",
-            "and": [
-              {
-                "is": "SCREEN",
-                "value": "menu-depart-team_0"
-              }
-            ]
-          },
-          "actions": [
-            {
-              "type": "TAP",
-              "value": "menu-depart-depart"
-            },
-            {
-              "type": "WAIT",
-              "value": "8500"
-            },
-            {
-              "type": "REPEAT",
-              "value": ""
-            }
-          ]
-        },
+        }
+      ]
+    },
+    "_raid-find_depart_team": {
+      "name": "Raid - Find Depart Team",
+      "statements": [
         {
           "condition": {
             "is": "SCREEN",
@@ -600,6 +581,31 @@
             {
               "type": "WAIT",
               "value": "1500"
+            },
+            {
+              "type": "REPEAT",
+              "value": ""
+            }
+          ]
+        }
+      ]
+    },
+    "_raid-depart": {
+      "name": "Raid - Depart",
+      "statements": [
+        {
+          "condition": {
+            "is": "SCREEN",
+            "value": "menu-depart"
+          },
+          "actions": [
+            {
+              "type": "TAP",
+              "value": "menu-depart-depart"
+            },
+            {
+              "type": "WAIT",
+              "value": "8500"
             },
             {
               "type": "REPEAT",

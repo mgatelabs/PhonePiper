@@ -312,11 +312,13 @@ public class ScriptRunner {
                 if (screenDefinition == null) {
                     System.out.println("Unknown Screen Id: " + screeId);
                     logger.log(Level.SEVERE, "Unknown Screen Id: " + screeId);
+                    continue;
                 } else if (screenDefinition.getPoints() == null) {
                     System.out.println("Bad Screen Id: " + screeId);
                     logger.log(Level.SEVERE, "Bad Screen Id: " + screeId);
+                    continue;
                 }
-                if (!screenDefinition.isEnabled() || screenDefinition.getPoints() == null || screenDefinition.getPoints().isEmpty()) {
+                if (!screenDefinition.isEnabled() || screenDefinition.getPoints() == null || (screenDefinition.getPoints() != null && screenDefinition.getPoints().isEmpty())) {
                     logger.log(Level.SEVERE, "Disabled Screen: " + screenDefinition.getScreenId() + " for state: " + stateEntry.getValue().getId());
                     continue;
                 }

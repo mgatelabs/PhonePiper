@@ -220,6 +220,11 @@
     "points" : [ ],
     "enabled" : false
   }, {
+    "name" : "Menu - Depart - Team 2",
+    "screenId" : "menu-depart-team_2",
+    "points" : [ ],
+    "enabled" : false
+  }, {
     "name" : "Menu - Energy Recovery",
     "screenId" : "menu-energy_recovery",
     "points" : [ ],

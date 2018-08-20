@@ -270,75 +270,149 @@
       ]
     },
 
-  "_common_battle-auto":{
-    "name": "Common Battle - Auto",
-    "statements": [
-      {
-        "condition": {
-          "is": "SCREEN",
-          "value": "game-battle",
-          "and": [
+    "_common_battle-auto": {
+      "name": "Common Battle - Auto",
+      "statements": [
+        {
+          "condition": {
+            "is": "SCREEN",
+            "value": "game-battle",
+            "and": [
+              {
+                "is": "SCREEN",
+                "value": "game-battle-auto_off",
+                "or": [
+                  {
+                    "is": "SCREEN",
+                    "value": "game-battle-repeat"
+                  }
+                ]
+              },
+              {
+                "is": "SCREEN",
+                "value": "battle-unit-0_ready"
+              }
+            ]
+          },
+          "actions": [
             {
-              "is": "SCREEN",
-              "value": "game-battle-auto_off",
-              "or" : [
-                {
-                  "is":"SCREEN",
-                  "value": "game-battle-repeat"
-                }
-              ]
+              "type": "MSG",
+              "value": "Auto-Attack"
             },
             {
-              "is": "SCREEN",
-              "value": "battle-unit-0_ready"
-            }
-          ]
-        },
-        "actions": [
-          {
-            "type": "MSG",
-            "value": "Auto-Attack"
-          },
-          {
-            "type": "TAP",
-            "value": "battle-auto"
-          },
-          {
-            "type": "SET",
-            "value": "0",
-            "var": "setup"
-          },
-          {
-            "type": "WAIT",
-            "value": "15000"
-          },
-          {
-            "type": "REPEAT",
-            "value": ""
-          }
-        ]
-      },
-      {
-        "condition": {
-          "is": "SCREEN",
-          "value": "game-battle",
-          "and": [
+              "type": "TAP",
+              "value": "battle-auto"
+            },
             {
-              "not": "SCREEN",
-              "value": "game-battle-auto_off"
+              "type": "SET",
+              "value": "0",
+              "var": "setup"
+            },
+            {
+              "type": "WAIT",
+              "value": "15000"
+            },
+            {
+              "type": "REPEAT",
+              "value": ""
             }
           ]
         },
-        "actions": [
-          {
-            "type": "SET",
-            "value": "0",
-            "var": "_loops"
-          }
-        ]
-      }
-    ]
-  }
+        {
+          "condition": {
+            "is": "SCREEN",
+            "value": "game-battle",
+            "and": [
+              {
+                "not": "SCREEN",
+                "value": "game-battle-auto_off"
+              }
+            ]
+          },
+          "actions": [
+            {
+              "type": "SET",
+              "value": "0",
+              "var": "_loops"
+            }
+          ]
+        }
+      ]
+    },
+    "_common_battle-repeat":{
+      "name": "Common Battle - Repeat",
+      "statements": [
+        {
+          "condition": {
+            "is": "SCREEN",
+            "value": "game-battle",
+            "and": [
+              {
+                "is": "SCREEN",
+                "value": "game-battle-auto_off",
+                "or" : [
+                  {
+                    "is":"SCREEN",
+                    "value": "game-battle-repeat"
+                  }
+                ]
+              },
+              {
+                "is": "SCREEN",
+                "value": "battle-unit-0_ready"
+              }
+            ]
+          },
+          "actions": [
+            {
+              "type": "MSG",
+              "value": "Auto-Attack"
+            },
+            {
+              "type": "TAP",
+              "value": "battle-repeat"
+            },
+            {
+              "type": "TAP",
+              "value": "battle-unit_5",
+              "count": "1"
+            },
+            {
+              "type": "SET",
+              "value": "0",
+              "var": "setup"
+            },
+            {
+              "type": "WAIT",
+              "value": "5000"
+            },
+            {
+              "type": "REPEAT",
+              "value": ""
+            }
+          ]
+        },
+        {
+          "condition": {
+            "is": "SCREEN",
+            "value": "game-battle",
+            "and": [
+              {
+                "not": "SCREEN",
+                "value": "game-battle-auto_off"
+              }
+            ]
+          },
+          "actions": [
+            {
+              "type": "SET",
+              "value": "0",
+              "var": "_loops"
+            }
+          ]
+        }
+      ]
+    }
 
   }
 }

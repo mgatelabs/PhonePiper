@@ -112,6 +112,7 @@
         "_common-ml-friend_0",
         "_common-ml-friend_none",
         "_common-ml-mission",
+        "_farm-find_depart_team",
         "_common-ml-depart",
         "_es-menu",
         "_common-no_op"
@@ -163,7 +164,13 @@
               "value": "farm_to_home"
             }
           ]
-        },
+        }
+      ]
+    },
+
+    "_farm-find_depart_team": {
+      "name": "Farm - Find Depart Team",
+      "statements": [
         {
           "condition": {
             "is": "SCREEN",
@@ -192,6 +199,7 @@
         }
       ]
     },
+
     "_es-menu": {
       "name": "Farm - Menu Ending Include",
       "statements": [
@@ -719,7 +727,6 @@
         "_common-no_op"
       ]
     },
-
     "_home_daily_fixes": {
       "name": "Home - Daily Fixes",
       "statements": [
@@ -1142,7 +1149,6 @@
         }
       ]
     },
-
     "farm_to_home": {
       "name": "Farm - To Home",
       "includes": [
@@ -1195,7 +1201,6 @@
         }
       ]
     },
-
     "raid_to_home": {
       "name": "Raid - To Home",
       "includes": [
@@ -1246,7 +1251,6 @@
         }
       ]
     },
-
     "arena_to_home": {
       "name": "Arena - To Home",
       "includes": [
@@ -1273,7 +1277,6 @@
         }
       ]
     },
-
     "_backup_to_home": {
       "name": "Backup to Home",
       "statements": [
@@ -1313,7 +1316,6 @@
         }
       ]
     },
-
     "log-in": {
       "name": "Common - Recovery Log In",
       "includes": [
@@ -1418,7 +1420,6 @@
         }
       ]
     },
-
     "arena-home": {
       "name": "Arena - Menu",
       "includes": [
@@ -1532,13 +1533,16 @@
             {
               "type": "SLOW_UP",
               "value": "menu-arena-opponent_drag"
-            },{
+            },
+            {
               "type": "SLOW_UP",
               "value": "menu-arena-opponent_drag"
-            },{
+            },
+            {
               "type": "SLOW_UP",
               "value": "menu-arena-opponent_drag"
-            }, {
+            },
+            {
               "type": "TAP",
               "value": "menu-arena-opponent_first"
             },

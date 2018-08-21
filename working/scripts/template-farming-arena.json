@@ -4,7 +4,6 @@
   "includes": [
   ],
   "states": {
-
     "arena-battle-setup": {
       "name": "Arena - Battle - Setup (Override)",
       "includes": [
@@ -48,6 +47,11 @@
             {
               "type": "MSG",
               "value": "Stop has been detected, trying to resolve"
+            },
+            {
+              "type": "SET",
+              "value": "1",
+              "var": "setup"
             },
             {
               "type": "SWIPE_RIGHT",
@@ -103,6 +107,11 @@
               "value": "Setting Up Ayaka"
             },
             {
+              "type": "SET",
+              "value": "0",
+              "var": "setup"
+            },
+            {
               "type": "SWIPE_RIGHT",
               "value": "battle-unit_3"
             },
@@ -135,7 +144,6 @@
             }
           ]
         },
-
         {
           "condition": {
             "is": "SCREEN",
@@ -192,7 +200,6 @@
             }
           ]
         },
-
         {
           "condition": {
             "is": "SCREEN",
@@ -236,7 +243,6 @@
             }
           ]
         },
-
         {
           "condition": {
             "is": "SCREEN",
@@ -280,7 +286,6 @@
             }
           ]
         },
-
         {
           "condition": {
             "is": "SCREEN",
@@ -324,14 +329,12 @@
             }
           ]
         },
-
         {
           "condition": {
             "is": "SCREEN",
             "value": "game-battle-repeat"
           },
           "actions": [
-
             {
               "type": "MSG",
               "value": "Starting Fight"
@@ -376,7 +379,6 @@
         }
       ]
     },
-
     "arena-battle-fight": {
       "name": "Arena - Battle - Fight (Override)",
       "includes": [
@@ -421,12 +423,35 @@
         {
           "condition": {
             "is": "SCREEN",
+            "value": "game-battle-repeat",
+            "and": [
+              {
+                "is": "EQUAL",
+                "var": "setup",
+                "value": "1"
+              }
+            ]
+          },
+          "actions": [
+            {
+              "type": "MSG",
+              "value": "Ayaka needs to be reset, reverting to setup phase to fix"
+            },
+            {
+              "type": "MOVE",
+              "value": "arena-battle-setup"
+            }
+          ]
+        },
+        {
+          "condition": {
+            "is": "SCREEN",
             "value": "game-battle-repeat"
           },
           "actions": [
             {
               "type": "MSG",
-              "value": "Fighting"
+              "value": "Fighting even more"
             },
             {
               "type": "TAP",
@@ -476,6 +501,5 @@
         }
       ]
     }
-
   }
 }

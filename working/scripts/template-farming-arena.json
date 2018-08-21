@@ -24,6 +24,77 @@
                 "is": "SCREEN",
                 "value": "battle-unit-3_mp"
               }
+            ],
+            "andOr": [
+              {
+                "is": "SCREEN",
+                "value": "battle-unit-0_stop"
+              },
+              {
+                "is": "SCREEN",
+                "value": "battle-unit-1_stop"
+              },
+              {
+                "is": "SCREEN",
+                "value": "battle-unit-2_stop"
+              },
+              {
+                "is": "SCREEN",
+                "value": "battle-unit-4_stop"
+              }
+            ]
+          },
+          "actions": [
+            {
+              "type": "MSG",
+              "value": "Stop has been detected, trying to resolve"
+            },
+            {
+              "type": "SWIPE_RIGHT",
+              "value": "battle-unit_3"
+            },
+            {
+              "type": "WAIT",
+              "value": "200"
+            },
+            {
+              "type": "SLOW_UP",
+              "value": "battle-skill-top-slider",
+              "count": "4"
+            },
+            {
+              "type": "TAP",
+              "value": "battle-skill-top-5",
+              "count": "1"
+            },
+            {
+              "type": "TAP",
+              "value": "battle-unit_3",
+              "count": "2"
+            },
+            {
+              "type": "WAIT",
+              "value": "3000"
+            },
+            {
+              "type": "REPEAT",
+              "value": ""
+            }
+          ]
+        },
+        {
+          "condition": {
+            "is": "SCREEN",
+            "value": "game-battle-repeat",
+            "and": [
+              {
+                "is": "SCREEN",
+                "value": "battle-unit-3_ready"
+              },
+              {
+                "is": "SCREEN",
+                "value": "battle-unit-3_mp"
+              }
             ]
           },
           "actions": [
@@ -313,6 +384,40 @@
         "_common-no_op"
       ],
       "statements": [
+        {
+          "condition": {
+            "is": "SCREEN",
+            "value": "game-battle-repeat",
+            "andOr": [
+              {
+                "is": "SCREEN",
+                "value": "battle-unit-0_stop"
+              },
+              {
+                "is": "SCREEN",
+                "value": "battle-unit-1_stop"
+              },
+              {
+                "is": "SCREEN",
+                "value": "battle-unit-2_stop"
+              },
+              {
+                "is": "SCREEN",
+                "value": "battle-unit-4_stop"
+              }
+            ]
+          },
+          "actions": [
+            {
+              "type": "MSG",
+              "value": "Stop has been detected, reverting to setup phase to fix"
+            },
+            {
+              "type": "MOVE",
+              "value": "arena-battle-setup"
+            }
+          ]
+        },
         {
           "condition": {
             "is": "SCREEN",

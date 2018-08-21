@@ -35,6 +35,11 @@
     "points" : [ ],
     "enabled" : false
   }, {
+    "name" : "battle-unit-0_stop",
+    "screenId" : "battle-unit-0_stop",
+    "points" : [ ],
+    "enabled" : false
+  }, {
     "name" : "Battle - Unit - 1 - Has MP",
     "screenId" : "battle-unit-1_mp",
     "points" : [ ],
@@ -42,6 +47,11 @@
   }, {
     "name" : "Battle - Unit - 1 Ready",
     "screenId" : "battle-unit-1_ready",
+    "points" : [ ],
+    "enabled" : false
+  }, {
+    "name" : "battle-unit-1_stop",
+    "screenId" : "battle-unit-1_stop",
     "points" : [ ],
     "enabled" : false
   }, {
@@ -55,6 +65,11 @@
     "points" : [ ],
     "enabled" : false
   }, {
+    "name" : "battle-unit-2_stop",
+    "screenId" : "battle-unit-2_stop",
+    "points" : [ ],
+    "enabled" : false
+  }, {
     "name" : "Battle - Unit - 3 - Has MP",
     "screenId" : "battle-unit-3_mp",
     "points" : [ ],
@@ -65,6 +80,11 @@
     "points" : [ ],
     "enabled" : false
   }, {
+    "name" : "battle-unit-3_stop",
+    "screenId" : "battle-unit-3_stop",
+    "points" : [ ],
+    "enabled" : false
+  }, {
     "name" : "Battle - Unit - 4 - Has MP",
     "screenId" : "battle-unit-4_mp",
     "points" : [ ],
@@ -72,6 +92,11 @@
   }, {
     "name" : "Battle - Unit - 4 Ready",
     "screenId" : "battle-unit-4_ready",
+    "points" : [ ],
+    "enabled" : false
+  }, {
+    "name" : "battle-unit-4_stop",
+    "screenId" : "battle-unit-4_stop",
     "points" : [ ],
     "enabled" : false
   }, {

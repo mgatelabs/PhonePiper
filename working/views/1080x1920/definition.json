@@ -605,6 +605,47 @@
     } ],
     "enabled" : true
   }, {
+    "name" : "battle-unit-0_stop",
+    "screenId" : "battle-unit-0_stop",
+    "points" : [ {
+      "x" : 382,
+      "y" : 1226,
+      "r" : 117,
+      "g" : 117,
+      "b" : 116
+    }, {
+      "x" : 393,
+      "y" : 1226,
+      "r" : 118,
+      "g" : 118,
+      "b" : 117
+    }, {
+      "x" : 375,
+      "y" : 1218,
+      "r" : 23,
+      "g" : 6,
+      "b" : 3
+    }, {
+      "x" : 401,
+      "y" : 1218,
+      "r" : 20,
+      "g" : 5,
+      "b" : 3
+    }, {
+      "x" : 415,
+      "y" : 1218,
+      "r" : 3,
+      "g" : 17,
+      "b" : 40
+    }, {
+      "x" : 415,
+      "y" : 1226,
+      "r" : 2,
+      "g" : 18,
+      "b" : 43
+    } ],
+    "enabled" : true
+  }, {
     "name" : "Battle - Unit - 1 - Has MP",
     "screenId" : "battle-unit-1_mp",
     "points" : [ {
@@ -681,6 +722,47 @@
     } ],
     "enabled" : true
   }, {
+    "name" : "battle-unit-1_stop",
+    "screenId" : "battle-unit-1_stop",
+    "points" : [ {
+      "x" : 379,
+      "y" : 1420,
+      "r" : 118,
+      "g" : 118,
+      "b" : 117
+    }, {
+      "x" : 390,
+      "y" : 1420,
+      "r" : 118,
+      "g" : 117,
+      "b" : 116
+    }, {
+      "x" : 397,
+      "y" : 1412,
+      "r" : 22,
+      "g" : 5,
+      "b" : 3
+    }, {
+      "x" : 373,
+      "y" : 1412,
+      "r" : 25,
+      "g" : 5,
+      "b" : 3
+    }, {
+      "x" : 411,
+      "y" : 1412,
+      "r" : 3,
+      "g" : 17,
+      "b" : 40
+    }, {
+      "x" : 411,
+      "y" : 1420,
+      "r" : 3,
+      "g" : 18,
+      "b" : 43
+    } ],
+    "enabled" : true
+  }, {
     "name" : "Battle - Unit - 2 - Has MP",
     "screenId" : "battle-unit-2_mp",
     "points" : [ {
@@ -748,6 +830,47 @@
       "r" : 0,
       "g" : 3,
       "b" : 55
+    } ],
+    "enabled" : true
+  }, {
+    "name" : "battle-unit-2_stop",
+    "screenId" : "battle-unit-2_stop",
+    "points" : [ {
+      "x" : 371,
+      "y" : 1608,
+      "r" : 22,
+      "g" : 6,
+      "b" : 3
+    }, {
+      "x" : 379,
+      "y" : 1613,
+      "r" : 119,
+      "g" : 119,
+      "b" : 118
+    }, {
+      "x" : 390,
+      "y" : 1613,
+      "r" : 119,
+      "g" : 118,
+      "b" : 118
+    }, {
+      "x" : 397,
+      "y" : 1607,
+      "r" : 23,
+      "g" : 5,
+      "b" : 3
+    }, {
+      "x" : 411,
+      "y" : 1607,
+      "r" : 3,
+      "g" : 16,
+      "b" : 40
+    }, {
+      "x" : 411,
+      "y" : 1613,
+      "r" : 3,
+      "g" : 18,
+      "b" : 43
     } ],
     "enabled" : true
   }, {
@@ -821,6 +944,11 @@
     } ],
     "enabled" : true
   }, {
+    "name" : "battle-unit-3_stop",
+    "screenId" : "battle-unit-3_stop",
+    "points" : [ ],
+    "enabled" : false
+  }, {
     "name" : "Battle - Unit - 4 - Has MP",
     "screenId" : "battle-unit-4_mp",
     "points" : [ {
@@ -888,6 +1016,47 @@
       "r" : 0,
       "g" : 3,
       "b" : 55
+    } ],
+    "enabled" : true
+  }, {
+    "name" : "battle-unit-4_stop",
+    "screenId" : "battle-unit-4_stop",
+    "points" : [ {
+      "x" : 913,
+      "y" : 1419,
+      "r" : 118,
+      "g" : 118,
+      "b" : 117
+    }, {
+      "x" : 925,
+      "y" : 1419,
+      "r" : 118,
+      "g" : 118,
+      "b" : 117
+    }, {
+      "x" : 907,
+      "y" : 1412,
+      "r" : 24,
+      "g" : 5,
+      "b" : 3
+    }, {
+      "x" : 933,
+      "y" : 1412,
+      "r" : 19,
+      "g" : 6,
+      "b" : 3
+    }, {
+      "x" : 946,
+      "y" : 1412,
+      "r" : 3,
+      "g" : 17,
+      "b" : 40
+    }, {
+      "x" : 946,
+      "y" : 1419,
+      "r" : 3,
+      "g" : 18,
+      "b" : 43
     } ],
     "enabled" : true
   }, {

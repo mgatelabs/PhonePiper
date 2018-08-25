@@ -13,10 +13,9 @@ Some scripts are a bit outdated, and need to be re-evaluated again.
 
 ## Getting Started
 
-0. Have the right phone
-* Axon7
+0. Have the right phone/resolution
 * Samsung S7 (1080P)
-* More devices are possible, but I only have those two phone.  If I was provided screen shots for every needed screen, I could build another definition.
+* More devices are possible, but I only have a limited # of phones.  If I was provided screen shots for every needed screen, I could build another definition.
 1. Install Java 8
 * http://www.oracle.com/technetwork/java/javase/downloads/index.html
 * JRE is to only run the app
@@ -32,7 +31,7 @@ Some scripts are a bit outdated, and need to be re-evaluated again.
 * Build from source
 * https://github.com/mgatelabs/ImageReaderApp
 4. Get this app
-* Release version
+* Release version (This is really out of date)
 * https://github.com/mgatelabs/FFBExecute/releases
 * Build from source (Use Intellij Community edition)
 5. Make sure ADB works
@@ -42,8 +41,10 @@ Some scripts are a bit outdated, and need to be re-evaluated again.
 * Open a cmd window
 * type "adb device-state", press enter and see what is returned.  If it's working you should see "device"
 6. Run the app
-* From intellij you need to setup a Java 8 configuration to execute "com.mgatelabs.ffbe.Runner"
-* From windows, double click FFBExecute.jar to start the app.
+* From JetBrains IntelliJ
+** you need to setup a Java 8 configuration to execute "com.mgatelabs.ffbe.Runner"
+** Set the program argument to SERVER
+** Change the working directory to the working folder included with the app
 
 ## Common Configurations
 

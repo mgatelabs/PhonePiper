@@ -80,7 +80,7 @@ public class ScriptRunner {
         timers = Maps.newHashMap();
         stack = new Stack<>();
         vars = Maps.newHashMap();
-        shell = new AdbShell();
+        shell = new AdbShell(deviceDefinition);
 
         logger.removeHandler(customHandler);
         logger.addHandler(customHandler);
@@ -214,7 +214,7 @@ public class ScriptRunner {
                 ex.printStackTrace();
             }
         }
-        shell = new AdbShell();
+        shell = new AdbShell(deviceDefinition);
     }
 
     public Date getLastImageDate() {

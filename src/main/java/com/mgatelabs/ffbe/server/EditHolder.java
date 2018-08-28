@@ -55,6 +55,6 @@ public class EditHolder {
     }
 
     public void resetShell() {
-        shell = new AdbShell();
+        shell = new AdbShell(deviceDefinition);
     }
 }

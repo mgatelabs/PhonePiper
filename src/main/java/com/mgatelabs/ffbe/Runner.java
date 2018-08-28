@@ -62,10 +62,10 @@ public class Runner {
 
         if (args.length >= 1 && "server".equalsIgnoreCase(args[0])) {
             SpringApplication.run(ServerRunner.class, args);
-        } else if (args.length >= 1 && "frame".equalsIgnoreCase(args[0])) {
+        } /*else if (args.length >= 1 && "frame".equalsIgnoreCase(args[0])) {
 
             long startTime = System.nanoTime();
-            AdbUtils.persistScreen(new AdbShell());
+            AdbUtils.persistScreen(new AdbShell(""));
             long endTime = System.nanoTime();
 
             long dif = endTime - startTime;
@@ -73,7 +73,7 @@ public class Runner {
             System.out.println("Frame captured in: " + ((float) dif / 1000000000.0) + "s");
 
             return;
-        } else {
+        }*/ else {
 
             PlayerDefinition playerDefinition = PlayerDefinition.read();
 

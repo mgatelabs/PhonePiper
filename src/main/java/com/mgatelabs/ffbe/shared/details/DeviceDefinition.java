@@ -18,6 +18,7 @@ public class DeviceDefinition {
     @JsonIgnore
     private String deviceId;
     private String viewId;
+    private String adbEndLine;
     private int width;
     private int height;
 
@@ -72,6 +73,14 @@ public class DeviceDefinition {
         this.height = height;
     }
 
+    public String getAdbEndLine() {
+        return adbEndLine;
+    }
+
+    public void setAdbEndLine(String adbEndLine) {
+        this.adbEndLine = adbEndLine;
+    }
+
     public static File getFileFor(String deviceName) {
         return new File(Runner.WORKING_DIRECTORY,"devices/" + deviceName + ".json");
     }
@@ -87,6 +96,9 @@ public class DeviceDefinition {
             try {
                 DeviceDefinition deviceDefinition = objectMapper.readValue(deviceFile, DeviceDefinition.class);
                 deviceDefinition.setDeviceId(deviceName);
+                if (deviceDefinition.getAdbEndLine() == null) {
+                    deviceDefinition.setAdbEndLine("load average:");
+                }
                 return deviceDefinition;
             } catch (JsonParseException e) {
                 e.printStackTrace();

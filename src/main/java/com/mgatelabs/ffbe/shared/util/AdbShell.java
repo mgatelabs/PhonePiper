@@ -2,6 +2,7 @@ package com.mgatelabs.ffbe.shared.util;
 
 import com.google.common.base.Joiner;
 import com.google.common.collect.Lists;
+import com.mgatelabs.ffbe.shared.details.DeviceDefinition;
 import org.apache.commons.lang3.StringUtils;
 
 import java.io.*;
@@ -23,7 +24,8 @@ public class AdbShell {
     //private char[] ECHO_KEY = {'9', '8', '7', '6', '1', '2', '3', '4'};
     //ailsa_ii:/
 
-    private String ECHO_KEY = "load average";
+    private String endLineKey;
+    //sleep time
 
     private OutputStream processInput;
     private InputStream processOutput;
@@ -31,6 +33,8 @@ public class AdbShell {
     private boolean ready;
 
     private List<String> batch;
+
+
 
     public static String enableRemote() {
         return commonHandler(new ProcessBuilder("adb", "tcpip", "5555"));
@@ -89,8 +93,10 @@ public class AdbShell {
         }
     }
 
-    public AdbShell() {
+    public AdbShell(DeviceDefinition device) {
         batch = Lists.newArrayList();
+
+        endLineKey = device.getAdbEndLine();
 
         builder = new ProcessBuilder("adb", "shell");
         builder.redirectOutput(ProcessBuilder.Redirect.PIPE);
@@ -172,10 +178,10 @@ public class AdbShell {
             while (!exitFound && (c = processOutput.read(buffer)) != -1) {
                 //System.out.println("Reading: " + c);
                 for (int i = 0; i < c; i++) {
-                    if (buffer[i] == ECHO_KEY.charAt(index)) {
+                    if (buffer[i] == endLineKey.charAt(index)) {
                         //System.out.println("KEY");
                         index++;
-                        if (index >= ECHO_KEY.length()) {
+                        if (index >= endLineKey.length()) {
                             //System.out.println("END KEY");
                             exitFound = true;
                             break;

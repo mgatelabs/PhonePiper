@@ -4,7 +4,6 @@ import com.mgatelabs.ffbe.Runner;
 import com.mgatelabs.ffbe.shared.details.*;
 import com.mgatelabs.ffbe.shared.mapper.MapDefinition;
 import com.mgatelabs.ffbe.shared.util.AdbShell;
-import com.mgatelabs.ffbe.shared.util.AdbUtils;
 import com.mgatelabs.ffbe.ui.FrameChoices;
 import com.mgatelabs.ffbe.ui.panels.*;
 import com.mgatelabs.ffbe.ui.utils.CustomHandler;
@@ -15,7 +14,6 @@ import javax.swing.event.MenuListener;
 import java.awt.*;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
-import java.beans.PropertyVetoException;
 
 /**
  * Created by @mgatelabs (Michael Fuller) on 9/12/2017.
@@ -104,8 +102,6 @@ public class MainFrame extends JFrame {
 
         customHandler = new CustomHandler();
 
-        shell = new AdbShell();
-
         connectionDefinition = ConnectionDefinition.read();
 
         playerDefinition = choices.getPlayerDefinition();
@@ -113,6 +109,8 @@ public class MainFrame extends JFrame {
         mapDefinition = choices.getMapDefinition();
         deviceDefinition = choices.getDeviceDefinition();
         viewDefinition = choices.getViewDefinition();
+
+        shell = new AdbShell(deviceDefinition);
 
         boolean showMap = false;
         boolean showPlayer = false;

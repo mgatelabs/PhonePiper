@@ -463,7 +463,7 @@ public class WebResource {
                 }
                 runner = null;
             }
-            editHolder = new EditHolder(frameChoices.getScriptDefinition(), frameChoices.getMapDefinition(), frameChoices.getDeviceDefinition(), frameChoices.getViewDefinition(), null, new AdbShell(), deviceHelper);
+            editHolder = new EditHolder(frameChoices.getScriptDefinition(), frameChoices.getMapDefinition(), frameChoices.getDeviceDefinition(), frameChoices.getViewDefinition(), null, new AdbShell(frameChoices.getDeviceDefinition()), deviceHelper);
             return result;
         } else {
             return new PrepResult(StatusEnum.FAIL);

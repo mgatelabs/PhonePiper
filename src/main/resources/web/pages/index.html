@@ -61,6 +61,7 @@
 
             var playPauseButton = $('#controlPlayPause');
             var unloadButton = $('#controlUnload');
+            var killButton = $('#controlKill');
             var unloadEdit = $('#unloadEdit');
             var loadButton = $('#controlLoad');
             var editViewButton = $('#controlEditView');
@@ -208,6 +209,19 @@
                         statusCheck();
                         $('[href="#config"]').tab('show');
                       }
+                    });
+                }
+            });
+
+            killButton.click(function(){
+                if (!unloadButton.hasClass('disabled')) {
+                    $.ajax({
+                        type: "POST",
+                        url: '/ffbe/process/kill',
+                        success: function(result){
+                            statusCheck();
+                            $('[href="#config"]').tab('show');
+                        }
                     });
                 }
             });
@@ -643,7 +657,8 @@
                 </div>
                 <div class="form-group">
                     <button type="button" id="controlPlayPause" class="btn btn-primary">Play/Pause</button>
-                    <button type="button" id="controlUnload" class="btn  btn-danger notWhileRunning">Unload</button>
+                    <button type="button" id="controlUnload" class="btn btn-danger notWhileRunning">Unload</button>
+                    <button type="button" id="controlKill" class="btn btn-danger">Kill</button>
                 </div>
                 <div class="form-group">
                     <label for="components">Components</label>

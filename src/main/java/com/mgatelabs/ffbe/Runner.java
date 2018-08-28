@@ -24,6 +24,7 @@ public class Runner {
     public static final String VERSION;
 
     public static File WORKING_DIRECTORY = new File(".");
+    public static String ADB_NAME = "adb";
 
     static {
         BufferedInputStream bui = new BufferedInputStream(Runner.class.getClassLoader().getResourceAsStream("version.txt"));
@@ -45,6 +46,9 @@ public class Runner {
         for (int i = 0; i < args.length - 1; i++) {
             if (StringUtils.equalsIgnoreCase(args[i], "-working")) {
                 WORKING_DIRECTORY = new File(args[i + 1]);
+                break;
+            }if (StringUtils.equalsIgnoreCase(args[i], "-adb")) {
+                ADB_NAME = args[i + 1];
                 break;
             }
         }

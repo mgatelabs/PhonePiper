@@ -392,6 +392,27 @@ public class WebResource {
     }
 
     @POST
+    @Path("/process/kill")
+    @Produces("application/json")
+    public Map<String, String> killProcess() {
+
+        checkInitialState();
+
+        Map<String, String> result = Maps.newHashMap();
+
+        if (runner != null) {
+            runner.setStatus(ScriptRunner.Status.PAUSED);
+            thread = null;
+            runner = null;
+            result.put("status", "true");
+        } else {
+            result.put("status", "false");
+        }
+
+        return result;
+    }
+
+    @POST
     @Path("/process/prep")
     @Consumes("application/json")
     @Produces("application/json")

@@ -10,6 +10,7 @@ import java.util.Set;
  */
 public class StatementDefinition {
     private ConditionDefinition condition;
+    private String description;
     private List<ActionDefinition> actions;
 
     public ConditionDefinition getCondition() {
@@ -26,6 +27,14 @@ public class StatementDefinition {
 
     public void setActions(List<ActionDefinition> actions) {
         this.actions = actions;
+    }
+
+    public String getDescription() {
+        return description == null ? "" : description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
     }
 
     public Set<String> determineScreenIds() {

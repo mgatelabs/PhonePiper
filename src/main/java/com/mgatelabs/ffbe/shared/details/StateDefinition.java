@@ -13,6 +13,7 @@ import java.util.Set;
  */
 public class StateDefinition {
     private String name;
+    private String description;
     @JsonIgnore
     private String id;
 
@@ -34,6 +35,14 @@ public class StateDefinition {
 
     public void setId(String id) {
         this.id = id;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
     }
 
     public List<StatementDefinition> getStatements() {
@@ -61,6 +70,9 @@ public class StateDefinition {
     }
 
     public void fix() {
+        if (getDescription() == null) {
+            setDescription("No description provided");
+        }
         if (includes == null) {
             includes = Lists.newArrayList();
         }

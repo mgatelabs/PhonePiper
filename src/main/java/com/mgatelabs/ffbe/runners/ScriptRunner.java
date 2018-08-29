@@ -427,18 +427,11 @@ public class ScriptRunner {
                 }
 
                 if (!shell.isReady()) {
-                    logger.log(Level.WARNING, "Bad Shell: Stopping");
+                    logger.log(Level.WARNING, "Bad Shell: Wait, Restart, Wait...");
+                    Thread.sleep(1000);
                     restartShell();
-                    this.status = Status.PAUSED;
-                    return;
+                    Thread.sleep(1000);
                 }
-
-                if (deviceHelper != null && deviceHelper.getFailures() > 20) {
-                    deviceHelper = null;
-                    logger.log(Level.SEVERE, "Stopping device helper");
-                }
-
-                //logger.log(Level.INFO, "Persist Calls");
 
                 if (deviceHelper != null) {
                     long startTime = System.nanoTime();

@@ -314,7 +314,7 @@
                         components.empty();
                         var i, item, grp, label, input, button;
                         for (i = 0; i < result.states.length; i++) {
-                        states.append($('<option></option>').attr('value', result.states[i].value).text(result.states[i].name));
+                        states.append($('<option></option>').attr('value', result.states[i].value).text(result.states[i].name).attr('description', result.states[i].description));
                         }
                         for (i = 0; i < result.components.length; i++) {
                         components.append($('<option></option>').attr('value', result.components[i].value).text(result.components[i].name));

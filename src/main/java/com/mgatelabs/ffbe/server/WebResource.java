@@ -515,7 +515,7 @@ public class WebResource {
             stateDefinitions.addAll(frameChoices.getScriptDefinition().getFilteredStates().values());
 
             for (StateDefinition definition : stateDefinitions) {
-                result.getStates().add(new NamedValueItem(definition.getName(), definition.getId()));
+                result.getStates().add(new NamedValueDescriptionItem(definition.getName(), definition.getId(), definition.getDescription()));
             }
 
             final SortedSet<ComponentDefinition> componentDefinitions = new TreeSet<>(new Comparator<ComponentDefinition>() {

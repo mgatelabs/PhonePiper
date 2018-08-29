@@ -14,7 +14,7 @@ public class PrepResult {
 
     private StatusEnum status;
 
-    private List<NamedValueItem> states;
+    private List<NamedValueDescriptionItem> states;
     private List<NamedValueItem> components;
     private List<NamedValueItem> screens;
     private List<VarDefinition> variables;
@@ -35,7 +35,7 @@ public class PrepResult {
         return status;
     }
 
-    public List<NamedValueItem> getStates() {
+    public List<NamedValueDescriptionItem> getStates() {
         return states;
     }
 

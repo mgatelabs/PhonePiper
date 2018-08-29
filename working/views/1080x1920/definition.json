@@ -5567,6 +5567,28 @@
     } ],
     "enabled" : true
   }, {
+    "name" : "Menu - Depart - Team 3",
+    "screenId" : "menu-depart-team_3",
+    "points" : [ {
+      "x" : 925,
+      "y" : 552,
+      "r" : 0,
+      "g" : 192,
+      "b" : 242
+    } ],
+    "enabled" : true
+  }, {
+    "name" : "Menu - Depart - Team 4",
+    "screenId" : "menu-depart-team_4",
+    "points" : [ {
+      "x" : 955,
+      "y" : 552,
+      "r" : 0,
+      "g" : 190,
+      "b" : 241
+    } ],
+    "enabled" : true
+  }, {
     "name" : "Menu - energy_recovery",
     "screenId" : "menu-energy_recovery",
     "points" : [ {

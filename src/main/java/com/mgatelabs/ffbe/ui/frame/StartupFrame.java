@@ -253,7 +253,7 @@ public class StartupFrame extends JFrame {
                 c.weightx = 0;
                 fieldPanel.add(label, c);
 
-                mapComboBox = new JComboBox<>(listJsonFilesIn(new File(Runner.WORKING_DIRECTORY,"./maps")));
+                mapComboBox = new JComboBox<>(); // listJsonFilesIn(new File(Runner.WORKING_DIRECTORY,"./maps"))
                 c.gridx = 1;
                 c.gridy = 5;
                 c.fill = GridBagConstraints.HORIZONTAL;

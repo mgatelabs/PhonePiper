@@ -26,7 +26,7 @@
     },
     {
       "name": "allow-ss",
-      "display": "Enable Screen Saved",
+      "display": "Enable Screen Saver",
       "value": "1",
       "type": "INT",
       "modify": "EDITABLE",

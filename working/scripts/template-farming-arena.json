@@ -6,7 +6,7 @@
   "states": {
     "arena-battle-setup": {
       "name": "Arena - Battle - Setup (Override)",
-      "Description":"Setup each unit and start the fight",
+      "description":"Setup each unit and start the fight",
       "includes": [
         "_arena-battle-fight",
         "_common-no_op"
@@ -383,7 +383,7 @@
     },
     "arena-battle-fight": {
       "name": "Arena - Battle - Fight (Override)",
-      "Description":"Continue fighting if every unit is fine, otherwise return to setup step.",
+      "description":"Continue fighting if every unit is fine, otherwise return to setup step.",
       "includes": [
         "_arena-battle-fight",
         "_common-no_op"

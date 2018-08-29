@@ -1,5 +1,10 @@
 {
   "screens" : [ {
+    "name" : "Battle - Actions",
+    "screenId" : "battle-actions",
+    "points" : [ ],
+    "enabled" : false
+  }, {
     "name" : "Battle - Complete",
     "screenId" : "battle-complete",
     "points" : [ ],
@@ -527,6 +532,14 @@
     "enabled" : false
   } ],
   "components" : [ {
+    "name" : "battle-actions-back",
+    "componentId" : "battle-actions-back",
+    "x" : 0,
+    "y" : 0,
+    "w" : 1,
+    "h" : 1,
+    "enabled" : false
+  }, {
     "name" : "Battle - Auto",
     "componentId" : "battle-auto",
     "x" : 25,

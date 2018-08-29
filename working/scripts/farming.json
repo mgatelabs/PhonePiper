@@ -1638,6 +1638,7 @@
     "arena-battle-setup": {
       "name": "Arena - Battle - Setup",
       "includes": [
+        "_arena-battle-fight",
         "_common-no_op"
       ],
       "statements": [
@@ -1689,8 +1690,24 @@
       ]
     },
     "_arena-battle-fight": {
-      "name": "Arena - Battle - Fight (Common)",
+      "name": "Arena - Battle - Common Fight",
       "statements": [
+        {
+          "condition": {
+            "is": "SCREEN",
+            "value": "battle-actions"
+          },
+          "actions": [
+            {
+              "type": "TAP",
+              "value": "battle-actions-back"
+            },
+            {
+              "type": "REPEAT",
+              "value": ""
+            }
+          ]
+        },
         {
           "condition": {
             "is": "SCREEN",

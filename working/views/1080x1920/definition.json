@@ -1,5 +1,46 @@
 {
   "screens" : [ {
+    "name" : "Battle - Actions",
+    "screenId" : "battle-actions",
+    "points" : [ {
+      "x" : 914,
+      "y" : 1788,
+      "r" : 31,
+      "g" : 215,
+      "b" : 204
+    }, {
+      "x" : 926,
+      "y" : 1789,
+      "r" : 16,
+      "g" : 205,
+      "b" : 210
+    }, {
+      "x" : 1008,
+      "y" : 1885,
+      "r" : 4,
+      "g" : 11,
+      "b" : 23
+    }, {
+      "x" : 1028,
+      "y" : 1865,
+      "r" : 7,
+      "g" : 14,
+      "b" : 26
+    }, {
+      "x" : 30,
+      "y" : 1813,
+      "r" : 0,
+      "g" : 44,
+      "b" : 63
+    }, {
+      "x" : 24,
+      "y" : 1819,
+      "r" : 0,
+      "g" : 41,
+      "b" : 59
+    } ],
+    "enabled" : true
+  }, {
     "name" : "Battle - Complete",
     "screenId" : "battle-complete",
     "points" : [ {
@@ -11657,6 +11698,14 @@
     "enabled" : true
   } ],
   "components" : [ {
+    "name" : "battle-actions-back",
+    "componentId" : "battle-actions-back",
+    "x" : 890,
+    "y" : 1790,
+    "w" : 110,
+    "h" : 60,
+    "enabled" : true
+  }, {
     "name" : "Battle - Auto",
     "componentId" : "battle-auto",
     "x" : 25,

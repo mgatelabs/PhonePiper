@@ -526,6 +526,11 @@
               "value": "menu-raid_0"
             },
             {
+              "type": "SET",
+              "var": "setup",
+              "value": "0"
+            },
+            {
               "type": "WAIT",
               "value": "10000"
             },
@@ -604,6 +609,11 @@
               "value": "menu-depart-depart"
             },
             {
+              "type": "SET",
+              "var": "setup",
+              "value": "0"
+            },
+            {
               "type": "WAIT",
               "value": "8500"
             },
@@ -631,6 +641,11 @@
             {
               "type": "SET",
               "var": "_loops",
+              "value": "0"
+            },
+            {
+              "type": "SET",
+              "var": "setup",
               "value": "0"
             },
             {

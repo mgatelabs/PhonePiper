@@ -69,6 +69,15 @@
       "order": 10
     },
     {
+      "name": "allow-farm",
+      "display": "Enable Farm",
+      "value": "1",
+      "type": "INT",
+      "modify": "EDITABLE",
+      "displayType": "BOOLEAN",
+      "order": 10
+    },
+    {
       "name": "allow-arena",
       "display": "Enable Arena",
       "value": "0",
@@ -1219,6 +1228,30 @@
               "value": "home_to_arena"
             }
           ]
+        },
+        {
+          "condition": {
+            "is": "SCREEN",
+            "value": "menu-home",
+            "and": [
+              {
+                "is": "EQUAL",
+                "value": "1",
+                "var": "allow-farm"
+              }
+            ]
+          },
+          "actions": [
+            {
+              "type": "SET",
+              "value": "0",
+              "var": "_screen_saver"
+            },
+            {
+              "type": "MOVE",
+              "value": "home_to_farm"
+            }
+          ]
         }
       ]
     },
@@ -1256,7 +1289,14 @@
         {
           "condition": {
             "is": "SCREEN",
-            "value": "menu-home"
+            "value": "menu-home",
+            "and": [
+              {
+                "is": "EQUAL",
+                "value": "1",
+                "var": "allow-farm"
+              }
+            ]
           },
           "actions": [
             {
@@ -1267,6 +1307,30 @@
             {
               "type": "MOVE",
               "value": "home_to_farm"
+            }
+          ]
+        },
+        {
+          "condition": {
+            "is": "SCREEN",
+            "value": "menu-home",
+            "and": [
+              {
+                "is": "EQUAL",
+                "value": "1",
+                "var": "allow-raid"
+              }
+            ]
+          },
+          "actions": [
+            {
+              "type": "SET",
+              "value": "0",
+              "var": "_screen_saver"
+            },
+            {
+              "type": "MOVE",
+              "value": "home_to_raid"
             }
           ]
         }
@@ -1282,7 +1346,14 @@
         {
           "condition": {
             "is": "SCREEN",
-            "value": "menu-home"
+            "value": "menu-home",
+            "and": [
+              {
+                "is":"EQUAL",
+                "var": "allow-farm",
+                "value": "1"
+              }
+            ]
           },
           "actions": [
             {
@@ -1293,6 +1364,52 @@
             {
               "type": "MOVE",
               "value": "home_to_farm"
+            }
+          ]
+        },{
+          "condition": {
+            "is": "SCREEN",
+            "value": "menu-home",
+            "and": [
+              {
+                "is":"EQUAL",
+                "var": "allow-raid",
+                "value": "1"
+              }
+            ]
+          },
+          "actions": [
+            {
+              "type": "SET",
+              "value": "0",
+              "var": "_screen_saver"
+            },
+            {
+              "type": "MOVE",
+              "value": "home_to_raid"
+            }
+          ]
+        },{
+          "condition": {
+            "is": "SCREEN",
+            "value": "menu-home",
+            "and": [
+              {
+                "is":"EQUAL",
+                "var": "allow-arena",
+                "value": "1"
+              }
+            ]
+          },
+          "actions": [
+            {
+              "type": "SET",
+              "value": "0",
+              "var": "_screen_saver"
+            },
+            {
+              "type": "MOVE",
+              "value": "home_to_arena"
             }
           ]
         }

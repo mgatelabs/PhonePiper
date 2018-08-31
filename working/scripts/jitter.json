@@ -7,8 +7,8 @@
     }
   ],
   "includes": [
-    "common-battle",
-    "common-no_op"
+    "_common-battle",
+    "_common-no_op"
   ],
   "states": {
 

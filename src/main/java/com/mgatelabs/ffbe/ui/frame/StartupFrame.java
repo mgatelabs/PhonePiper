@@ -352,7 +352,7 @@ public class StartupFrame extends JFrame {
         for (File f : dir.listFiles(new FilenameFilter() {
             @Override
             public boolean accept(File dir, String name) {
-                return name.endsWith(".json");
+                return name.endsWith(".json") && !name.startsWith("_");
             }
         })) {
             itemList.add(f.getName().substring(0, f.getName().length() - 5));

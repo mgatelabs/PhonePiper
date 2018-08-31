@@ -2,8 +2,6 @@ package com.mgatelabs.ffbe;
 
 import com.mgatelabs.ffbe.server.ServerRunner;
 import com.mgatelabs.ffbe.shared.details.PlayerDefinition;
-import com.mgatelabs.ffbe.shared.util.AdbShell;
-import com.mgatelabs.ffbe.shared.util.AdbUtils;
 import com.mgatelabs.ffbe.shared.util.Closer;
 import com.mgatelabs.ffbe.ui.FrameChoices;
 import com.mgatelabs.ffbe.ui.frame.MainFrame;
@@ -103,7 +101,7 @@ public class Runner {
 
                 if (startupFrame.getSelectedAction() != null && startupFrame.getSelectedMode() != null) {
 
-                    FrameChoices frameChoices = new FrameChoices(startupFrame.getSelectedAction(), startupFrame.getSelectedMode(), playerDefinition, startupFrame.getSelectedMap(), startupFrame.getSelectedScript(), startupFrame.getSelectedScript2(), null, startupFrame.getSelectedDevice(), startupFrame.getSelectedView(), startupFrame.getSelectedView2());
+                    FrameChoices frameChoices = new FrameChoices(startupFrame.getSelectedAction(), startupFrame.getSelectedMode(), playerDefinition, startupFrame.getSelectedMap(), startupFrame.getSelectedScript(), startupFrame.getSelectedScript2(), null, null, startupFrame.getSelectedDevice(), startupFrame.getSelectedView(), startupFrame.getSelectedView2());
 
                     if (frameChoices.getAction() == FrameChoices.Action.CREATE) {
                         String inputValue = JOptionPane.showInputDialog("Please input a " + frameChoices.getMode().name());

@@ -46,6 +46,7 @@
             var script1 = $('#script1');
             var script2 = $('#script2');
             var script3 = $('#script3');
+            var script4 = $('#script4');
             var statusName = $('#statusName');
 
             var logs = $('#logs');
@@ -100,7 +101,11 @@
             });
 
             script2.change(function(){
-                script3.prop('disabled', !script1.val());
+                script3.prop('disabled', !script2.val());
+            });
+
+            script3.change(function(){
+                script4.prop('disabled', !script3.val());
             });
 
             function createGroup(name, field, button) {
@@ -404,7 +409,8 @@
                     view2: view2.val(),
                     script: script1.val(),
                     script2: script2.val(),
-                    script3: script3.val()
+                    script3: script3.val(),
+                    script4: script4.val()
                 };
                 $.ajax({
                   type: "POST",
@@ -432,7 +438,8 @@
                     view2: view2.val(),
                     script: script1.val(),
                     script2: script2.val(),
-                    script3: script3.val()
+                    script3: script3.val(),
+                    script4: script4.val()
                 };
                 $.ajax({
                   type: "POST",
@@ -465,6 +472,7 @@
                     populateSelect(script1, data.scripts || []);
                     populateSelect(script2, data.scripts || []);
                     populateSelect(script3, data.scripts || []);
+                    populateSelect(script4, data.scripts || []);
                     loadSelection();
                   }
                 });
@@ -501,6 +509,7 @@
                 var script1 = $('#script1').val();
                 var script2 = $('#script2').val();
                 var script3 = $('#script3').val();
+                var script4 = $('#script4').val();
 
                 var data = {
                     device: device1 || '',
@@ -512,6 +521,7 @@
                 if (script1) data.scripts.push(script1);
                 if (script2) data.scripts.push(script2);
                 if (script3) data.scripts.push(script3);
+                if (script4) data.scripts.push(script4);
 
                 localStorage.setItem("LAST", JSON.stringify(data));
             }
@@ -526,6 +536,7 @@
                     var script1 = $('#script1');
                     var script2 = $('#script2');
                     var script3 = $('#script3');
+                    var script4 = $('#script4');
 
                     var j = JSON.parse(lData);
                     if (j.device) device1.val(j.device);
@@ -543,8 +554,12 @@
                         script2.val(j.scripts[1]);
                         script3.prop('disabled', false);
                     }
-                    if (j.scripts && j.scripts.length > 2)
+                    if (j.scripts && j.scripts.length > 2) {
                         script3.val(j.scripts[2]);
+                        script4.prop('disabled', false);
+                    }
+                    if (j.scripts && j.scripts.length > 3)
+                        script4.val(j.scripts[3]);
                 }
             }
 
@@ -634,6 +649,12 @@
                         <span class="input-group-text">Extra Script</span>
                     </div>
                     <select class="form-control" id="script3" disabled></select>
+                </div><br/>
+                <div class="input-group">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text">Extra Script</span>
+                    </div>
+                    <select class="form-control" id="script4" disabled></select>
                 </div>
                 <br/>
                 <div class="form-group">

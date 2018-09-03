@@ -116,7 +116,7 @@
                 return grp;
             }
 
-            function statusCheck() {
+            function statusCheck(firstTime) {
                 $.getJSON({
                     url: '/ffbe/status',
                     data: {},
@@ -130,7 +130,10 @@
                             case 'EDIT_VIEW': {
                                 editForm.show();
                                 settingForm.hide();
-
+                                if (firstTime) {
+                                    $('[href="#edit"]').tab('show');
+                                    loadEditViewInfo(true);
+                                }
                             } break;
                             case 'INIT': {
                                 editForm.hide();
@@ -141,25 +144,35 @@
                                 states.prop('disabled', true);
                             } break;
                             case 'READY': {
-                                editForm.hide();
-                                playPauseButton.removeClass('disabled');
-                                unloadButton.removeClass('disabled');
-                                settingForm.hide();
-                                loadedForm.show();
-                                states.prop('disabled', false);
-                                notWhileRunning.prop('disabled', false);
+                                if (firstTime) {
+                                    $('[href="#run"]').tab('show');
+                                    loadProcessInfo(true);
+                                } else {
+                                    editForm.hide();
+                                    playPauseButton.removeClass('disabled');
+                                    unloadButton.removeClass('disabled');
+                                    settingForm.hide();
+                                    loadedForm.show();
+                                    states.prop('disabled', false);
+                                    notWhileRunning.prop('disabled', false);
+                                }
                             } break;
                             case 'RUNNING':
                             case 'STOPPING':
                             case 'STOPPED': {
-                                editForm.hide();
-                                playPauseButton.removeClass('disabled');
-                                unloadButton.removeClass('disabled');
-                                settingForm.hide();
-                                loadedForm.show();
-                                states.prop('disabled', true);
-                                notWhileRunning.prop('disabled', true);
-                                setTimeout(statusCheck, 3000);
+                                if (firstTime) {
+                                    $('[href="#run"]').tab('show');
+                                    loadProcessInfo(true);
+                                } else {
+                                    editForm.hide();
+                                    playPauseButton.removeClass('disabled');
+                                    unloadButton.removeClass('disabled');
+                                    settingForm.hide();
+                                    loadedForm.show();
+                                    states.prop('disabled', true);
+                                    notWhileRunning.prop('disabled', true);
+                                    setTimeout(statusCheck, 3000);
+                                }
                             } break;
                         }
 
@@ -309,7 +322,7 @@
                 }
             }
 
-            function loadProcessInfo() {
+            function loadProcessInfo(firstTime) {
                 $.ajax({
                   type: "GET",
                   url: '/ffbe/process/info',
@@ -358,13 +371,14 @@
                         } else {
                             variableForm.hide();
                         }
+                        statusCheck();
                     }
                   },
                   dataType: 'json'
                 });
             }
 
-            function loadEditViewInfo() {
+            function loadEditViewInfo(firstTime) {
                 $.ajax({
                   type: "GET",
                   url: '/ffbe/edit/view/info',
@@ -378,6 +392,9 @@
                         }
                         for (i = 0; i < result.components.length; i++) {
                             editComponents.append($('<option></option>').attr('value', result.components[i].value).text(result.components[i].name));
+                        }
+                        if (firstTime) {
+                            statusCheck();
                         }
                     }
                   },
@@ -422,8 +439,7 @@
                   success: function(result){
                     if (result.status == 'OK') {
                         saveSelection();
-                        loadProcessInfo();
-                        statusCheck();
+                        loadProcessInfo(true);
                         $('[href="#run"]').tab('show');
                     }
                   },
@@ -450,8 +466,7 @@
                     },
                   success: function(result){
                     if (result.status == 'OK') {
-                        loadEditViewInfo();
-                        statusCheck();
+                        loadEditViewInfo(true);
                         $('[href="#edit"]').tab('show');
                     }
                   },
@@ -474,6 +489,8 @@
                     populateSelect(script3, data.scripts || []);
                     populateSelect(script4, data.scripts || []);
                     loadSelection();
+
+                    statusCheck(true);
                   }
                 });
 
@@ -495,10 +512,6 @@
                       }
                   }
                 );
-
-                statusCheck();
-                loadProcessInfo();
-                loadEditViewInfo();
             }
 
             function saveSelection() {

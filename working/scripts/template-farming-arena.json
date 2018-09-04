@@ -263,7 +263,7 @@
           "actions": [
             {
               "type": "MSG",
-              "value": "Setting Up ExAil"
+              "value": "Setting Up Adam J"
             },
             {
               "type": "SWIPE_RIGHT",
@@ -276,7 +276,7 @@
             {
               "type": "SLOW_UP",
               "value": "battle-skill-top-slider",
-              "count": "8"
+              "count": "10"
             },
             {
               "type": "TAP",

@@ -55,7 +55,7 @@
             {
               "type": "SLOW_UP",
               "value": "battle-skill-top-slider",
-              "count": "6"
+              "count": "7"
             },
             {
               "type": "TAP",
@@ -194,10 +194,6 @@
             {
               "type": "TAP",
               "value": "battle-unit_0"
-            },
-            {
-              "type": "TAP",
-              "value": "battle-auto"
             },
             {
               "type": "SET",

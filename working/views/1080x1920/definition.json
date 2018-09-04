@@ -2441,6 +2441,95 @@
     } ],
     "enabled" : false
   }, {
+    "name" : "Explore - Chamber of Arms",
+    "screenId" : "explore-chamber_of_arms",
+    "points" : [ {
+      "x" : 540,
+      "y" : 600,
+      "r" : 88,
+      "g" : 188,
+      "b" : 82
+    }, {
+      "x" : 415,
+      "y" : 725,
+      "r" : 81,
+      "g" : 180,
+      "b" : 71
+    }, {
+      "x" : 657,
+      "y" : 726,
+      "r" : 87,
+      "g" : 187,
+      "b" : 81
+    }, {
+      "x" : 539,
+      "y" : 793,
+      "r" : 81,
+      "g" : 180,
+      "b" : 71
+    }, {
+      "x" : 539,
+      "y" : 699,
+      "r" : 84,
+      "g" : 185,
+      "b" : 78
+    }, {
+      "x" : 962,
+      "y" : 1808,
+      "r" : 1,
+      "g" : 1,
+      "b" : 2
+    }, {
+      "x" : 945,
+      "y" : 1836,
+      "r" : 0,
+      "g" : 0,
+      "b" : 0
+    }, {
+      "x" : 933,
+      "y" : 1836,
+      "r" : 0,
+      "g" : 0,
+      "b" : 0
+    }, {
+      "x" : 540,
+      "y" : 1130,
+      "r" : 13,
+      "g" : 254,
+      "b" : 219
+    }, {
+      "x" : 340,
+      "y" : 1070,
+      "r" : 11,
+      "g" : 248,
+      "b" : 212
+    }, {
+      "x" : 190,
+      "y" : 920,
+      "r" : 12,
+      "g" : 251,
+      "b" : 215
+    }, {
+      "x" : 910,
+      "y" : 950,
+      "r" : 13,
+      "g" : 254,
+      "b" : 219
+    }, {
+      "x" : 950,
+      "y" : 730,
+      "r" : 123,
+      "g" : 254,
+      "b" : 235
+    }, {
+      "x" : 540,
+      "y" : 1868,
+      "r" : 13,
+      "g" : 254,
+      "b" : 219
+    } ],
+    "enabled" : true
+  }, {
     "name" : "Game - Battle",
     "screenId" : "game-battle",
     "points" : [ {
@@ -10354,6 +10443,65 @@
     } ],
     "enabled" : true
   }, {
+    "name" : "menu-vortex-nemeses",
+    "screenId" : "menu-vortex-nemeses",
+    "points" : [ {
+      "x" : 730,
+      "y" : 311,
+      "r" : 85,
+      "g" : 12,
+      "b" : 13
+    }, {
+      "x" : 737,
+      "y" : 306,
+      "r" : 80,
+      "g" : 4,
+      "b" : 4
+    }, {
+      "x" : 1048,
+      "y" : 365,
+      "r" : 128,
+      "g" : 27,
+      "b" : 28
+    }, {
+      "x" : 385,
+      "y" : 333,
+      "r" : 6,
+      "g" : 24,
+      "b" : 17
+    }, {
+      "x" : 31,
+      "y" : 330,
+      "r" : 29,
+      "g" : 25,
+      "b" : 0
+    }, {
+      "x" : 45,
+      "y" : 84,
+      "r" : 0,
+      "g" : 74,
+      "b" : 183
+    }, {
+      "x" : 35,
+      "y" : 94,
+      "r" : 0,
+      "g" : 84,
+      "b" : 178
+    }, {
+      "x" : 170,
+      "y" : 168,
+      "r" : 0,
+      "g" : 33,
+      "b" : 126
+    }, {
+      "x" : 180,
+      "y" : 158,
+      "r" : 0,
+      "g" : 41,
+      "b" : 135
+    } ],
+    "enabled" : true
+  }, {
     "name" : "Menu - white",
     "screenId" : "menu-white",
     "points" : [ {
@@ -11898,6 +12046,30 @@
     "h" : 111,
     "enabled" : false
   }, {
+    "name" : "explore-menu",
+    "componentId" : "explore-menu",
+    "x" : 950,
+    "y" : 1740,
+    "w" : 60,
+    "h" : 60,
+    "enabled" : true
+  }, {
+    "name" : "explore-menu-home",
+    "componentId" : "explore-menu-home",
+    "x" : 37,
+    "y" : 1777,
+    "w" : 103,
+    "h" : 83,
+    "enabled" : true
+  }, {
+    "name" : "explore-return_home-yes",
+    "componentId" : "explore-return_home-yes",
+    "x" : 630,
+    "y" : 1020,
+    "w" : 250,
+    "h" : 70,
+    "enabled" : true
+  }, {
     "name" : "Menu - Arena - Begin",
     "componentId" : "menu-arena-begin",
     "x" : 253,
@@ -12280,6 +12452,14 @@
     "y" : 1647,
     "w" : 193,
     "h" : 79,
+    "enabled" : true
+  }, {
+    "name" : "menu-vortex-event",
+    "componentId" : "menu-vortex-event",
+    "x" : 50,
+    "y" : 320,
+    "w" : 250,
+    "h" : 40,
     "enabled" : true
   }, {
     "name" : "Menu - Vortex - Item 0",

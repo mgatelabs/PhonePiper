@@ -183,6 +183,70 @@
               "value": ""
             }
           ]
+        },
+        {
+          "condition": {
+            "is": "SCREEN",
+            "value": "menu-vortex-nemeses"
+          },
+          "actions": [
+            {
+              "type": "MSG",
+              "value": "Inside Nemeses Portal, getting out"
+            },
+            {
+              "type": "TAP",
+              "value": "menu-vortex-event"
+            },
+            {
+              "type": "WAIT",
+              "value": "1000"
+            },
+            {
+              "type": "REPEAT",
+              "value": ""
+            }
+          ]
+        },
+        {
+          "condition": {
+            "is": "SCREEN",
+            "value": "explore-chamber_of_arms"
+          },
+          "actions": [
+            {
+              "type": "MSG",
+              "value": "Inside Chamber of Arm, getting out"
+            },
+            {
+              "type": "TAP",
+              "value": "explore-menu"
+            },
+            {
+              "type": "WAIT",
+              "value": "1000"
+            },
+            {
+              "type": "TAP",
+              "value": "explore-menu-home"
+            },
+            {
+              "type": "WAIT",
+              "value": "1000"
+            },
+            {
+              "type": "TAP",
+              "value": "explore-return_home-yes"
+            },
+            {
+              "type": "WAIT",
+              "value": "1000"
+            },
+            {
+              "type": "REPEAT",
+              "value": ""
+            }
+          ]
         }
       ]
     }

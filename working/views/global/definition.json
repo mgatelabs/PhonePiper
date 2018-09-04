@@ -466,6 +466,11 @@
     "points" : [ ],
     "enabled" : false
   }, {
+    "name" : "menu-vortex-nemeses",
+    "screenId" : "menu-vortex-nemeses",
+    "points" : [ ],
+    "enabled" : false
+  }, {
     "name" : "Menu - White",
     "screenId" : "menu-white",
     "points" : [ ],
@@ -528,6 +533,11 @@
   }, {
     "name" : "units-select_base-two_unit",
     "screenId" : "units-select_base-two_unit",
+    "points" : [ ],
+    "enabled" : false
+  }, {
+    "name" : "Explore - Chamber of Arms",
+    "screenId" : "explore-chamber_of_arms",
     "points" : [ ],
     "enabled" : false
   } ],
@@ -730,6 +740,30 @@
     "y" : 2401,
     "w" : 103,
     "h" : 111,
+    "enabled" : false
+  }, {
+    "name" : "explore-menu",
+    "componentId" : "explore-menu",
+    "x" : 0,
+    "y" : 0,
+    "w" : 1,
+    "h" : 1,
+    "enabled" : false
+  }, {
+    "name" : "explore-menu-home",
+    "componentId" : "explore-menu-home",
+    "x" : 0,
+    "y" : 0,
+    "w" : 1,
+    "h" : 1,
+    "enabled" : false
+  }, {
+    "name" : "explore-return_home-yes",
+    "componentId" : "explore-return_home-yes",
+    "x" : 0,
+    "y" : 0,
+    "w" : 1,
+    "h" : 1,
     "enabled" : false
   }, {
     "name" : "Menu - Arena - Begin",
@@ -1114,6 +1148,14 @@
     "y" : 1647,
     "w" : 193,
     "h" : 79,
+    "enabled" : false
+  }, {
+    "name" : "menu-vortex-event",
+    "componentId" : "menu-vortex-event",
+    "x" : 0,
+    "y" : 0,
+    "w" : 1,
+    "h" : 1,
     "enabled" : false
   }, {
     "name" : "Menu - Vortex - Index 0",

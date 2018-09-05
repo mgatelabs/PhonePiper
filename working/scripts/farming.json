@@ -110,6 +110,7 @@
         "_es-to_results",
         "_es-to_menu",
         "_es-to_battle",
+        "_es-from_home",
         "_common-no_op"
       ]
     },
@@ -456,6 +457,83 @@
             {
               "type": "SWAP",
               "value": "farm-battle"
+            }
+          ]
+        }
+      ]
+    },
+    "_es-from_home": {
+      "name": "From Home",
+      "statements": [
+        {
+          "condition": {
+            "is": "SCREEN",
+            "value": "menu-home",
+            "and": [
+              {
+                "is": "EQUAL",
+                "value": "1",
+                "var": "allow-arena"
+              }
+            ]
+          },
+          "actions": [
+            {
+              "type": "SET",
+              "value": "0",
+              "var": "_screen_saver"
+            },
+            {
+              "type": "MOVE",
+              "value": "home_to_arena"
+            }
+          ]
+        },
+        {
+          "condition": {
+            "is": "SCREEN",
+            "value": "menu-home",
+            "and": [
+              {
+                "is": "EQUAL",
+                "value": "1",
+                "var": "allow-farm"
+              }
+            ]
+          },
+          "actions": [
+            {
+              "type": "SET",
+              "value": "0",
+              "var": "_screen_saver"
+            },
+            {
+              "type": "MOVE",
+              "value": "home_to_farm"
+            }
+          ]
+        },
+        {
+          "condition": {
+            "is": "SCREEN",
+            "value": "menu-home",
+            "and": [
+              {
+                "is": "EQUAL",
+                "value": "1",
+                "var": "allow-raid"
+              }
+            ]
+          },
+          "actions": [
+            {
+              "type": "SET",
+              "value": "0",
+              "var": "_screen_saver"
+            },
+            {
+              "type": "MOVE",
+              "value": "home_to_raid"
             }
           ]
         }

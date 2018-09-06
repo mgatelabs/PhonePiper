@@ -36,7 +36,7 @@
           "actions": [
             {
               "type": "MSG",
-              "value": "Unit 5 setup and Repeat"
+              "value": "Unit 5 Skip and Repeat"
             },
             {
               "type": "SET",
@@ -48,28 +48,8 @@
               "value": "START"
             },
             {
-              "type": "SWIPE_DOWN",
-              "value": "battle-unit_5"
-            },
-            {
-              "type": "TAP",
-              "value": "battle-unit_5"
-            },
-            {
-              "type": "TAP",
-              "value": "battle-unit_5"
-            },
-            {
-              "type": "TAP",
-              "value": "battle-repeat"
-            },
-            {
-              "type": "BATCH",
-              "value": "END"
-            },
-            {
               "type": "WAIT",
-              "value": "8000"
+              "value": "6000"
             },
             {
               "type": "REPEAT",

@@ -51,15 +51,6 @@
       "order": 20
     },
     {
-      "name": "force-auto",
-      "display": "Force Auto Battle",
-      "value": "0",
-      "type": "INT",
-      "modify": "EDITABLE",
-      "displayType": "BOOLEAN",
-      "order": 15
-    },
-    {
       "name": "allow-raid",
       "display": "Enable Raid",
       "value": "0",
@@ -216,14 +207,7 @@
         {
           "condition": {
             "is": "SCREEN",
-            "value": "game-battle",
-            "and": [
-              {
-                "not": "EQUAL",
-                "var": "force-auto",
-                "value": "1"
-              }
-            ]
+            "value": "game-battle"
           },
           "actions": [
             {
@@ -249,43 +233,6 @@
               "value": "farm-battle"
             }
           ]
-        },
-        {
-          "condition": {
-            "is": "SCREEN",
-            "value": "game-battle",
-            "and": [
-              {
-                "is": "EQUAL",
-                "var": "force-auto",
-                "value": "1"
-              }
-            ]
-          },
-          "actions": [
-            {
-              "type": "LAP",
-              "value": "BATTLE"
-            },
-            {
-              "type": "SET",
-              "var": "_loops",
-              "value": "0"
-            },
-            {
-              "type": "ADD",
-              "var": "runs",
-              "value": "1"
-            },
-            {
-              "type": "MSG",
-              "value": "Starting run ${runs}"
-            },
-            {
-              "type": "SWAP",
-              "value": "farm-battle-auto"
-            }
-          ]
         }
       ]
     },
@@ -293,15 +240,6 @@
       "name": "Farm - Battle",
       "includes": [
         "_common_battle-three_attack",
-        "_common-screen_saver",
-        "_es-from_battle_to_results",
-        "_common-no_op"
-      ]
-    },
-    "farm-battle-auto": {
-      "name": "Farm - Battle - Auto",
-      "includes": [
-        "_common_battle-auto",
         "_common-screen_saver",
         "_es-from_battle_to_results",
         "_common-no_op"

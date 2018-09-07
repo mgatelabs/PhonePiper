@@ -4,25 +4,25 @@
       "name": "_screen_saver",
       "value": "0",
       "type": "TIMER",
-      "modify":"VISIBLE",
+      "modify": "VISIBLE",
       "display": "Screen Saver",
-      "displayType":"SECONDS"
+      "displayType": "SECONDS"
     },
     {
       "name": "_seconds",
       "value": "0",
       "type": "TIMER",
-      "modify":"VISIBLE",
+      "modify": "VISIBLE",
       "display": "Elapsed Time",
-      "displayType":"SECONDS"
+      "displayType": "SECONDS"
     },
     {
       "name": "_loops",
       "value": "0",
       "type": "TIMER",
-      "modify":"VISIBLE",
+      "modify": "VISIBLE",
       "display": "NoOp",
-      "displayType":"SECONDS"
+      "displayType": "SECONDS"
     },
     {
       "name": "allow-ss",
@@ -35,31 +35,32 @@
     }
   ],
   "states": {
-
     "main": {
-      "name":"Common - Main Template",
-      "includes": ["_common-power_down"]
+      "name": "Common - Main Template",
+      "includes": [
+        "_common-power_down"
+      ]
     },
-
     "recovery": {
-      "name":"Common - Recovery Template",
-      "includes": ["_common-recovery_os"]
+      "name": "Common - Recovery Template",
+      "includes": [
+        "_common-recovery_os"
+      ]
     },
-
     "log-in": {
-      "name":"Common - Recovery Login Template",
-      "includes": ["_common-power_down"]
+      "name": "Common - Recovery Login Template",
+      "includes": [
+        "_common-power_down"
+      ]
     },
-
     "reset": {
       "name": "Common - Reset",
       "includes": [
         "_common-reset"
       ]
     },
-
     "_common-screen_saver": {
-      "name":"Common - Screen Saver",
+      "name": "Common - Screen Saver",
       "statements": [
         {
           "condition": {
@@ -68,7 +69,7 @@
             "value": "900",
             "and": [
               {
-                "is":"EQUAL",
+                "is": "EQUAL",
                 "var": "allow-ss",
                 "value": "1"
               }
@@ -112,12 +113,12 @@
         }
       ]
     },
-
     "_common-recovery_os": {
-      "name":"Common - Power Device Down",
-      "includes": ["_common-power_down"]
+      "name": "Common - Power Device Down",
+      "includes": [
+        "_common-power_down"
+      ]
     },
-
     "_common-power_down": {
       "name": "Common - Power Down",
       "statements": [
@@ -142,7 +143,6 @@
         }
       ]
     },
-
     "_common-no_op": {
       "name": "Common - No-Op",
       "statements": [
@@ -165,7 +165,8 @@
               "value": ""
             }
           ]
-        },{
+        },
+        {
           "condition": {
             "is": "SCREEN",
             "value": "menu-quest_restart"
@@ -333,11 +334,15 @@
           "actions": [
             {
               "type": "MSG",
-              "value": "Home screen detected, attempting recovery"
+              "value": "Home Screen Detected!"
+            },
+            {
+              "type": "TAP",
+              "value": "os-app-icon"
             },
             {
               "type": "MOVE",
-              "value": "recovery"
+              "value": "log-in"
             }
           ]
         },
@@ -411,7 +416,6 @@
         }
       ]
     },
-
     "_common-reset": {
       "name": "Common - Reset",
       "statements": [
@@ -425,11 +429,13 @@
               "type": "SET",
               "value": "0",
               "var": "_loops"
-            },{
+            },
+            {
               "type": "SET",
               "value": "0",
               "var": "_seconds"
-            },{
+            },
+            {
               "type": "SET",
               "value": "0",
               "var": "_screen_saver"
@@ -442,6 +448,5 @@
         }
       ]
     }
-
   }
 }

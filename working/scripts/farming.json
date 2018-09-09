@@ -60,6 +60,15 @@
       "order": 10
     },
     {
+      "name": "alt-raid",
+      "display": "Home Raid",
+      "value": "0",
+      "type": "INT",
+      "modify": "EDITABLE",
+      "displayType": "BOOLEAN",
+      "order": 10
+    },
+    {
       "name": "allow-farm",
       "display": "Enable Farm",
       "value": "1",
@@ -867,6 +876,42 @@
         "_common-no_op"
       ],
       "statements": [
+        {
+          "condition": {
+            "is": "SCREEN",
+            "value": "menu-home",
+            "and": [
+              {
+                "is": "EQUAL",
+                "var": "alt-raid",
+                "value": "1"
+              }
+            ]
+          },
+          "actions": [
+            {
+              "type": "MSG",
+              "value": "Going to Vortex (Alt)"
+            },
+            {
+              "type": "SET",
+              "var": "_loops",
+              "value": "0"
+            },
+            {
+              "type": "TAP",
+              "value": "menu-home-special"
+            },
+            {
+              "type": "WAIT",
+              "value": "10000"
+            },
+            {
+              "type": "REPEAT",
+              "value": ""
+            }
+          ]
+        },
         {
           "condition": {
             "is": "SCREEN",

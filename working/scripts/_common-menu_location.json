@@ -471,12 +471,16 @@
           },
           "actions": [
             {
+              "type": "MSG",
+              "value": "Departing"
+            },
+            {
               "type": "TAP",
               "value": "menu-depart-depart"
             },
             {
               "type": "WAIT",
-              "value": "1500"
+              "value": "4500"
             },
             {
               "type": "REPEAT",

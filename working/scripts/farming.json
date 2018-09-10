@@ -142,6 +142,10 @@
                     "is": "EQUAL",
                     "value": "$raid-timer",
                     "var": "_seconds"
+                  },
+                  {
+                    "not": "ENERGY",
+                    "var": "min-energy"
                   }
                 ]
               }
@@ -162,7 +166,7 @@
           "actions": [
             {
               "type": "MSG",
-              "value": "Time limit hit, switching to home screen"
+              "value": "Time limit/energy hit, switching to Home screen"
             },
             {
               "type": "SET",
@@ -238,7 +242,7 @@
               "value": "Starting run ${runs}"
             },
             {
-              "type": "SWAP",
+              "type": "MOVE",
               "value": "farm-battle"
             }
           ]

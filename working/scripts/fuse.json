@@ -224,7 +224,8 @@
             },
             {
               "type": "TAP",
-              "value": "units-enhance_units-fuse"
+              "value": "units-enhance_units-fuse",
+              "count": "6"
             },
             {
               "type": "REPEAT",

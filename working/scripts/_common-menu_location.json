@@ -341,6 +341,37 @@
         }
       ]
     },
+    "_common-ml-goals-quick": {
+      "name": "Common - Goals (Quick)",
+      "statements": [
+        {
+          "condition": {
+            "is": "SCREEN",
+            "value": "menu-goal_list",
+            "and": [
+              {
+                "is": "SCREEN",
+                "value": "menu-goal_list-next"
+              }
+            ]
+          },
+          "actions": [
+            {
+              "type": "TAP",
+              "value": "menu-goal_list-next"
+            },
+            {
+              "type": "WAIT",
+              "value": "1500"
+            },
+            {
+              "type": "REPEAT",
+              "value": ""
+            }
+          ]
+        }
+      ]
+    },
 
     "_common-ml-friend_0": {
       "name": "Common - Friend Select 0",

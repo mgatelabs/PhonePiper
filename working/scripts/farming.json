@@ -534,7 +534,7 @@
     "raid-home": {
       "name": "Raid - Menu",
       "includes": [
-        "_common-ml-goals",
+        "_common-ml-goals-quick",
         "_common-ml-friend_0",
         "_common-ml-friend_none",
         "_raid-find_depart_team",

@@ -155,6 +155,11 @@
     "points" : [ ],
     "enabled" : false
   }, {
+    "name" : "Explore - Chamber of Arms",
+    "screenId" : "explore-chamber_of_arms",
+    "points" : [ ],
+    "enabled" : false
+  }, {
     "name" : "Game - Battle",
     "screenId" : "game-battle",
     "points" : [ ],
@@ -476,6 +481,16 @@
     "points" : [ ],
     "enabled" : false
   }, {
+    "name" : "menu-world-common",
+    "screenId" : "menu-world-common",
+    "points" : [ ],
+    "enabled" : false
+  }, {
+    "name" : "menu-world-grandshelt",
+    "screenId" : "menu-world-grandshelt",
+    "points" : [ ],
+    "enabled" : false
+  }, {
     "name" : "menu-world-grandshelt_isles",
     "screenId" : "menu-world-grandshelt_isles",
     "points" : [ ],
@@ -533,11 +548,6 @@
   }, {
     "name" : "units-select_base-two_unit",
     "screenId" : "units-select_base-two_unit",
-    "points" : [ ],
-    "enabled" : false
-  }, {
-    "name" : "Explore - Chamber of Arms",
-    "screenId" : "explore-chamber_of_arms",
     "points" : [ ],
     "enabled" : false
   } ],

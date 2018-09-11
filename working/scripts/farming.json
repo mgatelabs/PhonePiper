@@ -1105,63 +1105,18 @@
             },
             {
               "type": "SLOW_RIGHT",
-              "value": "screen-center-large"
-            },
-            {
-              "type": "SLOW_RIGHT",
-              "value": "screen-center-large"
-            },
-            {
-              "type": "SLOW_RIGHT",
-              "value": "screen-center-large"
-            },
-            {
-              "type": "SLOW_RIGHT",
-              "value": "screen-center-large"
-            },
-            {
-              "type": "SLOW_RIGHT",
-              "value": "screen-center-large"
-            },
-            {
-              "type": "SLOW_RIGHT",
-              "value": "screen-center-large"
-            },
-            {
-              "type": "SLOW_RIGHT",
-              "value": "screen-center-large"
-            },
-            {
-              "type": "SLOW_RIGHT",
-              "value": "screen-center-large"
-            },
-            {
-              "type": "SLOW_RIGHT",
-              "value": "screen-center-large"
+              "value": "screen-center-large",
+              "count": "9"
             },
             {
               "type": "SLOW_DOWN",
-              "value": "screen-center-large"
-            },
-            {
-              "type": "SLOW_DOWN",
-              "value": "screen-center-large"
+              "value": "screen-center-large",
+              "count": "2"
             },
             {
               "type": "SLOW_LEFT",
-              "value": "screen-center-large"
-            },
-            {
-              "type": "SLOW_LEFT",
-              "value": "screen-center-large"
-            },
-            {
-              "type": "SLOW_LEFT",
-              "value": "screen-center-large"
-            },
-            {
-              "type": "SLOW_LEFT",
-              "value": "screen-center-large"
+              "value": "screen-center-large",
+              "count": "4"
             },
             {
               "type": "MSG",
@@ -1170,6 +1125,35 @@
             {
               "type": "TAP",
               "value": "menu-location-earthshrine"
+            },
+            {
+              "type": "WAIT",
+              "value": "5000"
+            },
+            {
+              "type": "REPEAT",
+              "value": ""
+            }
+          ]
+        },
+        {
+          "condition": {
+            "is": "SCREEN",
+            "value": "menu-world-grandshelt"
+          },
+          "actions": [
+            {
+              "type": "MSG",
+              "value": "Found Grandshelt"
+            },
+            {
+              "type": "SET",
+              "var": "_loops",
+              "value": "0"
+            },
+            {
+              "type": "TAP",
+              "value": "menu-island-grandshelt_isles"
             },
             {
               "type": "WAIT",
@@ -1197,12 +1181,9 @@
               "value": "0"
             },
             {
-              "type": "SWIPE_LEFT",
-              "value": "menu-island-grandshelt_isles"
-            },
-            {
-              "type": "WAIT",
-              "value": "5000"
+              "type": "SLOW_LEFT",
+              "value": "screen-center-large",
+              "count": "3"
             },
             {
               "type": "TAP",
@@ -1213,8 +1194,24 @@
               "value": "5000"
             },
             {
-              "type": "TAP",
-              "value": "menu-island-grandshelt_isles"
+              "type": "REPEAT",
+              "value": ""
+            }
+          ]
+        },
+        {
+          "condition": {
+            "is": "SCREEN",
+            "value": "menu-world-common"
+          },
+          "actions": [
+            {
+              "type": "MSG",
+              "value": "Found Random Land, Backing up"
+            },
+            {
+              "type": "EVENT",
+              "value": "back"
             },
             {
               "type": "WAIT",

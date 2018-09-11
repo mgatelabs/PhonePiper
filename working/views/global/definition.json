@@ -95,6 +95,11 @@
     "points" : [ ],
     "enabled" : false
   }, {
+    "name" : "Battle - Unit - 3 Magic",
+    "screenId" : "battle-unit-3_magic",
+    "points" : [ ],
+    "enabled" : false
+  }, {
     "name" : "Battle - Unit - 3 - Has MP",
     "screenId" : "battle-unit-3_mp",
     "points" : [ ],

@@ -162,6 +162,10 @@
               {
                 "is": "SCREEN",
                 "value": "battle-unit-0_ready"
+              },
+              {
+                "not": "SCREEN",
+                "value": "battle-unit-0_ability"
               }
             ]
           },
@@ -189,20 +193,7 @@
             },
             {
               "type": "WAIT",
-              "value": "200"
-            },
-            {
-              "type": "TAP",
-              "value": "battle-unit_0"
-            },
-            {
-              "type": "SET",
-              "value": "0",
-              "var": "setup"
-            },
-            {
-              "type": "WAIT",
-              "value": "10000"
+              "value": "500"
             },
             {
               "type": "REPEAT",
@@ -210,6 +201,207 @@
             }
           ]
         },
+
+
+        {
+          "condition": {
+            "is": "SCREEN",
+            "value": "game-battle",
+            "and": [
+              {
+                "is": "SCREEN",
+                "value": "game-battle-auto_off",
+                "or" : [
+                  {
+                    "is":"SCREEN",
+                    "value": "game-battle-repeat"
+                  }
+                ]
+              },
+              {
+                "is": "SCREEN",
+                "value": "battle-unit-3_ready"
+              },
+              {
+                "not": "SCREEN",
+                "value": "battle-unit-3_magic"
+              }
+            ]
+          },
+          "actions": [
+            {
+              "type": "MSG",
+              "value": "Rinoa"
+            },
+            {
+              "type": "SWIPE_RIGHT",
+              "value": "battle-unit_3"
+            },
+            {
+              "type": "WAIT",
+              "value": "200"
+            },
+            {
+              "type": "SLOW_UP",
+              "value": "battle-skill-top-slider",
+              "count": "6"
+            },
+            {
+              "type": "TAP",
+              "value": "battle-skill-top-2"
+            },
+            {
+              "type": "WAIT",
+              "value": "500"
+            },
+            {
+              "type": "SLOW_DOWN",
+              "value": "battle-skill-top-slider",
+              "count": "3"
+            },
+            {
+              "type": "TAP",
+              "value": "battle-skill-top-0",
+              "count": "3"
+            },
+            {
+              "type": "WAIT",
+              "value": "500"
+            },
+            {
+              "type": "REPEAT",
+              "value": ""
+            }
+          ]
+        },
+
+        {
+          "condition": {
+            "is": "SCREEN",
+            "value": "game-battle",
+            "and": [
+              {
+                "is": "SCREEN",
+                "value": "game-battle-auto_off",
+                "or" : [
+                  {
+                    "is":"SCREEN",
+                    "value": "game-battle-repeat"
+                  }
+                ]
+              },
+              {
+                "is": "SCREEN",
+                "value": "battle-unit-4_ready"
+              },
+              {
+                "not": "SCREEN",
+                "value": "battle-unit-4_ability"
+              }
+            ]
+          },
+          "actions": [
+            {
+              "type": "MSG",
+              "value": "Adam J"
+            },
+            {
+              "type": "SWIPE_RIGHT",
+              "value": "battle-unit_4"
+            },
+            {
+              "type": "WAIT",
+              "value": "200"
+            },
+            {
+              "type": "SLOW_UP",
+              "value": "battle-skill-top-slider",
+              "count": "6"
+            },
+            {
+              "type": "TAP",
+              "value": "battle-skill-top-5"
+            },
+            {
+              "type": "WAIT",
+              "value": "500"
+            },
+            {
+              "type": "REPEAT",
+              "value": ""
+            }
+          ]
+        },
+
+        {
+          "condition": {
+            "is": "SCREEN",
+            "value": "game-battle",
+            "and": [
+              {
+                "is": "SCREEN",
+                "value": "game-battle-auto_off",
+                "or" : [
+                  {
+                    "is":"SCREEN",
+                    "value": "game-battle-repeat"
+                  }
+                ]
+              },
+              {
+                "is": "SCREEN",
+                "value": "battle-unit-0_ready"
+              },
+              {
+                "is": "SCREEN",
+                "value": "battle-unit-0_ability"
+              },
+              {
+                "is": "SCREEN",
+                "value": "battle-unit-3_ready"
+              },
+              {
+                "is": "SCREEN",
+                "value": "battle-unit-3_magic"
+              },
+              {
+                "is": "SCREEN",
+                "value": "battle-unit-4_ready"
+              },
+              {
+                "is": "SCREEN",
+                "value": "battle-unit-4_ability"
+              }
+            ]
+          },
+          "actions": [
+            {
+              "type": "MSG",
+              "value": "Attack"
+            },
+            {
+              "type": "TAP",
+              "value": "battle-unit_0"
+            },
+            {
+              "type": "TAP",
+              "value": "battle-unit_3"
+            },
+            {
+              "type": "TAP",
+              "value": "battle-unit_4"
+            },
+            {
+              "type": "WAIT",
+              "value": "200"
+            },
+            {
+              "type": "REPEAT",
+              "value": ""
+            }
+          ]
+        },
+
         {
           "condition": {
             "is": "SCREEN",

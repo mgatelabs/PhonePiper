@@ -206,6 +206,17 @@
                 });
             }
 
+            $(".setLevel").click(function(){
+                var ref = $(this), level = ref.attr('level');
+                $.ajax({
+                    type: "POST",
+                    url: '/ffbe/process/level/' + level,
+                    success: function(result){
+
+                    }
+                });
+            });
+
             playPauseButton.click(function(){
                 if (!playPauseButton.hasClass('disabled')) {
                     $.ajax({
@@ -693,6 +704,12 @@
                     <button type="button" id="controlPlayPause" class="btn btn-primary">Play/Pause</button>
                     <button type="button" id="controlUnload" class="btn btn-danger notWhileRunning">Unload</button>
                     <button type="button" id="controlKill" class="btn btn-danger">Kill</button>
+                </div>
+                <div class="form-group">
+                    <button type="button" level="SEVERE" class="btn btn-danger setLevel">Severe</button>
+                    <button type="button" level="INFO" class="btn btn-info setLevel">Info</button>
+                    <button type="button" level="FINER" class="btn btn-success setLevel">Finer</button>
+                    <button type="button" level="FINEST" class="btn btn-warning setLevel">Finest</button>
                 </div>
                 <div class="form-group">
                     <label for="components">Components</label>

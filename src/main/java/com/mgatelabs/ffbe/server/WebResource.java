@@ -485,6 +485,21 @@ public class WebResource {
         return result;
     }
 
+    @POST
+    @Path("/process/level/{level}")
+    @Produces("application/json")
+    public Map<String, String> setLevel(@PathParam("level") String level) {
+        checkInitialState();
+
+        handler.setLevel(java.util.logging.Level.parse(level));
+        if (runner != null) {
+            runner.updateLogger(handler.getLevel());
+        }
+        Map<String, String> result = Maps.newHashMap();
+            result.put("status", "true");
+        return result;
+    }
+
     @GET
     @Path("/process/info")
     @Consumes("application/json")
@@ -548,12 +563,12 @@ public class WebResource {
         if (editHolder != null) {
             PrepResult results = new PrepResult(StatusEnum.OK);
 
-            for(ScreenDefinition screenDefinition: editHolder.getViewDefinition().getScreens()) {
+            for (ScreenDefinition screenDefinition : editHolder.getViewDefinition().getScreens()) {
                 results.getScreens().add(new NamedValueItem(screenDefinition.getName(), screenDefinition.getScreenId()));
             }
             Collections.sort(results.getScreens());
 
-            for(ComponentDefinition screenDefinition: editHolder.getViewDefinition().getComponents()) {
+            for (ComponentDefinition screenDefinition : editHolder.getViewDefinition().getComponents()) {
                 results.getComponents().add(new NamedValueItem(screenDefinition.getName(), screenDefinition.getComponentId()));
             }
             Collections.sort(results.getComponents());

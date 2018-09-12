@@ -1,5 +1,6 @@
 package com.mgatelabs.ffbe.runners;
 
+import com.google.common.base.Joiner;
 import com.google.common.collect.ImmutableSet;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
@@ -84,6 +85,7 @@ public class ScriptRunner {
 
         logger.removeHandler(customHandler);
         logger.addHandler(customHandler);
+        logger.setLevel(customHandler.getLevel());
 
         logger.finer("Extracting Variables");
 
@@ -193,6 +195,10 @@ public class ScriptRunner {
         this.deviceHelper = deviceHelper;
 
         status = Status.INIT;
+    }
+
+    public void updateLogger(Level level) {
+        logger.setLevel(level);
     }
 
     public void stopShell() {
@@ -462,7 +468,7 @@ public class ScriptRunner {
                         waitFor(250);
                         continue;
                     } else {
-                        logger.finest("Image Persisted");
+                        logger.finest("Image Persisted in " + lastImageDuration);
                     }
                 }
 
@@ -476,6 +482,10 @@ public class ScriptRunner {
                         logger.finer("Helper: /check/" + stateDefinition.getId());
 
                         validScreenIds = deviceHelper.check(stateDefinition.getId());
+
+                        if (logger.getLevel() == Level.FINEST) {
+                            logger.log(Level.FINEST, "Valid Screens: " + Joiner.on(",").join(validScreenIds));
+                        }
                     }
 
                     StateResult result = state(stateDefinition, imageWrapper);

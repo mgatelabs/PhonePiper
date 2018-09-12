@@ -12,7 +12,7 @@ import java.util.logging.LogRecord;
  */
 public class CustomHandler extends Handler {
 
-    public BlockingQueue<LogRecord> events = new ArrayBlockingQueue<>(100);
+    public BlockingQueue<LogRecord> events = new ArrayBlockingQueue<>(200);
 
     public CustomHandler() {
 
@@ -22,7 +22,7 @@ public class CustomHandler extends Handler {
     public void publish(LogRecord record) {
         //record.ge
         synchronized (events) {
-            while (events.size() >= 100) {
+            while (events.size() >= 200) {
                 events.poll();
             }
             events.add(record);

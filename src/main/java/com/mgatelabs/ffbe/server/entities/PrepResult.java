@@ -13,6 +13,7 @@ import java.util.List;
 public class PrepResult {
 
     private StatusEnum status;
+    private String level;
 
     private List<NamedValueDescriptionItem> states;
     private List<NamedValueItem> components;
@@ -25,6 +26,14 @@ public class PrepResult {
         components = Lists.newArrayList();
         screens = Lists.newArrayList();
         variables = Lists.newArrayList();
+    }
+
+    public String getLevel() {
+        return level;
+    }
+
+    public void setLevel(String level) {
+        this.level = level;
     }
 
     public void setStatus(StatusEnum status) {

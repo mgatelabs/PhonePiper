@@ -8,17 +8,17 @@
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="viewport" content="width=device-width">
 
-    <link rel="apple-touch-icon" sizes="180x180" href="/ffbe/resource/apple-touch-icon.png">
-    <link rel="icon" type="image/png" sizes="32x32" href="/ffbe/resource/favicon-32x32.png">
-    <link rel="icon" type="image/png" sizes="16x16" href="/ffbe/resource/favicon-16x16.png">
-    <link rel="manifest" href="/ffbe/resource/site.webmanifest">
-    <link rel="mask-icon" href="/ffbe/resource/safari-pinned-tab.svg" color="#5bbad5">
-    <link rel="shortcut icon" href="/ffbe/resource/favicon.ico">
+    <link rel="apple-touch-icon" sizes="180x180" href="/piper/resource/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/piper/resource/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/piper/resource/favicon-16x16.png">
+    <link rel="manifest" href="/piper/resource/site.webmanifest">
+    <link rel="mask-icon" href="/piper/resource/safari-pinned-tab.svg" color="#5bbad5">
+    <link rel="shortcut icon" href="/piper/resource/favicon.ico">
     <meta name="msapplication-TileColor" content="#da532c">
-    <meta name="msapplication-config" content="/ffbe/resource/browserconfig.xml">
+    <meta name="msapplication-config" content="/piper/resource/browserconfig.xml">
     <meta name="theme-color" content="#ffffff">
 
-    <title>FFBExecute - Web Interface</title>
+    <title>Phone Piper - Web Interface</title>
 
     <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet"
           integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
@@ -118,7 +118,7 @@
 
             function statusCheck(firstTime) {
                 $.getJSON({
-                    url: '/ffbe/status',
+                    url: '/piper/status',
                     data: {},
                     success: function(data){
 
@@ -206,11 +206,11 @@
                 });
             }
 
-            $(".setLevel").click(function(){
-                var ref = $(this), level = ref.attr('level');
+            $("#logging").change(function(){
+                var ref = $(this), level = ref.val();
                 $.ajax({
                     type: "POST",
-                    url: '/ffbe/process/level/' + level,
+                    url: '/piper/process/level/' + level,
                     success: function(result){
 
                     }
@@ -221,7 +221,7 @@
                 if (!playPauseButton.hasClass('disabled')) {
                     $.ajax({
                       type: "POST",
-                      url: '/ffbe/process/playPause/' + states.val(),
+                      url: '/piper/process/playPause/' + states.val(),
                       success: function(result){
                         statusCheck();
                       }
@@ -233,7 +233,7 @@
                 if (!unloadButton.hasClass('disabled')) {
                     $.ajax({
                       type: "POST",
-                      url: '/ffbe/process/unload',
+                      url: '/piper/process/unload',
                       success: function(result){
                         statusCheck();
                         $('[href="#config"]').tab('show');
@@ -246,7 +246,7 @@
                 if (!unloadButton.hasClass('disabled')) {
                     $.ajax({
                         type: "POST",
-                        url: '/ffbe/process/kill',
+                        url: '/piper/process/kill',
                         success: function(result){
                             statusCheck();
                             $('[href="#config"]').tab('show');
@@ -259,7 +259,7 @@
                 if (!unloadEdit.hasClass('disabled')) {
                     $.ajax({
                       type: "POST",
-                      url: '/ffbe/edit/unload',
+                      url: '/piper/edit/unload',
                       success: function(result){
                         statusCheck();
                         $('[href="#config"]').tab('show');
@@ -271,7 +271,7 @@
             controlPlayerSave.click(function(){
                 $.ajax({
                   type: "POST",
-                  url: '/ffbe/player/level',
+                  url: '/piper/player/level',
                   data: {value: playerLevel.val()}
                 });
             });
@@ -280,7 +280,7 @@
                 adbInfo.val("Please Wait...");
                 $.ajax({
                     type: "POST",
-                    url: '/ffbe/adb/' + $(this).attr('adb'),
+                    url: '/piper/adb/' + $(this).attr('adb'),
                     data: {},
                     success: function(result){
                         adbInfo.val(result.value || 'Done');
@@ -291,7 +291,7 @@
             controlDeviceSave.click(function(){
                 $.ajax({
                   type: "POST",
-                  url: '/ffbe/device/ip',
+                  url: '/piper/device/ip',
                   data: {value: deviceIp.val()}
                 });
             });
@@ -300,7 +300,7 @@
                 var ref= $(this), button = ref.attr('controlButton'), componentId = $('#components').val();
                 $.ajax({
                     type: "POST",
-                    url: '/ffbe/button',
+                    url: '/piper/button',
                     data: {buttonId: button, componentId: componentId}
                 });
             });
@@ -336,7 +336,7 @@
             function loadProcessInfo(firstTime) {
                 $.ajax({
                   type: "GET",
-                  url: '/ffbe/process/info',
+                  url: '/piper/process/info',
                   success: function(result){
                     if (result.status == 'OK') {
                         states.empty();
@@ -348,6 +348,7 @@
                         for (i = 0; i < result.components.length; i++) {
                         components.append($('<option></option>').attr('value', result.components[i].value).text(result.components[i].name));
                         }
+                        $('#logging').val(result.level);
                         variableContainer.empty();
                         linkedVariables = {};
                         if (result.variables.length > 0) {
@@ -392,7 +393,7 @@
             function loadEditViewInfo(firstTime) {
                 $.ajax({
                   type: "GET",
-                  url: '/ffbe/edit/view/info',
+                  url: '/piper/edit/view/info',
                   success: function(result){
                     if (result.status == 'OK') {
                         editScreens.empty();
@@ -424,7 +425,7 @@
                 if (input.val()) {
                     $.ajax({
                       type: "POST",
-                      url: '/ffbe/variable',
+                      url: '/piper/variable',
                       data: {key: key, value: input.val()}
                     });
                 }
@@ -442,7 +443,7 @@
                 };
                 $.ajax({
                   type: "POST",
-                  url: '/ffbe/process/prep',
+                  url: '/piper/process/prep',
                   data: JSON.stringify(blob),
                   headers: {
                         'Content-Type': 'application/json'
@@ -470,7 +471,7 @@
                 };
                 $.ajax({
                   type: "POST",
-                  url: '/ffbe/edit/view',
+                  url: '/piper/edit/view',
                   data: JSON.stringify(blob),
                   headers: {
                         'Content-Type': 'application/json'
@@ -489,7 +490,7 @@
             function firstTimeLoad() {
 
                 $.getJSON({
-                  url: '/ffbe/settings/list',
+                  url: '/piper/settings/list',
                   data: {},
                   success: function(data){
                     populateSelect(device1, data.devices || []);
@@ -506,7 +507,7 @@
                 });
 
                 $.getJSON({
-                      url: '/ffbe/player/level',
+                      url: '/piper/player/level',
                       data: {},
                       success: function(data){
                         playerLevel.val(data.value);
@@ -516,7 +517,7 @@
                 );
 
                 $.getJSON({
-                      url: '/ffbe/device/ip',
+                      url: '/piper/device/ip',
                       data: {},
                       success: function(data){
                         deviceIp.val(data.value);
@@ -598,39 +599,45 @@
 
 <div class="container-fluid">
 
-    <ul class="nav nav-tabs" id="myTab" role="tablist">
-        <li class="nav-item">
-            <a class="nav-link active" id="config-tab" data-toggle="tab" href="#config" role="tab" aria-controls="config"
-               aria-selected="true">Config</a>
-        </li>
-        <li class="nav-item">
-            <a class="nav-link" id="run-tab" data-toggle="tab" href="#run" role="tab" aria-controls="run"
-               aria-selected="false">Run</a>
-        </li>
-        <li class="nav-item">
-            <a class="nav-link" id="vars-tab" data-toggle="tab" href="#vars" role="tab" aria-controls="vars"
-               aria-selected="false">Variables</a>
-        </li>
-        <li class="nav-item">
-            <a class="nav-link" id="device-tab" data-toggle="tab" href="#device" role="tab" aria-controls="device"
-               aria-selected="false">Device</a>
-        </li>
-        <li class="nav-item">
-            <a class="nav-link" id="edit-tab" data-toggle="tab" href="#edit" role="tab" aria-controls="edit"
-               aria-selected="false">Edit</a>
-        </li>
-        <li class="nav-item">
-            <a class="nav-link" id="console-tab" data-toggle="tab" href="#console" role="tab" aria-controls="console"
-               aria-selected="false">Console</a>
-        </li>
-    </ul>
+    <!-- !!!!!!!! -->
 
+    <nav class="navbar navbar-expand-md navbar-dark bg-dark" style="margin-bottom: 1em;">
+        <a class="navbar-brand" href="#">Phone Piper</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsExample01" aria-controls="navbarsExample01" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
 
+        <div class="collapse navbar-collapse" id="navbarsExample01">
+            <ul class="nav navbar-nav mr-auto" id="myTab" role="tablist">
+                <li class="nav-item">
+                    <a class="nav-link active" id="config-tab" data-toggle="tab" href="#config" role="tab" aria-controls="config" aria-selected="true">Config</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" id="run-tab" data-toggle="tab" href="#run" role="tab" aria-controls="run" aria-selected="false">Run</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" id="vars-tab" data-toggle="tab" href="#vars" role="tab" aria-controls="vars" aria-selected="false">Variables</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" id="device-tab" data-toggle="tab" href="#device" role="tab" aria-controls="device" aria-selected="false">Device</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" id="edit-tab" data-toggle="tab" href="#edit" role="tab" aria-controls="edit" aria-selected="false">Edit</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" id="console-tab" data-toggle="tab" href="#console" role="tab" aria-controls="console" aria-selected="false">Console</a>
+                </li>
+            </ul>
+
+        </div>
+    </nav>
+
+    <!-- !!!!!!!! -->
 
     <div class="tab-content" id="myTabContent">
         <div class="tab-pane fade show active" id="config" role="tabpanel" aria-labelledby="config-tab">
 
-            <form id="setting-form" class="col-sm-4" style="display:none;">
+            <form id="setting-form" class="col-sm-12" style="display:none;">
                 <h3>Loader</h3>
 
                 <div class="input-group">
@@ -694,7 +701,7 @@
                 <a class="navbar-brand" href="#" id="statusName">CHECKING</a>
             </nav>
 
-            <form id="loaded-form" class="col-sm-4" style="display:none;">
+            <form id="loaded-form" class="col-sm-12" style="display:none;">
                 <h3>Run</h3>
                 <div class="form-group">
                     <label for="states">State</label>
@@ -706,10 +713,13 @@
                     <button type="button" id="controlKill" class="btn btn-danger">Kill</button>
                 </div>
                 <div class="form-group">
-                    <button type="button" level="SEVERE" class="btn btn-danger setLevel">Severe</button>
-                    <button type="button" level="INFO" class="btn btn-info setLevel">Info</button>
-                    <button type="button" level="FINER" class="btn btn-success setLevel">Finer</button>
-                    <button type="button" level="FINEST" class="btn btn-warning setLevel">Finest</button>
+                    <label for="logging">Logging</label>
+                    <select id="logging" class="form-control">
+                        <option value="SEVERE">Severe</option>
+                        <option value="INFO" selected>Info</option>
+                        <option value="FINER">Finer</option>
+                        <option value="FINEST">Finest</option>
+                    </select>
                 </div>
                 <div class="form-group">
                     <label for="components">Components</label>

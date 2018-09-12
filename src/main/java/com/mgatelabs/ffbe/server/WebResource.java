@@ -25,12 +25,13 @@ import java.io.File;
 import java.io.IOException;
 import java.net.URL;
 import java.util.*;
+import java.util.logging.Level;
 import java.util.logging.LogRecord;
 
 /**
  * Created by @mgatelabs (Michael Fuller) on 2/13/2018.
  */
-@Path("/ffbe")
+@Path("/piper")
 public class WebResource {
 
     // This can change
@@ -52,6 +53,7 @@ public class WebResource {
             connectionDefinition = ConnectionDefinition.read();
             deviceHelper = new DeviceHelper(connectionDefinition.getIp());
             handler = new CustomHandler();
+            handler.setLevel(Level.INFO);
             return true;
         }
         return false;
@@ -547,6 +549,8 @@ public class WebResource {
             }
 
             result.getVariables().addAll(runner.getVariables());
+
+            result.setLevel(handler.getLevel().getName());
 
             return result;
         } else {

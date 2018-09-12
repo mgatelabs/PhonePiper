@@ -170,6 +170,11 @@
             },
             {
               "type": "SET",
+              "var": "setup",
+              "value": "0"
+            },
+            {
+              "type": "SET",
               "value": "0",
               "var": "_seconds"
             },
@@ -226,6 +231,11 @@
             {
               "type": "LAP",
               "value": "BATTLE"
+            },
+            {
+              "type": "SET",
+              "var": "setup",
+              "value": "0"
             },
             {
               "type": "SET",
@@ -1100,6 +1110,11 @@
             },
             {
               "type": "SET",
+              "var": "setup",
+              "value": "0"
+            },
+            {
+              "type": "SET",
               "var": "_loops",
               "value": "0"
             },
@@ -1148,6 +1163,11 @@
             },
             {
               "type": "SET",
+              "var": "setup",
+              "value": "0"
+            },
+            {
+              "type": "SET",
               "var": "_loops",
               "value": "0"
             },
@@ -1174,6 +1194,11 @@
             {
               "type": "MSG",
               "value": "Found Lapis"
+            },
+            {
+              "type": "SET",
+              "var": "setup",
+              "value": "0"
             },
             {
               "type": "SET",

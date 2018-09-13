@@ -433,13 +433,16 @@ public class ScriptRunner {
                 }
 
                 if (!shell.isReady()) {
-                    logger.log(Level.WARNING, "Bad Shell: Wait, Restart, Wait...");
+                    logger.log(Level.WARNING, "Bad Shell: Wait, Connect, Restart, Wait...");
+                    Thread.sleep(1000);
+                    AdbShell.connect(deviceHelper.getIpAddress());
                     Thread.sleep(1000);
                     restartShell();
                     Thread.sleep(1000);
                 }
 
                 if (deviceHelper != null) {
+                    logger.finest("Helper Image");
                     long startTime = System.nanoTime();
                     AdbUtils.persistScreen(shell);
                     long endTime = System.nanoTime();
@@ -449,10 +452,11 @@ public class ScriptRunner {
                     lastImageDate = new Date();
                     lastImageDuration = ((float) dif / 1000000000.0f);
 
-                    logger.finest("Image Persisted");
+                    logger.finest("Image Persisted in " + lastImageDuration);
 
                     imageWrapper = null;
                 } else {
+                    logger.finest("USB Image");
 
                     long startTime = System.nanoTime();
                     imageWrapper = AdbUtils.getScreen();

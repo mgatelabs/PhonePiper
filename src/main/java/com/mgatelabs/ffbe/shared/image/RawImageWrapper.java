@@ -2,8 +2,10 @@ package com.mgatelabs.ffbe.shared.image;
 
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
+import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.IOException;
+import java.io.OutputStream;
 
 /**
  * Created by @mgatelabs (Michael Fuller) on 8/31/2017.
@@ -180,6 +182,25 @@ public class RawImageWrapper implements ImageWrapper {
         } catch (IOException e) {
             e.printStackTrace();
             return false;
+        }
+    }
+
+    @Override
+    public byte [] outputPng() {
+        BufferedImage bufferedImage = new BufferedImage(getWidth(), getHeight(), BufferedImage.TYPE_INT_RGB);
+        for (int y = 0; y < height; y++) {
+            for (int x = 0; x < width; x++) {
+                int color = getPixel(x,y);
+                bufferedImage.setRGB(x,y, 0xFFFFFF & color);
+            }
+        }
+        ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
+        try {
+            ImageIO.write(bufferedImage, "PNG", byteArrayOutputStream);
+            return byteArrayOutputStream.toByteArray();
+        } catch (IOException e) {
+            e.printStackTrace();
+            return null;
         }
     }
 

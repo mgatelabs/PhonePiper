@@ -116,6 +116,10 @@
                 return grp;
             }
 
+            $('#controlUpdatePreview').click(function(){
+                $('#previewImage').attr('src', '/piper/screen?time=' + (new Date().getTime()));
+            });
+
             function statusCheck(firstTime) {
                 $.getJSON({
                     url: '/piper/status',
@@ -761,7 +765,7 @@
 
         <div class="tab-pane fade" id="device" role="tabpanel" aria-labelledby="device-tab">
 
-            <form id="player-form" class="col-sm-4" style="display:none;">
+            <form id="player-form" class="col-sm-12" style="display:none;">
 
                 <h3>Settings</h3>
 
@@ -799,8 +803,19 @@
                     <button type="button" class="btn controlAdb btn-info notWhileRunning" adb="connect">Connect</button>
                     <button type="button" class="btn controlAdb btn-info notWhileRunning" adb="devices">Devices</button>
                 </div>
+                <br/>
+
+                <div class="form-group">
+                    <label for="adb-info">Preview</label>
+                    <br/>
+                    <img id="previewImage" src="" class="img-fluid" alt="Responsive image">
+                </div>
+                <div class="input-group">
+                    <button type="button" id="controlUpdatePreview" class="btn btn-info notWhileRunning">Update Preview</button>
+                </div>
 
             </form>
+
 
         </div>
         <div class="tab-pane fade" id="edit" role="tabpanel" aria-labelledby="edit-tab">

@@ -1,6 +1,8 @@
 package com.mgatelabs.ffbe.shared.image;
 
 import java.io.File;
+import java.io.InputStream;
+import java.io.OutputStream;
 
 /**
  * Created by @mgatelabs (Michael Fuller) on 9/1/2017.
@@ -17,4 +19,6 @@ public interface ImageWrapper {
     void getPixel(int x, int y, Sampler sample);
 
     boolean savePng(File file);
+
+    byte [] outputPng();
 }

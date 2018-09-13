@@ -2,8 +2,10 @@ package com.mgatelabs.ffbe.shared.image;
 
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
+import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.IOException;
+import java.io.OutputStream;
 
 /**
  * Created by @mgatelabs (Michael Fuller) on 9/1/2017.
@@ -52,6 +54,18 @@ public class PngImageWrapper implements ImageWrapper {
         } catch (IOException e) {
             e.printStackTrace();
             return false;
+        }
+    }
+
+    @Override
+    public byte [] outputPng() {
+        ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
+        try {
+            ImageIO.write(bufferedImage, "PNG", byteArrayOutputStream);
+            return byteArrayOutputStream.toByteArray();
+        } catch (IOException e) {
+            e.printStackTrace();
+            return null;
         }
     }
 

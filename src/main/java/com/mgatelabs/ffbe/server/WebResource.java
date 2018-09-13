@@ -9,7 +9,9 @@ import com.mgatelabs.ffbe.runners.ScriptRunner;
 import com.mgatelabs.ffbe.server.entities.*;
 import com.mgatelabs.ffbe.shared.details.*;
 import com.mgatelabs.ffbe.shared.helper.DeviceHelper;
+import com.mgatelabs.ffbe.shared.image.ImageWrapper;
 import com.mgatelabs.ffbe.shared.util.AdbShell;
+import com.mgatelabs.ffbe.shared.util.AdbUtils;
 import com.mgatelabs.ffbe.ui.FrameChoices;
 import com.mgatelabs.ffbe.ui.frame.StartupFrame;
 import com.mgatelabs.ffbe.ui.panels.LogPanel;
@@ -23,6 +25,8 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
 import java.net.URL;
 import java.util.*;
 import java.util.logging.Level;
@@ -498,7 +502,7 @@ public class WebResource {
             runner.updateLogger(handler.getLevel());
         }
         Map<String, String> result = Maps.newHashMap();
-            result.put("status", "true");
+        result.put("status", "true");
         return result;
     }
 
@@ -595,6 +599,30 @@ public class WebResource {
         values.put("views", StartupFrame.arrayToList(StartupFrame.listFoldersFilesIn(new File(Runner.WORKING_DIRECTORY, StartupFrame.PATH_VIEWS))));
         values.put("scripts", StartupFrame.arrayToList(StartupFrame.listJsonFilesIn(new File(Runner.WORKING_DIRECTORY, StartupFrame.PATH_SCRIPTS))));
         return values;
+    }
+
+    @GET
+    @Path("/screen")
+    public Response screen() {
+        try {
+            checkInitialState();
+            if (frameChoices != null) {
+                // Save the Image
+                AdbUtils.persistScreen(new AdbShell(frameChoices.getDeviceDefinition()));
+                // Get the Image
+                ImageWrapper wrapper = deviceHelper.download();
+
+                if (wrapper.isReady()) {
+                    byte [] stream = wrapper.outputPng();
+                    if (stream != null) {
+                        return Response.status(200).header("content-type", "image/png").entity(stream).build();
+                    }
+                }
+            }
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+        return Response.status(500).build();
     }
 
     @GET

@@ -25,55 +25,6 @@
               {
                 "is": "SCREEN",
                 "value": "battle-unit-0_ready"
-              },
-              {
-                "is": "EQUAL",
-                "var": "setup",
-                "value": "2"
-              }
-            ]
-          },
-          "actions": [
-            {
-              "type": "MSG",
-              "value": "Unit 5 Skip and Repeat"
-            },
-            {
-              "type": "SET",
-              "var": "setup",
-              "value": "1"
-            },
-            {
-              "type": "BATCH",
-              "value": "START"
-            },
-            {
-              "type": "WAIT",
-              "value": "6000"
-            },
-            {
-              "type": "REPEAT",
-              "value": ""
-            }
-          ]
-        },
-        {
-          "condition": {
-            "is": "SCREEN",
-            "value": "game-battle",
-            "and": [
-              {
-                "is": "SCREEN",
-                "value": "game-battle-auto_off"
-              },
-              {
-                "is": "SCREEN",
-                "value": "battle-unit-0_ready"
-              },
-              {
-                "is": "EQUAL",
-                "var": "setup",
-                "value": "0"
               }
             ]
           },
@@ -88,49 +39,8 @@
               "value": "0"
             },
             {
-              "type": "SET",
-              "var": "setup",
-              "value": "1"
-            },
-            {
               "type": "BATCH",
               "value": "START"
-            },
-            {
-              "type": "SWIPE_DOWN",
-              "value": "battle-unit_3"
-            },
-            {
-              "type": "TAP",
-              "value": "battle-unit_3"
-            },
-            {
-              "type": "TAP",
-              "value": "battle-unit_3"
-            },
-            {
-              "type": "SWIPE_DOWN",
-              "value": "battle-unit_4"
-            },
-            {
-              "type": "TAP",
-              "value": "battle-unit_4"
-            },
-            {
-              "type": "TAP",
-              "value": "battle-unit_4"
-            },
-            {
-              "type": "SWIPE_DOWN",
-              "value": "battle-unit_5"
-            },
-            {
-              "type": "TAP",
-              "value": "battle-unit_5"
-            },
-            {
-              "type": "TAP",
-              "value": "battle-unit_5"
             },
             {
               "type": "TAP",
@@ -149,62 +59,6 @@
               "value": "END"
             },
             {
-              "type": "WAIT",
-              "value": "8000"
-            },
-            {
-              "type": "REPEAT",
-              "value": ""
-            }
-          ]
-        },
-        {
-          "condition": {
-            "is": "SCREEN",
-            "value": "game-battle",
-            "and": [
-              {
-                "is": "SCREEN",
-                "value": "game-battle-auto_off"
-              },
-              {
-                "is": "SCREEN",
-                "value": "battle-unit-0_ready"
-              },
-              {
-                "is": "EQUAL",
-                "var": "setup",
-                "value": "1"
-              }
-            ]
-          },
-          "actions": [
-            {
-              "type": "MSG",
-              "value": "Repeat"
-            },
-            {
-              "type": "SET",
-              "var": "_loops",
-              "value": "0"
-            },
-            {
-              "type": "BATCH",
-              "value": "START"
-            },
-            {
-              "type": "TAP",
-              "value": "battle-repeat"
-            },
-            {
-              "type": "BATCH",
-              "value": "END"
-            },
-            {
-              "type": "WAIT",
-              "value": "8000"
-            },
-            {
               "type": "REPEAT",
               "value": ""
             }
@@ -218,18 +72,18 @@
             "and": [
               {
                 "is": "SCREEN",
-                "value": "game-battle-auto_off"
+                "value": "battle-unit-0_ready"
               }
             ]
           },
           "actions": [
             {
-              "type": "TAP",
-              "value": "battle-auto"
+              "type": "MSG",
+              "value": "Enabling Auto - Pause Detected"
             },
             {
-              "type": "WAIT",
-              "value": "8000"
+              "type": "TAP",
+              "value": "battle-auto"
             },
             {
               "type": "SET",
@@ -287,10 +141,6 @@
               "type": "SET",
               "value": "0",
               "var": "setup"
-            },
-            {
-              "type": "WAIT",
-              "value": "15000"
             },
             {
               "type": "REPEAT",

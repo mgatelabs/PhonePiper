@@ -234,11 +234,6 @@
             },
             {
               "type": "SET",
-              "var": "setup",
-              "value": "0"
-            },
-            {
-              "type": "SET",
               "var": "_loops",
               "value": "0"
             },

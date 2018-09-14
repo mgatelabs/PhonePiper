@@ -913,7 +913,7 @@
             },
             {
               "type": "WAIT",
-              "value": "10000"
+              "value": "6000"
             },
             {
               "type": "REPEAT",
@@ -942,7 +942,7 @@
             },
             {
               "type": "WAIT",
-              "value": "10000"
+              "value": "6000"
             },
             {
               "type": "REPEAT",
@@ -961,8 +961,30 @@
               "value": "Found Raid Screen"
             },
             {
+              "type": "SET",
+              "var": "_loops",
+              "value": "0"
+            },
+            {
               "type": "MOVE",
               "value": "raid-home"
+            }
+          ]
+        },
+        {
+          "condition": {
+            "is": "GREATER",
+            "var": "_loops",
+            "value": "60"
+          },
+          "actions": [
+            {
+              "type": "MSG",
+              "value": "Could not find Raid, switching to home"
+            },
+            {
+              "type": "MOVE",
+              "value": "raid_to_home"
             }
           ]
         }

@@ -18,6 +18,7 @@ import com.mgatelabs.ffbe.ui.panels.LogPanel;
 import com.mgatelabs.ffbe.ui.panels.RunScriptPanel;
 import com.mgatelabs.ffbe.ui.utils.Constants;
 import com.mgatelabs.ffbe.ui.utils.CustomHandler;
+import org.apache.juli.FileHandler;
 import org.springframework.web.bind.annotation.RequestBody;
 
 import javax.ws.rs.*;
@@ -25,8 +26,6 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import java.io.File;
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
 import java.net.URL;
 import java.util.*;
 import java.util.logging.Level;
@@ -49,15 +48,17 @@ public class WebResource {
     private static FrameChoices frameChoices;
     private static DeviceHelper deviceHelper;
     private static PlayerDefinition playerDefinition;
-    private static CustomHandler handler;
+    private static FileHandler fileLogger;
+    private static CustomHandler webLogger;
 
     private synchronized boolean checkInitialState() {
         if (connectionDefinition == null) {
             playerDefinition = PlayerDefinition.read();
             connectionDefinition = ConnectionDefinition.read();
             deviceHelper = new DeviceHelper(connectionDefinition.getIp());
-            handler = new CustomHandler();
-            handler.setLevel(Level.INFO);
+            webLogger = new CustomHandler();
+            webLogger.setLevel(Level.INFO);
+            fileLogger = new FileHandler(Runner.WORKING_DIRECTORY.getAbsolutePath(),"piper", ".log", 3);
             return true;
         }
         return false;
@@ -326,7 +327,7 @@ public class WebResource {
             result.getVariables().addAll(runner.getVariables());
         }
 
-        final ImmutableList<LogRecord> records = handler.getEvents();
+        final ImmutableList<LogRecord> records = webLogger.getEvents();
 
         for (LogRecord record : records) {
 
@@ -434,7 +435,7 @@ public class WebResource {
 
             editHolder = null;
 
-            runner = new ScriptRunner(playerDefinition, deviceHelper, frameChoices.getScriptDefinition(), frameChoices.getDeviceDefinition(), frameChoices.getViewDefinition(), handler);
+            runner = new ScriptRunner(playerDefinition, deviceHelper, frameChoices.getScriptDefinition(), frameChoices.getDeviceDefinition(), frameChoices.getViewDefinition(), webLogger, fileLogger);
 
             if (VarStateDefinition.exists(frameChoices.getScriptName())) {
                 VarStateDefinition varStateDefinition = VarStateDefinition.read(frameChoices.getScriptName());
@@ -497,9 +498,10 @@ public class WebResource {
     public Map<String, String> setLevel(@PathParam("level") String level) {
         checkInitialState();
 
-        handler.setLevel(java.util.logging.Level.parse(level));
+        webLogger.setLevel(java.util.logging.Level.parse(level));
+        fileLogger.setLevel(java.util.logging.Level.parse(level));
         if (runner != null) {
-            runner.updateLogger(handler.getLevel());
+            runner.updateLogger(webLogger.getLevel());
         }
         Map<String, String> result = Maps.newHashMap();
         result.put("status", "true");
@@ -554,7 +556,7 @@ public class WebResource {
 
             result.getVariables().addAll(runner.getVariables());
 
-            result.setLevel(handler.getLevel().getName());
+            result.setLevel(webLogger.getLevel().getName());
 
             return result;
         } else {

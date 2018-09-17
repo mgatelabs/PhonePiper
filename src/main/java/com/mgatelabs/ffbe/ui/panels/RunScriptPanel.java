@@ -58,7 +58,7 @@ public class RunScriptPanel extends JToolBar {
 
         timer = null;
 
-        scriptRunner = new ScriptRunner(playerDefinition, helper, scriptDefinition, deviceDefinition, viewDefinition, customHandler);
+        scriptRunner = new ScriptRunner(playerDefinition, helper, scriptDefinition, deviceDefinition, viewDefinition, customHandler, null);
 
         scriptThread = null;
 

@@ -18,6 +18,7 @@ import com.mgatelabs.ffbe.ui.utils.CustomHandler;
 import java.text.SimpleDateFormat;
 import java.util.*;
 import java.util.concurrent.TimeUnit;
+import java.util.logging.Handler;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -73,7 +74,7 @@ public class ScriptRunner {
 
     private long elapsedTime;
 
-    public ScriptRunner(PlayerDefinition playerDefinition, DeviceHelper deviceHelper, ScriptDefinition scriptDefinition, DeviceDefinition deviceDefinition, ViewDefinition viewDefinition, CustomHandler customHandler) {
+    public ScriptRunner(PlayerDefinition playerDefinition, DeviceHelper deviceHelper, ScriptDefinition scriptDefinition, DeviceDefinition deviceDefinition, ViewDefinition viewDefinition, CustomHandler customHandler, Handler fileHandler) {
         this.playerDefinition = playerDefinition;
         this.scriptDefinition = scriptDefinition;
         this.deviceDefinition = deviceDefinition;
@@ -85,6 +86,9 @@ public class ScriptRunner {
 
         logger.removeHandler(customHandler);
         logger.addHandler(customHandler);
+        if (fileHandler != null) {
+            logger.addHandler(fileHandler);
+        }
         logger.setLevel(customHandler.getLevel());
 
         logger.finer("Extracting Variables");

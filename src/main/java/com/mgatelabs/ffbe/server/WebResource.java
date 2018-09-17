@@ -335,7 +335,7 @@ public class WebResource {
 
             String sourceName;
             if (record.getSourceClassName() != null && record.getSourceClassName().lastIndexOf('.') > 0) {
-                sourceName = record.getSourceClassName().substring(record.getSourceClassName().lastIndexOf('.'));
+                sourceName = record.getSourceClassName().substring(record.getSourceClassName().lastIndexOf('.') + 1);
             } else if (record.getLoggerName() != null) {
                 sourceName = record.getLoggerName();
             } else {

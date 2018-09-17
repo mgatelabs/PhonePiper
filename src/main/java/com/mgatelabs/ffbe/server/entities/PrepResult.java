@@ -13,7 +13,8 @@ import java.util.List;
 public class PrepResult {
 
     private StatusEnum status;
-    private String level;
+    private String webLevel;
+    private String fileLevel;
 
     private List<NamedValueDescriptionItem> states;
     private List<NamedValueItem> components;
@@ -28,12 +29,20 @@ public class PrepResult {
         variables = Lists.newArrayList();
     }
 
-    public String getLevel() {
-        return level;
+    public String getWebLevel() {
+        return webLevel;
     }
 
-    public void setLevel(String level) {
-        this.level = level;
+    public void setWebLevel(String webLevel) {
+        this.webLevel = webLevel;
+    }
+
+    public String getFileLevel() {
+        return fileLevel;
+    }
+
+    public void setFileLevel(String fileLevel) {
+        this.fileLevel = fileLevel;
     }
 
     public void setStatus(StatusEnum status) {

@@ -5,7 +5,7 @@ import com.mgatelabs.ffbe.runners.ScriptRunner;
 import com.mgatelabs.ffbe.shared.details.*;
 import com.mgatelabs.ffbe.shared.helper.DeviceHelper;
 import com.mgatelabs.ffbe.shared.util.AdbShell;
-import com.mgatelabs.ffbe.ui.utils.CustomHandler;
+import com.mgatelabs.ffbe.ui.utils.WebLogHandler;
 
 import javax.swing.*;
 import java.awt.*;
@@ -47,7 +47,7 @@ public class RunScriptPanel extends JToolBar {
     private final Icon playIcon;
     private final Icon pauseIcon;
 
-    public RunScriptPanel(DeviceHelper helper, PlayerDefinition playerDefinition, AdbShell shell, DeviceDefinition deviceDefinition, ViewDefinition viewDefinition, ScriptDefinition scriptDefinition, MapPanel mapPanel, CustomHandler customHandler) {
+    public RunScriptPanel(DeviceHelper helper, PlayerDefinition playerDefinition, AdbShell shell, DeviceDefinition deviceDefinition, ViewDefinition viewDefinition, ScriptDefinition scriptDefinition, MapPanel mapPanel, WebLogHandler webLogHandler) {
         super("Run", JToolBar.HORIZONTAL);
 
         this.helper = helper;
@@ -58,7 +58,7 @@ public class RunScriptPanel extends JToolBar {
 
         timer = null;
 
-        scriptRunner = new ScriptRunner(playerDefinition, helper, scriptDefinition, deviceDefinition, viewDefinition, customHandler, null);
+        scriptRunner = new ScriptRunner(playerDefinition, helper, scriptDefinition, deviceDefinition, viewDefinition, webLogHandler, null);
 
         scriptThread = null;
 

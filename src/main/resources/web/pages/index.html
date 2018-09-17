@@ -210,11 +210,11 @@
                 });
             }
 
-            $("#logging").change(function(){
-                var ref = $(this), level = ref.val();
+            $(".logging").change(function(){
+                var ref = $(this), level = ref.val(), mode = ref.attr('mode');
                 $.ajax({
                     type: "POST",
-                    url: '/piper/process/level/' + level,
+                    url: '/piper/process/level/' + mode + '/' + level,
                     success: function(result){
 
                     }
@@ -352,7 +352,8 @@
                         for (i = 0; i < result.components.length; i++) {
                         components.append($('<option></option>').attr('value', result.components[i].value).text(result.components[i].name));
                         }
-                        $('#logging').val(result.level);
+                        $('#webLogging').val(result.webLevel);
+                        $('#fileLogging').val(result.fileLevel);
                         variableContainer.empty();
                         linkedVariables = {};
                         if (result.variables.length > 0) {
@@ -717,12 +718,23 @@
                     <button type="button" id="controlKill" class="btn btn-danger">Kill</button>
                 </div>
                 <div class="form-group">
-                    <label for="logging">Logging</label>
-                    <select id="logging" class="form-control">
+                    <label for="webLogging">Web Logging</label>
+                    <select id="webLogging" class="form-control logging" mode="web">
                         <option value="SEVERE">Severe</option>
                         <option value="INFO" selected>Info</option>
                         <option value="FINER">Finer</option>
                         <option value="FINEST">Finest</option>
+                        <option value="OFF">Off</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="fileLogging">File Logging</label>
+                    <select id="fileLogging" class="form-control logging" mode="file">
+                        <option value="SEVERE">Severe</option>
+                        <option value="INFO" selected>Info</option>
+                        <option value="FINER">Finer</option>
+                        <option value="FINEST">Finest</option>
+                        <option value="OFF">Off</option>
                     </select>
                 </div>
                 <div class="form-group">

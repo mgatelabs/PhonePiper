@@ -10,22 +10,24 @@ import java.util.logging.LogRecord;
 /**
  * Created by @mgatelabs (Michael Fuller) on 9/25/2017.
  */
-public class CustomHandler extends Handler {
+public class WebLogHandler extends Handler {
 
     public BlockingQueue<LogRecord> events = new ArrayBlockingQueue<>(200);
 
-    public CustomHandler() {
+    public WebLogHandler() {
 
     }
 
     @Override
     public void publish(LogRecord record) {
-        //record.ge
-        synchronized (events) {
-            while (events.size() >= 200) {
-                events.poll();
+        if (isLoggable(record)) {
+            //record.ge
+            synchronized (events) {
+                while (events.size() >= 200) {
+                    events.poll();
+                }
+                events.add(record);
             }
-            events.add(record);
         }
     }
 

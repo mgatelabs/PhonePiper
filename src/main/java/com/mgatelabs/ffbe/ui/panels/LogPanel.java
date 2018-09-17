@@ -1,7 +1,7 @@
 package com.mgatelabs.ffbe.ui.panels;
 
 import com.google.common.collect.ImmutableList;
-import com.mgatelabs.ffbe.ui.utils.CustomHandler;
+import com.mgatelabs.ffbe.ui.utils.WebLogHandler;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
@@ -17,7 +17,7 @@ import java.util.logging.LogRecord;
  */
 public class LogPanel extends JPanel {
 
-    private CustomHandler customHandler;
+    private WebLogHandler webLogHandler;
 
     private JTable table;
 
@@ -27,9 +27,9 @@ public class LogPanel extends JPanel {
 
     public static final SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 
-    public LogPanel(CustomHandler customHandler) {
+    public LogPanel(WebLogHandler webLogHandler) {
         super();
-        this.customHandler = customHandler;
+        this.webLogHandler = webLogHandler;
 
         build();
     }
@@ -63,7 +63,7 @@ public class LogPanel extends JPanel {
         timer = new Timer(1000, new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                ImmutableList<LogRecord> records = customHandler.getEvents();
+                ImmutableList<LogRecord> records = webLogHandler.getEvents();
                 try {
                     if (records.size() > 0) {
                         final String[] cols = new String[4];

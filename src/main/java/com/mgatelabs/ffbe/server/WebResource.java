@@ -17,7 +17,7 @@ import com.mgatelabs.ffbe.ui.frame.StartupFrame;
 import com.mgatelabs.ffbe.ui.panels.LogPanel;
 import com.mgatelabs.ffbe.ui.panels.RunScriptPanel;
 import com.mgatelabs.ffbe.ui.utils.Constants;
-import com.mgatelabs.ffbe.ui.utils.CustomHandler;
+import com.mgatelabs.ffbe.ui.utils.WebLogHandler;
 import org.apache.juli.FileHandler;
 import org.springframework.web.bind.annotation.RequestBody;
 
@@ -28,6 +28,7 @@ import java.io.File;
 import java.io.IOException;
 import java.net.URL;
 import java.util.*;
+import java.util.logging.Handler;
 import java.util.logging.Level;
 import java.util.logging.LogRecord;
 
@@ -49,16 +50,17 @@ public class WebResource {
     private static DeviceHelper deviceHelper;
     private static PlayerDefinition playerDefinition;
     private static FileHandler fileLogger;
-    private static CustomHandler webLogger;
+    private static WebLogHandler webLogger;
 
     private synchronized boolean checkInitialState() {
         if (connectionDefinition == null) {
             playerDefinition = PlayerDefinition.read();
             connectionDefinition = ConnectionDefinition.read();
             deviceHelper = new DeviceHelper(connectionDefinition.getIp());
-            webLogger = new CustomHandler();
+            webLogger = new WebLogHandler();
             webLogger.setLevel(Level.INFO);
             fileLogger = new FileHandler(Runner.WORKING_DIRECTORY.getAbsolutePath(),"piper", ".log", 3);
+            fileLogger.setLevel(Level.INFO);
             return true;
         }
         return false;
@@ -493,19 +495,32 @@ public class WebResource {
     }
 
     @POST
-    @Path("/process/level/{level}")
+    @Path("/process/level/web/{level}")
     @Produces("application/json")
-    public Map<String, String> setLevel(@PathParam("level") String level) {
+    public Map<String, String> setWebLevel(@PathParam("level") String level) {
         checkInitialState();
-
-        webLogger.setLevel(java.util.logging.Level.parse(level));
-        fileLogger.setLevel(java.util.logging.Level.parse(level));
-        if (runner != null) {
-            runner.updateLogger(webLogger.getLevel());
-        }
+        updateLoggerFor(webLogger, java.util.logging.Level.parse(level));
         Map<String, String> result = Maps.newHashMap();
         result.put("status", "true");
         return result;
+    }
+
+    @POST
+    @Path("/process/level/file/{level}")
+    @Produces("application/json")
+    public Map<String, String> setFileLevel(@PathParam("level") String level) {
+        checkInitialState();
+        updateLoggerFor(fileLogger, java.util.logging.Level.parse(level));
+        Map<String, String> result = Maps.newHashMap();
+        result.put("status", "true");
+        return result;
+    }
+
+    private void updateLoggerFor(Handler handler, Level level) {
+        handler.setLevel(level);
+        if (runner != null) {
+            runner.updateLogger(webLogger.getLevel().intValue() < fileLogger.getLevel().intValue() ? webLogger.getLevel(): fileLogger.getLevel());
+        }
     }
 
     @GET
@@ -556,7 +571,8 @@ public class WebResource {
 
             result.getVariables().addAll(runner.getVariables());
 
-            result.setLevel(webLogger.getLevel().getName());
+            result.setWebLevel(webLogger.getLevel().getName());
+            result.setFileLevel(fileLogger.getLevel().getName());
 
             return result;
         } else {

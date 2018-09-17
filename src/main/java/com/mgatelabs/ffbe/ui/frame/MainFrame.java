@@ -6,7 +6,7 @@ import com.mgatelabs.ffbe.shared.mapper.MapDefinition;
 import com.mgatelabs.ffbe.shared.util.AdbShell;
 import com.mgatelabs.ffbe.ui.FrameChoices;
 import com.mgatelabs.ffbe.ui.panels.*;
-import com.mgatelabs.ffbe.ui.utils.CustomHandler;
+import com.mgatelabs.ffbe.ui.utils.WebLogHandler;
 
 import javax.swing.*;
 import javax.swing.event.MenuEvent;
@@ -42,7 +42,7 @@ public class MainFrame extends JFrame {
 
     private LogPanel logPanel;
 
-    private CustomHandler customHandler;
+    private WebLogHandler webLogHandler;
 
     private JSplitPane logSplit;
 
@@ -100,7 +100,7 @@ public class MainFrame extends JFrame {
 
         returnRequested = false;
 
-        customHandler = new CustomHandler();
+        webLogHandler = new WebLogHandler();
 
         connectionDefinition = ConnectionDefinition.read();
 
@@ -190,7 +190,7 @@ public class MainFrame extends JFrame {
 
         desktopPane = new JDesktopPane();
 
-        logPanel = new LogPanel(customHandler);
+        logPanel = new LogPanel(webLogHandler);
 
         int column0Top = 0;
         int column1Top = 0;
@@ -240,7 +240,7 @@ public class MainFrame extends JFrame {
         }
 
         if (showRunScript) {
-            runScriptPanel = new RunScriptPanel(connectionPanel.getDeviceHelper(), playerDefinition, shell, deviceDefinition, viewDefinition, scriptDefinition, mapPanel, customHandler);
+            runScriptPanel = new RunScriptPanel(connectionPanel.getDeviceHelper(), playerDefinition, shell, deviceDefinition, viewDefinition, scriptDefinition, mapPanel, webLogHandler);
             //runScriptPanel.setLocation(0, column0Top);
             //column0Top += runScriptPanel.getHeight();
 

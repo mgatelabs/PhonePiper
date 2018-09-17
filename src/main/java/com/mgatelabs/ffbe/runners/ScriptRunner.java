@@ -13,7 +13,7 @@ import com.mgatelabs.ffbe.shared.image.*;
 import com.mgatelabs.ffbe.shared.util.AdbShell;
 import com.mgatelabs.ffbe.shared.util.AdbUtils;
 import com.mgatelabs.ffbe.shared.util.VarTimer;
-import com.mgatelabs.ffbe.ui.utils.CustomHandler;
+import com.mgatelabs.ffbe.ui.utils.WebLogHandler;
 
 import java.text.SimpleDateFormat;
 import java.util.*;
@@ -74,7 +74,7 @@ public class ScriptRunner {
 
     private long elapsedTime;
 
-    public ScriptRunner(PlayerDefinition playerDefinition, DeviceHelper deviceHelper, ScriptDefinition scriptDefinition, DeviceDefinition deviceDefinition, ViewDefinition viewDefinition, CustomHandler customHandler, Handler fileHandler) {
+    public ScriptRunner(PlayerDefinition playerDefinition, DeviceHelper deviceHelper, ScriptDefinition scriptDefinition, DeviceDefinition deviceDefinition, ViewDefinition viewDefinition, WebLogHandler webLogHandler, Handler fileHandler) {
         this.playerDefinition = playerDefinition;
         this.scriptDefinition = scriptDefinition;
         this.deviceDefinition = deviceDefinition;
@@ -84,12 +84,13 @@ public class ScriptRunner {
         vars = Maps.newHashMap();
         shell = new AdbShell(deviceDefinition);
 
-        logger.removeHandler(customHandler);
-        logger.addHandler(customHandler);
+        logger.removeHandler(webLogHandler);
+        logger.addHandler(webLogHandler);
         if (fileHandler != null) {
+            logger.removeHandler(fileHandler);
             logger.addHandler(fileHandler);
         }
-        logger.setLevel(customHandler.getLevel());
+        logger.setLevel(webLogHandler.getLevel());
 
         logger.finer("Extracting Variables");
 

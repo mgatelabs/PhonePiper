@@ -83,14 +83,23 @@ public class ScriptRunner {
         stack = new Stack<>();
         vars = Maps.newHashMap();
         shell = new AdbShell(deviceDefinition);
+        shell.attachhandler(webLogHandler);
+
 
         logger.removeHandler(webLogHandler);
         logger.addHandler(webLogHandler);
         if (fileHandler != null) {
+            shell.attachhandler(fileHandler);
             logger.removeHandler(fileHandler);
             logger.addHandler(fileHandler);
         }
+        Level min = webLogHandler.getLevel();
+        if (fileHandler != null) {
+            min = webLogHandler.getLevel().intValue() < fileHandler.getLevel().intValue() ? webLogHandler.getLevel(): fileHandler.getLevel();
+        }
         logger.setLevel(webLogHandler.getLevel());
+        shell.setLevel(webLogHandler.getLevel());
+
 
         logger.finer("Extracting Variables");
 
@@ -204,6 +213,7 @@ public class ScriptRunner {
 
     public void updateLogger(Level level) {
         logger.setLevel(level);
+        shell.setLevel(level);
     }
 
     public void stopShell() {
@@ -226,6 +236,7 @@ public class ScriptRunner {
             }
         }
         shell = new AdbShell(deviceDefinition);
+        updateLogger(logger.getLevel());
     }
 
     public Date getLastImageDate() {

@@ -7,6 +7,8 @@ import org.apache.commons.lang3.StringUtils;
 
 import java.io.*;
 import java.util.List;
+import java.util.logging.Handler;
+import java.util.logging.Level;
 import java.util.logging.Logger;
 
 /**
@@ -33,8 +35,6 @@ public class AdbShell {
     private boolean ready;
 
     private List<String> batch;
-
-
 
     public static String enableRemote() {
         return commonHandler(new ProcessBuilder("adb", "tcpip", "5555"));
@@ -98,13 +98,15 @@ public class AdbShell {
 
         endLineKey = device.getAdbEndLine();
 
+        logger.finest("Starting ADb Shell");
+
         builder = new ProcessBuilder("adb", "shell");
         builder.redirectOutput(ProcessBuilder.Redirect.PIPE);
         builder.redirectError(ProcessBuilder.Redirect.INHERIT);
         try {
             adb = builder.start();
             if (!adb.isAlive()) {
-                System.out.println("Exit Code: " + adb.exitValue());
+                logger.severe("Adb Exit Code: " + adb.exitValue());
                 ready = false;
                 return;
             }
@@ -120,6 +122,15 @@ public class AdbShell {
             e.printStackTrace();
             ready = false;
         }
+    }
+
+    public void attachhandler(final Handler handler) {
+        logger.removeHandler(handler);
+        logger.addHandler(handler);
+    }
+
+    public void setLevel(Level newLevel) {
+        logger.setLevel(newLevel);
     }
 
     public void shutdown() {
@@ -146,12 +157,12 @@ public class AdbShell {
 
     public synchronized void exec(String adbCommand) {
         if (!ready) {
-            System.out.println("Not Ready");
+            logger.severe("Adb Not Ready");
             return;
         }
 
         if (!adb.isAlive()) {
-            System.out.println("Exit Code: " + adb.exitValue());
+            logger.severe("Adb Exit Code: " + adb.exitValue());
             ready = false;
             return;
         }
@@ -194,8 +205,9 @@ public class AdbShell {
 
             long endTime = System.nanoTime();
             long diff = endTime - startTime;
-            logger.finest("AdbCommand: " + adbCommand + " (" + String.format("%2.2f", ((float) diff / 1000000000.0)) + "s)");
-
+            if (logger.isLoggable(Level.SEVERE)) {
+                logger.finest("AdbCommand: " + adbCommand + " (" + String.format("%2.2f", ((float) diff / 1000000000.0)) + "s)");
+            }
         } catch (Exception ex) {
             ex.printStackTrace();
             ready = false;

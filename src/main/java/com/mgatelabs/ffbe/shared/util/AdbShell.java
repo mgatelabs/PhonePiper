@@ -149,7 +149,7 @@ public class AdbShell {
 
     public synchronized void exec() {
         if (batch.size() > 0) {
-            String cmd = Joiner.on('\n').join(batch);
+            String cmd = Joiner.on(" && ").join(batch);
             batch.clear();
             exec(cmd);
         }

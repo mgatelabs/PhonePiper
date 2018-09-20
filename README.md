@@ -49,58 +49,19 @@ Some scripts are a bit outdated, and need to be re-evaluated again.
 ## Common Configurations
 
 ## TMR farming
-Make sure your already at the earth shrine, entrance, at the depart screen.  Make sure your TMR team is selected.
-
-1. Setup
-* Mode: script
-* Action: run
+Make sure your already at the earth shrine menu.  The TMR team by default is slot 2.  You can override the default slot with scripts.
+-1. Run the helper app on the phone
+0. Run the app with "server" as a parameter
+1. Open your web browser to localhost:8080/piper
+2. Setup your run
 * Device: Samsung-S7-1080
 * Views: 1080x1920
-* Scripts: earthshrine-entrance-attack
-* Maps: Leave blank
-2. Hit start
-3. Check the screen, make sure your player level is right, and the phone's IP address is entered.
-4. Make sure the phone helper is running
-5. Hit the play button and look at the logs, if the logs says, "BAD SHELL", try pressing play/pause again
-
- and press the play button
-
-## LB farming (Non-destructive)
-Make sure your already at the earth shrine, entrance, at the depart screen, with no friend.  Make sure your single LB farming unit is in slot 1.  The unit should have gear that constantly fills the LB guage and heals.
-
-1. Setup
-* Mode: script
-* Action: run
-* Device: Samsung-S7-1080
-* Views: 1080x1920
-* Scripts: battle-farm-lb-1unit
-* Maps: Leave blank
-2. Hit start
-3. Check the screen, make sure your player level is right, and the phone's IP address is entered.
-4. Make sure the phone helper is running
-5. Hit the play button and look at the logs, if the logs says, "BAD SHELL", try pressing play/pause again
-
-## ESPER farming (Non-destructive)
-Make sure your already at the earth shrine, entrance, at the depart screen, with no friend.  Make sure your single unit is Rydia in slot 1.  The unit should have gear that constantly fills the LB guage and heals.  When you get the esper achievement, Rydia's LB level should be maxed.
-
-1. Setup
-* Mode: script
-* Action: run
-* Device: Samsung-S7-1080
-* Views: 1080x1920
-* Scripts: battle-farm-esper-1unit
-* Maps: Leave blank
-2. Hit start
-3. Check the screen, make sure your player level is right, and the phone's IP address is entered.
-4. Make sure the phone helper is running
-5. Hit the play button and look at the logs, if the logs says, "BAD SHELL", try pressing play/pause again
-
-## What is it doing
-
-0. Loading Script, Device, View, Connection & Player Information
-1. Executing the main loop
-2. Grabbing the current screen
-3. Handle conditions and execute actions
+* Scripts: farming
+* More scripts can be added to tune your run
+2. Hit load
+3. Goto the device tab and make sure the IP is right, then hit connect to link ADB to your device.
+4. On the run tab hit play/pause
+5. Watch the screen, it should start to move.  If not check the console for errors.
 
 ## Server setup
 

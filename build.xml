@@ -9,7 +9,7 @@
             <fileset dir="${artifact.output.path}" includes="*.json"/>
             <fileset dir="${artifact.output.path}/views" includes="**/*.png"/>
         </delete>
-        <zip destfile="${artifact.output.path}/release.zip">
+        <zip destfile="${artifact.output.path}/PhonePiperFFBE.zip">
             <fileset dir="${artifact.output.path}" includes="**/*"/>
         </zip>
     </target>

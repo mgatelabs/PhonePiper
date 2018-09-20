@@ -42,7 +42,7 @@ Some scripts are a bit outdated, and need to be re-evaluated again.
 * type "adb device-state", press enter and see what is returned.  If it's working you should see "device"
 6. Run the app
 * From JetBrains IntelliJ
-** you need to setup a Java 8 configuration to execute "com.mgatelabs.ffbe.Runner"
+** you need to setup a Java 8 configuration to execute "com.mgatelabs.piper.Runner"
 ** Set the program argument to SERVER
 ** Change the working directory to the working folder included with the app
 

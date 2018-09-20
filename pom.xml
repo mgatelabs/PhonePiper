@@ -5,13 +5,13 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>com.mgatelabs</groupId>
-    <artifactId>FFBExecute</artifactId>
-    <version>0.0.5-SNAPSHOT</version>
+    <artifactId>PhonePiper</artifactId>
+    <version>0.0.6-SNAPSHOT</version>
 
     <properties>
         <maven.compiler.source>1.8</maven.compiler.source>
         <maven.compiler.target>1.8</maven.compiler.target>
-        <exec.mainClass>com.mgatelabs.ffbe.Runner</exec.mainClass>
+        <exec.mainClass>com.mgatelabs.piper.Runner</exec.mainClass>
     </properties>
 
     <dependencies>
@@ -109,11 +109,25 @@
             <version>1.5.10.RELEASE</version>
         </dependency>
 
+        <!-- https://mvnrepository.com/artifact/org.apache.tomcat/tomcat-juli -->
+        <dependency>
+            <groupId>org.apache.tomcat</groupId>
+            <artifactId>tomcat-juli</artifactId>
+            <version>9.0.12</version>
+        </dependency>
+
+        <!-- https://mvnrepository.com/artifact/commons-logging/commons-logging -->
+        <dependency>
+            <groupId>commons-logging</groupId>
+            <artifactId>commons-logging</artifactId>
+            <version>1.2</version>
+        </dependency>
+
 
     </dependencies>
 
     <build>
-        <finalName>android-control</finalName>
+        <finalName>phone-piper</finalName>
         <plugins>
             <plugin>
                 <artifactId>maven-compiler-plugin</artifactId>
@@ -129,7 +143,7 @@
                 <artifactId>spring-boot-maven-plugin</artifactId>
                 <configuration>
                     <fork>true</fork>
-                    <mainClass>com.mgatelabs.ffbe.Runner</mainClass>
+                    <mainClass>com.mgatelabs.piper.Runner</mainClass>
                 </configuration>
                 <executions>
                     <execution>

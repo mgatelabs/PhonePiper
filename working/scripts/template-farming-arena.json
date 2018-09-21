@@ -261,11 +261,11 @@
             {
               "type": "SLOW_UP",
               "value": "battle-skill-top-slider",
-              "count": "8"
+              "count": "10"
             },
             {
               "type": "TAP",
-              "value": "battle-skill-top-5"
+              "value": "battle-skill-top-2"
             },
             {
               "type": "WAIT",

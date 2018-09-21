@@ -96,7 +96,7 @@ public class FrameChoices {
         } else {
             this.scriptDefinition = null;
         }
-        this.scriptName = scriptDefinition.getScriptId();
+        this.scriptName = scriptDefinition != null ? scriptDefinition.getScriptId() : "";
 
         if (canDevice(action, mode) && deviceId != null) {
             this.deviceDefinition = DeviceDefinition.read(deviceId);

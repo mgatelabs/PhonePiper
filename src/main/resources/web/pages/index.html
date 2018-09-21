@@ -65,6 +65,7 @@
             var killButton = $('#controlKill');
             var unloadEdit = $('#unloadEdit');
             var loadButton = $('#controlLoad');
+            var saveButton = $('#controlSave');
             var editViewButton = $('#controlEditView');
 
             var controlPlayerSave = $('#controlPlayerSave');
@@ -83,6 +84,10 @@
             var notWhileRunning = $('.notWhileRunning');
 
             var logItems = [];
+
+            var configList = $('#config-list');
+
+            var configs = [];
 
             function populateSelect(select, items) {
                 var i = 0;
@@ -128,6 +133,8 @@
 
                         var i = 0, item, div;
 
+                        configList.hide();
+
                         statusName.text(data.status);
 
                         switch(data.status) {
@@ -146,6 +153,7 @@
                                 settingForm.show();
                                 loadedForm.hide();
                                 states.prop('disabled', true);
+                                configList.show();
                             } break;
                             case 'READY': {
                                 if (firstTime) {
@@ -246,6 +254,12 @@
                 }
             });
 
+            saveButton.click(function(){
+                if (!saveButton.hasClass('disabled')) {
+                    saveConfig();
+                }
+            });
+
             killButton.click(function(){
                 if (!unloadButton.hasClass('disabled')) {
                     $.ajax({
@@ -307,6 +321,20 @@
                     url: '/piper/button',
                     data: {buttonId: button, componentId: componentId}
                 });
+            });
+
+            configList.on('click', 'button', function(){
+                var ref = $(this), index = ref.attr('index') - 0;
+                if (index >= 0 && index < configs.length) {
+                    if (ref.hasClass('run-config')) {
+                        applySelection(configs[index]);
+                        loadButton.click();
+                    } else if (ref.hasClass('delete-config')) {
+                        configs.splice(index, 1);
+                        localStorage.setItem("CONFIGS", JSON.stringify(configs));
+                        buildConfigs();
+                    }
+                }
             });
 
             function doubleWide(numb) {
@@ -531,6 +559,42 @@
                 );
             }
 
+            function saveConfig() {
+
+                var title = prompt("Configuration name?");
+
+                if (!title) {
+                    title = "Untitled " + (configs.length + 1);
+                }
+
+                var device1 = $('#device1').val();
+                var view1 = $('#view1').val();
+                var view2 = $('#view2').val();
+                var script1 = $('#script1').val();
+                var script2 = $('#script2').val();
+                var script3 = $('#script3').val();
+                var script4 = $('#script4').val();
+
+                var data = {
+                    device: device1 || '',
+                    views: [],
+                    scripts: []
+                };
+                if (view1) data.views.push(view1);
+                if (view2) data.views.push(view2);
+                if (script1) data.scripts.push(script1);
+                if (script2) data.scripts.push(script2);
+                if (script3) data.scripts.push(script3);
+                if (script4) data.scripts.push(script4);
+                data.title = title;
+
+                configs.push(data);
+
+                localStorage.setItem("CONFIGS", JSON.stringify(configs));
+
+                buildConfigs();
+            }
+
             function saveSelection() {
 
                 var device1 = $('#device1').val();
@@ -559,38 +623,73 @@
             function loadSelection() {
                 var lData = localStorage.getItem("LAST");
                 if (lData) {
-
-                    var device1 = $('#device1');
-                    var view1 = $('#view1');
-                    var view2 = $('#view2');
-                    var script1 = $('#script1');
-                    var script2 = $('#script2');
-                    var script3 = $('#script3');
-                    var script4 = $('#script4');
-
                     var j = JSON.parse(lData);
-                    if (j.device) device1.val(j.device);
-                    if (j.views && j.views.length > 0) {
-                        view1.val(j.views[0]);
-                        view2.prop('disabled', false);
-                    }
-                    if (j.views && j.views.length > 1)
-                        view2.val(j.views[1]);
-                    if (j.scripts && j.scripts.length > 0) {
-                        script1.val(j.scripts[0]);
-                        script2.prop('disabled', false);
-                    }
-                    if (j.scripts && j.scripts.length > 1) {
-                        script2.val(j.scripts[1]);
-                        script3.prop('disabled', false);
-                    }
-                    if (j.scripts && j.scripts.length > 2) {
-                        script3.val(j.scripts[2]);
-                        script4.prop('disabled', false);
-                    }
-                    if (j.scripts && j.scripts.length > 3)
-                        script4.val(j.scripts[3]);
+                    applySelection(j);
                 }
+
+                var configData = localStorage.getItem("CONFIGS");
+                if (configData) {
+                    configData = JSON.parse(configData);
+                    configs = [];
+                    var i;
+                    for (i = 0; i < configData.length; i++) {
+                        configs.push(configData[i]);
+                    }
+                    buildConfigs();
+                }
+            }
+
+            function applySelection(j) {
+                var device1 = $('#device1').val('');
+                var view1 = $('#view1').val('');
+                var view2 = $('#view2').val('').prop('disabled', true);
+                var script1 = $('#script1').val('');
+                var script2 = $('#script2').val('').prop('disabled', true);
+                var script3 = $('#script3').val('').prop('disabled', true);
+                var script4 = $('#script4').val('').prop('disabled', true);
+
+                if (j.device) device1.val(j.device);
+                if (j.views && j.views.length > 0) {
+                    view1.val(j.views[0]);
+                    view2.prop('disabled', false);
+                }
+                if (j.views && j.views.length > 1)
+                    view2.val(j.views[1]);
+                if (j.scripts && j.scripts.length > 0) {
+                    script1.val(j.scripts[0]);
+                    script2.prop('disabled', false);
+                }
+                if (j.scripts && j.scripts.length > 1) {
+                    script2.val(j.scripts[1]);
+                    script3.prop('disabled', false);
+                }
+                if (j.scripts && j.scripts.length > 2) {
+                    script3.val(j.scripts[2]);
+                    script4.prop('disabled', false);
+                }
+                if (j.scripts && j.scripts.length > 3)
+                    script4.val(j.scripts[3]);
+            }
+
+            function buildConfigs() {
+                var i;
+                configList.empty();
+                for (i = 0; i < configs.length; i++) {
+                    createConfigItem(i, configs[i].title)
+                }
+            }
+
+            function createConfigItem(index, title) {
+                var card, body, bntGroup;
+                card = $('<div class="card mb-4 shadow-sm"></div>');
+                $('<div class="card-header"></div>').append($('<h4 class="my-0 font-weight-normal"></h4>').text(title || 'Untitled')).appendTo(card);
+                body = $('<div class="card-body"></div>').appendTo(card);
+                bntGroup = $('<div class="btn-group" role="group" aria-label="Controls"></div>').appendTo(body);
+                bntGroup.append($('<button type="button" class="btn run-config btn-primary">Run</button>').attr('index', index));
+                //bntGroup.append($('<button type="button" class="btn btn-outline-dark">Modify</button>').attr('index', index));
+                bntGroup.append($('<button type="button" class="btn delete-config btn-outline-danger">Delete</button>').attr('index', index));
+
+                configList.append(card);
             }
 
             setTimeout(firstTimeLoad, 100);
@@ -615,7 +714,10 @@
         <div class="collapse navbar-collapse" id="navbarsExample01">
             <ul class="nav navbar-nav mr-auto" id="myTab" role="tablist">
                 <li class="nav-item">
-                    <a class="nav-link active" id="config-tab" data-toggle="tab" href="#config" role="tab" aria-controls="config" aria-selected="true">Config</a>
+                    <a class="nav-link active" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home" aria-selected="true">Home</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" id="config-tab" data-toggle="tab" href="#config" role="tab" aria-controls="config" aria-selected="true">Config</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" id="run-tab" data-toggle="tab" href="#run" role="tab" aria-controls="run" aria-selected="false">Run</a>
@@ -640,7 +742,25 @@
     <!-- !!!!!!!! -->
 
     <div class="tab-content" id="myTabContent">
-        <div class="tab-pane fade show active" id="config" role="tabpanel" aria-labelledby="config-tab">
+
+        <div class="tab-pane fade show active text-center" id="home" role="tabpanel" aria-labelledby="home-tab">
+
+            <div class="col-sm-12">
+                <img src="/piper/resource/PhonePiper-Large.png" class="img-fluid" alt="Responsive image"/>
+            </div>
+
+            <div class="col-sm-12">
+                <h3>Available Configs</h3>
+            </div>
+
+            <div class="card-deck mb-3 text-center" id="config-list">
+
+            </div>
+
+
+        </div>
+
+        <div class="tab-pane fade show" id="config" role="tabpanel" aria-labelledby="config-tab">
 
             <form id="setting-form" class="col-sm-12" style="display:none;">
                 <h3>Loader</h3>
@@ -696,6 +816,7 @@
                 <div class="form-group">
                     <button type="button" id="controlLoad" class="btn btn-primary">Run Script</button>
                     <button type="button" id="controlEditView" class="btn btn-secondary">Edit View</button>
+                    <button type="button" id="controlSave" class="btn btn-dark">Save</button>
                 </div>
             </form>
 

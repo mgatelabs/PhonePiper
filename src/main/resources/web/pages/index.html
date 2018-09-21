@@ -337,6 +337,10 @@
                 }
             });
 
+            $('#new-config').click(function(){
+                $('[href="#config"]').tab('show');
+            });
+
             function doubleWide(numb) {
                 if (numb < 10) {
                     return "0" + numb;
@@ -673,23 +677,24 @@
 
             function buildConfigs() {
                 var i;
-                configList.empty();
+                $('.customConfig',configList).remove();
                 for (i = 0; i < configs.length; i++) {
                     createConfigItem(i, configs[i].title)
                 }
             }
 
             function createConfigItem(index, title) {
-                var card, body, bntGroup;
-                card = $('<div class="card mb-4 shadow-sm"></div>');
+                var wrap, card, body, bntGroup;
+                wrap = $('<div class="col-sm-12 col-md-6 col-lg-4 col-xl-3 customConfig"></div>');
+                card = $('<div class="card shadow-sm"></div>');
                 $('<div class="card-header"></div>').append($('<h4 class="my-0 font-weight-normal"></h4>').text(title || 'Untitled')).appendTo(card);
                 body = $('<div class="card-body"></div>').appendTo(card);
                 bntGroup = $('<div class="btn-group" role="group" aria-label="Controls"></div>').appendTo(body);
                 bntGroup.append($('<button type="button" class="btn run-config btn-primary">Run</button>').attr('index', index));
                 //bntGroup.append($('<button type="button" class="btn btn-outline-dark">Modify</button>').attr('index', index));
                 bntGroup.append($('<button type="button" class="btn delete-config btn-outline-danger">Delete</button>').attr('index', index));
-
-                configList.append(card);
+                wrap.append(card);
+                configList.append(wrap);
             }
 
             setTimeout(firstTimeLoad, 100);
@@ -753,10 +758,19 @@
                 <h3>Available Configs</h3>
             </div>
 
-            <div class="card-deck mb-3 text-center" id="config-list">
+            <div class="row text-center" id="config-list">
 
+                <div class="col-sm-12 col-md-6 col-lg-4 col-xl-3">
+                    <div class="card shadow-sm">
+                        <div class="card-header">
+                            <h4 class="my-0 font-weight-normal">New Configuration</h4>
+                        </div>
+                        <div class="card-body">
+                            <button type="button" id="new-config" class="btn btn-lg btn-block btn-outline-primary">Create</button>
+                        </div>
+                    </div>
+                </div>
             </div>
-
 
         </div>
 

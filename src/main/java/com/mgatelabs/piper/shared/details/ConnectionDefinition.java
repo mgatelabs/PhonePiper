@@ -25,9 +25,9 @@ public class ConnectionDefinition {
     }
 
     public static ConnectionDefinition read() {
-        File localFile = new File(Runner.WORKING_DIRECTORY,"connection.json");
+        File localFile = new File(Runner.WORKING_DIRECTORY, "connection.json");
         if (localFile.exists()) {
-            ObjectMapper objectMapper = JsonTool.INSTANCE;
+            ObjectMapper objectMapper = JsonTool.getInstance();
             try {
                 return objectMapper.readValue(localFile, ConnectionDefinition.class);
             } catch (JsonParseException e) {
@@ -42,8 +42,8 @@ public class ConnectionDefinition {
     }
 
     public boolean write() {
-        File localFile = new File(Runner.WORKING_DIRECTORY,"connection.json");
-        ObjectMapper objectMapper = JsonTool.INSTANCE;
+        File localFile = new File(Runner.WORKING_DIRECTORY, "connection.json");
+        ObjectMapper objectMapper = JsonTool.getInstance();
         try {
             objectMapper.writeValue(localFile, this);
             return true;

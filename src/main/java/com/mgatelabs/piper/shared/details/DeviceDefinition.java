@@ -82,7 +82,7 @@ public class DeviceDefinition {
     }
 
     public static File getFileFor(String deviceName) {
-        return new File(Runner.WORKING_DIRECTORY,"devices/" + deviceName + ".json");
+        return new File(Runner.WORKING_DIRECTORY, "devices/" + deviceName + ".json");
     }
 
     public static boolean exists(String viewName) {
@@ -92,7 +92,7 @@ public class DeviceDefinition {
     public static DeviceDefinition read(String deviceName) {
         final File deviceFile = getFileFor(deviceName);
         if (deviceFile.exists()) {
-            final ObjectMapper objectMapper = JsonTool.INSTANCE;
+            final ObjectMapper objectMapper = JsonTool.getInstance();
             try {
                 DeviceDefinition deviceDefinition = objectMapper.readValue(deviceFile, DeviceDefinition.class);
                 deviceDefinition.setDeviceId(deviceName);

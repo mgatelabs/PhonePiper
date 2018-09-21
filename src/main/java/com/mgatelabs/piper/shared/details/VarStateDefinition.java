@@ -32,7 +32,7 @@ public class VarStateDefinition {
     }
 
     public static File getFileFor(String scriptName) {
-        return new File(Runner.WORKING_DIRECTORY,"states/" + scriptName + ".json");
+        return new File(Runner.WORKING_DIRECTORY, "states/" + scriptName + ".json");
     }
 
     public static boolean exists(String scriptName) {
@@ -42,7 +42,7 @@ public class VarStateDefinition {
     public static VarStateDefinition read(String scriptName) {
         File viewFile = getFileFor(scriptName);
         if (viewFile.exists()) {
-            ObjectMapper objectMapper = JsonTool.INSTANCE;
+            ObjectMapper objectMapper = JsonTool.getInstance();
             try {
                 VarStateDefinition viewDefinition = objectMapper.readValue(viewFile, VarStateDefinition.class);
                 return viewDefinition;
@@ -58,8 +58,8 @@ public class VarStateDefinition {
     }
 
     public boolean save(String scriptName) {
-        File viewFile =getFileFor(scriptName);
-        final ObjectMapper objectMapper = JsonTool.INSTANCE;
+        File viewFile = getFileFor(scriptName);
+        final ObjectMapper objectMapper = JsonTool.getInstance();
         try {
             objectMapper.writeValue(viewFile, this);
             return true;

@@ -2,12 +2,26 @@ package com.mgatelabs.piper.server;
 
 import com.google.common.base.Charsets;
 import com.google.common.collect.ImmutableList;
+import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 import com.google.common.io.Resources;
 import com.mgatelabs.piper.Runner;
 import com.mgatelabs.piper.runners.ScriptRunner;
-import com.mgatelabs.piper.server.entities.*;
-import com.mgatelabs.piper.shared.details.*;
+import com.mgatelabs.piper.server.entities.NamedValueDescriptionItem;
+import com.mgatelabs.piper.server.entities.NamedValueItem;
+import com.mgatelabs.piper.server.entities.PrepResult;
+import com.mgatelabs.piper.server.entities.StatusLog;
+import com.mgatelabs.piper.server.entities.StatusResult;
+import com.mgatelabs.piper.server.entities.ValueResult;
+import com.mgatelabs.piper.shared.details.ActionType;
+import com.mgatelabs.piper.shared.details.ComponentDefinition;
+import com.mgatelabs.piper.shared.details.ConnectionDefinition;
+import com.mgatelabs.piper.shared.details.PlayerDefinition;
+import com.mgatelabs.piper.shared.details.ScreenDefinition;
+import com.mgatelabs.piper.shared.details.StateDefinition;
+import com.mgatelabs.piper.shared.details.VarDefinition;
+import com.mgatelabs.piper.shared.details.VarModify;
+import com.mgatelabs.piper.shared.details.VarStateDefinition;
 import com.mgatelabs.piper.shared.helper.DeviceHelper;
 import com.mgatelabs.piper.shared.image.ImageWrapper;
 import com.mgatelabs.piper.shared.util.AdbShell;
@@ -18,17 +32,27 @@ import com.mgatelabs.piper.ui.frame.StartupFrame;
 import com.mgatelabs.piper.ui.panels.LogPanel;
 import com.mgatelabs.piper.ui.panels.RunScriptPanel;
 import com.mgatelabs.piper.ui.utils.Constants;
-import com.mgatelabs.piper.ui.utils.WebLogHandler;
-import org.apache.juli.FileHandler;
 import org.springframework.web.bind.annotation.RequestBody;
 
-import javax.ws.rs.*;
+import javax.ws.rs.Consumes;
+import javax.ws.rs.FormParam;
+import javax.ws.rs.GET;
+import javax.ws.rs.POST;
+import javax.ws.rs.Path;
+import javax.ws.rs.PathParam;
+import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
-import java.util.*;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.Date;
+import java.util.List;
+import java.util.Map;
+import java.util.SortedSet;
+import java.util.TreeSet;
 import java.util.logging.Handler;
 import java.util.logging.Level;
 import java.util.logging.LogRecord;
@@ -260,6 +284,7 @@ public class WebResource {
             if (runner != null) {
                 runner.stopShell();
             }
+
             String s = AdbShell.connect(deviceHelper.getIpAddress());
             if (runner != null) {
                 runner.restartShell();
@@ -426,8 +451,14 @@ public class WebResource {
         checkInitialState();
 
         thread = null;
+        List<String> scripts = Lists.newArrayList(
+                values.get("script"),
+                values.get("script2"),
+                values.get("script3"),
+                values.get("script4")
+        );
 
-        frameChoices = new FrameChoices(Constants.ACTION_RUN, Constants.MODE_SCRIPT, playerDefinition, "", values.get("script"), values.get("script2"), values.get("script3"), values.get("script4"), values.get("device"), values.get("view"), values.get("view2"));
+        frameChoices = new FrameChoices(Constants.ACTION_RUN, Constants.MODE_SCRIPT, playerDefinition, "", values.get("device"), values.get("view"), values.get("view2"), scripts);
 
         if (frameChoices.isValid()) {
             final PrepResult result = new PrepResult(StatusEnum.OK);
@@ -459,7 +490,14 @@ public class WebResource {
 
         thread = null;
 
-        frameChoices = new FrameChoices(Constants.ACTION_EDIT, Constants.MODE_VIEW, playerDefinition, "", values.get("script"), values.get("script2"), values.get("script3"), values.get("script4"), values.get("device"), values.get("view"), values.get("view2"));
+        List<String> scripts = Lists.newArrayList(
+                values.get("script"),
+                values.get("script2"),
+                values.get("script3"),
+                values.get("script4")
+        );
+
+        frameChoices = new FrameChoices(Constants.ACTION_EDIT, Constants.MODE_VIEW, playerDefinition, "", values.get("device"), values.get("view"), values.get("view2"), scripts);
 
         if (frameChoices.isValid()) {
             final PrepResult result = new PrepResult(StatusEnum.OK);
@@ -516,7 +554,7 @@ public class WebResource {
     private void updateLoggerFor(Handler handler, Level level) {
         handler.setLevel(level);
         if (runner != null) {
-            runner.updateLogger(Loggers.webLogger.getLevel().intValue() < Loggers.fileLogger.getLevel().intValue() ? Loggers.webLogger.getLevel(): Loggers.fileLogger.getLevel());
+            runner.updateLogger(Loggers.webLogger.getLevel().intValue() < Loggers.fileLogger.getLevel().intValue() ? Loggers.webLogger.getLevel() : Loggers.fileLogger.getLevel());
         }
     }
 
@@ -628,7 +666,7 @@ public class WebResource {
                 ImageWrapper wrapper = deviceHelper.download();
 
                 if (wrapper.isReady()) {
-                    byte [] stream = wrapper.outputPng();
+                    byte[] stream = wrapper.outputPng();
                     if (stream != null) {
                         return Response.status(200).header("content-type", "image/png").entity(stream).build();
                     }

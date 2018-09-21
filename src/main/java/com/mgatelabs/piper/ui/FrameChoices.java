@@ -1,10 +1,15 @@
 package com.mgatelabs.piper.ui;
 
-import com.mgatelabs.piper.shared.details.*;
+import com.mgatelabs.piper.shared.details.DeviceDefinition;
+import com.mgatelabs.piper.shared.details.PlayerDefinition;
+import com.mgatelabs.piper.shared.details.ScriptDefinition;
+import com.mgatelabs.piper.shared.details.StateDefinition;
+import com.mgatelabs.piper.shared.details.ViewDefinition;
 import com.mgatelabs.piper.shared.mapper.MapDefinition;
 import com.mgatelabs.piper.ui.utils.Constants;
 
 import java.io.File;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -41,7 +46,7 @@ public class FrameChoices {
     private final Mode mode;
     private final Action action;
 
-    public FrameChoices(String actionId, String modeId, PlayerDefinition playerDefinition, String mapId, String scriptId, String scriptId2, String scriptId3, String scriptId4, String deviceId, String viewId, String viewId2) {
+    public FrameChoices(String actionId, String modeId, PlayerDefinition playerDefinition, String mapId, String deviceId, String viewId, String viewId2, List<String> scripts) {
         this.playerDefinition = playerDefinition;
 
         switch (modeId) {
@@ -77,7 +82,6 @@ public class FrameChoices {
         }
 
         this.mapName = mapId;
-        this.scriptName = scriptId;
         this.deviceName = deviceId;
         this.viewName = viewId;
 
@@ -87,32 +91,12 @@ public class FrameChoices {
             this.mapDefinition = null;
         }
 
-        if (canScript(action, mode) && scriptId != null) {
-            this.scriptDefinition = ScriptDefinition.read(scriptId);
-            if (action == Action.RUN && scriptId2 != null && scriptId2.trim().length() > 0) {
-                ScriptDefinition scriptDefinitionOther = ScriptDefinition.read(scriptId2);
-                for (Map.Entry<String, StateDefinition> other : scriptDefinitionOther.getStates().entrySet()) {
-                    this.scriptDefinition.getStates().remove(other.getKey());
-                    this.scriptDefinition.getStates().put(other.getKey(), other.getValue());
-                }
-            }
-            if (action == Action.RUN && scriptId3 != null && scriptId3.trim().length() > 0) {
-                ScriptDefinition scriptDefinitionOther = ScriptDefinition.read(scriptId3);
-                for (Map.Entry<String, StateDefinition> other : scriptDefinitionOther.getStates().entrySet()) {
-                    this.scriptDefinition.getStates().remove(other.getKey());
-                    this.scriptDefinition.getStates().put(other.getKey(), other.getValue());
-                }
-            }
-            if (action == Action.RUN && scriptId4 != null && scriptId4.trim().length() > 0) {
-                ScriptDefinition scriptDefinitionOther = ScriptDefinition.read(scriptId4);
-                for (Map.Entry<String, StateDefinition> other : scriptDefinitionOther.getStates().entrySet()) {
-                    this.scriptDefinition.getStates().remove(other.getKey());
-                    this.scriptDefinition.getStates().put(other.getKey(), other.getValue());
-                }
-            }
+        if (canScript(action, mode)) {
+            scriptDefinition = buildScriptDefinition(scripts);
         } else {
             this.scriptDefinition = null;
         }
+        this.scriptName = scriptDefinition.getScriptId();
 
         if (canDevice(action, mode) && deviceId != null) {
             this.deviceDefinition = DeviceDefinition.read(deviceId);
@@ -145,6 +129,32 @@ public class FrameChoices {
         } else {
             this.viewDefinition = null;
         }
+    }
+
+    private ScriptDefinition buildScriptDefinition(List<String> scripts) {
+        ScriptDefinition scriptDef = null;
+
+        for (String scriptId : scripts) {
+            if (scriptId.trim().length() > 0) {
+                ScriptDefinition otherScriptDef = ScriptDefinition.read(scriptId);
+
+                if (otherScriptDef == null)
+                    continue;
+
+                if (scriptDef == null) {
+                    scriptDef = otherScriptDef;
+                    continue;
+                }
+
+                if (action == Action.RUN) {
+                    for (Map.Entry<String, StateDefinition> otherState : otherScriptDef.getStates().entrySet()) {
+                        scriptDef.getStates().remove(otherState.getKey());
+                        scriptDef.getStates().put(otherState.getKey(), otherState.getValue());
+                    }
+                }
+            }
+        }
+        return scriptDef;
     }
 
     public boolean isValid() {

@@ -24,7 +24,7 @@ public class DeviceHelper {
 
     public DeviceHelper(String ipAddress) {
         this.ipAddress = ipAddress;
-        objectMapper = JsonTool.INSTANCE;
+        objectMapper = JsonTool.getInstance();
         client = new OkHttpClient();
         failures = 0;
     }
@@ -53,7 +53,7 @@ public class DeviceHelper {
         }
 
         Request request = new Request.Builder()
-                .url("http://"+ipAddress+":8080/setup").post(RequestBody.create(MediaType.parse("application/json"), arrayOutputStream.toByteArray()))
+                .url("http://" + ipAddress + ":8080/setup").post(RequestBody.create(MediaType.parse("application/json"), arrayOutputStream.toByteArray()))
                 .build();
 
         try (Response response = client.newCall(request).execute()) {
@@ -75,7 +75,7 @@ public class DeviceHelper {
 
     public Set<String> check(String menu) {
         Request request = new Request.Builder()
-                .url("http://"+ipAddress+":8080/check/" + menu).get()
+                .url("http://" + ipAddress + ":8080/check/" + menu).get()
                 .build();
 
         try (Response response = client.newCall(request).execute()) {
@@ -95,9 +95,9 @@ public class DeviceHelper {
         }
     }
 
-    public int [] pixel(int offset) {
+    public int[] pixel(int offset) {
         Request request = new Request.Builder()
-                .url("http://"+ipAddress+":8080/pixel/" + offset).get()
+                .url("http://" + ipAddress + ":8080/pixel/" + offset).get()
                 .build();
         try (Response response = client.newCall(request).execute()) {
             //if (!response.isSuccessful()) throw new IOException("Unexpected code " + response);
@@ -118,7 +118,7 @@ public class DeviceHelper {
 
     public ImageWrapper download() {
         Request request = new Request.Builder()
-                .url("http://"+ipAddress+":8080/download").post( RequestBody.create(MediaType.parse("text/plain"), new byte [0]) )
+                .url("http://" + ipAddress + ":8080/download").post(RequestBody.create(MediaType.parse("text/plain"), new byte[0]))
                 .build();
         try (Response response = client.newCall(request).execute()) {
             return AdbUtils.getScreenFrom(response.body().bytes());

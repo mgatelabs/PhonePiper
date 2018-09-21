@@ -43,9 +43,9 @@ public class PlayerDefinition {
     }
 
     public static PlayerDefinition read() {
-        File playerFile = new File(Runner.WORKING_DIRECTORY,"player.json");
+        File playerFile = new File(Runner.WORKING_DIRECTORY, "player.json");
         if (playerFile.exists()) {
-            ObjectMapper objectMapper = JsonTool.INSTANCE;
+            ObjectMapper objectMapper = JsonTool.getInstance();
             try {
                 return objectMapper.readValue(playerFile, PlayerDefinition.class);
             } catch (JsonParseException e) {
@@ -60,8 +60,8 @@ public class PlayerDefinition {
     }
 
     public boolean write() {
-        File playerFile = new File(Runner.WORKING_DIRECTORY,"player.json");
-        ObjectMapper objectMapper = JsonTool.INSTANCE;
+        File playerFile = new File(Runner.WORKING_DIRECTORY, "player.json");
+        ObjectMapper objectMapper = JsonTool.getInstance();
         try {
             objectMapper.writeValue(playerFile, this);
             return true;

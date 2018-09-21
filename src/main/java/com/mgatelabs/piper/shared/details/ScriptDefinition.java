@@ -40,7 +40,7 @@ public class ScriptDefinition {
         for (StateDefinition stateDefinition : states.values()) {
             stateDefinition.fix();
         }
-        for (VarDefinition varDefinition: getVars()) {
+        for (VarDefinition varDefinition : getVars()) {
             if (varDefinition.getDisplay() == null) {
                 varDefinition.setDisplay(varDefinition.getName());
             }
@@ -66,7 +66,7 @@ public class ScriptDefinition {
 
     public Map<String, StateDefinition> getFilteredStates() {
         Map<String, StateDefinition> tempMap = Maps.newHashMap();
-        for (Map.Entry<String, StateDefinition> entry: states.entrySet()) {
+        for (Map.Entry<String, StateDefinition> entry : states.entrySet()) {
             if (!entry.getKey().startsWith("_")) {
                 tempMap.put(entry.getKey(), entry.getValue());
             }
@@ -95,7 +95,7 @@ public class ScriptDefinition {
     }
 
     public static File getFileFor(String scriptId) {
-        return new File(Runner.WORKING_DIRECTORY,"scripts/" + scriptId + ".json");
+        return new File(Runner.WORKING_DIRECTORY, "scripts/" + scriptId + ".json");
     }
 
     public static boolean exists(String viewName) {
@@ -113,7 +113,7 @@ public class ScriptDefinition {
     public static ScriptDefinition read(String scriptId) {
         final File deviceFile = getFileFor(scriptId);
         if (deviceFile.exists()) {
-            final ObjectMapper objectMapper = JsonTool.INSTANCE;
+            final ObjectMapper objectMapper = JsonTool.getInstance();
             try {
                 ScriptDefinition scriptDefinition = objectMapper.readValue(deviceFile, ScriptDefinition.class);
 
@@ -149,7 +149,7 @@ public class ScriptDefinition {
 
     public boolean save() {
         File scriptFile = getFileFor(scriptId);
-        final ObjectMapper objectMapper = JsonTool.INSTANCE;
+        final ObjectMapper objectMapper = JsonTool.getInstance();
         try {
             objectMapper.writeValue(scriptFile, this);
             return true;

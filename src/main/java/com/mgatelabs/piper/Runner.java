@@ -1,5 +1,6 @@
 package com.mgatelabs.piper;
 
+import com.google.common.collect.Lists;
 import com.mgatelabs.piper.server.ServerRunner;
 import com.mgatelabs.piper.shared.details.PlayerDefinition;
 import com.mgatelabs.piper.shared.util.Closer;
@@ -14,6 +15,7 @@ import org.springframework.boot.SpringApplication;
 import javax.swing.*;
 import java.io.BufferedInputStream;
 import java.io.File;
+import java.util.List;
 
 /**
  * Created by @mgatelabs (Michael Fuller) on 8/27/2017.
@@ -46,7 +48,8 @@ public class Runner {
             if (StringUtils.equalsIgnoreCase(args[i], "-working")) {
                 WORKING_DIRECTORY = new File(args[i + 1]);
                 break;
-            }if (StringUtils.equalsIgnoreCase(args[i], "-adb")) {
+            }
+            if (StringUtils.equalsIgnoreCase(args[i], "-adb")) {
                 ADB_NAME = args[i + 1];
                 break;
             }
@@ -54,7 +57,6 @@ public class Runner {
     }
 
     public static void main(final String[] args) {
-
         handleStaticArgs(args);
 
         Loggers.init();
@@ -93,8 +95,12 @@ public class Runner {
                 }
 
                 if (startupFrame.getSelectedAction() != null && startupFrame.getSelectedMode() != null) {
+                    List<String> scripts = Lists.newArrayList(
+                            startupFrame.getSelectedScript(),
+                            startupFrame.getSelectedScript2()
+                    );
 
-                    FrameChoices frameChoices = new FrameChoices(startupFrame.getSelectedAction(), startupFrame.getSelectedMode(), playerDefinition, startupFrame.getSelectedMap(), startupFrame.getSelectedScript(), startupFrame.getSelectedScript2(), null, null, startupFrame.getSelectedDevice(), startupFrame.getSelectedView(), startupFrame.getSelectedView2());
+                    FrameChoices frameChoices = new FrameChoices(startupFrame.getSelectedAction(), startupFrame.getSelectedMode(), playerDefinition, startupFrame.getSelectedMap(), startupFrame.getSelectedDevice(), startupFrame.getSelectedView(), startupFrame.getSelectedView2(), scripts);
 
                     if (frameChoices.getAction() == FrameChoices.Action.CREATE) {
                         String inputValue = JOptionPane.showInputDialog("Please input a " + frameChoices.getMode().name());

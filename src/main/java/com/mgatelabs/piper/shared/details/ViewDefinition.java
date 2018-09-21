@@ -110,13 +110,13 @@ public class ViewDefinition {
     }
 
     public static File folderPath(String viewName) {
-        return new File(Runner.WORKING_DIRECTORY,"views/" + viewName + "/");
+        return new File(Runner.WORKING_DIRECTORY, "views/" + viewName + "/");
     }
 
     public static ViewDefinition read(String viewName) {
-        File viewFile = new File(Runner.WORKING_DIRECTORY,"views/" + viewName + "/definition.json");
+        File viewFile = new File(Runner.WORKING_DIRECTORY, "views/" + viewName + "/definition.json");
         if (viewFile.exists()) {
-            ObjectMapper objectMapper = JsonTool.INSTANCE;
+            ObjectMapper objectMapper = JsonTool.getInstance();
             try {
                 ViewDefinition viewDefinition = objectMapper.readValue(viewFile, ViewDefinition.class);
                 viewDefinition.setViewId(viewName);
@@ -133,7 +133,7 @@ public class ViewDefinition {
     }
 
     public static File getFileFor(String viewName) {
-        return new File(Runner.WORKING_DIRECTORY,"views/" + viewName + "/definition.json");
+        return new File(Runner.WORKING_DIRECTORY, "views/" + viewName + "/definition.json");
     }
 
     public static boolean exists(String viewName) {
@@ -141,8 +141,8 @@ public class ViewDefinition {
     }
 
     public boolean save() {
-        File viewFile =getFileFor(viewId);
-        final ObjectMapper objectMapper = JsonTool.INSTANCE;
+        File viewFile = getFileFor(viewId);
+        final ObjectMapper objectMapper = JsonTool.getInstance();
         try {
             objectMapper.writeValue(viewFile, this);
             return true;

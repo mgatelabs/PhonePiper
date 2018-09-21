@@ -1274,6 +1274,10 @@
             {
               "type": "MSG",
               "value": "Found Mission"
+            },
+            {
+              "type": "MOVE",
+              "value": "menu"
             }
           ]
         }

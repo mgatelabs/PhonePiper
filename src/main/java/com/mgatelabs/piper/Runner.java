@@ -95,12 +95,16 @@ public class Runner {
                 }
 
                 if (startupFrame.getSelectedAction() != null && startupFrame.getSelectedMode() != null) {
-                    List<String> scripts = Lists.newArrayList(
-                            startupFrame.getSelectedScript(),
-                            startupFrame.getSelectedScript2()
-                    );
 
-                    FrameChoices frameChoices = new FrameChoices(startupFrame.getSelectedAction(), startupFrame.getSelectedMode(), playerDefinition, startupFrame.getSelectedMap(), startupFrame.getSelectedDevice(), startupFrame.getSelectedView(), startupFrame.getSelectedView2(), scripts);
+                    List<String> views = Lists.newArrayList();
+                    if (StringUtils.isNotBlank(startupFrame.getSelectedView())) views.add(startupFrame.getSelectedView());
+                    if (StringUtils.isNotBlank(startupFrame.getSelectedView2())) views.add(startupFrame.getSelectedView2());
+
+                    List<String> scripts = Lists.newArrayList();
+                    if (StringUtils.isNotBlank(startupFrame.getSelectedScript())) scripts.add(startupFrame.getSelectedScript());
+                    if (StringUtils.isNotBlank(startupFrame.getSelectedScript2())) scripts.add(startupFrame.getSelectedScript2());
+
+                    FrameChoices frameChoices = new FrameChoices(startupFrame.getSelectedAction(), startupFrame.getSelectedMode(), playerDefinition, startupFrame.getSelectedMap(), startupFrame.getSelectedDevice(), views, scripts);
 
                     if (frameChoices.getAction() == FrameChoices.Action.CREATE) {
                         String inputValue = JOptionPane.showInputDialog("Please input a " + frameChoices.getMode().name());

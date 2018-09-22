@@ -1,10 +1,6 @@
 package com.mgatelabs.piper.ui;
 
-import com.mgatelabs.piper.shared.details.DeviceDefinition;
-import com.mgatelabs.piper.shared.details.PlayerDefinition;
-import com.mgatelabs.piper.shared.details.ScriptDefinition;
-import com.mgatelabs.piper.shared.details.StateDefinition;
-import com.mgatelabs.piper.shared.details.ViewDefinition;
+import com.mgatelabs.piper.shared.details.*;
 import com.mgatelabs.piper.shared.mapper.MapDefinition;
 import com.mgatelabs.piper.ui.utils.Constants;
 
@@ -46,7 +42,7 @@ public class FrameChoices {
     private final Mode mode;
     private final Action action;
 
-    public FrameChoices(String actionId, String modeId, PlayerDefinition playerDefinition, String mapId, String deviceId, String viewId, String viewId2, List<String> scripts) {
+    public FrameChoices(String actionId, String modeId, PlayerDefinition playerDefinition, String mapId, String deviceId, List<String> views, List<String> scripts) {
         this.playerDefinition = playerDefinition;
 
         switch (modeId) {
@@ -83,7 +79,11 @@ public class FrameChoices {
 
         this.mapName = mapId;
         this.deviceName = deviceId;
-        this.viewName = viewId;
+        if (views.size() > 0) {
+            this.viewName = views.get(0);
+        } else {
+            this.viewName = "";
+        }
 
         if (canMap(action, mode) && mapId != null) {
             this.mapDefinition = new MapDefinition();
@@ -105,23 +105,29 @@ public class FrameChoices {
         }
 
         if (canView(action, mode)) {
-            if (viewId != null) {
-                this.viewDefinition = ViewDefinition.read(viewId);
-            } else if (deviceDefinition != null && deviceDefinition.getViewId() != null) {
-                this.viewDefinition = ViewDefinition.read(deviceDefinition.getViewId());
-            }
-            if (viewDefinition != null && deviceDefinition != null) {
-                deviceDefinition.setViewId(viewId);
-            }
-            if (viewDefinition != null) {
-                ViewDefinition otherDefinition = ViewDefinition.read("global");
-                if (otherDefinition != null) { // We want to add, but not overwrite
-                    ViewDefinition.merge(otherDefinition, viewDefinition, false);
+            if (views.size() > 0) {
+                final String viewId = views.get(0);
+                if (viewId != null) {
+                    this.viewDefinition = ViewDefinition.read(viewId);
+                } else if (deviceDefinition != null && deviceDefinition.getViewId() != null) {
+                    this.viewDefinition = ViewDefinition.read(deviceDefinition.getViewId());
                 }
-            }
-            if (action == Action.RUN && viewId2 != null && viewId2.trim().length() > 0) {
-                ViewDefinition otherDefinition = ViewDefinition.read(viewId2);
-                ViewDefinition.merge(otherDefinition, viewDefinition, true);
+                if (viewDefinition != null && deviceDefinition != null) {
+                    deviceDefinition.setViewId(viewId);
+                }
+                if (viewDefinition != null) {
+                    ViewDefinition otherDefinition = ViewDefinition.read("global");
+                    if (otherDefinition != null) { // We want to add, but not overwrite
+                        ViewDefinition.merge(otherDefinition, viewDefinition, false);
+                    }
+                }
+                for (int i = 1; i < views.size(); i++) {
+                    final String viewId2 = views.get(i);
+                    if (action == Action.RUN && viewId2 != null && viewId2.trim().length() > 0) {
+                        ViewDefinition otherDefinition = ViewDefinition.read(viewId2);
+                        ViewDefinition.merge(otherDefinition, viewDefinition, true);
+                    }
+                }
             }
             if (viewDefinition != null) {
                 viewDefinition.sort();

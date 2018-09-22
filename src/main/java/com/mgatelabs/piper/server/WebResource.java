@@ -7,12 +7,7 @@ import com.google.common.collect.Maps;
 import com.google.common.io.Resources;
 import com.mgatelabs.piper.Runner;
 import com.mgatelabs.piper.runners.ScriptRunner;
-import com.mgatelabs.piper.server.entities.NamedValueDescriptionItem;
-import com.mgatelabs.piper.server.entities.NamedValueItem;
-import com.mgatelabs.piper.server.entities.PrepResult;
-import com.mgatelabs.piper.server.entities.StatusLog;
-import com.mgatelabs.piper.server.entities.StatusResult;
-import com.mgatelabs.piper.server.entities.ValueResult;
+import com.mgatelabs.piper.server.entities.*;
 import com.mgatelabs.piper.shared.details.ActionType;
 import com.mgatelabs.piper.shared.details.ComponentDefinition;
 import com.mgatelabs.piper.shared.details.ConnectionDefinition;
@@ -487,18 +482,17 @@ public class WebResource {
     @Path("/process/prep")
     @Consumes("application/json")
     @Produces("application/json")
-    public PrepResult prepProcess(@RequestBody Map<String, String> values) {
+    public PrepResult prepProcess(@RequestBody LoadRequest request) {
         checkInitialState();
 
         thread = null;
-        List<String> scripts = Lists.newArrayList(
-                values.get("script"),
-                values.get("script2"),
-                values.get("script3"),
-                values.get("script4")
-        );
+        List<String> views = Lists.newArrayList();
+        views.addAll(request.getViews());
 
-        frameChoices = new FrameChoices(Constants.ACTION_RUN, Constants.MODE_SCRIPT, playerDefinition, "", values.get("device"), values.get("view"), values.get("view2"), scripts);
+        List<String> scripts = Lists.newArrayList();
+        scripts.addAll(request.getScripts());
+
+        frameChoices = new FrameChoices(Constants.ACTION_RUN, Constants.MODE_SCRIPT, playerDefinition, "", request.getDevice(), views, scripts);
 
         if (frameChoices.isValid()) {
             final PrepResult result = new PrepResult(StatusEnum.OK);
@@ -525,19 +519,12 @@ public class WebResource {
     @Path("/edit/view")
     @Consumes("application/json")
     @Produces("application/json")
-    public PrepResult editView(@RequestBody Map<String, String> values) {
+    public PrepResult editView(@RequestBody LoadRequest request) {
         checkInitialState();
 
         thread = null;
 
-        List<String> scripts = Lists.newArrayList(
-                values.get("script"),
-                values.get("script2"),
-                values.get("script3"),
-                values.get("script4")
-        );
-
-        frameChoices = new FrameChoices(Constants.ACTION_EDIT, Constants.MODE_VIEW, playerDefinition, "", values.get("device"), values.get("view"), values.get("view2"), scripts);
+        frameChoices = new FrameChoices(Constants.ACTION_EDIT, Constants.MODE_VIEW, playerDefinition, "", request.getDevice(), request.getViews(), request.getScripts());
 
         if (frameChoices.isValid()) {
             final PrepResult result = new PrepResult(StatusEnum.OK);
@@ -733,6 +720,10 @@ public class WebResource {
             contentType = "image/x-icon";
         } else if (path.toLowerCase().endsWith(".xml")) {
             contentType = "text/xml";
+        } else if (path.toLowerCase().endsWith(".js")) {
+            contentType = "application/javascript";
+        } else if (path.toLowerCase().endsWith(".css")) {
+            contentType = "text/css";
         } else if (path.toLowerCase().endsWith(".webmanifest")) {
             contentType = "application/manifest+json";
         } else {

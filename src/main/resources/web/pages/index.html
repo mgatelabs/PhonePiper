@@ -29,713 +29,10 @@
             integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
             crossorigin="anonymous"></script>
 
-    <style type="text/css">
-        .updatedValue {
-            background-color:#f7b2b2;
-        }
+    <link href="/piper/resource/index.css" rel="stylesheet">
 
+    <script type="text/javascript" src="/piper/resource/index.js"></script>
 
-    </style>
-
-    <script type="text/javascript">
-        $(function(){
-
-            var device1 = $('#device1');
-            var view1 = $('#view1');
-            var view2 = $('#view2');
-            var script1 = $('#script1');
-            var script2 = $('#script2');
-            var script3 = $('#script3');
-            var script4 = $('#script4');
-            var statusName = $('#statusName');
-
-            var logs = $('#logs');
-            var states = $('#states');
-            var components = $('#components');
-            var editComponents = $('#edit-components');
-            var editScreens = $('#edit-screens');
-
-            var editForm = $('#edit-form');
-
-            var playerLevel = $('#player-level');
-            var deviceIp = $('#device-ip');
-            var deviceAdb = $('#device-adb');
-            var deviceWifi = $('#device-wifi');
-            var deviceDirect = $('#device-direct');
-
-            var playPauseButton = $('#controlPlayPause');
-            var unloadButton = $('#controlUnload');
-            var killButton = $('#controlKill');
-            var unloadEdit = $('#unloadEdit');
-            var loadButton = $('#controlLoad');
-            var saveButton = $('#controlSave');
-            var editViewButton = $('#controlEditView');
-
-            var controlPlayerSave = $('#controlPlayerSave');
-            var controlDeviceSave = $('#controlDeviceSave');
-            var controlDeviceDirectSave = $('#controlDeviceDirectSave');
-            var controlDeviceAdbSave = $('#controlDeviceAdbSave');
-            var controlDeviceWifiSave = $('#controlDeviceWifiSave');
-
-            var settingForm = $('#setting-form');
-            var playerForm = $('#player-form');
-            var variableForm = $('#variable-form');
-            var variableContainer = $('#variable-container');
-            var loadedForm = $('#loaded-form');
-
-            var controlAdb = $('.controlAdb');
-            var adbInfo = $('#adb-info');
-            var linkedVariables = {};
-
-            var notWhileRunning = $('.notWhileRunning');
-
-            var logItems = [];
-
-            var configList = $('#config-list');
-
-            var configs = [];
-
-            function populateSelect(select, items) {
-                var i = 0;
-                select.empty();
-                for (i = 0; i < items.length; i++) {
-                    select.append($('<option></option>').text(items[i]).attr('value', items[i]));
-                }
-            }
-
-            view1.change(function(){
-                view2.prop('disabled', !view1.val());
-            });
-
-            script1.change(function(){
-                script2.prop('disabled', !script1.val());
-            });
-
-            script2.change(function(){
-                script3.prop('disabled', !script2.val());
-            });
-
-            script3.change(function(){
-                script4.prop('disabled', !script3.val());
-            });
-
-            function createGroup(name, field, button) {
-                var grp = $('<div class="input-group mb-3"></div>').appendTo(variableContainer);
-                $('<div class="input-group-prepend"></div>').append($('<span class="input-group-text" id=""></span>').text(name)).appendTo(grp);
-                field.appendTo(grp);
-                $('<div class="input-group-append"></div>').append(button).appendTo(grp);
-                return grp;
-            }
-
-            $('#controlUpdatePreview').click(function(){
-                $('#previewImage').attr('src', '/piper/screen?time=' + (new Date().getTime()));
-            });
-
-            function statusCheck(firstTime) {
-                $.getJSON({
-                    url: '/piper/status',
-                    data: {},
-                    success: function(data){
-
-                        var i = 0, item, div;
-
-                        configList.hide();
-
-                        statusName.text(data.status);
-
-                        switch(data.status) {
-                            case 'EDIT_VIEW': {
-                                editForm.show();
-                                settingForm.hide();
-                                if (firstTime) {
-                                    $('[href="#edit"]').tab('show');
-                                    loadEditViewInfo(true);
-                                }
-                            } break;
-                            case 'INIT': {
-                                editForm.hide();
-                                playPauseButton.addClass('disabled');
-                                unloadButton.addClass('disabled');
-                                settingForm.show();
-                                loadedForm.hide();
-                                states.prop('disabled', true);
-                                configList.show();
-                            } break;
-                            case 'READY': {
-                                if (firstTime) {
-                                    $('[href="#run"]').tab('show');
-                                    loadProcessInfo(true);
-                                } else {
-                                    editForm.hide();
-                                    playPauseButton.removeClass('disabled');
-                                    unloadButton.removeClass('disabled');
-                                    settingForm.hide();
-                                    loadedForm.show();
-                                    states.prop('disabled', false);
-                                    notWhileRunning.prop('disabled', false);
-                                }
-                            } break;
-                            case 'RUNNING':
-                            case 'STOPPING':
-                            case 'STOPPED': {
-                                if (firstTime) {
-                                    $('[href="#run"]').tab('show');
-                                    loadProcessInfo(true);
-                                } else {
-                                    editForm.hide();
-                                    playPauseButton.removeClass('disabled');
-                                    unloadButton.removeClass('disabled');
-                                    settingForm.hide();
-                                    loadedForm.show();
-                                    states.prop('disabled', true);
-                                    notWhileRunning.prop('disabled', true);
-                                    setTimeout(statusCheck, 3000);
-                                }
-                            } break;
-                        }
-
-                        if (data.state) {
-                            states.val(data.state);
-                        }
-
-                        for (i = 0; i < data.logs.length; i++) {
-                            item = data.logs[i];
-                            div = $('<div class="row"></div>')
-                            div.append($('<div class="col-sm-2 col-md-2 d-none d-sm-block"></div>').text(item.source));
-                            div.append($('<div class="col-sm-4 col-md-2"></div>').text(item.timestamp));
-                            div.append($('<div class="col-sm-2 col-md-2 d-none d-sm-block"></div>').text(item.level));
-                            div.append($('<div class="col-sm-8 col-md-6"></div>').text(item.message));
-                            logItems.push(div);
-                            logs.prepend(div);
-                        }
-
-                        while (logItems.length > 50) {
-                            logItems.splice(0,1)[0].detach();
-                        }
-
-                        if (data.variables.length > 0) {
-                            for (i = 0; i < data.variables.length; i++) {
-                                item = data.variables[i];
-                                linkedVariables[item.name].val(formatVariable(item));
-                            }
-                        }
-
-                    }
-                });
-            }
-
-            $(".logging").change(function(){
-                var ref = $(this), level = ref.val(), mode = ref.attr('mode');
-                $.ajax({
-                    type: "POST",
-                    url: '/piper/process/level/' + mode + '/' + level,
-                    success: function(result){
-
-                    }
-                });
-            });
-
-            playPauseButton.click(function(){
-                if (!playPauseButton.hasClass('disabled')) {
-                    $.ajax({
-                      type: "POST",
-                      url: '/piper/process/playPause/' + states.val(),
-                      success: function(result){
-                        statusCheck();
-                      }
-                    });
-                }
-            });
-
-            unloadButton.click(function(){
-                if (!unloadButton.hasClass('disabled')) {
-                    $.ajax({
-                      type: "POST",
-                      url: '/piper/process/unload',
-                      success: function(result){
-                        statusCheck();
-                        $('[href="#config"]').tab('show');
-                      }
-                    });
-                }
-            });
-
-            saveButton.click(function(){
-                if (!saveButton.hasClass('disabled')) {
-                    saveConfig();
-                }
-            });
-
-            killButton.click(function(){
-                if (!unloadButton.hasClass('disabled')) {
-                    $.ajax({
-                        type: "POST",
-                        url: '/piper/process/kill',
-                        success: function(result){
-                            statusCheck();
-                            $('[href="#config"]').tab('show');
-                        }
-                    });
-                }
-            });
-
-            unloadEdit.click(function(){
-                if (!unloadEdit.hasClass('disabled')) {
-                    $.ajax({
-                      type: "POST",
-                      url: '/piper/edit/unload',
-                      success: function(result){
-                        statusCheck();
-                        $('[href="#config"]').tab('show');
-                      }
-                    });
-                }
-            });
-
-            controlPlayerSave.click(function(){
-                $.ajax({
-                  type: "POST",
-                  url: '/piper/player/level',
-                  data: {value: playerLevel.val()}
-                });
-            });
-
-            controlAdb.click(function(){
-                adbInfo.val("Please Wait...");
-                $.ajax({
-                    type: "POST",
-                    url: '/piper/adb/' + $(this).attr('adb'),
-                    data: {},
-                    success: function(result){
-                        adbInfo.val(result.value || 'Done');
-                    }
-                });
-            });
-
-            controlDeviceSave.click(function(){
-                $.ajax({
-                  type: "POST",
-                  url: '/piper/device/ip',
-                  data: {value: deviceIp.val()}
-                });
-            });
-
-            controlDeviceDirectSave.click(function(){
-                $.ajax({
-                  type: "POST",
-                  url: '/piper/device/direct',
-                  data: {value: deviceDirect.val()}
-                });
-            });
-
-            controlDeviceAdbSave.click(function(){
-                $.ajax({
-                  type: "POST",
-                  url: '/piper/device/adb',
-                  data: {value: deviceAdb.val()}
-                });
-            });
-
-            controlDeviceWifiSave.click(function(){
-                $.ajax({
-                  type: "POST",
-                  url: '/piper/device/wifi',
-                  data: {value: deviceWifi.val()}
-                });
-            });
-
-            $('.controlButton').click(function(){
-                var ref= $(this), button = ref.attr('controlButton'), componentId = $('#components').val();
-                $.ajax({
-                    type: "POST",
-                    url: '/piper/button',
-                    data: {buttonId: button, componentId: componentId}
-                });
-            });
-
-            configList.on('click', 'button', function(){
-                var ref = $(this), index = ref.attr('index') - 0;
-                if (index >= 0 && index < configs.length) {
-                    if (ref.hasClass('run-config')) {
-                        applySelection(configs[index]);
-                        loadButton.click();
-                    } else if (ref.hasClass('delete-config')) {
-                        configs.splice(index, 1);
-                        localStorage.setItem("CONFIGS", JSON.stringify(configs));
-                        buildConfigs();
-                    }
-                }
-            });
-
-            $('#new-config').click(function(){
-                $('[href="#config"]').tab('show');
-            });
-
-            function doubleWide(numb) {
-                if (numb < 10) {
-                    return "0" + numb;
-                }
-                return numb;
-            }
-
-            function formatVariable(varDef) {
-                switch(varDef.displayType) {
-                    case 'STANDARD':
-                        return varDef.value;
-                    case 'TENTH': {
-                        return ((varDef.value - 0) / 10.0).toFixed(1) + "%";
-                    } break;
-                    case 'BOOLEAN': {
-                        return varDef.value - 0;
-                    } break;
-                    case 'SECONDS': {
-                        var total = varDef.value - 0;
-                        var hours = Math.floor(total / (3600));
-                        total -= (hours * 3600);
-                        var minutes = Math.floor(total / 60);
-                        var seconds = total % 60;
-                        return doubleWide(hours) + ":" + doubleWide(minutes) + ":" + doubleWide(seconds);
-                    } break;
-                }
-            }
-
-            function loadProcessInfo(firstTime) {
-                $.ajax({
-                  type: "GET",
-                  url: '/piper/process/info',
-                  success: function(result){
-                    if (result.status == 'OK') {
-                        states.empty();
-                        components.empty();
-                        var i, item, grp, label, input, button;
-                        for (i = 0; i < result.states.length; i++) {
-                        states.append($('<option></option>').attr('value', result.states[i].value).text(result.states[i].name).attr('description', result.states[i].description));
-                        }
-                        for (i = 0; i < result.components.length; i++) {
-                        components.append($('<option></option>').attr('value', result.components[i].value).text(result.components[i].name));
-                        }
-                        $('#webLogging').val(result.webLevel);
-                        $('#fileLogging').val(result.fileLevel);
-                        variableContainer.empty();
-                        linkedVariables = {};
-                        if (result.variables.length > 0) {
-                            variableForm.show();
-
-                            var row;
-
-                            for (i = 0; i < result.variables.length; i++) {
-                                item = result.variables[i];
-
-                                if (i == 0) {
-                                    row = $('<div class="row"></div>').appendTo(variableContainer);
-                                }
-
-                                grp = $('<div class="input-group col-sm-12 col-md-6 col-lg-4" style="margin-bottom: 1em"></div>').appendTo(row);
-
-                                $('<div class="input-group-prepend"></div>').append($('<span class="input-group-text" id=""></span>').text(item.display)).appendTo(grp);
-
-                                if (item.displayType == 'BOOLEAN') {
-                                    linkedVariables[item.name] = $('<select class="form-control notWhileRunning"><option value="0">False</option><option value="1">True</option></select>')
-                                } else {
-                                    linkedVariables[item.name] = $('<input type="text" class="form-control notWhileRunning"/>');
-                                }
-
-                                linkedVariables[item.name].data('key', item.name).val(formatVariable(item)).attr('id', 'var_' + item.name).appendTo(grp);
-                                switch(item.modify) {
-                                    case 'EDITABLE': {
-                                        $('<div class="input-group-append"></div>').append($('<button class="btn btn-secondary updateVariable notWhileRunning" type="button">Update</button>').data('key', item.name).attr('for', 'var_' + item.name)).appendTo(grp);
-                                    } break;
-                                }
-                            }
-                        } else {
-                            variableForm.hide();
-                        }
-                        statusCheck();
-                    }
-                  },
-                  dataType: 'json'
-                });
-            }
-
-            function loadEditViewInfo(firstTime) {
-                $.ajax({
-                  type: "GET",
-                  url: '/piper/edit/view/info',
-                  success: function(result){
-                    if (result.status == 'OK') {
-                        editScreens.empty();
-                        editComponents.empty();
-                        var i, item, grp, label, input, button;
-                        for (i = 0; i < result.screens.length; i++) {
-                            editScreens.append($('<option></option>').attr('value', result.screens[i].value).text(result.screens[i].name));
-                        }
-                        for (i = 0; i < result.components.length; i++) {
-                            editComponents.append($('<option></option>').attr('value', result.components[i].value).text(result.components[i].name));
-                        }
-                        if (firstTime) {
-                            statusCheck();
-                        }
-                    }
-                  },
-                  dataType: 'json'
-                });
-            }
-
-            variableContainer.on('change', 'select, input', function(){
-                var ref = $(this);
-                ref.addClass('updatedValue');
-            });
-
-            variableContainer.on('click', 'button.updateVariable', function(){
-                var ref = $(this), key = ref.data('key'), input = linkedVariables[key];
-                input.removeClass('updatedValue');
-                if (input.val()) {
-                    $.ajax({
-                      type: "POST",
-                      url: '/piper/variable',
-                      data: {key: key, value: input.val()}
-                    });
-                }
-            });
-
-            loadButton.click(function(){
-                var blob = {
-                    device: device1.val(),
-                    view: view1.val(),
-                    view2: view2.val(),
-                    script: script1.val(),
-                    script2: script2.val(),
-                    script3: script3.val(),
-                    script4: script4.val()
-                };
-                $.ajax({
-                  type: "POST",
-                  url: '/piper/process/prep',
-                  data: JSON.stringify(blob),
-                  headers: {
-                        'Content-Type': 'application/json'
-                    },
-                  success: function(result){
-                    if (result.status == 'OK') {
-                        saveSelection();
-                        loadProcessInfo(true);
-                        $('[href="#run"]').tab('show');
-                    }
-                  },
-                  dataType: 'json'
-                });
-            });
-
-            editViewButton.click(function(){
-                var blob = {
-                    device: device1.val(),
-                    view: view1.val(),
-                    view2: view2.val(),
-                    script: script1.val(),
-                    script2: script2.val(),
-                    script3: script3.val(),
-                    script4: script4.val()
-                };
-                $.ajax({
-                  type: "POST",
-                  url: '/piper/edit/view',
-                  data: JSON.stringify(blob),
-                  headers: {
-                        'Content-Type': 'application/json'
-                    },
-                  success: function(result){
-                    if (result.status == 'OK') {
-                        loadEditViewInfo(true);
-                        $('[href="#edit"]').tab('show');
-                    }
-                  },
-                  dataType: 'json'
-                });
-
-            });
-
-            function firstTimeLoad() {
-
-                $.getJSON({
-                  url: '/piper/settings/list',
-                  data: {},
-                  success: function(data){
-                    populateSelect(device1, data.devices || []);
-                    populateSelect(view1, data.views || []);
-                    populateSelect(view2, data.views || []);
-                    populateSelect(script1, data.scripts || []);
-                    populateSelect(script2, data.scripts || []);
-                    populateSelect(script3, data.scripts || []);
-                    populateSelect(script4, data.scripts || []);
-                    loadSelection();
-
-                    statusCheck(true);
-                  }
-                });
-
-                $.getJSON({
-                      url: '/piper/player/level',
-                      data: {},
-                      success: function(data){
-                        playerLevel.val(data.value);
-                        playerForm.show();
-                      }
-                  }
-                );
-
-                $.getJSON({
-                      url: '/piper/device',
-                      data: {},
-                      success: function(data){
-                        deviceIp.val(data.ip);
-                        deviceAdb.val(data.adb);
-                        deviceWifi.val(data.wifi);
-                        deviceDirect.val(data.direct);
-                      }
-                  }
-                );
-            }
-
-            function saveConfig() {
-
-                var title = prompt("Configuration name?");
-
-                if (!title) {
-                    title = "Untitled " + (configs.length + 1);
-                }
-
-                var device1 = $('#device1').val();
-                var view1 = $('#view1').val();
-                var view2 = $('#view2').val();
-                var script1 = $('#script1').val();
-                var script2 = $('#script2').val();
-                var script3 = $('#script3').val();
-                var script4 = $('#script4').val();
-
-                var data = {
-                    device: device1 || '',
-                    views: [],
-                    scripts: []
-                };
-                if (view1) data.views.push(view1);
-                if (view2) data.views.push(view2);
-                if (script1) data.scripts.push(script1);
-                if (script2) data.scripts.push(script2);
-                if (script3) data.scripts.push(script3);
-                if (script4) data.scripts.push(script4);
-                data.title = title;
-
-                configs.push(data);
-
-                localStorage.setItem("CONFIGS", JSON.stringify(configs));
-
-                buildConfigs();
-            }
-
-            function saveSelection() {
-
-                var device1 = $('#device1').val();
-                var view1 = $('#view1').val();
-                var view2 = $('#view2').val();
-                var script1 = $('#script1').val();
-                var script2 = $('#script2').val();
-                var script3 = $('#script3').val();
-                var script4 = $('#script4').val();
-
-                var data = {
-                    device: device1 || '',
-                    views: [],
-                    scripts: []
-                };
-                if (view1) data.views.push(view1);
-                if (view2) data.views.push(view2);
-                if (script1) data.scripts.push(script1);
-                if (script2) data.scripts.push(script2);
-                if (script3) data.scripts.push(script3);
-                if (script4) data.scripts.push(script4);
-
-                localStorage.setItem("LAST", JSON.stringify(data));
-            }
-
-            function loadSelection() {
-                var lData = localStorage.getItem("LAST");
-                if (lData) {
-                    var j = JSON.parse(lData);
-                    applySelection(j);
-                }
-
-                var configData = localStorage.getItem("CONFIGS");
-                if (configData) {
-                    configData = JSON.parse(configData);
-                    configs = [];
-                    var i;
-                    for (i = 0; i < configData.length; i++) {
-                        configs.push(configData[i]);
-                    }
-                    buildConfigs();
-                }
-            }
-
-            function applySelection(j) {
-                var device1 = $('#device1').val('');
-                var view1 = $('#view1').val('');
-                var view2 = $('#view2').val('').prop('disabled', true);
-                var script1 = $('#script1').val('');
-                var script2 = $('#script2').val('').prop('disabled', true);
-                var script3 = $('#script3').val('').prop('disabled', true);
-                var script4 = $('#script4').val('').prop('disabled', true);
-
-                if (j.device) device1.val(j.device);
-                if (j.views && j.views.length > 0) {
-                    view1.val(j.views[0]);
-                    view2.prop('disabled', false);
-                }
-                if (j.views && j.views.length > 1)
-                    view2.val(j.views[1]);
-                if (j.scripts && j.scripts.length > 0) {
-                    script1.val(j.scripts[0]);
-                    script2.prop('disabled', false);
-                }
-                if (j.scripts && j.scripts.length > 1) {
-                    script2.val(j.scripts[1]);
-                    script3.prop('disabled', false);
-                }
-                if (j.scripts && j.scripts.length > 2) {
-                    script3.val(j.scripts[2]);
-                    script4.prop('disabled', false);
-                }
-                if (j.scripts && j.scripts.length > 3)
-                    script4.val(j.scripts[3]);
-            }
-
-            function buildConfigs() {
-                var i;
-                $('.customConfig',configList).remove();
-                for (i = 0; i < configs.length; i++) {
-                    createConfigItem(i, configs[i].title)
-                }
-            }
-
-            function createConfigItem(index, title) {
-                var wrap, card, body, bntGroup;
-                wrap = $('<div class="col-sm-12 col-md-6 col-lg-4 col-xl-3 customConfig"></div>');
-                card = $('<div class="card shadow-sm"></div>');
-                $('<div class="card-header"></div>').append($('<h4 class="my-0 font-weight-normal"></h4>').text(title || 'Untitled')).appendTo(card);
-                body = $('<div class="card-body"></div>').appendTo(card);
-                bntGroup = $('<div class="btn-group" role="group" aria-label="Controls"></div>').appendTo(body);
-                bntGroup.append($('<button type="button" class="btn run-config btn-primary">Run</button>').attr('index', index));
-                //bntGroup.append($('<button type="button" class="btn btn-outline-dark">Modify</button>').attr('index', index));
-                bntGroup.append($('<button type="button" class="btn delete-config btn-outline-danger">Delete</button>').attr('index', index));
-                wrap.append(card);
-                configList.append(wrap);
-            }
-
-            setTimeout(firstTimeLoad, 100);
-        });
-
-
-
-    </script>
 </head>
 <body>
 
@@ -810,7 +107,17 @@
         <div class="tab-pane fade show" id="config" role="tabpanel" aria-labelledby="config-tab">
 
             <form id="setting-form" class="col-sm-12" style="display:none;">
-                <h3>Loader</h3>
+
+                <h3>Engine Configuration</h3>
+
+                <div class="input-group">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text">Name</span>
+                    </div>
+                    <input type="text" class="form-control" id="configName" placeholder="Short Description">
+                </div>
+
+                <br/>
 
                 <div class="input-group">
                     <div class="input-group-prepend">
@@ -818,47 +125,73 @@
                     </div>
                     <select class="form-control" id="device1"></select>
                 </div>
+
                 <br/>
                 <div class="input-group">
                     <div class="input-group-prepend">
-                        <span class="input-group-text">Primary View</span>
+                        <span class="input-group-text">View</span>
                     </div>
-                    <select class="form-control" id="view1"></select>
+                    <select class="form-control view-item default"></select>
+                    <div class="input-group-append">
+                        <button type="button" id="addViewButton" class="btn btn-success">+</button>
+                    </div>
                 </div>
+                <div id="addViewHolder">
+
+                </div>
+
                 <br/>
                 <div class="input-group">
                     <div class="input-group-prepend">
-                        <span class="input-group-text">Extra View</span>
+                        <span class="input-group-text">Script</span>
                     </div>
-                    <select class="form-control" id="view2" disabled></select>
+                    <select class="form-control script-item default"></select>
+                    <div class="input-group-append">
+                        <button type="button" id="addScriptButton" class="btn btn-success">+</button>
+                    </div>
                 </div>
+                <div id="addScriptHolder">
+
+                </div>
+                <br/>
+
+                <h3>Device (Overrides)</h3>
+
+                <div class="input-group">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text">I.P</span>
+                    </div>
+                    <input type="text" class="form-control config-attribute" attrname="device-ip" placeholder="IP address of device">
+                </div>
+
                 <br/>
                 <div class="input-group">
                     <div class="input-group-prepend">
-                        <span class="input-group-text">Primary Script</span>
+                        <span class="input-group-text">ADB</span>
                     </div>
-                    <select class="form-control" id="script1"></select>
+                    <input type="text" class="form-control config-attribute" attrname="device-adb" placeholder="Path to ADB execuable">
                 </div>
+
                 <br/>
                 <div class="input-group">
                     <div class="input-group-prepend">
-                        <span class="input-group-text">Extra Script</span>
+                        <span class="input-group-text">Direct</span>
                     </div>
-                    <select class="form-control" id="script2" disabled></select>
+                    <input type="text" class="form-control config-attribute" attrname="device-direct" placeholder="ADB direct value">
                 </div>
+
                 <br/>
                 <div class="input-group">
                     <div class="input-group-prepend">
-                        <span class="input-group-text">Extra Script</span>
+                        <span class="input-group-text">Connection</span>
                     </div>
-                    <select class="form-control" id="script3" disabled></select>
-                </div><br/>
-                <div class="input-group">
-                    <div class="input-group-prepend">
-                        <span class="input-group-text">Extra Script</span>
-                    </div>
-                    <select class="form-control" id="script4" disabled></select>
+                    <select class="form-control config-attribute" attrname="device-wifi">
+                        <option value=""></option>
+                        <option value="true">Remote</option>
+                        <option value="false">USB</option>
+                    </select>
                 </div>
+
                 <br/>
                 <div class="form-group">
                     <button type="button" id="controlLoad" class="btn btn-primary">Run Script</button>

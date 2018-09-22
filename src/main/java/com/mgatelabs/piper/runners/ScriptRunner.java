@@ -36,6 +36,7 @@ public class ScriptRunner {
     }
 
     private PlayerDefinition playerDefinition;
+    private ConnectionDefinition connectionDefinition;
     private ScriptDefinition scriptDefinition;
     private DeviceDefinition deviceDefinition;
     private ViewDefinition viewDefinition;
@@ -74,10 +75,11 @@ public class ScriptRunner {
 
     private long elapsedTime;
 
-    public ScriptRunner(PlayerDefinition playerDefinition, DeviceHelper deviceHelper, ScriptDefinition scriptDefinition, DeviceDefinition deviceDefinition, ViewDefinition viewDefinition, WebLogHandler webLogHandler, Handler fileHandler) {
+    public ScriptRunner(PlayerDefinition playerDefinition, ConnectionDefinition connectionDefinition, DeviceHelper deviceHelper, ScriptDefinition scriptDefinition, DeviceDefinition deviceDefinition, ViewDefinition viewDefinition, WebLogHandler webLogHandler, Handler fileHandler) {
         this.playerDefinition = playerDefinition;
         this.scriptDefinition = scriptDefinition;
         this.deviceDefinition = deviceDefinition;
+        this.connectionDefinition = connectionDefinition;
         this.viewDefinition = viewDefinition;
         timers = Maps.newHashMap();
         stack = new Stack<>();
@@ -450,8 +452,10 @@ public class ScriptRunner {
 
                 if (!shell.isReady()) {
                     logger.log(Level.WARNING, "Bad Shell: Wait, Connect, Restart, Wait...");
-                    Thread.sleep(1000);
-                    AdbShell.connect(deviceHelper.getIpAddress());
+                    if (connectionDefinition.isWifi()) {
+                        Thread.sleep(1000);
+                        AdbShell.connect(deviceHelper.getIpAddress());
+                    }
                     Thread.sleep(1000);
                     restartShell();
                     Thread.sleep(1000);
@@ -597,6 +601,14 @@ public class ScriptRunner {
         }
     }
 
+    private String valueHandlerAsString(String value) {
+        if (value.startsWith("$")) {
+            return Integer.toString(getVar(value.substring(1)));
+        } else {
+            return Integer.toString(Integer.parseInt(value));
+        }
+    }
+
     private boolean stillRunning() {
         return status == Status.RUNNING;
     }
@@ -683,6 +695,13 @@ public class ScriptRunner {
                             break;
                             case EVENT: {
                                 if (!AdbUtils.event(actionDefinition.getValue(), shell, batchCmds)) {
+                                    logger.log(Level.SEVERE, "Unknown event id: " + actionDefinition.getValue());
+                                    throw new RuntimeException("Unknown event id: " + actionDefinition.getValue());
+                                }
+                            }
+                            break;
+                            case INPUT: {
+                                if (!AdbUtils.event(valueHandlerAsString(actionDefinition.getValue()), shell, batchCmds)) {
                                     logger.log(Level.SEVERE, "Unknown event id: " + actionDefinition.getValue());
                                     throw new RuntimeException("Unknown event id: " + actionDefinition.getValue());
                                 }

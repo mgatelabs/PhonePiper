@@ -4,6 +4,7 @@ import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.mgatelabs.piper.Runner;
+import com.mgatelabs.piper.shared.util.AdbShell;
 import com.mgatelabs.piper.shared.util.JsonTool;
 
 import java.io.File;
@@ -22,6 +23,39 @@ public class ConnectionDefinition {
 
     public void setIp(String ip) {
         this.ip = ip;
+    }
+
+    private String direct;
+
+    public String getDirect() {
+        return direct;
+    }
+
+    public void setDirect(String direct) {
+        AdbShell.ADB_DIRECT = direct;
+        this.direct = direct;
+    }
+
+    private boolean wifi;
+
+    public boolean isWifi() {
+        return wifi;
+    }
+
+    public void setWifi(boolean wifi) {
+        this.wifi = wifi;
+    }
+
+    private String adb = "adb";
+
+    public String getAdb() {
+        return adb;
+    }
+
+    public void setAdb(String adb) {
+        // Update the path
+        AdbShell.ADB_PATH = adb;
+        this.adb = adb;
     }
 
     public static ConnectionDefinition read() {

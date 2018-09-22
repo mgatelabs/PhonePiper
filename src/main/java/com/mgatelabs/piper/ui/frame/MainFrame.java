@@ -7,7 +7,6 @@ import com.mgatelabs.piper.shared.util.AdbShell;
 import com.mgatelabs.piper.shared.util.Loggers;
 import com.mgatelabs.piper.ui.FrameChoices;
 import com.mgatelabs.piper.ui.panels.*;
-import com.mgatelabs.piper.ui.utils.WebLogHandler;
 
 import javax.swing.*;
 import javax.swing.event.MenuEvent;
@@ -237,7 +236,7 @@ public class MainFrame extends JFrame {
         }
 
         if (showRunScript) {
-            runScriptPanel = new RunScriptPanel(connectionPanel.getDeviceHelper(), playerDefinition, shell, deviceDefinition, viewDefinition, scriptDefinition, mapPanel, Loggers.webLogger);
+            runScriptPanel = new RunScriptPanel(connectionPanel.getDeviceHelper(), connectionDefinition, playerDefinition, shell, deviceDefinition, viewDefinition, scriptDefinition, mapPanel, Loggers.webLogger);
             //runScriptPanel.setLocation(0, column0Top);
             //column0Top += runScriptPanel.getHeight();
 

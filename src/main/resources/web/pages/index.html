@@ -59,6 +59,9 @@
 
             var playerLevel = $('#player-level');
             var deviceIp = $('#device-ip');
+            var deviceAdb = $('#device-adb');
+            var deviceWifi = $('#device-wifi');
+            var deviceDirect = $('#device-direct');
 
             var playPauseButton = $('#controlPlayPause');
             var unloadButton = $('#controlUnload');
@@ -70,6 +73,9 @@
 
             var controlPlayerSave = $('#controlPlayerSave');
             var controlDeviceSave = $('#controlDeviceSave');
+            var controlDeviceDirectSave = $('#controlDeviceDirectSave');
+            var controlDeviceAdbSave = $('#controlDeviceAdbSave');
+            var controlDeviceWifiSave = $('#controlDeviceWifiSave');
 
             var settingForm = $('#setting-form');
             var playerForm = $('#player-form');
@@ -314,6 +320,30 @@
                 });
             });
 
+            controlDeviceDirectSave.click(function(){
+                $.ajax({
+                  type: "POST",
+                  url: '/piper/device/direct',
+                  data: {value: deviceDirect.val()}
+                });
+            });
+
+            controlDeviceAdbSave.click(function(){
+                $.ajax({
+                  type: "POST",
+                  url: '/piper/device/adb',
+                  data: {value: deviceAdb.val()}
+                });
+            });
+
+            controlDeviceWifiSave.click(function(){
+                $.ajax({
+                  type: "POST",
+                  url: '/piper/device/wifi',
+                  data: {value: deviceWifi.val()}
+                });
+            });
+
             $('.controlButton').click(function(){
                 var ref= $(this), button = ref.attr('controlButton'), componentId = $('#components').val();
                 $.ajax({
@@ -554,10 +584,13 @@
                 );
 
                 $.getJSON({
-                      url: '/piper/device/ip',
+                      url: '/piper/device',
                       data: {},
                       success: function(data){
-                        deviceIp.val(data.value);
+                        deviceIp.val(data.ip);
+                        deviceAdb.val(data.adb);
+                        deviceWifi.val(data.wifi);
+                        deviceDirect.val(data.direct);
                       }
                   }
                 );
@@ -935,6 +968,45 @@
                         <button type="button" id="controlDeviceSave" class="btn btn-primary">Update</button>
                     </div>
                 </div>
+                <br/>
+                <div class="input-group">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text">Direct Identity</span>
+                    </div>
+                    <input class="form-control" id="device-direct"/>
+                    <div class="input-group-append">
+                        <button type="button" id="controlDeviceDirectSave" class="btn btn-primary">Update</button>
+                    </div>
+                </div>
+                <br/>
+                <div class="input-group">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text">ADB Path</span>
+                    </div>
+                    <input class="form-control" id="device-adb"/>
+                    <div class="input-group-append">
+                        <button type="button" id="controlDeviceAdbSave" class="btn btn-primary">Update</button>
+                    </div>
+                </div>
+
+                <div class="alert alert-light" role="alert">
+                    The path to your ADB instance you wish to run against.
+                </div>
+
+                <br/>
+                <div class="input-group">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text">Wifi?</span>
+                    </div>
+                    <select class="form-control" id="device-wifi">
+                        <option value="true">True</option>
+                        <option value="false">False</option>
+                    </select>
+                    <div class="input-group-append">
+                        <button type="button" id="controlDeviceWifiSave" class="btn btn-primary">Update</button>
+                    </div>
+                </div>
+
                 <br/>
 
                 <div class="form-group">

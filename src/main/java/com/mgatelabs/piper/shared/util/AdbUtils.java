@@ -116,6 +116,18 @@ public class AdbUtils {
         return true;
     }
 
+    public static boolean input(final String inputId, final AdbShell shell, final boolean batch) {
+        final String cmd;
+        final int event = Integer.parseInt(inputId);
+        cmd = "input keyevent " + event;
+        if (batch) {
+            shell.batch(cmd);
+        } else {
+            shell.exec(cmd);
+        }
+        return true;
+    }
+
     private static int getStartX(ComponentDefinition componentDefinition, ActionType type) {
         int x = componentDefinition.getX();
         switch (type) {

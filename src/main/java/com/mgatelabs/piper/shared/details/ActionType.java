@@ -25,7 +25,8 @@ public enum ActionType {
     SET(ActionValueType.INT, true), // Zero a variable
     ADD(ActionValueType.INT, true), // Increment a variable
     LAP(ActionValueType.ID, false), // LAP EVENT
-    EVENT(ActionValueType.EVENT_ID, false); // EVENT
+    EVENT(ActionValueType.EVENT_ID, false), // GENERAL EVENT
+    INPUT(ActionValueType.INPUT_ID, false); // GENERIC INPUT
 
     private final ActionValueType valueType;
 

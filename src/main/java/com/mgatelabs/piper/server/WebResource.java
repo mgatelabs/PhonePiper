@@ -134,6 +134,19 @@ public class WebResource {
         return valueResult;
     }
 
+    @GET
+    @Path("/device")
+    @Produces(MediaType.APPLICATION_JSON)
+    public synchronized Map<String, String> getDevice() {
+        checkInitialState();
+        final Map<String, String> results = Maps.newHashMap();
+        results.put("ip", connectionDefinition.getIp());
+        results.put("adb", connectionDefinition.getAdb());
+        results.put("direct", connectionDefinition.getDirect());
+        results.put("wifi", Boolean.toString(connectionDefinition.isWifi()));
+        return results;
+    }
+
     @POST
     @Path("/device/ip")
     @Produces(MediaType.APPLICATION_JSON)
@@ -144,6 +157,33 @@ public class WebResource {
         if (deviceHelper != null) {
             deviceHelper.setIpAddress(connectionDefinition.getIp());
         }
+    }
+
+    @POST
+    @Path("/device/wifi")
+    @Produces(MediaType.APPLICATION_JSON)
+    public synchronized void setDeviceWifi(@FormParam("value") boolean value) {
+        checkInitialState();
+        connectionDefinition.setWifi(value);
+        connectionDefinition.write();
+    }
+
+    @POST
+    @Path("/device/direct")
+    @Produces(MediaType.APPLICATION_JSON)
+    public synchronized void setDeviceDirect(@FormParam("value") String value) {
+        checkInitialState();
+        connectionDefinition.setDirect(value);
+        connectionDefinition.write();
+    }
+
+    @POST
+    @Path("/device/adb")
+    @Produces(MediaType.APPLICATION_JSON)
+    public synchronized void setDeviceAdb(@FormParam("value") String value) {
+        checkInitialState();
+        connectionDefinition.setAdb(value);
+        connectionDefinition.write();
     }
 
     @POST
@@ -465,7 +505,7 @@ public class WebResource {
 
             editHolder = null;
 
-            runner = new ScriptRunner(playerDefinition, deviceHelper, frameChoices.getScriptDefinition(), frameChoices.getDeviceDefinition(), frameChoices.getViewDefinition(), Loggers.webLogger, Loggers.fileLogger);
+            runner = new ScriptRunner(playerDefinition, connectionDefinition, deviceHelper, frameChoices.getScriptDefinition(), frameChoices.getDeviceDefinition(), frameChoices.getViewDefinition(), Loggers.webLogger, Loggers.fileLogger);
 
             if (VarStateDefinition.exists(frameChoices.getScriptName())) {
                 VarStateDefinition varStateDefinition = VarStateDefinition.read(frameChoices.getScriptName());

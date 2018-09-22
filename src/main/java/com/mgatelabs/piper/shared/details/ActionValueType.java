@@ -11,6 +11,7 @@ public enum ActionValueType {
     COMPONENT_ID,
     STATE_ID,
     EVENT_ID,
+    INPUT_ID,
     NONE,
     START_STOP,
 }

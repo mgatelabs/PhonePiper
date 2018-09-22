@@ -18,6 +18,10 @@ public class AdbShell {
 
     Logger logger = Logger.getLogger("AdbShell");
 
+    public static String ADB_PATH = "adb";
+
+    public static String ADB_DIRECT = "";
+
     private ProcessBuilder builder;
     private Process adb;
     private static final byte[] LS = new byte[]{0x0a};
@@ -37,23 +41,23 @@ public class AdbShell {
     private List<String> batch;
 
     public static String enableRemote() {
-        return commonHandler(new ProcessBuilder("adb", "tcpip", "5555"));
+        return commonHandler(new ProcessBuilder(ADB_PATH, "tcpip", "5555"));
     }
 
     public static String killServer() {
-        return commonHandler(new ProcessBuilder("adb", "kill-server"));
+        return commonHandler(new ProcessBuilder(ADB_PATH, "kill-server"));
     }
 
     public static String connect(final String address) {
-        return commonHandler(new ProcessBuilder("adb", "connect", address));
+        return commonHandler(new ProcessBuilder(ADB_PATH, "connect", address));
     }
 
     public static String devices() {
-        return commonHandler(new ProcessBuilder("adb", "devices"));
+        return commonHandler(new ProcessBuilder(ADB_PATH, "devices"));
     }
 
     public static String enableUsb() {
-        return commonHandler(new ProcessBuilder("adb", "usb"));
+        return commonHandler(new ProcessBuilder(ADB_PATH, "usb"));
     }
 
     public static String getStreamAsString(InputStream inputStream) {
@@ -100,7 +104,11 @@ public class AdbShell {
 
         logger.finest("Starting ADb Shell");
 
-        builder = new ProcessBuilder("adb", "shell");
+        if (StringUtils.isNotBlank(ADB_DIRECT)) {
+            builder = new ProcessBuilder(ADB_PATH, "-s", ADB_DIRECT, "shell");
+        } else {
+            builder = new ProcessBuilder(ADB_PATH, "shell");
+        }
         builder.redirectOutput(ProcessBuilder.Redirect.PIPE);
         builder.redirectError(ProcessBuilder.Redirect.INHERIT);
         try {

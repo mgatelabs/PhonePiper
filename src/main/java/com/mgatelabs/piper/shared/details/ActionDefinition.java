@@ -109,6 +109,8 @@ public class ActionDefinition {
             }
             case EVENT:
                 return "Event: " + value;
+            case INPUT:
+                return "Input: " + value;
         }
         return "???";
     }

@@ -612,7 +612,7 @@ $(function(){
 
         var i = 0, found = false;
         for (i = 0; i < configs.length; i++) {
-            if (configs[i].title == title) {
+            if (configs[i].title == data.title) {
                 found = true;
                 break;
             }

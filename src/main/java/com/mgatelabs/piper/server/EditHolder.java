@@ -1,9 +1,6 @@
 package com.mgatelabs.piper.server;
 
-import com.mgatelabs.piper.shared.details.ConnectionDefinition;
-import com.mgatelabs.piper.shared.details.DeviceDefinition;
-import com.mgatelabs.piper.shared.details.ScriptDefinition;
-import com.mgatelabs.piper.shared.details.ViewDefinition;
+import com.mgatelabs.piper.shared.details.*;
 import com.mgatelabs.piper.shared.helper.DeviceHelper;
 import com.mgatelabs.piper.shared.mapper.MapDefinition;
 import com.mgatelabs.piper.shared.util.AdbShell;
@@ -16,6 +13,7 @@ public class EditHolder {
     private ScriptDefinition scriptDefinition;
     private MapDefinition mapDefinition;
     private DeviceDefinition deviceDefinition;
+    private ConnectionDefinition connectionDefinition;
     private ViewDefinition viewDefinition;
     private DeviceHelper deviceHelper;
 
@@ -25,9 +23,29 @@ public class EditHolder {
         this.scriptDefinition = scriptDefinition;
         this.mapDefinition = mapDefinition;
         this.deviceDefinition = deviceDefinition;
+        this.connectionDefinition = connectionDefinition;
         this.viewDefinition = viewDefinition;
         this.deviceHelper = deviceHelper;
+        deviceHelper.setIpAddress(connectionDefinition.getIp());
         this.shell = shell;
+    }
+
+    public ScreenDefinition getScreenForId(String id) {
+        for (ScreenDefinition screenDefinition: viewDefinition.getScreens()) {
+            if (screenDefinition.getScreenId().equals(id)) {
+                return screenDefinition;
+            }
+        }
+        return null;
+    }
+
+    public ComponentDefinition getComponentForId(String id) {
+        for (ComponentDefinition screenDefinition: viewDefinition.getComponents()) {
+            if (screenDefinition.getComponentId().equals(id)) {
+                return screenDefinition;
+            }
+        }
+        return null;
     }
 
     public ScriptDefinition getScriptDefinition() {
@@ -56,5 +74,9 @@ public class EditHolder {
 
     public void resetShell() {
         shell = new AdbShell(deviceDefinition);
+    }
+
+    public ConnectionDefinition getConnectionDefinition() {
+        return connectionDefinition;
     }
 }

@@ -6,7 +6,9 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.mgatelabs.piper.Runner;
 import com.mgatelabs.piper.shared.util.AdbShell;
 import com.mgatelabs.piper.shared.util.JsonTool;
+import org.apache.commons.lang3.StringUtils;
 
+import javax.xml.bind.annotation.XmlElementDecl;
 import java.io.File;
 import java.io.IOException;
 
@@ -16,6 +18,13 @@ import java.io.IOException;
 public class ConnectionDefinition {
 
     private String ip;
+    private String adb = "adb";
+    private String direct;
+    private boolean wifi;
+
+    public ConnectionDefinition() {
+
+    }
 
     public String getIp() {
         return ip;
@@ -25,18 +34,13 @@ public class ConnectionDefinition {
         this.ip = ip;
     }
 
-    private String direct;
-
     public String getDirect() {
         return direct;
     }
 
     public void setDirect(String direct) {
-        AdbShell.ADB_DIRECT = direct;
         this.direct = direct;
     }
-
-    private boolean wifi;
 
     public boolean isWifi() {
         return wifi;
@@ -46,44 +50,25 @@ public class ConnectionDefinition {
         this.wifi = wifi;
     }
 
-    private String adb = "adb";
-
     public String getAdb() {
         return adb;
     }
 
     public void setAdb(String adb) {
-        // Update the path
-        AdbShell.ADB_PATH = adb;
         this.adb = adb;
     }
 
-    public static ConnectionDefinition read() {
-        File localFile = new File(Runner.WORKING_DIRECTORY, "connection.json");
-        if (localFile.exists()) {
-            ObjectMapper objectMapper = JsonTool.getInstance();
-            try {
-                return objectMapper.readValue(localFile, ConnectionDefinition.class);
-            } catch (JsonParseException e) {
-                e.printStackTrace();
-            } catch (JsonMappingException e) {
-                e.printStackTrace();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
+    public void push() {
+        if (StringUtils.isNotBlank(adb)) {
+            AdbShell.ADB_PATH = adb;
+        } else {
+            AdbShell.ADB_PATH = "adb";
         }
-        return new ConnectionDefinition();
-    }
 
-    public boolean write() {
-        File localFile = new File(Runner.WORKING_DIRECTORY, "connection.json");
-        ObjectMapper objectMapper = JsonTool.getInstance();
-        try {
-            objectMapper.writeValue(localFile, this);
-            return true;
-        } catch (IOException e) {
-            e.printStackTrace();
-            return false;
+        if (StringUtils.isNotBlank(direct)) {
+            AdbShell.ADB_DIRECT = direct;
+        } else {
+            AdbShell.ADB_DIRECT = "";
         }
     }
 }

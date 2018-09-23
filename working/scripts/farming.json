@@ -1273,7 +1273,7 @@
           "actions": [
             {
               "type": "MSG",
-              "value": "Found Mission"
+              "value": "Found Mission Select"
             },
             {
               "type": "MOVE",

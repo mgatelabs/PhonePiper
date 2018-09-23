@@ -58,13 +58,14 @@ public class ConnectionPanel extends JInternalFrame {
         container.add(ipLabel, c);
 
         ipAddress = new JTextField();
-        ipAddress.setText(connectionDefinition.getIp());
+        ipAddress.setText(connectionDefinition != null ? connectionDefinition.getIp() : "");
         c.gridx = 1;
         c.gridy = 0;
         c.gridwidth = 1;
         c.weightx = 1.0;
         container.add(ipAddress, c);
 
+        /*
         JButton saveButton = new JButton("Save / Update");
         saveButton.setMnemonic('s');
         saveButton.addActionListener(new AbstractAction() {
@@ -82,6 +83,7 @@ public class ConnectionPanel extends JInternalFrame {
         c.weightx = 1.0f;
         c.insets = new Insets(5, 5, 5, 5);
         this.add(saveButton, c);
+        */
 
         pack();
 

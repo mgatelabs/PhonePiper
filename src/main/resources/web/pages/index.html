@@ -51,19 +51,19 @@
                 <li class="nav-item">
                     <a class="nav-link active" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home" aria-selected="true">Home</a>
                 </li>
-                <li class="nav-item">
+                <li class="nav-item notLoaded">
                     <a class="nav-link" id="config-tab" data-toggle="tab" href="#config" role="tab" aria-controls="config" aria-selected="true">Config</a>
                 </li>
-                <li class="nav-item">
+                <li class="nav-item whenRun">
                     <a class="nav-link" id="run-tab" data-toggle="tab" href="#run" role="tab" aria-controls="run" aria-selected="false">Run</a>
                 </li>
-                <li class="nav-item">
+                <li class="nav-item whenRun">
                     <a class="nav-link" id="vars-tab" data-toggle="tab" href="#vars" role="tab" aria-controls="vars" aria-selected="false">Variables</a>
                 </li>
-                <li class="nav-item">
+                <li class="nav-item whenLoaded">
                     <a class="nav-link" id="device-tab" data-toggle="tab" href="#device" role="tab" aria-controls="device" aria-selected="false">Device</a>
                 </li>
-                <li class="nav-item">
+                <li class="nav-item whenEdit">
                     <a class="nav-link" id="edit-tab" data-toggle="tab" href="#edit" role="tab" aria-controls="edit" aria-selected="false">Edit</a>
                 </li>
                 <li class="nav-item">
@@ -155,7 +155,7 @@
                 </div>
                 <br/>
 
-                <h3>Device (Overrides)</h3>
+                <h3>Device</h3>
 
                 <div class="input-group">
                     <div class="input-group-prepend">
@@ -292,55 +292,8 @@
                     </div>
                 </div>
                 <br/>
-                <div class="input-group">
-                    <div class="input-group-prepend">
-                        <span class="input-group-text">Device I.P.</span>
-                    </div>
-                    <input class="form-control" id="device-ip"/>
-                    <div class="input-group-append">
-                        <button type="button" id="controlDeviceSave" class="btn btn-primary">Update</button>
-                    </div>
-                </div>
-                <br/>
-                <div class="input-group">
-                    <div class="input-group-prepend">
-                        <span class="input-group-text">Direct Identity</span>
-                    </div>
-                    <input class="form-control" id="device-direct"/>
-                    <div class="input-group-append">
-                        <button type="button" id="controlDeviceDirectSave" class="btn btn-primary">Update</button>
-                    </div>
-                </div>
-                <br/>
-                <div class="input-group">
-                    <div class="input-group-prepend">
-                        <span class="input-group-text">ADB Path</span>
-                    </div>
-                    <input class="form-control" id="device-adb"/>
-                    <div class="input-group-append">
-                        <button type="button" id="controlDeviceAdbSave" class="btn btn-primary">Update</button>
-                    </div>
-                </div>
 
-                <div class="alert alert-light" role="alert">
-                    The path to your ADB instance you wish to run against.
-                </div>
-
-                <br/>
-                <div class="input-group">
-                    <div class="input-group-prepend">
-                        <span class="input-group-text">Wifi?</span>
-                    </div>
-                    <select class="form-control" id="device-wifi">
-                        <option value="true">True</option>
-                        <option value="false">False</option>
-                    </select>
-                    <div class="input-group-append">
-                        <button type="button" id="controlDeviceWifiSave" class="btn btn-primary">Update</button>
-                    </div>
-                </div>
-
-                <br/>
+                <h3>ADB</h3>
 
                 <div class="form-group">
                     <label for="adb-info">ADB</label>
@@ -348,12 +301,12 @@
                 </div>
 
                 <div class="input-group">
-                    <button type="button" class="btn controlAdb btn-info notWhileRunning" adb="restart">Restart</button>
-                    <button type="button" class="btn controlAdb btn-info notWhileRunning" adb="usb">USB</button>
-                    <button type="button" class="btn controlAdb btn-info notWhileRunning" adb="remote">Remote</button>
-                    <button type="button" class="btn controlAdb btn-info notWhileRunning" adb="kill">Kill</button>
-                    <button type="button" class="btn controlAdb btn-info notWhileRunning" adb="connect">Connect</button>
-                    <button type="button" class="btn controlAdb btn-info notWhileRunning" adb="devices">Devices</button>
+                    <button type="button" class="btn controlAdb btn-info notWhileRunning whenLoaded" adb="restart">Restart</button>
+                    <button type="button" class="btn controlAdb btn-info notWhileRunning whenLoaded" adb="usb">USB</button>
+                    <button type="button" class="btn controlAdb btn-info notWhileRunning whenLoaded" adb="remote">Remote</button>
+                    <button type="button" class="btn controlAdb btn-info notWhileRunning whenLoaded" adb="kill">Kill</button>
+                    <button type="button" class="btn controlAdb btn-info notWhileRunning whenLoaded" adb="connect">Connect</button>
+                    <button type="button" class="btn controlAdb btn-info notWhileRunning whenLoaded" adb="devices">Devices</button>
                 </div>
                 <br/>
 
@@ -363,7 +316,7 @@
                     <img id="previewImage" src="" class="img-fluid" alt="Responsive image">
                 </div>
                 <div class="input-group">
-                    <button type="button" id="controlUpdatePreview" class="btn btn-info notWhileRunning">Update Preview</button>
+                    <button type="button" id="controlUpdatePreview" class="btn btn-info whenLoaded notWhileRunning">Update Preview</button>
                 </div>
 
             </form>
@@ -372,7 +325,7 @@
         </div>
         <div class="tab-pane fade" id="edit" role="tabpanel" aria-labelledby="edit-tab">
 
-            <form id="edit-form" class="col-sm-4" style="display:none;">
+            <form id="edit-form" class="col-sm-12" style="display:none;">
                 <div class="form-group">
                     <button type="button" id="unloadEdit" class="btn  btn-danger notWhileRunning">Unload</button>
                 </div>
@@ -383,12 +336,13 @@
                 </div>
 
                 <div class="form-group">
-                    <button type="button" id="newScreen" class="btn btn-info">New</button>
-                    <button type="button" id="stubScreen" class="btn btn-info">Stub</button>
-                    <button type="button" id="editScreen" class="btn btn-info">Edit</button>
-                    <button type="button" id="fixScreen" class="btn btn-info">Fix</button>
-                    <button type="button" id="verifyScreen" class="btn btn-info">Verify</button>
-                    <button type="button" id="updateScreen" class="btn btn-info">Update</button>
+                    <button type="button" class="btn btn-info notWhileRunning">New</button>
+                    <button type="button" class="btn btn-info notWhileRunning">Stub</button>
+                    <button type="button" class="btn btn-info edit-action notWhileRunning whenLoaded" editvalue="editScreen"       lst="edit-screens">Edit Pixels</button>
+                    <button type="button" class="btn btn-info edit-action notWhileRunning whenLoaded" editvalue="fixScreen"        lst="edit-screens">Fix Pixels</button>
+                    <button type="button" class="btn btn-info edit-action notWhileRunning whenLoaded" editvalue="verifyScreen"     lst="edit-screens">Verify (Disk)</button>
+                    <button type="button" class="btn btn-info edit-action notWhileRunning whenLoaded" editvalue="liveVerifyScreen" lst="edit-screens">Verify (Live)</button>
+                    <button type="button" class="btn btn-info edit-action notWhileRunning whenLoaded" editvalue="updateScreen"     lst="edit-screens">Update Image</button>
                 </div>
 
                 <div class="form-group">
@@ -398,10 +352,10 @@
 
                 <div class="form-group">
                     <div class="form-group">
-                        <button type="button" id="newComponent" class="btn btn-info">New</button>
-                        <button type="button" id="stubComponent" class="btn btn-info">Stub</button>
-                        <button type="button" id="editComponent" class="btn btn-info">Edit</button>
-                        <button type="button" id="updateComponent" class="btn btn-info">Update</button>
+                        <button type="button" class="btn btn-info notWhileRunning">New</button>
+                        <button type="button" class="btn btn-info notWhileRunning">Stub</button>
+                        <button type="button" class="edit-action notWhileRunning btn btn-info notWhileRunning whenLoaded" lst="edit-components" editvalue="editComponent">Edit</button>
+                        <button type="button" class="edit-action notWhileRunning btn btn-info notWhileRunning whenLoaded" lst="edit-components" editvalue="updateComponent">Update</button>
                     </div>
                 </div>
 

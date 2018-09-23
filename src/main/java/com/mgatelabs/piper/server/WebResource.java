@@ -2,21 +2,15 @@ package com.mgatelabs.piper.server;
 
 import com.google.common.base.Charsets;
 import com.google.common.collect.ImmutableList;
+import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 import com.google.common.io.Resources;
 import com.mgatelabs.piper.Runner;
 import com.mgatelabs.piper.runners.ScriptRunner;
+import com.mgatelabs.piper.server.actions.*;
 import com.mgatelabs.piper.server.entities.*;
-import com.mgatelabs.piper.shared.details.ActionType;
-import com.mgatelabs.piper.shared.details.ComponentDefinition;
-import com.mgatelabs.piper.shared.details.ConnectionDefinition;
-import com.mgatelabs.piper.shared.details.PlayerDefinition;
-import com.mgatelabs.piper.shared.details.ScreenDefinition;
-import com.mgatelabs.piper.shared.details.StateDefinition;
-import com.mgatelabs.piper.shared.details.VarDefinition;
-import com.mgatelabs.piper.shared.details.VarModify;
-import com.mgatelabs.piper.shared.details.VarStateDefinition;
+import com.mgatelabs.piper.shared.details.*;
 import com.mgatelabs.piper.shared.helper.DeviceHelper;
 import com.mgatelabs.piper.shared.image.ImageWrapper;
 import com.mgatelabs.piper.shared.util.AdbShell;
@@ -27,27 +21,16 @@ import com.mgatelabs.piper.ui.frame.StartupFrame;
 import com.mgatelabs.piper.ui.panels.LogPanel;
 import com.mgatelabs.piper.ui.panels.RunScriptPanel;
 import com.mgatelabs.piper.ui.utils.Constants;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.web.bind.annotation.RequestBody;
 
-import javax.ws.rs.Consumes;
-import javax.ws.rs.FormParam;
-import javax.ws.rs.GET;
-import javax.ws.rs.POST;
-import javax.ws.rs.Path;
-import javax.ws.rs.PathParam;
-import javax.ws.rs.Produces;
+import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.Date;
-import java.util.List;
-import java.util.Map;
-import java.util.SortedSet;
-import java.util.TreeSet;
+import java.util.*;
 import java.util.logging.Handler;
 import java.util.logging.Level;
 import java.util.logging.LogRecord;
@@ -73,7 +56,7 @@ public class WebResource {
     private synchronized boolean checkInitialState() {
         if (connectionDefinition == null) {
             playerDefinition = PlayerDefinition.read();
-            connectionDefinition = ConnectionDefinition.read();
+            connectionDefinition = new ConnectionDefinition();
             deviceHelper = new DeviceHelper(connectionDefinition.getIp());
             Loggers.webLogger.setLevel(Level.INFO);
             Loggers.fileLogger.setLevel(Level.INFO);
@@ -116,69 +99,6 @@ public class WebResource {
         checkInitialState();
         playerDefinition.setLevel(level);
         playerDefinition.write();
-    }
-
-    @GET
-    @Path("/device/ip")
-    @Produces(MediaType.APPLICATION_JSON)
-    public synchronized ValueResult getDeviceIp() {
-        checkInitialState();
-        final ValueResult valueResult = new ValueResult();
-        valueResult.setStatus("OK");
-        valueResult.setValue(connectionDefinition.getIp());
-        return valueResult;
-    }
-
-    @GET
-    @Path("/device")
-    @Produces(MediaType.APPLICATION_JSON)
-    public synchronized Map<String, String> getDevice() {
-        checkInitialState();
-        final Map<String, String> results = Maps.newHashMap();
-        results.put("ip", connectionDefinition.getIp());
-        results.put("adb", connectionDefinition.getAdb());
-        results.put("direct", connectionDefinition.getDirect());
-        results.put("wifi", Boolean.toString(connectionDefinition.isWifi()));
-        return results;
-    }
-
-    @POST
-    @Path("/device/ip")
-    @Produces(MediaType.APPLICATION_JSON)
-    public synchronized void setDeviceIp(@FormParam("value") String value) {
-        checkInitialState();
-        connectionDefinition.setIp(value);
-        connectionDefinition.write();
-        if (deviceHelper != null) {
-            deviceHelper.setIpAddress(connectionDefinition.getIp());
-        }
-    }
-
-    @POST
-    @Path("/device/wifi")
-    @Produces(MediaType.APPLICATION_JSON)
-    public synchronized void setDeviceWifi(@FormParam("value") boolean value) {
-        checkInitialState();
-        connectionDefinition.setWifi(value);
-        connectionDefinition.write();
-    }
-
-    @POST
-    @Path("/device/direct")
-    @Produces(MediaType.APPLICATION_JSON)
-    public synchronized void setDeviceDirect(@FormParam("value") String value) {
-        checkInitialState();
-        connectionDefinition.setDirect(value);
-        connectionDefinition.write();
-    }
-
-    @POST
-    @Path("/device/adb")
-    @Produces(MediaType.APPLICATION_JSON)
-    public synchronized void setDeviceAdb(@FormParam("value") String value) {
-        checkInitialState();
-        connectionDefinition.setAdb(value);
-        connectionDefinition.write();
     }
 
     @POST
@@ -437,6 +357,76 @@ public class WebResource {
     }
 
     @POST
+    @Path("/process/prep")
+    @Consumes("application/json")
+    @Produces("application/json")
+    public PrepResult prepProcess(@RequestBody LoadRequest request) {
+        checkInitialState();
+
+        handleConnection(request);
+
+        thread = null;
+        List<String> views = Lists.newArrayList();
+        views.addAll(request.getViews());
+
+        List<String> scripts = Lists.newArrayList();
+        scripts.addAll(request.getScripts());
+
+        frameChoices = new FrameChoices(Constants.ACTION_RUN, Constants.MODE_SCRIPT, playerDefinition, "", request.getDevice(), views, scripts);
+
+        if (frameChoices.isValid()) {
+            final PrepResult result = new PrepResult(StatusEnum.OK);
+
+            editHolder = null;
+
+            runner = new ScriptRunner(playerDefinition, connectionDefinition, deviceHelper, frameChoices.getScriptDefinition(), frameChoices.getDeviceDefinition(), frameChoices.getViewDefinition(), Loggers.webLogger, Loggers.fileLogger);
+
+            if (VarStateDefinition.exists(frameChoices.getScriptName())) {
+                VarStateDefinition varStateDefinition = VarStateDefinition.read(frameChoices.getScriptName());
+                for (VarDefinition varDefinition : varStateDefinition.getItems()) {
+                    runner.updateVariable(varDefinition.getName(), varDefinition.getValue());
+                }
+            }
+
+            return result;
+
+        } else {
+            return new PrepResult(StatusEnum.FAIL);
+        }
+    }
+
+    private void handleConnection(LoadRequest request) {
+        ConnectionDefinition tempConnection = new ConnectionDefinition();
+
+        if (request.getAttributes() != null) {
+            for (Map.Entry<String, String> entry : request.getAttributes().entrySet()) {
+                if (entry.getKey().contains("-")) {
+                    int dot = entry.getKey().indexOf("-");
+                    String entity = entry.getKey().substring(0, dot);
+                    String field = entry.getKey().substring(dot + 1);
+                    String value = StringUtils.trim(entry.getValue());
+                    if (entity.equalsIgnoreCase("device")) {
+                        if (field.equalsIgnoreCase("adb")) {
+                            tempConnection.setAdb(value);
+                        } else if (field.equalsIgnoreCase("ip")) {
+                            tempConnection.setIp(value);
+                        } else if (field.equalsIgnoreCase("direct")) {
+                            tempConnection.setDirect(value);
+                        } else if (field.equalsIgnoreCase("wifi")) {
+                            tempConnection.setWifi(Boolean.parseBoolean(value));
+                        }
+                    }
+                } else {
+                    // not defined
+                }
+            }
+        }
+        connectionDefinition = tempConnection;
+        connectionDefinition.push();
+        deviceHelper.setIpAddress(connectionDefinition.getIp());
+    }
+
+    @POST
     @Path("/process/unload")
     @Produces("application/json")
     public Map<String, String> unloadProcess() {
@@ -479,48 +469,13 @@ public class WebResource {
     }
 
     @POST
-    @Path("/process/prep")
-    @Consumes("application/json")
-    @Produces("application/json")
-    public PrepResult prepProcess(@RequestBody LoadRequest request) {
-        checkInitialState();
-
-        thread = null;
-        List<String> views = Lists.newArrayList();
-        views.addAll(request.getViews());
-
-        List<String> scripts = Lists.newArrayList();
-        scripts.addAll(request.getScripts());
-
-        frameChoices = new FrameChoices(Constants.ACTION_RUN, Constants.MODE_SCRIPT, playerDefinition, "", request.getDevice(), views, scripts);
-
-        if (frameChoices.isValid()) {
-            final PrepResult result = new PrepResult(StatusEnum.OK);
-
-            editHolder = null;
-
-            runner = new ScriptRunner(playerDefinition, connectionDefinition, deviceHelper, frameChoices.getScriptDefinition(), frameChoices.getDeviceDefinition(), frameChoices.getViewDefinition(), Loggers.webLogger, Loggers.fileLogger);
-
-            if (VarStateDefinition.exists(frameChoices.getScriptName())) {
-                VarStateDefinition varStateDefinition = VarStateDefinition.read(frameChoices.getScriptName());
-                for (VarDefinition varDefinition : varStateDefinition.getItems()) {
-                    runner.updateVariable(varDefinition.getName(), varDefinition.getValue());
-                }
-            }
-
-            return result;
-
-        } else {
-            return new PrepResult(StatusEnum.FAIL);
-        }
-    }
-
-    @POST
     @Path("/edit/view")
     @Consumes("application/json")
     @Produces("application/json")
     public PrepResult editView(@RequestBody LoadRequest request) {
         checkInitialState();
+
+        handleConnection(request);
 
         thread = null;
 
@@ -534,11 +489,43 @@ public class WebResource {
                 }
                 runner = null;
             }
-            editHolder = new EditHolder(frameChoices.getScriptDefinition(), frameChoices.getMapDefinition(), frameChoices.getDeviceDefinition(), frameChoices.getViewDefinition(), null, new AdbShell(frameChoices.getDeviceDefinition()), deviceHelper);
+            editHolder = new EditHolder(frameChoices.getScriptDefinition(), frameChoices.getMapDefinition(), frameChoices.getDeviceDefinition(), frameChoices.getViewDefinition(), connectionDefinition, new AdbShell(frameChoices.getDeviceDefinition()), deviceHelper);
+            deviceHelper = editHolder.getDeviceHelper();
             return result;
         } else {
             return new PrepResult(StatusEnum.FAIL);
         }
+    }
+
+    private static final ImmutableMap<String, EditActionInterface> ACTIONS = ImmutableMap.<String, EditActionInterface>builder()
+            // Screens
+            .put("verifyScreen", new VerifyScreenAction())
+            .put("liveVerifyScreen", new LiveVerifyScreenAction())
+            .put("updateScreen", new UpdateScreenAction())
+            // Components
+            .put("updateComponent", new UpdateComponentImageAction())
+            .build();
+
+    @POST
+    @Path("/edit/action/{actionId}/{id}/{value}")
+    @Produces("application/json")
+    public Map<String, String> editAction(@PathParam("actionId") String actionId, @PathParam("id") String id, @PathParam("value") String value) {
+        checkInitialState();
+        Map<String, String> result = Maps.newHashMap();
+        if (editHolder != null) {
+            EditActionInterface editActionInterface = ACTIONS.get(actionId);
+            if (editActionInterface == null) {
+                result.put("msg", "Unknown Action");
+                result.put("status", "false");
+            } else {
+                result.put("msg", editActionInterface.execute(id, value, editHolder));
+                result.put("status", "true");
+            }
+        } else {
+            result.put("msg", "Edit engine isn't running");
+            result.put("status", "false");
+        }
+        return result;
     }
 
     @POST
@@ -660,6 +647,7 @@ public class WebResource {
                 results.getComponents().add(new NamedValueItem(screenDefinition.getName(), screenDefinition.getComponentId()));
             }
             Collections.sort(results.getComponents());
+
 
             return results;
 

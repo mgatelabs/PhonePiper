@@ -98,8 +98,6 @@ public class MainFrame extends JFrame {
 
         returnRequested = false;
 
-        connectionDefinition = ConnectionDefinition.read();
-
         playerDefinition = choices.getPlayerDefinition();
         scriptDefinition = choices.getScriptDefinition();
         mapDefinition = choices.getMapDefinition();

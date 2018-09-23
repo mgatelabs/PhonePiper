@@ -103,6 +103,55 @@ $(function(){
                 statusName.text(data.status);
 
                 switch(data.status) {
+                        case 'EDIT_VIEW':
+                        case 'READY': {
+                    $('.whenLoaded').prop('disabled', false);
+                   } break;
+                   default: {
+                    $('.whenLoaded').prop('disabled', true);
+                   }
+                }
+
+                switch(data.status) {
+                    case 'EDIT_VIEW': {
+                        $('.whenEdit').show();
+                    } break;
+                    default: {
+                        $('.whenEdit').hide();
+                    } break;
+                }
+
+                switch(data.status) {
+                    case 'EDIT_VIEW':
+                    case 'READY':
+                    case 'RUNNING':
+                    case 'STOPPING':
+                    case 'STOPPED':
+                     {
+                        $('.whenLoaded').show();
+                        $('.notLoaded').hide();
+                    } break;
+                    default: {
+                        $('.whenLoaded').hide();
+                        $('.notLoaded').show();
+                    } break;
+                }
+
+                switch(data.status) {
+                    case 'READY':
+                    case 'RUNNING':
+                    case 'STOPPING':
+                    case 'STOPPED':
+                     {
+                        $('.whenRun').show();
+                    } break;
+                    default: {
+                        $('.whenRun').hide();
+                    } break;
+                }
+
+
+                switch(data.status) {
                     case 'EDIT_VIEW': {
                         editForm.show();
                         settingForm.hide();
@@ -451,6 +500,25 @@ $(function(){
         }
     });
 
+
+    ///////////////////////////////////////////////////////////////////////////
+    // EDIT
+    ///////////////////////////////////////////////////////////////////////////
+
+    $('.edit-action').click(function(){
+        var ref = $(this), action = ref.attr('editvalue'), list = $('#' + ref.attr('lst')), id = list.val();
+        $.ajax({
+          type: "POST",
+          url: '/piper/edit/action/' + action + "/" + id + '/' + 'null',
+          success: function(result){
+            alert(result.msg);
+          },
+          dataType: 'json'
+        });
+
+    });
+
+
     ///////////////////////////////////////////////////////////////////////////
     // Configuration
     ///////////////////////////////////////////////////////////////////////////
@@ -650,15 +718,7 @@ $(function(){
 });
 
 editViewButton.click(function(){
-    var blob = {
-        device: device1.val(),
-        view: view1.val(),
-        view2: view2.val(),
-        script: script1.val(),
-        script2: script2.val(),
-        script3: script3.val(),
-        script4: script4.val()
-    };
+    var blob = extractConfig();
     $.ajax({
       type: "POST",
       url: '/piper/edit/view',
@@ -747,17 +807,6 @@ editViewButton.click(function(){
           }
         );
 
-        $.getJSON({
-              url: '/piper/device',
-              data: {},
-              success: function(data){
-                deviceIp.val(data.ip);
-                deviceAdb.val(data.adb);
-                deviceWifi.val(data.wifi);
-                deviceDirect.val(data.direct);
-              }
-          }
-        );
     }
 
     setTimeout(firstTimeLoad, 100);

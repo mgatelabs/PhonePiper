@@ -13123,10 +13123,10 @@
   }, {
     "name" : "Menu - Worlds",
     "componentId" : "menu-worlds",
-    "x" : 410,
-    "y" : 1310,
-    "w" : 250,
-    "h" : 180,
+    "x" : 424,
+    "y" : 1324,
+    "w" : 226,
+    "h" : 156,
     "enabled" : true
   }, {
     "name" : "OS - App - Icon",

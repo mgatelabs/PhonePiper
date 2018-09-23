@@ -11,6 +11,7 @@ import com.mgatelabs.piper.ui.frame.StartupFrame;
 import com.mgatelabs.piper.ui.utils.Constants;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.boot.SpringApplication;
+import org.springframework.boot.builder.SpringApplicationBuilder;
 
 import javax.swing.*;
 import java.io.BufferedInputStream;
@@ -65,7 +66,7 @@ public class Runner {
 
         if (args.length == 0 || (args.length >= 1 && "server".equalsIgnoreCase(args[0]))) {
             // Just run the server and let it handle everything else
-            SpringApplication.run(ServerRunner.class, args);
+            new SpringApplicationBuilder(ServerRunner.class).headless(false).run(args);
         } else {
 
             PlayerDefinition playerDefinition = PlayerDefinition.read();

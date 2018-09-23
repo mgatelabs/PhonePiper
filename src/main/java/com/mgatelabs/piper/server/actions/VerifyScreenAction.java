@@ -7,13 +7,14 @@ import com.mgatelabs.piper.shared.image.PngImageWrapper;
 import com.mgatelabs.piper.shared.image.SamplePoint;
 
 import java.io.File;
+import java.util.logging.Logger;
 
 /**
  * Created by @mgatelabs (Michael Fuller) on 9/22/2018.
  */
 public class VerifyScreenAction implements EditActionInterface {
     @Override
-    public String execute(final String id, final String value, final EditHolder holder) {
+    public String execute(final String id, final String value, final EditHolder holder, Logger logger) {
         ScreenDefinition screenDefinition = holder.getScreenForId(id);
         if (screenDefinition == null) return "Could not find screen with id: " + id;
 

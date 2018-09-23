@@ -118,7 +118,7 @@ public class ComponentListPanel extends JInternalFrame {
 
                         if (imageReader != null && imageReader.isReady()) {
 
-                            ImagePixelPickerDialog imagePixelPickerDialog = new ImagePixelPickerDialog(ImagePixelPickerDialog.Mode.BOX, owner);
+                            ImagePixelPickerDialog imagePixelPickerDialog = new ImagePixelPickerDialog(ImagePixelPickerDialog.Mode.BOX, owner, null);
                             imagePixelPickerDialog.setup(imageReader, new ArrayList<>());
                             imagePixelPickerDialog.start();
 
@@ -256,7 +256,7 @@ public class ComponentListPanel extends JInternalFrame {
                         return;
                     }
 
-                    ImagePixelPickerDialog imagePixelPickerDialog = new ImagePixelPickerDialog(ImagePixelPickerDialog.Mode.BOX, null);
+                    ImagePixelPickerDialog imagePixelPickerDialog = new ImagePixelPickerDialog(ImagePixelPickerDialog.Mode.BOX, null, null);
 
                     int x = selectedItem.getX() >= deviceDefinition.getWidth() ? 0 : selectedItem.getX();
                     int y = selectedItem.getY() >= deviceDefinition.getHeight() ? 0 : selectedItem.getY();

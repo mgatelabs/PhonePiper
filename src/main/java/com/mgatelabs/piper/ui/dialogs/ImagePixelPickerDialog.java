@@ -45,11 +45,17 @@ public class ImagePixelPickerDialog extends JDialog implements KeyListener {
 
   private final Mode mode;
 
-  public ImagePixelPickerDialog(Mode mode, JFrame frame) {
+  private final PickerHandler handler;
+
+  private final ImagePixelPickerDialog instance;
+
+  public ImagePixelPickerDialog(Mode mode, JFrame frame, PickerHandler handler) {
     super(frame, "Pixel Picker", false);
     this.points = new ArrayList<>();
     this.dialog = this;
     this.mode = mode;
+    this.handler = handler;
+    instance = this;
 
     buildComponents();
     setResizable(true);
@@ -107,9 +113,15 @@ public class ImagePixelPickerDialog extends JDialog implements KeyListener {
                 switch (button.getActionId()) {
                   case 1: {
                     isOk = true;
+                    if (handler != null) {
+                      handler.finished(instance);
+                    }
                     dialog.dispose();
                   } break;
                   case 2: {
+                    if (handler != null) {
+                      handler.finished(instance);
+                    }
                     dialog.dispose();
                   } break;
                   case 3: {
@@ -302,6 +314,8 @@ public class ImagePixelPickerDialog extends JDialog implements KeyListener {
 
   public void start() {
     this.setVisible(true);
+    this.toFront();
+    this.repaint();
   }
 
   public List<SamplePoint> getPoints() {

@@ -119,7 +119,7 @@ public class ScreenListPanel extends JInternalFrame {
 
                             List<SamplePoint> samples = new ArrayList<>();
 
-                            ImagePixelPickerDialog imagePixelPickerDialog = new ImagePixelPickerDialog(ImagePixelPickerDialog.Mode.PIXELS, owner);
+                            ImagePixelPickerDialog imagePixelPickerDialog = new ImagePixelPickerDialog(ImagePixelPickerDialog.Mode.PIXELS, owner, null);
                             imagePixelPickerDialog.setup(imageReader, samples);
                             imagePixelPickerDialog.start();
 
@@ -276,7 +276,7 @@ public class ScreenListPanel extends JInternalFrame {
                         }
                     }
 
-                    ImagePixelPickerDialog imagePixelPickerDialog = new ImagePixelPickerDialog(ImagePixelPickerDialog.Mode.PIXELS, owner);
+                    ImagePixelPickerDialog imagePixelPickerDialog = new ImagePixelPickerDialog(ImagePixelPickerDialog.Mode.PIXELS, owner, null);
                     imagePixelPickerDialog.setup(imageWrapper, newPoints);
                     imagePixelPickerDialog.start();
 
@@ -319,7 +319,7 @@ public class ScreenListPanel extends JInternalFrame {
                     List<SamplePoint> copy = new ArrayList<>();
                     copy.addAll(selectedItem.getPoints());
 
-                    ImagePixelPickerDialog imagePixelPickerDialog = new ImagePixelPickerDialog(ImagePixelPickerDialog.Mode.PIXELS, owner);
+                    ImagePixelPickerDialog imagePixelPickerDialog = new ImagePixelPickerDialog(ImagePixelPickerDialog.Mode.PIXELS, owner, null);
                     imagePixelPickerDialog.setup(imageWrapper, copy);
                     imagePixelPickerDialog.start();
 

@@ -31,9 +31,7 @@ import java.io.File;
 import java.io.IOException;
 import java.net.URL;
 import java.util.*;
-import java.util.logging.Handler;
-import java.util.logging.Level;
-import java.util.logging.LogRecord;
+import java.util.logging.*;
 
 /**
  * Created by @mgatelabs (Michael Fuller) on 2/13/2018.
@@ -53,6 +51,8 @@ public class WebResource {
     private static DeviceHelper deviceHelper;
     private static PlayerDefinition playerDefinition;
 
+    private Logger logger = Logger.getLogger("WebResource");
+
     private synchronized boolean checkInitialState() {
         if (connectionDefinition == null) {
             playerDefinition = PlayerDefinition.read();
@@ -60,6 +60,8 @@ public class WebResource {
             deviceHelper = new DeviceHelper(connectionDefinition.getIp());
             Loggers.webLogger.setLevel(Level.INFO);
             Loggers.fileLogger.setLevel(Level.INFO);
+            logger.addHandler(Loggers.webLogger);
+            logger.setLevel(Level.FINEST);
             return true;
         }
         return false;
@@ -502,6 +504,8 @@ public class WebResource {
             .put("verifyScreen", new VerifyScreenAction())
             .put("liveVerifyScreen", new LiveVerifyScreenAction())
             .put("updateScreen", new UpdateScreenAction())
+            .put("editScreen", new EditScreenAction())
+            .put("fixScreen", new FixScreenAction())
             // Components
             .put("editComponent", new EditComponentAction())
             .put("updateComponent", new UpdateComponentImageAction())
@@ -519,7 +523,7 @@ public class WebResource {
                 result.put("msg", "Unknown Action");
                 result.put("status", "false");
             } else {
-                result.put("msg", editActionInterface.execute(id, value, editHolder));
+                result.put("msg", editActionInterface.execute(id, value, editHolder, logger));
                 result.put("status", "true");
             }
         } else {

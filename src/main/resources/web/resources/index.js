@@ -605,7 +605,7 @@ $(function(){
 
         var data = extractConfig();
 
-        if (!title) {
+        if (!data.title) {
             alert('Please provide a name');
             return;
         }

@@ -174,6 +174,14 @@ public class WebResource {
                 valueResult.setStatus("FAIL");
                 ex.printStackTrace();
             }
+        } else if (editHolder != null) {
+            try {
+                editHolder.restartShell();
+                valueResult.setStatus("OK");
+            } catch (Exception ex) {
+                valueResult.setStatus("FAIL");
+                ex.printStackTrace();
+            }
         } else {
             valueResult.setStatus("FAIL");
         }

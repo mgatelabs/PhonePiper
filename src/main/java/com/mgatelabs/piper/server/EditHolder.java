@@ -72,7 +72,7 @@ public class EditHolder {
         return shell;
     }
 
-    public void resetShell() {
+    public void restartShell() {
         shell = new AdbShell(deviceDefinition);
     }
 

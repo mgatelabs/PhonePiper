@@ -46,7 +46,7 @@ public class ImagePixelPickerDialog extends JDialog implements KeyListener {
   private final Mode mode;
 
   public ImagePixelPickerDialog(Mode mode, JFrame frame) {
-    super(frame, "Pixel Picker", true);
+    super(frame, "Pixel Picker", false);
     this.points = new ArrayList<>();
     this.dialog = this;
     this.mode = mode;

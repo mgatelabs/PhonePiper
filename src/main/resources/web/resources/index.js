@@ -511,7 +511,9 @@ $(function(){
           type: "POST",
           url: '/piper/edit/action/' + action + "/" + id + '/' + 'null',
           success: function(result){
-            alert(result.msg);
+            if (result.msg) {
+                alert(result.msg);
+            }
           },
           dataType: 'json'
         });

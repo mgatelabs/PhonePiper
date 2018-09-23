@@ -503,6 +503,7 @@ public class WebResource {
             .put("liveVerifyScreen", new LiveVerifyScreenAction())
             .put("updateScreen", new UpdateScreenAction())
             // Components
+            .put("editComponent", new EditComponentAction())
             .put("updateComponent", new UpdateComponentImageAction())
             .build();
 

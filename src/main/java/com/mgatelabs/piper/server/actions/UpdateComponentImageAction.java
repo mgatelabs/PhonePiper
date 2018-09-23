@@ -14,7 +14,7 @@ public class UpdateComponentImageAction implements EditActionInterface {
     @Override
     public String execute(final String id, final String value, final EditHolder holder) {
         ComponentDefinition componentDefinition = holder.getComponentForId(id);
-        if (componentDefinition == null) return "Could not find screen with id: " + id;
+        if (componentDefinition == null) return "Could not find component with id: " + id;
         AdbUtils.persistScreen(holder.getShell());
         ImageWrapper wrapper = holder.getDeviceHelper().download();
         if (wrapper != null && wrapper.isReady()) {

@@ -32,31 +32,48 @@ public class AdbUtils {
             }
             break;
             case SWIPE_DOWN:
-            case SWIPE_RIGHT:
-            case SWIPE_LEFT:
             case SWIPE_UP: {
                 final int x1 = getStartX(componentDefinition, type);
+                final int x2 = x1;
+
                 final int y1 = getStartY(componentDefinition, type);
-                final int x2 = getEndX(deviceDefinition, componentDefinition, type);
                 final int y2 = getEndY(deviceDefinition, componentDefinition, type);
-                final int time;
-                if (type == ActionType.SWIPE_DOWN || type == ActionType.SWIPE_UP) {
-                    time = 200;
-                } else {
-                    time = 100;
-                }
+                final int time = 200;
+
+                cmd = ("input swipe " + x1 + " " + y1 + " " + x2 + " " + y2 + " " + time);
+            } break;
+            case SWIPE_RIGHT:
+            case SWIPE_LEFT: {
+                final int x1 = getStartX(componentDefinition, type);
+                final int x2 = getEndX(deviceDefinition, componentDefinition, type);
+
+                final int y1 = getStartY(componentDefinition, type);
+                final int y2 = y1;
+                final int time = 100;
+
                 cmd = ("input swipe " + x1 + " " + y1 + " " + x2 + " " + y2 + " " + time);
             }
             break;
             case SLOW_DOWN:
-            case SLOW_UP:
+            case SLOW_UP: {
+                final int x1 = getStartX(componentDefinition, type);
+                final int x2 = x1;
+
+                final int y1 = getStartY(componentDefinition, type);
+                final int y2 = getEndY(deviceDefinition, componentDefinition, type);
+                final int time = 2000;
+
+                cmd = ("input swipe " + x1 + " " + y1 + " " + x2 + " " + y2 + " " + time);
+            } break;
             case SLOW_LEFT:
             case SLOW_RIGHT: {
                 final int x1 = getStartX(componentDefinition, type);
-                final int y1 = getStartY(componentDefinition, type);
                 final int x2 = getEndX(deviceDefinition, componentDefinition, type);
-                final int y2 = getEndY(deviceDefinition, componentDefinition, type);
+
+                final int y1 = getStartY(componentDefinition, type);
+                final int y2 = y1;
                 final int time = 2000;
+
                 cmd = ("input swipe " + x1 + " " + y1 + " " + x2 + " " + y2 + " " + time);
             }
             break;
@@ -147,13 +164,6 @@ public class AdbUtils {
                 x += 0;
             }
             break;
-            case SWIPE_UP:
-            case SLOW_UP:
-            case SLOW_DOWN:
-            case SWIPE_DOWN: {
-                x += componentDefinition.getW() / 2;
-            }
-            break;
             default: {
                 x += RANDOM.nextInt(componentDefinition.getW());
             }
@@ -200,13 +210,6 @@ public class AdbUtils {
             break;
             case SWIPE_DOWN: {
                 y += (componentDefinition.getH() / 8);
-            }
-            break;
-            case SLOW_LEFT:
-            case SLOW_RIGHT:
-            case SWIPE_LEFT:
-            case SWIPE_RIGHT: {
-                y += componentDefinition.getH() / 2;
             }
             break;
             default: {

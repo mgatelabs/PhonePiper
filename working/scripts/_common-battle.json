@@ -196,7 +196,7 @@
           "actions": [
             {
               "type": "MSG",
-              "value": "Auto-Attack"
+              "value": "Repeat-Attack"
             },
             {
               "type": "TAP",

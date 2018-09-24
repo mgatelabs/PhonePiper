@@ -4,6 +4,11 @@
       "name": "setup",
       "value": "0",
       "type": "INT"
+    },
+    {
+      "name": "mode",
+      "value": "0",
+      "type": "INT"
     }
   ],
   "includes": [
@@ -12,9 +17,10 @@
   ],
   "states": {
 
-    "up-down": {
-      "name": "Up - Down",
+    "up-down-stop": {
+      "name": "Up - Down (Stop on Fight)",
       "includes": [
+        "_up-down",
         "_common-no_op"
       ],
       "statements": [
@@ -29,7 +35,90 @@
               "value": ""
             }
           ]
-        }, {
+        }
+      ]
+    },
+
+    "up-down-fight": {
+      "name": "Up - Down (Repeat Fight)",
+      "includes": [
+        "_up-down",
+        "_common-no_op"
+      ],
+      "statements": [
+        {
+          "condition": {
+            "is": "SCREEN",
+            "value": "game-battle"
+          },
+          "actions": [
+            {
+              "type": "SET",
+              "var": "mode",
+              "value": "0"
+            },
+            {
+              "type": "MOVE",
+              "value": "fight"
+            }
+          ]
+        }
+      ]
+    },
+
+    "left-right-stop": {
+      "name": "Left - Right (Stop on Fight)",
+      "includes": [
+        "_left-right",
+        "_common-no_op"
+      ],
+      "statements": [
+        {
+          "condition": {
+            "is": "SCREEN",
+            "value": "game-battle"
+          },
+          "actions": [
+            {
+              "type": "STOP",
+              "value": ""
+            }
+          ]
+        }
+      ]
+    },
+
+    "left-right-fight": {
+      "name": "Left - Right (Repeat Fight)",
+      "includes": [
+        "_left-right",
+        "_common-no_op"
+      ],
+      "statements": [
+        {
+          "condition": {
+            "is": "SCREEN",
+            "value": "game-battle"
+          },
+          "actions": [
+            {
+              "type": "SET",
+              "var": "mode",
+              "value": "1"
+            },
+            {
+              "type": "MOVE",
+              "value": "fight"
+            }
+          ]
+        }
+      ]
+    },
+
+    "_up-down": {
+      "name": "Up - Down",
+      "statements": [
+        {
           "condition": {
             "not": "SCREEN",
             "value": "game-battle",
@@ -88,24 +177,10 @@
       ]
     },
 
-    "left-right": {
+    "_left-right": {
       "name": "Left - Right",
-      "includes": [
-        "_common-no_op"
-      ],
       "statements": [
         {
-          "condition": {
-            "is": "SCREEN",
-            "value": "game-battle"
-          },
-          "actions": [
-            {
-              "type": "STOP",
-              "value": ""
-            }
-          ]
-        }, {
           "condition": {
             "not": "SCREEN",
             "value": "game-battle",
@@ -158,6 +233,54 @@
             {
               "type": "REPEAT",
               "value": ""
+            }
+          ]
+        }
+      ]
+    },
+
+    "fight": {
+      "name": "Fight",
+      "includes": [
+        "_common_battle-repeat",
+        "_common-no_op"
+      ],
+      "statements": [
+        {
+          "condition": {
+            "not": "SCREEN",
+            "value": "game-battle",
+            "and": [
+              {
+                "is": "EQUAL",
+                "var": "0",
+                "value": "0"
+              }
+            ]
+          },
+          "actions": [
+            {
+              "type": "MOVE",
+              "value": "up-down-fight"
+            }
+          ]
+        },
+        {
+          "condition": {
+            "not": "SCREEN",
+            "value": "game-battle",
+            "and": [
+              {
+                "is": "EQUAL",
+                "var": "0",
+                "value": "1"
+              }
+            ]
+          },
+          "actions": [
+            {
+              "type": "MOVE",
+              "value": "left-right-fight"
             }
           ]
         }

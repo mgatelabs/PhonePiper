@@ -4,49 +4,44 @@ package com.mgatelabs.piper.shared.details;
  * Created by @mgatelabs (Michael Fuller) on 9/4/2017.
  */
 public class StateResult {
-    public enum Type {
-        POP,
-        PUSH,
-        SWAP,
-        MOVE,
-        REPEAT,
-        STOP
-    }
 
-    private final Type type;
+  private final ActionType type;
+  private final ActionDefinition actionDefinition;
+  private final StateResult priorStateResult;
+  private int actionIndex;
+  private final StateDefinition stateDefinition;
 
-    private final String value;
+  public static final StateResult REPEAT = new StateResult(ActionType.REPEAT, null, null, 0, null);
 
-    public static final StateResult STOP = new StateResult(Type.STOP, "");
-    public static final StateResult POP = new StateResult(Type.POP, "");
-    public static final StateResult REPEAT = new StateResult(Type.REPEAT, "");
+  public StateResult(ActionType type, ActionDefinition actionDefinition, StateResult priorStateResult, int actionIndex, StateDefinition stateDefinition) {
+    this.type = type;
+    this.actionDefinition = actionDefinition;
+    this.priorStateResult = priorStateResult;
+    this.actionIndex = actionIndex;
+    this.stateDefinition = stateDefinition;
+  }
 
-    public StateResult(Type type, String value) {
-        this.type = type;
-        this.value = value;
-    }
+  public ActionType getType() {
+    return type;
+  }
 
-    public static StateResult push(String stateName) {
-        return new StateResult(Type.PUSH, stateName);
-    }
+  public String getValue() {
+    return actionDefinition.getValue();
+  }
 
-    public static StateResult move(String stateName) {
-        return new StateResult(Type.MOVE, stateName);
-    }
+  public ActionDefinition getActionDefinition() {
+    return actionDefinition;
+  }
 
-    public static StateResult swap(String stateName) {
-        return new StateResult(Type.SWAP, stateName);
-    }
+  public StateResult getPriorStateResult() {
+    return priorStateResult;
+  }
 
-    public Type getType() {
-        return type;
-    }
+  public int getActionIndex() {
+    return actionIndex;
+  }
 
-    public String getValue() {
-        return value;
-    }
-
-    public static StateResult getPOP() {
-        return POP;
-    }
+  public StateDefinition getStateDefinition() {
+    return stateDefinition;
+  }
 }

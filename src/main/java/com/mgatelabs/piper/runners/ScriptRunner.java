@@ -47,7 +47,7 @@ public class ScriptRunner {
     private Map<String, StateTransfer> transferStateMap;
     private MapTransfer transferMap;
 
-    private Stack<String> stack;
+    private Stack<StateResult> stack;
 
     public static final SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 
@@ -127,9 +127,9 @@ public class ScriptRunner {
                             break;
                         }
 
-                    }
-                    if (!exists) {
-                        scriptDefinition.getVars().add(varDefinition);
+                }
+                if (!exists) {
+                    scriptDefinition.getVars().add(varDefinition);
                     }
                 }
             }
@@ -499,37 +499,29 @@ public class ScriptRunner {
                 while (keepRunning && isRunning()) {
                     keepRunning = false;
 
-                    if (deviceHelper != null) {
+                    StateResult result = getStateResult(stateDefinition, imageWrapper, 0);
+                    if (result.getType() == ActionType.POP) {
+                        if (stack.size() > 0) {
+                            final StateResult oldState = stack.pop();
+                            stateDefinition = scriptDefinition.getStates().get(oldState.getStateDefinition().getId());
+                            if (stateDefinition == null) {
+                                logger.log(Level.SEVERE, "Cannot find state with id: " + oldState);
+                                throw new RuntimeException("Cannot find state with id: " + oldState);
+                            }
+                            currentStateId = stateDefinition.getId();
+                            keepRunning = false;
 
-                        logger.finer("Helper: /check/" + stateDefinition.getId());
-
-                        validScreenIds = deviceHelper.check(stateDefinition.getId());
-
-                        if (logger.getLevel() == Level.FINEST) {
-                            logger.log(Level.FINEST, "Valid Screens: " + Joiner.on(",").join(validScreenIds));
+                            result = getStateResult(stateDefinition, imageWrapper, oldState.getActionIndex() + 1);
+                        } else {
+                            throw new RuntimeException("Stack is empty");
                         }
                     }
-
-                    StateResult result = state(stateDefinition, imageWrapper);
 
                     switch (result.getType()) {
                         case STOP: {
                             this.status = Status.STOPPED;
                             return;
                         }
-                        case POP:
-                            if (stack.size() > 0) {
-                                final String oldState = stack.pop();
-                                stateDefinition = scriptDefinition.getStates().get(oldState);
-                                if (stateDefinition == null) {
-                                    logger.log(Level.SEVERE, "Cannot find state with id: " + oldState);
-                                    throw new RuntimeException("Cannot find state with id: " + oldState);
-                                }
-                                keepRunning = false;
-                            } else {
-                                throw new RuntimeException("Stack is empty");
-                            }
-                            break;
                         case MOVE: {
                             stateDefinition = scriptDefinition.getStates().get(result.getValue());
                             if (stateDefinition == null) {
@@ -541,7 +533,7 @@ public class ScriptRunner {
                         }
                         break;
                         case PUSH: {
-                            stack.push(stateDefinition.getId());
+                            stack.push(result);
                             stateDefinition = scriptDefinition.getStates().get(result.getValue());
                             if (stateDefinition == null) {
                                 logger.log(Level.SEVERE, "Cannot find state with id: " + result.getValue());
@@ -566,7 +558,6 @@ public class ScriptRunner {
                         }
                         break;
                     }
-
                 }
 
                 waitFor(250);
@@ -579,6 +570,20 @@ public class ScriptRunner {
             setStatus(Status.STOPPED);
             logger.info("Script Stopped");
         }
+    }
+
+    private StateResult getStateResult(StateDefinition stateDefinition, ImageWrapper imageWrapper, int startingAction) {
+        if (deviceHelper != null) {
+            logger.finer("Helper: /check/" + stateDefinition.getId());
+
+            validScreenIds = deviceHelper.check(stateDefinition.getId());
+
+            if (logger.getLevel() == Level.FINEST) {
+                logger.log(Level.FINEST, "Valid Screens: " + Joiner.on(",").join(validScreenIds));
+            }
+        }
+
+        return state(stateDefinition, imageWrapper, startingAction);
     }
 
     private String lapEvent(String id) {
@@ -611,20 +616,29 @@ public class ScriptRunner {
         return status == Status.RUNNING;
     }
 
-    private StateResult state(final StateDefinition stateDefinition, final ImageWrapper imageWrapper) {
-
+    private StateResult state(final StateDefinition stateDefinition, final ImageWrapper imageWrapper, int startingAction) {
         logger.fine("Running State: " + stateDefinition.getName());
 
         boolean batchCmds = false;
-
+        StateResult priorResult = null;
+        StateResult stateResult = null;
         for (StatementDefinition statementDefinition : stateDefinition.getStatements()) {
             if (check(statementDefinition.getCondition(), imageWrapper)) {
                 for (ActionDefinition actionDefinition : statementDefinition.getActions()) {
+                    final int actionIndex = statementDefinition.getActions().indexOf(actionDefinition);
+                    if (actionIndex < startingAction)
+                        continue;
+
+                    priorResult = stateResult;
+                    stateResult = new StateResult(actionDefinition.getType(), actionDefinition, priorResult, actionIndex, stateDefinition);
                     final int loopIndex = actionDefinition.getCount() <= 0 ? 1 : actionDefinition.getCount();
+                    actionDefinition.setValue(replaceTokens((actionDefinition.getValue())));
+
                     for (int looper = 0; looper < loopIndex; looper++) {
                         if (!stillRunning()) {
-                            return StateResult.STOP;
+                            return new StateResult(ActionType.STOP, actionDefinition, priorResult, actionIndex, stateDefinition);
                         }
+
                         switch (actionDefinition.getType()) {
                             case MSG: {
                                 String msg = actionDefinition.getValue();
@@ -675,6 +689,7 @@ public class ScriptRunner {
                                 setVar(varName, orig.add(value));
                             }
                             break;
+
                             case TAP:
                             case SWIPE_DOWN:
                             case SLOW_DOWN:
@@ -692,6 +707,7 @@ public class ScriptRunner {
                                 AdbUtils.component(deviceDefinition, componentDefinition, actionDefinition.getType(), shell, batchCmds);
                             }
                             break;
+
                             case EVENT: {
                                 if (!AdbUtils.event(actionDefinition.getValue(), shell, batchCmds)) {
                                     logger.log(Level.SEVERE, "Unknown event id: " + actionDefinition.getValue());
@@ -706,6 +722,7 @@ public class ScriptRunner {
                                 }
                             }
                             break;
+
                             case WAIT: {
                                 int time = valueHandler(actionDefinition.getValue()).toInt();
                                 if (time > 0) {
@@ -716,30 +733,42 @@ public class ScriptRunner {
                                 }
                             }
                             break;
-                            case POP: {
-                                return StateResult.POP;
-                            }
-                            case PUSH: {
-                                return StateResult.push(actionDefinition.getValue());
-                            }
-                            case SWAP: {
-                                return StateResult.swap(actionDefinition.getValue());
-                            }
-                            case MOVE: {
-                                return StateResult.move(actionDefinition.getValue());
-                            }
-                            case REPEAT: {
-                                return StateResult.REPEAT;
-                            }
+
+                            case POP:
+                            case PUSH:
+                            case SWAP:
+                            case MOVE:
+                            case REPEAT:
                             case STOP:
-                                return StateResult.STOP;
+                                return stateResult;
                         }
                     }
                 }
             }
         }
-
         return StateResult.REPEAT;
+    }
+
+    private String replaceTokens(String text) {
+        if (text != null) {
+            int startindex;
+            while ((startindex = text.indexOf("${")) >= 0) {
+                int endIndex = text.indexOf('}', startindex);
+                if (endIndex > startindex + 2) {
+                    String varName = text.substring(startindex += 2, endIndex).trim();
+                    if (varName.length() > 0) {
+                        if (vars.getVarInstance(varName) != null) {
+                            text = text.substring(0, startindex - 2) + vars.get(varName) + text.substring(endIndex + 1);
+                        } else {
+                            break;
+                        }
+                    }
+                } else {
+                    break;
+                }
+            }
+        }
+        return text;
     }
 
     private void waitFor(long milli) {

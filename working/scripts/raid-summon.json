@@ -1,0 +1,55 @@
+//@formatter:off
+{
+"vars": [{
+  "name": "_loops", "value": "0", "type": "TIMER", "modify": "VISIBLE", "display": "NoOp", "displayType": "SECONDS"}, {
+  "name": "summon_number", "value": "0", "type": "INT", "modify": "VISIBLE"}
+],
+"includes": [
+//  "_common-no_op"
+],
+"states": {
+
+  "raid-summon-multi": {
+    "name": "Raid - Summon Multi",
+    "includes": [
+      "raid-summon-results"
+    ],
+    "statements": [{
+      "condition": {
+        "is": "SCREEN", "value": "raid-summon"
+      },
+      "actions": [{
+        "type": "ADD", "value": "1", "var": "summon_number"}, {
+        "type": "MSG", "value": "Multi Summon - ${summon_number}"}, {
+        "type": "TAP", "value": "raid-summon_multi-main"}, {
+        "type": "WAIT", "value": "250"}, {
+        "type": "TAP", "value": "raid-summon_multi-popup"}, {
+        "type": "REPEAT"}
+      ]
+    }, {
+
+      "condition": {
+        "not": "SCREEN", "value": "raid-summon"
+      },
+      "actions": [{
+        "type": "MSG", "value": "Raid Summon Complete - Batch ${summon_number}"}, {
+        "type": "STOP"}
+      ]
+    }]
+  },
+
+  "raid-summon-results": {
+    "name": "Raid - Summon Results",
+    "statements": [{
+      "condition": {
+        "not": "SCREEN", "value": "raid-summon"
+      },
+      "actions": [{
+        "type": "TAP", "value": "raid-summon_results-next"}, {
+        "type": "WAIT", "value": "250"}, {
+        "type": "REPEAT"}
+      ]
+    }]
+  }
+}
+}

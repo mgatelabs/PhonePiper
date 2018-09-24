@@ -12267,6 +12267,59 @@
     } ],
     "enabled" : true
   }, {
+    "name" : "Raid - Summon",
+    "screenId" : "raid-summon",
+    "points" : [ {
+      "x" : 659,
+      "y" : 1206,
+      "r" : 150,
+      "g" : 150,
+      "b" : 150
+    }, {
+      "x" : 660,
+      "y" : 1340,
+      "r" : 192,
+      "g" : 125,
+      "b" : 78
+    }, {
+      "x" : 976,
+      "y" : 1346,
+      "r" : 230,
+      "g" : 230,
+      "b" : 230
+    }, {
+      "x" : 970,
+      "y" : 1222,
+      "r" : 254,
+      "g" : 150,
+      "b" : 53
+    }, {
+      "x" : 829,
+      "y" : 1233,
+      "r" : 254,
+      "g" : 64,
+      "b" : 9
+    }, {
+      "x" : 830,
+      "y" : 1285,
+      "r" : 119,
+      "g" : 33,
+      "b" : 19
+    }, {
+      "x" : 850,
+      "y" : 1295,
+      "r" : 1,
+      "g" : 1,
+      "b" : 1
+    }, {
+      "x" : 965,
+      "y" : 1300,
+      "r" : 20,
+      "g" : 20,
+      "b" : 20
+    } ],
+    "enabled" : true
+  }, {
     "name" : "units-enhance_units",
     "screenId" : "units-enhance_units",
     "points" : [ {
@@ -12335,6 +12388,53 @@
       "r" : 6,
       "g" : 11,
       "b" : 6
+    } ],
+    "enabled" : true
+  }, {
+    "name" : "units-filtered",
+    "screenId" : "units-filtered",
+    "points" : [ {
+      "x" : 815,
+      "y" : 415,
+      "r" : 229,
+      "g" : 218,
+      "b" : 220
+    }, {
+      "x" : 825,
+      "y" : 430,
+      "r" : 125,
+      "g" : 90,
+      "b" : 94
+    }, {
+      "x" : 860,
+      "y" : 430,
+      "r" : 194,
+      "g" : 178,
+      "b" : 180
+    }, {
+      "x" : 900,
+      "y" : 425,
+      "r" : 205,
+      "g" : 188,
+      "b" : 190
+    }, {
+      "x" : 775,
+      "y" : 400,
+      "r" : 130,
+      "g" : 15,
+      "b" : 28
+    }, {
+      "x" : 775,
+      "y" : 450,
+      "r" : 90,
+      "g" : 11,
+      "b" : 19
+    }, {
+      "x" : 975,
+      "y" : 425,
+      "r" : 79,
+      "g" : 9,
+      "b" : 17
     } ],
     "enabled" : true
   }, {
@@ -12876,6 +12976,171 @@
       "r" : 255,
       "g" : 255,
       "b" : 255
+    } ],
+    "enabled" : true
+  }, {
+    "name" : "units-sell",
+    "screenId" : "units-sell",
+    "points" : [ {
+      "x" : 235,
+      "y" : 400,
+      "r" : 251,
+      "g" : 251,
+      "b" : 251
+    }, {
+      "x" : 225,
+      "y" : 400,
+      "r" : 211,
+      "g" : 211,
+      "b" : 211
+    }, {
+      "x" : 235,
+      "y" : 420,
+      "r" : 246,
+      "g" : 246,
+      "b" : 246
+    }, {
+      "x" : 225,
+      "y" : 420,
+      "r" : 230,
+      "g" : 230,
+      "b" : 230
+    }, {
+      "x" : 245,
+      "y" : 415,
+      "r" : 239,
+      "g" : 239,
+      "b" : 239
+    }, {
+      "x" : 255,
+      "y" : 415,
+      "r" : 116,
+      "g" : 116,
+      "b" : 116
+    }, {
+      "x" : 250,
+      "y" : 405,
+      "r" : 199,
+      "g" : 202,
+      "b" : 201
+    }, {
+      "x" : 250,
+      "y" : 422,
+      "r" : 235,
+      "g" : 235,
+      "b" : 235
+    }, {
+      "x" : 505,
+      "y" : 1565,
+      "r" : 255,
+      "g" : 255,
+      "b" : 255
+    }, {
+      "x" : 505,
+      "y" : 1605,
+      "r" : 255,
+      "g" : 255,
+      "b" : 255
+    }, {
+      "x" : 495,
+      "y" : 1600,
+      "r" : 255,
+      "g" : 255,
+      "b" : 255
+    }, {
+      "x" : 520,
+      "y" : 1600,
+      "r" : 174,
+      "g" : 186,
+      "b" : 209
+    }, {
+      "x" : 495,
+      "y" : 1575,
+      "r" : 255,
+      "g" : 255,
+      "b" : 255
+    } ],
+    "enabled" : true
+  }, {
+    "name" : "units-sell-confirm-popup",
+    "screenId" : "units-sell-confirm-popup",
+    "points" : [ {
+      "x" : 675,
+      "y" : 1465,
+      "r" : 158,
+      "g" : 0,
+      "b" : 10
+    }, {
+      "x" : 675,
+      "y" : 1550,
+      "r" : 118,
+      "g" : 0,
+      "b" : 1
+    }, {
+      "x" : 945,
+      "y" : 1550,
+      "r" : 107,
+      "g" : 0,
+      "b" : 0
+    }, {
+      "x" : 945,
+      "y" : 1465,
+      "r" : 137,
+      "g" : 0,
+      "b" : 5
+    }, {
+      "x" : 750,
+      "y" : 1500,
+      "r" : 94,
+      "g" : 0,
+      "b" : 0
+    } ],
+    "enabled" : true
+  }, {
+    "name" : "units-sell-popup_ok",
+    "screenId" : "units-sell-popup_ok",
+    "points" : [ {
+      "x" : 520,
+      "y" : 1040,
+      "r" : 255,
+      "g" : 255,
+      "b" : 255
+    }, {
+      "x" : 530,
+      "y" : 1060,
+      "r" : 255,
+      "g" : 255,
+      "b" : 255
+    }, {
+      "x" : 500,
+      "y" : 1060,
+      "r" : 255,
+      "g" : 255,
+      "b" : 255
+    }, {
+      "x" : 560,
+      "y" : 1060,
+      "r" : 255,
+      "g" : 255,
+      "b" : 255
+    }, {
+      "x" : 575,
+      "y" : 1040,
+      "r" : 255,
+      "g" : 255,
+      "b" : 255
+    }, {
+      "x" : 575,
+      "y" : 1080,
+      "r" : 255,
+      "g" : 255,
+      "b" : 255
+    }, {
+      "x" : 650,
+      "y" : 1050,
+      "r" : 0,
+      "g" : 19,
+      "b" : 91
     } ],
     "enabled" : true
   } ],
@@ -13544,6 +13809,30 @@
     "h" : 36,
     "enabled" : true
   }, {
+    "name" : "Raid Summon - Multi",
+    "componentId" : "raid-summon_multi-main",
+    "x" : 656,
+    "y" : 1201,
+    "w" : 300,
+    "h" : 150,
+    "enabled" : true
+  }, {
+    "name" : "Raid - Summon Multi",
+    "componentId" : "raid-summon_multi-popup",
+    "x" : 379,
+    "y" : 968,
+    "w" : 300,
+    "h" : 150,
+    "enabled" : true
+  }, {
+    "name" : "Raid - Summon Results Next",
+    "componentId" : "raid-summon_results-next",
+    "x" : 445,
+    "y" : 1660,
+    "w" : 190,
+    "h" : 105,
+    "enabled" : true
+  }, {
     "name" : "Screen - Center",
     "componentId" : "screen-center",
     "x" : 40,
@@ -13574,6 +13863,134 @@
     "y" : 935,
     "w" : 50,
     "h" : 50,
+    "enabled" : true
+  }, {
+    "name" : "unit-sell_1",
+    "componentId" : "unit-sell_1",
+    "x" : 25,
+    "y" : 575,
+    "w" : 150,
+    "h" : 175,
+    "enabled" : true
+  }, {
+    "name" : "unit-sell_2",
+    "componentId" : "unit-sell_2",
+    "x" : 239,
+    "y" : 575,
+    "w" : 150,
+    "h" : 175,
+    "enabled" : true
+  }, {
+    "name" : "unit-sell_3",
+    "componentId" : "unit-sell_3",
+    "x" : 453,
+    "y" : 575,
+    "w" : 150,
+    "h" : 175,
+    "enabled" : true
+  }, {
+    "name" : "unit-sell_4",
+    "componentId" : "unit-sell_4",
+    "x" : 667,
+    "y" : 575,
+    "w" : 150,
+    "h" : 175,
+    "enabled" : true
+  }, {
+    "name" : "unit-sell_5",
+    "componentId" : "unit-sell_5",
+    "x" : 881,
+    "y" : 575,
+    "w" : 150,
+    "h" : 175,
+    "enabled" : true
+  }, {
+    "name" : "unit-sell_6",
+    "componentId" : "unit-sell_6",
+    "x" : 25,
+    "y" : 879,
+    "w" : 150,
+    "h" : 175,
+    "enabled" : true
+  }, {
+    "name" : "unit-sell_7",
+    "componentId" : "unit-sell_7",
+    "x" : 239,
+    "y" : 879,
+    "w" : 150,
+    "h" : 175,
+    "enabled" : true
+  }, {
+    "name" : "unit-sell_8",
+    "componentId" : "unit-sell_8",
+    "x" : 453,
+    "y" : 879,
+    "w" : 150,
+    "h" : 175,
+    "enabled" : true
+  }, {
+    "name" : "unit-sell_9",
+    "componentId" : "unit-sell_9",
+    "x" : 667,
+    "y" : 879,
+    "w" : 150,
+    "h" : 175,
+    "enabled" : true
+  }, {
+    "name" : "unit-sell_10",
+    "componentId" : "unit-sell_10",
+    "x" : 881,
+    "y" : 879,
+    "w" : 150,
+    "h" : 175,
+    "enabled" : true
+  }, {
+    "name" : "unit-sell_11",
+    "componentId" : "unit-sell_11",
+    "x" : 25,
+    "y" : 1183,
+    "w" : 150,
+    "h" : 175,
+    "enabled" : true
+  }, {
+    "name" : "unit-sell_12",
+    "componentId" : "unit-sell_12",
+    "x" : 239,
+    "y" : 1183,
+    "w" : 150,
+    "h" : 175,
+    "enabled" : true
+  }, {
+    "name" : "unit-sell_13",
+    "componentId" : "unit-sell_13",
+    "x" : 453,
+    "y" : 1183,
+    "w" : 150,
+    "h" : 175,
+    "enabled" : true
+  }, {
+    "name" : "unit-sell_14",
+    "componentId" : "unit-sell_14",
+    "x" : 667,
+    "y" : 1183,
+    "w" : 150,
+    "h" : 175,
+    "enabled" : true
+  }, {
+    "name" : "unit-sell_15",
+    "componentId" : "unit-sell_15",
+    "x" : 881,
+    "y" : 1183,
+    "w" : 150,
+    "h" : 175,
+    "enabled" : true
+  }, {
+    "name" : "unit-sell_sell",
+    "componentId" : "unit-sell_sell",
+    "x" : 405,
+    "y" : 1530,
+    "w" : 270,
+    "h" : 105,
     "enabled" : true
   }, {
     "name" : "units-enhance_units-back",
@@ -13638,6 +14055,30 @@
     "y" : 570,
     "w" : 100,
     "h" : 110,
+    "enabled" : true
+  }, {
+    "name" : "units-sell-confirm_1",
+    "componentId" : "units-sell-confirm_1",
+    "x" : 675,
+    "y" : 1455,
+    "w" : 270,
+    "h" : 105,
+    "enabled" : true
+  }, {
+    "name" : "units-sell-confirm_2",
+    "componentId" : "units-sell-confirm_2",
+    "x" : 620,
+    "y" : 1000,
+    "w" : 270,
+    "h" : 105,
+    "enabled" : true
+  }, {
+    "name" : "units-sell-confirm_ok",
+    "componentId" : "units-sell-confirm_ok",
+    "x" : 405,
+    "y" : 1000,
+    "w" : 270,
+    "h" : 105,
     "enabled" : true
   } ]
 }

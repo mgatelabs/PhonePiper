@@ -1,0 +1,99 @@
+//@formatter:off
+{
+  "vars": [{
+    "name": "_loops", "value": "0", "type": "TIMER", "modify": "VISIBLE", "display": "NoOp", "displayType": "SECONDS"}, {
+    "name": "batch_number", "value": "0", "type": "INT", "modify": "VISIBLE"}
+  ],
+  "includes": [],
+  "states": {
+
+    "units-sell": {
+      "name": "Units - Sell",
+      "includes": [
+        "units-sell-popup_confirm_1",
+        "units-sell-popup_confirm_2"
+      ],
+      "statements": [{
+        "condition": {
+          "is": "SCREEN", "value": "units-sell", "and": [{
+            "is": "SCREEN", "value": "units-filtered"
+          }]
+        },
+        "actions": [{
+          "type": "ADD", "value": "1", "var": "batch_number"}, {
+          "type": "MSG", "value": "Sell Batch - ${batch_number}"}, {
+          "type": "BATCH", "value": "START"}, {
+          "type": "TAP", "value": "unit-sell_1"}, {
+          "type": "TAP", "value": "unit-sell_2"}, {
+          "type": "TAP", "value": "unit-sell_3"}, {
+          "type": "TAP", "value": "unit-sell_4"}, {
+          "type": "TAP", "value": "unit-sell_5"}, {
+          "type": "TAP", "value": "unit-sell_6"}, {
+          "type": "TAP", "value": "unit-sell_7"}, {
+          "type": "TAP", "value": "unit-sell_8"}, {
+          "type": "TAP", "value": "unit-sell_9"}, {
+          "type": "TAP", "value": "unit-sell_10"}, {
+          "type": "TAP", "value": "unit-sell_11"}, {
+          "type": "TAP", "value": "unit-sell_12"}, {
+          "type": "TAP", "value": "unit-sell_13"}, {
+          "type": "TAP", "value": "unit-sell_14"}, {
+          "type": "TAP", "value": "unit-sell_15"}, {
+          "type": "BATCH", "value": "END"}, {
+          "type": "TAP", "value": "unit-sell_sell"}, {
+          "type": "WAIT", "value": "500"}, {
+          "type": "REPEAT"}
+        ]
+      }, {
+        "condition": {
+          "is": "SCREEN", "value": "units-sell", "and": [{
+            "is": "SCREEN", "value": "units-filtered"
+          }]
+        },
+        "actions": [{
+          "type": "TAP", "value": "unit-sell_sell"}, {
+          "type": "WAIT", "value": "500"}, {
+          "type": "REPEAT"}
+        ]
+      }, {
+
+        "condition": {
+          "is": "SCREEN", "value": "units-sell", "and": [{
+            "not": "SCREEN", "value": "units-filtered"
+          }]
+        },
+        "actions": [{
+          "type": "MSG", "value": "Sell Complete - Batch ${batch_number}"}, {
+          "type": "STOP"}
+        ]
+      }]
+    },
+
+    "units-sell-popup_confirm_1": {
+      "name": "Units - Sell Popup",
+      "statements": [{
+        "condition" : {
+          "is" : "SCREEN","value" : "units-sell-confirm-popup"},
+        "actions": [{
+          "type": "TAP", "value": "units-sell-confirm_1"}, {
+          "type": "WAIT", "value": "100"}, {
+          "type": "TAP", "value": "units-sell-confirm_2"}, {
+          "type": "WAIT", "value": "1000"}, {
+          "type": "REPEAT"}
+        ]
+      }]
+    },
+
+    "units-sell-popup_confirm_2": {
+      "name": "Units - Sell Popup Ok",
+      "statements": [{
+        "condition" : {
+          "is" : "SCREEN","value" : "units-sell-popup_ok"},
+        "actions": [{
+          "type": "TAP", "value": "units-sell-confirm_ok"}, {
+          "type": "WAIT", "value": "1000"}, {
+          "type": "REPEAT"}
+        ]
+      }]
+    }
+  }
+}

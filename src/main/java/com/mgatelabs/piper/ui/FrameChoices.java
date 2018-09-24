@@ -147,21 +147,23 @@ public class FrameChoices {
                 if (otherScriptDef == null)
                     continue;
 
-                if (scriptDef == null) {
-                    scriptDef = otherScriptDef;
-                    continue;
-                }
-
-                if (action == Action.RUN) {
-                    for (Map.Entry<String, StateDefinition> otherState : otherScriptDef.getStates().entrySet()) {
-                        scriptDef.getStates().remove(otherState.getKey());
-                        scriptDef.getStates().put(otherState.getKey(), otherState.getValue());
-                    }
-                }
-            }
+        if (scriptDef == null) {
+          scriptDef = otherScriptDef;
+          scriptDef.getIncludes().add(scriptId);
+          continue;
         }
-        return scriptDef;
+
+        if (action == Action.RUN) {
+          scriptDef.getIncludes().add(scriptId);
+          for (Map.Entry<String, StateDefinition> otherState : otherScriptDef.getStates().entrySet()) {
+            scriptDef.getStates().remove(otherState.getKey());
+            scriptDef.getStates().put(otherState.getKey(), otherState.getValue());
+          }
+        }
+      }
     }
+    return scriptDef;
+  }
 
     public boolean isValid() {
         switch (action) {

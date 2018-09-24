@@ -61,7 +61,7 @@
                     <a class="nav-link" id="vars-tab" data-toggle="tab" href="#vars" role="tab" aria-controls="vars" aria-selected="false">Variables</a>
                 </li>
                 <li class="nav-item whenLoaded">
-                    <a class="nav-link" id="device-tab" data-toggle="tab" href="#device" role="tab" aria-controls="device" aria-selected="false">Device</a>
+                    <a class="nav-link" id="device-tab" data-toggle="tab" href="#device" role="tab" aria-controls="device" aria-selected="false">Settings</a>
                 </li>
                 <li class="nav-item whenEdit">
                     <a class="nav-link" id="edit-tab" data-toggle="tab" href="#edit" role="tab" aria-controls="edit" aria-selected="false">Edit</a>
@@ -217,26 +217,8 @@
                     <button type="button" id="controlUnload" class="btn btn-danger notWhileRunning">Unload</button>
                     <button type="button" id="controlKill" class="btn btn-danger">Kill</button>
                 </div>
-                <div class="form-group">
-                    <label for="webLogging">Web Logging</label>
-                    <select id="webLogging" class="form-control logging" mode="web">
-                        <option value="SEVERE">Severe</option>
-                        <option value="INFO" selected>Info</option>
-                        <option value="FINER">Finer</option>
-                        <option value="FINEST">Finest</option>
-                        <option value="OFF">Off</option>
-                    </select>
-                </div>
-                <div class="form-group">
-                    <label for="fileLogging">File Logging</label>
-                    <select id="fileLogging" class="form-control logging" mode="file">
-                        <option value="SEVERE">Severe</option>
-                        <option value="INFO" selected>Info</option>
-                        <option value="FINER">Finer</option>
-                        <option value="FINEST">Finest</option>
-                        <option value="OFF">Off</option>
-                    </select>
-                </div>
+
+
                 <div class="form-group">
                     <label for="components">Components</label>
                     <select id="components" class="form-control notWhileRunning"></select>
@@ -292,12 +274,36 @@
                 </div>
                 <br/>
 
-                <h3>ADB</h3>
+                <h3>Logging</h3>
 
-                <div class="form-group">
-                    <label for="adb-info">ADB</label>
-                    <textarea class="form-control" id="adb-info" rows="3"></textarea>
+                <div class="input-group">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text">Web</span>
+                    </div>
+                    <select id="webLogging" class="form-control logging" mode="web">
+                        <option value="SEVERE">Severe</option>
+                        <option value="INFO" selected>Info</option>
+                        <option value="FINER">Finer</option>
+                        <option value="FINEST">Finest</option>
+                        <option value="OFF">Off</option>
+                    </select>
                 </div>
+                <br/>
+                <div class="input-group">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text">File</span>
+                    </div>
+                    <select id="fileLogging" class="form-control logging" mode="file">
+                        <option value="SEVERE">Severe</option>
+                        <option value="INFO" selected>Info</option>
+                        <option value="FINER">Finer</option>
+                        <option value="FINEST">Finest</option>
+                        <option value="OFF">Off</option>
+                    </select>
+                </div>
+                <br/>
+
+                <h3>ADB</h3>
 
                 <div class="input-group">
                     <button type="button" class="btn controlAdb btn-info notWhileRunning whenLoaded" adb="restart">Restart</button>
@@ -308,9 +314,14 @@
                     <button type="button" class="btn controlAdb btn-info notWhileRunning whenLoaded" adb="devices">Devices</button>
                 </div>
                 <br/>
+                <div class="form-group">
+                    <textarea class="form-control" id="adb-info" rows="3"></textarea>
+                </div>
+
+                <br/>
 
                 <div class="form-group">
-                    <label for="adb-info">Preview</label>
+                    <label for="previewImage">Preview</label>
                     <br/>
                     <img id="previewImage" src="" class="img-fluid" alt="Responsive image">
                 </div>

@@ -9,6 +9,14 @@
       "name": "mode",
       "value": "0",
       "type": "INT"
+    },
+    {
+      "name": "fights",
+      "display": "Fights",
+      "value": "0",
+      "type": "INT",
+      "modify": "VISIBLE",
+      "order": 0
     }
   ],
   "includes": [
@@ -56,6 +64,10 @@
               "type": "SET",
               "var": "mode",
               "value": "0"
+            },{
+              "type": "ADD",
+              "var": "fights",
+              "value": "1"
             },
             {
               "type": "MOVE",
@@ -104,6 +116,10 @@
             {
               "type": "SET",
               "var": "mode",
+              "value": "1"
+            },{
+              "type": "ADD",
+              "var": "fights",
               "value": "1"
             },
             {

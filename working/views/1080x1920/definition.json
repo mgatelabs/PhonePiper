@@ -267,7 +267,7 @@
     } ],
     "enabled" : true
   }, {
-    "name" : "battle-menu",
+    "name" : "Battle - Menu",
     "screenId" : "battle-menu",
     "points" : [ {
       "x" : 877,
@@ -428,7 +428,7 @@
     } ],
     "enabled" : true
   }, {
-    "name" : "battle-message",
+    "name" : "Battle - Message",
     "screenId" : "battle-message",
     "points" : [ {
       "x" : 995,
@@ -493,7 +493,7 @@
     } ],
     "enabled" : true
   }, {
-    "name" : "battle-unit-0_ability",
+    "name" : "Battle - Unit - 0 - Has Ability",
     "screenId" : "battle-unit-0_ability",
     "points" : [ {
       "x" : 41,
@@ -534,7 +534,42 @@
     } ],
     "enabled" : true
   }, {
-    "name" : "battle-unit-0_magic",
+    "name" : "Battle - Unit - 0 - Has LB",
+    "screenId" : "battle-unit-0_lb",
+    "points" : [ {
+      "x" : 34,
+      "y" : 1182,
+      "r" : 255,
+      "g" : 255,
+      "b" : 255
+    }, {
+      "x" : 45,
+      "y" : 1193,
+      "r" : 255,
+      "g" : 255,
+      "b" : 255
+    }, {
+      "x" : 32,
+      "y" : 1211,
+      "r" : 255,
+      "g" : 255,
+      "b" : 255
+    }, {
+      "x" : 58,
+      "y" : 1189,
+      "r" : 255,
+      "g" : 255,
+      "b" : 255
+    }, {
+      "x" : 50,
+      "y" : 1183,
+      "r" : 255,
+      "g" : 255,
+      "b" : 255
+    } ],
+    "enabled" : true
+  }, {
+    "name" : "Battle - Unit - 0 - Has Magic",
     "screenId" : "battle-unit-0_magic",
     "points" : [ {
       "x" : 45,
@@ -580,7 +615,7 @@
     } ],
     "enabled" : true
   }, {
-    "name" : "Battle - Unit - 0 NotFull",
+    "name" : "Battle - Unit - 0 - LB Not Full",
     "screenId" : "battle-unit-0_notfull",
     "points" : [ {
       "x" : 510,
@@ -597,7 +632,7 @@
     } ],
     "enabled" : true
   }, {
-    "name" : "Battle - Unit - 0 Ready",
+    "name" : "Battle - Unit - 0 - Is Ready",
     "screenId" : "battle-unit-0_ready",
     "points" : [ {
       "x" : 530,
@@ -722,7 +757,7 @@
     } ],
     "enabled" : true
   }, {
-    "name" : "battle-unit-0_stop",
+    "name" : "Battle - Unit - 0 - Is Stopped",
     "screenId" : "battle-unit-0_stop",
     "points" : [ {
       "x" : 382,
@@ -763,7 +798,7 @@
     } ],
     "enabled" : true
   }, {
-    "name" : "battle-unit-1_ability",
+    "name" : "Battle - Unit - 1 - Has Ability",
     "screenId" : "battle-unit-1_ability",
     "points" : [ {
       "x" : 38,
@@ -792,7 +827,42 @@
     } ],
     "enabled" : true
   }, {
-    "name" : "battle-unit-1_magic",
+    "name" : "Battle - Unit - 1 - Has LB",
+    "screenId" : "battle-unit-1_lb",
+    "points" : [ {
+      "x" : 31,
+      "y" : 1376,
+      "r" : 255,
+      "g" : 255,
+      "b" : 255
+    }, {
+      "x" : 41,
+      "y" : 1388,
+      "r" : 255,
+      "g" : 255,
+      "b" : 255
+    }, {
+      "x" : 30,
+      "y" : 1404,
+      "r" : 255,
+      "g" : 255,
+      "b" : 255
+    }, {
+      "x" : 55,
+      "y" : 1383,
+      "r" : 255,
+      "g" : 255,
+      "b" : 255
+    }, {
+      "x" : 46,
+      "y" : 1378,
+      "r" : 255,
+      "g" : 255,
+      "b" : 255
+    } ],
+    "enabled" : true
+  }, {
+    "name" : "Battle - Unit - 1 - Has Magic",
     "screenId" : "battle-unit-1_magic",
     "points" : [ {
       "x" : 45,
@@ -838,7 +908,12 @@
     } ],
     "enabled" : true
   }, {
-    "name" : "Battle - Unit - 1 Ready",
+    "name" : "Battle - Unit - 1 - LB Not Full",
+    "screenId" : "battle-unit-1_notfull",
+    "points" : [ ],
+    "enabled" : false
+  }, {
+    "name" : "Battle - Unit - 1 - Is Ready",
     "screenId" : "battle-unit-1_ready",
     "points" : [ {
       "x" : 526,
@@ -903,7 +978,7 @@
     } ],
     "enabled" : true
   }, {
-    "name" : "battle-unit-1_stop",
+    "name" : "Battle - Unit - 1 - Is Stopped",
     "screenId" : "battle-unit-1_stop",
     "points" : [ {
       "x" : 379,
@@ -944,7 +1019,7 @@
     } ],
     "enabled" : true
   }, {
-    "name" : "battle-unit-2_ability",
+    "name" : "Battle - Unit - 2 - Has Ability",
     "screenId" : "battle-unit-2_ability",
     "points" : [ {
       "x" : 38,
@@ -979,7 +1054,42 @@
     } ],
     "enabled" : true
   }, {
-    "name" : "battle-unit-2_magic",
+    "name" : "Battle - Unit - 2 - Has LB",
+    "screenId" : "battle-unit-2_lb",
+    "points" : [ {
+      "x" : 31,
+      "y" : 1571,
+      "r" : 255,
+      "g" : 255,
+      "b" : 255
+    }, {
+      "x" : 30,
+      "y" : 1598,
+      "r" : 255,
+      "g" : 255,
+      "b" : 255
+    }, {
+      "x" : 41,
+      "y" : 1582,
+      "r" : 255,
+      "g" : 255,
+      "b" : 255
+    }, {
+      "x" : 46,
+      "y" : 1572,
+      "r" : 255,
+      "g" : 255,
+      "b" : 255
+    }, {
+      "x" : 55,
+      "y" : 1577,
+      "r" : 255,
+      "g" : 255,
+      "b" : 255
+    } ],
+    "enabled" : true
+  }, {
+    "name" : "Battle - Unit - 2 - Has Magic",
     "screenId" : "battle-unit-2_magic",
     "points" : [ {
       "x" : 45,
@@ -1025,7 +1135,12 @@
     } ],
     "enabled" : true
   }, {
-    "name" : "Battle - Unit - 2 Ready",
+    "name" : "Battle - Unit - 2 - LB Not Full",
+    "screenId" : "battle-unit-2_notfull",
+    "points" : [ ],
+    "enabled" : false
+  }, {
+    "name" : "Battle - Unit - 2 - Is Ready",
     "screenId" : "battle-unit-2_ready",
     "points" : [ {
       "x" : 523,
@@ -1084,7 +1199,7 @@
     } ],
     "enabled" : true
   }, {
-    "name" : "battle-unit-2_stop",
+    "name" : "Battle - Unit - 2 - Is Stopped",
     "screenId" : "battle-unit-2_stop",
     "points" : [ {
       "x" : 371,
@@ -1125,7 +1240,7 @@
     } ],
     "enabled" : true
   }, {
-    "name" : "battle-unit-3_ability",
+    "name" : "Battle - Unit - 3 - Has Ability",
     "screenId" : "battle-unit-3_ability",
     "points" : [ {
       "x" : 547,
@@ -1154,7 +1269,42 @@
     } ],
     "enabled" : true
   }, {
-    "name" : "Battle - Unit - 3 Magic",
+    "name" : "Battle - Unit - 3 - Has LB",
+    "screenId" : "battle-unit-3_lb",
+    "points" : [ {
+      "x" : 565,
+      "y" : 1210,
+      "r" : 255,
+      "g" : 255,
+      "b" : 255
+    }, {
+      "x" : 576,
+      "y" : 1193,
+      "r" : 255,
+      "g" : 255,
+      "b" : 255
+    }, {
+      "x" : 566,
+      "y" : 1182,
+      "r" : 255,
+      "g" : 255,
+      "b" : 255
+    }, {
+      "x" : 581,
+      "y" : 1184,
+      "r" : 255,
+      "g" : 255,
+      "b" : 255
+    }, {
+      "x" : 591,
+      "y" : 1189,
+      "r" : 255,
+      "g" : 255,
+      "b" : 255
+    } ],
+    "enabled" : true
+  }, {
+    "name" : "Battle - Unit - 3 - Has Magic",
     "screenId" : "battle-unit-3_magic",
     "points" : [ {
       "x" : 577,
@@ -1212,7 +1362,12 @@
     } ],
     "enabled" : true
   }, {
-    "name" : "Battle - Unit - 3 Ready",
+    "name" : "Battle - Unit - 3 - LB Not Full",
+    "screenId" : "battle-unit-3_notfull",
+    "points" : [ ],
+    "enabled" : false
+  }, {
+    "name" : "Battle - Unit - 3 - Is Ready",
     "screenId" : "battle-unit-3_ready",
     "points" : [ {
       "x" : 1057,
@@ -1271,12 +1426,12 @@
     } ],
     "enabled" : true
   }, {
-    "name" : "battle-unit-3_stop",
+    "name" : "Battle - Unit - 3 - Is Stopped",
     "screenId" : "battle-unit-3_stop",
     "points" : [ ],
     "enabled" : false
   }, {
-    "name" : "battle-unit-4_ability",
+    "name" : "Battle - Unit - 4 - Has Ability",
     "screenId" : "battle-unit-4_ability",
     "points" : [ {
       "x" : 572,
@@ -1311,7 +1466,42 @@
     } ],
     "enabled" : true
   }, {
-    "name" : "battle-unit-4_magic",
+    "name" : "Battle - Unit - 4 - Has LB",
+    "screenId" : "battle-unit-4_lb",
+    "points" : [ {
+      "x" : 565,
+      "y" : 1404,
+      "r" : 255,
+      "g" : 255,
+      "b" : 255
+    }, {
+      "x" : 576,
+      "y" : 1387,
+      "r" : 255,
+      "g" : 255,
+      "b" : 255
+    }, {
+      "x" : 566,
+      "y" : 1377,
+      "r" : 255,
+      "g" : 255,
+      "b" : 255
+    }, {
+      "x" : 581,
+      "y" : 1378,
+      "r" : 255,
+      "g" : 255,
+      "b" : 255
+    }, {
+      "x" : 590,
+      "y" : 1383,
+      "r" : 255,
+      "g" : 255,
+      "b" : 255
+    } ],
+    "enabled" : true
+  }, {
+    "name" : "Battle - Unit - 4 - Has Magic",
     "screenId" : "battle-unit-4_magic",
     "points" : [ {
       "x" : 577,
@@ -1357,7 +1547,12 @@
     } ],
     "enabled" : true
   }, {
-    "name" : "Battle - Unit - 4 Ready",
+    "name" : "Battle - Unit - 4 - LB Not Full",
+    "screenId" : "battle-unit-4_notfull",
+    "points" : [ ],
+    "enabled" : false
+  }, {
+    "name" : "Battle - Unit - 4 - Is Ready",
     "screenId" : "battle-unit-4_ready",
     "points" : [ {
       "x" : 1057,
@@ -1416,7 +1611,7 @@
     } ],
     "enabled" : true
   }, {
-    "name" : "battle-unit-4_stop",
+    "name" : "Battle - Unit - 4 - Is Stopped",
     "screenId" : "battle-unit-4_stop",
     "points" : [ {
       "x" : 913,

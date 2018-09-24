@@ -25,12 +25,17 @@
     "points" : [ ],
     "enabled" : false
   }, {
-    "name" : "battle-unit-0_ability",
+    "name" : "Battle - Unit - 0 - Has Ability",
     "screenId" : "battle-unit-0_ability",
     "points" : [ ],
     "enabled" : false
   }, {
-    "name" : "battle-unit-0_magic",
+    "name" : "Battle - Unit - 0 - Has LB",
+    "screenId" : "battle-unit-0_lb",
+    "points" : [ ],
+    "enabled" : false
+  }, {
+    "name" : "Battle - Unit - 0 - Has Magic",
     "screenId" : "battle-unit-0_magic",
     "points" : [ ],
     "enabled" : false
@@ -40,27 +45,32 @@
     "points" : [ ],
     "enabled" : false
   }, {
-    "name" : "Battle - Unit - 0 NotFull",
+    "name" : "Battle - Unit - 0 - LB Not Full",
     "screenId" : "battle-unit-0_notfull",
     "points" : [ ],
     "enabled" : false
   }, {
-    "name" : "Battle - Unit - 0 Ready",
+    "name" : "Battle - Unit - 0 - Ready",
     "screenId" : "battle-unit-0_ready",
     "points" : [ ],
     "enabled" : false
   }, {
-    "name" : "battle-unit-0_stop",
+    "name" : "Battle - Unit - 0 - Is Stopped",
     "screenId" : "battle-unit-0_stop",
     "points" : [ ],
     "enabled" : false
   }, {
-    "name" : "battle-unit-1_ability",
+    "name" : "Battle - Unit - 1 - Is Ability",
     "screenId" : "battle-unit-1_ability",
     "points" : [ ],
     "enabled" : false
   }, {
-    "name" : "battle-unit-1_magic",
+    "name" : "Battle - Unit - 1 - Has LB",
+    "screenId" : "battle-unit-1_lb",
+    "points" : [ ],
+    "enabled" : false
+  }, {
+    "name" : "Battle - Unit - 1 - Has Magic",
     "screenId" : "battle-unit-1_magic",
     "points" : [ ],
     "enabled" : false
@@ -70,22 +80,32 @@
     "points" : [ ],
     "enabled" : false
   }, {
-    "name" : "Battle - Unit - 1 Ready",
+    "name" : "Battle - Unit - 1 - LB Not Full",
+    "screenId" : "battle-unit-1_notfull",
+    "points" : [ ],
+    "enabled" : false
+  }, {
+    "name" : "Battle - Unit - 1 - Is Ready",
     "screenId" : "battle-unit-1_ready",
     "points" : [ ],
     "enabled" : false
   }, {
-    "name" : "battle-unit-1_stop",
+    "name" : "Battle - Unit - 1 - Is Stopped",
     "screenId" : "battle-unit-1_stop",
     "points" : [ ],
     "enabled" : false
   }, {
-    "name" : "battle-unit-2_ability",
+    "name" : "Battle - Unit - 2 - Has Ability",
     "screenId" : "battle-unit-2_ability",
     "points" : [ ],
     "enabled" : false
   }, {
-    "name" : "battle-unit-2_magic",
+    "name" : "Battle - Unit - 2 - Has LB",
+    "screenId" : "battle-unit-2_lb",
+    "points" : [ ],
+    "enabled" : false
+  }, {
+    "name" : "Battle - Unit - 2 - Has Magic",
     "screenId" : "battle-unit-2_magic",
     "points" : [ ],
     "enabled" : false
@@ -95,22 +115,32 @@
     "points" : [ ],
     "enabled" : false
   }, {
-    "name" : "Battle - Unit - 2 Ready",
+    "name" : "Battle - Unit - 2 - LB Not Full",
+    "screenId" : "battle-unit-2_notfull",
+    "points" : [ ],
+    "enabled" : false
+  }, {
+    "name" : "Battle - Unit - 2 - Is Ready",
     "screenId" : "battle-unit-2_ready",
     "points" : [ ],
     "enabled" : false
   }, {
-    "name" : "battle-unit-2_stop",
+    "name" : "Battle - Unit - 2 - Is Stopped",
     "screenId" : "battle-unit-2_stop",
     "points" : [ ],
     "enabled" : false
   }, {
-    "name" : "battle-unit-3_ability",
+    "name" : "Battle - Unit - 3 - Has Ability",
     "screenId" : "battle-unit-3_ability",
     "points" : [ ],
     "enabled" : false
   }, {
-    "name" : "Battle - Unit - 3 Magic",
+    "name" : "Battle - Unit - 3 - Has LB",
+    "screenId" : "battle-unit-3_lb",
+    "points" : [ ],
+    "enabled" : false
+  }, {
+    "name" : "Battle - Unit - 3 - Has Magic",
     "screenId" : "battle-unit-3_magic",
     "points" : [ ],
     "enabled" : false
@@ -120,22 +150,32 @@
     "points" : [ ],
     "enabled" : false
   }, {
-    "name" : "Battle - Unit - 3 Ready",
+    "name" : "Battle - Unit - 3 - LB Not Full",
+    "screenId" : "battle-unit-3_notfull",
+    "points" : [ ],
+    "enabled" : false
+  }, {
+    "name" : "Battle - Unit - 3 - Is Ready",
     "screenId" : "battle-unit-3_ready",
     "points" : [ ],
     "enabled" : false
   }, {
-    "name" : "battle-unit-3_stop",
+    "name" : "Battle - Unit - 3 - Is Stopped",
     "screenId" : "battle-unit-3_stop",
     "points" : [ ],
     "enabled" : false
   }, {
-    "name" : "battle-unit-4_ability",
+    "name" : "Battle - Unit - 4 - Has Ability",
     "screenId" : "battle-unit-4_ability",
     "points" : [ ],
     "enabled" : false
   }, {
-    "name" : "battle-unit-4_magic",
+    "name" : "Battle - Unit - 4 - Has LB",
+    "screenId" : "battle-unit-4_lb",
+    "points" : [ ],
+    "enabled" : false
+  }, {
+    "name" : "Battle - Unit - 4 - Has Magic",
     "screenId" : "battle-unit-4_magic",
     "points" : [ ],
     "enabled" : false
@@ -145,12 +185,17 @@
     "points" : [ ],
     "enabled" : false
   }, {
-    "name" : "Battle - Unit - 4 Ready",
+    "name" : "Battle - Unit - 4 - LB Not Full",
+    "screenId" : "battle-unit-4_notfull",
+    "points" : [ ],
+    "enabled" : false
+  }, {
+    "name" : "Battle - Unit - 4 is Ready",
     "screenId" : "battle-unit-4_ready",
     "points" : [ ],
     "enabled" : false
   }, {
-    "name" : "battle-unit-4_stop",
+    "name" : "Battle - Unit - 4 is Stopped",
     "screenId" : "battle-unit-4_stop",
     "points" : [ ],
     "enabled" : false
@@ -601,7 +646,7 @@
     "h" : 87,
     "enabled" : false
   }, {
-    "name" : "battle-menu-back",
+    "name" : "Battle - Menu - Back",
     "componentId" : "battle-menu-back",
     "x" : 0,
     "y" : 0,

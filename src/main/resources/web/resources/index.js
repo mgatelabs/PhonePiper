@@ -505,19 +505,26 @@ $(function(){
     // EDIT
     ///////////////////////////////////////////////////////////////////////////
 
-    $('.edit-action').click(function(){
-        var ref = $(this), action = ref.attr('editvalue'), list = $('#' + ref.attr('lst')), id = list.val();
-        $.ajax({
-          type: "POST",
-          url: '/piper/edit/action/' + action + "/" + id + '/' + 'null',
-          success: function(result){
-            if (result.msg) {
-                alert(result.msg);
-            }
-          },
-          dataType: 'json'
-        });
-
+    $('.edit-action').click(function() {
+        var ref = $(this), action = ref.attr('editvalue'), list, id;
+        if (ref.hasClass('prompt-name')) {
+            id = $.trim(prompt('Name:'));
+        } else {
+            list = $('#' + ref.attr('lst'));
+            id = list.val();
+        }
+        if (id) {
+            $.ajax({
+                type: "POST",
+                url: '/piper/edit/action/' + action + "/" + id + '/' + 'null',
+                success: function (result) {
+                    if (result.msg) {
+                        alert(result.msg);
+                    }
+                },
+                dataType: 'json'
+            });
+        }
     });
 
 
@@ -747,18 +754,20 @@ editViewButton.click(function(){
         var i;
         $('.customConfig',configList).remove();
         for (i = 0; i < configs.length; i++) {
-            createHomeItem(i, configs[i].title)
+            createHomeItem(i, configs[i].title, configs[i] && configs[i].scripts && configs[i].scripts.length > 0)
         }
     }
 
-    function createHomeItem(index, title) {
+    function createHomeItem(index, title, allowRun) {
         var wrap, card, body, bntGroup;
         wrap = $('<div class="col-sm-12 col-md-6 col-lg-4 col-xl-3 customConfig"></div>');
         card = $('<div class="card shadow-sm"></div>');
         $('<div class="card-header"></div>').append($('<h4 class="my-0 font-weight-normal"></h4>').text(title || 'Untitled')).appendTo(card);
         body = $('<div class="card-body"></div>').appendTo(card);
         bntGroup = $('<div class="btn-group" role="group" aria-label="Controls"></div>').appendTo(body);
-        bntGroup.append($('<button type="button" class="btn run-config btn-primary">Run</button>').attr('index', index));
+        if (allowRun) {
+            bntGroup.append($('<button type="button" class="btn run-config btn-primary">Run</button>').attr('index', index));
+        }
         bntGroup.append($('<button type="button" class="btn modify-config btn-outline-dark">Modify</button>').attr('index', index));
         bntGroup.append($('<button type="button" class="btn delete-config btn-outline-danger">Delete</button>').attr('index', index));
         wrap.append(card);

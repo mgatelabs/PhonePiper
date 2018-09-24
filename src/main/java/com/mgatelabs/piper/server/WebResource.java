@@ -509,12 +509,14 @@ public class WebResource {
 
     private static final ImmutableMap<String, EditActionInterface> ACTIONS = ImmutableMap.<String, EditActionInterface>builder()
             // Screens
+            .put("stubScreen", new StubScreenAction())
             .put("verifyScreen", new VerifyScreenAction())
             .put("liveVerifyScreen", new LiveVerifyScreenAction())
             .put("updateScreen", new UpdateScreenAction())
             .put("editScreen", new EditScreenAction())
             .put("fixScreen", new FixScreenAction())
             // Components
+            .put("stubComponent", new StubComponentAction())
             .put("editComponent", new EditComponentAction())
             .put("updateComponent", new UpdateComponentImageAction())
             .build();

@@ -9,7 +9,7 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * @author <a href="mailto:mfuller@acteksoft.com">Michael Fuller</a>
+ * @author <a href="mailto:developer@mgatelabs.com">Michael Fuller</a>
  * Creation Date: 9/20/2017
  */
 public class FrameChoices {

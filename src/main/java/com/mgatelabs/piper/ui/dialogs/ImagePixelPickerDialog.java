@@ -11,7 +11,7 @@ import java.util.*;
 import java.util.List;
 
 /**
- * @author <a href="mailto:mfuller@acteksoft.com">Michael Fuller</a>
+ * @author <a href="mailto:developer@mgatelabs.com">Michael Fuller</a>
  * Creation Date: 9/1/2017
  */
 public class ImagePixelPickerDialog extends JDialog implements KeyListener {

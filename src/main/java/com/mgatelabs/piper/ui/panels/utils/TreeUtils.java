@@ -3,7 +3,7 @@ package com.mgatelabs.piper.ui.panels.utils;
 import javax.swing.*;
 
 /**
- * @author <a href="mailto:mfuller@acteksoft.com">Michael Fuller</a>
+ * @author <a href="mailto:developer@mgatelabs.com">Michael Fuller</a>
  * Creation Date: 10/16/2017
  */
 public class TreeUtils {

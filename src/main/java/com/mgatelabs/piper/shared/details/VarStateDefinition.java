@@ -12,7 +12,7 @@ import java.io.IOException;
 import java.util.List;
 
 /**
- * @author <a href="mailto:mfuller@acteksoft.com">Michael Fuller</a>
+ * @author <a href="mailto:developer@mgatelabs.com">Michael Fuller</a>
  * Creation Date: 4/23/2018
  */
 public class VarStateDefinition {

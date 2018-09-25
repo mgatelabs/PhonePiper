@@ -6,7 +6,7 @@ import org.springframework.stereotype.Component;
 import javax.ws.rs.ApplicationPath;
 
 /**
- * @author <a href="mailto:mfuller@acteksoft.com">Michael Fuller</a>
+ * @author <a href="mailto:developer@mgatelabs.com">Michael Fuller</a>
  * Creation Date: 2/14/2018
  */
 

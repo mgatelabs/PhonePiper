@@ -4,7 +4,7 @@ import com.mgatelabs.piper.shared.details.VarDefinition;
 import com.mgatelabs.piper.shared.details.VarType;
 
 /**
- * @author <a href="mailto:mfuller@acteksoft.com">Michael Fuller</a>
+ * @author <a href="mailto:developer@mgatelabs.com">Michael Fuller</a>
  * Creation Date: 9/25/2018
  */
 public class VarInstance {

@@ -140,9 +140,22 @@
               "count": "1"
             },
             {
+              "type": "WAIT",
+              "value": "400"
+            },
+            {
               "type": "TAP",
               "value": "battle-unit_3",
-              "count": "2"
+              "count": "1"
+            },
+            {
+              "type": "WAIT",
+              "value": "200"
+            },
+            {
+              "type": "TAP",
+              "value": "battle-unit_3",
+              "count": "1"
             },
             {
               "type": "WAIT",
@@ -214,7 +227,16 @@
             {
               "type": "TAP",
               "value": "battle-skill-top-3",
-              "count": "2"
+              "count": "1"
+            },
+            {
+              "type": "WAIT",
+              "value": "200"
+            },
+            {
+              "type": "TAP",
+              "value": "battle-skill-top-3",
+              "count": "1"
             },
             {
               "type": "WAIT",
@@ -265,7 +287,7 @@
             },
             {
               "type": "TAP",
-              "value": "battle-skill-top-2"
+              "value": "battle-skill-top-5"
             },
             {
               "type": "WAIT",

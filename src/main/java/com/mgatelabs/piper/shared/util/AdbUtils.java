@@ -255,8 +255,8 @@ public class AdbUtils {
         return value;
     }
 
-    public static void persistScreen(AdbShell shell) {
-        shell.exec("screencap /mnt/sdcard/framebuffer.raw");
+    public static boolean persistScreen(AdbShell shell) {
+        return shell.exec("screencap /mnt/sdcard/framebuffer.raw");
     }
 
     public static ImageWrapper getScreen() {

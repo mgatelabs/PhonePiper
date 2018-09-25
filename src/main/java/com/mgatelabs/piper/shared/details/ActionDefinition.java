@@ -1,5 +1,9 @@
 package com.mgatelabs.piper.shared.details;
 
+import com.google.common.collect.Maps;
+
+import java.util.Map;
+
 /**
  * Created by @mgatelabs (Michael Fuller) on 9/3/2017.
  */
@@ -8,6 +12,7 @@ public class ActionDefinition {
     private String var;
     private String value;
     private int count;
+    private Map<String, String> arguments;
 
     public ActionType getType() {
         return type;
@@ -39,6 +44,20 @@ public class ActionDefinition {
 
     public void setCount(int count) {
         this.count = count;
+    }
+
+    public Map<String, String> getArguments() {
+        return arguments;
+    }
+
+    public void setArguments(Map<String, String> arguments) {
+        this.arguments = arguments;
+    }
+
+    public void fix() {
+        if (arguments == null) {
+            arguments = Maps.newHashMap();
+        }
     }
 
     @Override

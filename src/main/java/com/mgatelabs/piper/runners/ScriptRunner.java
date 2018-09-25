@@ -10,9 +10,7 @@ import com.mgatelabs.piper.shared.helper.InfoTransfer;
 import com.mgatelabs.piper.shared.helper.MapTransfer;
 import com.mgatelabs.piper.shared.helper.PointTransfer;
 import com.mgatelabs.piper.shared.image.*;
-import com.mgatelabs.piper.shared.util.AdbShell;
-import com.mgatelabs.piper.shared.util.AdbUtils;
-import com.mgatelabs.piper.shared.util.VarTimer;
+import com.mgatelabs.piper.shared.util.*;
 import com.mgatelabs.piper.ui.utils.WebLogHandler;
 
 import java.text.SimpleDateFormat;
@@ -59,7 +57,7 @@ public class ScriptRunner {
 
     private AdbShell shell;
 
-    private Map<String, Integer> vars;
+    private VarManager vars;
 
     private volatile Status status;
 
@@ -81,9 +79,9 @@ public class ScriptRunner {
         this.deviceDefinition = deviceDefinition;
         this.connectionDefinition = connectionDefinition;
         this.viewDefinition = viewDefinition;
+        vars = new VarManager(logger);
         timers = Maps.newHashMap();
         stack = new Stack<>();
-        vars = Maps.newHashMap();
         shell = new AdbShell(deviceDefinition);
         shell.attachhandler(webLogHandler);
 
@@ -97,7 +95,7 @@ public class ScriptRunner {
         }
         Level min = webLogHandler.getLevel();
         if (fileHandler != null) {
-            min = webLogHandler.getLevel().intValue() < fileHandler.getLevel().intValue() ? webLogHandler.getLevel(): fileHandler.getLevel();
+            min = webLogHandler.getLevel().intValue() < fileHandler.getLevel().intValue() ? webLogHandler.getLevel() : fileHandler.getLevel();
         }
         logger.setLevel(webLogHandler.getLevel());
         shell.setLevel(webLogHandler.getLevel());
@@ -154,13 +152,11 @@ public class ScriptRunner {
         //scriptDefinition.getVars().add(new VarDefinition(VAR_LOOPS, "Loops", "0", VarType.INT, VarDisplay.STANDARD, VarModify.HIDDEN));
 
         for (VarDefinition varDefinition : scriptDefinition.getVars()) {
-            if (varDefinition.getType() == VarType.INT) {
-                addVar(varDefinition.getName(), Integer.parseInt(varDefinition.getValue()));
-            } else if (varDefinition.getType() == VarType.TIMER) {
-                addVar(varDefinition.getName(), Integer.parseInt(varDefinition.getValue()));
+            if (varDefinition.getDisplayType() == VarDisplay.SECONDS) {
                 timers.put(varDefinition.getName(), new VarTimer(false));
             }
         }
+        vars.global(scriptDefinition.getVars());
 
         scriptDefinition.getVars().sort(new Comparator<VarDefinition>() {
             @Override
@@ -279,29 +275,28 @@ public class ScriptRunner {
         this.status = status;
     }
 
-    private int getVar(String name) {
-        return vars.getOrDefault(name, 0);
+    private Var getVar(String name) {
+        return vars.get(name);
     }
 
-    private void addVar(String name, int value) {
-        vars.put(name, getVar(name) + value);
+    private void putVar(String name, Var data) {
+        vars.update(name, data);
     }
 
-    private void setVar(String name, int value) {
+    private void setVar(String name, Var value) {
         final VarDefinition varDefinition = getVarDefinition(name);
-        switch (varDefinition.getType()) {
-            case TIMER: {
-                if (value == 0) {
+        switch (varDefinition.getDisplayType()) {
+            case SECONDS: {
+                if (value.toInt() == 0) {
                     VarTimer timer = timers.get(varDefinition.getName());
                     timer.reset();
-                    vars.put(name, value);
+                    putVar(name, IntVar.ZERO);
                 }
             }
             break;
-            case INT: {
-                vars.put(name, value);
-            }
-            break;
+            default:
+                putVar(name, value);
+                break;
         }
     }
 
@@ -438,20 +433,20 @@ public class ScriptRunner {
             }
 
             // Always reset the loop counter
-            setVar(VAR_LOOPS, 0);
+            setVar(VAR_LOOPS, IntVar.ZERO);
 
             while (isRunning()) {
 
                 for (VarDefinition varDefinition : getRawEditVariables()) {
-                    if (varDefinition.getType() == VarType.TIMER) {
+                    if (varDefinition.getDisplayType() == VarDisplay.SECONDS) {
                         final VarTimer timer = timers.get(varDefinition.getName());
                         timer.forward();
-                        vars.put(varDefinition.getName(), (int) TimeUnit.NANOSECONDS.toSeconds(timer.getElapsed()));
+                        vars.update(varDefinition.getName(), new IntVar((int) TimeUnit.NANOSECONDS.toSeconds(timer.getElapsed())));
                     }
                 }
 
                 if (!shell.isReady()) {
-                    logger.log(Level.WARNING, "Bad Shell: Wait, Connect, Restart, Wait...");
+                    logger.log(Level.WARNING, "Bad Shell: Will try to reconnect...");
                     if (connectionDefinition.isWifi()) {
                         Thread.sleep(1000);
                         AdbShell.connect(deviceHelper.getIpAddress());
@@ -462,9 +457,14 @@ public class ScriptRunner {
                 }
 
                 if (deviceHelper != null) {
-                    logger.finest("Helper Image");
                     long startTime = System.nanoTime();
-                    AdbUtils.persistScreen(shell);
+
+                    if (!AdbUtils.persistScreen(shell)) {
+                        logger.warning("Helper Image Failure");
+                        waitFor(250);
+                        continue;
+                    }
+
                     long endTime = System.nanoTime();
 
                     long dif = endTime - startTime;
@@ -472,12 +472,10 @@ public class ScriptRunner {
                     lastImageDate = new Date();
                     lastImageDuration = ((float) dif / 1000000000.0f);
 
-                    logger.finest("Image Persisted in " + lastImageDuration);
+                    logger.finest("Helper Image Persisted in " + lastImageDuration);
 
                     imageWrapper = null;
                 } else {
-                    logger.finest("USB Image");
-
                     long startTime = System.nanoTime();
                     imageWrapper = AdbUtils.getScreen();
                     long endTime = System.nanoTime();
@@ -488,11 +486,11 @@ public class ScriptRunner {
                     lastImageDuration = ((float) dif / 1000000000.0f);
 
                     if (imageWrapper == null || !imageWrapper.isReady()) {
-                        logger.warning("Image Failure");
+                        logger.warning("USB Image Failure");
                         waitFor(250);
                         continue;
                     } else {
-                        logger.finest("Image Persisted in " + lastImageDuration);
+                        logger.finest("USB Image Persisted in " + lastImageDuration);
                     }
                 }
 
@@ -575,8 +573,8 @@ public class ScriptRunner {
             }
 
         } catch (Exception ex) {
-          logger.log(Level.SEVERE, ex.getMessage());
-          ex.printStackTrace();
+            logger.log(Level.SEVERE, ex.getMessage());
+            ex.printStackTrace();
         } finally {
             setStatus(Status.STOPPED);
             logger.info("Script Stopped");
@@ -593,19 +591,19 @@ public class ScriptRunner {
         return "Lap: " + id + " : " + timer.toString();
     }
 
-    private int valueHandler(String value) {
+    private Var valueHandler(String value) {
         if (value.startsWith("$")) {
             return getVar(value.substring(1));
         } else {
-            return Integer.parseInt(value);
+            return new StringVar(value);
         }
     }
 
-    private String valueHandlerAsString(String value) {
+    private Var valueHandlerAsString(String value) {
         if (value.startsWith("$")) {
-            return Integer.toString(getVar(value.substring(1)));
+            return getVar(value.substring(1));
         } else {
-            return Integer.toString(Integer.parseInt(value));
+            return new StringVar(value);
         }
     }
 
@@ -636,7 +634,7 @@ public class ScriptRunner {
                                     if (endIndex > startindex + 2) {
                                         String varName = msg.substring(startindex += 2, endIndex).trim();
                                         if (varName.length() > 0) {
-                                            if (vars.containsKey(varName)) {
+                                            if (vars.getVarInstance(varName) != null) {
                                                 msg = msg.substring(0, startindex - 2) + vars.get(varName) + msg.substring(endIndex + 1);
                                             } else {
                                                 break;
@@ -660,7 +658,7 @@ public class ScriptRunner {
                             break;
                             case SET: {
                                 String varName = actionDefinition.getVar();
-                                int value = valueHandler(actionDefinition.getValue());
+                                Var value = valueHandler(actionDefinition.getValue());
                                 setVar(varName, value);
                             }
                             break;
@@ -672,8 +670,9 @@ public class ScriptRunner {
                             break;
                             case ADD: {
                                 String varName = actionDefinition.getVar();
-                                int value = valueHandler(actionDefinition.getValue());
-                                addVar(varName, value);
+                                Var value = valueHandler(actionDefinition.getValue());
+                                Var orig = vars.get(varName);
+                                setVar(varName, orig.add(value));
                             }
                             break;
                             case TAP:
@@ -701,14 +700,14 @@ public class ScriptRunner {
                             }
                             break;
                             case INPUT: {
-                                if (!AdbUtils.event(valueHandlerAsString(actionDefinition.getValue()), shell, batchCmds)) {
+                                if (!AdbUtils.event(valueHandlerAsString(actionDefinition.getValue()).toString(), shell, batchCmds)) {
                                     logger.log(Level.SEVERE, "Unknown event id: " + actionDefinition.getValue());
                                     throw new RuntimeException("Unknown event id: " + actionDefinition.getValue());
                                 }
                             }
                             break;
                             case WAIT: {
-                                int time = valueHandler(actionDefinition.getValue());
+                                int time = valueHandler(actionDefinition.getValue()).toInt();
                                 if (time > 0) {
                                     waitFor(time);
                                 } else {
@@ -765,25 +764,25 @@ public class ScriptRunner {
             case GREATER:
             case LESS:
             case EQUAL: {
-                int value;
+                Var value;
                 if (conditionDefinition.getValue().startsWith("$")) {
                     value = getVar(conditionDefinition.getValue().substring(1));
                 } else {
-                    value = Integer.parseInt(conditionDefinition.getValue());
+                    value = new StringVar(conditionDefinition.getValue());
                 }
                 String varName = conditionDefinition.getVar();
-                int currentValue = getVar(varName);
+                Var currentValue = getVar(varName);
                 switch (conditionDefinition.getUsedCondition()) {
                     case GREATER: {
-                        result = currentValue > value;
+                        result = currentValue.greater(value);
                     }
                     break;
                     case LESS: {
-                        result = currentValue < value;
+                        result = currentValue.lesser(value);
                     }
                     break;
                     case EQUAL: {
-                        result = currentValue == value;
+                        result = currentValue.equals(value);
                     }
                     break;
                 }
@@ -808,14 +807,15 @@ public class ScriptRunner {
             }
             break;
             case ENERGY: {
-                int energy;
+                Var energy;
                 if (conditionDefinition.getVar() != null && conditionDefinition.getVar().trim().length() > 0) {
                     energy = getVar(conditionDefinition.getVar());
                 } else {
-                    energy = Integer.parseInt(conditionDefinition.getValue());
+                    energy = new StringVar(conditionDefinition.getValue());
                 }
-                if (energy >= PlayerDefinition.MIN_ENERGY && energy <= PlayerDefinition.MAX_ENERGY) {
-                    float requiredPercent = ((float) energy / (float) playerDefinition.getTotalEnergy());
+                energy = energy.asInt();
+                if (energy.toInt() >= PlayerDefinition.MIN_ENERGY && energy.toInt() <= PlayerDefinition.MAX_ENERGY) {
+                    float requiredPercent = (energy.toFloat() / (float) playerDefinition.getTotalEnergy());
                     int requiredPixel = ((int) (energyBar.getW() * requiredPercent) + 1);
                     if (requiredPixel > energyBar.getW()) {
                         requiredPixel = energyBar.getW();
@@ -891,11 +891,12 @@ public class ScriptRunner {
                 case HIDDEN:
                     continue;
                 case VISIBLE:
-                case EDITABLE: {
-                    if (varDefinition.getType() == VarType.INT || varDefinition.getType() == VarType.TIMER) {
-                        vars.add(new VarDefinition(varDefinition.getName(), varDefinition.getDisplay(), Integer.toString(getVar(varDefinition.getName())), varDefinition.getType(), varDefinition.getDisplayType(), varDefinition.getModify(), varDefinition.getOrder()));
+                case EDITABLE:
+                    Var var = getVar(varDefinition.getName());
+                    if (var == null) {
+                        var = IntVar.ZERO;
                     }
-                }
+                    vars.add(new VarDefinition(varDefinition.getName(), varDefinition.getDisplay(), var.toString(), varDefinition.getType(), varDefinition.getDisplayType(), varDefinition.getModify(), varDefinition.getOrder()));
                 break;
             }
         }
@@ -910,11 +911,7 @@ public class ScriptRunner {
                     continue;
                 case VISIBLE:
                 case EDITABLE: {
-                    if (varDefinition.getType() == VarType.INT) {
-                        vars.add(new VarDefinition(varDefinition.getName(), varDefinition.getDisplay(), Integer.toString(getVar(varDefinition.getName())), varDefinition.getType(), varDefinition.getDisplayType(), varDefinition.getModify(), varDefinition.getOrder()));
-                    } else if (varDefinition.getType() == VarType.TIMER) {
-                        vars.add(new VarDefinition(varDefinition.getName(), varDefinition.getDisplay(), Integer.toString(getVar(varDefinition.getName())), varDefinition.getType(), varDefinition.getDisplayType(), varDefinition.getModify(), varDefinition.getOrder()));
-                    }
+                    vars.add(new VarDefinition(varDefinition.getName(), varDefinition.getDisplay(), getVar(varDefinition.getName()).toString(), varDefinition.getType(), varDefinition.getDisplayType(), varDefinition.getModify(), varDefinition.getOrder()));
                 }
                 break;
             }
@@ -933,13 +930,12 @@ public class ScriptRunner {
 
     public void updateVariable(String key, String value) {
         VarDefinition definition = getVarDefinition(key);
-
         if (definition != null) {
-            int v;
+            Var v;
             switch (definition.getDisplayType()) {
                 case BOOLEAN:
                 case STANDARD: {
-                    v = Integer.parseInt(value);
+                    v = new StringVar(value);
                 }
                 break;
                 case TENTH: {
@@ -949,10 +945,10 @@ public class ScriptRunner {
                 case SECONDS: {
                     String[] parts = value.split(":");
                     int multiply = 1;
-                    v = 0;
+                    v = IntVar.ZERO;
                     for (int i = parts.length - 1; i >= 0; i--) {
                         int part = Integer.parseInt(parts[i]) * multiply;
-                        v += part;
+                        v.add(new IntVar(part));
                         multiply *= 60;
                     }
                 }
@@ -960,9 +956,7 @@ public class ScriptRunner {
                 default:
                     return;
             }
-
-
-            vars.put(key, v);
+            vars.update(key, v);
         }
     }
 

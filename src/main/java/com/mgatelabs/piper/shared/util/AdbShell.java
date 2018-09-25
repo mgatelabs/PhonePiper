@@ -163,16 +163,16 @@ public class AdbShell {
         }
     }
 
-    public synchronized void exec(String adbCommand) {
+    public synchronized boolean exec(String adbCommand) {
         if (!ready) {
             logger.severe("Adb Not Ready");
-            return;
+            return false;
         }
 
         if (!adb.isAlive()) {
             logger.severe("Adb Exit Code: " + adb.exitValue());
             ready = false;
-            return;
+            return false;
         }
 
         final long startTime = System.nanoTime();
@@ -216,9 +216,11 @@ public class AdbShell {
             if (logger.isLoggable(Level.SEVERE)) {
                 logger.finest("AdbCommand: " + adbCommand + " (" + String.format("%2.2f", ((float) diff / 1000000000.0)) + "s)");
             }
+            return true;
         } catch (Exception ex) {
             ex.printStackTrace();
             ready = false;
+            return false;
         }
     }
 

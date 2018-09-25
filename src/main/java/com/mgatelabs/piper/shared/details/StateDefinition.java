@@ -3,9 +3,11 @@ package com.mgatelabs.piper.shared.details;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.Lists;
+import com.google.common.collect.Maps;
 import com.google.common.collect.Sets;
 
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 /**
@@ -16,6 +18,8 @@ public class StateDefinition {
     private String description;
     @JsonIgnore
     private String id;
+
+    private Map<String, VarDefinition> variables;
 
     private List<StatementDefinition> statements;
 
@@ -53,6 +57,14 @@ public class StateDefinition {
         this.statements = statements;
     }
 
+    public Map<String, VarDefinition> getVariables() {
+        return variables;
+    }
+
+    public void setVariables(Map<String, VarDefinition> variables) {
+        this.variables = variables;
+    }
+
     public List<String> determineScreenIds() {
         Set<String> screenIds = Sets.newHashSet();
         for (StatementDefinition statementDefinition : statements) {
@@ -78,6 +90,9 @@ public class StateDefinition {
         }
         if (statements == null) {
             statements = Lists.newArrayList();
+        }
+        if (variables == null) {
+            variables = Maps.newHashMap();
         }
         for (StatementDefinition statementDefinition : getStatements()) {
             statementDefinition.getCondition().fix();

@@ -6,5 +6,5 @@ package com.mgatelabs.piper.shared.details;
 public enum VarType {
     STRING,
     INT,
-    TIMER
+    FLOAT
 }

@@ -3,7 +3,7 @@
     {
       "name": "_screen_saver",
       "value": "0",
-      "type": "TIMER",
+      "type": "INT",
       "modify": "VISIBLE",
       "display": "Screen Saver",
       "displayType": "SECONDS"
@@ -11,7 +11,7 @@
     {
       "name": "_seconds",
       "value": "0",
-      "type": "TIMER",
+      "type": "INT",
       "modify": "VISIBLE",
       "display": "Elapsed Time",
       "displayType": "SECONDS"
@@ -19,7 +19,7 @@
     {
       "name": "_loops",
       "value": "0",
-      "type": "TIMER",
+      "type": "INT",
       "modify": "VISIBLE",
       "display": "NoOp",
       "displayType": "SECONDS"

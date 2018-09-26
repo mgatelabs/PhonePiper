@@ -166,11 +166,8 @@ public class ScriptRunner {
             }
         }
 
-        //scriptDefinition.getVars().add(new VarDefinition(VAR_SECONDS, "Elapsed Seconds", "0", VarType.INT, VarDisplay.SECONDS, VarModify.VISIBLE));
-        //scriptDefinition.getVars().add(new VarDefinition(VAR_LOOPS, "Loops", "0", VarType.INT, VarDisplay.STANDARD, VarModify.HIDDEN));
-
         for (VarDefinition varDefinition : scriptDefinition.getVars()) {
-            if (varDefinition.getDisplayType() == VarDisplay.SECONDS) {
+            if (varDefinition.getDisplayType() == VarDisplay.SECONDS  && varDefinition.getModify() != VarModify.EDITABLE) {
                 timers.put(varDefinition.getName(), new VarTimer(false));
             }
         }
@@ -497,7 +494,7 @@ public class ScriptRunner {
             while (isRunning()) {
 
                 for (VarDefinition varDefinition : getRawEditVariables()) {
-                    if (varDefinition.getDisplayType() == VarDisplay.SECONDS) {
+                    if (varDefinition.getDisplayType() == VarDisplay.SECONDS && varDefinition.getModify() != VarModify.EDITABLE) {
                         final VarTimer timer = timers.get(varDefinition.getName());
                         timer.forward();
                         vars.update(varDefinition.getName(), new IntVar((int) TimeUnit.NANOSECONDS.toSeconds(timer.getElapsed())));

@@ -1074,7 +1074,7 @@ public class ScriptRunner {
                     v = IntVar.ZERO;
                     for (int i = parts.length - 1; i >= 0; i--) {
                         int part = Integer.parseInt(parts[i]) * multiply;
-                        v.add(new IntVar(part));
+                        v = v.add(new IntVar(part));
                         multiply *= 60;
                     }
                 }

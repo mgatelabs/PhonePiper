@@ -58,7 +58,7 @@
             },
             {
               "type": "WAIT",
-              "value": "3000"
+              "value": "200"
             },
             {
               "type": "REPEAT",
@@ -84,7 +84,7 @@
             },
             {
               "type": "WAIT",
-              "value": "3000"
+              "value": "200"
             },
             {
               "type": "REPEAT",
@@ -110,7 +110,7 @@
             },
             {
               "type": "WAIT",
-              "value": "3000"
+              "value": "200"
             },
             {
               "type": "REPEAT",
@@ -136,7 +136,7 @@
             },
             {
               "type": "WAIT",
-              "value": "3000"
+              "value": "200"
             },
             {
               "type": "REPEAT",
@@ -162,7 +162,7 @@
             },
             {
               "type": "WAIT",
-              "value": "3000"
+              "value": "200"
             },
             {
               "type": "REPEAT",
@@ -306,7 +306,7 @@
             },
             {
               "type": "WAIT",
-              "value": "500"
+              "value": "200"
             },
             {
               "type": "REPEAT",
@@ -332,7 +332,7 @@
             },
             {
               "type": "WAIT",
-              "value": "1500"
+              "value": "500"
             },
             {
               "type": "REPEAT",

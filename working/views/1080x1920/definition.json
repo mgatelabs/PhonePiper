@@ -10192,6 +10192,53 @@
     } ],
     "enabled" : true
   }, {
+    "name" : "Menu - Results - Points - OK",
+    "screenId" : "menu-results-points-next",
+    "points" : [ {
+      "x" : 445,
+      "y" : 1630,
+      "r" : 0,
+      "g" : 0,
+      "b" : 0
+    }, {
+      "x" : 449,
+      "y" : 1643,
+      "r" : 0,
+      "g" : 59,
+      "b" : 162
+    }, {
+      "x" : 438,
+      "y" : 1653,
+      "r" : 0,
+      "g" : 59,
+      "b" : 152
+    }, {
+      "x" : 631,
+      "y" : 1728,
+      "r" : 0,
+      "g" : 62,
+      "b" : 155
+    }, {
+      "x" : 641,
+      "y" : 1718,
+      "r" : 0,
+      "g" : 62,
+      "b" : 155
+    }, {
+      "x" : 653,
+      "y" : 1718,
+      "r" : 0,
+      "g" : 0,
+      "b" : 0
+    }, {
+      "x" : 631,
+      "y" : 1741,
+      "r" : 0,
+      "g" : 0,
+      "b" : 0
+    } ],
+    "enabled" : true
+  }, {
     "name" : "Menu - results-points_raid",
     "screenId" : "menu-results-points_raid",
     "points" : [ {

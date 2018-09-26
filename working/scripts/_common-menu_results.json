@@ -49,6 +49,32 @@
         {
           "condition": {
             "is": "SCREEN",
+            "value": "menu-results-points",
+            "and": [
+              {
+                "is": "SCREEN",
+                "value": "menu-results-points-next"
+              }
+            ]
+          },
+          "actions": [
+            {
+              "type": "TAP",
+              "value": "menu-results-next"
+            },
+            {
+              "type": "WAIT",
+              "value": "3000"
+            },
+            {
+              "type": "REPEAT",
+              "value": ""
+            }
+          ]
+        },
+        {
+          "condition": {
+            "is": "SCREEN",
             "value": "menu-results-points"
           },
           "actions": [
@@ -58,7 +84,7 @@
             },
             {
               "type": "WAIT",
-              "value": "200"
+              "value": "500"
             },
             {
               "type": "REPEAT",

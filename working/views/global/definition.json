@@ -496,6 +496,11 @@
     "points" : [ ],
     "enabled" : false
   }, {
+    "name" : "Menu - Results - Points - OK",
+    "screenId" : "menu-results-points-next",
+    "points" : [ ],
+    "enabled" : false
+  }, {
     "name" : "Menu - Results - Points (Raid)",
     "screenId" : "menu-results-points_raid",
     "points" : [ ],

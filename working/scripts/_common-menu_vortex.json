@@ -27,7 +27,7 @@
           },
           "actions": [
             {
-              "type": "MSG",
+              "type": "INFO",
               "value": "Clicking Vortex Index 0"
             },
             {
@@ -58,7 +58,7 @@
           },
           "actions": [
             {
-              "type": "MSG",
+              "type": "INFO",
               "value": "Clicking Vortex Index 1"
             },
             {
@@ -89,7 +89,7 @@
           },
           "actions": [
             {
-              "type": "MSG",
+              "type": "INFO",
               "value": "Clicking Vortex Index 2"
             },
             {
@@ -120,7 +120,7 @@
           },
           "actions": [
             {
-              "type": "MSG",
+              "type": "INFO",
               "value": "Clicking Vortex Index 3"
             },
             {
@@ -159,7 +159,7 @@
           },
           "actions": [
             {
-              "type": "MSG",
+              "type": "INFO",
               "value": "Clicking Vortex Index 4"
             },
             {
@@ -191,7 +191,7 @@
           },
           "actions": [
             {
-              "type": "MSG",
+              "type": "INFO",
               "value": "Inside Nemeses Portal, getting out"
             },
             {
@@ -215,7 +215,7 @@
           },
           "actions": [
             {
-              "type": "MSG",
+              "type": "INFO",
               "value": "Inside Chamber of Arm, getting out"
             },
             {

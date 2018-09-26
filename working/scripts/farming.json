@@ -165,7 +165,7 @@
           },
           "actions": [
             {
-              "type": "MSG",
+              "type": "INFO",
               "value": "Time limit/energy hit, switching to Home screen"
             },
             {
@@ -243,7 +243,7 @@
               "value": "1"
             },
             {
-              "type": "MSG",
+              "type": "INFO",
               "value": "Starting run ${runs}"
             },
             {
@@ -372,7 +372,7 @@
           },
           "actions": [
             {
-              "type": "MSG",
+              "type": "INFO",
               "value": "Ending run ${runs}"
             },
             {
@@ -407,7 +407,7 @@
               "value": "1"
             },
             {
-              "type": "MSG",
+              "type": "INFO",
               "value": "Starting run ${runs}"
             },
             {
@@ -561,7 +561,7 @@
           },
           "actions": [
             {
-              "type": "MSG",
+              "type": "INFO",
               "value": "Orb Available, Starting Mission 0 - ELT"
             },
             {
@@ -596,7 +596,7 @@
           },
           "actions": [
             {
-              "type": "MSG",
+              "type": "INFO",
               "value": "Out of Orbs, going home"
             },
             {
@@ -697,7 +697,7 @@
               "value": "1"
             },
             {
-              "type": "MSG",
+              "type": "INFO",
               "value": "Starting raid ${raid_runs}"
             },
             {
@@ -801,7 +801,7 @@
           },
           "actions": [
             {
-              "type": "MSG",
+              "type": "INFO",
               "value": "Found Daily Login Reward, Claiming"
             },
             {
@@ -821,7 +821,7 @@
           },
           "actions": [
             {
-              "type": "MSG",
+              "type": "INFO",
               "value": "Found Login Bonus, OK"
             },
             {
@@ -841,7 +841,7 @@
           },
           "actions": [
             {
-              "type": "MSG",
+              "type": "INFO",
               "value": "Found Message Screen"
             },
             {
@@ -866,7 +866,7 @@
           },
           "actions": [
             {
-              "type": "MSG",
+              "type": "INFO",
               "value": "Ending run ${runs}"
             },
             {
@@ -899,7 +899,7 @@
           },
           "actions": [
             {
-              "type": "MSG",
+              "type": "INFO",
               "value": "Going to Vortex (Alt)"
             },
             {
@@ -928,7 +928,7 @@
           },
           "actions": [
             {
-              "type": "MSG",
+              "type": "INFO",
               "value": "Going to Vortex"
             },
             {
@@ -957,7 +957,7 @@
           },
           "actions": [
             {
-              "type": "MSG",
+              "type": "INFO",
               "value": "Found Raid Screen"
             },
             {
@@ -979,7 +979,7 @@
           },
           "actions": [
             {
-              "type": "MSG",
+              "type": "INFO",
               "value": "Could not find Raid, switching to home"
             },
             {
@@ -1004,7 +1004,7 @@
           },
           "actions": [
             {
-              "type": "MSG",
+              "type": "INFO",
               "value": "Going to Arena"
             },
             {
@@ -1033,7 +1033,7 @@
           },
           "actions": [
             {
-              "type": "MSG",
+              "type": "INFO",
               "value": "Found Arena Screen"
             },
             {
@@ -1059,7 +1059,7 @@
           },
           "actions": [
             {
-              "type": "MSG",
+              "type": "INFO",
               "value": "Returning to Battle"
             },
             {
@@ -1097,7 +1097,7 @@
           },
           "actions": [
             {
-              "type": "MSG",
+              "type": "INFO",
               "value": "Going to World"
             },
             {
@@ -1122,7 +1122,7 @@
           },
           "actions": [
             {
-              "type": "MSG",
+              "type": "INFO",
               "value": "Found Grandshelf Isles, looking for Earth Shrine"
             },
             {
@@ -1151,7 +1151,7 @@
               "count": "4"
             },
             {
-              "type": "MSG",
+              "type": "INFO",
               "value": "Tapping Earthshrine"
             },
             {
@@ -1175,7 +1175,7 @@
           },
           "actions": [
             {
-              "type": "MSG",
+              "type": "INFO",
               "value": "Found Grandshelt"
             },
             {
@@ -1209,7 +1209,7 @@
           },
           "actions": [
             {
-              "type": "MSG",
+              "type": "INFO",
               "value": "Found Lapis"
             },
             {
@@ -1248,7 +1248,7 @@
           },
           "actions": [
             {
-              "type": "MSG",
+              "type": "INFO",
               "value": "Found Random Land, Backing up"
             },
             {
@@ -1272,7 +1272,7 @@
           },
           "actions": [
             {
-              "type": "MSG",
+              "type": "INFO",
               "value": "Found Mission Select"
             },
             {
@@ -1579,7 +1579,7 @@
           },
           "actions": [
             {
-              "type": "MSG",
+              "type": "INFO",
               "value": "Backing Up"
             },
             {
@@ -1626,7 +1626,7 @@
           },
           "actions": [
             {
-              "type": "MSG",
+              "type": "INFO",
               "value": "Tapping OK"
             },
             {
@@ -1656,7 +1656,7 @@
           },
           "actions": [
             {
-              "type": "MSG",
+              "type": "INFO",
               "value": "Tapping Screen Center"
             },
             {
@@ -1681,7 +1681,7 @@
           },
           "actions": [
             {
-              "type": "MSG",
+              "type": "INFO",
               "value": "Found Quest Restart Screen, stopping quest, returning to Home..."
             },
             {
@@ -1706,7 +1706,7 @@
           },
           "actions": [
             {
-              "type": "MSG",
+              "type": "INFO",
               "value": "Found Home Screen, attempting to recover..."
             },
             {
@@ -1744,7 +1744,7 @@
           },
           "actions": [
             {
-              "type": "MSG",
+              "type": "INFO",
               "value": "Orb Available, Starting Fight"
             },
             {
@@ -1787,7 +1787,7 @@
           },
           "actions": [
             {
-              "type": "MSG",
+              "type": "INFO",
               "value": "Out of Orbs, going home"
             },
             {
@@ -1900,7 +1900,7 @@
           },
           "actions": [
             {
-              "type": "MSG",
+              "type": "INFO",
               "value": "Battle Started"
             },
             {
@@ -1940,7 +1940,7 @@
           },
           "actions": [
             {
-              "type": "MSG",
+              "type": "INFO",
               "value": "Moving to Fight"
             },
             {
@@ -1965,7 +1965,7 @@
           },
           "actions": [
             {
-              "type": "MSG",
+              "type": "INFO",
               "value": "Fighting (You shouod override this, auto isn't good)"
             },
             {
@@ -2006,7 +2006,7 @@
           },
           "actions": [
             {
-              "type": "MSG",
+              "type": "INFO",
               "value": "Reward found - OK"
             },
             {
@@ -2026,7 +2026,7 @@
           },
           "actions": [
             {
-              "type": "MSG",
+              "type": "INFO",
               "value": "It's Over, Tapping"
             },
             {
@@ -2046,7 +2046,7 @@
           },
           "actions": [
             {
-              "type": "MSG",
+              "type": "INFO",
               "value": "Tapping OK"
             },
             {
@@ -2066,7 +2066,7 @@
           },
           "actions": [
             {
-              "type": "MSG",
+              "type": "INFO",
               "value": "Tapping OK"
             },
             {
@@ -2096,7 +2096,7 @@
           },
           "actions": [
             {
-              "type": "MSG",
+              "type": "INFO",
               "value": "Restarting"
             },
             {

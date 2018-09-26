@@ -82,7 +82,7 @@
               "var": "_screen_saver"
             },
             {
-              "type": "MSG",
+              "type": "INFO",
               "value": "Screen saver activated"
             },
             {
@@ -102,7 +102,7 @@
               "value": "15000"
             },
             {
-              "type": "MSG",
+              "type": "INFO",
               "value": "Returning"
             },
             {
@@ -129,7 +129,7 @@
           },
           "actions": [
             {
-              "type": "MSG",
+              "type": "INFO",
               "value": "Default operation stops operations and locks the device"
             },
             {
@@ -333,7 +333,7 @@
           },
           "actions": [
             {
-              "type": "MSG",
+              "type": "INFO",
               "value": "Home Screen Detected!"
             },
             {
@@ -353,7 +353,7 @@
           },
           "actions": [
             {
-              "type": "MSG",
+              "type": "INFO",
               "value": "Log in Required"
             },
             {
@@ -369,7 +369,7 @@
           },
           "actions": [
             {
-              "type": "MSG",
+              "type": "INFO",
               "value": "App Restarted"
             },
             {
@@ -386,7 +386,7 @@
           },
           "actions": [
             {
-              "type": "MSG",
+              "type": "INFO",
               "value": "Too many cycles, stopping run"
             },
             {

@@ -30,7 +30,7 @@
           },
           "actions": [
             {
-              "type": "MSG",
+              "type": "INFO",
               "value": "Unit setup and Repeat"
             },
             {
@@ -81,7 +81,7 @@
           },
           "actions": [
             {
-              "type": "MSG",
+              "type": "INFO",
               "value": "Enabling Auto - Pause Detected"
             },
             {
@@ -133,7 +133,7 @@
           },
           "actions": [
             {
-              "type": "MSG",
+              "type": "INFO",
               "value": "Auto-Attack"
             },
             {
@@ -198,7 +198,7 @@
           },
           "actions": [
             {
-              "type": "MSG",
+              "type": "INFO",
               "value": "Repeat-Attack"
             },
             {

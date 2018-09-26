@@ -192,6 +192,19 @@
                 </div>
 
                 <br/>
+                <div class="input-group">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text">Throttle</span>
+                    </div>
+                    <input type="text" class="form-control config-attribute" attrname="device-throttle" placeholder="250">
+                </div>
+
+                <br/>
+                <div class="alert alert-dark" role="alert">
+                    This is the time in MS to throttle the main loop.  The default is 250, or 250 miliseconds.  1000 milliseconds is a second.
+                </div>
+
+                <br/>
                 <div class="form-group">
                     <button type="button" id="controlLoad" class="btn btn-primary">Run Script</button>
                     <button type="button" id="controlEditView" class="btn btn-secondary">Edit View</button>

@@ -424,6 +424,10 @@ public class WebResource {
                             tempConnection.setDirect(value);
                         } else if (field.equalsIgnoreCase("wifi")) {
                             tempConnection.setWifi(Boolean.parseBoolean(value));
+                        } else if (field.equalsIgnoreCase("throttle")) {
+                            if (StringUtils.isNotBlank(value)) {
+                                tempConnection.setThrottle(Integer.parseInt(value));
+                            }
                         }
                     }
                 } else {

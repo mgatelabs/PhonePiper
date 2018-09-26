@@ -47,7 +47,7 @@
           },
           "actions": [
             {
-              "type": "MSG",
+              "type": "INFO",
               "value": "Stop has been detected, trying to resolve"
             },
             {
@@ -113,7 +113,7 @@
           },
           "actions": [
             {
-              "type": "MSG",
+              "type": "INFO",
               "value": "Ayaka heals"
             },
             {
@@ -196,7 +196,7 @@
           },
           "actions": [
             {
-              "type": "MSG",
+              "type": "INFO",
               "value": "Setting Up GLS"
             },
             {
@@ -269,7 +269,7 @@
           },
           "actions": [
             {
-              "type": "MSG",
+              "type": "INFO",
               "value": "Setting Up TT"
             },
             {
@@ -320,7 +320,7 @@
           },
           "actions": [
             {
-              "type": "MSG",
+              "type": "INFO",
               "value": "Setting Up Adam J"
             },
             {
@@ -371,7 +371,7 @@
           },
           "actions": [
             {
-              "type": "MSG",
+              "type": "INFO",
               "value": "Setting Up Olive"
             },
             {
@@ -408,7 +408,7 @@
           },
           "actions": [
             {
-              "type": "MSG",
+              "type": "INFO",
               "value": "Starting Fight"
             },
             {
@@ -440,7 +440,7 @@
               "value": "end"
             },
             {
-              "type": "MSG",
+              "type": "INFO",
               "value": "Moving to Fight"
             },
             {
@@ -484,7 +484,7 @@
           },
           "actions": [
             {
-              "type": "MSG",
+              "type": "INFO",
               "value": "Stop has been detected, reverting to setup phase to fix"
             },
             {
@@ -507,7 +507,7 @@
           },
           "actions": [
             {
-              "type": "MSG",
+              "type": "INFO",
               "value": "Ayaka needs to be reset, reverting to setup phase to fix"
             },
             {
@@ -523,7 +523,7 @@
           },
           "actions": [
             {
-              "type": "MSG",
+              "type": "INFO",
               "value": "Fighting even more"
             },
             {

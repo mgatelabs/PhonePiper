@@ -46,7 +46,7 @@
           },
           "actions": [
             {
-              "type": "MSG",
+              "type": "INFO",
               "value": "Stopping for safety, fused ${count} units"
             },
             {
@@ -67,7 +67,7 @@
           },
           "actions": [
             {
-              "type": "MSG",
+              "type": "INFO",
               "value": "Stopping for safety, fused ${count} units"
             },
             {
@@ -83,7 +83,7 @@
           },
           "actions": [
             {
-              "type": "MSG",
+              "type": "INFO",
               "value": "Selecting Base"
             },
             {
@@ -132,7 +132,7 @@
           },
           "actions": [
             {
-              "type": "MSG",
+              "type": "INFO",
               "value": "Choosing"
             },
             {
@@ -168,7 +168,7 @@
           },
           "actions": [
             {
-              "type": "MSG",
+              "type": "INFO",
               "value": "Choosing Unit"
             },
             {
@@ -209,7 +209,7 @@
           },
           "actions": [
             {
-              "type": "MSG",
+              "type": "INFO",
               "value": "Fusing"
             },
             {
@@ -246,7 +246,7 @@
           },
           "actions": [
             {
-              "type": "MSG",
+              "type": "INFO",
               "value": "Backing up"
             },
             {
@@ -283,7 +283,7 @@
           },
           "actions": [
             {
-              "type": "MSG",
+              "type": "INFO",
               "value": "Skiping"
             },
             {

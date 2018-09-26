@@ -41,7 +41,7 @@
           },
           "actions": [
             {
-              "type": "MSG",
+              "type": "INFO",
               "value": "Breaking"
             },
             {
@@ -106,7 +106,7 @@
           },
           "actions": [
             {
-              "type": "MSG",
+              "type": "INFO",
               "value": "Stealing"
             },
             {
@@ -171,7 +171,7 @@
           },
           "actions": [
             {
-              "type": "MSG",
+              "type": "INFO",
               "value": "Nuking"
             },
             {
@@ -230,7 +230,7 @@
           },
           "actions": [
             {
-              "type": "MSG",
+              "type": "INFO",
               "value": "Rinoa"
             },
             {
@@ -302,7 +302,7 @@
           },
           "actions": [
             {
-              "type": "MSG",
+              "type": "INFO",
               "value": "Adam J"
             },
             {
@@ -376,7 +376,7 @@
           },
           "actions": [
             {
-              "type": "MSG",
+              "type": "INFO",
               "value": "Attack"
             },
             {

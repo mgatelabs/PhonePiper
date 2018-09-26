@@ -20,7 +20,7 @@
       },
       "actions": [{
         "type": "ADD", "value": "1", "var": "summon_number"}, {
-        "type": "MSG", "value": "Multi Summon - ${summon_number}"}, {
+        "type": "INFO", "value": "Multi Summon - ${summon_number}"}, {
         "type": "TAP", "value": "raid-summon_multi-main"}, {
         "type": "WAIT", "value": "250"}, {
         "type": "TAP", "value": "raid-summon_multi-popup"}, {
@@ -32,7 +32,7 @@
         "not": "SCREEN", "value": "raid-summon"
       },
       "actions": [{
-        "type": "MSG", "value": "Raid Summon Complete - Batch ${summon_number}"}, {
+        "type": "INFO", "value": "Raid Summon Complete - Batch ${summon_number}"}, {
         "type": "STOP"}
       ]
     }]

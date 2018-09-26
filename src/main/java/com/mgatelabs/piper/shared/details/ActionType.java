@@ -21,7 +21,9 @@ public enum ActionType {
     PUSH(ActionValueType.STATE_ID, false, true, false), // Start a new state, but still leave old state alone
     POP(ActionValueType.STATE_ID, false, true, false), // Don't with this bubble
     WAIT(ActionValueType.INT, false, true, true), // Wait a few MS
-    MSG(ActionValueType.STRING, false, true, true), // Show a message
+    INFO(ActionValueType.STRING, false, true, true), // Show a info message
+    FINE(ActionValueType.STRING, false, true, true), // Show a fine message
+    FINEST(ActionValueType.STRING, false, true, true), // Show a finest message
     STOP(ActionValueType.NONE, false, true, true), // Stop execution
     SET(ActionValueType.INT, true, true, true), // Zero a variable
     ADD(ActionValueType.INT, true, true, true), // Increment a variable

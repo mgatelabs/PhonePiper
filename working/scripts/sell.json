@@ -21,7 +21,7 @@
         },
         "actions": [{
           "type": "ADD", "value": "1", "var": "batch_number"}, {
-          "type": "MSG", "value": "Sell Batch - ${batch_number}"}, {
+          "type": "INFO", "value": "Sell Batch - ${batch_number}"}, {
           "type": "BATCH", "value": "START"}, {
           "type": "TAP", "value": "unit-sell_1"}, {
           "type": "TAP", "value": "unit-sell_2"}, {
@@ -62,7 +62,7 @@
           }]
         },
         "actions": [{
-          "type": "MSG", "value": "Sell Complete - Batch ${batch_number}"}, {
+          "type": "INFO", "value": "Sell Complete - Batch ${batch_number}"}, {
           "type": "STOP"}
         ]
       }]

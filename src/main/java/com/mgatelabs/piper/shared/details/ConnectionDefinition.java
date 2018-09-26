@@ -21,6 +21,7 @@ public class ConnectionDefinition {
     private String adb = "adb";
     private String direct;
     private boolean wifi;
+    private int throttle = 250;
 
     public ConnectionDefinition() {
 
@@ -56,6 +57,14 @@ public class ConnectionDefinition {
 
     public void setAdb(String adb) {
         this.adb = adb;
+    }
+
+    public int getThrottle() {
+        return throttle;
+    }
+
+    public void setThrottle(int throttle) {
+        this.throttle = throttle;
     }
 
     public void push() {

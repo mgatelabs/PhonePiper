@@ -16,6 +16,8 @@ import com.mgatelabs.piper.ui.utils.WebLogHandler;
 import org.springframework.util.CollectionUtils;
 import org.springframework.util.StringUtils;
 
+import java.text.DecimalFormat;
+import java.text.NumberFormat;
 import java.text.SimpleDateFormat;
 import java.util.*;
 import java.util.concurrent.TimeUnit;
@@ -38,6 +40,8 @@ public class ScriptRunner {
     }
 
     private static final Pattern SINGLE_VARIABLE = Pattern.compile("^\\$\\{[a-zA-Z0-9_-]+\\}$");
+
+    private static final NumberFormat THREE_DECIMAL = new DecimalFormat("#.###");
 
     private PlayerDefinition playerDefinition;
     private ConnectionDefinition connectionDefinition;
@@ -503,12 +507,12 @@ public class ScriptRunner {
                 if (!shell.isReady()) {
                     logger.log(Level.WARNING, "Bad Shell: Will try to reconnect...");
                     if (connectionDefinition.isWifi()) {
-                        Thread.sleep(1000);
+                        waitFor(1000);
                         AdbShell.connect(deviceHelper.getIpAddress());
                     }
-                    Thread.sleep(1000);
+                    waitFor(1000);
                     restartShell();
-                    Thread.sleep(1000);
+                    waitFor(1000);
                 }
 
                 if (deviceHelper != null) {
@@ -527,7 +531,7 @@ public class ScriptRunner {
                     lastImageDate = new Date();
                     lastImageDuration = ((float) dif / 1000000000.0f);
 
-                    logger.finest("Helper Image Persisted in " + lastImageDuration);
+                    logger.fine("Helper Image Persisted in " + THREE_DECIMAL.format(lastImageDuration)+"s");
 
                     imageWrapper = null;
                 } else {
@@ -545,7 +549,7 @@ public class ScriptRunner {
                         waitFor(250);
                         continue;
                     } else {
-                        logger.finest("USB Image Persisted in " + lastImageDuration);
+                        logger.fine("USB Image Persisted in " + THREE_DECIMAL.format(lastImageDuration) + "s");
                     }
                 }
 
@@ -615,7 +619,8 @@ public class ScriptRunner {
                     }
                 }
 
-                waitFor(250);
+                if (connectionDefinition.getThrottle() > 0)
+                waitFor(connectionDefinition.getThrottle());
             }
 
         } catch (Exception ex) {
@@ -631,7 +636,16 @@ public class ScriptRunner {
         if (deviceHelper != null) {
             logger.finer("Helper: /check/" + stateDefinition.getId());
 
+            long startTime = System.nanoTime();
             validScreenIds = deviceHelper.check(stateDefinition.getId());
+            long endTime = System.nanoTime();
+
+            long dif = endTime - startTime;
+
+            lastImageDate = new Date();
+            lastImageDuration = ((float) dif / 1000000000.0f);
+
+            logger.fine("Screen State checked in " + THREE_DECIMAL.format(lastImageDuration) + "s");
 
             if (logger.getLevel() == Level.FINEST) {
                 logger.log(Level.FINEST, "Valid Screens: " + Joiner.on(",").join(validScreenIds));
@@ -703,25 +717,19 @@ public class ScriptRunner {
                         }
 
                         switch (actionDefinition.getType()) {
-                            case MSG: {
-                                String msg = actionDefinition.getValue();
-                                int startindex;
-                                while ((startindex = msg.indexOf("${")) >= 0) {
-                                    int endIndex = msg.indexOf('}', startindex);
-                                    if (endIndex > startindex + 2) {
-                                        String varName = msg.substring(startindex += 2, endIndex).trim();
-                                        if (varName.length() > 0) {
-                                            if (vars.getVarInstance(varName) != null) {
-                                                msg = msg.substring(0, startindex - 2) + vars.get(varName) + msg.substring(endIndex + 1);
-                                            } else {
-                                                break;
-                                            }
-                                        }
-                                    } else {
-                                        break;
-                                    }
-                                }
+                            case INFO: {
+                                String msg = replaceTokens(actionDefinition.getValue());
                                 logger.info("MSG: " + msg);
+                            }
+                            break;
+                            case FINE: {
+                                String msg = replaceTokens(actionDefinition.getValue());
+                                logger.fine("MSG: " + msg);
+                            }
+                            break;
+                            case FINEST: {
+                                String msg = replaceTokens(actionDefinition.getValue());
+                                logger.finest("MSG: " + msg);
                             }
                             break;
                             case BATCH: {

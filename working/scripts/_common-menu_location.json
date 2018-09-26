@@ -37,7 +37,7 @@
           },
           "actions": [
             {
-              "type": "MSG",
+              "type": "INFO",
               "value": "Clicking Mission Item 0"
             },
             {
@@ -72,7 +72,7 @@
           },
           "actions": [
             {
-              "type": "MSG",
+              "type": "INFO",
               "value": "Clicking Mission Item 1"
             },
             {
@@ -107,7 +107,7 @@
           },
           "actions": [
             {
-              "type": "MSG",
+              "type": "INFO",
               "value": "Clicking Mission Item 2"
             },
             {
@@ -142,7 +142,7 @@
           },
           "actions": [
             {
-              "type": "MSG",
+              "type": "INFO",
               "value": "Clicking Mission Item 3"
             },
             {
@@ -178,7 +178,7 @@
           },
           "actions": [
             {
-              "type": "MSG",
+              "type": "INFO",
               "value": "Clicking Mission Item 0"
             },
             {
@@ -214,7 +214,7 @@
           },
           "actions": [
             {
-              "type": "MSG",
+              "type": "INFO",
               "value": "Clicking Mission Item 1"
             },
             {
@@ -250,7 +250,7 @@
           },
           "actions": [
             {
-              "type": "MSG",
+              "type": "INFO",
               "value": "Clicking Mission Item 2"
             },
             {
@@ -286,7 +286,7 @@
           },
           "actions": [
             {
-              "type": "MSG",
+              "type": "INFO",
               "value": "Clicking Mission Item 3"
             },
             {
@@ -502,7 +502,7 @@
           },
           "actions": [
             {
-              "type": "MSG",
+              "type": "INFO",
               "value": "Departing"
             },
             {

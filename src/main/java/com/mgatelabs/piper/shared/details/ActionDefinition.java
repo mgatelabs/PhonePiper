@@ -97,8 +97,14 @@ public class ActionDefinition {
             case ADD: {
                 return "Add: " + value + " to Var: " + var;
             }
-            case MSG: {
-                return "Msg: " + value;
+            case INFO: {
+                return "Info Msg: " + value;
+            }
+            case FINE: {
+                return "Fine Msg: " + value;
+            }
+            case FINEST: {
+                return "Finest Msg: " + value;
             }
             case POP: {
                 return "Pop State";
@@ -134,6 +140,10 @@ public class ActionDefinition {
                 return "Event: " + value;
             case INPUT:
                 return "Input: " + value;
+            case CALL:
+                return "Call: " + value;
+            case RETURN:
+                return "RETURN";
         }
         return "???";
     }

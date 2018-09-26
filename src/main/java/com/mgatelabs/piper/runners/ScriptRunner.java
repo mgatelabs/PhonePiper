@@ -1,6 +1,7 @@
 package com.mgatelabs.piper.runners;
 
 import com.google.common.base.Joiner;
+import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.ImmutableSet;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
@@ -13,6 +14,7 @@ import com.mgatelabs.piper.shared.image.*;
 import com.mgatelabs.piper.shared.util.*;
 import com.mgatelabs.piper.ui.utils.WebLogHandler;
 import org.springframework.util.CollectionUtils;
+import org.springframework.util.StringUtils;
 
 import java.text.SimpleDateFormat;
 import java.util.*;
@@ -20,6 +22,7 @@ import java.util.concurrent.TimeUnit;
 import java.util.logging.Handler;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import java.util.regex.Pattern;
 
 /**
  * Created by @mgatelabs (Michael Fuller) on 9/4/2017.
@@ -33,6 +36,8 @@ public class ScriptRunner {
         PAUSED,
         STOPPED
     }
+
+    private static final Pattern SINGLE_VARIABLE = Pattern.compile("^\\$\\{[a-zA-Z0-9_-]+\\}$");
 
     private PlayerDefinition playerDefinition;
     private ConnectionDefinition connectionDefinition;
@@ -368,8 +373,8 @@ public class ScriptRunner {
 
         for (Map.Entry<String, StateDefinition> stateEntry : scriptDefinition.getStates().entrySet()) {
 
-            // Skip all include states
-            if (stateEntry.getKey().startsWith("_")) continue;
+            // Skip all include and function states
+            if (stateEntry.getKey().startsWith("_") || stateEntry.getKey().startsWith("@")) continue;
 
             StateTransfer stateTransfer = new StateTransfer();
             stateTransfer.setStateId(stateEntry.getKey());
@@ -633,7 +638,7 @@ public class ScriptRunner {
             }
         }
 
-        return state(stateDefinition, imageWrapper, startingAction);
+        return state(stateDefinition, imageWrapper, startingAction, false, ImmutableMap.of(), false);
     }
 
     private String lapEvent(String id) {
@@ -647,27 +652,29 @@ public class ScriptRunner {
     }
 
     private Var valueHandler(String value) {
-        if (value.startsWith("$")) {
+        if (SINGLE_VARIABLE.matcher(value).matches()) {
+            // This is a single variable lookup, extract the name and look it up
+            return getVar(value.substring(2, value.length() - 1));
+        } else if (value.startsWith("$")) {
+            // Old Style Value's
             return getVar(value.substring(1));
-        } else {
-            return new StringVar(value);
         }
-    }
-
-    private Var valueHandlerAsString(String value) {
-        if (value.startsWith("$")) {
-            return getVar(value.substring(1));
-        } else {
-            return new StringVar(value);
-        }
+        // Replace any token with a value and continue
+        return new StringVar(replaceTokens(value));
     }
 
     private boolean stillRunning() {
         return status == Status.RUNNING;
     }
 
-    private StateResult state(final StateDefinition stateDefinition, final ImageWrapper imageWrapper, int startingAction) {
-        logger.fine("Running State: " + stateDefinition.getName());
+    private StateResult state(final StateDefinition stateDefinition, final ImageWrapper imageWrapper, int startingAction, boolean isCall, Map<String, String> arguments, boolean inBatch) {
+        if (isCall) {
+            logger.fine("Calling State: " + stateDefinition.getName());
+            vars.push(stateDefinition, arguments);
+        } else {
+            logger.fine("Running State: " + stateDefinition.getName());
+            vars.state(stateDefinition, arguments);
+        }
 
         boolean batchCmds = false;
         StateResult priorResult = null;
@@ -682,11 +689,17 @@ public class ScriptRunner {
                     priorResult = stateResult;
                     stateResult = new StateResult(actionDefinition.getType(), actionDefinition, priorResult, actionIndex, stateDefinition);
                     final int loopIndex = actionDefinition.getCount() <= 0 ? 1 : actionDefinition.getCount();
-                    actionDefinition.setValue(replaceTokens((actionDefinition.getValue())));
 
                     for (int looper = 0; looper < loopIndex; looper++) {
                         if (!stillRunning()) {
                             return new StateResult(ActionType.STOP, actionDefinition, priorResult, actionIndex, stateDefinition);
+                        }
+
+                        // Skip actions not allowed for the current state mode
+                        if (isCall && !actionDefinition.getType().isAllowedForCall()) {
+                            continue;
+                        } else if (!isCall && !actionDefinition.getType().isAllowedForState()) {
+                            continue;
                         }
 
                         switch (actionDefinition.getType()) {
@@ -712,7 +725,10 @@ public class ScriptRunner {
                             }
                             break;
                             case BATCH: {
-                                if ("START".equalsIgnoreCase(actionDefinition.getValue())) {
+                                if (inBatch) {
+                                    logger.log(Level.FINEST, "Skipping batch request, already in batch");
+                                }
+                                else if ("START".equalsIgnoreCase(actionDefinition.getValue())) {
                                     batchCmds = true;
                                 } else if (batchCmds) {
                                     batchCmds = false;
@@ -749,24 +765,25 @@ public class ScriptRunner {
                             case SLOW_UP:
                             case SWIPE_LEFT:
                             case SWIPE_RIGHT: {
-                                ComponentDefinition componentDefinition = components.get(actionDefinition.getValue());
+                                ComponentDefinition componentDefinition = components.get(replaceTokens(actionDefinition.getValue()));
                                 if (componentDefinition == null) {
                                     logger.log(Level.SEVERE, "Cannot find component with id: " + actionDefinition.getValue());
                                     throw new RuntimeException("Cannot find component with id: " + actionDefinition.getValue());
                                 }
-                                AdbUtils.component(deviceDefinition, componentDefinition, actionDefinition.getType(), shell, batchCmds);
+                                logger.finest("Performing Action " + actionDefinition.getType() + " For Component: " + componentDefinition.getComponentId());
+                                AdbUtils.component(deviceDefinition, componentDefinition, actionDefinition.getType(), shell, batchCmds || inBatch);
                             }
                             break;
 
                             case EVENT: {
-                                if (!AdbUtils.event(actionDefinition.getValue(), shell, batchCmds)) {
+                                if (!AdbUtils.event(actionDefinition.getValue(), shell, batchCmds || inBatch)) {
                                     logger.log(Level.SEVERE, "Unknown event id: " + actionDefinition.getValue());
                                     throw new RuntimeException("Unknown event id: " + actionDefinition.getValue());
                                 }
                             }
                             break;
                             case INPUT: {
-                                if (!AdbUtils.event(valueHandlerAsString(actionDefinition.getValue()).toString(), shell, batchCmds)) {
+                                if (!AdbUtils.event(valueHandler(actionDefinition.getValue()).toString(), shell, batchCmds || inBatch)) {
                                     logger.log(Level.SEVERE, "Unknown event id: " + actionDefinition.getValue());
                                     throw new RuntimeException("Unknown event id: " + actionDefinition.getValue());
                                 }
@@ -783,7 +800,29 @@ public class ScriptRunner {
                                 }
                             }
                             break;
-
+                            case CALL: {
+                                // Call Names are not dynamic
+                                final String callName = actionDefinition.getValue();
+                                if (!callName.startsWith("@")) {
+                                    throw new RuntimeException("All calls must start with a @: " + actionDefinition.getValue());
+                                }
+                                final StateDefinition callDefinition = scriptDefinition.getStates().get(callName);
+                                final Map<String, String> callArguments = Maps.newHashMap();
+                                for (Map.Entry<String, String> entry : actionDefinition.getArguments().entrySet()) {
+                                    callArguments.put(entry.getKey(), replaceTokens(entry.getValue()));
+                                }
+                                final StateResult callResult = state(callDefinition, imageWrapper, 0, true, callArguments, batchCmds);
+                                vars.pop();
+                                if (callResult.getResult() != null && !StringUtils.isEmpty(actionDefinition.getVar())) {
+                                    setVar(actionDefinition.getVar(), callResult.getResult());
+                                }
+                            }
+                            break;
+                            case RETURN: {
+                                if (!StringUtils.isEmpty(actionDefinition.getValue())) {
+                                    stateResult.setResult(valueHandler(actionDefinition.getValue()));
+                                }
+                            } // Let it fall through
                             case POP:
                             case PUSH:
                             case SWAP:
@@ -830,7 +869,7 @@ public class ScriptRunner {
     }
 
     private boolean check(final ConditionDefinition conditionDefinition, ImageWrapper imageWrapper) {
-
+        if (conditionDefinition == null) return true;
         boolean result = false;
         boolean checkAnd = true;
         boolean failure = false;
@@ -976,7 +1015,7 @@ public class ScriptRunner {
                         var = IntVar.ZERO;
                     }
                     vars.add(new VarDefinition(varDefinition.getName(), varDefinition.getDisplay(), var.toString(), varDefinition.getType(), varDefinition.getDisplayType(), varDefinition.getModify(), varDefinition.getOrder()));
-                break;
+                    break;
             }
         }
         return vars;

@@ -36,6 +36,7 @@ public class VarManager {
     public void state(StateDefinition stateDefinition, Map<String, String> arguments) {
         state.clear();
         calls.clear();
+        // Set with default arguments
         for (Map.Entry<String, VarDefinition> entry: stateDefinition.getVariables().entrySet()) {
             state.put(entry.getKey(), new VarInstance(entry.getValue()));
         }
@@ -51,10 +52,11 @@ public class VarManager {
     }
 
     // Future use
-    public void push(Map<String, VarDefinition> defaults, Map<String, String> arguments) {
+    public void push(StateDefinition stateDefinition, Map<String, String> arguments) {
         Map<String, VarInstance> callArgs = Maps.newHashMap();
-        // Copy Function arguments
-        for (Map.Entry<String, VarDefinition> entry: defaults.entrySet()) {
+        calls.clear();
+        // Set with default arguments
+        for (Map.Entry<String, VarDefinition> entry: stateDefinition.getVariables().entrySet()) {
             callArgs.put(entry.getKey(), new VarInstance(entry.getValue()));
         }
         // Override with arguments
@@ -66,6 +68,7 @@ public class VarManager {
                 logger.severe("Argument " + arg.getKey() + " does not related to a Call variable");
             }
         }
+        calls.push(callArgs);
     }
 
     public void pop() {

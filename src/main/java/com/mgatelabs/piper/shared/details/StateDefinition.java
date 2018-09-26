@@ -94,8 +94,13 @@ public class StateDefinition {
         if (variables == null) {
             variables = Maps.newHashMap();
         }
+        // Fix the names
+        for (Map.Entry<String, VarDefinition> variableDef : variables.entrySet()) {
+            variableDef.getValue().setName(variableDef.getKey());
+        }
         for (StatementDefinition statementDefinition : getStatements()) {
-            statementDefinition.getCondition().fix();
+            if (statementDefinition.getCondition() != null)
+                statementDefinition.getCondition().fix();
         }
     }
 

@@ -1,5 +1,7 @@
 package com.mgatelabs.piper.shared.details;
 
+import com.mgatelabs.piper.shared.util.Var;
+
 /**
  * Created by @mgatelabs (Michael Fuller) on 9/4/2017.
  */
@@ -10,6 +12,7 @@ public class StateResult {
   private final StateResult priorStateResult;
   private int actionIndex;
   private final StateDefinition stateDefinition;
+  private Var result;
 
   public static final StateResult REPEAT = new StateResult(ActionType.REPEAT, null, null, 0, null);
 
@@ -19,6 +22,15 @@ public class StateResult {
     this.priorStateResult = priorStateResult;
     this.actionIndex = actionIndex;
     this.stateDefinition = stateDefinition;
+    this.result = null;
+  }
+
+  public Var getResult() {
+    return result;
+  }
+
+  public void setResult(Var result) {
+    this.result = result;
   }
 
   public ActionType getType() {

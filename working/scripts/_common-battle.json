@@ -43,16 +43,19 @@
               "value": "START"
             },
             {
-              "type": "TAP",
-              "value": "battle-unit_0"
+              "type": "CALL",
+              "value": "@tapUnit",
+              "args": {"index":"0"}
             },
             {
-              "type": "TAP",
-              "value": "battle-unit_1"
+              "type": "CALL",
+              "value": "@tapUnit",
+              "args": {"index":"1"}
             },
             {
-              "type": "TAP",
-              "value": "battle-unit_2"
+              "type": "CALL",
+              "value": "@tapUnit",
+              "args": {"index":"2"}
             },
             {
               "type": "BATCH",
@@ -238,6 +241,56 @@
               "type": "SET",
               "value": "0",
               "var": "_loops"
+            }
+          ]
+        }
+      ]
+    },
+
+    "@showUnitActions":{
+      "name": "Function - Show Unit's Actions",
+      "variables": {
+        "index": {
+          "value": "0",
+          "type": "INT"
+        }
+      },
+      "statements": [
+        {
+          "actions": [
+            {
+              "type": "SWIPE_RIGHT",
+              "value": "battle-unit_${index}"
+            },
+            {
+              "type": "WAIT",
+              "value": "200"
+            },
+            {
+              "type": "RETURN"
+            }
+          ]
+        }
+      ]
+    },
+
+    "@tapUnit":{
+      "name": "Function - Tap Unit",
+      "variables": {
+        "index": {
+          "value": "0",
+          "type": "INT"
+        }
+      },
+      "statements": [
+        {
+          "actions": [
+            {
+              "type": "TAP",
+              "value": "battle-unit_${index}"
+            },
+            {
+              "type": "RETURN"
             }
           ]
         }

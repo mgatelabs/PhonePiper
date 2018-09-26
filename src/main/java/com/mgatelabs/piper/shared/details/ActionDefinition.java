@@ -1,5 +1,6 @@
 package com.mgatelabs.piper.shared.details;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.google.common.collect.Maps;
 
 import java.util.Map;
@@ -12,6 +13,8 @@ public class ActionDefinition {
     private String var;
     private String value;
     private int count;
+
+    @JsonProperty("args")
     private Map<String, String> arguments;
 
     public ActionType getType() {
@@ -45,6 +48,7 @@ public class ActionDefinition {
     public void setCount(int count) {
         this.count = count;
     }
+
 
     public Map<String, String> getArguments() {
         return arguments;

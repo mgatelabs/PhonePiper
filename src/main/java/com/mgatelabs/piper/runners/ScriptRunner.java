@@ -491,6 +491,8 @@ public class ScriptRunner {
             // Always reset the loop counter
             setVar(VAR_LOOPS, IntVar.ZERO);
 
+            vars.state(stateDefinition, Maps.newHashMap());
+
             while (isRunning()) {
 
                 for (VarDefinition varDefinition : getRawEditVariables()) {
@@ -555,23 +557,7 @@ public class ScriptRunner {
                 while (keepRunning && isRunning()) {
                     keepRunning = false;
 
-                    StateResult result = getStateResult(stateDefinition, imageWrapper, 0);
-                    if (result.getType() == ActionType.POP) {
-                        if (stack.size() > 0) {
-                            final StateResult oldState = stack.pop();
-                            stateDefinition = scriptDefinition.getStates().get(oldState.getStateDefinition().getId());
-                            if (stateDefinition == null) {
-                                logger.log(Level.SEVERE, "Cannot find state with id: " + oldState);
-                                throw new RuntimeException("Cannot find state with id: " + oldState);
-                            }
-                            currentStateId = stateDefinition.getId();
-                            keepRunning = false;
-
-                            result = getStateResult(stateDefinition, imageWrapper, oldState.getActionIndex() + 1);
-                        } else {
-                            throw new RuntimeException("Stack is empty");
-                        }
-                    }
+                    final StateResult result = getStateResult(stateDefinition, imageWrapper, 0);
 
                     switch (result.getType()) {
                         case STOP: {
@@ -584,29 +570,15 @@ public class ScriptRunner {
                                 logger.log(Level.SEVERE, "Cannot find state with id: " + result.getValue());
                                 throw new RuntimeException("Cannot find state with id: " + result.getValue());
                             }
+                            // If this state had arguments, set them up now before altering the state
+                            final Map<String, String> stateArguments = Maps.newHashMap();
+                            for (Map.Entry<String, String> entry : result.getActionDefinition().getArguments().entrySet()) {
+                                stateArguments.put(entry.getKey(), replaceTokens(entry.getValue()));
+                            }
+                            logger.fine("Running State: " + stateDefinition.getName());
+                            vars.state(stateDefinition, stateArguments);
                             currentStateId = stateDefinition.getId();
                             keepRunning = false;
-                        }
-                        break;
-                        case PUSH: {
-                            stack.push(result);
-                            stateDefinition = scriptDefinition.getStates().get(result.getValue());
-                            if (stateDefinition == null) {
-                                logger.log(Level.SEVERE, "Cannot find state with id: " + result.getValue());
-                                throw new RuntimeException("Cannot find state with id: " + result.getValue());
-                            }
-                            currentStateId = stateDefinition.getId();
-                            keepRunning = true;
-                        }
-                        break;
-                        case SWAP: {
-                            stateDefinition = scriptDefinition.getStates().get(result.getValue());
-                            if (stateDefinition == null) {
-                                logger.log(Level.SEVERE, "Cannot find state with id: " + result.getValue());
-                                throw new RuntimeException("Cannot find state with id: " + result.getValue());
-                            }
-                            currentStateId = stateDefinition.getId();
-                            keepRunning = true;
                         }
                         break;
                         case REPEAT: {
@@ -682,13 +654,10 @@ public class ScriptRunner {
         if (isCall) {
             logger.fine("Calling State: " + stateDefinition.getName());
             vars.push(stateDefinition, arguments);
-        } else {
-            logger.fine("Running State: " + stateDefinition.getName());
-            vars.state(stateDefinition, arguments);
         }
 
         boolean batchCmds = false;
-        StateResult priorResult = null;
+        StateResult priorResult;
         StateResult stateResult = null;
         for (StatementDefinition statementDefinition : stateDefinition.getStatements()) {
             if (check(statementDefinition.getCondition(), imageWrapper)) {
@@ -828,9 +797,6 @@ public class ScriptRunner {
                                     stateResult.setResult(valueHandler(actionDefinition.getValue()));
                                 }
                             } // Let it fall through
-                            case POP:
-                            case PUSH:
-                            case SWAP:
                             case MOVE:
                             case REPEAT:
                             case STOP:
@@ -840,19 +806,44 @@ public class ScriptRunner {
                 }
             }
         }
+        if (isCall) {
+            return StateResult.RETURN;
+        }
         return StateResult.REPEAT;
     }
 
     private String replaceTokens(String text) {
         if (text != null) {
-            int startindex;
-            while ((startindex = text.indexOf("${")) >= 0) {
-                int endIndex = text.indexOf('}', startindex);
-                if (endIndex > startindex + 2) {
-                    String varName = text.substring(startindex += 2, endIndex).trim();
+            int startIndex;
+            while ((startIndex = text.indexOf("${")) >= 0) {
+                int endIndex = text.indexOf('}', startIndex);
+                if (endIndex > startIndex + 2) {
+                    String varName = text.substring(startIndex += 2, endIndex).trim();
                     if (varName.length() > 0) {
                         if (vars.getVarInstance(varName) != null) {
-                            text = text.substring(0, startindex - 2) + vars.get(varName) + text.substring(endIndex + 1);
+                            text = text.substring(0, startIndex - 2) + vars.get(varName) + text.substring(endIndex + 1);
+                        } else {
+                            break;
+                        }
+                    }
+                } else {
+                    break;
+                }
+            }
+        }
+        return text;
+    }
+
+    private String replaceTokensForRegex(String text) {
+        if (text != null) {
+            int startIndex;
+            while ((startIndex = text.indexOf("${")) >= 0) {
+                int endIndex = text.indexOf('}', startIndex);
+                if (endIndex > startIndex + 2) {
+                    String varName = text.substring(startIndex += 2, endIndex).trim();
+                    if (varName.length() > 0) {
+                        if (vars.getVarInstance(varName) != null) {
+                            text = text.substring(0, startIndex - 2) + "[a-zA-Z0-9_-]+" + text.substring(endIndex + 1);
                         } else {
                             break;
                         }

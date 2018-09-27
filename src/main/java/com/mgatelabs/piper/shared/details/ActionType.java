@@ -16,10 +16,7 @@ public enum ActionType {
     SWIPE_LEFT(ActionValueType.COMPONENT_ID, false, true, true), // Swipe
     REPEAT(ActionValueType.NONE, false, true, false),
     RETURN(ActionValueType.NONE, false, false, true),
-    SWAP(ActionValueType.STATE_ID, false, true, false), // Move to a new state, without taking a new image
     MOVE(ActionValueType.STATE_ID, false, true, false), // Move to a new state
-    PUSH(ActionValueType.STATE_ID, false, true, false), // Start a new state, but still leave old state alone
-    POP(ActionValueType.STATE_ID, false, true, false), // Don't with this bubble
     WAIT(ActionValueType.INT, false, true, true), // Wait a few MS
     INFO(ActionValueType.STRING, false, true, true), // Show a info message
     FINE(ActionValueType.STRING, false, true, true), // Show a fine message

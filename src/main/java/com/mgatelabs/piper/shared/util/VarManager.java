@@ -20,6 +20,8 @@ public class VarManager {
     Stack<Map<String, VarInstance>> calls;
     Logger logger;
 
+    private String currentSceneId = null;
+
     public VarManager(Logger logger) {
         globals = Maps.newHashMap();
         state = Maps.newHashMap();
@@ -34,20 +36,26 @@ public class VarManager {
     }
 
     public void state(StateDefinition stateDefinition, Map<String, String> arguments) {
-        state.clear();
         calls.clear();
-        // Set with default arguments
-        for (Map.Entry<String, VarDefinition> entry: stateDefinition.getVariables().entrySet()) {
-            state.put(entry.getKey(), new VarInstance(entry.getValue()));
-        }
-        // Override with arguments
-        for (Map.Entry<String, String> arg: arguments.entrySet()) {
-            VarInstance varInstance = state.get(arg.getKey());
-            if (varInstance != null) {
-                varInstance.update(new StringVar(arg.getValue()));
-            } else {
-                logger.severe("Argument " + arg.getKey() + " does not related to a state variable");
+        if (!stateDefinition.getId().equalsIgnoreCase(currentSceneId)) {
+            // Only reset the state if the state is different
+            currentSceneId = stateDefinition.getId();
+            state.clear();
+            // Set with default arguments
+            for (Map.Entry<String, VarDefinition> entry : stateDefinition.getVariables().entrySet()) {
+                state.put(entry.getKey(), new VarInstance(entry.getValue()));
             }
+            // Override with arguments
+            for (Map.Entry<String, String> arg : arguments.entrySet()) {
+                VarInstance varInstance = state.get(arg.getKey());
+                if (varInstance != null) {
+                    varInstance.update(new StringVar(arg.getValue()));
+                } else {
+                    logger.severe("Argument " + arg.getKey() + " does not related to a state variable");
+                }
+            }
+        } else {
+            logger.fine("Not updating variables for state, current state is next state");
         }
     }
 

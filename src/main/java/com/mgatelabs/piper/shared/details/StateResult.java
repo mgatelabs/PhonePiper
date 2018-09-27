@@ -15,6 +15,7 @@ public class StateResult {
   private Var result;
 
   public static final StateResult REPEAT = new StateResult(ActionType.REPEAT, null, null, 0, null);
+  public static final StateResult RETURN = new StateResult(ActionType.RETURN, null, null, 0, null);
 
   public StateResult(ActionType type, ActionDefinition actionDefinition, StateResult priorStateResult, int actionIndex, StateDefinition stateDefinition) {
     this.type = type;

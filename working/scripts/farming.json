@@ -293,7 +293,7 @@
               "value": "2"
             },
             {
-              "type": "SWAP",
+              "type": "MOVE",
               "value": "farm-results"
             }
           ]
@@ -325,7 +325,7 @@
               "value": "0"
             },
             {
-              "type": "SWAP",
+              "type": "MOVE",
               "value": "farm-results"
             }
           ]
@@ -411,7 +411,7 @@
               "value": "Starting run ${runs}"
             },
             {
-              "type": "SWAP",
+              "type": "MOVE",
               "value": "farm-battle"
             }
           ]
@@ -771,7 +771,7 @@
               "value": "0"
             },
             {
-              "type": "SWAP",
+              "type": "MOVE",
               "value": "raid-results"
             }
           ]
@@ -1081,7 +1081,7 @@
               "value": "5000"
             },
             {
-              "type": "SWAP",
+              "type": "MOVE",
               "value": "raid-battle"
             },
             {

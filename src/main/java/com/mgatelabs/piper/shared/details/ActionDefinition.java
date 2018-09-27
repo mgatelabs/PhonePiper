@@ -106,23 +106,14 @@ public class ActionDefinition {
             case FINEST: {
                 return "Finest Msg: " + value;
             }
-            case POP: {
-                return "Pop State";
-            }
             case SET: {
                 return "Set Var: " + var + " to: " + value;
             }
             case MOVE: {
                 return "Move to state: " + value;
             }
-            case PUSH: {
-                return "Push state: " + value;
-            }
             case STOP: {
                 return "Stop";
-            }
-            case SWAP: {
-                return "Swap to state: " + value;
             }
             case WAIT: {
                 return "Wait: " + value + "ms";

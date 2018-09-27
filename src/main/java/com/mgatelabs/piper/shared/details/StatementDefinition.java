@@ -1,6 +1,9 @@
 package com.mgatelabs.piper.shared.details;
 
+import com.google.common.collect.Sets;
+
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 /**
@@ -35,7 +38,14 @@ public class StatementDefinition {
         this.description = description;
     }
 
-    public Set<String> determineScreenIds() {
-        return getCondition().determineScreenIds();
+    public Set<String> determineScreenIds(final Set<String> exploredStates, final Map<String, StateDefinition> states) {
+        final Set<String> found = Sets.newHashSet();
+        if (getCondition() != null) {
+            found.addAll(getCondition().determineScreenIds(exploredStates, states));
+        }
+        for (ActionDefinition actionDefinition: actions) {
+            found.addAll(actionDefinition.determineScreenIds(exploredStates, states));
+        }
+        return found;
     }
 }

@@ -1,10 +1,13 @@
 package com.mgatelabs.piper.shared.details;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Sets;
 
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 /**
@@ -15,6 +18,9 @@ public class ConditionDefinition {
     private ConditionType not;
     private String value;
     private String var;
+
+    @JsonProperty("args")
+    private Map<String, String> arguments;
 
     private List<ConditionDefinition> and;
     private List<ConditionDefinition> andOr;
@@ -62,6 +68,14 @@ public class ConditionDefinition {
         this.value = value;
     }
 
+    public Map<String, String> getArguments() {
+        return arguments;
+    }
+
+    public void setArguments(Map<String, String> arguments) {
+        this.arguments = arguments;
+    }
+
     public void fix() {
         if (and == null) {
             and = Lists.newArrayList();
@@ -83,6 +97,9 @@ public class ConditionDefinition {
             for (ConditionDefinition conditionDefinition : andOr) {
                 conditionDefinition.fix();
             }
+        }
+        if (arguments == null) {
+            arguments = ImmutableMap.of();
         }
     }
 
@@ -118,28 +135,31 @@ public class ConditionDefinition {
         this.var = var;
     }
 
-    public Set<String> determineScreenIds() {
+    public Set<String> determineScreenIds(final Set<String> exploredStates, final Map<String, StateDefinition> states) {
         Set<String> screenIds = Sets.newHashSet();
 
-        if (getUsedCondition() == ConditionType.SCREEN) {
+        if (getUsedCondition() == ConditionType.CALL) {
+            StateDefinition stateDefinition = states.get(value);
+            screenIds.addAll(stateDefinition.determineScreenIds(exploredStates, states));
+        } else if (getUsedCondition() == ConditionType.SCREEN) {
             screenIds.add(value);
         }
 
         if (and != null) {
             for (ConditionDefinition conditionDefinition : and) {
-                screenIds.addAll(conditionDefinition.determineScreenIds());
+                screenIds.addAll(conditionDefinition.determineScreenIds(exploredStates, states));
             }
         }
 
         if (or != null) {
             for (ConditionDefinition conditionDefinition : or) {
-                screenIds.addAll(conditionDefinition.determineScreenIds());
+                screenIds.addAll(conditionDefinition.determineScreenIds(exploredStates, states));
             }
         }
 
         if (andOr != null) {
             for (ConditionDefinition conditionDefinition : andOr) {
-                screenIds.addAll(conditionDefinition.determineScreenIds());
+                screenIds.addAll(conditionDefinition.determineScreenIds(exploredStates, states));
             }
         }
 
@@ -161,7 +181,7 @@ public class ConditionDefinition {
         stringBuilder.append(getConditionString(this));
 
         if (!and.isEmpty()) {
-            for (ConditionDefinition subCondition: and) {
+            for (ConditionDefinition subCondition : and) {
                 stringBuilder.append(" && ");
                 stringBuilder.append(subCondition.toString());
             }
@@ -169,7 +189,7 @@ public class ConditionDefinition {
         }
 
         if (!or.isEmpty()) {
-            for (ConditionDefinition subCondition: or) {
+            for (ConditionDefinition subCondition : or) {
                 stringBuilder.append(" || ");
                 stringBuilder.append(subCondition.toString());
             }
@@ -188,28 +208,37 @@ public class ConditionDefinition {
 
 
         switch (conditionType) {
-            case LESS:{
-                stringBuilder.append(definition.getNot() != null ? "!" : "").append(definition.getVar()).append( definition.getNot() != null ? " >= " : " < ").append(definition.getValue());
-            } break;
+            case LESS: {
+                stringBuilder.append(definition.getNot() != null ? "!" : "").append(definition.getVar()).append(definition.getNot() != null ? " >= " : " < ").append(definition.getValue());
+            }
+            break;
 
-            case EQUAL:{
-                stringBuilder.append(definition.getVar()).append( definition.getNot() != null ? " != " : " == ").append(definition.getValue());
-            } break;
+            case EQUAL: {
+                stringBuilder.append(definition.getVar()).append(definition.getNot() != null ? " != " : " == ").append(definition.getValue());
+            }
+            break;
 
-            case SCREEN:{
+            case SCREEN: {
                 stringBuilder.append(definition.getNot() != null ? "!" : "").append("hasScreen('").append(definition.getValue()).append("')");
-            } break;
+            }
+            break;
 
             case GREATER: {
-                stringBuilder.append(definition.getVar()).append( definition.getNot() != null ? " <= " : " > ").append(definition.getValue());
-            } break;
+                stringBuilder.append(definition.getVar()).append(definition.getNot() != null ? " <= " : " > ").append(definition.getValue());
+            }
+            break;
             case ENERGY: {
                 stringBuilder.append(definition.getNot() != null ? "!" : "").append("hasEnergy('").append(definition.getValue()).append("')");
-            } break;
+            }
+            break;
+            case CALL: {
+                stringBuilder.append(definition.getNot() != null ? "!" : "").append("function('").append(definition.getValue()).append("')");
+            }
             case BOOLEAN: {
                 final boolean booleanValue = "true".equalsIgnoreCase(definition.getValue());
                 stringBuilder.append(definition.getNot() != null ? !booleanValue : booleanValue);
-            } break;
+            }
+            break;
         }
 
         return stringBuilder.toString();

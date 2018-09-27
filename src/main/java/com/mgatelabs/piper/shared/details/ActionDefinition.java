@@ -2,8 +2,10 @@ package com.mgatelabs.piper.shared.details;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.google.common.collect.Maps;
+import com.google.common.collect.Sets;
 
 import java.util.Map;
+import java.util.Set;
 
 /**
  * Created by @mgatelabs (Michael Fuller) on 9/3/2017.
@@ -12,7 +14,7 @@ public class ActionDefinition {
     private ActionType type;
     private String var;
     private String value;
-    private int count;
+    private String count;
 
     @JsonProperty("args")
     private Map<String, String> arguments;
@@ -41,14 +43,13 @@ public class ActionDefinition {
         this.value = value;
     }
 
-    public int getCount() {
+    public String getCount() {
         return count;
     }
 
-    public void setCount(int count) {
+    public void setCount(String count) {
         this.count = count;
     }
-
 
     public Map<String, String> getArguments() {
         return arguments;
@@ -137,5 +138,16 @@ public class ActionDefinition {
                 return "RETURN";
         }
         return "???";
+    }
+
+    public Set<String> determineScreenIds(final Set<String> exploredStates, final Map<String, StateDefinition> states) {
+        Set<String> found = Sets.newHashSet();
+
+        if (getType() == ActionType.CALL) {
+            StateDefinition otherDefinition = states.get(getValue());
+            found.addAll(otherDefinition.determineScreenIds(exploredStates, states));
+        }
+
+        return found;
     }
 }

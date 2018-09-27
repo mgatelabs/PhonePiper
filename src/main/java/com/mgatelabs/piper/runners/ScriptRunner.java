@@ -1,10 +1,7 @@
 package com.mgatelabs.piper.runners;
 
 import com.google.common.base.Joiner;
-import com.google.common.collect.ImmutableMap;
-import com.google.common.collect.ImmutableSet;
-import com.google.common.collect.Lists;
-import com.google.common.collect.Maps;
+import com.google.common.collect.*;
 import com.mgatelabs.piper.shared.details.*;
 import com.mgatelabs.piper.shared.helper.DeviceHelper;
 import com.mgatelabs.piper.shared.helper.InfoTransfer;
@@ -377,7 +374,23 @@ public class ScriptRunner {
             stateTransfer.setStateId(stateEntry.getKey());
             List<String> determinedScreenIds = Lists.newArrayList();
 
-            List<String> tempScreenIds = stateEntry.getValue().determineScreenIds();
+            List<String> unfilteredScreenIds = stateEntry.getValue().determineScreenIds(ImmutableSet.of(), scriptDefinition.getStates());
+            Set<String> tempScreenIds = Sets.newHashSet();
+
+            for (String tempScreenId: unfilteredScreenIds) {
+                if (tempScreenId.contains("$")) {
+                    String regex = replaceTokensForRegex(tempScreenId);
+                    Pattern p = Pattern.compile(regex);
+                    for (ScreenDefinition screenDefinition: viewDefinition.getScreens()) {
+                        if (p.matcher(screenDefinition.getScreenId()).matches()) {
+                            tempScreenIds.add(screenDefinition.getScreenId());
+                        }
+                    }
+                } else {
+                    tempScreenIds.add(tempScreenId);
+                }
+            }
+
             for (String screeId : tempScreenIds) {
                 ScreenDefinition screenDefinition = screens.get(screeId);
                 if (screenDefinition == null) {
@@ -617,7 +630,7 @@ public class ScriptRunner {
             }
         }
 
-        return state(stateDefinition, imageWrapper, startingAction, false, ImmutableMap.of(), false);
+        return state(stateDefinition, imageWrapper, startingAction, StateCallType.STATE, ImmutableMap.of(), false);
     }
 
     private String lapEvent(String id) {
@@ -646,8 +659,8 @@ public class ScriptRunner {
         return status == Status.RUNNING;
     }
 
-    private StateResult state(final StateDefinition stateDefinition, final ImageWrapper imageWrapper, int startingAction, boolean isCall, Map<String, String> arguments, boolean inBatch) {
-        if (isCall) {
+    private StateResult state(final StateDefinition stateDefinition, final ImageWrapper imageWrapper, int startingAction, StateCallType callType, Map<String, String> arguments, boolean inBatch) {
+        if (callType == StateCallType.CALL) {
             logger.fine("Calling State: " + stateDefinition.getName());
             vars.push(stateDefinition, arguments);
         }
@@ -664,17 +677,27 @@ public class ScriptRunner {
 
                     priorResult = stateResult;
                     stateResult = new StateResult(actionDefinition.getType(), actionDefinition, priorResult, actionIndex, stateDefinition);
-                    final int loopIndex = actionDefinition.getCount() <= 0 ? 1 : actionDefinition.getCount();
+
+                    final int loopIndex;
+                    if (!StringUtils.isEmpty(actionDefinition.getCount())) {
+                        Var v = valueHandler(actionDefinition.getCount());
+                        loopIndex = v.toInt();
+                    } else {
+                        loopIndex = 1;
+                    }
 
                     for (int looper = 0; looper < loopIndex; looper++) {
                         if (!stillRunning()) {
                             return new StateResult(ActionType.STOP, actionDefinition, priorResult, actionIndex, stateDefinition);
                         }
 
+
                         // Skip actions not allowed for the current state mode
-                        if (isCall && !actionDefinition.getType().isAllowedForCall()) {
+                        if (callType == StateCallType.CALL && !actionDefinition.getType().isAllowedForCall()) {
                             continue;
-                        } else if (!isCall && !actionDefinition.getType().isAllowedForState()) {
+                        } else if (callType == StateCallType.STATE && !actionDefinition.getType().isAllowedForState()) {
+                            continue;
+                        } else if (callType == StateCallType.CONDITION && !actionDefinition.getType().isAllowedForCondition()) {
                             continue;
                         }
 
@@ -781,7 +804,7 @@ public class ScriptRunner {
                                 for (Map.Entry<String, String> entry : actionDefinition.getArguments().entrySet()) {
                                     callArguments.put(entry.getKey(), replaceTokens(entry.getValue()));
                                 }
-                                final StateResult callResult = state(callDefinition, imageWrapper, 0, true, callArguments, batchCmds);
+                                final StateResult callResult = state(callDefinition, imageWrapper, 0, StateCallType.CALL, callArguments, batchCmds);
                                 vars.pop();
                                 if (callResult.getResult() != null && !StringUtils.isEmpty(actionDefinition.getVar())) {
                                     setVar(actionDefinition.getVar(), callResult.getResult());
@@ -802,7 +825,7 @@ public class ScriptRunner {
                 }
             }
         }
-        if (isCall) {
+        if (callType != StateCallType.STATE) {
             return StateResult.RETURN;
         }
         return StateResult.REPEAT;
@@ -817,7 +840,7 @@ public class ScriptRunner {
                     String varName = text.substring(startIndex += 2, endIndex).trim();
                     if (varName.length() > 0) {
                         if (vars.getVarInstance(varName) != null) {
-                            text = text.substring(0, startIndex - 2) + vars.get(varName) + text.substring(endIndex + 1);
+                            text = text.substring(0, startIndex) + vars.get(varName) + text.substring(endIndex + 1);
                         } else {
                             break;
                         }
@@ -836,14 +859,7 @@ public class ScriptRunner {
             while ((startIndex = text.indexOf("${")) >= 0) {
                 int endIndex = text.indexOf('}', startIndex);
                 if (endIndex > startIndex + 2) {
-                    String varName = text.substring(startIndex += 2, endIndex).trim();
-                    if (varName.length() > 0) {
-                        if (vars.getVarInstance(varName) != null) {
-                            text = text.substring(0, startIndex - 2) + "[a-zA-Z0-9_-]+" + text.substring(endIndex + 1);
-                        } else {
-                            break;
-                        }
-                    }
+                    text = text.substring(0, startIndex) + "[a-zA-Z0-9_-]+" + text.substring(endIndex + 1);
                 } else {
                     break;
                 }
@@ -898,6 +914,23 @@ public class ScriptRunner {
                 }
             }
             break;
+            case CALL: {
+                final String callName = conditionDefinition.getValue();
+                if (!callName.startsWith("@")) {
+                    throw new RuntimeException("All condition calls must start with a @: " + conditionDefinition.getValue());
+                }
+                final StateDefinition callDefinition = scriptDefinition.getStates().get(callName);
+                final Map<String, String> callArguments = Maps.newHashMap();
+                for (Map.Entry<String, String> entry : conditionDefinition.getArguments().entrySet()) {
+                    callArguments.put(entry.getKey(), replaceTokens(entry.getValue()));
+                }
+                final StateResult callResult = state(callDefinition, imageWrapper, 0, StateCallType.CONDITION, callArguments, false);
+                vars.pop();
+                if (callResult.getResult() == null) {
+                    throw new RuntimeException("All condition calls must return a 0 or 1");
+                }
+                result = callResult.getResult().toInt() == 1;
+            } break;
             case SCREEN: {
                 ScreenDefinition screenDefinition = screens.get(conditionDefinition.getValue());
                 if (screenDefinition == null || !screenDefinition.isEnabled() || screenDefinition.getPoints() == null || screenDefinition.getPoints().isEmpty()) {

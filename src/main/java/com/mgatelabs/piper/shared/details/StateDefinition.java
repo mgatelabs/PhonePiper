@@ -6,6 +6,7 @@ import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 import com.google.common.collect.Sets;
 
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -65,10 +66,15 @@ public class StateDefinition {
         this.variables = variables;
     }
 
-    public List<String> determineScreenIds() {
+    public List<String> determineScreenIds(final Set<String> exploredStates, final Map<String, StateDefinition> states) {
+        if (exploredStates.contains(id)) {
+            return ImmutableList.of();
+        }
         Set<String> screenIds = Sets.newHashSet();
+        Set<String> copy = Sets.newHashSet(exploredStates);
+        copy.add(id);
         for (StatementDefinition statementDefinition : statements) {
-            screenIds.addAll(statementDefinition.determineScreenIds());
+            screenIds.addAll(statementDefinition.determineScreenIds(copy, states));
         }
         return ImmutableList.copyOf(screenIds);
     }

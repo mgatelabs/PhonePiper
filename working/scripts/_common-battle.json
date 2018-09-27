@@ -15,17 +15,10 @@
       "statements": [
         {
           "condition": {
-            "is": "SCREEN",
-            "value": "game-battle",
+            "is": "CALL",
+            "value": "@isBattleReady",
             "and": [
-              {
-                "is": "SCREEN",
-                "value": "game-battle-auto_off"
-              },
-              {
-                "is": "SCREEN",
-                "value": "battle-unit-0_ready"
-              }
+              { "is": "CALL", "value": "@isUnitReady", "args": {"index": "0"} }
             ]
           },
           "actions": [
@@ -45,17 +38,23 @@
             {
               "type": "CALL",
               "value": "@tapUnit",
-              "args": {"index":"0"}
+              "args": {
+                "index": "0"
+              }
             },
             {
               "type": "CALL",
               "value": "@tapUnit",
-              "args": {"index":"1"}
+              "args": {
+                "index": "1"
+              }
             },
             {
               "type": "CALL",
               "value": "@tapUnit",
-              "args": {"index":"2"}
+              "args": {
+                "index": "2"
+              }
             },
             {
               "type": "BATCH",
@@ -106,7 +105,6 @@
         }
       ]
     },
-
     "_common_battle-auto": {
       "name": "Common Battle - Auto",
       "statements": [
@@ -172,8 +170,7 @@
         }
       ]
     },
-
-    "_common_battle-repeat":{
+    "_common_battle-repeat": {
       "name": "Common Battle - Repeat",
       "statements": [
         {
@@ -184,9 +181,9 @@
               {
                 "is": "SCREEN",
                 "value": "game-battle-auto_off",
-                "or" : [
+                "or": [
                   {
-                    "is":"SCREEN",
+                    "is": "SCREEN",
                     "value": "game-battle-repeat"
                   }
                 ]
@@ -247,8 +244,7 @@
         }
       ]
     },
-
-    "@showUnitActions":{
+    "@showUnitActions": {
       "name": "Function - Show Unit's Actions",
       "variables": {
         "index": {
@@ -274,8 +270,33 @@
         }
       ]
     },
-
-    "@tapUnit":{
+    "@showUnitActions": {
+      "name": "Function - Show Unit's Actions",
+      "variables": {
+        "index": {
+          "value": "0",
+          "type": "INT"
+        }
+      },
+      "statements": [
+        {
+          "actions": [
+            {
+              "type": "SWIPE_RIGHT",
+              "value": "battle-unit_${index}"
+            },
+            {
+              "type": "WAIT",
+              "value": "200"
+            },
+            {
+              "type": "RETURN"
+            }
+          ]
+        }
+      ]
+    },
+    "@tapUnit": {
       "name": "Function - Tap Unit",
       "variables": {
         "index": {
@@ -297,8 +318,7 @@
         }
       ]
     },
-
-    "@readyUnitGuard":{
+    "@readyUnitGuard": {
       "name": "Function - Ready Unit Guard",
       "variables": {
         "index": {
@@ -324,8 +344,7 @@
         }
       ]
     },
-
-    "@readyUnitLB":{
+    "@readyUnitLb": {
       "name": "Function - Ready Unit LB",
       "variables": {
         "index": {
@@ -337,7 +356,11 @@
         {
           "actions": [
             {
-              "type": "CALL", "value": "@showUnitActions", "args": {"index": "${index}"}
+              "type": "CALL",
+              "value": "@showUnitActions",
+              "args": {
+                "index": "${index}"
+              }
             },
             {
               "type": "TAP",
@@ -355,8 +378,7 @@
         }
       ]
     },
-
-    "@readyUnitEsper":{
+    "@readyUnitEsper": {
       "name": "Function - Ready Unit Esper",
       "variables": {
         "index": {
@@ -368,7 +390,11 @@
         {
           "actions": [
             {
-              "type": "CALL", "value": "@showUnitActions", "args": {"index": "${index}"}
+              "type": "CALL",
+              "value": "@showUnitActions",
+              "args": {
+                "index": "${index}"
+              }
             },
             {
               "type": "TAP",
@@ -385,7 +411,165 @@
           ]
         }
       ]
+    },
+    "@isUnitReady": {
+      "name": "Function - Is Unit Ready",
+      "variables": {
+        "index": {
+          "value": "0",
+          "type": "INT"
+        }
+      },
+      "statements": [
+        {
+          "condition": {
+            "is": "SCREEN",
+            "value": "battle-unit-${index}_ready"
+          },
+          "actions": [
+            {
+              "type": "RETURN",
+              "value": "1"
+            }
+          ]
+        },
+        {
+          "actions": [
+            {
+              "type": "RETURN",
+              "value": "0"
+            }
+          ]
+        }
+      ]
+    },
+    "@isUnitLbReady": {
+      "name": "Function - Is Unit Limit Break Ready",
+      "variables": {
+        "index": {
+          "value": "0",
+          "type": "INT"
+        }
+      },
+      "statements": [
+        {
+          "condition": {
+            "is": "SCREEN",
+            "value": "battle-unit-${index}_notfull"
+          },
+          "actions": [
+            {
+              "type": "RETURN",
+              "value": "0"
+            }
+          ]
+        },
+        {
+          "actions": [
+            {
+              "type": "RETURN",
+              "value": "1"
+            }
+          ]
+        }
+      ]
+    },
+    "@isUnitMpReady": {
+      "name": "Function - Is Unit MP Ready",
+      "variables": {
+        "index": {
+          "value": "0",
+          "type": "INT"
+        }
+      },
+      "statements": [
+        {
+          "condition": {
+            "is": "SCREEN",
+            "value": "battle-unit-${index}_mp"
+          },
+          "actions": [
+            {
+              "type": "RETURN",
+              "value": "1"
+            }
+          ]
+        },
+        {
+          "actions": [
+            {
+              "type": "RETURN",
+              "value": "0"
+            }
+          ]
+        }
+      ]
+    },
+    "@isEsperReady": {
+      "name": "Function - Is Esper Ready",
+      "variables": {
+        "index": {
+          "value": "0",
+          "type": "INT"
+        }
+      },
+      "statements": [
+        {
+          "condition": {
+            "is": "SCREEN",
+            "value": "battle-esper-notfull"
+          },
+          "actions": [
+            {
+              "type": "RETURN",
+              "value": "0"
+            }
+          ]
+        },
+        {
+          "actions": [
+            {
+              "type": "RETURN",
+              "value": "1"
+            }
+          ]
+        }
+      ]
+    },
+    "@isBattleReady": {
+      "name": "Function - Is Battle Ready",
+      "statements": [
+        {
+          "condition": {
+            "is": "SCREEN",
+            "value": "game-battle",
+            "andOr": [
+              {
+                "is": "SCREEN",
+                "value": "game-battle-auto_off"
+              },
+              {
+                "is": "SCREEN",
+                "value": "game-battle-repeat"
+              }
+            ]
+          },
+          "actions": [
+            {
+              "type": "RETURN",
+              "value": "1"
+            }
+          ]
+        },
+        {
+          "actions": [
+            {
+              "type": "RETURN",
+              "value": "0"
+            }
+          ]
+        }
+      ]
     }
-
   }
 }

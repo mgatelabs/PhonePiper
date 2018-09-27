@@ -11,6 +11,16 @@
         "_arena-battle-fight",
         "_common-no_op"
       ],
+      "variables": {
+        "_turn": {
+          "value": "1",
+          "type": "INT"
+        },
+        "_step": {
+          "value": "0",
+          "type": "INT"
+        }
+      },
       "statements": [
         {
           "condition": {

@@ -172,6 +172,7 @@
         }
       ]
     },
+
     "_common_battle-repeat":{
       "name": "Common Battle - Repeat",
       "statements": [
@@ -288,6 +289,95 @@
             {
               "type": "TAP",
               "value": "battle-unit_${index}"
+            },
+            {
+              "type": "RETURN"
+            }
+          ]
+        }
+      ]
+    },
+
+    "@readyUnitGuard":{
+      "name": "Function - Ready Unit Guard",
+      "variables": {
+        "index": {
+          "value": "0",
+          "type": "INT"
+        }
+      },
+      "statements": [
+        {
+          "actions": [
+            {
+              "type": "SWIPE_DOWN",
+              "value": "battle-unit_${index}"
+            },
+            {
+              "type": "WAIT",
+              "value": "200"
+            },
+            {
+              "type": "RETURN"
+            }
+          ]
+        }
+      ]
+    },
+
+    "@readyUnitLB":{
+      "name": "Function - Ready Unit LB",
+      "variables": {
+        "index": {
+          "value": "0",
+          "type": "INT"
+        }
+      },
+      "statements": [
+        {
+          "actions": [
+            {
+              "type": "CALL", "value": "@showUnitActions", "args": {"index": "${index}"}
+            },
+            {
+              "type": "TAP",
+              "value": "battle-skill-top-0",
+              "count": "1"
+            },
+            {
+              "type": "WAIT",
+              "value": "200"
+            },
+            {
+              "type": "RETURN"
+            }
+          ]
+        }
+      ]
+    },
+
+    "@readyUnitEsper":{
+      "name": "Function - Ready Unit Esper",
+      "variables": {
+        "index": {
+          "value": "0",
+          "type": "INT"
+        }
+      },
+      "statements": [
+        {
+          "actions": [
+            {
+              "type": "CALL", "value": "@showUnitActions", "args": {"index": "${index}"}
+            },
+            {
+              "type": "TAP",
+              "value": "battle-skill-top-3",
+              "count": "1"
+            },
+            {
+              "type": "WAIT",
+              "value": "200"
             },
             {
               "type": "RETURN"

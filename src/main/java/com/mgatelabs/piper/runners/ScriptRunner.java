@@ -81,8 +81,6 @@ public class ScriptRunner {
     //private static final String VAR_SECONDS = "_seconds";
     private static final String VAR_LOOPS = "_loops";
 
-    private long elapsedTime;
-
     public ScriptRunner(PlayerDefinition playerDefinition, ConnectionDefinition connectionDefinition, DeviceHelper deviceHelper, ScriptDefinition scriptDefinition, DeviceDefinition deviceDefinition, ViewDefinition viewDefinition, WebLogHandler webLogHandler, Handler fileHandler) {
         this.playerDefinition = playerDefinition;
         this.scriptDefinition = scriptDefinition;
@@ -107,13 +105,11 @@ public class ScriptRunner {
         if (fileHandler != null) {
             min = webLogHandler.getLevel().intValue() < fileHandler.getLevel().intValue() ? webLogHandler.getLevel() : fileHandler.getLevel();
         }
-        logger.setLevel(webLogHandler.getLevel());
-        shell.setLevel(webLogHandler.getLevel());
+        logger.setLevel(min);
+        shell.setLevel(min);
 
 
         logger.finer("Extracting Variables");
-
-        elapsedTime = 0;
 
         // Script Includes
         Map<String, ScriptDefinition> scriptDefinitions = Maps.newLinkedHashMap();
@@ -491,7 +487,7 @@ public class ScriptRunner {
             // Always reset the loop counter
             setVar(VAR_LOOPS, IntVar.ZERO);
 
-            vars.state(stateDefinition, Maps.newHashMap());
+            vars.state(stateDefinition, Maps.newHashMap(), logger);
 
             while (isRunning()) {
 
@@ -576,7 +572,7 @@ public class ScriptRunner {
                                 stateArguments.put(entry.getKey(), replaceTokens(entry.getValue()));
                             }
                             logger.fine("Running State: " + stateDefinition.getName());
-                            vars.state(stateDefinition, stateArguments);
+                            vars.state(stateDefinition, stateArguments, logger);
                             currentStateId = stateDefinition.getId();
                             keepRunning = false;
                         }

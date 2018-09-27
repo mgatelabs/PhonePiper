@@ -101,6 +101,12 @@ public class StateDefinition {
         for (StatementDefinition statementDefinition : getStatements()) {
             if (statementDefinition.getCondition() != null)
                 statementDefinition.getCondition().fix();
+            if (statementDefinition.getActions() == null) {
+                statementDefinition.setActions(Lists.newArrayList());
+            }
+            for (ActionDefinition actionDefinition: statementDefinition.getActions()) {
+                actionDefinition.fix();
+            }
         }
     }
 

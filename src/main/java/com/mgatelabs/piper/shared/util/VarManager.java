@@ -35,7 +35,7 @@ public class VarManager {
         }
     }
 
-    public void state(StateDefinition stateDefinition, Map<String, String> arguments) {
+    public void state(StateDefinition stateDefinition, Map<String, String> arguments, Logger logger) {
         calls.clear();
         if (!stateDefinition.getId().equalsIgnoreCase(currentSceneId)) {
             // Only reset the state if the state is different

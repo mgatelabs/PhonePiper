@@ -644,6 +644,7 @@ public class ScriptRunner {
     }
 
     private Var valueHandler(String value) {
+        if (value == null) return new StringVar("");
         if (SINGLE_VARIABLE.matcher(value).matches()) {
             // This is a single variable lookup, extract the name and look it up
             return getVar(value.substring(2, value.length() - 1));
@@ -949,7 +950,14 @@ public class ScriptRunner {
             }
             break;
             case ENERGY: {
-                Var energy = valueHandler(conditionDefinition.getValue());
+                Var energy;
+                if (conditionDefinition.getValue() != null) {
+                    energy = valueHandler(conditionDefinition.getValue());
+                } else if (conditionDefinition.getVar() != null) {
+                    energy = getVar(conditionDefinition.getVar());
+                } else {
+                    throw new RuntimeException("Unknown ENERGY value");
+                }
                 energy = energy.asInt();
                 if (energy.toInt() >= PlayerDefinition.MIN_ENERGY && energy.toInt() <= PlayerDefinition.MAX_ENERGY) {
                     float requiredPercent = (energy.toFloat() / (float) playerDefinition.getTotalEnergy());

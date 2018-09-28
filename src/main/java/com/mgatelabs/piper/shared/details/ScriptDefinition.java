@@ -67,7 +67,7 @@ public class ScriptDefinition {
     public Map<String, StateDefinition> getFilteredStates() {
         Map<String, StateDefinition> tempMap = Maps.newHashMap();
         for (Map.Entry<String, StateDefinition> entry : states.entrySet()) {
-            if (!entry.getKey().startsWith("_")) {
+            if (!entry.getKey().startsWith("_") && !entry.getKey().startsWith("@")) {
                 tempMap.put(entry.getKey(), entry.getValue());
             }
         }

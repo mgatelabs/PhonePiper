@@ -26,6 +26,7 @@ public enum ActionType {
     ADD(ActionValueType.INT, true, true, true, true), // Increment a variable
     LAP(ActionValueType.ID, false, true, true, false), // LAP EVENT
     EVENT(ActionValueType.EVENT_ID, false, true, true, false), // GENERAL EVENT
+    MATH(ActionValueType.MATH, true, true, true, true), // GENERAL EVENT
     CALL(ActionValueType.CALL_ID, false, true, true, true), // GENERAL EVENT
     INPUT(ActionValueType.INPUT_ID, false, true, true, false); // GENERIC INPUT
 
@@ -38,7 +39,7 @@ public enum ActionType {
 
     ActionType(ActionValueType valueType, boolean varNameRequired, boolean allowedForState, boolean allowedForCall, boolean allowedForCondition) {
         this.valueType = valueType;
-        this.varNameRequired = false;
+        this.varNameRequired = varNameRequired;
         this.allowedForCall = allowedForCall;
         this.allowedForState = allowedForState;
         this.allowedForCondition = allowedForCondition;

@@ -15,130 +15,106 @@
       ]
     },
 
-    "_raid_battle-auto":{
-      "name": "Raid Battle - Auto (Override)",
+    "_raid_battle-auto": {
+      "name": "Raid - Battle - Auto",
       "statements": [
         {
           "condition": {
-            "is": "SCREEN",
-            "value": "game-battle",
+            "is": "CALL",
+            "value": "@isBattleReady",
             "and": [
               {
-                "is": "SCREEN",
-                "value": "game-battle-auto_off",
-                "or" : [
-                  {
-                    "is":"SCREEN",
-                    "value": "game-battle-repeat"
-                  }
-                ]
-              },
-              {
-                "is": "SCREEN",
-                "value": "battle-unit-1_ready"
+                "is": "CALL",
+                "value": "@isUnitReady",
+                "args": {
+                  "index": "1"
+                }
               }
             ]
           },
           "actions": [
             {
               "type": "INFO",
-              "value": "Breaking"
+              "value": "Breaking SPR"
             },
             {
-              "type": "SWIPE_RIGHT",
-              "value": "battle-unit_1"
+              "type": "CALL",
+              "value": "@showUnitActions",
+              "args": {
+                "index": "1"
+              }
             },
             {
-              "type": "WAIT",
-              "value": "200"
+              "type": "CALL",
+              "value": "@selectUnitAction",
+              "args": {
+                "row": "8",
+                "column": "0"
+              }
             },
             {
-              "type": "SLOW_UP",
-              "value": "battle-skill-top-slider",
-              "count": "7"
-            },
-            {
-              "type": "TAP",
-              "value": "battle-skill-top-5"
-            },
-            {
-              "type": "WAIT",
-              "value": "200"
-            },
-            {
-              "type": "TAP",
-              "value": "battle-unit_1"
+              "type": "CALL",
+              "value": "@tapUnit",
+              "args": {
+                "index": "1"
+              }
             },
             {
               "type": "WAIT",
               "value": "400"
             },
             {
-              "type": "SET",
-              "value": "0",
-              "var": "setup"
-            },
-            {
               "type": "REPEAT",
               "value": ""
             }
           ]
-        },{
+        },
+        {
           "condition": {
-            "is": "SCREEN",
-            "value": "game-battle",
+            "is": "CALL",
+            "value": "@isBattleReady",
             "and": [
               {
-                "is": "SCREEN",
-                "value": "game-battle-auto_off",
-                "or" : [
-                  {
-                    "is":"SCREEN",
-                    "value": "game-battle-repeat"
-                  }
-                ]
+                "is": "CALL",
+                "value": "@isUnitReady",
+                "args": {
+                  "index": "0"
+                }
               },
               {
-                "is": "SCREEN",
-                "value": "battle-unit-2_ready"
+                "is": "CALL",
+                "value": "@isUnitAtkReady",
+                "args": {
+                  "index": "0"
+                }
               }
             ]
           },
           "actions": [
             {
               "type": "INFO",
-              "value": "Stealing"
+              "value": "Lila A"
             },
             {
-              "type": "SWIPE_RIGHT",
-              "value": "battle-unit_2"
+              "type": "CALL",
+              "value": "@showUnitActions",
+              "args": {
+                "index": "0"
+              }
             },
             {
-              "type": "WAIT",
-              "value": "200"
-            },
-            {
-              "type": "TAP",
-              "value": "battle-skill-top-2"
-            },
-            {
-              "type": "WAIT",
-              "value": "200"
-            },
-            {
-              "type": "TAP",
-              "value": "battle-unit_2"
+              "type": "CALL",
+              "value": "@selectUnitAction",
+              "args": {
+                "row": "8",
+                "column": "1"
+              }
             },
             {
               "type": "WAIT",
               "value": "400"
             },
             {
-              "type": "SET",
-              "value": "0",
-              "var": "setup"
-            },
-            {
               "type": "REPEAT",
               "value": ""
             }
@@ -146,54 +122,48 @@
         },
         {
           "condition": {
-            "is": "SCREEN",
-            "value": "game-battle",
+            "is": "CALL",
+            "value": "@isBattleReady",
             "and": [
               {
-                "is": "SCREEN",
-                "value": "game-battle-auto_off",
-                "or" : [
-                  {
-                    "is":"SCREEN",
-                    "value": "game-battle-repeat"
-                  }
-                ]
+                "is": "CALL",
+                "value": "@isUnitReady",
+                "args": {
+                  "index": "2"
+                }
               },
               {
-                "is": "SCREEN",
-                "value": "battle-unit-0_ready"
-              },
-              {
-                "not": "SCREEN",
-                "value": "battle-unit-0_ability"
+                "is": "CALL",
+                "value": "@isUnitAtkReady",
+                "args": {
+                  "index": "2"
+                }
               }
             ]
           },
           "actions": [
             {
               "type": "INFO",
-              "value": "Nuking"
+              "value": "Lila B"
             },
             {
-              "type": "SWIPE_RIGHT",
-              "value": "battle-unit_0"
+              "type": "CALL",
+              "value": "@showUnitActions",
+              "args": {
+                "index": "2"
+              }
+            },
+            {
+              "type": "CALL",
+              "value": "@selectUnitAction",
+              "args": {
+                "row": "5",
+                "column": "1"
+              }
             },
             {
               "type": "WAIT",
-              "value": "200"
-            },
-            {
-              "type": "SLOW_UP",
-              "value": "battle-skill-top-slider",
-              "count": "7"
-            },
-            {
-              "type": "TAP",
-              "value": "battle-skill-top-5"
-            },
-            {
-              "type": "WAIT",
-              "value": "500"
+              "value": "400"
             },
             {
               "type": "REPEAT",
@@ -201,72 +171,50 @@
             }
           ]
         },
-
-
         {
           "condition": {
-            "is": "SCREEN",
-            "value": "game-battle",
+            "is": "CALL",
+            "value": "@isBattleReady",
             "and": [
               {
-                "is": "SCREEN",
-                "value": "game-battle-auto_off",
-                "or" : [
-                  {
-                    "is":"SCREEN",
-                    "value": "game-battle-repeat"
-                  }
-                ]
+                "is": "CALL",
+                "value": "@isUnitReady",
+                "args": {
+                  "index": "3"
+                }
               },
               {
-                "is": "SCREEN",
-                "value": "battle-unit-3_ready"
-              },
-              {
-                "not": "SCREEN",
-                "value": "battle-unit-3_magic"
+                "is": "CALL",
+                "value": "@isUnitAtkReady",
+                "args": {
+                  "index": "3"
+                }
               }
             ]
           },
           "actions": [
             {
               "type": "INFO",
-              "value": "Rinoa"
+              "value": "Olive"
             },
             {
-              "type": "SWIPE_RIGHT",
-              "value": "battle-unit_3"
+              "type": "CALL",
+              "value": "@showUnitActions",
+              "args": {
+                "index": "3"
+              }
             },
             {
-              "type": "WAIT",
-              "value": "200"
-            },
-            {
-              "type": "SLOW_UP",
-              "value": "battle-skill-top-slider",
-              "count": "6"
-            },
-            {
-              "type": "TAP",
-              "value": "battle-skill-top-2"
-            },
-            {
-              "type": "WAIT",
-              "value": "500"
-            },
-            {
-              "type": "SLOW_DOWN",
-              "value": "battle-skill-top-slider",
-              "count": "3"
-            },
-            {
-              "type": "TAP",
-              "value": "battle-skill-top-0",
-              "count": "3"
+              "type": "CALL",
+              "value": "@selectUnitAction",
+              "args": {
+                "row": "8",
+                "column": "0"
+              }
             },
             {
               "type": "WAIT",
-              "value": "500"
+              "value": "400"
             },
             {
               "type": "REPEAT",
@@ -274,57 +222,50 @@
             }
           ]
         },
-
         {
           "condition": {
-            "is": "SCREEN",
-            "value": "game-battle",
+            "is": "CALL",
+            "value": "@isBattleReady",
             "and": [
               {
-                "is": "SCREEN",
-                "value": "game-battle-auto_off",
-                "or" : [
-                  {
-                    "is":"SCREEN",
-                    "value": "game-battle-repeat"
-                  }
-                ]
+                "is": "CALL",
+                "value": "@isUnitReady",
+                "args": {
+                  "index": "4"
+                }
               },
               {
-                "is": "SCREEN",
-                "value": "battle-unit-4_ready"
-              },
-              {
-                "not": "SCREEN",
-                "value": "battle-unit-4_ability"
+                "is": "CALL",
+                "value": "@isUnitAtkReady",
+                "args": {
+                  "index": "4"
+                }
               }
             ]
           },
           "actions": [
             {
               "type": "INFO",
-              "value": "Adam J"
+              "value": "Adam"
             },
             {
-              "type": "SWIPE_RIGHT",
-              "value": "battle-unit_4"
+              "type": "CALL",
+              "value": "@showUnitActions",
+              "args": {
+                "index": "4"
+              }
+            },
+            {
+              "type": "CALL",
+              "value": "@selectUnitAction",
+              "args": {
+                "row": "4",
+                "column": "0"
+              }
             },
             {
               "type": "WAIT",
-              "value": "200"
-            },
-            {
-              "type": "SLOW_UP",
-              "value": "battle-skill-top-slider",
-              "count": "6"
-            },
-            {
-              "type": "TAP",
-              "value": "battle-skill-top-5"
-            },
-            {
-              "type": "WAIT",
-              "value": "500"
+              "value": "400"
             },
             {
               "type": "REPEAT",
@@ -332,97 +273,75 @@
             }
           ]
         },
-
         {
           "condition": {
-            "is": "SCREEN",
-            "value": "game-battle",
+            "is": "CALL",
+            "value": "@isBattleReady",
             "and": [
               {
-                "is": "SCREEN",
-                "value": "game-battle-auto_off",
-                "or" : [
-                  {
-                    "is":"SCREEN",
-                    "value": "game-battle-repeat"
-                  }
-                ]
+                "is": "CALL",
+                "value": "@isUnitActionReady",
+                "args": {
+                  "index": "0"
+                }
               },
               {
-                "is": "SCREEN",
-                "value": "battle-unit-0_ready"
-              },
-              {
-                "is": "SCREEN",
-                "value": "battle-unit-0_ability"
-              },
-              {
-                "is": "SCREEN",
-                "value": "battle-unit-3_ready"
-              },
-              {
-                "is": "SCREEN",
-                "value": "battle-unit-3_magic"
-              },
-              {
-                "is": "SCREEN",
-                "value": "battle-unit-4_ready"
-              },
-              {
-                "is": "SCREEN",
-                "value": "battle-unit-4_ability"
+                "is": "CALL",
+                "value": "@isUnitActionReady",
+                "args": {
+                  "index": "2"
+                }
               }
             ]
           },
           "actions": [
             {
               "type": "INFO",
-              "value": "Attack"
+              "value": "Fighting"
             },
             {
-              "type": "TAP",
-              "value": "battle-unit_0"
+              "type": "BATCH",
+              "value": "START"
             },
             {
-              "type": "TAP",
-              "value": "battle-unit_3"
+              "type": "CALL",
+              "value": "@tapUnit",
+              "args": {
+                "index": "4"
+              }
             },
             {
-              "type": "TAP",
-              "value": "battle-unit_4"
+              "type": "CALL",
+              "value": "@tapUnit",
+              "args": {
+                "index": "3"
+              }
             },
             {
-              "type": "WAIT",
-              "value": "200"
+              "type": "CALL",
+              "value": "@tapUnit",
+              "args": {
+                "index": "0"
+              }
+            },
+            {
+              "type": "CALL",
+              "value": "@tapUnit",
+              "args": {
+                "index": "2"
+              }
+            },
+            {
+              "type": "BATCH",
+              "value": "END"
             },
             {
               "type": "REPEAT",
               "value": ""
-            }
-          ]
-        },
-
-        {
-          "condition": {
-            "is": "SCREEN",
-            "value": "game-battle",
-            "and": [
-              {
-                "not": "SCREEN",
-                "value": "game-battle-auto_off"
-              }
-            ]
-          },
-          "actions": [
-            {
-              "type": "SET",
-              "value": "0",
-              "var": "_loops"
             }
           ]
         }
       ]
     }
-
   }
 }

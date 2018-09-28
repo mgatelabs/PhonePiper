@@ -128,6 +128,9 @@ public class ActionDefinition {
             case LAP: {
                 return "Lap: " + value;
             }
+            case MATH: {
+                return "Lap: " + value;
+            }
             case EVENT:
                 return "Event: " + value;
             case INPUT:

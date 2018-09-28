@@ -59,6 +59,7 @@ public class VarDefinition {
     }
 
     public VarDisplay getDisplayType() {
+        if (displayType == null) return VarDisplay.STANDARD;
         return displayType;
     }
 

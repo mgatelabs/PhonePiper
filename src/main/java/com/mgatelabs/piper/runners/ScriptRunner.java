@@ -160,7 +160,7 @@ public class ScriptRunner {
         }
 
         for (VarDefinition varDefinition : scriptDefinition.getVars()) {
-            if (varDefinition.getDisplayType() == VarDisplay.SECONDS  && varDefinition.getModify() != VarModify.EDITABLE) {
+            if (varDefinition.getDisplayType() == VarDisplay.SECONDS && varDefinition.getModify() != VarModify.EDITABLE) {
                 timers.put(varDefinition.getName(), new VarTimer(false));
             }
         }
@@ -332,7 +332,7 @@ public class ScriptRunner {
         vars.update(name, data);
     }
 
-    private void setVar(String name, Var value) {
+    private void setVarFromUserInput(String name, Var value) {
         final VarDefinition varDefinition = getVarDefinition(name);
         switch (varDefinition.getDisplayType()) {
             case SECONDS: {
@@ -377,11 +377,11 @@ public class ScriptRunner {
             List<String> unfilteredScreenIds = stateEntry.getValue().determineScreenIds(ImmutableSet.of(), scriptDefinition.getStates());
             Set<String> tempScreenIds = Sets.newHashSet();
 
-            for (String tempScreenId: unfilteredScreenIds) {
+            for (String tempScreenId : unfilteredScreenIds) {
                 if (tempScreenId.contains("$")) {
                     String regex = replaceTokensForRegex(tempScreenId);
                     Pattern p = Pattern.compile(regex);
-                    for (ScreenDefinition screenDefinition: viewDefinition.getScreens()) {
+                    for (ScreenDefinition screenDefinition : viewDefinition.getScreens()) {
                         if (p.matcher(screenDefinition.getScreenId()).matches()) {
                             tempScreenIds.add(screenDefinition.getScreenId());
                         }
@@ -498,7 +498,7 @@ public class ScriptRunner {
             }
 
             // Always reset the loop counter
-            setVar(VAR_LOOPS, IntVar.ZERO);
+            setVarFromUserInput(VAR_LOOPS, IntVar.ZERO);
 
             vars.state(stateDefinition, Maps.newHashMap(), logger);
 
@@ -539,7 +539,7 @@ public class ScriptRunner {
                     lastImageDate = new Date();
                     lastImageDuration = ((float) dif / 1000000000.0f);
 
-                    logger.fine("Helper Image Persisted in " + THREE_DECIMAL.format(lastImageDuration)+"s");
+                    logger.fine("Helper Image Persisted in " + THREE_DECIMAL.format(lastImageDuration) + "s");
 
                     imageWrapper = null;
                 } else {
@@ -598,7 +598,7 @@ public class ScriptRunner {
                 }
 
                 if (connectionDefinition.getThrottle() > 0)
-                waitFor(connectionDefinition.getThrottle());
+                    waitFor(connectionDefinition.getThrottle());
             }
 
         } catch (Exception ex) {
@@ -648,7 +648,7 @@ public class ScriptRunner {
         if (SINGLE_VARIABLE.matcher(value).matches()) {
             // This is a single variable lookup, extract the name and look it up
             return getVar(value.substring(2, value.length() - 1));
-        } else if (value.startsWith("$")) {
+        } else if (value.startsWith("$") && value.indexOf("{") == -1) {
             // Old Style Value's
             return getVar(value.substring(1));
         }
@@ -724,8 +724,7 @@ public class ScriptRunner {
                             case BATCH: {
                                 if (inBatch) {
                                     logger.log(Level.FINEST, "Skipping batch request, already in batch");
-                                }
-                                else if ("START".equalsIgnoreCase(actionDefinition.getValue())) {
+                                } else if ("START".equalsIgnoreCase(actionDefinition.getValue())) {
                                     batchCmds = true;
                                 } else if (batchCmds) {
                                     batchCmds = false;
@@ -736,7 +735,7 @@ public class ScriptRunner {
                             case SET: {
                                 String varName = actionDefinition.getVar();
                                 Var value = valueHandler(actionDefinition.getValue());
-                                setVar(varName, value);
+                                setVarFromUserInput(varName, value);
                             }
                             break;
                             case LAP: {
@@ -749,10 +748,18 @@ public class ScriptRunner {
                                 String varName = actionDefinition.getVar();
                                 Var value = valueHandler(actionDefinition.getValue());
                                 Var orig = vars.get(varName);
-                                setVar(varName, orig.add(value));
+                                setVarFromUserInput(varName, orig.add(value));
                             }
                             break;
-
+                            case MATH: {
+                                String varName = actionDefinition.getVar();
+                                VarInstance varInstance = vars.getVarInstance(varName);
+                                Var expr = valueHandler(actionDefinition.getValue());
+                                String expression = expr.toString();
+                                Var result = Mather.evaluate(expression, varInstance.getType());
+                                putVar(varName,result);
+                            }
+                            break;
                             case TAP:
                             case SWIPE_DOWN:
                             case SLOW_DOWN:
@@ -811,7 +818,7 @@ public class ScriptRunner {
                                 final StateResult callResult = state(callDefinition, imageWrapper, 0, StateCallType.CALL, callArguments, batchCmds);
                                 vars.pop();
                                 if (callResult.getResult() != null && !StringUtils.isEmpty(actionDefinition.getVar())) {
-                                    setVar(actionDefinition.getVar(), callResult.getResult());
+                                    setVarFromUserInput(actionDefinition.getVar(), callResult.getResult());
                                 }
                             }
                             break;
@@ -929,7 +936,8 @@ public class ScriptRunner {
                     throw new RuntimeException("All condition calls must return a 0 or 1");
                 }
                 result = callResult.getResult().toInt() == 1;
-            } break;
+            }
+            break;
             case SCREEN: {
                 Var screenValue = valueHandler(conditionDefinition.getValue());
                 ScreenDefinition screenDefinition = screens.get(screenValue.toString());

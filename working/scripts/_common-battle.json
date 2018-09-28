@@ -270,6 +270,80 @@
         }
       ]
     },
+    "@selectUnitAction": {
+      "name": "Function - Select a single unit's action",
+      "variables": {
+        "row": {
+          "value": "0",
+          "type": "INT"
+        },
+        "column": {
+          "value": "0",
+          "type": "INT"
+        },
+        "index": {
+          "value": "0",
+          "type": "INT"
+        }
+      },
+      "statements": [
+        {
+          "condition": {
+            "is": "LESS",
+            "var": "row",
+            "value": "3"
+          },
+          "actions": [
+            {
+              "type": "MATH",
+              "value": "${row}+(${column}*3)",
+              "var": "index"
+            },
+            {
+              "type": "TAP",
+              "value": "battle-skill-top-${index}"
+            },
+            {
+              "type": "WAIT",
+              "value": "200"
+            },
+            {
+              "type": "RETURN"
+            }
+          ]
+        },
+        {
+          "actions": [
+            {
+              "type": "MATH",
+              "value": "${row}-2",
+              "var": "row"
+            },
+            {
+              "type": "SLOW_UP",
+              "value": "battle-skill-top-slider",
+              "count": "${row}"
+            },
+            {
+              "type": "MATH",
+              "value": "2+(${column}*3)",
+              "var": "index"
+            },
+            {
+              "type": "TAP",
+              "value": "battle-skill-top-${index}"
+            },
+            {
+              "type": "WAIT",
+              "value": "200"
+            },
+            {
+              "type": "RETURN"
+            }
+          ]
+        }
+      ]
+    },
     "@showUnitActions": {
       "name": "Function - Show Unit's Actions",
       "variables": {
@@ -443,6 +517,47 @@
         }
       ]
     },
+    "@isUnitAtkReady": {
+      "name": "Function - Is Unit Attack Ready",
+      "variables": {
+        "index": {
+          "value": "0",
+          "type": "INT"
+        }
+      },
+      "statements": [
+        {
+          "condition": {
+            "not": "SCREEN",
+            "value": "battle-unit-${index}_ability",
+            "and": [
+              {
+                "not": "SCREEN",
+                "value": "battle-unit-${index}_lb"
+              },
+              {
+                "not": "SCREEN",
+                "value": "battle-unit-${index}_magic"
+              }
+            ]
+          },
+          "actions": [
+            {
+              "type": "RETURN",
+              "value": "1"
+            }
+          ]
+        },
+        {
+          "actions": [
+            {
+              "type": "RETURN",
+              "value": "0"
+            }
+          ]
+        }
+      ]
+    },
     "@isUnitLbReady": {
       "name": "Function - Is Unit Limit Break Ready",
       "variables": {
@@ -469,6 +584,37 @@
             {
               "type": "RETURN",
               "value": "1"
+            }
+          ]
+        }
+      ]
+    },
+    "@isUnitActionReady": {
+      "name": "Function - Is Unit Action Ready",
+      "variables": {
+        "index": {
+          "value": "0",
+          "type": "INT"
+        }
+      },
+      "statements": [
+        {
+          "condition": {
+            "is": "SCREEN",
+            "value": "battle-unit-${index}_ability"
+          },
+          "actions": [
+            {
+              "type": "RETURN",
+              "value": "1"
+            }
+          ]
+        },
+        {
+          "actions": [
+            {
+              "type": "RETURN",
+              "value": "0"
             }
           ]
         }

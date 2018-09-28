@@ -1652,6 +1652,36 @@
         {
           "condition": {
             "is": "SCREEN",
+            "value": "menu-new_data"
+          },
+          "actions": [
+            {
+              "type": "INFO",
+              "value": "Tapping OK"
+            },
+            {
+              "type": "SET",
+              "value": "0",
+              "var": "_screen_saver"
+            },
+            {
+              "type": "SET",
+              "var": "_loops",
+              "value": "0"
+            },
+            {
+              "type": "TAP",
+              "value": "menu-new_data-ok"
+            },
+            {
+              "type": "REPEAT",
+              "value": ""
+            }
+          ]
+        },
+        {
+          "condition": {
+            "is": "SCREEN",
             "value": "menu-title"
           },
           "actions": [

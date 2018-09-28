@@ -1171,6 +1171,14 @@
     "h" : 173,
     "enabled" : false
   }, {
+    "name" : "menu-new_data-ok",
+    "componentId" : "menu-new_data-ok",
+    "x" : 0,
+    "y" : 0,
+    "w" : 1,
+    "h" : 1,
+    "enabled" : false
+  }, {
     "name" : "Menu - Play Mission - No",
     "componentId" : "menu-play_mission-no",
     "x" : 0,

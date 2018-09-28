@@ -663,6 +663,9 @@ public class ScriptRunner {
         if (callType == StateCallType.CALL) {
             logger.fine("Calling State: " + stateDefinition.getName());
             vars.push(stateDefinition, arguments);
+        } else if (callType == StateCallType.CONDITION) {
+            logger.fine("Condition State: " + stateDefinition.getName());
+            vars.push(stateDefinition, arguments);
         }
 
         boolean batchCmds = false;
@@ -837,7 +840,7 @@ public class ScriptRunner {
             while ((startIndex = text.indexOf("${")) >= 0) {
                 int endIndex = text.indexOf('}', startIndex);
                 if (endIndex > startIndex + 2) {
-                    String varName = text.substring(startIndex += 2, endIndex).trim();
+                    String varName = text.substring(startIndex + 2, endIndex).trim();
                     if (varName.length() > 0) {
                         if (vars.getVarInstance(varName) != null) {
                             text = text.substring(0, startIndex) + vars.get(varName) + text.substring(endIndex + 1);
@@ -890,12 +893,7 @@ public class ScriptRunner {
             case GREATER:
             case LESS:
             case EQUAL: {
-                Var value;
-                if (conditionDefinition.getValue().startsWith("$")) {
-                    value = getVar(conditionDefinition.getValue().substring(1));
-                } else {
-                    value = new StringVar(conditionDefinition.getValue());
-                }
+                Var value = valueHandler(conditionDefinition.getValue());
                 String varName = conditionDefinition.getVar();
                 Var currentValue = getVar(varName);
                 switch (conditionDefinition.getUsedCondition()) {
@@ -932,12 +930,13 @@ public class ScriptRunner {
                 result = callResult.getResult().toInt() == 1;
             } break;
             case SCREEN: {
-                ScreenDefinition screenDefinition = screens.get(conditionDefinition.getValue());
+                Var screenValue = valueHandler(conditionDefinition.getValue());
+                ScreenDefinition screenDefinition = screens.get(screenValue.toString());
                 if (screenDefinition == null || !screenDefinition.isEnabled() || screenDefinition.getPoints() == null || screenDefinition.getPoints().isEmpty()) {
                     failure = true;
                 } else {
                     if (deviceHelper != null) {
-                        result = validScreenIds.contains(conditionDefinition.getValue());
+                        result = validScreenIds.contains(screenDefinition.getScreenId());
                     } else {
 
                         if (screenDefinition == null) {
@@ -950,12 +949,7 @@ public class ScriptRunner {
             }
             break;
             case ENERGY: {
-                Var energy;
-                if (conditionDefinition.getVar() != null && conditionDefinition.getVar().trim().length() > 0) {
-                    energy = getVar(conditionDefinition.getVar());
-                } else {
-                    energy = new StringVar(conditionDefinition.getValue());
-                }
+                Var energy = valueHandler(conditionDefinition.getValue());
                 energy = energy.asInt();
                 if (energy.toInt() >= PlayerDefinition.MIN_ENERGY && energy.toInt() <= PlayerDefinition.MAX_ENERGY) {
                     float requiredPercent = (energy.toFloat() / (float) playerDefinition.getTotalEnergy());

@@ -4,13 +4,20 @@
         <echo>For use with Intellij to build the release zip file</echo>
     </target>
     <target name="release">
+        <mkdir dir="./release"/>
+        <copydir src="./working" dest="./release"/>
+        <copydir src="./extra" dest="./release"/>
         <delete verbose="true">
-            <fileset dir="${artifact.output.path}" includes="*.zip"/>
-            <fileset dir="${artifact.output.path}" includes="*.json"/>
-            <fileset dir="${artifact.output.path}/views" includes="**/*.png"/>
+            <fileset dir="./release" includes="*.zip"/>
+            <fileset dir="./release" includes="*.json"/>
+            <fileset dir="./release" includes="*.log"/>
+            <fileset dir="./release/views" includes="**/*.png"/>
         </delete>
-        <zip destfile="${artifact.output.path}/PhonePiperFFBE.zip">
-            <fileset dir="${artifact.output.path}" includes="**/*"/>
+        <copy file="./target/phone-piper.jar" tofile="./release/phone-piper.jar"/>
+        <copy file="./LICENSE.txt" tofile="./release/LICENSE.txt"/>
+        <zip destfile="./target/PhonePiper0.0.12.zip">
+            <fileset dir="./release" includes="**/*"/>
         </zip>
+        <delete dir="./release"/>
     </target>
 </project>

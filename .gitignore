@@ -8,3 +8,4 @@
 /working/state/*.json
 /.idea/*
 *.db
+*.zip

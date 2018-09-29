@@ -109,7 +109,7 @@ public class WebResource {
     public synchronized void setDeviceIp(@FormParam("key") String key, @FormParam("value") String value) {
         checkInitialState();
         if (runner != null) {
-            runner.updateVariable(key, value);
+            runner.updateVariableFromUserInput(key, value);
 
             VarStateDefinition varStateDefinition = new VarStateDefinition();
             for (VarDefinition varDefinition : runner.getVariables()) {
@@ -394,7 +394,7 @@ public class WebResource {
             if (VarStateDefinition.exists(frameChoices.getScriptName())) {
                 VarStateDefinition varStateDefinition = VarStateDefinition.read(frameChoices.getScriptName());
                 for (VarDefinition varDefinition : varStateDefinition.getItems()) {
-                    runner.updateVariable(varDefinition.getName(), varDefinition.getValue());
+                    runner.updateVariableFromUserInput(varDefinition.getName(), varDefinition.getValue());
                 }
             }
 

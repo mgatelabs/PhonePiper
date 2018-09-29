@@ -583,6 +583,7 @@
               "type": "INFO",
               "value": "Out of Orbs, going home"
             },
+            { "type": "CALL", "value": "@keepAlive" },
             {
               "type": "MOVE",
               "value": "raid_to_home"
@@ -1740,6 +1741,7 @@
               "type": "INFO",
               "value": "Out of Orbs, going home"
             },
+            { "type": "CALL", "value": "@keepAlive" },
             {
               "type": "SET",
               "value": "0",

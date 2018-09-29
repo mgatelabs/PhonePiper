@@ -10,7 +10,7 @@ import com.mgatelabs.piper.shared.helper.PointTransfer;
 import com.mgatelabs.piper.shared.image.*;
 import com.mgatelabs.piper.shared.util.*;
 import org.springframework.util.CollectionUtils;
-import org.springframework.util.StringUtils;
+import org.apache.commons.lang3.StringUtils;
 
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
@@ -325,22 +325,8 @@ public class ScriptRunner {
 
     private void putVar(String name, Var data) {
         vars.update(name, data);
-    }
-
-    private void setVarFromUserInput(String name, Var value) {
-        final VarDefinition varDefinition = getVarDefinition(name);
-        switch (varDefinition.getDisplayType()) {
-            case SECONDS: {
-                if (value.toInt() == 0) {
-                    VarTimer timer = timers.get(varDefinition.getName());
-                    timer.reset();
-                    putVar(name, IntVar.ZERO);
-                }
-            }
-            break;
-            default:
-                putVar(name, value);
-                break;
+        if (timers.containsKey(name) && data.toInt() == 0) {
+            timers.get(name).reset();
         }
     }
 
@@ -493,7 +479,7 @@ public class ScriptRunner {
             }
 
             // Always reset the loop counter
-            setVarFromUserInput(VAR_LOOPS, IntVar.ZERO);
+            putVar(VAR_LOOPS, IntVar.ZERO);
 
             vars.state(stateDefinition, Maps.newHashMap(), logger);
 
@@ -828,7 +814,7 @@ public class ScriptRunner {
                                 final StateResult callResult = state(callDefinition, imageWrapper, 0, StateCallType.CALL, callArguments, batchCmds);
                                 vars.pop();
                                 if (callResult.getResult() != null && !StringUtils.isEmpty(actionDefinition.getVar())) {
-                                    setVarFromUserInput(actionDefinition.getVar(), callResult.getResult());
+                                    putVar(actionDefinition.getVar(), callResult.getResult());
                                 }
                             }
                             break;
@@ -1091,7 +1077,7 @@ public class ScriptRunner {
         return null;
     }
 
-    public void updateVariable(String key, String value) {
+    public void updateVariableFromUserInput(String key, String value) {
         VarDefinition definition = getVarDefinition(key);
         if (definition != null) {
             Var v;
@@ -1102,9 +1088,14 @@ public class ScriptRunner {
                 }
                 break;
                 case TENTH: {
-
+                    if (StringUtils.isBlank(value)) {
+                        return;
+                    }
+                    float f = Float.parseFloat(value);
+                    f *= 10;
+                    v = new IntVar((int)f);
                 }
-                return;
+                break;
                 case SECONDS: {
                     String[] parts = value.split(":");
                     int multiply = 1;

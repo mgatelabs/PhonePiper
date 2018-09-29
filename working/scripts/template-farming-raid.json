@@ -61,7 +61,7 @@
             },
             {
               "type": "WAIT",
-              "value": "400"
+              "value": "800"
             },
             {
               "type": "REPEAT",
@@ -112,7 +112,7 @@
             },
             {
               "type": "WAIT",
-              "value": "400"
+              "value": "800"
             },
             {
               "type": "REPEAT",
@@ -163,7 +163,7 @@
             },
             {
               "type": "WAIT",
-              "value": "400"
+              "value": "800"
             },
             {
               "type": "REPEAT",
@@ -214,7 +214,7 @@
             },
             {
               "type": "WAIT",
-              "value": "400"
+              "value": "800"
             },
             {
               "type": "REPEAT",
@@ -265,7 +265,7 @@
             },
             {
               "type": "WAIT",
-              "value": "400"
+              "value": "800"
             },
             {
               "type": "REPEAT",

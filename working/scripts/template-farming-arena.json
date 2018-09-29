@@ -92,6 +92,52 @@
             "and": [
               { "is": "EQUAL", "value": "0", "var":"segment"},
               { "is": "CALL", "value": "@isUnitReady", "args": {"index": "3"} },
+              { "is": "CALL", "value": "@isUnitLbReady", "args": {"index": "3"} },
+              { "not": "CALL", "value": "@isUnitLbSelected", "args": {"index": "3"} }
+            ]
+          },
+          "actions": [
+            {
+              "type": "INFO",
+              "value": "Ayaka Has Her LB, what sort of world are we living in?  Pressing the button (TM)"
+            },
+            {
+              "type": "CALL",
+              "value": "@readyUnitLb",
+              "args": {
+                "index": "3"
+              }
+            },
+            {
+              "type": "SET",
+              "var": "segment",
+              "value": "1"
+            },
+            {
+              "type": "CALL",
+              "value": "@tapUnit",
+              "args": {
+                "index": "3"
+              }
+            },
+            {
+              "type": "WAIT",
+              "value": "2000"
+            },
+            {
+              "type": "REPEAT",
+              "value": ""
+            }
+          ]
+        },
+
+        {
+          "condition": {
+            "is": "CALL",
+            "value": "@isBattleReady",
+            "and": [
+              { "is": "EQUAL", "value": "0", "var":"segment"},
+              { "is": "CALL", "value": "@isUnitReady", "args": {"index": "3"} },
               { "is": "EQUAL", "value": "0", "var":"elysium"},
               { "is": "EQUAL", "value": "4", "var":"availableUnits"}
             ]
@@ -465,7 +511,7 @@
             },
             {
               "type": "WAIT",
-              "value": "400"
+              "value": "1000"
             },
             {
               "type": "REPEAT",
@@ -512,7 +558,7 @@
             },
             {
               "type": "WAIT",
-              "value": "400"
+              "value": "1000"
             },
             {
               "type": "REPEAT",
@@ -641,7 +687,7 @@
             },
             {
               "type": "WAIT",
-              "value": "400"
+              "value": "1000"
             },
             {
               "type": "REPEAT",
@@ -690,7 +736,7 @@
             },
             {
               "type": "WAIT",
-              "value": "400"
+              "value": "1000"
             },
             {
               "type": "REPEAT",
@@ -860,7 +906,7 @@
           "actions": [
             {
               "type": "INFO",
-              "value": "Attack"
+              "value": "Units were changed, Tapping in order"
             },
             {
               "type": "BATCH",
@@ -905,50 +951,10 @@
               "type": "BATCH",
               "value": "end"
             },
-
-            {
-              "type": "ADD",
-              "var": "turn",
-              "value": "1"
-            },
-
             {
               "type": "SET",
               "var": "segment",
-              "value": "0"
-            },
-
-            {
-              "type": "SET",
-              "var": "modified",
-              "value": "0"
-            },
-
-            {
-              "type": "ADD",
-              "var": "elysium",
-              "value": "-1",
-              "condition": {
-                "is": "GREATER",
-                "var": "elysium",
-                "value": "0"
-              }
-            },
-
-            {
-              "type": "ADD",
-              "var": "purify",
-              "value": "-1",
-              "condition": {
-                "is": "GREATER",
-                "var": "purify",
-                "value": "0"
-              }
-            },
-
-            {
-              "type": "WAIT",
-              "value": "400"
+              "value": "4"
             },
             {
               "type": "REPEAT",
@@ -968,24 +974,37 @@
           "actions": [
             {
               "type": "INFO",
-              "value": "Repeat"
+              "value": "No unit changes, Hit Repeat"
             },
             {
               "type": "TAP",
               "value": "battle-repeat"
             },
             {
-              "type": "ADD",
-              "var": "turn",
-              "value": "1"
+              "type": "SET",
+              "var": "segment",
+              "value": "4"
             },
+            {
+              "type": "REPEAT",
+              "value": ""
+            }
+          ]
+        },
 
+        {
+          "condition": { "is": "EQUAL", "value": "4", "var":"segment"},
+          "actions": [
             {
               "type": "SET",
               "var": "segment",
               "value": "0"
             },
-
+            {
+              "type": "ADD",
+              "var": "turn",
+              "value": "1"
+            },
             {
               "type": "SET",
               "var": "modified",

@@ -9,7 +9,6 @@ import com.mgatelabs.piper.shared.helper.MapTransfer;
 import com.mgatelabs.piper.shared.helper.PointTransfer;
 import com.mgatelabs.piper.shared.image.*;
 import com.mgatelabs.piper.shared.util.*;
-import com.mgatelabs.piper.ui.utils.WebLogHandler;
 import org.springframework.util.CollectionUtils;
 import org.springframework.util.StringUtils;
 
@@ -18,7 +17,6 @@ import java.text.NumberFormat;
 import java.text.SimpleDateFormat;
 import java.util.*;
 import java.util.concurrent.TimeUnit;
-import java.util.logging.Handler;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.regex.Pattern;
@@ -78,7 +76,7 @@ public class ScriptRunner {
     //private static final String VAR_SECONDS = "_seconds";
     private static final String VAR_LOOPS = "_loops";
 
-    public ScriptRunner(PlayerDefinition playerDefinition, ConnectionDefinition connectionDefinition, DeviceHelper deviceHelper, ScriptDefinition scriptDefinition, DeviceDefinition deviceDefinition, ViewDefinition viewDefinition, WebLogHandler webLogHandler, Handler fileHandler) {
+    public ScriptRunner(PlayerDefinition playerDefinition, ConnectionDefinition connectionDefinition, DeviceHelper deviceHelper, ScriptDefinition scriptDefinition, DeviceDefinition deviceDefinition, ViewDefinition viewDefinition) {
         this.playerDefinition = playerDefinition;
         this.scriptDefinition = scriptDefinition;
         this.deviceDefinition = deviceDefinition;
@@ -87,24 +85,21 @@ public class ScriptRunner {
         vars = new VarManager(logger);
         timers = Maps.newHashMap();
         stack = new Stack<>();
+
         shell = new AdbShell(deviceDefinition);
-        shell.attachhandler(webLogHandler);
+        shell.attachhandler(Loggers.webLogger);
+        shell.attachhandler(Loggers.fileLogger);
 
+        logger.removeHandler(Loggers.webLogger);
+        logger.addHandler(Loggers.webLogger);
 
-        logger.removeHandler(webLogHandler);
-        logger.addHandler(webLogHandler);
-        if (fileHandler != null) {
-            shell.attachhandler(fileHandler);
-            logger.removeHandler(fileHandler);
-            logger.addHandler(fileHandler);
-        }
-        Level min = webLogHandler.getLevel();
-        if (fileHandler != null) {
-            min = webLogHandler.getLevel().intValue() < fileHandler.getLevel().intValue() ? webLogHandler.getLevel() : fileHandler.getLevel();
-        }
+        logger.removeHandler(Loggers.fileLogger);
+        logger.addHandler(Loggers.fileLogger);
+
+        Level min = Loggers.webLogger.getLevel().intValue() < Loggers.fileLogger.getLevel().intValue() ? Loggers.webLogger.getLevel() : Loggers.fileLogger.getLevel();
+
         logger.setLevel(min);
         shell.setLevel(min);
-
 
         logger.finer("Extracting Variables");
 

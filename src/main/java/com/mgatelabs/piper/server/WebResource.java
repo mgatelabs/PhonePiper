@@ -389,7 +389,7 @@ public class WebResource {
 
             editHolder = null;
 
-            runner = new ScriptRunner(playerDefinition, connectionDefinition, deviceHelper, frameChoices.getScriptDefinition(), frameChoices.getDeviceDefinition(), frameChoices.getViewDefinition(), Loggers.webLogger, Loggers.fileLogger);
+            runner = new ScriptRunner(playerDefinition, connectionDefinition, deviceHelper, frameChoices.getScriptDefinition(), frameChoices.getDeviceDefinition(), frameChoices.getViewDefinition());
 
             if (VarStateDefinition.exists(frameChoices.getScriptName())) {
                 VarStateDefinition varStateDefinition = VarStateDefinition.read(frameChoices.getScriptName());
@@ -587,7 +587,9 @@ public class WebResource {
     private void updateLoggerFor(Handler handler, Level level) {
         handler.setLevel(level);
         if (runner != null) {
-            runner.updateLogger(Loggers.webLogger.getLevel().intValue() < Loggers.fileLogger.getLevel().intValue() ? Loggers.webLogger.getLevel() : Loggers.fileLogger.getLevel());
+            Level determined = Loggers.webLogger.getLevel().intValue() < Loggers.fileLogger.getLevel().intValue() ? Loggers.webLogger.getLevel() : Loggers.fileLogger.getLevel();
+            logger.info("Setting log Level to " + determined.toString());
+            runner.updateLogger(determined);
         }
     }
 

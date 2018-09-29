@@ -1275,6 +1275,14 @@
     "h" : 1,
     "enabled" : false
   }, {
+    "name" : "Menu - Vortex - Scroll",
+    "componentId" : "menu-vortex-scroll",
+    "x" : 0,
+    "y" : 0,
+    "w" : 1,
+    "h" : 1,
+    "enabled" : false
+  }, {
     "name" : "Menu - Worlds",
     "componentId" : "menu-worlds",
     "x" : 0,

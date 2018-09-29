@@ -1388,8 +1388,20 @@
   }, {
     "name" : "Battle - Unit - 3 - LB Not Full",
     "screenId" : "battle-unit-3_notfull",
-    "points" : [ ],
-    "enabled" : false
+    "points" : [ {
+      "x" : 1037,
+      "y" : 1290,
+      "r" : 0,
+      "g" : 0,
+      "b" : 5
+    }, {
+      "x" : 1035,
+      "y" : 1295,
+      "r" : 0,
+      "g" : 0,
+      "b" : 45
+    } ],
+    "enabled" : true
   }, {
     "name" : "Battle - Unit - 3 - Is Ready",
     "screenId" : "battle-unit-3_ready",
@@ -13718,6 +13730,14 @@
     "y" : 1445,
     "w" : 879,
     "h" : 205,
+    "enabled" : true
+  }, {
+    "name" : "Menu - Vortex - Scroll",
+    "componentId" : "menu-vortex-scroll",
+    "x" : 254,
+    "y" : 780,
+    "w" : 603,
+    "h" : 479,
     "enabled" : true
   }, {
     "name" : "Menu - Worlds",

@@ -16,167 +16,15 @@
         {
           "condition": {
             "is": "SCREEN",
-            "value": "menu-vortex",
-            "and": [
-              {
-                "is": "EQUAL",
-                "var": "vortex-item",
-                "value": "0"
-              }
-            ]
+            "value": "menu-vortex"
           },
           "actions": [
             {
-              "type": "INFO",
-              "value": "Clicking Vortex Index 0"
-            },
-            {
-              "type": "TAP",
-              "value": "menu-vortex-item_0"
-            },
-            {
-              "type": "WAIT",
-              "value": "3000"
-            },
-            {
-              "type": "REPEAT",
-              "value": ""
-            }
-          ]
-        },
-        {
-          "condition": {
-            "is": "SCREEN",
-            "value": "menu-vortex",
-            "and": [
-              {
-                "is": "EQUAL",
-                "var": "vortex-item",
-                "value": "1"
+              "type": "CALL",
+              "value": "@selectVortexItem",
+              "args": {
+                "row": "${vortex-item}"
               }
-            ]
-          },
-          "actions": [
-            {
-              "type": "INFO",
-              "value": "Clicking Vortex Index 1"
-            },
-            {
-              "type": "TAP",
-              "value": "menu-vortex-item_1"
-            },
-            {
-              "type": "WAIT",
-              "value": "3000"
-            },
-            {
-              "type": "REPEAT",
-              "value": ""
-            }
-          ]
-        },
-        {
-          "condition": {
-            "is": "SCREEN",
-            "value": "menu-vortex",
-            "and": [
-              {
-                "is": "EQUAL",
-                "var": "vortex-item",
-                "value": "2"
-              }
-            ]
-          },
-          "actions": [
-            {
-              "type": "INFO",
-              "value": "Clicking Vortex Index 2"
-            },
-            {
-              "type": "TAP",
-              "value": "menu-vortex-item_2"
-            },
-            {
-              "type": "WAIT",
-              "value": "3000"
-            },
-            {
-              "type": "REPEAT",
-              "value": ""
-            }
-          ]
-        },
-        {
-          "condition": {
-            "is": "SCREEN",
-            "value": "menu-vortex",
-            "and": [
-              {
-                "is": "EQUAL",
-                "var": "vortex-item",
-                "value": "3"
-              }
-            ]
-          },
-          "actions": [
-            {
-              "type": "INFO",
-              "value": "Clicking Vortex Index 3"
-            },
-            {
-              "type": "SWIPE_UP",
-              "value": "menu-vortex-item_0"
-            },
-            {
-              "type": "WAIT",
-              "value": "1000"
-            },
-            {
-              "type": "TAP",
-              "value": "menu-vortex-item_1"
-            },
-            {
-              "type": "WAIT",
-              "value": "3000"
-            },
-            {
-              "type": "REPEAT",
-              "value": ""
-            }
-          ]
-        },
-        {
-          "condition": {
-            "is": "SCREEN",
-            "value": "menu-vortex",
-            "and": [
-              {
-                "is": "EQUAL",
-                "var": "vortex-item",
-                "value": "4"
-              }
-            ]
-          },
-          "actions": [
-            {
-              "type": "INFO",
-              "value": "Clicking Vortex Index 4"
-            },
-            {
-              "type": "SWIPE_UP",
-              "value": "menu-vortex-item_0"
-            },
-            {
-              "type": "WAIT",
-              "value": "1000"
-            },
-            {
-              "type": "TAP",
-              "value": "menu-vortex-item_2"
-            },
-            {
-              "type": "WAIT",
-              "value": "3000"
             },
             {
               "type": "REPEAT",
@@ -245,6 +93,80 @@
             {
               "type": "REPEAT",
               "value": ""
+            }
+          ]
+        }
+      ]
+    },
+
+    "@selectVortexItem": {
+      "name": "Function - Select a Vortex Item",
+      "variables": {
+        "row": {
+          "value": "0",
+          "type": "INT"
+        },
+        "index": {
+          "value": "0",
+          "type": "INT"
+        }
+      },
+      "statements": [
+        {
+          "actions": [
+            {
+              "type": "INFO",
+              "value": "Clicking Vortex Index ${row}"
+            }
+          ]
+        },
+        {
+          "condition": {
+            "is": "LESS",
+            "var": "row",
+            "value": "3"
+          },
+          "actions": [
+            {
+              "type": "SET",
+              "value": "${row}",
+              "var": "index"
+            },
+            {
+              "type": "TAP",
+              "value": "menu-vortex-item_${row}"
+            },
+            {
+              "type": "WAIT",
+              "value": "3000"
+            },
+            {
+              "type": "RETURN"
+            }
+          ]
+        },
+        {
+          "actions": [
+            {
+              "type": "MATH",
+              "value": "${row}-2",
+              "var": "row"
+            },
+            {
+              "type": "SLOW_UP",
+              "value": "menu-vortex-scroll",
+              "count": "${row}"
+            },
+            {
+              "type": "TAP",
+              "value": "menu-vortex-item_2"
+            },
+            {
+              "type": "WAIT",
+              "value": "3000"
+            },
+            {
+              "type": "RETURN"
             }
           ]
         }

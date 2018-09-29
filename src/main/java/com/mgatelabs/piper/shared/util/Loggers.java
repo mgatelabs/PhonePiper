@@ -14,7 +14,7 @@ public class Loggers {
     public static WebLogHandler webLogger;
 
     public static void init() {
-        fileLogger = new FileHandler(Runner.WORKING_DIRECTORY.toString(), "piper", ".log", 3);
+        fileLogger = new FileHandler(Runner.WORKING_DIRECTORY.toString(), "piper_", ".log", 3);
         webLogger = new WebLogHandler();
     }
 }

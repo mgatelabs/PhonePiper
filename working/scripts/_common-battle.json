@@ -26,11 +26,7 @@
               "type": "INFO",
               "value": "Three Attack"
             },
-            {
-              "type": "SET",
-              "var": "_loops",
-              "value": "0"
-            },
+            { "type": "CALL", "value": "@keepAlive" },
             {
               "type": "BATCH",
               "value": "START"
@@ -87,11 +83,7 @@
               "type": "TAP",
               "value": "battle-auto"
             },
-            {
-              "type": "SET",
-              "var": "_loops",
-              "value": "0"
-            },
+            { "type": "CALL", "value": "@keepAlive" },
             {
               "type": "SET",
               "value": "0",
@@ -161,11 +153,7 @@
             ]
           },
           "actions": [
-            {
-              "type": "SET",
-              "value": "0",
-              "var": "_loops"
-            }
+            { "type": "CALL", "value": "@keepAlive" }
           ]
         }
       ]
@@ -235,11 +223,7 @@
             ]
           },
           "actions": [
-            {
-              "type": "SET",
-              "value": "0",
-              "var": "_loops"
-            }
+            { "type": "CALL", "value": "@keepAlive" }
           ]
         }
       ]

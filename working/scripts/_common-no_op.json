@@ -463,6 +463,23 @@
           ]
         }
       ]
+    },
+    "@keepAlive": {
+      "name": "Function - Keep Alive",
+      "statements": [
+        {
+          "actions": [
+            {
+              "type": "SET",
+              "var": "_loops",
+              "value": "0"
+            },
+            {
+              "type": "RETURN"
+            }
+          ]
+        }
+      ]
     }
   }
 }

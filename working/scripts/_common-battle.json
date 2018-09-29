@@ -443,7 +443,7 @@
             },
             {
               "type": "WAIT",
-              "value": "200"
+              "value": "500"
             },
             {
               "type": "RETURN"
@@ -620,6 +620,37 @@
         }
       ]
     },
+    "@isUnitLbSelected": {
+      "name": "Function - Is Unit LB Selected",
+      "variables": {
+        "index": {
+          "value": "0",
+          "type": "INT"
+        }
+      },
+      "statements": [
+        {
+          "condition": {
+            "is": "SCREEN",
+            "value": "battle-unit-${index}_lb"
+          },
+          "actions": [
+            {
+              "type": "RETURN",
+              "value": "1"
+            }
+          ]
+        },
+        {
+          "actions": [
+            {
+              "type": "RETURN",
+              "value": "0"
+            }
+          ]
+        }
+      ]
+    },
     "@isUnitMpReady": {
       "name": "Function - Is Unit MP Ready",
       "variables": {
@@ -689,7 +720,7 @@
           "condition": {
             "is": "SCREEN",
             "value": "game-battle",
-            "andOr": [
+            "and": [
               {
                 "is": "SCREEN",
                 "value": "game-battle-auto_off"

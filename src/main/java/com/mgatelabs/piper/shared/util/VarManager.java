@@ -62,7 +62,6 @@ public class VarManager {
     // Future use
     public void push(StateDefinition stateDefinition, Map<String, String> arguments) {
         Map<String, VarInstance> callArgs = Maps.newHashMap();
-        calls.clear();
         // Set with default arguments
         for (Map.Entry<String, VarDefinition> entry: stateDefinition.getVariables().entrySet()) {
             callArgs.put(entry.getKey(), new VarInstance(entry.getValue()));
@@ -80,6 +79,9 @@ public class VarManager {
     }
 
     public void pop() {
+        if (calls.size() == 0) {
+            logger.severe("Out of Call Pops");
+        }
         calls.pop();
     }
 

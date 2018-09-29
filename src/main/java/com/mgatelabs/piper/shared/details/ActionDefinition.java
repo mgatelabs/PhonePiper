@@ -15,6 +15,7 @@ public class ActionDefinition {
     private String var;
     private String value;
     private String count;
+    private ConditionDefinition condition;
 
     @JsonProperty("args")
     private Map<String, String> arguments;
@@ -59,9 +60,20 @@ public class ActionDefinition {
         this.arguments = arguments;
     }
 
+    public ConditionDefinition getCondition() {
+        return condition;
+    }
+
+    public void setCondition(ConditionDefinition condition) {
+        this.condition = condition;
+    }
+
     public void fix() {
         if (arguments == null) {
             arguments = Maps.newHashMap();
+        }
+        if (condition != null) {
+            condition.fix();
         }
     }
 
@@ -145,6 +157,10 @@ public class ActionDefinition {
 
     public Set<String> determineScreenIds(final Set<String> exploredStates, final Map<String, StateDefinition> states) {
         Set<String> found = Sets.newHashSet();
+
+        if (getCondition() != null) {
+            found.addAll(getCondition().determineScreenIds(exploredStates, states));
+        }
 
         if (getType() == ActionType.CALL) {
             StateDefinition otherDefinition = states.get(getValue());

@@ -1788,7 +1788,7 @@
             },
             {
               "type": "WAIT",
-              "value": "5000"
+              "value": "2000"
             },
             {
               "type": "REPEAT",
@@ -1843,7 +1843,7 @@
             },
             {
               "type": "WAIT",
-              "value": "5000"
+              "value": "2000"
             },
             {
               "type": "REPEAT",
@@ -1858,24 +1858,12 @@
           },
           "actions": [
             {
-              "type": "SLOW_UP",
-              "value": "menu-arena-opponent_drag"
-            },
-            {
-              "type": "SLOW_UP",
-              "value": "menu-arena-opponent_drag"
-            },
-            {
-              "type": "SLOW_UP",
-              "value": "menu-arena-opponent_drag"
-            },
-            {
               "type": "TAP",
               "value": "menu-arena-opponent_first"
             },
             {
               "type": "WAIT",
-              "value": "5000"
+              "value": "2000"
             },
             {
               "type": "REPEAT",

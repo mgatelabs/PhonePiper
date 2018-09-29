@@ -673,11 +673,36 @@ public class ScriptRunner {
         StateResult priorResult;
         StateResult stateResult = null;
         for (StatementDefinition statementDefinition : stateDefinition.getStatements()) {
-            if (check(statementDefinition.getCondition(), imageWrapper)) {
+            boolean checkStatus = check(statementDefinition.getCondition(), imageWrapper);
+            if (logger.isLoggable(Level.FINEST) && statementDefinition.getCondition() != null) {
+                logger.finest("CHECK: " + ConditionDefinition.getConditionString(statementDefinition.getCondition()) + " - " + checkStatus);
+            }
+            if (checkStatus) {
                 for (ActionDefinition actionDefinition : statementDefinition.getActions()) {
                     final int actionIndex = statementDefinition.getActions().indexOf(actionDefinition);
                     if (actionIndex < startingAction)
                         continue;
+
+                    // Skip actions not allowed for the current state mode
+                    if (callType == StateCallType.CALL && !actionDefinition.getType().isAllowedForCall()) {
+                        continue;
+                    } else if (callType == StateCallType.STATE && !actionDefinition.getType().isAllowedForState()) {
+                        continue;
+                    } else if (callType == StateCallType.CONDITION && !actionDefinition.getType().isAllowedForCondition()) {
+                        continue;
+                    }
+
+                    // Actions can have conditions
+                    if (actionDefinition.getCondition() != null && !check(actionDefinition.getCondition(), imageWrapper)) {
+                        if (logger.isLoggable(Level.FINEST)) {
+                            logger.finest("Action Skip: " + ConditionDefinition.getConditionString(actionDefinition.getCondition()));
+                        }
+                        continue;
+                    } else if (actionDefinition.getCondition() != null) {
+                        if (logger.isLoggable(Level.FINEST)) {
+                            logger.finest("Action Run: " + ConditionDefinition.getConditionString(actionDefinition.getCondition()));
+                        }
+                    }
 
                     priorResult = stateResult;
                     stateResult = new StateResult(actionDefinition.getType(), actionDefinition, priorResult, actionIndex, stateDefinition);
@@ -693,16 +718,6 @@ public class ScriptRunner {
                     for (int looper = 0; looper < loopIndex; looper++) {
                         if (!stillRunning()) {
                             return new StateResult(ActionType.STOP, actionDefinition, priorResult, actionIndex, stateDefinition);
-                        }
-
-
-                        // Skip actions not allowed for the current state mode
-                        if (callType == StateCallType.CALL && !actionDefinition.getType().isAllowedForCall()) {
-                            continue;
-                        } else if (callType == StateCallType.STATE && !actionDefinition.getType().isAllowedForState()) {
-                            continue;
-                        } else if (callType == StateCallType.CONDITION && !actionDefinition.getType().isAllowedForCondition()) {
-                            continue;
                         }
 
                         switch (actionDefinition.getType()) {
@@ -735,7 +750,7 @@ public class ScriptRunner {
                             case SET: {
                                 String varName = actionDefinition.getVar();
                                 Var value = valueHandler(actionDefinition.getValue());
-                                setVarFromUserInput(varName, value);
+                                putVar(varName, value);
                             }
                             break;
                             case LAP: {
@@ -748,7 +763,7 @@ public class ScriptRunner {
                                 String varName = actionDefinition.getVar();
                                 Var value = valueHandler(actionDefinition.getValue());
                                 Var orig = vars.get(varName);
-                                setVarFromUserInput(varName, orig.add(value));
+                                putVar(varName, orig.add(value));
                             }
                             break;
                             case MATH: {

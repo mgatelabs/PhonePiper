@@ -1,0 +1,28 @@
+#!/bin/bash
+# /etc/init.d/phone-piper
+
+### BEGIN INIT INFO
+# Default-Start:  2 3 4 5
+### END INIT INFO
+
+# Carry out specific functions when asked to by the system
+case "$1" in
+start)
+echo "Starting Phone Piper"
+# Turn 0 on which keeps relay off
+#/home/pi/Phone-Piper/server.sh &
+cd /home/pi/Phone-Piper/working
+java -jar "../target/phone-piper.jar" server &
+echo $! > /home/pi/phone-piper.pid
+;;
+stop)
+echo "Stopping Phone Piper"
+cat /home/pi/phone-piper.pid | xargs kill
+;;
+*)
+echo "Usage: /etc/init.d/phone-piper {start|stop}"
+exit 1
+;;
+esac
+
+exit 0

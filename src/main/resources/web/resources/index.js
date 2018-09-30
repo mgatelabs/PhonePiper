@@ -16,7 +16,6 @@ $(function(){
 
     var editForm = $('#edit-form');
 
-    var playerLevel = $('#player-level');
     var deviceIp = $('#device-ip');
     var deviceAdb = $('#device-adb');
     var deviceWifi = $('#device-wifi');
@@ -28,7 +27,6 @@ $(function(){
     var unloadEdit = $('#unloadEdit');
 
 
-    var controlPlayerSave = $('#controlPlayerSave');
     var controlDeviceSave = $('#controlDeviceSave');
     var controlDeviceDirectSave = $('#controlDeviceDirectSave');
     var controlDeviceAdbSave = $('#controlDeviceAdbSave');
@@ -292,14 +290,6 @@ $(function(){
               }
             });
         }
-    });
-
-    controlPlayerSave.click(function(){
-        $.ajax({
-          type: "POST",
-          url: '/piper/player/level',
-          data: {value: playerLevel.val()}
-        });
     });
 
     controlAdb.click(function(){
@@ -807,17 +797,6 @@ editViewButton.click(function(){
             statusCheck(true);
           }
         });
-
-        $.getJSON({
-              url: '/piper/player/level',
-              data: {},
-              success: function(data){
-                playerLevel.val(data.value);
-                playerForm.show();
-              }
-          }
-        );
-
     }
 
     setTimeout(firstTimeLoad, 100);

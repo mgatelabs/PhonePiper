@@ -38,7 +38,6 @@ public class ScriptRunner {
 
     private static final NumberFormat THREE_DECIMAL = new DecimalFormat("#.###");
 
-    private PlayerDefinition playerDefinition;
     private ConnectionDefinition connectionDefinition;
     private ScriptDefinition scriptDefinition;
     private DeviceDefinition deviceDefinition;
@@ -76,8 +75,7 @@ public class ScriptRunner {
     //private static final String VAR_SECONDS = "_seconds";
     private static final String VAR_LOOPS = "_loops";
 
-    public ScriptRunner(PlayerDefinition playerDefinition, ConnectionDefinition connectionDefinition, DeviceHelper deviceHelper, ScriptDefinition scriptDefinition, DeviceDefinition deviceDefinition, ViewDefinition viewDefinition) {
-        this.playerDefinition = playerDefinition;
+    public ScriptRunner(ConnectionDefinition connectionDefinition, DeviceHelper deviceHelper, ScriptDefinition scriptDefinition, DeviceDefinition deviceDefinition, ViewDefinition viewDefinition) {
         this.scriptDefinition = scriptDefinition;
         this.deviceDefinition = deviceDefinition;
         this.connectionDefinition = connectionDefinition;
@@ -728,6 +726,59 @@ public class ScriptRunner {
                                 }
                             }
                             break;
+                            case COMPONENT: {
+                                ComponentDefinition componentDefinition = components.get(replaceTokens(actionDefinition.getValue()));
+                                if (componentDefinition == null) {
+                                    logger.log(Level.SEVERE, "Cannot find component with id: " + actionDefinition.getValue());
+                                    throw new RuntimeException("Cannot find component with id: " + actionDefinition.getValue());
+                                }
+                                if (actionDefinition.getArguments().containsKey("w")) {
+                                    putVar(actionDefinition.getArguments().get("w"), new IntVar(componentDefinition.getW()));
+                                }
+                                if (actionDefinition.getArguments().containsKey("h")) {
+                                    putVar(actionDefinition.getArguments().get("h"), new IntVar(componentDefinition.getH()));
+                                }
+                                if (actionDefinition.getArguments().containsKey("x")) {
+                                    putVar(actionDefinition.getArguments().get("x"), new IntVar(componentDefinition.getX()));
+                                }
+                                if (actionDefinition.getArguments().containsKey("y")) {
+                                    putVar(actionDefinition.getArguments().get("y"), new IntVar(componentDefinition.getY()));
+                                }
+                            } break;
+                            case PIXEL: {
+                                Var x = null, y = null;
+                                if (actionDefinition.getArguments().containsKey("x")) {
+                                    x = valueHandler(actionDefinition.getArguments().get("x"));
+                                }
+                                if (actionDefinition.getArguments().containsKey("y")) {
+                                    y = valueHandler(actionDefinition.getArguments().get("y"));
+                                }
+                                if (x == null || y == null)
+                                {
+                                    logger.log(Level.SEVERE, "Cannot execute pixel request, x & y arguments are required");
+                                    throw new RuntimeException("Cannot execute pixel request, x & y arguments are required");
+                                }
+                                final Sampler sample = new Sampler();
+                                if (deviceHelper != null) {
+                                    int[] pixels = deviceHelper.pixel(RawImageWrapper.getOffsetFor(deviceDefinition.getWidth(), 12, x.toInt(), y.toInt(), RawImageWrapper.ImageFormats.RGBA));
+                                    if (pixels != null) {
+                                        sample.setR(pixels[0]);
+                                        sample.setG(pixels[1]);
+                                        sample.setB(pixels[2]);
+                                    }
+                                } else {
+                                    imageWrapper.getPixel(x.toInt(), y.toInt(), sample);
+                                }
+                                if (actionDefinition.getArguments().containsKey("r")) {
+                                    putVar(actionDefinition.getArguments().get("r"), new IntVar(sample.getR()));
+                                }
+                                if (actionDefinition.getArguments().containsKey("g")) {
+                                    putVar(actionDefinition.getArguments().get("g"), new IntVar(sample.getG()));
+                                }
+                                if (actionDefinition.getArguments().containsKey("b")) {
+                                    putVar(actionDefinition.getArguments().get("b"), new IntVar(sample.getB()));
+                                }
+                            } break;
                             case SET: {
                                 String varName = actionDefinition.getVar();
                                 Var value = valueHandler(actionDefinition.getValue());
@@ -753,6 +804,9 @@ public class ScriptRunner {
                                 Var expr = valueHandler(actionDefinition.getValue());
                                 String expression = expr.toString();
                                 Var result = Mather.evaluate(expression, varInstance.getType());
+                                if (logger.isLoggable(Level.FINEST)) {
+                                    logger.finest("MATH: " + expression + " = " + result.toString());
+                                }
                                 putVar(varName,result);
                             }
                             break;
@@ -950,42 +1004,6 @@ public class ScriptRunner {
                         }
                         result = SamplePoint.validate(screenDefinition.getPoints(), imageWrapper, false);
                     }
-                }
-            }
-            break;
-            case ENERGY: {
-                Var energy;
-                if (conditionDefinition.getValue() != null) {
-                    energy = valueHandler(conditionDefinition.getValue());
-                } else if (conditionDefinition.getVar() != null) {
-                    energy = getVar(conditionDefinition.getVar());
-                } else {
-                    throw new RuntimeException("Unknown ENERGY value");
-                }
-                energy = energy.asInt();
-                if (energy.toInt() >= PlayerDefinition.MIN_ENERGY && energy.toInt() <= PlayerDefinition.MAX_ENERGY) {
-                    float requiredPercent = (energy.toFloat() / (float) playerDefinition.getTotalEnergy());
-                    int requiredPixel = ((int) (energyBar.getW() * requiredPercent) + 1);
-                    if (requiredPixel > energyBar.getW()) {
-                        requiredPixel = energyBar.getW();
-                    }
-                    Sampler sample = new Sampler();
-                    if (deviceHelper != null) {
-                        int[] pixels = deviceHelper.pixel(RawImageWrapper.getOffsetFor(deviceDefinition.getWidth(), 12, energyBar.getX() + requiredPixel, energyBar.getY(), RawImageWrapper.ImageFormats.RGBA));
-                        if (pixels != null) {
-                            sample.setR(pixels[0]);
-                            sample.setG(pixels[1]);
-                            sample.setB(pixels[2]);
-                        } else {
-
-                        }
-                    } else {
-                        imageWrapper.getPixel(energyBar.getX() + requiredPixel, energyBar.getY(), sample);
-                    }
-                    result = sample.getB() > 100;
-                } else {
-                    logger.log(Level.SEVERE, "Invalid energy value: " + conditionDefinition.getValue());
-                    throw new RuntimeException("Invalid energy value: " + conditionDefinition.getValue());
                 }
             }
             break;

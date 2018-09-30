@@ -97,6 +97,7 @@
   ],
   "includes": [
     "_common-no_op",
+    "_common-energy",
     "_common-menu_location",
     "_common-menu_results",
     "_common-menu_vortex",
@@ -105,7 +106,7 @@
   ],
   "states": {
     "main": {
-      "name": "Farm - Main",
+      "name": "Main - Farming Switcher",
       "includes": [
         "_es-to_results",
         "_es-to_menu",
@@ -135,31 +136,23 @@
             "and": [
               {
                 "is": "GREATER",
-                "value": "$raid-timer",
+                "value": "${raid-timer}",
                 "var": "_seconds",
                 "or": [
-                  {
-                    "is": "EQUAL",
-                    "value": "$raid-timer",
-                    "var": "_seconds"
-                  },
-                  {
-                    "not": "ENERGY",
-                    "var": "min-energy"
-                  }
+                  { "not": "CALL", "value":"@isMinEnergyAvailable" }
                 ]
-              }
-            ],
-            "andOr": [
-              {
-                "is": "EQUAL",
-                "value": "1",
-                "var": "allow-raid"
               },
               {
                 "is": "EQUAL",
                 "value": "1",
-                "var": "allow-arena"
+                "var": "allow-raid",
+                "or": [
+                  {
+                    "is": "EQUAL",
+                    "value": "1",
+                    "var": "allow-arena"
+                  }
+                ]
               }
             ]
           },

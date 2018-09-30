@@ -47,7 +47,7 @@ public class RunScriptPanel extends JToolBar {
     private final Icon playIcon;
     private final Icon pauseIcon;
 
-    public RunScriptPanel(DeviceHelper helper, ConnectionDefinition connectionDefinition, PlayerDefinition playerDefinition, AdbShell shell, DeviceDefinition deviceDefinition, ViewDefinition viewDefinition, ScriptDefinition scriptDefinition, MapPanel mapPanel, WebLogHandler webLogHandler) {
+    public RunScriptPanel(DeviceHelper helper, ConnectionDefinition connectionDefinition, AdbShell shell, DeviceDefinition deviceDefinition, ViewDefinition viewDefinition, ScriptDefinition scriptDefinition, MapPanel mapPanel, WebLogHandler webLogHandler) {
         super("Run", JToolBar.HORIZONTAL);
 
         this.helper = helper;
@@ -58,7 +58,7 @@ public class RunScriptPanel extends JToolBar {
 
         timer = null;
 
-        scriptRunner = new ScriptRunner(playerDefinition, connectionDefinition, helper, scriptDefinition, deviceDefinition, viewDefinition);
+        scriptRunner = new ScriptRunner(connectionDefinition, helper, scriptDefinition, deviceDefinition, viewDefinition);
 
         scriptThread = null;
 

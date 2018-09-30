@@ -14,6 +14,9 @@
       "modify":"EDITABLE"
     }
   ],
+  "includes": [
+    "_common-energy"
+  ],
   "states": {
 
     "_common-ml-mission": {
@@ -29,10 +32,7 @@
                 "var": "menu-item",
                 "value": "0"
               },
-              {
-                "is": "ENERGY",
-                "var": "min-energy"
-              }
+              { "is": "CALL", "value":"@isMinEnergyAvailable" }
             ]
           },
           "actions": [
@@ -64,10 +64,7 @@
                 "var": "menu-item",
                 "value": "1"
               },
-              {
-                "is": "ENERGY",
-                "var": "min-energy"
-              }
+              { "is": "CALL", "value":"@isMinEnergyAvailable" }
             ]
           },
           "actions": [
@@ -99,10 +96,7 @@
                 "var": "menu-item",
                 "value": "2"
               },
-              {
-                "is": "ENERGY",
-                "var": "min-energy"
-              }
+              { "is": "CALL", "value":"@isMinEnergyAvailable" }
             ]
           },
           "actions": [
@@ -134,10 +128,7 @@
                 "var": "menu-item",
                 "value": "3"
               },
-              {
-                "is": "ENERGY",
-                "var": "min-energy"
-              }
+              { "is": "CALL", "value":"@isMinEnergyAvailable" }
             ]
           },
           "actions": [
@@ -170,10 +161,7 @@
             "is": "SCREEN",
             "value": "menu-missions-select",
             "and": [
-              {
-                "is": "ENERGY",
-                "var": "min-energy"
-              }
+              { "is": "CALL", "value":"@isMinEnergyAvailable" }
             ]
           },
           "actions": [
@@ -206,10 +194,7 @@
             "is": "SCREEN",
             "value": "menu-missions-select",
             "and": [
-              {
-                "is": "ENERGY",
-                "var": "min-energy"
-              }
+              { "is": "CALL", "value":"@isMinEnergyAvailable" }
             ]
           },
           "actions": [
@@ -242,10 +227,7 @@
             "is": "SCREEN",
             "value": "menu-missions-select",
             "and": [
-              {
-                "is": "ENERGY",
-                "var": "min-energy"
-              }
+              { "is": "CALL", "value":"@isMinEnergyAvailable" }
             ]
           },
           "actions": [
@@ -278,10 +260,7 @@
             "is": "SCREEN",
             "value": "menu-missions-select",
             "and": [
-              {
-                "is": "ENERGY",
-                "var": "min-energy"
-              }
+              { "is": "CALL", "value":"@isMinEnergyAvailable" }
             ]
           },
           "actions": [
@@ -318,10 +297,7 @@
                 "is": "SCREEN",
                 "value": "menu-goal_list-next"
               },
-              {
-                "is": "ENERGY",
-                "var": "min-energy"
-              }
+              { "is": "CALL", "value":"@isMinEnergyAvailable" }
             ]
           },
           "actions": [

@@ -14,7 +14,6 @@ import java.util.Map;
  */
 public class FrameChoices {
 
-    private PlayerDefinition playerDefinition;
     private MapDefinition mapDefinition;
     private ScriptDefinition scriptDefinition;
     private DeviceDefinition deviceDefinition;
@@ -42,8 +41,7 @@ public class FrameChoices {
     private final Mode mode;
     private final Action action;
 
-    public FrameChoices(String actionId, String modeId, PlayerDefinition playerDefinition, String mapId, String deviceId, List<String> views, List<String> scripts) {
-        this.playerDefinition = playerDefinition;
+    public FrameChoices(String actionId, String modeId, String mapId, String deviceId, List<String> views, List<String> scripts) {
 
         switch (modeId) {
             case Constants.MODE_SCRIPT:
@@ -319,10 +317,6 @@ public class FrameChoices {
 
     public Action getAction() {
         return action;
-    }
-
-    public PlayerDefinition getPlayerDefinition() {
-        return playerDefinition;
     }
 
     public MapDefinition getMapDefinition() {

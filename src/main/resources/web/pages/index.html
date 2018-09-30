@@ -49,7 +49,7 @@
         <div class="collapse navbar-collapse" id="navbarsExample01">
             <ul class="nav navbar-nav mr-auto" id="myTab" role="tablist">
                 <li class="nav-item">
-                    <a class="nav-link active" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home" aria-selected="true">Home</a>
+                    <a class="nav-link notLoaded active" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home" aria-selected="true">Home</a>
                 </li>
                 <li class="nav-item notLoaded">
                     <a class="nav-link" id="config-tab" data-toggle="tab" href="#config" role="tab" aria-controls="config" aria-selected="true">Config</a>
@@ -275,20 +275,7 @@
 
         <div class="tab-pane fade" id="device" role="tabpanel" aria-labelledby="device-tab">
 
-            <form id="player-form" class="col-sm-12" style="display:none;">
-
-                <h3>Settings</h3>
-
-                <div class="input-group">
-                    <div class="input-group-prepend">
-                        <span class="input-group-text">Player Level</span>
-                    </div>
-                    <input type="number" class="form-control" id="player-level"/>
-                    <div class="input-group-append">
-                        <button type="button" id="controlPlayerSave" class="btn btn-primary">Update</button>
-                    </div>
-                </div>
-                <br/>
+            <form id="player-form" class="col-sm-12">
 
                 <h3>Logging</h3>
 

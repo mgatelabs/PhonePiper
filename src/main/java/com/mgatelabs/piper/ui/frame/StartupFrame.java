@@ -6,7 +6,6 @@ import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.common.collect.Lists;
 import com.mgatelabs.piper.Runner;
-import com.mgatelabs.piper.shared.details.PlayerDefinition;
 import com.mgatelabs.piper.shared.util.JsonTool;
 import com.mgatelabs.piper.ui.utils.Constants;
 import org.apache.commons.lang3.StringUtils;
@@ -37,7 +36,6 @@ public class StartupFrame extends JFrame {
     private JComboBox<String> mapComboBox;
     private JComboBox<String> modeComboBox;
     private JComboBox<String> actionComboBox;
-    private final PlayerDefinition playerDefinition;
 
     public static final String PATH_DEVICES = "./devices";
     public static final String PATH_VIEWS = "./views";
@@ -54,13 +52,12 @@ public class StartupFrame extends JFrame {
 
     private String postfix;
 
-    public StartupFrame(PlayerDefinition playerDefinition, ImageIcon icon, String postfix) throws HeadlessException {
+    public StartupFrame(ImageIcon icon, String postfix) throws HeadlessException {
         super();
         this.setTitle("PhonePiper - " + Runner.VERSION);
         setIconImage(icon.getImage());
         frame = this;
         this.postfix = postfix;
-        this.playerDefinition = playerDefinition;
         setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
         setResizable(false);
         setMinimumSize(new Dimension(400, 200));

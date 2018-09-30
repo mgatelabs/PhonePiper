@@ -49,13 +49,11 @@ public class WebResource {
     private static ConnectionDefinition connectionDefinition;
     private static FrameChoices frameChoices;
     private static DeviceHelper deviceHelper;
-    private static PlayerDefinition playerDefinition;
 
     private Logger logger = Logger.getLogger("WebResource");
 
     private synchronized boolean checkInitialState() {
         if (connectionDefinition == null) {
-            playerDefinition = PlayerDefinition.read();
             connectionDefinition = new ConnectionDefinition();
             deviceHelper = new DeviceHelper(connectionDefinition.getIp());
             Loggers.webLogger.setLevel(Level.INFO);
@@ -81,26 +79,6 @@ public class WebResource {
             e.printStackTrace();
             return "";
         }
-    }
-
-    @GET
-    @Path("/player/level")
-    @Produces(MediaType.APPLICATION_JSON)
-    public synchronized ValueResult getPlayerLevel() {
-        checkInitialState();
-        final ValueResult valueResult = new ValueResult();
-        valueResult.setStatus("OK");
-        valueResult.setValue(Integer.toString(playerDefinition.getLevel()));
-        return valueResult;
-    }
-
-    @POST
-    @Path("/player/level")
-    @Produces(MediaType.APPLICATION_JSON)
-    public synchronized void setPlayerLevel(@FormParam("value") int level) {
-        checkInitialState();
-        playerDefinition.setLevel(level);
-        playerDefinition.write();
     }
 
     @POST
@@ -382,14 +360,14 @@ public class WebResource {
         List<String> scripts = Lists.newArrayList();
         scripts.addAll(request.getScripts());
 
-        frameChoices = new FrameChoices(Constants.ACTION_RUN, Constants.MODE_SCRIPT, playerDefinition, "", request.getDevice(), views, scripts);
+        frameChoices = new FrameChoices(Constants.ACTION_RUN, Constants.MODE_SCRIPT, "", request.getDevice(), views, scripts);
 
         if (frameChoices.isValid()) {
             final PrepResult result = new PrepResult(StatusEnum.OK);
 
             editHolder = null;
 
-            runner = new ScriptRunner(playerDefinition, connectionDefinition, deviceHelper, frameChoices.getScriptDefinition(), frameChoices.getDeviceDefinition(), frameChoices.getViewDefinition());
+            runner = new ScriptRunner(connectionDefinition, deviceHelper, frameChoices.getScriptDefinition(), frameChoices.getDeviceDefinition(), frameChoices.getViewDefinition());
 
             if (VarStateDefinition.exists(frameChoices.getScriptName())) {
                 VarStateDefinition varStateDefinition = VarStateDefinition.read(frameChoices.getScriptName());
@@ -493,7 +471,7 @@ public class WebResource {
 
         thread = null;
 
-        frameChoices = new FrameChoices(Constants.ACTION_EDIT, Constants.MODE_VIEW, playerDefinition, "", request.getDevice(), request.getViews(), request.getScripts());
+        frameChoices = new FrameChoices(Constants.ACTION_EDIT, Constants.MODE_VIEW, "", request.getDevice(), request.getViews(), request.getScripts());
 
         if (frameChoices.isValid()) {
             final PrepResult result = new PrepResult(StatusEnum.OK);

@@ -20,7 +20,6 @@ import java.awt.event.WindowListener;
  */
 public class MainFrame extends JFrame {
 
-    final PlayerDefinition playerDefinition;
     private ScriptDefinition scriptDefinition;
     private MapDefinition mapDefinition;
     private DeviceDefinition deviceDefinition;
@@ -30,7 +29,6 @@ public class MainFrame extends JFrame {
     private AdbShell shell;
 
     private JDesktopPane desktopPane;
-    private PlayerPanel playerPanel;
 
     private MapPanel mapPanel;
     private MapperPanel mapperPanel;
@@ -98,7 +96,6 @@ public class MainFrame extends JFrame {
 
         returnRequested = false;
 
-        playerDefinition = choices.getPlayerDefinition();
         scriptDefinition = choices.getScriptDefinition();
         mapDefinition = choices.getMapDefinition();
         deviceDefinition = choices.getDeviceDefinition();
@@ -226,15 +223,8 @@ public class MainFrame extends JFrame {
             desktopPane.add(scriptPanel);
         }
 
-        if (showPlayer) {
-            playerPanel = new PlayerPanel(playerDefinition);
-            playerPanel.setLocation(0, column0Top);
-            column0Top += playerPanel.getHeight();
-            desktopPane.add(playerPanel);
-        }
-
         if (showRunScript) {
-            runScriptPanel = new RunScriptPanel(connectionPanel.getDeviceHelper(), connectionDefinition, playerDefinition, shell, deviceDefinition, viewDefinition, scriptDefinition, mapPanel, Loggers.webLogger);
+            runScriptPanel = new RunScriptPanel(connectionPanel.getDeviceHelper(), connectionDefinition, shell, deviceDefinition, viewDefinition, scriptDefinition, mapPanel, Loggers.webLogger);
             //runScriptPanel.setLocation(0, column0Top);
             //column0Top += runScriptPanel.getHeight();
 

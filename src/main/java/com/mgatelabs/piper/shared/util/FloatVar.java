@@ -76,7 +76,7 @@ public class FloatVar implements Var {
 
     @Override
     public Var asInt() {
-        return null;
+        return new IntVar((int) data);
     }
 
     @Override

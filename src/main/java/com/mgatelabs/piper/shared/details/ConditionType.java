@@ -5,7 +5,6 @@ package com.mgatelabs.piper.shared.details;
  */
 public enum ConditionType {
     SCREEN,
-    ENERGY,
     BOOLEAN,
     GREATER,
     LESS,

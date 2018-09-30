@@ -227,10 +227,6 @@ public class ConditionDefinition {
                 stringBuilder.append(definition.getVar()).append(definition.getNot() != null ? " <= " : " > ").append(definition.getValue());
             }
             break;
-            case ENERGY: {
-                stringBuilder.append(definition.getNot() != null ? "!" : "").append("hasEnergy('").append(definition.getValue()).append("')");
-            }
-            break;
             case CALL: {
                 stringBuilder.append(definition.getNot() != null ? "!" : "").append("function('").append(definition.getValue()).append("')");
             }

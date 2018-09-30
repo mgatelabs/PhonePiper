@@ -2,15 +2,15 @@ package com.mgatelabs.piper;
 
 import com.google.common.collect.Lists;
 import com.mgatelabs.piper.server.ServerRunner;
-import com.mgatelabs.piper.shared.details.PlayerDefinition;
 import com.mgatelabs.piper.shared.util.Closer;
+import com.mgatelabs.piper.shared.util.IntVar;
 import com.mgatelabs.piper.shared.util.Loggers;
+import com.mgatelabs.piper.shared.util.Var;
 import com.mgatelabs.piper.ui.FrameChoices;
 import com.mgatelabs.piper.ui.frame.MainFrame;
 import com.mgatelabs.piper.ui.frame.StartupFrame;
 import com.mgatelabs.piper.ui.utils.Constants;
 import org.apache.commons.lang3.StringUtils;
-import org.springframework.boot.SpringApplication;
 import org.springframework.boot.builder.SpringApplicationBuilder;
 
 import javax.swing.*;
@@ -69,9 +69,9 @@ public class Runner {
             new SpringApplicationBuilder(ServerRunner.class).headless(false).run(args);
         } else {
 
-            PlayerDefinition playerDefinition = PlayerDefinition.read();
+            Var v = new IntVar(0);
 
-            final ImageIcon imageIcon = new ImageIcon(playerDefinition.getClass().getResource("/icon.png"));
+            final ImageIcon imageIcon = new ImageIcon(v.getClass().getResource("/icon.png"));
 
             while (true) {
 
@@ -85,7 +85,7 @@ public class Runner {
                     }
                 }
 
-                StartupFrame startupFrame = new StartupFrame(playerDefinition, imageIcon, postfix);
+                StartupFrame startupFrame = new StartupFrame(imageIcon, postfix);
 
                 while (startupFrame.isShowing()) {
                     try {
@@ -105,7 +105,7 @@ public class Runner {
                     if (StringUtils.isNotBlank(startupFrame.getSelectedScript())) scripts.add(startupFrame.getSelectedScript());
                     if (StringUtils.isNotBlank(startupFrame.getSelectedScript2())) scripts.add(startupFrame.getSelectedScript2());
 
-                    FrameChoices frameChoices = new FrameChoices(startupFrame.getSelectedAction(), startupFrame.getSelectedMode(), playerDefinition, startupFrame.getSelectedMap(), startupFrame.getSelectedDevice(), views, scripts);
+                    FrameChoices frameChoices = new FrameChoices(startupFrame.getSelectedAction(), startupFrame.getSelectedMode(), startupFrame.getSelectedMap(), startupFrame.getSelectedDevice(), views, scripts);
 
                     if (frameChoices.getAction() == FrameChoices.Action.CREATE) {
                         String inputValue = JOptionPane.showInputDialog("Please input a " + frameChoices.getMode().name());

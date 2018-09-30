@@ -1,7 +1,7 @@
 package com.mgatelabs.piper.shared.image;
 
 /**
- * Created by @mgatelabs (Michael Fuller) on 8/29/2017.
+ * Created by @mgatelabs (Michael Fuller) on 8/29/2017 for Phone-Piper
  */
 public class Sampler {
     private int r;

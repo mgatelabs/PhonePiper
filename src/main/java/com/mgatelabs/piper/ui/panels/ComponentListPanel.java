@@ -23,7 +23,7 @@ import java.io.File;
 import java.util.ArrayList;
 
 /**
- * Created by @mgatelabs (Michael Fuller) on 9/29/2017.
+ * Created by @mgatelabs (Michael Fuller) on 9/29/2017 for Phone-Piper
  */
 public class ComponentListPanel extends JInternalFrame {
 

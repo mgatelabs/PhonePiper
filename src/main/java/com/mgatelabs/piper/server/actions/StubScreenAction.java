@@ -9,8 +9,8 @@ import org.apache.commons.lang3.StringUtils;
 import java.util.logging.Logger;
 
 /**
- * @author <a href="mailto:developer@mgatelabs.com">Michael Fuller</a>
- * Creation Date: 9/24/2018
+ *
+ * Created by @mgatelabs (Michael Fuller) on 9/24/2018
  */
 public class StubScreenAction implements EditActionInterface {
     @Override

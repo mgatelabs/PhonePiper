@@ -12,7 +12,7 @@ import java.io.IOException;
 import java.util.Set;
 
 /**
- * Created by @mgatelabs (Michael Fuller) on 9/7/2017.
+ * Created by @mgatelabs (Michael Fuller) on 9/7/2017 for Phone-Piper
  */
 public class DeviceHelper {
 

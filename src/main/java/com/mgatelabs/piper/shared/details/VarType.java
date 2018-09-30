@@ -3,7 +3,7 @@ package com.mgatelabs.piper.shared.details;
 import com.mgatelabs.piper.shared.util.Var;
 
 /**
- * Created by @mgatelabs (Michael Fuller) on 9/23/2017.
+ * Created by @mgatelabs (Michael Fuller) on 9/23/2017 for Phone-Piper
  */
 public enum VarType {
     STRING,

@@ -7,7 +7,7 @@ import java.io.File;
 import java.io.IOException;
 
 /**
- * Created by @mgatelabs (Michael Fuller) on 9/1/2017.
+ * Created by @mgatelabs (Michael Fuller) on 9/1/2017 for Phone-Piper
  */
 public class PngImageWrapper implements ImageWrapper {
 

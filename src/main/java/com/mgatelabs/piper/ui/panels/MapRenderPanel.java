@@ -11,7 +11,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 /**
- * Created by @mgatelabs (Michael Fuller) on 9/10/2017.
+ * Created by @mgatelabs (Michael Fuller) on 9/10/2017 for Phone-Piper
  */
 public class MapRenderPanel extends JPanel {
 

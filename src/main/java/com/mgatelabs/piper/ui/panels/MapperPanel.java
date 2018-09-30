@@ -10,7 +10,7 @@ import java.awt.*;
 import java.util.List;
 
 /**
- * Created by @mgatelabs (Michael Fuller) on 9/17/2017.
+ * Created by @mgatelabs (Michael Fuller) on 9/17/2017 for Phone-Piper
  */
 public class MapperPanel extends JInternalFrame {
 
@@ -33,7 +33,6 @@ public class MapperPanel extends JInternalFrame {
         this.mapPanel = mapPanel;
 
         floors = Lists.newArrayList();
-
 
 
         setMinimumSize(new Dimension(300, 450));
@@ -71,7 +70,7 @@ public class MapperPanel extends JInternalFrame {
         c.gridy = 6;
         c.weighty = 0.0;
         c.gridwidth = 4;
-        c.gridheight =1;
+        c.gridheight = 1;
         container.add(sampleLabel, c);
 
         sampleModel = new RefreshableListModel<>(Lists.newArrayList());

@@ -3,7 +3,7 @@ package com.mgatelabs.piper.shared.image;
 import java.util.*;
 
 /**
- * Created by @mgatelabs (Michael Fuller) on 8/27/2017.
+ * Created by @mgatelabs (Michael Fuller) on 8/27/2017 for Phone-Piper
  */
 public class SamplePoint {
     private int x;

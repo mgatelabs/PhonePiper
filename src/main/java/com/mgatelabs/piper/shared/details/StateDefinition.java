@@ -12,7 +12,7 @@ import java.util.Map;
 import java.util.Set;
 
 /**
- * Created by @mgatelabs (Michael Fuller) on 9/4/2017.
+ * Created by @mgatelabs (Michael Fuller) on 9/4/2017 for Phone-Piper
  */
 public class StateDefinition {
     private String name;

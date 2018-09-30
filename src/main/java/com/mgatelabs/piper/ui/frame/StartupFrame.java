@@ -22,8 +22,8 @@ import java.util.Collections;
 import java.util.List;
 
 /**
- * @author <a href="mailto:developer@mgatelabs.com">Michael Fuller</a>
- * Creation Date: 9/19/2017
+ *
+ * Created by @mgatelabs (Michael Fuller) on 9/19/2017
  */
 public class StartupFrame extends JFrame {
 

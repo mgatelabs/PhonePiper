@@ -1,9 +1,8 @@
 package com.mgatelabs.piper.shared.mapper;
 
 /**
- * Used to bring in
  *
- * Created by @mgatelabs (Michael Fuller) on 9/10/2017.
+ * Created by @mgatelabs (Michael Fuller) on 9/10/2017 for Phone-Piper
  */
 public class MapSampleArea implements Comparable<MapSampleArea> {
 

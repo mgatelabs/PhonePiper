@@ -7,7 +7,7 @@ import java.io.File;
 import java.io.IOException;
 
 /**
- * Created by @mgatelabs (Michael Fuller) on 8/31/2017.
+ * Created by @mgatelabs (Michael Fuller) on 8/31/2017 for Phone-Piper
  */
 public class RawImageWrapper implements ImageWrapper {
 

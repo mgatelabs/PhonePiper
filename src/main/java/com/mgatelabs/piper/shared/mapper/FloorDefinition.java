@@ -1,7 +1,7 @@
 package com.mgatelabs.piper.shared.mapper;
 
 /**
- * Created by @mgatelabs (Michael Fuller) on 9/10/2017.
+ * Created by @mgatelabs (Michael Fuller) on 9/10/2017 for Phone-Piper
  */
 public class FloorDefinition implements Comparable<FloorDefinition>{
 

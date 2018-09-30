@@ -1,19 +1,10 @@
 package com.mgatelabs.piper.shared.details;
 
-import com.fasterxml.jackson.core.JsonParseException;
-import com.fasterxml.jackson.databind.JsonMappingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.mgatelabs.piper.Runner;
 import com.mgatelabs.piper.shared.util.AdbShell;
-import com.mgatelabs.piper.shared.util.JsonTool;
 import org.apache.commons.lang3.StringUtils;
 
-import javax.xml.bind.annotation.XmlElementDecl;
-import java.io.File;
-import java.io.IOException;
-
 /**
- * Created by @mgatelabs (Michael Fuller) on 9/20/2017.
+ * Created by @mgatelabs (Michael Fuller) on 9/20/2017 for Phone-Piper
  */
 public class ConnectionDefinition {
 

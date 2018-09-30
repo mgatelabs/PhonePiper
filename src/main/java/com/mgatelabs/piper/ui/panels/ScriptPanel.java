@@ -22,8 +22,8 @@ import java.awt.event.MouseListener;
 import java.util.Map;
 
 /**
- * @author <a href="mailto:developer@mgatelabs.com">Michael Fuller</a>
- * Creation Date: 10/12/2017
+ *
+ * Created by @mgatelabs (Michael Fuller) on 10/12/2017
  */
 public class ScriptPanel extends JInternalFrame {
 

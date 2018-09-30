@@ -7,7 +7,7 @@ import java.io.File;
 import java.util.List;
 
 /**
- * Created by @mgatelabs (Michael Fuller) on 9/1/2017.
+ * Created by @mgatelabs (Michael Fuller) on 9/1/2017 for Phone-Piper
  */
 public class ScreenDefinition implements Comparable<ScreenDefinition> {
 
@@ -55,12 +55,12 @@ public class ScreenDefinition implements Comparable<ScreenDefinition> {
     }
 
     public static File getPreviewPath(String viewId, String screenId) {
-        return new File(Runner.WORKING_DIRECTORY,"views/" + viewId + "/s-" + screenId + ".png");
+        return new File(Runner.WORKING_DIRECTORY, "views/" + viewId + "/s-" + screenId + ".png");
     }
 
     @Override
     public String toString() {
-        return (enabled ? "" : "[X] - ") +  screenId + " - " + name;
+        return (enabled ? "" : "[X] - ") + screenId + " - " + name;
     }
 
     @Override

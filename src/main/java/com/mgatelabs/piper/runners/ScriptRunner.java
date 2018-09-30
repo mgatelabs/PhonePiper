@@ -1,28 +1,66 @@
 package com.mgatelabs.piper.runners;
 
 import com.google.common.base.Joiner;
-import com.google.common.collect.*;
-import com.mgatelabs.piper.shared.details.*;
+import com.google.common.collect.ImmutableMap;
+import com.google.common.collect.ImmutableSet;
+import com.google.common.collect.Lists;
+import com.google.common.collect.Maps;
+import com.google.common.collect.Sets;
+import com.mgatelabs.piper.shared.details.ActionDefinition;
+import com.mgatelabs.piper.shared.details.ActionType;
+import com.mgatelabs.piper.shared.details.ComponentDefinition;
+import com.mgatelabs.piper.shared.details.ConditionDefinition;
+import com.mgatelabs.piper.shared.details.ConnectionDefinition;
+import com.mgatelabs.piper.shared.details.DeviceDefinition;
+import com.mgatelabs.piper.shared.details.ScreenDefinition;
+import com.mgatelabs.piper.shared.details.ScriptDefinition;
+import com.mgatelabs.piper.shared.details.StateCallType;
+import com.mgatelabs.piper.shared.details.StateDefinition;
+import com.mgatelabs.piper.shared.details.StateResult;
+import com.mgatelabs.piper.shared.details.StatementDefinition;
+import com.mgatelabs.piper.shared.details.VarDefinition;
+import com.mgatelabs.piper.shared.details.VarDisplay;
+import com.mgatelabs.piper.shared.details.VarModify;
+import com.mgatelabs.piper.shared.details.ViewDefinition;
 import com.mgatelabs.piper.shared.helper.DeviceHelper;
 import com.mgatelabs.piper.shared.helper.InfoTransfer;
 import com.mgatelabs.piper.shared.helper.MapTransfer;
 import com.mgatelabs.piper.shared.helper.PointTransfer;
-import com.mgatelabs.piper.shared.image.*;
-import com.mgatelabs.piper.shared.util.*;
-import org.springframework.util.CollectionUtils;
+import com.mgatelabs.piper.shared.image.ImageWrapper;
+import com.mgatelabs.piper.shared.image.RawImageWrapper;
+import com.mgatelabs.piper.shared.image.SamplePoint;
+import com.mgatelabs.piper.shared.image.Sampler;
+import com.mgatelabs.piper.shared.image.StateTransfer;
+import com.mgatelabs.piper.shared.util.AdbShell;
+import com.mgatelabs.piper.shared.util.AdbUtils;
+import com.mgatelabs.piper.shared.util.IntVar;
+import com.mgatelabs.piper.shared.util.Loggers;
+import com.mgatelabs.piper.shared.util.Mather;
+import com.mgatelabs.piper.shared.util.StringVar;
+import com.mgatelabs.piper.shared.util.Var;
+import com.mgatelabs.piper.shared.util.VarInstance;
+import com.mgatelabs.piper.shared.util.VarManager;
+import com.mgatelabs.piper.shared.util.VarTimer;
 import org.apache.commons.lang3.StringUtils;
+import org.springframework.util.CollectionUtils;
 
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
 import java.text.SimpleDateFormat;
-import java.util.*;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.Date;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
+import java.util.Stack;
 import java.util.concurrent.TimeUnit;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.regex.Pattern;
 
 /**
- * Created by @mgatelabs (Michael Fuller) on 9/4/2017.
+ * Created by @mgatelabs (Michael Fuller) on 9/4/2017 for Phone-Piper
  */
 public class ScriptRunner {
 
@@ -744,7 +782,8 @@ public class ScriptRunner {
                                 if (actionDefinition.getArguments().containsKey("y")) {
                                     putVar(actionDefinition.getArguments().get("y"), new IntVar(componentDefinition.getY()));
                                 }
-                            } break;
+                            }
+                            break;
                             case PIXEL: {
                                 Var x = null, y = null;
                                 if (actionDefinition.getArguments().containsKey("x")) {
@@ -753,8 +792,7 @@ public class ScriptRunner {
                                 if (actionDefinition.getArguments().containsKey("y")) {
                                     y = valueHandler(actionDefinition.getArguments().get("y"));
                                 }
-                                if (x == null || y == null)
-                                {
+                                if (x == null || y == null) {
                                     logger.log(Level.SEVERE, "Cannot execute pixel request, x & y arguments are required");
                                     throw new RuntimeException("Cannot execute pixel request, x & y arguments are required");
                                 }
@@ -778,7 +816,8 @@ public class ScriptRunner {
                                 if (actionDefinition.getArguments().containsKey("b")) {
                                     putVar(actionDefinition.getArguments().get("b"), new IntVar(sample.getB()));
                                 }
-                            } break;
+                            }
+                            break;
                             case SET: {
                                 String varName = actionDefinition.getVar();
                                 Var value = valueHandler(actionDefinition.getValue());
@@ -807,7 +846,7 @@ public class ScriptRunner {
                                 if (logger.isLoggable(Level.FINEST)) {
                                     logger.finest("MATH: " + expression + " = " + result.toString());
                                 }
-                                putVar(varName,result);
+                                putVar(varName, result);
                             }
                             break;
                             case TAP:
@@ -1111,7 +1150,7 @@ public class ScriptRunner {
                     }
                     float f = Float.parseFloat(value);
                     f *= 10;
-                    v = new IntVar((int)f);
+                    v = new IntVar((int) f);
                 }
                 break;
                 case SECONDS: {

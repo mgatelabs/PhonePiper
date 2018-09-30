@@ -6,8 +6,8 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 
 /**
- * @author <a href="mailto:developer@mgatelabs.com">Michael Fuller</a>
- * Creation Date: 9/21/2017
+ *
+ * Created by @mgatelabs (Michael Fuller) on 9/21/2017
  */
 public class JsonTool {
     private static ObjectMapper INSTANCE = null;

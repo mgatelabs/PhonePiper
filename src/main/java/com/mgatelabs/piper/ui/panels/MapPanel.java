@@ -6,7 +6,7 @@ import javax.swing.*;
 import java.awt.*;
 
 /**
- * Created by @mgatelabs (Michael Fuller) on 9/15/2017.
+ * Created by @mgatelabs (Michael Fuller) on 9/15/2017 for Phone-Piper
  */
 public class MapPanel extends JInternalFrame {
 

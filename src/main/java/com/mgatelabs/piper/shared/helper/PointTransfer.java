@@ -1,7 +1,7 @@
 package com.mgatelabs.piper.shared.helper;
 
 /**
- * Created by @mgatelabs (Michael Fuller) on 9/6/2017.
+ * Created by @mgatelabs (Michael Fuller) on 9/6/2017 for Phone-Piper
  */
 public class PointTransfer {
 

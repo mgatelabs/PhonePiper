@@ -5,8 +5,8 @@ import com.mgatelabs.piper.ui.utils.WebLogHandler;
 import org.apache.juli.FileHandler;
 
 /**
- * @author <a href="mailto:developer@mgatelabs.com">Michael Fuller</a>
- * Creation Date: 9/20/2018
+ *
+ * Created by @mgatelabs (Michael Fuller) on 9/20/2018
  */
 public class Loggers {
 

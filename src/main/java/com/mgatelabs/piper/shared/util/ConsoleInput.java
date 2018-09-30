@@ -3,7 +3,7 @@ package com.mgatelabs.piper.shared.util;
 import java.util.Scanner;
 
 /**
- * Created by @mgatelabs (Michael Fuller) on 9/1/2017.
+ * Created by @mgatelabs (Michael Fuller) on 9/1/2017 for Phone-Piper
  */
 public class ConsoleInput {
 

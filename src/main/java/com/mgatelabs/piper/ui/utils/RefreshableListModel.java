@@ -5,7 +5,7 @@ import java.util.Collections;
 import java.util.List;
 
 /**
- * Created by @mgatelabs (Michael Fuller) on 9/3/2017.
+ * Created by @mgatelabs (Michael Fuller) on 9/3/2017 for Phone-Piper
  */
 public class RefreshableListModel<E extends Comparable> extends AbstractListModel<E> {
     private List<E> data;
@@ -26,10 +26,10 @@ public class RefreshableListModel<E extends Comparable> extends AbstractListMode
 
     public void refresh() {
         Collections.sort(data);
-        fireContentsChanged(data, 0,data.size());
+        fireContentsChanged(data, 0, data.size());
     }
 
-    public void sort(){
+    public void sort() {
         Collections.sort(data);
         fireContentsChanged(this, 0, data.size());
     }

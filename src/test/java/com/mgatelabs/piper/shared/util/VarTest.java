@@ -1,13 +1,14 @@
 package com.mgatelabs.piper.shared.util;
 
+import com.google.common.base.Preconditions;
 import org.junit.Assert;
 import org.junit.Test;
 
 import static org.junit.Assert.*;
 
 /**
- * @author <a href="mailto:developer@mgatelabs.com">Michael Fuller</a>
- * Creation Date: 9/25/2018
+ *
+ * Created by @mgatelabs (Michael Fuller) on 9/25/2018 for Phone-Piper
  */
 public class VarTest {
 
@@ -134,5 +135,58 @@ public class VarTest {
         a = new IntVar(0);
         b = new IntVar(1);
         Assert.assertTrue(!a.equals(b));
+    }
+
+    @Test
+    public void conversions() {
+        Var a, b;
+
+        // From Int
+
+        a = new IntVar(1);
+        b = a.asInt();
+        Assert.assertNotNull(b);
+        Assert.assertTrue(b.toInt() == 1);
+
+        b = a.asFloat();
+        Assert.assertNotNull(b);
+        Assert.assertTrue(b.toFloat() > 0.999f);
+        Assert.assertTrue(b.toFloat() < 1.0001f);
+
+        b = a.asString();
+        Assert.assertNotNull(b);
+        Assert.assertTrue(b.toString().equalsIgnoreCase("1"));
+
+        // From String
+
+        a = new StringVar("2");
+        b = a.asInt();
+        Assert.assertNotNull(b);
+        Assert.assertTrue(b.toInt() == 2);
+
+        b = a.asFloat();
+        Assert.assertNotNull(b);
+        Assert.assertTrue(b.toFloat() > 1.999f);
+        Assert.assertTrue(b.toFloat() < 2.0001f);
+
+        b = a.asString();
+        Assert.assertNotNull(b);
+        Assert.assertTrue(b.toString().equalsIgnoreCase("2"));
+
+        // From Float
+
+        a = new FloatVar(3.0f);
+        b = a.asInt();
+        Assert.assertNotNull(b);
+        Assert.assertTrue(b.toInt() == 3);
+
+        b = a.asFloat();
+        Assert.assertNotNull(b);
+        Assert.assertTrue(b.toFloat() > 2.999f);
+        Assert.assertTrue(b.toFloat() < 3.0001f);
+
+        b = a.asString();
+        Assert.assertNotNull(b);
+        Assert.assertTrue(b.toString().startsWith("3"));
     }
 }

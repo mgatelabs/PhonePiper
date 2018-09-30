@@ -5,7 +5,7 @@ import com.google.common.collect.Maps;
 import java.util.Map;
 
 /**
- * Created by @mgatelabs (Michael Fuller) on 9/10/2017.
+ * Created by @mgatelabs (Michael Fuller) on 9/10/2017 for Phone-Piper
  */
 public class MapDefinition {
 

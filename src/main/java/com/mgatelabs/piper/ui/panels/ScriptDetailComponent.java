@@ -1,6 +1,13 @@
 package com.mgatelabs.piper.ui.panels;
 
-import com.mgatelabs.piper.shared.details.*;
+import com.mgatelabs.piper.shared.details.ActionDefinition;
+import com.mgatelabs.piper.shared.details.ActionType;
+import com.mgatelabs.piper.shared.details.ConditionDefinition;
+import com.mgatelabs.piper.shared.details.ScriptDefinition;
+import com.mgatelabs.piper.shared.details.StateDefinition;
+import com.mgatelabs.piper.shared.details.StatementDefinition;
+import com.mgatelabs.piper.shared.details.VarDefinition;
+import com.mgatelabs.piper.shared.details.ViewDefinition;
 import com.mgatelabs.piper.ui.panels.utils.CommonNode;
 import com.mgatelabs.piper.ui.panels.utils.NodeType;
 import com.mgatelabs.piper.ui.panels.utils.TreeUtils;
@@ -17,7 +24,7 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 
 /**
- * Created by @mgatelabs (Michael Fuller) on 10/15/2017.
+ * Created by @mgatelabs (Michael Fuller) on 10/15/2017 for Phone-Piper
  */
 public class ScriptDetailComponent extends JPanel {
 

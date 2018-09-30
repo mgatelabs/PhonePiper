@@ -19,7 +19,7 @@ import java.io.File;
 import java.util.List;
 
 /**
- * Created by @mgatelabs (Michael Fuller) on 8/27/2017.
+ * Created by @mgatelabs (Michael Fuller) on 8/27/2017 for Phone-Piper
  */
 public class Runner {
 
@@ -98,12 +98,16 @@ public class Runner {
                 if (startupFrame.getSelectedAction() != null && startupFrame.getSelectedMode() != null) {
 
                     List<String> views = Lists.newArrayList();
-                    if (StringUtils.isNotBlank(startupFrame.getSelectedView())) views.add(startupFrame.getSelectedView());
-                    if (StringUtils.isNotBlank(startupFrame.getSelectedView2())) views.add(startupFrame.getSelectedView2());
+                    if (StringUtils.isNotBlank(startupFrame.getSelectedView()))
+                        views.add(startupFrame.getSelectedView());
+                    if (StringUtils.isNotBlank(startupFrame.getSelectedView2()))
+                        views.add(startupFrame.getSelectedView2());
 
                     List<String> scripts = Lists.newArrayList();
-                    if (StringUtils.isNotBlank(startupFrame.getSelectedScript())) scripts.add(startupFrame.getSelectedScript());
-                    if (StringUtils.isNotBlank(startupFrame.getSelectedScript2())) scripts.add(startupFrame.getSelectedScript2());
+                    if (StringUtils.isNotBlank(startupFrame.getSelectedScript()))
+                        scripts.add(startupFrame.getSelectedScript());
+                    if (StringUtils.isNotBlank(startupFrame.getSelectedScript2()))
+                        scripts.add(startupFrame.getSelectedScript2());
 
                     FrameChoices frameChoices = new FrameChoices(startupFrame.getSelectedAction(), startupFrame.getSelectedMode(), startupFrame.getSelectedMap(), startupFrame.getSelectedDevice(), views, scripts);
 

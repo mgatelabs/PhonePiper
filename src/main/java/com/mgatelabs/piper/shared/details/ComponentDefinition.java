@@ -5,7 +5,7 @@ import com.mgatelabs.piper.Runner;
 import java.io.File;
 
 /**
- * Created by @mgatelabs (Michael Fuller) on 9/1/2017.
+ * Created by @mgatelabs (Michael Fuller) on 9/1/2017 for Phone-Piper
  */
 public class ComponentDefinition implements Comparable<ComponentDefinition> {
 

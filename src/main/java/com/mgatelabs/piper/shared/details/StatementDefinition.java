@@ -7,7 +7,7 @@ import java.util.Map;
 import java.util.Set;
 
 /**
- * Created by @mgatelabs (Michael Fuller) on 9/4/2017.
+ * Created by @mgatelabs (Michael Fuller) on 9/4/2017 for Phone-Piper
  */
 public class StatementDefinition {
     private ConditionDefinition condition;
@@ -43,7 +43,7 @@ public class StatementDefinition {
         if (getCondition() != null) {
             found.addAll(getCondition().determineScreenIds(exploredStates, states));
         }
-        for (ActionDefinition actionDefinition: actions) {
+        for (ActionDefinition actionDefinition : actions) {
             found.addAll(actionDefinition.determineScreenIds(exploredStates, states));
         }
         return found;

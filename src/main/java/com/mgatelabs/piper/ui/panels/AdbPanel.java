@@ -5,7 +5,7 @@ import com.mgatelabs.piper.shared.util.AdbShell;
 import javax.swing.*;
 
 /**
- * Created by @mgatelabs (Michael Fuller) on 9/21/2017.
+ * Created by @mgatelabs (Michael Fuller) on 9/21/2017 for Phone-Piper
  */
 public class AdbPanel extends JInternalFrame {
 

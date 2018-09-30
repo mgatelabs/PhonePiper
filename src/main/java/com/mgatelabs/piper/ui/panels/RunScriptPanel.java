@@ -2,7 +2,11 @@ package com.mgatelabs.piper.ui.panels;
 
 import com.google.common.collect.Maps;
 import com.mgatelabs.piper.runners.ScriptRunner;
-import com.mgatelabs.piper.shared.details.*;
+import com.mgatelabs.piper.shared.details.ConnectionDefinition;
+import com.mgatelabs.piper.shared.details.DeviceDefinition;
+import com.mgatelabs.piper.shared.details.ScriptDefinition;
+import com.mgatelabs.piper.shared.details.StateDefinition;
+import com.mgatelabs.piper.shared.details.ViewDefinition;
 import com.mgatelabs.piper.shared.helper.DeviceHelper;
 import com.mgatelabs.piper.shared.util.AdbShell;
 import com.mgatelabs.piper.ui.utils.WebLogHandler;
@@ -18,7 +22,7 @@ import java.util.SortedSet;
 import java.util.TreeSet;
 
 /**
- * Created by @mgatelabs (Michael Fuller) on 9/20/2017.
+ * Created by @mgatelabs (Michael Fuller) on 9/20/2017 for Phone-Piper
  */
 public class RunScriptPanel extends JToolBar {
 
@@ -64,23 +68,23 @@ public class RunScriptPanel extends JToolBar {
 
         stateToIntegerMap = Maps.newHashMap();
 
-        playIcon = new ImageIcon( this.getClass().getClassLoader().getResource("play.png"));
+        playIcon = new ImageIcon(this.getClass().getClassLoader().getResource("play.png"));
         pauseIcon = new ImageIcon(this.getClass().getClassLoader().getResource("pause.png"));
 
         build();
     }
 
     private void build() {
-        setMinimumSize(new Dimension(400,64));
+        setMinimumSize(new Dimension(400, 64));
         setPreferredSize(getMinimumSize());
 
         setLayout(new GridBagLayout());
         GridBagConstraints c = new GridBagConstraints();
 
         startStopButton = new JButton();
-        startStopButton.setPreferredSize(new Dimension(64,64));
-        startStopButton.setMinimumSize(new Dimension(64,64));
-        startStopButton.setMaximumSize(new Dimension(64,64));
+        startStopButton.setPreferredSize(new Dimension(64, 64));
+        startStopButton.setMinimumSize(new Dimension(64, 64));
+        startStopButton.setMaximumSize(new Dimension(64, 64));
         c.fill = GridBagConstraints.VERTICAL;
         c.gridx = 0;
         c.gridy = 0;
@@ -97,12 +101,12 @@ public class RunScriptPanel extends JToolBar {
                     scriptThread = null;
                     changeIcon(true);
                 } else if (scriptRunner.getStatus() != ScriptRunner.Status.PAUSED) {
-                    scriptThread = new ScriptThread(scriptRunner, ((StateDefinition)stateCombo.getSelectedItem()).getId());
+                    scriptThread = new ScriptThread(scriptRunner, ((StateDefinition) stateCombo.getSelectedItem()).getId());
                     scriptThread.start();
                     timer.start();
                     changeIcon(false);
                 } else if (scriptRunner.getStatus() == ScriptRunner.Status.PAUSED) {
-                    scriptThread = new ScriptThread(scriptRunner, ((StateDefinition)stateCombo.getSelectedItem()).getId());
+                    scriptThread = new ScriptThread(scriptRunner, ((StateDefinition) stateCombo.getSelectedItem()).getId());
                     scriptThread.start();
                     timer.start();
                     changeIcon(false);
@@ -146,7 +150,7 @@ public class RunScriptPanel extends JToolBar {
         definitions.addAll(scriptDefinition.getFilteredStates().values());
 
         int i = 0;
-        for (StateDefinition stateDefinition: definitions) {
+        for (StateDefinition stateDefinition : definitions) {
             stateCombo.addItem(stateDefinition);
             stateToIntegerMap.put(stateDefinition.getId(), i++);
         }
@@ -180,7 +184,7 @@ public class RunScriptPanel extends JToolBar {
                     }
                 }
                 if (scriptRunner.getLastImageDate() != null) {
-                    lastImageTimeLabel.setText(simpleDateFormat.format(scriptRunner.getLastImageDate()) + String.format(" (%2.2f)", scriptRunner.getLastImageDuration()) );
+                    lastImageTimeLabel.setText(simpleDateFormat.format(scriptRunner.getLastImageDate()) + String.format(" (%2.2f)", scriptRunner.getLastImageDuration()));
                 }
                 if (scriptRunner.getStatus() != ScriptRunner.Status.RUNNING) {
                     timer.stop();
@@ -206,6 +210,7 @@ public class RunScriptPanel extends JToolBar {
     public static class ScriptThread extends Thread {
         ScriptRunner runner;
         String state;
+
         public ScriptThread(ScriptRunner scriptRunner, String state) {
             this.runner = scriptRunner;
             this.state = state;

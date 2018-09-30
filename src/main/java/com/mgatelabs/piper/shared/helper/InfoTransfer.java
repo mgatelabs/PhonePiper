@@ -5,7 +5,7 @@ import com.mgatelabs.piper.shared.image.StateTransfer;
 import java.util.Map;
 
 /**
- * Created by @mgatelabs (Michael Fuller) on 9/6/2017.
+ * Created by @mgatelabs (Michael Fuller) on 9/6/2017 for Phone-Piper
  */
 public class InfoTransfer {
     private Map<String, StateTransfer> states;

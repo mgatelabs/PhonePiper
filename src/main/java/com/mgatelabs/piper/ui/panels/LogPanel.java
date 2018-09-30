@@ -10,11 +10,10 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.logging.Handler;
 import java.util.logging.LogRecord;
 
 /**
- * Created by @mgatelabs (Michael Fuller) on 9/25/2017.
+ * Created by @mgatelabs (Michael Fuller) on 9/25/2017 for Phone-Piper
  */
 public class LogPanel extends JPanel {
 

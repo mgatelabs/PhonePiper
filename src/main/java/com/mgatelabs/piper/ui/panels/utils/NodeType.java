@@ -1,8 +1,8 @@
 package com.mgatelabs.piper.ui.panels.utils;
 
 /**
- * @author <a href="mailto:developer@mgatelabs.com">Michael Fuller</a>
- * Creation Date: 10/16/2017
+ *
+ * Created by @mgatelabs (Michael Fuller) on 10/16/2017
  */
 public enum NodeType {
     ROOT,

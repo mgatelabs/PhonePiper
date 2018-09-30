@@ -1,7 +1,7 @@
 package com.mgatelabs.piper.shared.util;
 
 /**
- * Created by @mgatelabs (Michael Fuller) on 10/20/2017.
+ * Created by @mgatelabs (Michael Fuller) on 10/20/2017 for Phone-Piper
  */
 public class VarTimer {
 

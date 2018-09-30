@@ -4,7 +4,7 @@ import java.io.Closeable;
 import java.io.IOException;
 
 /**
- * Created by @mgatelabs (Michael Fuller) on 9/7/2017.
+ * Created by @mgatelabs (Michael Fuller) on 9/7/2017 for Phone-Piper
  */
 public class Closer {
     public static void close(Closeable c) {

@@ -1,8 +1,8 @@
 package com.mgatelabs.piper.server.entities;
 
 /**
- * @author <a href="mailto:developer@mgatelabs.com">Michael Fuller</a>
- * Creation Date: 2/15/2018
+ *
+ * Created by @mgatelabs (Michael Fuller) on 2/15/2018
  */
 public class NamedValueDescriptionItem implements Comparable<NamedValueDescriptionItem> {
     private String name;

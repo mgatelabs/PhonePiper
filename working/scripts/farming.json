@@ -1960,7 +1960,11 @@
             },
             {
               "type": "TAP",
-              "value": "screen-center"
+              "value": "screen-center-small"
+            },
+            {
+              "type": "WAIT",
+              "value": "500"
             },
             {
               "type": "REPEAT",

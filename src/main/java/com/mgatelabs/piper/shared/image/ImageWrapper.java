@@ -3,7 +3,7 @@ package com.mgatelabs.piper.shared.image;
 import java.io.File;
 
 /**
- * Created by @mgatelabs (Michael Fuller) on 9/1/2017.
+ * Created by @mgatelabs (Michael Fuller) on 9/1/2017 for Phone-Piper
  */
 public interface ImageWrapper {
     boolean isReady();

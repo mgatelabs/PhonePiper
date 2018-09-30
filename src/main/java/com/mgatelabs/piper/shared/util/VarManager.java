@@ -10,8 +10,8 @@ import java.util.Stack;
 import java.util.logging.Logger;
 
 /**
- * @author <a href="mailto:developer@mgatelabs.com">Michael Fuller</a>
- * Creation Date: 9/25/2018
+ *
+ * Created by @mgatelabs (Michael Fuller) on 9/25/2018
  */
 public class VarManager {
 

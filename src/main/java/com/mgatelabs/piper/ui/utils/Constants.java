@@ -3,8 +3,8 @@ package com.mgatelabs.piper.ui.utils;
 import java.util.regex.Pattern;
 
 /**
- * @author <a href="mailto:developer@mgatelabs.com">Michael Fuller</a>
- * Creation Date: 9/20/2017
+ *
+ * Created by @mgatelabs (Michael Fuller) on 9/20/2017
  */
 public class Constants {
 

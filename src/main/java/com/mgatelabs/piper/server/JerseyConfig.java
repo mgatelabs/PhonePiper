@@ -6,8 +6,8 @@ import org.springframework.stereotype.Component;
 import javax.ws.rs.ApplicationPath;
 
 /**
- * @author <a href="mailto:developer@mgatelabs.com">Michael Fuller</a>
- * Creation Date: 2/14/2018
+ *
+ * Created by @mgatelabs (Michael Fuller) on 2/14/2018
  */
 
 @Component

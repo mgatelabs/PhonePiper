@@ -16,7 +16,7 @@ import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
 
 /**
- * Created by @mgatelabs (Michael Fuller) on 9/12/2017.
+ * Created by @mgatelabs (Michael Fuller) on 9/12/2017 for Phone-Piper
  */
 public class MainFrame extends JFrame {
 

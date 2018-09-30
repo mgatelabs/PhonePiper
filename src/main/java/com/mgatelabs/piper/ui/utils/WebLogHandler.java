@@ -8,7 +8,7 @@ import java.util.logging.Handler;
 import java.util.logging.LogRecord;
 
 /**
- * Created by @mgatelabs (Michael Fuller) on 9/25/2017.
+ * Created by @mgatelabs (Michael Fuller) on 9/25/2017 for Phone-Piper
  */
 public class WebLogHandler extends Handler {
 

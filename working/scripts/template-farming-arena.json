@@ -36,6 +36,10 @@
         "modified": {
           "value": "0",
           "type": "INT"
+        },
+        "lbAttempts": {
+          "value": "0",
+          "type": "INT"
         }
       },
       "statements": [
@@ -787,6 +791,7 @@
             "value": "@isBattleReady",
             "and": [
               { "is": "EQUAL", "value": "3", "var":"segment"},
+              { "is": "LESS", "value": "8", "var":"lbAttempts"},
               { "is": "CALL", "value": "@isUnitReady", "args": {"index": "0"} },
               { "is": "CALL", "value": "@isUnitLbReady", "args": {"index": "0"} },
               { "not": "CALL", "value": "@isUnitLbSelected", "args": {"index": "0"} }
@@ -801,6 +806,11 @@
               }
             },
             {
+              "type": "ADD",
+              "var": "lbAttempts",
+              "value": "1"
+            },
+            {
               "type": "SET",
               "var": "modified",
               "value": "1"
@@ -818,6 +828,7 @@
             "value": "@isBattleReady",
             "and": [
               { "is": "EQUAL", "value": "3", "var":"segment"},
+              { "is": "LESS", "value": "8", "var":"lbAttempts"},
               { "is": "CALL", "value": "@isUnitReady", "args": {"index": "1"} },
               { "is": "CALL", "value": "@isUnitLbReady", "args": {"index": "1"} },
               { "not": "CALL", "value": "@isUnitLbSelected", "args": {"index": "1"} }
@@ -832,6 +843,11 @@
               }
             },
             {
+              "type": "ADD",
+              "var": "lbAttempts",
+              "value": "1"
+            },
+            {
               "type": "SET",
               "var": "modified",
               "value": "1"
@@ -849,6 +865,7 @@
             "value": "@isBattleReady",
             "and": [
               { "is": "EQUAL", "value": "3", "var":"segment"},
+              { "is": "LESS", "value": "8", "var":"lbAttempts"},
               { "is": "CALL", "value": "@isUnitReady", "args": {"index": "2"} },
               { "is": "CALL", "value": "@isUnitLbReady", "args": {"index": "2"} },
               { "not": "CALL", "value": "@isUnitLbSelected", "args": {"index": "2"} }
@@ -863,6 +880,11 @@
               }
             },
             {
+              "type": "ADD",
+              "var": "lbAttempts",
+              "value": "1"
+            },
+            {
               "type": "SET",
               "var": "modified",
               "value": "1"
@@ -880,6 +902,7 @@
             "value": "@isBattleReady",
             "and": [
               { "is": "EQUAL", "value": "3", "var":"segment"},
+              { "is": "LESS", "value": "8", "var":"lbAttempts"},
               { "is": "CALL", "value": "@isUnitReady", "args": {"index": "4"} },
               { "is": "CALL", "value": "@isUnitLbReady", "args": {"index": "4"} },
               { "not": "CALL", "value": "@isUnitLbSelected", "args": {"index": "4"} }
@@ -896,6 +919,11 @@
             {
               "type": "SET",
               "var": "modified",
+              "value": "1"
+            },
+            {
+              "type": "ADD",
+              "var": "lbAttempts",
               "value": "1"
             },
             {
@@ -1021,7 +1049,11 @@
               "var": "modified",
               "value": "0"
             },
-
+            {
+              "type": "SET",
+              "var": "lbAttempts",
+              "value": "0"
+            },
             {
               "type": "ADD",
               "var": "elysium",

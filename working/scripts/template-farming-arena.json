@@ -122,6 +122,17 @@
             },
             {
               "type": "WAIT",
+              "value": "200"
+            },
+            {
+              "type": "CALL",
+              "value": "@tapUnit",
+              "args": {
+                "index": "3"
+              }
+            },
+            {
+              "type": "WAIT",
               "value": "2000"
             },
             {

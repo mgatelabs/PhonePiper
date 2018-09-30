@@ -618,17 +618,17 @@
     "name" : "Battle - Unit - 0 - LB Not Full",
     "screenId" : "battle-unit-0_notfull",
     "points" : [ {
-      "x" : 505,
-      "y" : 1291,
-      "r" : 0,
-      "g" : 0,
-      "b" : 19
-    }, {
-      "x" : 503,
+      "x" : 504,
       "y" : 1294,
       "r" : 0,
       "g" : 0,
-      "b" : 27
+      "b" : 37
+    }, {
+      "x" : 506,
+      "y" : 1291,
+      "r" : 0,
+      "g" : 0,
+      "b" : 37
     } ],
     "enabled" : true
   }, {
@@ -911,17 +911,17 @@
     "name" : "Battle - Unit - 1 - LB Not Full",
     "screenId" : "battle-unit-1_notfull",
     "points" : [ {
-      "x" : 502,
-      "y" : 1485,
-      "r" : 0,
-      "g" : 0,
-      "b" : 21
-    }, {
-      "x" : 500,
+      "x" : 501,
       "y" : 1488,
       "r" : 0,
       "g" : 0,
-      "b" : 28
+      "b" : 46
+    }, {
+      "x" : 503,
+      "y" : 1485,
+      "r" : 4,
+      "g" : 5,
+      "b" : 51
     } ],
     "enabled" : true
   }, {
@@ -1150,17 +1150,17 @@
     "name" : "Battle - Unit - 2 - LB Not Full",
     "screenId" : "battle-unit-2_notfull",
     "points" : [ {
-      "x" : 502,
-      "y" : 1679,
-      "r" : 0,
-      "g" : 0,
-      "b" : 20
-    }, {
-      "x" : 500,
+      "x" : 501,
       "y" : 1682,
       "r" : 0,
       "g" : 0,
-      "b" : 27
+      "b" : 45
+    }, {
+      "x" : 503,
+      "y" : 1679,
+      "r" : 4,
+      "g" : 4,
+      "b" : 50
     } ],
     "enabled" : true
   }, {
@@ -1389,17 +1389,17 @@
     "name" : "Battle - Unit - 3 - LB Not Full",
     "screenId" : "battle-unit-3_notfull",
     "points" : [ {
-      "x" : 1037,
+      "x" : 1036,
+      "y" : 1295,
+      "r" : 1,
+      "g" : 1,
+      "b" : 60
+    }, {
+      "x" : 1039,
       "y" : 1290,
       "r" : 0,
       "g" : 0,
-      "b" : 5
-    }, {
-      "x" : 1035,
-      "y" : 1295,
-      "r" : 0,
-      "g" : 0,
-      "b" : 45
+      "b" : 59
     } ],
     "enabled" : true
   }, {
@@ -1586,17 +1586,17 @@
     "name" : "Battle - Unit - 4 - LB Not Full",
     "screenId" : "battle-unit-4_notfull",
     "points" : [ {
-      "x" : 1037,
+      "x" : 1038,
       "y" : 1485,
-      "r" : 0,
-      "g" : 0,
-      "b" : 22
+      "r" : 5,
+      "g" : 6,
+      "b" : 55
     }, {
-      "x" : 1035,
-      "y" : 1488,
-      "r" : 0,
-      "g" : 0,
-      "b" : 28
+      "x" : 1036,
+      "y" : 1489,
+      "r" : 1,
+      "g" : 1,
+      "b" : 59
     } ],
     "enabled" : true
   }, {

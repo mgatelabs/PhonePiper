@@ -947,6 +947,7 @@
               "type": "INFO",
               "value": "Units were changed, Tapping in order"
             },
+            { "type": "CALL", "value": "@keepAlive" },
             {
               "type": "BATCH",
               "value": "start"
@@ -1015,6 +1016,7 @@
               "type": "INFO",
               "value": "No unit changes, Hit Repeat"
             },
+            { "type": "CALL", "value": "@keepAlive" },
             {
               "type": "TAP",
               "value": "battle-repeat"

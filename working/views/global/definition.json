@@ -410,17 +410,17 @@
     "points" : [ ],
     "enabled" : false
   }, {
-    "name" : "menu-home-daily",
+    "name" : "Menu - Home - Daily",
     "screenId" : "menu-home-daily",
     "points" : [ ],
     "enabled" : false
   }, {
-    "name" : "menu-home-login_bonus",
+    "name" : "Menu - Home - Login bonus",
     "screenId" : "menu-home-login_bonus",
     "points" : [ ],
     "enabled" : false
   }, {
-    "name" : "menu-log_in_again",
+    "name" : "Menu - Log in again",
     "screenId" : "menu-log_in_again",
     "points" : [ ],
     "enabled" : false
@@ -435,7 +435,7 @@
     "points" : [ ],
     "enabled" : false
   }, {
-    "name" : "menu-messages",
+    "name" : "Menu - Messages",
     "screenId" : "menu-messages",
     "points" : [ ],
     "enabled" : false
@@ -468,6 +468,11 @@
   }, {
     "name" : "Menu - Raid  Orbs",
     "screenId" : "menu-raid_orbs",
+    "points" : [ ],
+    "enabled" : false
+  }, {
+    "name" : "Menu - Raid Recovery",
+    "screenId" : "menu-raid_recovery",
     "points" : [ ],
     "enabled" : false
   }, {
@@ -538,6 +543,11 @@
   }, {
     "name" : "menu-title",
     "screenId" : "menu-title",
+    "points" : [ ],
+    "enabled" : false
+  }, {
+    "name" : "Menu - Use Lapis",
+    "screenId" : "menu-use_lapis",
     "points" : [ ],
     "enabled" : false
   }, {
@@ -1235,12 +1245,28 @@
     "h" : 1,
     "enabled" : false
   }, {
+    "name" : "Menu - Raid Recovery - Yes",
+    "componentId" : "menu-raid_recovery-yes",
+    "x" : 0,
+    "y" : 0,
+    "w" : 1,
+    "h" : 1,
+    "enabled" : false
+  }, {
     "name" : "Menu - Results - Next",
     "componentId" : "menu-results-next",
     "x" : 443,
     "y" : 1647,
     "w" : 193,
     "h" : 79,
+    "enabled" : false
+  }, {
+    "name" : "Menu - Use Lapis - Yes",
+    "componentId" : "menu-use_lapis-yes",
+    "x" : 0,
+    "y" : 0,
+    "w" : 1,
+    "h" : 1,
     "enabled" : false
   }, {
     "name" : "menu-vortex-event",

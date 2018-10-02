@@ -108,6 +108,19 @@
       },
       "statements": [
         {
+          "condition": {
+            "is": "LESS",
+            "var": "min-energy",
+            "value": "1"
+          },
+          "actions": [
+            {
+              "type": "RETURN",
+              "value": "1"
+            }
+          ]
+        },
+        {
           "actions": [
             { "type": "CALL", "value": "@maxEnergyValue", "var": "totalEnergy" },
             {

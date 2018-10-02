@@ -93,6 +93,24 @@
       "type": "INT",
       "modify": "EDITABLE",
       "displayType": "SECONDS"
+    },
+    {
+      "name": "refresh-farm",
+      "display": "Farm - Refreshes Allowed",
+      "value": "0",
+      "type": "INT",
+      "modify": "EDITABLE",
+      "order": 20,
+      "skipSave": "true"
+    },
+    {
+      "name": "refresh-raid",
+      "display": "Raid - Refreshes Allowed",
+      "value": "0",
+      "type": "INT",
+      "modify": "EDITABLE",
+      "order": 20,
+      "skipSave": "true"
     }
   ],
   "includes": [
@@ -129,6 +147,99 @@
         "_common-no_op"
       ],
       "statements": [
+        {
+          "condition": {
+            "is": "SCREEN",
+            "value": "menu-energy_recovery",
+            "and": [
+              {
+                "is": "GREATER",
+                "var": "refresh-farm",
+                "value": "0"
+              }
+            ]
+          },
+          "actions": [
+            {
+              "type": "TAP",
+              "value": "menu-energy_recovery-lapis"
+            },
+            {
+              "type": "WAIT",
+              "value": "1500"
+            },
+            {
+              "type": "REPEAT",
+              "value": ""
+            }
+          ]
+        },
+        {
+          "condition": {
+            "is": "SCREEN",
+            "value": "menu-use_lapis",
+            "and": [
+              {
+                "is": "GREATER",
+                "var": "refresh-farm",
+                "value": "0"
+              }
+            ]
+          },
+          "actions": [
+            {
+              "type": "INFO",
+              "value": "Refeshed Energy"
+            },
+            {
+              "type": "ADD",
+              "var": "refresh-farm",
+              "value": "-1"
+            },
+            {
+              "type": "TAP",
+              "value": "menu-use_lapis-yes"
+            },
+            {
+              "type": "WAIT",
+              "value": "1500"
+            },
+            {
+              "type": "REPEAT",
+              "value": ""
+            }
+          ]
+        },
+        {
+          "condition": {
+            "is": "EQUAL",
+            "var": "min-energy",
+            "value": "0",
+            "and": [
+              {
+                "is": "LESS",
+                "var": "refresh-farm",
+                "value": "1"
+              }
+            ]
+          },
+          "actions": [
+            {
+              "type": "SET",
+              "var": "refresh-farm",
+              "value": "0"
+            },
+            {
+              "type": "SET",
+              "var": "min-energy",
+              "value": "1"
+            },
+            {
+              "type": "REPEAT",
+              "value": ""
+            }
+          ]
+        },
         {
           "condition": {
             "is": "SCREEN",
@@ -528,11 +639,79 @@
         {
           "condition": {
             "is": "SCREEN",
-            "value": "menu-raid_screen",
+            "value": "menu-raid_recovery",
             "and": [
+              {
+                "is": "GREATER",
+                "var": "refresh-raid",
+                "value": "0"
+              }
+            ]
+          },
+          "actions": [
+            {
+              "type": "TAP",
+              "value": "menu-raid_recovery-yes"
+            },
+            {
+              "type": "WAIT",
+              "value": "1500"
+            },
+            {
+              "type": "REPEAT",
+              "value": ""
+            }
+          ]
+        },
+        {
+          "condition": {
+            "is": "SCREEN",
+            "value": "menu-use_lapis",
+            "and": [
+              {
+                "is": "GREATER",
+                "var": "refresh-raid",
+                "value": "0"
+              }
+            ]
+          },
+          "actions": [
+            {
+              "type": "INFO",
+              "value": "Refeshed Raid ORB"
+            },
+            {
+              "type": "ADD",
+              "var": "refresh-raid",
+              "value": "-1"
+            },
+            {
+              "type": "TAP",
+              "value": "menu-use_lapis-yes"
+            },
+            {
+              "type": "WAIT",
+              "value": "1500"
+            },
+            {
+              "type": "REPEAT",
+              "value": ""
+            }
+          ]
+        },
+        {
+          "condition": {
+            "is": "SCREEN",
+            "value": "menu-raid_screen",
+            "andOr": [
               {
                 "is": "SCREEN",
                 "value": "menu-raid_orbs"
+              },
+              {
+                "is": "GREATER",
+                "var": "refresh-raid",
+                "value": "0"
               }
             ]
           },

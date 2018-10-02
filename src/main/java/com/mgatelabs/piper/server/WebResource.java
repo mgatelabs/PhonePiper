@@ -91,7 +91,7 @@ public class WebResource {
 
             VarStateDefinition varStateDefinition = new VarStateDefinition();
             for (VarDefinition varDefinition : runner.getVariables()) {
-                if (varDefinition.getModify() == VarModify.EDITABLE) {
+                if (varDefinition.getModify() == VarModify.EDITABLE && !varDefinition.isSkipSave()) {
                     varStateDefinition.addItem(varDefinition);
                 }
             }

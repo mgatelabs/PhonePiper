@@ -12,18 +12,21 @@ public class VarDefinition {
     private VarModify modify;
     private VarDisplay displayType;
     private int order;
+    private boolean skipSave;
 
     public VarDefinition() {
         order = 99;
     }
 
-    public VarDefinition(String name, String display, String value, VarType type, VarDisplay displayType, VarModify modify, int order) {
+    public VarDefinition(String name, String display, String value, VarType type, VarDisplay displayType, VarModify modify, int order, boolean skipSave) {
         this.name = name;
         this.display = display;
         this.value = value;
         this.type = type;
         this.modify = modify;
         this.displayType = displayType;
+        this.order = order;
+        this.skipSave = skipSave;
     }
 
     public String getName() {
@@ -81,6 +84,14 @@ public class VarDefinition {
 
     public void setOrder(int order) {
         this.order = order;
+    }
+
+    public boolean isSkipSave() {
+        return skipSave;
+    }
+
+    public void setSkipSave(boolean skipSave) {
+        this.skipSave = skipSave;
     }
 
     @Override

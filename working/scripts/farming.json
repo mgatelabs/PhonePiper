@@ -12,11 +12,13 @@
     },
     {
       "name": "runs",
-      "display": "Battles",
+      "display": "Farm Runs",
       "value": "0",
       "type": "INT",
       "modify": "VISIBLE",
-      "order": 5
+      "order": 5,
+      "tierId": "farm",
+      "tierId": "stats"
     },
     {
       "name": "raid_runs",
@@ -24,7 +26,8 @@
       "value": "0",
       "type": "INT",
       "modify": "VISIBLE",
-      "order": 5
+      "order": 5,
+      "tierId": "stats"
     },
     {
       "name": "arena_runs",
@@ -32,7 +35,8 @@
       "value": "0",
       "type": "INT",
       "modify": "VISIBLE",
-      "order": 5
+      "order": 5,
+      "tierId": "stats"
     },
     {
       "name": "menu-item",
@@ -40,7 +44,26 @@
       "value": "1",
       "type": "INT",
       "modify": "EDITABLE",
-      "order": 20
+      "order": 20,
+      "tierId": "farm"
+    },
+    {
+      "name": "min-energy",
+      "display": "Transition Energy",
+      "value": "1",
+      "type": "INT",
+      "modify":"EDITABLE",
+      "order": 20,
+      "tierId": "farm"
+    },
+    {
+      "name": "player-level",
+      "display": "Player Level",
+      "value": "100",
+      "type": "INT",
+      "modify":"EDITABLE",
+      "order": 20,
+      "tierId": "farm"
     },
     {
       "name": "vortex-item",
@@ -48,7 +71,8 @@
       "value": "0",
       "type": "INT",
       "modify": "EDITABLE",
-      "order": 20
+      "order": 20,
+      "tierId": "raid"
     },
     {
       "name": "allow-raid",
@@ -57,7 +81,8 @@
       "type": "INT",
       "modify": "EDITABLE",
       "displayType": "BOOLEAN",
-      "order": 10
+      "order": 10,
+      "tierId": "enable"
     },
     {
       "name": "alt-raid",
@@ -66,7 +91,8 @@
       "type": "INT",
       "modify": "EDITABLE",
       "displayType": "BOOLEAN",
-      "order": 10
+      "order": 10,
+      "tierId": "raid"
     },
     {
       "name": "allow-farm",
@@ -75,7 +101,8 @@
       "type": "INT",
       "modify": "EDITABLE",
       "displayType": "BOOLEAN",
-      "order": 10
+      "order": 10,
+      "tierId": "enable"
     },
     {
       "name": "allow-arena",
@@ -84,7 +111,8 @@
       "type": "INT",
       "modify": "EDITABLE",
       "displayType": "BOOLEAN",
-      "order": 10
+      "order": 10,
+      "tierId": "enable"
     },
     {
       "name": "raid-timer",
@@ -92,7 +120,8 @@
       "value": "16320",
       "type": "INT",
       "modify": "EDITABLE",
-      "displayType": "SECONDS"
+      "displayType": "SECONDS",
+      "tierId": "farm"
     },
     {
       "name": "refresh-farm",
@@ -101,7 +130,8 @@
       "type": "INT",
       "modify": "EDITABLE",
       "order": 20,
-      "skipSave": "true"
+      "skipSave": "true",
+      "tierId": "refresh"
     },
     {
       "name": "refresh-raid",
@@ -110,8 +140,16 @@
       "type": "INT",
       "modify": "EDITABLE",
       "order": 20,
-      "skipSave": "true"
+      "skipSave": "true",
+      "tierId": "refresh"
     }
+  ],
+  "varTiers": [
+    {"title":"Stats", "id":"stats"},
+    {"title":"Enable", "id":"enable"},
+    {"title":"Farming", "id":"farm"},
+    {"title":"Raid", "id":"raid"},
+    {"title":"Refresh", "id":"refresh"}
   ],
   "includes": [
     "_common-no_op",

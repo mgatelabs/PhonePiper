@@ -23,6 +23,7 @@ public class ScriptDefinition {
     private String scriptId;
     private List<String> includes;
     private List<VarDefinition> vars;
+    private List<VarTierDefinition> varTiers;
     private Map<String, StateDefinition> states;
 
     @SuppressWarnings("unused")
@@ -34,6 +35,7 @@ public class ScriptDefinition {
         vars = Lists.newArrayList();
         states = Maps.newHashMap();
         includes = Lists.newArrayList();
+        varTiers = Lists.newArrayList();
     }
 
     public void fix() {
@@ -50,6 +52,9 @@ public class ScriptDefinition {
             if (varDefinition.getDisplayType() == null) {
                 varDefinition.setDisplayType(VarDisplay.STANDARD);
             }
+        }
+        if (varTiers == null) {
+            varTiers = Lists.newArrayList();
         }
         if (includes == null) {
             includes = Lists.newArrayList();
@@ -108,6 +113,14 @@ public class ScriptDefinition {
 
     public void setIncludes(List<String> includes) {
         this.includes = includes;
+    }
+
+    public List<VarTierDefinition> getVarTiers() {
+        return varTiers;
+    }
+
+    public void setVarTiers(List<VarTierDefinition> varTiers) {
+        this.varTiers = varTiers;
     }
 
     public static ScriptDefinition read(String scriptId) {

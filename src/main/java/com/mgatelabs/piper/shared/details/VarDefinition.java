@@ -1,11 +1,14 @@
 package com.mgatelabs.piper.shared.details;
 
+import org.apache.commons.lang3.StringUtils;
+
 /**
  * Created by @mgatelabs (Michael Fuller) on 9/23/2017 for Phone-Piper
  */
 public class VarDefinition {
 
     private String name;
+    private String tierId;
     private String display;
     private String value;
     private VarType type;
@@ -18,7 +21,7 @@ public class VarDefinition {
         order = 99;
     }
 
-    public VarDefinition(String name, String display, String value, VarType type, VarDisplay displayType, VarModify modify, int order, boolean skipSave) {
+    public VarDefinition(final String name, final String display, final String value, final VarType type, final VarDisplay displayType, final VarModify modify, final int order, final boolean skipSave, final String tierId) {
         this.name = name;
         this.display = display;
         this.value = value;
@@ -27,6 +30,7 @@ public class VarDefinition {
         this.displayType = displayType;
         this.order = order;
         this.skipSave = skipSave;
+        this.tierId = StringUtils.isBlank(tierId) ? "*" : tierId;
     }
 
     public String getName() {
@@ -92,6 +96,14 @@ public class VarDefinition {
 
     public void setSkipSave(boolean skipSave) {
         this.skipSave = skipSave;
+    }
+
+    public String getTierId() {
+        return tierId;
+    }
+
+    public void setTierId(String tierId) {
+        this.tierId = tierId;
     }
 
     @Override

@@ -618,6 +618,7 @@ public class WebResource {
             }
 
             result.getVariables().addAll(runner.getVariables());
+            result.getVariableTiers().addAll(runner.getVariableTiers());
 
             result.setWebLevel(Loggers.webLogger.getLevel().getName());
             result.setFileLevel(Loggers.fileLogger.getLevel().getName());

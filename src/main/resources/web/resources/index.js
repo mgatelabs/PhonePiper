@@ -399,7 +399,7 @@ $(function(){
             if (result.status == 'OK') {
                 states.empty();
                 components.empty();
-                var i, item, grp, label, input, button;
+                var i, item, grp, label, input, button, def;
                 for (i = 0; i < result.states.length; i++) {
                 states.append($('<option></option>').attr('value', result.states[i].value).text(result.states[i].name).attr('description', result.states[i].description));
                 }
@@ -410,6 +410,19 @@ $(function(){
                 $('#fileLogging').val(result.fileLevel);
                 variableContainer.empty();
                 linkedVariables = {};
+                var varTiers = {};
+                if (result.variableTiers && result.variableTiers.length > 0) {
+                    for (i = 0; i < result.variableTiers.length; i++) {
+                        def = $('<div></div>').appendTo(variableContainer);
+                        def.append($('<h3></h3>').text(result.variableTiers[i].title));
+                        varTiers[result.variableTiers[i].id] = $('<div class="row"></div>').appendTo(def);
+                    }
+                }
+
+                def = $('<div></div>').appendTo(variableContainer);
+                def.append($('<h3></h3>').text('General'));
+                varTiers['*'] = $('<div class="row"></div>').appendTo(def);
+
                 if (result.variables.length > 0) {
                     variableForm.show();
 
@@ -418,8 +431,12 @@ $(function(){
                     for (i = 0; i < result.variables.length; i++) {
                         item = result.variables[i];
 
-                        if (i == 0) {
-                            row = $('<div class="row"></div>').appendTo(variableContainer);
+                        row = undefined;
+                        if (item.tierId) {
+                            row = varTiers[item.tierId];
+                        }
+                        if (!row) {
+                            row = varTiers['*'];
                         }
 
                         grp = $('<div class="input-group col-sm-12 col-md-6 col-lg-4" style="margin-bottom: 1em"></div>').appendTo(row);

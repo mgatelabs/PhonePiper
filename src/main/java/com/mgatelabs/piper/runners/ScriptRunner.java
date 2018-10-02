@@ -6,22 +6,7 @@ import com.google.common.collect.ImmutableSet;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 import com.google.common.collect.Sets;
-import com.mgatelabs.piper.shared.details.ActionDefinition;
-import com.mgatelabs.piper.shared.details.ActionType;
-import com.mgatelabs.piper.shared.details.ComponentDefinition;
-import com.mgatelabs.piper.shared.details.ConditionDefinition;
-import com.mgatelabs.piper.shared.details.ConnectionDefinition;
-import com.mgatelabs.piper.shared.details.DeviceDefinition;
-import com.mgatelabs.piper.shared.details.ScreenDefinition;
-import com.mgatelabs.piper.shared.details.ScriptDefinition;
-import com.mgatelabs.piper.shared.details.StateCallType;
-import com.mgatelabs.piper.shared.details.StateDefinition;
-import com.mgatelabs.piper.shared.details.StateResult;
-import com.mgatelabs.piper.shared.details.StatementDefinition;
-import com.mgatelabs.piper.shared.details.VarDefinition;
-import com.mgatelabs.piper.shared.details.VarDisplay;
-import com.mgatelabs.piper.shared.details.VarModify;
-import com.mgatelabs.piper.shared.details.ViewDefinition;
+import com.mgatelabs.piper.shared.details.*;
 import com.mgatelabs.piper.shared.helper.DeviceHelper;
 import com.mgatelabs.piper.shared.helper.InfoTransfer;
 import com.mgatelabs.piper.shared.helper.MapTransfer;
@@ -1102,10 +1087,16 @@ public class ScriptRunner {
                     if (var == null) {
                         var = IntVar.ZERO;
                     }
-                    vars.add(new VarDefinition(varDefinition.getName(), varDefinition.getDisplay(), var.toString(), varDefinition.getType(), varDefinition.getDisplayType(), varDefinition.getModify(), varDefinition.getOrder(), varDefinition.isSkipSave()));
+                    vars.add(new VarDefinition(varDefinition.getName(), varDefinition.getDisplay(), var.toString(), varDefinition.getType(), varDefinition.getDisplayType(), varDefinition.getModify(), varDefinition.getOrder(), varDefinition.isSkipSave(), varDefinition.getTierId()));
                     break;
             }
         }
+        return vars;
+    }
+
+    public List<VarTierDefinition> getVariableTiers() {
+        List<VarTierDefinition> vars = Lists.newArrayList();
+        vars.addAll(scriptDefinition.getVarTiers());
         return vars;
     }
 
@@ -1117,7 +1108,7 @@ public class ScriptRunner {
                     continue;
                 case VISIBLE:
                 case EDITABLE: {
-                    vars.add(new VarDefinition(varDefinition.getName(), varDefinition.getDisplay(), getVar(varDefinition.getName()).toString(), varDefinition.getType(), varDefinition.getDisplayType(), varDefinition.getModify(), varDefinition.getOrder(), varDefinition.isSkipSave()));
+                    vars.add(new VarDefinition(varDefinition.getName(), varDefinition.getDisplay(), getVar(varDefinition.getName()).toString(), varDefinition.getType(), varDefinition.getDisplayType(), varDefinition.getModify(), varDefinition.getOrder(), varDefinition.isSkipSave(), varDefinition.getTierId()));
                 }
                 break;
             }

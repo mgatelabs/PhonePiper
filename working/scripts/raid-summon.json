@@ -1,7 +1,13 @@
 //@formatter:off
 {
 "vars": [{
-  "name": "_loops", "value": "0", "type": "TIMER", "modify": "VISIBLE", "display": "NoOp", "displayType": "SECONDS"}, {
+  "name": "_loops",
+  "value": "0",
+  "type": "INT",
+  "modify": "VISIBLE",
+  "display": "NoOp",
+  "displayType": "SECONDS"
+}, {
   "name": "summon_number", "value": "0", "type": "INT", "modify": "VISIBLE"}
 ],
 "includes": [

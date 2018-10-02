@@ -125,7 +125,7 @@
     },
     {
       "name": "refresh-farm",
-      "display": "Farm - Refreshes Allowed",
+      "display": "Farm - Refreshes",
       "value": "0",
       "type": "INT",
       "modify": "EDITABLE",
@@ -135,7 +135,7 @@
     },
     {
       "name": "refresh-raid",
-      "display": "Raid - Refreshes Allowed",
+      "display": "Raid - Refreshes",
       "value": "0",
       "type": "INT",
       "modify": "EDITABLE",

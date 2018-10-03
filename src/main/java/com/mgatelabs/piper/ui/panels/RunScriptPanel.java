@@ -5,6 +5,7 @@ import com.mgatelabs.piper.runners.ScriptRunner;
 import com.mgatelabs.piper.shared.details.ConnectionDefinition;
 import com.mgatelabs.piper.shared.details.DeviceDefinition;
 import com.mgatelabs.piper.shared.details.ScriptDefinition;
+import com.mgatelabs.piper.shared.details.ScriptEnvironment;
 import com.mgatelabs.piper.shared.details.StateDefinition;
 import com.mgatelabs.piper.shared.details.ViewDefinition;
 import com.mgatelabs.piper.shared.helper.DeviceHelper;
@@ -51,7 +52,7 @@ public class RunScriptPanel extends JToolBar {
     private final Icon playIcon;
     private final Icon pauseIcon;
 
-    public RunScriptPanel(DeviceHelper helper, ConnectionDefinition connectionDefinition, AdbShell shell, DeviceDefinition deviceDefinition, ViewDefinition viewDefinition, ScriptDefinition scriptDefinition, MapPanel mapPanel, WebLogHandler webLogHandler) {
+    public RunScriptPanel(DeviceHelper helper, ConnectionDefinition connectionDefinition, AdbShell shell, DeviceDefinition deviceDefinition, ViewDefinition viewDefinition, ScriptEnvironment scriptEnvironment, MapPanel mapPanel, WebLogHandler webLogHandler) {
         super("Run", JToolBar.HORIZONTAL);
 
         this.helper = helper;
@@ -62,7 +63,7 @@ public class RunScriptPanel extends JToolBar {
 
         timer = null;
 
-        scriptRunner = new ScriptRunner(connectionDefinition, helper, scriptDefinition, deviceDefinition, viewDefinition);
+        scriptRunner = new ScriptRunner(connectionDefinition, helper, scriptEnvironment, deviceDefinition, viewDefinition);
 
         scriptThread = null;
 

@@ -10,7 +10,7 @@ import com.mgatelabs.piper.shared.util.AdbShell;
  */
 public class EditHolder {
 
-    private ScriptDefinition scriptDefinition;
+    private ScriptEnvironment scriptEnvironment;
     private MapDefinition mapDefinition;
     private DeviceDefinition deviceDefinition;
     private ConnectionDefinition connectionDefinition;
@@ -19,8 +19,8 @@ public class EditHolder {
 
     private AdbShell shell;
 
-    public EditHolder(ScriptDefinition scriptDefinition, MapDefinition mapDefinition, DeviceDefinition deviceDefinition, ViewDefinition viewDefinition, ConnectionDefinition connectionDefinition, AdbShell shell, DeviceHelper deviceHelper) {
-        this.scriptDefinition = scriptDefinition;
+    public EditHolder(ScriptEnvironment scriptEnvironment, MapDefinition mapDefinition, DeviceDefinition deviceDefinition, ViewDefinition viewDefinition, ConnectionDefinition connectionDefinition, AdbShell shell, DeviceHelper deviceHelper) {
+        this.scriptEnvironment = scriptEnvironment;
         this.mapDefinition = mapDefinition;
         this.deviceDefinition = deviceDefinition;
         this.connectionDefinition = connectionDefinition;
@@ -48,8 +48,8 @@ public class EditHolder {
         return null;
     }
 
-    public ScriptDefinition getScriptDefinition() {
-        return scriptDefinition;
+    public ScriptEnvironment getScriptEnvironment() {
+        return scriptEnvironment;
     }
 
     public MapDefinition getMapDefinition() {

@@ -2,6 +2,7 @@ package com.mgatelabs.piper;
 
 import com.google.common.collect.Lists;
 import com.mgatelabs.piper.server.ServerRunner;
+import com.mgatelabs.piper.shared.details.ScriptEnvironment;
 import com.mgatelabs.piper.shared.util.Closer;
 import com.mgatelabs.piper.shared.util.IntVar;
 import com.mgatelabs.piper.shared.util.Loggers;
@@ -111,7 +112,7 @@ public class Runner {
 
                     FrameChoices frameChoices = new FrameChoices(startupFrame.getSelectedAction(), startupFrame.getSelectedMode(), startupFrame.getSelectedMap(), startupFrame.getSelectedDevice(), views, scripts);
 
-                    if (frameChoices.getAction() == FrameChoices.Action.CREATE) {
+                    if (frameChoices.getAction() == ScriptEnvironment.Action.CREATE) {
                         String inputValue = JOptionPane.showInputDialog("Please input a " + frameChoices.getMode().name());
                         if (inputValue == null || inputValue.trim().length() == 0) {
                             continue;

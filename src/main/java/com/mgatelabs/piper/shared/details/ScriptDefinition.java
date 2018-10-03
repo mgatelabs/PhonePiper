@@ -4,11 +4,14 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.google.common.collect.ImmutableList;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 import com.mgatelabs.piper.Runner;
+import com.mgatelabs.piper.shared.TreeNode;
 import com.mgatelabs.piper.shared.util.JsonTool;
 
+import javax.swing.plaf.nimbus.State;
 import java.io.File;
 import java.io.IOException;
 import java.util.List;
@@ -19,23 +22,23 @@ import java.util.Map;
  */
 public class ScriptDefinition {
 
-    @JsonIgnore
-    private String scriptId;
-    private List<String> includes;
+    @JsonIgnore private String scriptId;
+    @JsonIgnore private TreeNode<ScriptDefinition> scriptDefTree;
+    private List<String> imports;
     private List<VarDefinition> vars;
     private List<VarTierDefinition> varTiers;
     private Map<String, StateDefinition> states;
 
     @SuppressWarnings("unused")
-    public ScriptDefinition() {
-    }
+    public ScriptDefinition() {}
 
     public ScriptDefinition(String scriptId) {
         this.scriptId = scriptId;
         vars = Lists.newArrayList();
-        states = Maps.newHashMap();
-        includes = Lists.newArrayList();
+        states = Maps.newLinkedHashMap();
+        imports = Lists.newArrayList();
         varTiers = Lists.newArrayList();
+        scriptDefTree = new TreeNode<ScriptDefinition>(this);
     }
 
     public void fix() {
@@ -54,10 +57,10 @@ public class ScriptDefinition {
             }
         }
         if (varTiers == null) {
-            varTiers = Lists.newArrayList();
+          varTiers = Lists.newArrayList();
         }
-        if (includes == null) {
-            includes = Lists.newArrayList();
+        if (imports == null) {
+            imports = Lists.newArrayList();
         }
     }
 
@@ -107,23 +110,46 @@ public class ScriptDefinition {
         return getFileFor(viewName).exists();
     }
 
-    public List<String> getIncludes() {
-        return includes;
+    public List<String> getImports() {
+        return imports;
     }
 
-    public void setIncludes(List<String> includes) {
-        this.includes = includes;
+    public void setImports(List<String> imports) {
+        this.imports = imports;
+    }
+
+    public ScriptDefinition addImport(String imp) {
+        imports.add(imp);
+        return this;
     }
 
     public List<VarTierDefinition> getVarTiers() {
-        return varTiers;
+      return varTiers;
     }
 
     public void setVarTiers(List<VarTierDefinition> varTiers) {
-        this.varTiers = varTiers;
+      this.varTiers = varTiers;
     }
 
-    public static ScriptDefinition read(String scriptId) {
+    public ScriptDefinition setScriptDefTree(TreeNode<ScriptDefinition> scriptDefTree) {
+          this.scriptDefTree = scriptDefTree;
+          return this;
+      }
+
+      public TreeNode<ScriptDefinition> getScriptDefTree() {
+          return scriptDefTree;
+      }
+
+      public static ScriptDefinition buildScriptDefinition(String scriptId) {
+          ScriptDefinition scriptDefinition = read(scriptId);
+          if (scriptDefinition != null) {
+              TreeNode<ScriptDefinition> scriptDefinitionTree = new TreeNode<ScriptDefinition>(scriptDefinition);
+              scriptDefinition.buildScriptDefinitionTree(scriptDefinitionTree);
+          }
+          return scriptDefinition;
+      }
+
+    private static ScriptDefinition read(String scriptId) {
         final File deviceFile = getFileFor(scriptId);
         if (deviceFile.exists()) {
             final ObjectMapper objectMapper = JsonTool.getInstance();
@@ -133,7 +159,7 @@ public class ScriptDefinition {
                 scriptDefinition.setScriptId(scriptId);
 
                 if (scriptDefinition.getStates() == null) {
-                    scriptDefinition.setStates(Maps.newHashMap());
+                    scriptDefinition.setStates(Maps.newLinkedHashMap());
                 } else {
                     for (Map.Entry<String, StateDefinition> entry : scriptDefinition.getStates().entrySet()) {
                         entry.getValue().setId(entry.getKey());
@@ -145,11 +171,11 @@ public class ScriptDefinition {
                 }
 
                 scriptDefinition.fix();
-
                 scriptDefinition.validate();
 
                 return scriptDefinition;
             } catch (JsonParseException e) {
+              System.out.println(scriptId);
                 e.printStackTrace();
             } catch (JsonMappingException e) {
                 e.printStackTrace();
@@ -158,6 +184,26 @@ public class ScriptDefinition {
             }
         }
         return null;
+    }
+
+    private void buildScriptDefinitionTree(TreeNode<ScriptDefinition> parent) {
+        setScriptDefTree(parent);
+        final List<TreeNode<ScriptDefinition>> toReturn = Lists.newArrayList();
+        for (String scriptId : getImports()) {
+            if (scriptId.trim().length() > 0) {
+                final TreeNode<ScriptDefinition> childNode = new TreeNode<ScriptDefinition>(parent);
+
+                ScriptDefinition scriptDef = read(scriptId);
+                if (scriptDef == null) {
+                    childNode.setIdentifier(scriptId);
+                    System.out.println("Could not find Script import: " + scriptId);
+                    continue;
+                }
+
+                childNode.setData(scriptDef);
+                scriptDef.buildScriptDefinitionTree(childNode);
+            }
+        }
     }
 
     public boolean save() {
@@ -174,5 +220,10 @@ public class ScriptDefinition {
             e.printStackTrace();
         }
         return false;
+    }
+
+    @Override
+    public String toString() {
+        return getScriptId();
     }
 }

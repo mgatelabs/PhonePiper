@@ -2,11 +2,12 @@ package com.mgatelabs.piper.shared.details;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.google.common.collect.ImmutableList;
+import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 import com.google.common.collect.Sets;
+import com.mgatelabs.piper.shared.TreeNode;
 
-import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -19,6 +20,7 @@ public class StateDefinition {
     private String description;
     @JsonIgnore
     private String id;
+    @JsonIgnore private TreeNode<StateDefinition> stateDefTree;
 
     private Map<String, VarDefinition> variables;
 
@@ -65,6 +67,24 @@ public class StateDefinition {
     public void setVariables(Map<String, VarDefinition> variables) {
         this.variables = variables;
     }
+
+    public StateDefinition setStateDefTree(TreeNode<StateDefinition> stateDefTree) {
+      this.stateDefTree = stateDefTree;
+      return this;
+    }
+
+    public TreeNode<StateDefinition> getStateDefTree() {
+      return stateDefTree;
+    }
+
+//  public static StateDefinition buildStateDefinition(String scriptId) {
+//    ScriptDefinition scriptDefinition = read(scriptId);
+//    if (scriptDefinition != null) {
+//      TreeNode<ScriptDefinition> scriptDefinitionTree = new TreeNode<ScriptDefinition>(scriptDefinition);
+//      scriptDefinition.buildScriptDefinitionTree(scriptDefinitionTree);
+//    }
+//    return scriptDefinition;
+//  }
 
     public List<String> determineScreenIds(final Set<String> exploredStates, final Map<String, StateDefinition> states) {
         if (exploredStates.contains(id)) {
@@ -113,6 +133,40 @@ public class StateDefinition {
             for (ActionDefinition actionDefinition: statementDefinition.getActions()) {
                 actionDefinition.fix();
             }
+        }
+    }
+
+    public void buildStateDefinitionTree(TreeNode<StateDefinition> parent, final ImmutableMap<String, StateDefinition> stateDefinitionMap, int counter) {
+      if (counter > 10) {
+        System.out.println("Tree has exceeded maximum number of depth: ");
+        System.out.println(parent.getRoot().printNodes());
+        return;
+      }
+      counter++;
+
+      setStateDefTree(parent);
+      for (String scriptId : getIncludes()) {
+        if (scriptId.trim().length() > 0) {
+          final TreeNode<StateDefinition> childNode = new TreeNode<StateDefinition>(parent);
+
+          StateDefinition stateDef = stateDefinitionMap.get(scriptId);
+          if (stateDef == null) {
+            childNode.setIdentifier(scriptId);
+            System.out.println("Could not find Script include: " + scriptId + " for states " + getId());
+            continue;
+          }
+
+          childNode.setData(stateDef);
+          stateDef.buildStateDefinitionTree(childNode, stateDefinitionMap, counter);
+        }
+      }
+    }
+
+    public void mergeStatementDefinitions() {
+        for (TreeNode<StateDefinition> stateDefTreeNode : getStateDefTree().getChildren()) {
+            StateDefinition stateDefinition = stateDefTreeNode.getData();
+            stateDefinition.mergeStatementDefinitions();
+            stateDefTreeNode.getParent().getData().getStatements().addAll(stateDefinition.getStatements());
         }
     }
 

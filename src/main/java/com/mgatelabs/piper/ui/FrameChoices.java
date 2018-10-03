@@ -1,12 +1,13 @@
 package com.mgatelabs.piper.ui;
 
+import com.google.common.collect.Lists;
+import com.mgatelabs.piper.shared.TreeNode;
 import com.mgatelabs.piper.shared.details.*;
 import com.mgatelabs.piper.shared.mapper.MapDefinition;
 import com.mgatelabs.piper.ui.utils.Constants;
 
 import java.io.File;
 import java.util.List;
-import java.util.Map;
 
 /**
  *
@@ -14,64 +15,49 @@ import java.util.Map;
  */
 public class FrameChoices {
 
+    private ScriptEnvironment scriptEnvironment;
     private MapDefinition mapDefinition;
-    private ScriptDefinition scriptDefinition;
     private DeviceDefinition deviceDefinition;
     private ViewDefinition viewDefinition;
 
     private final String deviceName;
-    private final String scriptName;
     private final String mapName;
     private final String viewName;
 
-    public enum Action {
-        RUN,
-        EDIT,
-        CREATE,
-        DELETE
-    }
-
-    public enum Mode {
-        SCRIPT,
-        MAP,
-        DEVICE,
-        VIEW
-    }
-
-    private final Mode mode;
-    private final Action action;
+    private final ScriptEnvironment.Mode mode;
+    private final ScriptEnvironment.Action action;
 
     public FrameChoices(String actionId, String modeId, String mapId, String deviceId, List<String> views, List<String> scripts) {
 
         switch (modeId) {
             case Constants.MODE_SCRIPT:
-                mode = Mode.SCRIPT;
+                mode = ScriptEnvironment.Mode.SCRIPT;
                 break;
             case Constants.MODE_MAP:
-                mode = Mode.MAP;
+                mode = ScriptEnvironment.Mode.MAP;
                 break;
             case Constants.MODE_VIEW:
-                mode = Mode.VIEW;
+                mode = ScriptEnvironment.Mode.VIEW;
                 break;
             case Constants.MODE_DEVICE:
             default:
-                mode = Mode.DEVICE;
+                mode = ScriptEnvironment.Mode.DEVICE;
                 break;
         }
 
         switch (actionId) {
             case Constants.ACTION_CREATE:
-                action = Action.CREATE;
+                action = ScriptEnvironment.Action.CREATE;
                 break;
             case Constants.ACTION_EDIT:
-                action = Action.EDIT;
+                action = ScriptEnvironment.Action.EDIT;
                 break;
             case Constants.ACTION_DELETE:
-                action = Action.DELETE;
+                action = ScriptEnvironment.Action.DELETE;
                 break;
             case Constants.ACTION_RUN:
             default:
-                action = Action.RUN;
+                action = ScriptEnvironment.Action.RUN;
                 break;
         }
 
@@ -90,11 +76,14 @@ public class FrameChoices {
         }
 
         if (canScript(action, mode)) {
-            scriptDefinition = buildScriptDefinition(scripts);
+            ScriptEnvironment.Builder environmentBuilder = ScriptEnvironment.builder()
+                    .setAction(action)
+                    .setMode(mode)
+                    .addScriptIds(scripts);
+            scriptEnvironment = environmentBuilder.build();
         } else {
-            this.scriptDefinition = null;
+            this.scriptEnvironment = null;
         }
-        this.scriptName = scriptDefinition != null ? scriptDefinition.getScriptId() : "";
 
         if (canDevice(action, mode) && deviceId != null) {
             this.deviceDefinition = DeviceDefinition.read(deviceId);
@@ -121,7 +110,7 @@ public class FrameChoices {
                 }
                 for (int i = 1; i < views.size(); i++) {
                     final String viewId2 = views.get(i);
-                    if (action == Action.RUN && viewId2 != null && viewId2.trim().length() > 0) {
+                    if (action == ScriptEnvironment.Action.RUN && viewId2 != null && viewId2.trim().length() > 0) {
                         ViewDefinition otherDefinition = ViewDefinition.read(viewId2);
                         ViewDefinition.merge(otherDefinition, viewDefinition, true);
                     }
@@ -135,40 +124,12 @@ public class FrameChoices {
         }
     }
 
-    private ScriptDefinition buildScriptDefinition(List<String> scripts) {
-        ScriptDefinition scriptDef = null;
-
-        for (String scriptId : scripts) {
-            if (scriptId.trim().length() > 0) {
-                ScriptDefinition otherScriptDef = ScriptDefinition.read(scriptId);
-
-                if (otherScriptDef == null)
-                    continue;
-
-        if (scriptDef == null) {
-          scriptDef = otherScriptDef;
-          scriptDef.getIncludes().add(scriptId);
-          continue;
-        }
-
-        if (action == Action.RUN) {
-          scriptDef.getIncludes().add(scriptId);
-          for (Map.Entry<String, StateDefinition> otherState : otherScriptDef.getStates().entrySet()) {
-            scriptDef.getStates().remove(otherState.getKey());
-            scriptDef.getStates().put(otherState.getKey(), otherState.getValue());
-          }
-        }
-      }
-    }
-    return scriptDef;
-  }
-
     public boolean isValid() {
         switch (action) {
             case RUN: {
                 switch (mode) {
                     case SCRIPT: {
-                        return isNotNullString(deviceName) && isNotNullString(scriptName);
+                        return isNotNullString(deviceName) && scriptEnvironment != null;
                     }
                     default:
                         return false;
@@ -191,9 +152,9 @@ public class FrameChoices {
         return s != null && s.trim().length() > 0;
     }
 
-    public boolean canMap(Action action, Mode mode) {
-        if (action == Action.DELETE) return false;
-        if (action == Action.CREATE) return false;
+    public boolean canMap(ScriptEnvironment.Action action, ScriptEnvironment.Mode mode) {
+        if (action == ScriptEnvironment.Action.DELETE) return false;
+        if (action == ScriptEnvironment.Action.CREATE) return false;
         switch (mode) {
             case DEVICE:
             case MAP:
@@ -205,9 +166,9 @@ public class FrameChoices {
         return false;
     }
 
-    public boolean canScript(Action action, Mode mode) {
-        if (action == Action.DELETE) return false;
-        if (action == Action.CREATE) return false;
+    public boolean canScript(ScriptEnvironment.Action action, ScriptEnvironment.Mode mode) {
+        if (action == ScriptEnvironment.Action.DELETE) return false;
+        if (action == ScriptEnvironment.Action.CREATE) return false;
         switch (mode) {
             case MAP:
             case VIEW:
@@ -219,9 +180,9 @@ public class FrameChoices {
         return false;
     }
 
-    public boolean canDevice(Action action, Mode mode) {
-        if (action == Action.DELETE) return false;
-        if (action == Action.CREATE) return false;
+    public boolean canDevice(ScriptEnvironment.Action action, ScriptEnvironment.Mode mode) {
+        if (action == ScriptEnvironment.Action.DELETE) return false;
+        if (action == ScriptEnvironment.Action.CREATE) return false;
         switch (mode) {
             case VIEW:
                 return true;
@@ -233,10 +194,10 @@ public class FrameChoices {
         return false;
     }
 
-    public boolean canView(Action action, Mode mode) {
-        if (action == Action.DELETE) return false;
-        if (action == Action.CREATE) return false;
-        if (mode == Mode.SCRIPT && action == Action.RUN) return true;
+    public boolean canView(ScriptEnvironment.Action action, ScriptEnvironment.Mode mode) {
+        if (action == ScriptEnvironment.Action.DELETE) return false;
+        if (action == ScriptEnvironment.Action.CREATE) return false;
+        if (mode == ScriptEnvironment.Mode.SCRIPT && action == ScriptEnvironment.Action.RUN) return true;
         switch (mode) {
             case MAP:
             case SCRIPT:
@@ -281,7 +242,7 @@ public class FrameChoices {
                         if (ScriptDefinition.exists(name)) {
                             return false;
                         }
-                        scriptDefinition = new ScriptDefinition(name);
+                        scriptEnvironment = ScriptEnvironment.builder().addScriptId(name).build();
                     }
                     break;
                 }
@@ -300,7 +261,7 @@ public class FrameChoices {
     }
 
     public String getScriptName() {
-        return scriptName;
+        return scriptEnvironment.getScriptDefinitions().get(0).getScriptId();
     }
 
     public String getMapName() {
@@ -311,11 +272,11 @@ public class FrameChoices {
         return viewName;
     }
 
-    public Mode getMode() {
+    public ScriptEnvironment.Mode getMode() {
         return mode;
     }
 
-    public Action getAction() {
+    public ScriptEnvironment.Action getAction() {
         return action;
     }
 
@@ -323,8 +284,8 @@ public class FrameChoices {
         return mapDefinition;
     }
 
-    public ScriptDefinition getScriptDefinition() {
-        return scriptDefinition;
+    public ScriptEnvironment getScriptEnvironment() {
+        return scriptEnvironment;
     }
 
     public DeviceDefinition getDeviceDefinition() {

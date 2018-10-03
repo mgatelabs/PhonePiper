@@ -20,7 +20,7 @@ import java.awt.event.WindowListener;
  */
 public class MainFrame extends JFrame {
 
-    private ScriptDefinition scriptDefinition;
+    private ScriptEnvironment scriptEnvironment;
     private MapDefinition mapDefinition;
     private DeviceDefinition deviceDefinition;
     private ViewDefinition viewDefinition;
@@ -96,7 +96,7 @@ public class MainFrame extends JFrame {
 
         returnRequested = false;
 
-        scriptDefinition = choices.getScriptDefinition();
+        scriptEnvironment = choices.getScriptEnvironment();
         mapDefinition = choices.getMapDefinition();
         deviceDefinition = choices.getDeviceDefinition();
         viewDefinition = choices.getViewDefinition();
@@ -218,13 +218,13 @@ public class MainFrame extends JFrame {
         }
 
         if (showStates) {
-            scriptPanel = new ScriptPanel(this, viewDefinition, scriptDefinition);
+            scriptPanel = new ScriptPanel(this, viewDefinition, scriptEnvironment);
             scriptPanel.setLocation(column0Left, 0);
             desktopPane.add(scriptPanel);
         }
 
         if (showRunScript) {
-            runScriptPanel = new RunScriptPanel(connectionPanel.getDeviceHelper(), connectionDefinition, shell, deviceDefinition, viewDefinition, scriptDefinition, mapPanel, Loggers.webLogger);
+            runScriptPanel = new RunScriptPanel(connectionPanel.getDeviceHelper(), connectionDefinition, shell, deviceDefinition, viewDefinition, scriptEnvironment, mapPanel, Loggers.webLogger);
             //runScriptPanel.setLocation(0, column0Top);
             //column0Top += runScriptPanel.getHeight();
 

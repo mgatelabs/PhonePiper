@@ -96,7 +96,7 @@ public class WebResource {
                 }
             }
             if (varStateDefinition.getItems().size() > 0) {
-                varStateDefinition.save(frameChoices.getScriptName());
+                varStateDefinition.save(frameChoices.getScriptEnvironment().getScriptDefinitions().get(0).getScriptId());
             }
         }
     }
@@ -367,7 +367,7 @@ public class WebResource {
 
             editHolder = null;
 
-            runner = new ScriptRunner(connectionDefinition, deviceHelper, frameChoices.getScriptDefinition(), frameChoices.getDeviceDefinition(), frameChoices.getViewDefinition());
+            runner = new ScriptRunner(connectionDefinition, deviceHelper, frameChoices.getScriptEnvironment(), frameChoices.getDeviceDefinition(), frameChoices.getViewDefinition());
 
             if (VarStateDefinition.exists(frameChoices.getScriptName())) {
                 VarStateDefinition varStateDefinition = VarStateDefinition.read(frameChoices.getScriptName());
@@ -481,7 +481,7 @@ public class WebResource {
                 }
                 runner = null;
             }
-            editHolder = new EditHolder(frameChoices.getScriptDefinition(), frameChoices.getMapDefinition(), frameChoices.getDeviceDefinition(), frameChoices.getViewDefinition(), connectionDefinition, new AdbShell(frameChoices.getDeviceDefinition()), deviceHelper);
+            editHolder = new EditHolder(frameChoices.getScriptEnvironment(), frameChoices.getMapDefinition(), frameChoices.getDeviceDefinition(), frameChoices.getViewDefinition(), connectionDefinition, new AdbShell(frameChoices.getDeviceDefinition()), deviceHelper);
             deviceHelper = editHolder.getDeviceHelper();
             return result;
         } else {
@@ -598,7 +598,7 @@ public class WebResource {
                 }
             });
 
-            stateDefinitions.addAll(frameChoices.getScriptDefinition().getFilteredStates().values());
+            stateDefinitions.addAll(frameChoices.getScriptEnvironment().getFilteredStates().values());
 
             for (StateDefinition definition : stateDefinitions) {
                 result.getStates().add(new NamedValueDescriptionItem(definition.getName(), definition.getId(), definition.getDescription()));

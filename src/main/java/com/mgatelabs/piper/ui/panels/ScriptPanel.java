@@ -51,11 +51,14 @@ public class ScriptPanel extends JInternalFrame {
     JPopupMenu statementItemMenu;
 
 
-    public ScriptPanel(JFrame parent, ViewDefinition viewDefinition, ScriptDefinition scriptDefinition) {
+    public ScriptPanel(JFrame parent, ViewDefinition viewDefinition, ScriptEnvironment scriptEnvironment) {
         super("States", true, false, true, false);
         this.parent = parent;
         this.viewDefinition = viewDefinition;
-        this.scriptDefinition = scriptDefinition;
+        // TODO: This is not going to work since the scriptEnvironment is intended to be immutable and is already constructed by this point.
+        // This class modifies values within the the ScriptDefinition, this should be done during the ScriptEnvironment.Builder instead.
+        // It appears to be not be possible to get here at this time though
+        this.scriptDefinition = scriptEnvironment.getScriptDefinitions().get(0);
 
         buildMenus();
 

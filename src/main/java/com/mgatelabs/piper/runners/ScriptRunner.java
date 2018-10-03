@@ -62,7 +62,7 @@ public class ScriptRunner {
     private static final NumberFormat THREE_DECIMAL = new DecimalFormat("#.###");
 
     private ConnectionDefinition connectionDefinition;
-    private ScriptDefinition scriptDefinition;
+    private ScriptEnvironment scriptEnvironment;
     private DeviceDefinition deviceDefinition;
     private ViewDefinition viewDefinition;
 
@@ -98,8 +98,8 @@ public class ScriptRunner {
     //private static final String VAR_SECONDS = "_seconds";
     private static final String VAR_LOOPS = "_loops";
 
-    public ScriptRunner(ConnectionDefinition connectionDefinition, DeviceHelper deviceHelper, ScriptDefinition scriptDefinition, DeviceDefinition deviceDefinition, ViewDefinition viewDefinition) {
-        this.scriptDefinition = scriptDefinition;
+    public ScriptRunner(ConnectionDefinition connectionDefinition, DeviceHelper deviceHelper, ScriptEnvironment scriptEnvironment, DeviceDefinition deviceDefinition, ViewDefinition viewDefinition) {
+        this.scriptEnvironment = scriptEnvironment;
         this.deviceDefinition = deviceDefinition;
         this.connectionDefinition = connectionDefinition;
         this.viewDefinition = viewDefinition;
@@ -124,65 +124,16 @@ public class ScriptRunner {
 
         logger.finer("Extracting Variables");
 
-        // Script Includes
-        Map<String, ScriptDefinition> scriptDefinitions = Maps.newLinkedHashMap();
-        scriptDefinitions.put(scriptDefinition.getScriptId(), scriptDefinition);
-        scriptDefinitions.putAll(buildScriptDefinitionsFromIncludes(scriptDefinition.getIncludes()));
+        List<VarDefinition> varDefinitions = Lists.newArrayList(scriptEnvironment.getVarDefinitions());
+        vars.global(varDefinitions);
 
-        if (!CollectionUtils.isEmpty(scriptDefinition.getStates())) {
-            for (StateDefinition stateDefinition : scriptDefinition.getStates().values()) {
-                if (!scriptDefinitions.containsKey(scriptDefinition.getScriptId())) {
-                    scriptDefinitions.putAll(buildScriptDefinitionsFromIncludes(stateDefinition.getIncludes()));
-                }
-            }
-        }
-
-        for (ScriptDefinition otherDefinition : scriptDefinitions.values()) {
-            // Add Replace any existing state with states from the includes
-            for (Map.Entry<String, StateDefinition> otherState : otherDefinition.getStates().entrySet()) {
-                if (scriptDefinition.getStates().containsKey(otherState.getKey())) {
-                    continue;
-                }
-                scriptDefinition.getStates().put(otherState.getKey(), otherState.getValue());
-            }
-
-            // Add all vars
-            for (VarDefinition varDefinition : otherDefinition.getVars()) {
-                boolean exists = false;
-                for (VarDefinition currentDef : scriptDefinition.getVars()) {
-                    if (currentDef.getName().equals(varDefinition.getName())) {
-                        exists = true;
-                        break;
-                    }
-
-                }
-                if (!exists) {
-                    scriptDefinition.getVars().add(varDefinition);
-                }
-            }
-        }
-
-        for (StateDefinition stateDefinition : scriptDefinition.getStates().values()) {
-            if (!stateDefinition.getIncludes().isEmpty()) {
-                for (String includeName : stateDefinition.getIncludes()) {
-                    if (scriptDefinition.getStates().containsKey(includeName)) {
-                        stateDefinition.getStatements().addAll(scriptDefinition.getStates().get(includeName).getStatements());
-                    } else {
-                        logger.log(Level.SEVERE, "Could not find statement include: " + includeName);
-                    }
-
-                }
-            }
-        }
-
-        for (VarDefinition varDefinition : scriptDefinition.getVars()) {
-            if (varDefinition.getDisplayType() == VarDisplay.SECONDS && varDefinition.getModify() != VarModify.EDITABLE) {
+        for (VarDefinition varDefinition : varDefinitions) {
+            if (varDefinition.getDisplayType() == VarDisplay.SECONDS  && varDefinition.getModify() != VarModify.EDITABLE) {
                 timers.put(varDefinition.getName(), new VarTimer(false));
             }
         }
-        vars.global(scriptDefinition.getVars());
 
-        scriptDefinition.getVars().sort(new Comparator<VarDefinition>() {
+        varDefinitions.sort(new Comparator<VarDefinition>() {
             @Override
             public int compare(VarDefinition o1, VarDefinition o2) {
                 if (o1.getOrder() == o2.getOrder()) {
@@ -212,10 +163,6 @@ public class ScriptRunner {
             throw new RuntimeException("Cannot find required component id: " + "menu-energy_bar");
         }
 
-        for (Map.Entry<String, StateDefinition> entry : scriptDefinition.getStates().entrySet()) {
-            entry.getValue().setId(entry.getKey());
-        }
-
         logger.finer("Generating State Info");
 
         transferStateMap = Maps.newHashMap();
@@ -231,47 +178,6 @@ public class ScriptRunner {
         this.deviceHelper = deviceHelper;
 
         status = Status.INIT;
-    }
-
-    private Map<String, ScriptDefinition> buildScriptDefinitionsFromIncludes(List<String> includes) {
-        Map<String, ScriptDefinition> scriptDefinitions = Maps.newLinkedHashMap();
-        for (String scriptId : includes) {
-            if (scriptDefinitions.containsKey(scriptId))
-                continue;
-
-            if (scriptId.trim().length() > 0) {
-                ScriptDefinition scriptDef = ScriptDefinition.read(scriptId);
-                if (scriptDef == null) {
-                    continue;
-                } else {
-                    scriptDefinitions.put(scriptId, scriptDef);
-                }
-
-                Map<String, StateDefinition> otherStates = scriptDef.getStates();
-                if (!CollectionUtils.isEmpty(otherStates)) {
-                    for (StateDefinition otherState : otherStates.values()) {
-                        scriptDefinitions.putAll(buildScriptDefinitionsFromIncludes(otherState.getIncludes()));
-                    }
-                }
-            }
-        }
-        return scriptDefinitions;
-    }
-
-    private void setupStateDefinitions(Map<String, ScriptDefinition> scriptDefinitionMap) {
-        for (ScriptDefinition scriptDefinition : scriptDefinitionMap.values()) {
-            for (StateDefinition stateDefinition : scriptDefinition.getStates().values()) {
-                if (!stateDefinition.getIncludes().isEmpty()) {
-                    for (String includeName : stateDefinition.getIncludes()) {
-                        if (scriptDefinition.getStates().containsKey(includeName)) {
-                            stateDefinition.getStatements().addAll(scriptDefinition.getStates().get(includeName).getStatements());
-                        } else {
-                            logger.log(Level.SEVERE, "Could not find statement include: " + includeName);
-                        }
-                    }
-                }
-            }
-        }
     }
 
     public void updateLogger(Level level) {
@@ -367,16 +273,12 @@ public class ScriptRunner {
 
         Map<String, StateTransfer> results = Maps.newHashMap();
 
-        for (Map.Entry<String, StateDefinition> stateEntry : scriptDefinition.getStates().entrySet()) {
-
-            // Skip all include and function states
-            if (stateEntry.getKey().startsWith("_") || stateEntry.getKey().startsWith("@")) continue;
-
+        for (Map.Entry<String, StateDefinition> stateEntry : scriptEnvironment.getFilteredStates().entrySet()) {
             StateTransfer stateTransfer = new StateTransfer();
             stateTransfer.setStateId(stateEntry.getKey());
             List<String> determinedScreenIds = Lists.newArrayList();
 
-            List<String> unfilteredScreenIds = stateEntry.getValue().determineScreenIds(ImmutableSet.of(), scriptDefinition.getStates());
+            List<String> unfilteredScreenIds = stateEntry.getValue().determineScreenIds(ImmutableSet.of(), scriptEnvironment.getStateDefinitions());
             Set<String> tempScreenIds = Sets.newHashSet();
 
             for (String tempScreenId : unfilteredScreenIds) {
@@ -489,7 +391,7 @@ public class ScriptRunner {
 
             ImageWrapper imageWrapper;
 
-            StateDefinition stateDefinition = scriptDefinition.getStates().get(stateName);
+            StateDefinition stateDefinition = scriptEnvironment.getStateDefinitions().get(stateName);
 
             if (stateDefinition == null) {
                 logger.log(Level.SEVERE, "Cannot find state with id: " + stateName);
@@ -576,7 +478,7 @@ public class ScriptRunner {
                             return;
                         }
                         case MOVE: {
-                            stateDefinition = scriptDefinition.getStates().get(result.getValue());
+                            stateDefinition = scriptEnvironment.getStateDefinitions().get(result.getValue());
                             if (stateDefinition == null) {
                                 logger.log(Level.SEVERE, "Cannot find state with id: " + result.getValue());
                                 throw new RuntimeException("Cannot find state with id: " + result.getValue());
@@ -884,7 +786,7 @@ public class ScriptRunner {
                                 if (!callName.startsWith("@")) {
                                     throw new RuntimeException("All calls must start with a @: " + actionDefinition.getValue());
                                 }
-                                final StateDefinition callDefinition = scriptDefinition.getStates().get(callName);
+                                final StateDefinition callDefinition = scriptEnvironment.getStateDefinitions().get(callName);
                                 final Map<String, String> callArguments = Maps.newHashMap();
                                 for (Map.Entry<String, String> entry : actionDefinition.getArguments().entrySet()) {
                                     callArguments.put(entry.getKey(), replaceTokens(entry.getValue()));
@@ -999,7 +901,7 @@ public class ScriptRunner {
                 if (!callName.startsWith("@")) {
                     throw new RuntimeException("All condition calls must start with a @: " + conditionDefinition.getValue());
                 }
-                final StateDefinition callDefinition = scriptDefinition.getStates().get(callName);
+                final StateDefinition callDefinition = scriptEnvironment.getStateDefinitions().get(callName);
                 final Map<String, String> callArguments = Maps.newHashMap();
                 for (Map.Entry<String, String> entry : conditionDefinition.getArguments().entrySet()) {
                     callArguments.put(entry.getKey(), replaceTokens(entry.getValue()));
@@ -1077,7 +979,7 @@ public class ScriptRunner {
 
     public List<VarDefinition> getVariables() {
         List<VarDefinition> vars = Lists.newArrayList();
-        for (VarDefinition varDefinition : scriptDefinition.getVars()) {
+        for (VarDefinition varDefinition : scriptEnvironment.getVarDefinitions()) {
             switch (varDefinition.getModify()) {
                 case HIDDEN:
                     continue;
@@ -1096,13 +998,13 @@ public class ScriptRunner {
 
     public List<VarTierDefinition> getVariableTiers() {
         List<VarTierDefinition> vars = Lists.newArrayList();
-        vars.addAll(scriptDefinition.getVarTiers());
+        vars.addAll(scriptEnvironment.getVarTiers());
         return vars;
     }
 
     public List<VarDefinition> getRawEditVariables() {
         List<VarDefinition> vars = Lists.newArrayList();
-        for (VarDefinition varDefinition : scriptDefinition.getVars()) {
+        for (VarDefinition varDefinition : scriptEnvironment.getVarDefinitions()) {
             switch (varDefinition.getModify()) {
                 case HIDDEN:
                     continue;
@@ -1117,7 +1019,7 @@ public class ScriptRunner {
     }
 
     private VarDefinition getVarDefinition(String name) {
-        for (VarDefinition varDefinition : scriptDefinition.getVars()) {
+        for (VarDefinition varDefinition : scriptEnvironment.getVarDefinitions()) {
             if (varDefinition.getName().equals(name)) {
                 return varDefinition;
             }

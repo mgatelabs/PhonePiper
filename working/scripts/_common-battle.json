@@ -6,7 +6,7 @@
       "type": "INT"
     }
   ],
-  "includes": [
+  "imports": [
     "_common-no_op"
   ],
   "states": {

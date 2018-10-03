@@ -1,8 +1,6 @@
 {
-  "vars": [
-  ],
-  "includes": [
-  ],
+  "vars": [],
+  "imports": [],
   "states": {
 
     "raid-battle": {

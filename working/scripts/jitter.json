@@ -19,7 +19,7 @@
       "order": 0
     }
   ],
-  "includes": [
+  "imports": [
     "_common-battle",
     "_common-no_op"
   ],

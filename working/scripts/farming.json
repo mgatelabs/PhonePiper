@@ -150,7 +150,7 @@
     {"title":"Raid", "id":"raid"},
     {"title":"Refresh", "id":"refresh"}
   ],
-  "includes": [
+  "imports": [
     "_common-no_op",
     "_common-energy",
     "_common-menu_location",

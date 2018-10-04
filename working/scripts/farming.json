@@ -687,6 +687,10 @@
           },
           "actions": [
             {
+              "type": "INFO",
+              "value": "We're out of raid orb's attempting to purchase more at least ${refresh-raid} more time(s)"
+            },
+            {
               "type": "TAP",
               "value": "menu-raid_recovery-yes"
             },
@@ -714,13 +718,13 @@
           },
           "actions": [
             {
-              "type": "INFO",
-              "value": "Refeshed Raid ORB"
-            },
-            {
               "type": "ADD",
               "var": "refresh-raid",
               "value": "-1"
+            },
+            {
+              "type": "INFO",
+              "value": "Refreshed Raid ORB, ${refresh-raid} attempts left"
             },
             {
               "type": "TAP",
@@ -768,7 +772,7 @@
             },
             {
               "type": "WAIT",
-              "value": "10000"
+              "value": "5000"
             },
             {
               "type": "REPEAT",
@@ -852,7 +856,7 @@
             },
             {
               "type": "WAIT",
-              "value": "8500"
+              "value": "6500"
             },
             {
               "type": "REPEAT",

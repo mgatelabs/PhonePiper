@@ -17,7 +17,6 @@
       "type": "INT",
       "modify": "VISIBLE",
       "order": 5,
-      "tierId": "farm",
       "tierId": "stats"
     },
     {

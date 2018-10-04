@@ -12,12 +12,53 @@
         "_raid-battle-message",
         "_raid-to_results",
         "_common-no_op"
-      ]
+      ],
+      "variables": {
+        "InLoop": {
+          "value": "0",
+          "type": "INT"
+        }
+      }
     },
-
     "_raid_battle-auto": {
       "name": "Raid - Battle - Auto",
       "statements": [
+        {
+          "condition": {
+            "is": "CALL",
+            "value": "@isBattleReady",
+            "and": [
+              {
+                "is": "EQUAL",
+                "value": "1",
+                "var":"InLoop"
+              }
+            ]
+          },
+          "actions": [
+            {
+              "type": "INFO",
+              "value": "Pressing Repeat, for speed purposes"
+            },
+            {
+              "type": "TAP",
+              "value": "battle-repeat"
+            },
+            {
+              "type": "SET",
+              "value": "0",
+              "var": "InLoop"
+            },
+            {
+              "type": "WAIT",
+              "value": "1200"
+            },
+            {
+              "type": "REPEAT",
+              "value": ""
+            }
+          ]
+        },
         {
           "condition": {
             "is": "CALL",

@@ -672,6 +672,12 @@
         "_raid-to_battle",
         "_common-no_op"
       ],
+      "variables": {
+        "InLoop": {
+          "value": "0",
+          "type": "INT"
+        }
+      },
       "statements": [
         {
           "condition": {
@@ -865,7 +871,10 @@
             },
             {
               "type": "MOVE",
-              "value": "raid-battle"
+              "value": "raid-battle",
+              "args": {
+                "InLoop":"${InLoop}"
+              }
             }
           ]
         }
@@ -878,7 +887,13 @@
         "_raid-battle-message",
         "_raid-to_results",
         "_common-no_op"
-      ]
+      ],
+      "variables": {
+        "InLoop": {
+          "value": "0",
+          "type": "INT"
+        }
+      }
     },
     "_raid-battle-message": {
       "name": "To Raid Results",
@@ -1030,7 +1045,10 @@
             },
             {
               "type": "MOVE",
-              "value": "raid-home"
+              "value": "raid-home",
+              "args": {
+                "InLoop":"1"
+              }
             }
           ]
         }

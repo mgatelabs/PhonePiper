@@ -1,0 +1,208 @@
+//@formatter:off
+{
+"imports":[
+  "xon"
+],
+"vars":[{
+  "name" : "vortex-farm-item",
+  "display" : "Vortex - Farm Index",
+  "value" : "0",
+  "type" : "INT",
+  "modify" : "EDITABLE",
+  "displayType" : "STANDARD",
+  "order" : 0
+}, {
+  "name": "vortex-locked", "value": "0", "type": "INT"}
+],
+
+"states":{
+
+  "home_to_farm": {
+    "name": "Home - To Farm (Override)",
+    "includes": [
+      "_common-no_op",
+      "_home_daily_fixes"
+    ],
+    "statements": [{
+
+      "condition": {
+        "var": "vortex-locked", "is": "EQUAL",  "value": "1"
+      },
+      "actions": [{
+        "type": "MOVE", "value": "home_to_earthshrine"}
+      ]
+
+    }, {
+
+      "condition": {
+        "is": "SCREEN", "value": "menu-home"
+      },
+      "actions": [{
+        "type": "INFO", "value": "Going to Vortex"}, {
+        "type": "SET", "var": "_loops", "value": "0"}, {
+        "type": "TAP", "value": "menu-home-vortex"}, {
+        "type": "WAIT", "value": "2000"}, {
+        "type": "MOVE", "value": "vortex_to_enhance"}
+      ]
+
+    }]
+  },
+
+  "vortex_to_enhance": {
+    "name": "Vortex - To Enhance",
+    "includes": [
+      "_common-no_op",
+      "_vortex_select_index",
+      "_vortex_locked"
+    ],
+    "statements": [{
+      "condition": {
+        "is": "SCREEN", "value": "menu-vortex",
+        "and": [{
+          "not": "SCREEN", "value": "menu-vortex-enhance"}
+        ]
+      },
+      "actions": [{
+        "type": "INFO", "value": "Clicking Vortex Enhance"}, {
+        "type": "TAP", "value": "menu-vortex-enhance"}, {
+        "type": "WAIT", "value": "2000"}, {
+        "type": "REPEAT", "value": ""}
+      ]
+    }]
+  },
+
+  "_vortex_select_index": {
+    "name": "Vortex - Select Index",
+    "includes": [],
+    "statements": [{
+      "condition": {
+        "is": "SCREEN", "value": "menu-vortex-enhance"
+      },
+      "actions": [{
+        "type": "INFO", "value": "Tapping Vortex Index ${vortex-farm-item}"}, {
+        "type": "TAP", "value": "menu-vortex-item_${vortex-farm-item}"}, {
+        "type": "WAIT", "value": "2000"}, {
+        "type": "REPEAT", "value": ""}
+      ]
+    }]
+  },
+
+  "_vortex_locked": {
+    "name": "Vortex - Unlock",
+    "includes": [],
+    "statements": [{
+      "condition": {
+        "is": "SCREEN", "value": "vortex-unlock-free", "or": [{
+          "is": "SCREEN", "value": "vortex-unlock-paid"
+        }]
+      },
+      "actions": [{
+        "type": "INFO", "value": "Unlocking Vortex"}, {
+        "type": "TAP", "value": "unlock-vortex_yes"}, {
+        "type": "WAIT", "value": "2000"}
+//        "type": "INFO", "value": "Vortex is Farm - Menu Indexlocked, moving to earthshrine"}, {
+//        "type": "SET", "var": "vortex-locked", "value": "1"}, {
+//        "type": "MOVE", "value": "farm_to_home"}
+      ]
+    }, {
+      "condition": {
+        "not": "SCREEN", "value": "vortex-unlock-free", "and": [{
+          "not": "SCREEN", "value": "vortex-unlock-paid"
+        }]
+      },
+      "actions": [{
+        "type": "INFO", "value": "Moving to chamber mission select"}, {
+        "type": "MOVE", "value": "menu"}
+      ]
+    }]
+  },
+
+  "_farm-find_depart_team": {
+    "name": "Farm - Find Depart Team",
+    "statements": [{
+      "condition": {
+        "is": "SCREEN", "value": "menu-depart",
+        "and": [{
+          "not": "SCREEN", "value": "menu-depart-team_2"}
+        ]
+      },
+      "actions": [{
+        "type": "SWIPE_RIGHT", "value": "menu-depart-units"}, {
+        "type": "WAIT", "value": "2000"}, {
+        "type": "REPEAT", "value": ""}
+      ]
+    }]
+  },
+
+  "_common_battle-three_attack": {
+    "name": "Common Battle - All Attack (Override)",
+    "statements": [{
+      "condition": {
+        "is": "SCREEN", "value": "game-battle-repeat",
+          "and": [{
+            "is": "SCREEN", "value": "battle-unit-0_mp"}, {
+            "is": "SCREEN", "value": "battle-unit-0_ready"}, {
+            "not": "SCREEN", "value": "battle-unit-0_ability"}
+          ]
+      },
+      "actions": [{
+        "type": "TAP", "value": "battle-reload"}, {
+        "type": "WAIT", "value": "500"}, {
+        "type": "CALL", "value": "@xon-waylay", "args": {"index": "0"}}, {
+        "type": "REPEAT"}
+      ]
+    }, {
+      "condition": {
+        "is": "SCREEN", "value": "game-battle-repeat",
+          "and": [{
+            "is": "SCREEN", "value": "battle-unit-1_mp"}, {
+            "is": "SCREEN", "value": "battle-unit-1_ready"}, {
+            "not": "SCREEN", "value": "battle-unit-1_ability"}
+          ]
+      },
+      "actions": [{
+        "type": "CALL", "value": "@xon-waylay", "args": {"index": "1"}}, {
+        "type": "REPEAT"}
+      ]
+
+    }, {
+
+      "condition": {
+        "is": "SCREEN", "value": "game-battle-repeat",
+        "and": [{
+          "not": "SCREEN","value": "battle-unit-0_ready", "or": [{"is": "SCREEN", "value": "battle-unit-0_ability"}]}, {
+          "not": "SCREEN","value": "battle-unit-1_ready", "or": [{"is": "SCREEN", "value": "battle-unit-1_ability"}]}
+        ]
+      },
+      "actions": [{
+        "type": "SET", "var": "_loops", "value": "0"}, {
+        "type": "BATCH", "value": "START"}, {
+        "type": "TAP", "value": "battle-unit_0"}, {
+        "type": "TAP", "value": "battle-unit_1"}, {
+        "type": "TAP", "value": "battle-unit_2"}, {
+        "type": "TAP", "value": "battle-unit_3"}, {
+        "type": "TAP", "value": "battle-unit_4"}, {
+        "type": "TAP", "value": "battle-unit_5"}, {
+        "type": "BATCH", "value": "END"}, {
+        "type": "REPEAT", "value": ""}
+      ]
+    }, {
+
+      "condition": {
+        "var": "_loops", "is": "GREATER", "value": "20",
+        "and": [{
+          "is": "SCREEN", "value": "battle-unit-0_ready"}
+        ]
+      },
+      "actions": [{
+        "type": "INFO", "value": "Enabling Auto - Pause Detected"}, {
+        "type": "TAP",  "value": "battle-auto"}, {
+        "type": "SET", "var": "_loops", "value": "0"}, {
+        "type": "SET", "value": "0", "var": "setup"}, {
+        "type": "REPEAT", "value": ""}
+      ]
+    }]
+  }
+
+}
+}

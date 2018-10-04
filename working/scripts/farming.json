@@ -141,6 +141,24 @@
       "order": 20,
       "skipSave": "true",
       "tierId": "refresh"
+    }, {
+      "name" : "arena-party-index",
+      "display" : "Battle Index",
+      "value" : "0",
+      "type" : "INT",
+      "modify" : "EDITABLE",
+      "displayType" : "STANDARD",
+      "order" : 0,
+      "tierId": "arena"
+    }, {
+      "name" : "arena-party-defense-index",
+      "display" : "Defense Index",
+      "value" : "0",
+      "type" : "INT",
+      "modify" : "EDITABLE",
+      "displayType" : "STANDARD",
+      "order" : 0,
+      "tierId": "arena"
     }
   ],
   "varTiers": [
@@ -148,7 +166,8 @@
     {"title":"Enable", "id":"enable"},
     {"title":"Farming", "id":"farm"},
     {"title":"Raid", "id":"raid"},
-    {"title":"Refresh", "id":"refresh"}
+    {"title":"Refresh", "id":"refresh"},
+    {"title":"Arena", "id":"arena"}
   ],
   "imports": [
     "_common-no_op",
@@ -160,6 +179,16 @@
     "_common-utils"
   ],
   "states": {
+
+    "_common-power_down": {
+      "name": "Common - Power Down",
+      "statements": [{
+        "condition": {
+          "is": "BOOLEAN", "value": "false"
+        }
+      }]
+    },
+
     "main": {
       "name": "Main - Farming Switcher",
       "includes": [
@@ -1205,8 +1234,32 @@
         }
       ]
     },
+
     "home_to_farm": {
-      "name": "Home - To Farm",
+      "name"       : "Home - To Farm",
+      "includes"   : [
+        "_home_daily_fixes",
+        "_es-to_menu",
+        "_common-no_op"
+      ],
+      "statements" : [
+        {
+          "condition" : {
+            "is"    : "BOOLEAN",
+            "value" : "true"
+          },
+          "actions"   : [
+            {
+              "type"  : "MOVE",
+              "value" : "home_to_earthshrine"
+            }
+          ]
+        }
+      ]
+    },
+
+    "home_to_earthshrine": {
+      "name": "Home - To Earthshrine",
       "includes": [
         "_home_daily_fixes",
         "_es-to_menu",
@@ -1751,7 +1804,7 @@
       ]
     },
     "log-in": {
-      "name": "Common - Recovery Log In",
+      "name": "Common - Recovery Log In (Override)",
       "includes": [
         "_home_daily_fixes"
       ],
@@ -1868,16 +1921,24 @@
         }
       ]
     },
+
     "arena-home": {
       "name": "Arena - Menu",
       "includes": [
-        "_common-no_op"
+        "_common-no_op",
+        "_arena-menu-orbs",
+        "_arena-menu-rules",
+        "_arena-find_depart_team",
+        "_arena-menu-opponent-select",
+        "_arena-menu-confirm-select",
+        "_arena-menu-begin",
+        "_arena-battle-start"
       ],
       "statements": [
         {
           "condition": {
             "is": "SCREEN",
-            "value": "menu-arena-orbs",
+            "value": "menu-arena-have-orbs",
             "andOr": [
               {
                 "is": "SCREEN",
@@ -1916,25 +1977,34 @@
               "value": ""
             }
           ]
-        },
+        }
+      ]
+    },
+
+    "_arena-menu-orbs": {
+      "statements" : [
         {
-          "condition": {
-            "not": "SCREEN",
-            "value": "menu-arena-orbs",
-            "andOr": [
-              {
-                "is": "SCREEN",
-                "value": "menu-arena_screen"
-              },
-              {
-                "is": "SCREEN",
-                "value": "menu-arena_screen-friends"
-              },
-              {
-                "is": "SCREEN",
-                "value": "menu-arena_screen-top"
-              }
-            ]
+          "condition" : {
+            "is": "SCREEN",
+            "value": "menu-arena-main",
+            "and": [{
+              "not"   : "SCREEN",
+              "value" : "menu-arena-have-orbs",
+              "andOr" : [
+                {
+                  "is"    : "SCREEN",
+                  "value" : "menu-arena_screen"
+                },
+                {
+                  "is"    : "SCREEN",
+                  "value" : "menu-arena_screen-friends"
+                },
+                {
+                  "is"    : "SCREEN",
+                  "value" : "menu-arena_screen-top"
+                }
+              ]
+            }]
           },
           "actions": [
             {
@@ -1952,7 +2022,12 @@
               "value": "arena_to_home"
             }
           ]
-        },
+        }
+      ]
+    },
+
+    "_arena-menu-rules": {
+      "statements" : [
         {
           "condition": {
             "is": "SCREEN",
@@ -1964,6 +2039,42 @@
               "value": "menu-arena-ok"
             },
             {
+              "type"  : "WAIT",
+              "value" : "3000"
+            },
+            {
+              "type"  : "REPEAT",
+              "value" : ""
+            }
+          ]
+        }
+      ]
+    },
+
+    "_arena-find_depart_team": {
+      "name": "Arena - Find Depart Team",
+      "statements": [
+        {
+          "condition": {
+            "is"    : "SCREEN",
+            "value" : "menu-arena-opponent_select",
+            "and" : [{
+              "not": "SCREEN",
+              "value": "arena-depart-team_${arena-party-index}",
+              "and": [
+                {
+                  "not": "SCREEN",
+                  "value": "arena-menu-party-select"
+                }
+              ]
+            }]
+          },
+          "actions": [
+            {
+              "type": "TAP",
+              "value": "arena-party-select"
+            },
+            {
               "type": "WAIT",
               "value": "2000"
             },
@@ -1973,6 +2084,63 @@
             }
           ]
         },
+        {
+          "condition" : {
+            "is"    : "SCREEN",
+            "value" : "arena-menu-party-select",
+            "and"   : [
+              {
+                "is"    : "SCREEN",
+                "value" : "arena-depart-team_${arena-party-index}"
+              }
+            ]
+          },
+          "actions"   : [
+            {
+              "type"  : "TAP",
+              "value" : "arena-party-select"
+            },
+            {
+              "type": "WAIT",
+              "value": "2000"
+            },
+            {
+              "type"  : "REPEAT",
+              "value" : ""
+            }
+          ]
+        },
+        {
+          "condition": {
+            "is": "SCREEN",
+            "value": "arena-menu-party-select",
+            "and": [
+              {
+                "not": "SCREEN",
+                "value": "arena-depart-team_${arena-party-index}"
+              }
+            ]
+          },
+          "actions": [
+            {
+              "type": "SWIPE_RIGHT",
+              "value": "menu-depart-units"
+            },
+            {
+              "type": "WAIT",
+              "value": "2000"
+            },
+            {
+              "type": "REPEAT",
+              "value": ""
+            }
+          ]
+        }
+      ]
+    },
+
+    "_arena-menu-opponent-select": {
+      "statements" : [
         {
           "condition": {
             "is": "SCREEN",
@@ -1992,7 +2160,12 @@
               "value": ""
             }
           ]
-        },
+        }
+      ]
+    },
+
+    "_arena-battle-start": {
+      "statements" : [
         {
           "condition": {
             "is": "SCREEN",
@@ -2012,7 +2185,12 @@
               "value": ""
             }
           ]
-        },
+        }
+      ]
+    },
+
+    "_arena-menu-confirm-select": {
+      "statements" : [
         {
           "condition": {
             "is": "SCREEN",
@@ -2032,7 +2210,12 @@
               "value": ""
             }
           ]
-        },
+        }
+      ]
+    },
+
+    "_arena-menu-begin": {
+      "statements" : [
         {
           "condition": {
             "is": "SCREEN",
@@ -2062,6 +2245,7 @@
         }
       ]
     },
+
     "arena-battle-setup": {
       "name": "Arena - Battle - Setup",
       "includes": [

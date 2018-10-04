@@ -270,8 +270,13 @@
     "points" : [ ],
     "enabled" : false
   }, {
+    "name" : "Menu - Arena Main",
+    "screenId" : "menu-arena-main",
+    "points" : [ ],
+    "enabled" : false
+  }, {
     "name" : "Menu - Arena Orbs",
-    "screenId" : "menu-arena-orbs",
+    "screenId" : "menu-arena-have-orbs",
     "points" : [ ],
     "enabled" : false
   }, {
@@ -362,6 +367,36 @@
   }, {
     "name" : "Menu - Depart - Team 4",
     "screenId" : "menu-depart-team_4",
+    "points" : [ ],
+    "enabled" : false
+  }, {
+    "name" : "Arena - Party - Select",
+    "screenId" : "arena-menu-party-select",
+    "points" : [ ],
+    "enabled" : false
+  }, {
+    "name" : "Arena - Depart - Team 0",
+    "screenId" : "arena-depart-team_0",
+    "points" : [ ],
+    "enabled" : false
+  }, {
+    "name" : "Arena - Depart - Team 1",
+    "screenId" : "arena-depart-team_1",
+    "points" : [ ],
+    "enabled" : false
+  }, {
+    "name" : "Arena - Depart - Team 2",
+    "screenId" : "arena-depart-team_2",
+    "points" : [ ],
+    "enabled" : false
+  }, {
+    "name" : "Arena - Depart - Team 3",
+    "screenId" : "arena-depart-team_3",
+    "points" : [ ],
+    "enabled" : false
+  }, {
+    "name" : "Arena - Depart - Team 4",
+    "screenId" : "arena-depart-team_4",
     "points" : [ ],
     "enabled" : false
   }, {
@@ -633,6 +668,16 @@
   }, {
     "name" : "units-select_base-two_unit",
     "screenId" : "units-select_base-two_unit",
+    "points" : [ ],
+    "enabled" : false
+  }, {
+    "name" : "vortex-unlock-free",
+    "screenId" : "vortex-unlock-free",
+    "points" : [ ],
+    "enabled" : false
+  }, {
+    "name" : "vortex-unlock-paid",
+    "screenId" : "vortex-unlock-paid",
     "points" : [ ],
     "enabled" : false
   } ],
@@ -1269,6 +1314,14 @@
     "h" : 1,
     "enabled" : false
   }, {
+    "name" : "menu-vortex-enhance",
+    "componentId" : "menu-vortex-enhance",
+    "x" : 0,
+    "y" : 0,
+    "w" : 1,
+    "h" : 1,
+    "enabled" : false
+  }, {
     "name" : "menu-vortex-event",
     "componentId" : "menu-vortex-event",
     "x" : 0,
@@ -1331,6 +1384,54 @@
     "y" : 0,
     "w" : 1,
     "h" : 1,
+    "enabled" : false
+  }, {
+    "name" : "Raid Summon - Multi",
+    "componentId" : "raid-summon_multi-main",
+    "x" : 656,
+    "y" : 1201,
+    "w" : 300,
+    "h" : 150,
+    "enabled" : false
+  }, {
+    "name" : "Raid - Summon Multi",
+    "componentId" : "raid-summon_multi-popup",
+    "x" : 379,
+    "y" : 968,
+    "w" : 300,
+    "h" : 150,
+    "enabled" : false
+  }, {
+    "name" : "Raid - Summon Results Next",
+    "componentId" : "raid-summon_results-next",
+    "x" : 445,
+    "y" : 1660,
+    "w" : 190,
+    "h" : 105,
+    "enabled" : false
+  }, {
+    "name" : "Raid Summon - Multi",
+    "componentId" : "raid-summon_multi-main",
+    "x" : 656,
+    "y" : 1201,
+    "w" : 300,
+    "h" : 150,
+    "enabled" : false
+  }, {
+    "name" : "Raid - Summon Multi",
+    "componentId" : "raid-summon_multi-popup",
+    "x" : 379,
+    "y" : 968,
+    "w" : 300,
+    "h" : 150,
+    "enabled" : false
+  }, {
+    "name" : "Raid - Summon Results Next",
+    "componentId" : "raid-summon_results-next",
+    "x" : 445,
+    "y" : 1660,
+    "w" : 190,
+    "h" : 105,
     "enabled" : false
   }, {
     "name" : "Screen - Center",
@@ -1427,6 +1528,46 @@
     "y" : 0,
     "w" : 1,
     "h" : 1,
+    "enabled" : false
+  }, {
+    "name" : "units-sell-confirm_1",
+    "componentId" : "units-sell-confirm_1",
+    "x" : 675,
+    "y" : 1455,
+    "w" : 270,
+    "h" : 105,
+    "enabled" : false
+  }, {
+    "name" : "units-sell-confirm_2",
+    "componentId" : "units-sell-confirm_2",
+    "x" : 620,
+    "y" : 1000,
+    "w" : 270,
+    "h" : 105,
+    "enabled" : false
+  }, {
+    "name" : "units-sell-confirm_ok",
+    "componentId" : "units-sell-confirm_ok",
+    "x" : 405,
+    "y" : 1000,
+    "w" : 270,
+    "h" : 105,
+    "enabled" : false
+  }, {
+    "name" : "unlock-vortex_yes",
+    "componentId" : "unlock-vortex_yes",
+    "x" : 615,
+    "y" : 1015,
+    "w" : 250,
+    "h" : 85,
+    "enabled" : false
+  }, {
+    "name" : "arena-party-select",
+    "componentId" : "arena-party-select",
+    "x" : 615,
+    "y" : 1015,
+    "w" : 250,
+    "h" : 85,
     "enabled" : false
   } ]
 }

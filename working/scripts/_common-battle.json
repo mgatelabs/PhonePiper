@@ -604,6 +604,37 @@
         }
       ]
     },
+    "@isUnitMagicReady": {
+      "name": "Function - Is Unit Magic Ready",
+      "variables": {
+        "index": {
+          "value": "0",
+          "type": "INT"
+        }
+      },
+      "statements": [
+        {
+          "condition": {
+            "is": "SCREEN",
+            "value": "battle-unit-${index}_magic"
+          },
+          "actions": [
+            {
+              "type": "RETURN",
+              "value": "1"
+            }
+          ]
+        },
+        {
+          "actions": [
+            {
+              "type": "RETURN",
+              "value": "0"
+            }
+          ]
+        }
+      ]
+    },
     "@isUnitLbSelected": {
       "name": "Function - Is Unit LB Selected",
       "variables": {

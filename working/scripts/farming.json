@@ -40,11 +40,20 @@
     },
     {
       "name": "menu-item",
-      "display": "Farm - Menu Index",
+      "display": "Menu Index",
       "value": "1",
       "type": "INT",
       "modify": "EDITABLE",
       "order": 20,
+      "tierId": "farm"
+    },
+    {
+      "name": "farm-timer",
+      "display": "Transition Timer",
+      "value": "3600",
+      "type": "INT",
+      "modify": "EDITABLE",
+      "displayType": "SECONDS",
       "tierId": "farm"
     },
     {
@@ -67,7 +76,7 @@
     },
     {
       "name": "vortex-item",
-      "display": "Raid - Vortex Index",
+      "display": "Vortex Index",
       "value": "0",
       "type": "INT",
       "modify": "EDITABLE",
@@ -76,7 +85,7 @@
     },
     {
       "name": "allow-raid",
-      "display": "Enable Raid",
+      "display": "Raid",
       "value": "0",
       "type": "INT",
       "modify": "EDITABLE",
@@ -96,7 +105,7 @@
     },
     {
       "name": "allow-farm",
-      "display": "Enable Farm",
+      "display": "Farm",
       "value": "1",
       "type": "INT",
       "modify": "EDITABLE",
@@ -106,22 +115,13 @@
     },
     {
       "name": "allow-arena",
-      "display": "Enable Arena",
+      "display": "Arena",
       "value": "0",
       "type": "INT",
       "modify": "EDITABLE",
       "displayType": "BOOLEAN",
       "order": 10,
       "tierId": "enable"
-    },
-    {
-      "name": "raid-timer",
-      "display": "Transition Timer",
-      "value": "16320",
-      "type": "INT",
-      "modify": "EDITABLE",
-      "displayType": "SECONDS",
-      "tierId": "farm"
     },
     {
       "name": "refresh-farm",
@@ -285,7 +285,7 @@
             "and": [
               {
                 "is": "GREATER",
-                "value": "${raid-timer}",
+                "value": "${farm-timer}",
                 "var": "_seconds",
                 "or": [
                   { "not": "CALL", "value":"@isMinEnergyAvailable" }

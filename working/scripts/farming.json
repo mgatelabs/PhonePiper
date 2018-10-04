@@ -687,48 +687,17 @@
           },
           "actions": [
             {
-              "type": "INFO",
-              "value": "We're out of raid orb's attempting to purchase more at least ${refresh-raid} more time(s)"
-            },
-            {
-              "type": "TAP",
-              "value": "menu-raid_recovery-yes"
-            },
-            {
-              "type": "WAIT",
-              "value": "1500"
-            },
-            {
-              "type": "REPEAT",
-              "value": ""
-            }
-          ]
-        },
-        {
-          "condition": {
-            "is": "SCREEN",
-            "value": "menu-use_lapis",
-            "and": [
-              {
-                "is": "GREATER",
-                "var": "refresh-raid",
-                "value": "0"
-              }
-            ]
-          },
-          "actions": [
-            {
               "type": "ADD",
               "var": "refresh-raid",
               "value": "-1"
             },
             {
               "type": "INFO",
-              "value": "Refreshed Raid ORB, ${refresh-raid} attempts left"
+              "value": "We're out of raid orb's attempting to purchase more.  can purchase ${refresh-raid} more time(s)"
             },
             {
               "type": "TAP",
-              "value": "menu-use_lapis-yes"
+              "value": "menu-raid_recovery-yes"
             },
             {
               "type": "WAIT",

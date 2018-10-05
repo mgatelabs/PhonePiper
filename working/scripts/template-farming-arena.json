@@ -94,63 +94,6 @@
             "and": [
               { "is": "EQUAL", "value": "0", "var":"segment"},
               { "is": "CALL", "value": "@isUnitReady", "args": {"index": "3"} },
-              { "is": "CALL", "value": "@isUnitLbReady", "args": {"index": "3"} },
-              { "not": "CALL", "value": "@isUnitLbSelected", "args": {"index": "3"} }
-            ]
-          },
-          "actions": [
-            {
-              "type": "INFO",
-              "value": "Ayaka Has Her LB, what sort of world are we living in?  Pressing the button (TM)"
-            },
-            {
-              "type": "CALL",
-              "value": "@readyUnitLb",
-              "args": {
-                "index": "3"
-              }
-            },
-            {
-              "type": "SET",
-              "var": "segment",
-              "value": "1"
-            },
-            {
-              "type": "CALL",
-              "value": "@tapUnit",
-              "args": {
-                "index": "3"
-              }
-            },
-            {
-              "type": "WAIT",
-              "value": "200"
-            },
-            {
-              "type": "CALL",
-              "value": "@tapUnit",
-              "args": {
-                "index": "3"
-              }
-            },
-            {
-              "type": "WAIT",
-              "value": "2000"
-            },
-            {
-              "type": "REPEAT",
-              "value": ""
-            }
-          ]
-        },
-
-        {
-          "condition": {
-            "is": "CALL",
-            "value": "@isBattleReady",
-            "and": [
-              { "is": "EQUAL", "value": "0", "var":"segment"},
-              { "is": "CALL", "value": "@isUnitReady", "args": {"index": "3"} },
               { "is": "EQUAL", "value": "0", "var":"elysium"},
               { "is": "EQUAL", "value": "4", "var":"availableUnits"}
             ]
@@ -210,6 +153,63 @@
             {
               "type": "WAIT",
               "value": "400"
+            },
+            {
+              "type": "REPEAT",
+              "value": ""
+            }
+          ]
+        },
+
+        {
+          "condition": {
+            "is": "CALL",
+            "value": "@isBattleReady",
+            "and": [
+              { "is": "EQUAL", "value": "0", "var":"segment"},
+              { "is": "CALL", "value": "@isUnitReady", "args": {"index": "3"} },
+              { "is": "CALL", "value": "@isUnitLbReady", "args": {"index": "3"} },
+              { "not": "CALL", "value": "@isUnitLbSelected", "args": {"index": "3"} }
+            ]
+          },
+          "actions": [
+            {
+              "type": "INFO",
+              "value": "Ayaka Has Her LB, what sort of world are we living in?  Pressing the button (TM)"
+            },
+            {
+              "type": "CALL",
+              "value": "@readyUnitLb",
+              "args": {
+                "index": "3"
+              }
+            },
+            {
+              "type": "SET",
+              "var": "segment",
+              "value": "1"
+            },
+            {
+              "type": "CALL",
+              "value": "@tapUnit",
+              "args": {
+                "index": "3"
+              }
+            },
+            {
+              "type": "WAIT",
+              "value": "200"
+            },
+            {
+              "type": "CALL",
+              "value": "@tapUnit",
+              "args": {
+                "index": "3"
+              }
+            },
+            {
+              "type": "WAIT",
+              "value": "2000"
             },
             {
               "type": "REPEAT",
@@ -463,11 +463,7 @@
           "actions": [
             {
               "type": "INFO",
-              "value": "Pressing Reload"
-            },
-            {
-              "type": "TAP",
-              "value": "battle-reload"
+              "value": "Skipping Reload"
             },
             {
               "type": "SET",
@@ -476,7 +472,7 @@
             },
             {
               "type": "WAIT",
-              "value": "2000"
+              "value": "200"
             },
             {
               "type": "REPEAT",
@@ -500,7 +496,7 @@
           "actions": [
             {
               "type": "INFO",
-              "value": "Setting Up Adam J"
+              "value": "Setting Up Hyoh"
             },
             {
               "type": "SET",
@@ -518,8 +514,8 @@
               "type": "CALL",
               "value": "@selectUnitAction",
               "args": {
-                "row": "12",
-                "column": "0"
+                "row": "10",
+                "column": "1"
               }
             },
             {
@@ -547,7 +543,7 @@
           "actions": [
             {
               "type": "INFO",
-              "value": "Setting Up Olive"
+              "value": "Setting Up Awakened Rain"
             },
             {
               "type": "SET",
@@ -565,7 +561,7 @@
               "type": "CALL",
               "value": "@selectUnitAction",
               "args": {
-                "row": "9",
+                "row": "10",
                 "column": "0"
               }
             },
@@ -586,6 +582,7 @@
             "value": "@isBattleReady",
             "and": [
               { "is": "EQUAL", "value": "2", "var":"segment"},
+              { "is": "EQUAL", "value": "1", "var":"turn"},
               { "is": "CALL", "value": "@isUnitReady", "args": {"index": "1"} },
               { "is": "CALL", "value": "@isUnitMpReady", "args": {"index": "1"} },
               { "not": "CALL", "value": "@isUnitActionReady", "args": {"index": "1"} }
@@ -594,79 +591,7 @@
           "actions": [
             {
               "type": "INFO",
-              "value": "Setting Up Grim Lord Sakura"
-            },
-            {
-              "type": "SET",
-              "var": "modified",
-              "value": "1"
-            },
-            {
-              "type": "CALL",
-              "value": "@showUnitActions",
-              "args": {
-                "index": "1"
-              }
-            },
-            {
-              "type": "SLOW_UP",
-              "value": "battle-skill-top-slider",
-              "count": "7"
-            },
-            {
-              "type": "TAP",
-              "value": "battle-skill-top-2"
-            },
-            {
-              "type": "WAIT",
-              "value": "200"
-            },
-            {
-              "type": "SLOW_DOWN",
-              "value": "battle-skill-top-slider"
-            },
-            {
-              "type": "TAP",
-              "value": "battle-skill-top-3",
-              "count": "1"
-            },
-            {
-              "type": "WAIT",
-              "value": "200"
-            },
-            {
-              "type": "TAP",
-              "value": "battle-skill-top-3",
-              "count": "1"
-            },
-            {
-              "type": "WAIT",
-              "value": "1000"
-            },
-            {
-              "type": "REPEAT",
-              "value": ""
-            }
-          ]
-        },
-
-
-        {
-          "condition": {
-            "is": "CALL",
-            "value": "@isBattleReady",
-            "and": [
-              { "is": "EQUAL", "value": "2", "var":"segment"},
-              { "is": "EQUAL", "value": "1", "var":"turn"},
-              { "is": "CALL", "value": "@isUnitReady", "args": {"index": "4"} },
-              { "is": "CALL", "value": "@isUnitMpReady", "args": {"index": "4"} },
-              { "not": "CALL", "value": "@isUnitActionReady", "args": {"index": "4"} }
-            ]
-          },
-          "actions": [
-            {
-              "type": "INFO",
-              "value": "Setting Up TT (Turn 1)"
+              "value": "Setting Up TT A (Turn 1)"
             },
             {
               "type": "SET",
@@ -684,7 +609,7 @@
               "type": "CALL",
               "value": "@selectUnitAction",
               "args": {
-                "row": "11",
+                "row": "7",
                 "column": "0"
               }
             },
@@ -697,6 +622,113 @@
               "type": "TAP",
               "value": "battle-skill-top-5",
               "count": "4"
+            },
+            {
+              "type": "WAIT",
+              "value": "1000"
+            },
+            {
+              "type": "REPEAT",
+              "value": ""
+            }
+          ]
+        },
+
+        {
+          "condition": {
+            "is": "CALL",
+            "value": "@isBattleReady",
+            "and": [
+              { "is": "EQUAL", "value": "2", "var":"segment"},
+              { "is": "EQUAL", "value": "1", "var":"turn"},
+              { "is": "CALL", "value": "@isUnitReady", "args": {"index": "4"} },
+              { "is": "CALL", "value": "@isUnitMpReady", "args": {"index": "4"} },
+              { "not": "CALL", "value": "@isUnitActionReady", "args": {"index": "4"} }
+            ]
+          },
+          "actions": [
+            {
+              "type": "INFO",
+              "value": "Setting Up TT B (Turn 1)"
+            },
+            {
+              "type": "SET",
+              "var": "modified",
+              "value": "1"
+            },
+            {
+              "type": "CALL",
+              "value": "@showUnitActions",
+              "args": {
+                "index": "4"
+              }
+            },
+            {
+              "type": "CALL",
+              "value": "@selectUnitAction",
+              "args": {
+                "row": "7",
+                "column": "1"
+              }
+            },
+            {
+              "type": "SLOW_UP",
+              "value": "battle-skill-top-slider",
+              "count": "2"
+            },
+            {
+              "type": "TAP",
+              "value": "battle-skill-top-2",
+              "count": "4"
+            },
+            {
+              "type": "WAIT",
+              "value": "1000"
+            },
+            {
+              "type": "REPEAT",
+              "value": ""
+            }
+          ]
+        },
+
+
+        {
+          "condition": {
+            "is": "CALL",
+            "value": "@isBattleReady",
+            "and": [
+              { "is": "EQUAL", "value": "2", "var":"segment"},
+              { "is": "GREATER", "value": "1", "var":"turn"},
+              { "is": "CALL", "value": "@isUnitReady", "args": {"index": "1"} },
+              { "is": "CALL", "value": "@isUnitMpReady", "args": {"index": "1"} },
+              { "not": "CALL", "value": "@isUnitActionReady", "args": {"index": "1"} }
+            ]
+          },
+          "actions": [
+            {
+              "type": "INFO",
+              "value": "Setting Up TT A (Turn 2+)"
+            },
+            {
+              "type": "SET",
+              "var": "modified",
+              "value": "1"
+            },
+            {
+              "type": "CALL",
+              "value": "@showUnitActions",
+              "args": {
+                "index": "4"
+              }
+            },
+            {
+              "type": "CALL",
+              "value": "@selectUnitAction",
+              "args": {
+                "row": "8",
+                "column": "0"
+              }
             },
             {
               "type": "WAIT",
@@ -725,7 +757,7 @@
           "actions": [
             {
               "type": "INFO",
-              "value": "Setting Up TT (Turn 2+)"
+              "value": "Setting Up TT B (Turn 2+)"
             },
             {
               "type": "SET",
@@ -743,8 +775,8 @@
               "type": "CALL",
               "value": "@selectUnitAction",
               "args": {
-                "row": "12",
-                "column": "0"
+                "row": "8",
+                "column": "1"
               }
             },
             {
@@ -792,7 +824,9 @@
               { "is": "LESS", "value": "8", "var":"lbAttempts"},
               { "is": "CALL", "value": "@isUnitReady", "args": {"index": "0"} },
               { "is": "CALL", "value": "@isUnitLbReady", "args": {"index": "0"} },
-              { "not": "CALL", "value": "@isUnitLbSelected", "args": {"index": "0"} }
+              { "not": "CALL", "value": "@isUnitLbSelected", "args": {"index": "0"} },
+              { "is": "CALL", "value": "@isUnitReady", "args": {"index": "2"} },
+              { "is": "CALL", "value": "@isUnitLbReady", "args": {"index": "2"} }
             ]
           },
           "actions": [
@@ -829,7 +863,9 @@
               { "is": "LESS", "value": "8", "var":"lbAttempts"},
               { "is": "CALL", "value": "@isUnitReady", "args": {"index": "1"} },
               { "is": "CALL", "value": "@isUnitLbReady", "args": {"index": "1"} },
-              { "not": "CALL", "value": "@isUnitLbSelected", "args": {"index": "1"} }
+              { "not": "CALL", "value": "@isUnitLbSelected", "args": {"index": "1"} },
+              { "is": "CALL", "value": "@isUnitReady", "args": {"index": "4"} },
+              { "is": "CALL", "value": "@isUnitLbReady", "args": {"index": "4"} }
             ]
           },
           "actions": [
@@ -866,7 +902,9 @@
               { "is": "LESS", "value": "8", "var":"lbAttempts"},
               { "is": "CALL", "value": "@isUnitReady", "args": {"index": "2"} },
               { "is": "CALL", "value": "@isUnitLbReady", "args": {"index": "2"} },
-              { "not": "CALL", "value": "@isUnitLbSelected", "args": {"index": "2"} }
+              { "not": "CALL", "value": "@isUnitLbSelected", "args": {"index": "2"} },
+              { "is": "CALL", "value": "@isUnitReady", "args": {"index": "0"} },
+              { "is": "CALL", "value": "@isUnitLbReady", "args": {"index": "0"} }
             ]
           },
           "actions": [
@@ -903,7 +941,9 @@
               { "is": "LESS", "value": "8", "var":"lbAttempts"},
               { "is": "CALL", "value": "@isUnitReady", "args": {"index": "4"} },
               { "is": "CALL", "value": "@isUnitLbReady", "args": {"index": "4"} },
-              { "not": "CALL", "value": "@isUnitLbSelected", "args": {"index": "4"} }
+              { "not": "CALL", "value": "@isUnitLbSelected", "args": {"index": "4"} },
+              { "is": "CALL", "value": "@isUnitReady", "args": {"index": "1"} },
+              { "is": "CALL", "value": "@isUnitLbReady", "args": {"index": "1"} }
             ]
           },
           "actions": [

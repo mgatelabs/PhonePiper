@@ -38,6 +38,10 @@
         "lbAttempts": {
           "value": "0",
           "type": "INT"
+        },
+        "hyoyAttempts": {
+          "value": "0",
+          "type": "INT"
         }
       },
       "statements": [
@@ -516,7 +520,30 @@
               "args": {
                 "row": "10",
                 "column": "1"
+              },
+              "condition": {
+                "is": "EQUAL",
+                "var": "hyoyAttempts",
+                "value": "0"
               }
+            },
+            {
+              "type": "CALL",
+              "value": "@selectUnitAction",
+              "args": {
+                "row": "11",
+                "column": "0"
+              },
+              "condition": {
+                "is": "GREATER",
+                "var": "hyoyAttempts",
+                "value": "0"
+              }
+            },
+            {
+              "type": "ADD",
+              "var": "hyoyAttempts",
+              "value": "1"
             },
             {
               "type": "WAIT",
@@ -1087,6 +1114,11 @@
             {
               "type": "SET",
               "var": "modified",
+              "value": "0"
+            },
+            {
+              "type": "SET",
+              "var": "hyoyAttempts",
               "value": "0"
             },
             {

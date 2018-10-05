@@ -602,7 +602,7 @@
               "type": "CALL",
               "value": "@showUnitActions",
               "args": {
-                "index": "4"
+                "index": "1"
               }
             },
             {
@@ -719,7 +719,7 @@
               "type": "CALL",
               "value": "@showUnitActions",
               "args": {
-                "index": "4"
+                "index": "1"
               }
             },
             {

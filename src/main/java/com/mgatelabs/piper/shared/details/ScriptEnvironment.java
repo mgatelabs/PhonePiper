@@ -72,7 +72,7 @@ public final class ScriptEnvironment {
     public ImmutableMap<String, StateDefinition> getFilteredStates() {
         Map<String, StateDefinition> tempMap = Maps.newHashMap();
         for (Map.Entry<String, StateDefinition> entry : stateDefinitions.entrySet()) {
-            if (!entry.getKey().startsWith("_") || entry.getKey().startsWith("@")) {
+            if (!entry.getKey().startsWith("_") && !entry.getKey().startsWith("@")) {
                 tempMap.put(entry.getKey(), entry.getValue());
             }
         }

@@ -1,5 +1,35 @@
 {
   "screens" : [ {
+    "name" : "Arena - Depart - Team 0",
+    "screenId" : "arena-depart-team_0",
+    "points" : [ ],
+    "enabled" : false
+  }, {
+    "name" : "Arena - Depart - Team 1",
+    "screenId" : "arena-depart-team_1",
+    "points" : [ ],
+    "enabled" : false
+  }, {
+    "name" : "Arena - Depart - Team 2",
+    "screenId" : "arena-depart-team_2",
+    "points" : [ ],
+    "enabled" : false
+  }, {
+    "name" : "Arena - Depart - Team 3",
+    "screenId" : "arena-depart-team_3",
+    "points" : [ ],
+    "enabled" : false
+  }, {
+    "name" : "Arena - Depart - Team 4",
+    "screenId" : "arena-depart-team_4",
+    "points" : [ ],
+    "enabled" : false
+  }, {
+    "name" : "Arena - Party - Select",
+    "screenId" : "arena-menu-party-select",
+    "points" : [ ],
+    "enabled" : false
+  }, {
     "name" : "Battle - Actions",
     "screenId" : "battle-actions",
     "points" : [ ],
@@ -265,8 +295,8 @@
     "points" : [ ],
     "enabled" : false
   }, {
-    "name" : "Menu - Arena - Opponent Select",
-    "screenId" : "menu-arena-opponent_select",
+    "name" : "Menu - Arena Orbs",
+    "screenId" : "menu-arena-have-orbs",
     "points" : [ ],
     "enabled" : false
   }, {
@@ -275,8 +305,8 @@
     "points" : [ ],
     "enabled" : false
   }, {
-    "name" : "Menu - Arena Orbs",
-    "screenId" : "menu-arena-have-orbs",
+    "name" : "Menu - Arena - Opponent Select",
+    "screenId" : "menu-arena-opponent_select",
     "points" : [ ],
     "enabled" : false
   }, {
@@ -367,36 +397,6 @@
   }, {
     "name" : "Menu - Depart - Team 4",
     "screenId" : "menu-depart-team_4",
-    "points" : [ ],
-    "enabled" : false
-  }, {
-    "name" : "Arena - Party - Select",
-    "screenId" : "arena-menu-party-select",
-    "points" : [ ],
-    "enabled" : false
-  }, {
-    "name" : "Arena - Depart - Team 0",
-    "screenId" : "arena-depart-team_0",
-    "points" : [ ],
-    "enabled" : false
-  }, {
-    "name" : "Arena - Depart - Team 1",
-    "screenId" : "arena-depart-team_1",
-    "points" : [ ],
-    "enabled" : false
-  }, {
-    "name" : "Arena - Depart - Team 2",
-    "screenId" : "arena-depart-team_2",
-    "points" : [ ],
-    "enabled" : false
-  }, {
-    "name" : "Arena - Depart - Team 3",
-    "screenId" : "arena-depart-team_3",
-    "points" : [ ],
-    "enabled" : false
-  }, {
-    "name" : "Arena - Depart - Team 4",
-    "screenId" : "arena-depart-team_4",
     "points" : [ ],
     "enabled" : false
   }, {
@@ -682,6 +682,14 @@
     "enabled" : false
   } ],
   "components" : [ {
+    "name" : "arena-party-select",
+    "componentId" : "arena-party-select",
+    "x" : 615,
+    "y" : 1015,
+    "w" : 250,
+    "h" : 85,
+    "enabled" : false
+  }, {
     "name" : "battle-actions-back",
     "componentId" : "battle-actions-back",
     "x" : 0,
@@ -788,6 +796,86 @@
   }, {
     "name" : "Battle - Skill (Top) - Slider",
     "componentId" : "battle-skill-top-slider",
+    "x" : 0,
+    "y" : 0,
+    "w" : 1,
+    "h" : 1,
+    "enabled" : false
+  }, {
+    "name" : "Battle - Unit - 0 - Life Bar",
+    "componentId" : "battle-unit-0-life_bar",
+    "x" : 0,
+    "y" : 0,
+    "w" : 1,
+    "h" : 1,
+    "enabled" : false
+  }, {
+    "name" : "Battle - Unit - 1 - Life Bar",
+    "componentId" : "battle-unit-1-life_bar",
+    "x" : 0,
+    "y" : 0,
+    "w" : 1,
+    "h" : 1,
+    "enabled" : false
+  }, {
+    "name" : "Battle - Unit - 2 - Life Bar",
+    "componentId" : "battle-unit-2-life_bar",
+    "x" : 0,
+    "y" : 0,
+    "w" : 1,
+    "h" : 1,
+    "enabled" : false
+  }, {
+    "name" : "Battle - Unit - 3 - Life Bar",
+    "componentId" : "battle-unit-3-life_bar",
+    "x" : 0,
+    "y" : 0,
+    "w" : 1,
+    "h" : 1,
+    "enabled" : false
+  }, {
+    "name" : "Battle - Unit - 4 - Life Bar",
+    "componentId" : "battle-unit-4-life_bar",
+    "x" : 0,
+    "y" : 0,
+    "w" : 1,
+    "h" : 1,
+    "enabled" : false
+  }, {
+    "name" : "Battle - Unit - 0 - MP Bar",
+    "componentId" : "battle-unit-0-mp_bar",
+    "x" : 0,
+    "y" : 0,
+    "w" : 1,
+    "h" : 1,
+    "enabled" : false
+  }, {
+    "name" : "Battle - Unit - 1 - MP Bar",
+    "componentId" : "battle-unit-1-mp_bar",
+    "x" : 0,
+    "y" : 0,
+    "w" : 1,
+    "h" : 1,
+    "enabled" : false
+  }, {
+    "name" : "Battle - Unit - 2 - MP Bar",
+    "componentId" : "battle-unit-2-mp_bar",
+    "x" : 0,
+    "y" : 0,
+    "w" : 1,
+    "h" : 1,
+    "enabled" : false
+  }, {
+    "name" : "Battle - Unit - 3 - MP Bar",
+    "componentId" : "battle-unit-3-mp_bar",
+    "x" : 0,
+    "y" : 0,
+    "w" : 1,
+    "h" : 1,
+    "enabled" : false
+  }, {
+    "name" : "Battle - Unit - 4 - MP Bar",
+    "componentId" : "battle-unit-4-mp_bar",
     "x" : 0,
     "y" : 0,
     "w" : 1,
@@ -1410,30 +1498,6 @@
     "h" : 105,
     "enabled" : false
   }, {
-    "name" : "Raid Summon - Multi",
-    "componentId" : "raid-summon_multi-main",
-    "x" : 656,
-    "y" : 1201,
-    "w" : 300,
-    "h" : 150,
-    "enabled" : false
-  }, {
-    "name" : "Raid - Summon Multi",
-    "componentId" : "raid-summon_multi-popup",
-    "x" : 379,
-    "y" : 968,
-    "w" : 300,
-    "h" : 150,
-    "enabled" : false
-  }, {
-    "name" : "Raid - Summon Results Next",
-    "componentId" : "raid-summon_results-next",
-    "x" : 445,
-    "y" : 1660,
-    "w" : 190,
-    "h" : 105,
-    "enabled" : false
-  }, {
     "name" : "Screen - Center",
     "componentId" : "screen-center",
     "x" : 195,
@@ -1556,14 +1620,6 @@
   }, {
     "name" : "unlock-vortex_yes",
     "componentId" : "unlock-vortex_yes",
-    "x" : 615,
-    "y" : 1015,
-    "w" : 250,
-    "h" : 85,
-    "enabled" : false
-  }, {
-    "name" : "arena-party-select",
-    "componentId" : "arena-party-select",
     "x" : 615,
     "y" : 1015,
     "w" : 250,

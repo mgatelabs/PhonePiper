@@ -14,9 +14,6 @@
       "modify":"EDITABLE"
     }
   ],
-  "imports": [
-    "_common-no_op"
-  ],
   "states": {
 
     "@maxEnergyValue": {

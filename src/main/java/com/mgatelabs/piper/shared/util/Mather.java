@@ -43,30 +43,12 @@ public class Mather {
         }
 
         if (input.contains("/")) {
-            int multiplyIndex = input.indexOf('/');
-            String left = input.substring(0, multiplyIndex);
-            String right = input.substring(multiplyIndex + 1);
+            int divideIndex = input.indexOf('/');
+            String left = input.substring(0, divideIndex);
+            String right = input.substring(divideIndex + 1);
             Var l = evaluate(left, expectedType);
             Var r = evaluate(right, expectedType);
             return l.divide(r);
-        }
-
-        if (input.contains("+")) {
-            int multiplyIndex = input.indexOf('+');
-            String left = input.substring(0, multiplyIndex);
-            String right = input.substring(multiplyIndex + 1);
-            Var l = evaluate(left, expectedType);
-            Var r = evaluate(right, expectedType);
-            return l.add(r);
-        }
-
-        if (input.contains("-")) {
-            int multiplyIndex = input.indexOf('-');
-            String left = input.substring(0, multiplyIndex);
-            String right = input.substring(multiplyIndex + 1);
-            Var l = evaluate(left, expectedType);
-            Var r = evaluate(right, expectedType);
-            return l.substract(r);
         }
 
         if (input.contains("%")) {
@@ -76,6 +58,43 @@ public class Mather {
             Var l = evaluate(left, expectedType);
             Var r = evaluate(right, expectedType);
             return l.mod(r);
+        }
+
+        if (input.contains("+")) {
+            int plusIndex = input.indexOf('+');
+            String left = input.substring(0, plusIndex);
+            String right = input.substring(plusIndex + 1);
+            Var l = evaluate(left, expectedType);
+            Var r = evaluate(right, expectedType);
+            return l.add(r);
+        }
+
+        if (input.contains("-")) {
+            int subtractIndex = input.indexOf('-');
+            String left = input.substring(0, subtractIndex);
+            String right = input.substring(subtractIndex + 1);
+            Var l = evaluate(left, expectedType);
+            int otherIndexPlus = right.indexOf('+');
+            int otherIndexMinus = right.indexOf('-');
+            if (otherIndexMinus == -1 && otherIndexPlus == -1) {
+                Var r = evaluate(right, expectedType);
+                return l.substract(r);
+            } else {
+                int min = Integer.min(otherIndexMinus, otherIndexPlus);
+                int max = Integer.max(otherIndexMinus, otherIndexPlus);
+                String right1;
+                String right2;
+                if (min == -1) {
+                    right1 = right.substring(0, max);
+                    right2 = right.substring(max);
+                } else {
+                    right1 = right.substring(min);
+                    right2 = right.substring(min);
+                }
+                Var m = evaluate(right1, expectedType);
+                Var e = evaluate(right2, expectedType);
+                return l.substract(m).add(e);
+            }
         }
 
         input = input.trim();

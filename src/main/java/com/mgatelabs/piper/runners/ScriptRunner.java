@@ -989,7 +989,9 @@ public class ScriptRunner {
                     if (var == null) {
                         var = IntVar.ZERO;
                     }
-                    vars.add(new VarDefinition(varDefinition.getName(), varDefinition.getDisplay(), var.toString(), varDefinition.getType(), varDefinition.getDisplayType(), varDefinition.getModify(), varDefinition.getOrder(), varDefinition.isSkipSave(), varDefinition.getTierId()));
+                    final VarDefinition copy = new VarDefinition(varDefinition);
+                    copy.setValue(var.toString());
+                    vars.add(copy);
                     break;
             }
         }
@@ -1010,7 +1012,9 @@ public class ScriptRunner {
                     continue;
                 case VISIBLE:
                 case EDITABLE: {
-                    vars.add(new VarDefinition(varDefinition.getName(), varDefinition.getDisplay(), getVar(varDefinition.getName()).toString(), varDefinition.getType(), varDefinition.getDisplayType(), varDefinition.getModify(), varDefinition.getOrder(), varDefinition.isSkipSave(), varDefinition.getTierId()));
+                    final VarDefinition copy = new VarDefinition(varDefinition);
+                    copy.setValue(getVar(varDefinition.getName()).toString());
+                    vars.add(copy);
                 }
                 break;
             }

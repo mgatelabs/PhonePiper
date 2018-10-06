@@ -84,8 +84,6 @@ public class ScriptRunner {
     private DeviceDefinition deviceDefinition;
     private ViewDefinition viewDefinition;
 
-    private ComponentDefinition energyBar;
-
     private Map<String, ScreenDefinition> screens;
     private Map<String, ComponentDefinition> components;
 
@@ -175,21 +173,15 @@ public class ScriptRunner {
             components.put(componentDefinition.getComponentId(), componentDefinition);
         }
 
-        energyBar = components.get("menu-energy_bar");
-        if (energyBar == null) {
-            logger.log(Level.SEVERE, "Cannot find required component id: " + "menu-energy_bar");
-            throw new RuntimeException("Cannot find required component id: " + "menu-energy_bar");
-        }
-
         logger.finer("Generating State Info");
 
         transferStateMap = Maps.newHashMap();
         transferStateMap.putAll(generateStateInfo());
 
         transferMap = new MapTransfer();
-        ComponentDefinition miniMapArea = components.get("dungeon-mini_map-area");
-        ComponentDefinition miniMapAreaCenter = components.get("dungeon-mini_map-center");
-        transferMap.setup(deviceDefinition.getWidth(), 12, 4, miniMapArea.getW(), miniMapArea.getH(), miniMapArea.getX(), miniMapArea.getY(), miniMapAreaCenter.getW(), miniMapAreaCenter.getH());
+        //ComponentDefinition miniMapArea = components.get("dungeon-mini_map-area");
+        //ComponentDefinition miniMapAreaCenter = components.get("dungeon-mini_map-center");
+        //transferMap.setup(deviceDefinition.getWidth(), 12, 4, miniMapArea.getW(), miniMapArea.getH(), miniMapArea.getX(), miniMapArea.getY(), miniMapAreaCenter.getW(), miniMapAreaCenter.getH());
 
         validScreenIds = null;
 

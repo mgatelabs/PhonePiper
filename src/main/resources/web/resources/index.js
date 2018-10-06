@@ -222,10 +222,10 @@ $(function(){
                 if (data.variables.length > 0) {
                     for (i = 0; i < data.variables.length; i++) {
                         item = data.variables[i];
-                        linkedVariables[item.name].val(formatVariable(item));
+                        if (linkedVariables[item.name])
+                            linkedVariables[item.name].val(formatVariable(item));
                     }
                 }
-
             }
         });
     }
@@ -399,7 +399,7 @@ $(function(){
             if (result.status == 'OK') {
                 states.empty();
                 components.empty();
-                var i, item, grp, label, input, button, def;
+                var i, valueLoop, item, grp, label, input, button, def;
                 for (i = 0; i < result.states.length; i++) {
                 states.append($('<option></option>').attr('value', result.states[i].value).text(result.states[i].name).attr('description', result.states[i].description));
                 }
@@ -426,7 +426,7 @@ $(function(){
                 if (result.variables.length > 0) {
                     variableForm.show();
 
-                    var row;
+                    var row, gen;
 
                     for (i = 0; i < result.variables.length; i++) {
                         item = result.variables[i];
@@ -443,9 +443,15 @@ $(function(){
 
                         $('<div class="input-group-prepend"></div>').append($('<span class="input-group-text" id=""></span>').text(item.display)).appendTo(grp);
 
-                        if (item.displayType == 'BOOLEAN') {
-                            linkedVariables[item.name] = $('<select class="form-control notWhileRunning"><option value="0">False</option><option value="1">True</option></select>')
-                        } else {
+                        if (item.values && item.values.length > 0) {
+                            gen = $('<select class="form-control notWhileRunning"></select>');
+                            for (valueLoop = 0; valueLoop < item.values.length; valueLoop++) {
+                                gen.append($('<option></option>').text(item.values[valueLoop].name).attr('value', item.values[valueLoop].value));
+                            }
+                            linkedVariables[item.name] = gen;
+                        } else if (item.displayType == 'BOOLEAN') {
+                           linkedVariables[item.name] = $('<select class="form-control notWhileRunning"><option value="0">False</option><option value="1">True</option></select>')
+                       } else {
                             linkedVariables[item.name] = $('<input type="text" class="form-control notWhileRunning"/>');
                         }
 

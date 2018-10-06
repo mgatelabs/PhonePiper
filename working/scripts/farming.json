@@ -39,12 +39,52 @@
     },
     {
       "name": "menu-item",
-      "display": "Menu Index",
+      "display": "Menu Item",
       "value": "1",
       "type": "INT",
       "modify": "EDITABLE",
       "order": 20,
-      "tierId": "farm"
+      "tierId": "farm",
+      "values": [
+        {"name": "One (Top)", "value": "0"},
+        {"name": "Two", "value": "1"},
+        {"name": "Three", "value": "2"},
+        {"name": "Four", "value": "3"}
+      ]
+    },
+    {
+      "name" : "farm-party-index",
+      "display" : "Farm Party",
+      "value" : "1",
+      "type" : "INT",
+      "modify" : "EDITABLE",
+      "displayType" : "STANDARD",
+      "order" : 0,
+      "tierId": "farm",
+      "values": [
+        {"name": "One (Left)", "value": "0"},
+        {"name": "Two", "value": "1"},
+        {"name": "Three", "value": "2"},
+        {"name": "Four", "value": "3"},
+        {"name": "Five (Right)", "value": "4"}
+      ]
+    },
+    {
+      "name" : "raid-party-index",
+      "display" : "Raid Party",
+      "value" : "0",
+      "type" : "INT",
+      "modify" : "EDITABLE",
+      "displayType" : "STANDARD",
+      "order" : 0,
+      "tierId": "raid",
+      "values": [
+        {"name": "One (Left)", "value": "0"},
+        {"name": "Two", "value": "1"},
+        {"name": "Three", "value": "2"},
+        {"name": "Four", "value": "3"},
+        {"name": "Five (Right)", "value": "4"}
+      ]
     },
     {
       "name": "farm-timer",
@@ -75,12 +115,31 @@
     },
     {
       "name": "vortex-item",
-      "display": "Vortex Index",
+      "display": "Vortex Item",
       "value": "0",
       "type": "INT",
       "modify": "EDITABLE",
       "order": 20,
-      "tierId": "raid"
+      "tierId": "raid",
+      "values": [
+        {"name": "One (Top)", "value": "0"},
+        {"name": "Two", "value": "1"},
+        {"name": "Three", "value": "2"}
+      ]
+    },
+    {
+      "name": "raid-menu-item",
+      "display": "Menu Item",
+      "value": "0",
+      "type": "INT",
+      "modify": "EDITABLE",
+      "order": 21,
+      "tierId": "raid",
+      "values": [
+        {"name": "One (Usually Elt)", "value": "0"},
+        {"name": "Two (Usually Pro)", "value": "1"},
+        {"name": "Three (Usually Adv)", "value": "2"}
+      ]
     },
     {
       "name": "allow-raid",
@@ -90,7 +149,11 @@
       "modify": "EDITABLE",
       "displayType": "BOOLEAN",
       "order": 10,
-      "tierId": "enable"
+      "tierId": "enable",
+      "values": [
+        {"name": "Enabled", "value": "1"},
+        {"name": "Disabled", "value": "0"}
+      ]
     },
     {
       "name": "alt-raid",
@@ -100,7 +163,11 @@
       "modify": "EDITABLE",
       "displayType": "BOOLEAN",
       "order": 10,
-      "tierId": "raid"
+      "tierId": "raid",
+      "values": [
+        {"name": "Enabled", "value": "1"},
+        {"name": "Disabled", "value": "0"}
+      ]
     },
     {
       "name": "allow-farm",
@@ -110,7 +177,11 @@
       "modify": "EDITABLE",
       "displayType": "BOOLEAN",
       "order": 10,
-      "tierId": "enable"
+      "tierId": "enable",
+      "values": [
+        {"name": "Enabled", "value": "1"},
+        {"name": "Disabled", "value": "0"}
+      ]
     },
     {
       "name": "allow-arena",
@@ -120,7 +191,11 @@
       "modify": "EDITABLE",
       "displayType": "BOOLEAN",
       "order": 10,
-      "tierId": "enable"
+      "tierId": "enable",
+      "values": [
+        {"name": "Enabled", "value": "1"},
+        {"name": "Disabled", "value": "0"}
+      ]
     },
     {
       "name": "refresh-farm",
@@ -149,7 +224,14 @@
       "modify" : "EDITABLE",
       "displayType" : "STANDARD",
       "order" : 0,
-      "tierId": "arena"
+      "tierId": "arena",
+      "values": [
+        {"name": "One (Left)", "value": "0"},
+        {"name": "Two", "value": "1"},
+        {"name": "Three", "value": "2"},
+        {"name": "Four", "value": "3"},
+        {"name": "Five (Right)", "value": "4"}
+      ]
     }, {
       "name" : "arena-party-defense-index",
       "display" : "Defense Index",
@@ -158,7 +240,14 @@
       "modify" : "EDITABLE",
       "displayType" : "STANDARD",
       "order" : 0,
-      "tierId": "arena"
+      "tierId": "arena",
+      "values": [
+        {"name": "One (Left)", "value": "0"},
+        {"name": "Two", "value": "1"},
+        {"name": "Three", "value": "2"},
+        {"name": "Four", "value": "3"},
+        {"name": "Five (Right)", "value": "4"}
+      ]
     }
   ],
   "varTiers": [
@@ -191,15 +280,24 @@
 
     "main": {
       "name": "Main - Farming Switcher",
+      "variables": {
+        "toState": {
+          "type": "STRING",
+          "value": "RAID"
+        }
+      },
       "includes": [
-        "_es-to_results",
-        "_es-to_menu",
-        "_es-to_battle",
-        "_es-from_home",
+        "_farm-to_results",
+        "_farm-to_menu",
+        "_farm-to_battle",
+        "_any_can_move_farm",
+        "_any_can_move_raid",
+        "_any_can_move_arena",
+        "_home_daily_fixes",
         "_common-no_op"
       ]
     },
-    "menu": {
+    "farm-menu": {
       "name": "Farm - Menu",
       "includes": [
         "_common-screen_saver",
@@ -209,7 +307,7 @@
         "_common-ml-mission",
         "_farm-find_depart_team",
         "_common-ml-depart",
-        "_es-menu",
+        "_farm-menu",
         "_common-no_op"
       ],
       "statements": [
@@ -255,7 +353,7 @@
           "actions": [
             {
               "type": "INFO",
-              "value": "Refeshed Energy"
+              "value": "Refreshed Energy"
             },
             {
               "type": "ADD",
@@ -336,7 +434,7 @@
           "actions": [
             {
               "type": "INFO",
-              "value": "Time limit/energy hit, switching to Home screen"
+              "value": "Time limit and or energy limit hit, moving to Home"
             },
             {
               "type": "SET",
@@ -350,7 +448,23 @@
             },
             {
               "type": "MOVE",
-              "value": "farm_to_home"
+              "value": "any_to_home",
+              "args": { "toState": "RAID" },
+              "condition": {
+                "is": "EQUAL",
+                "value": "1",
+                "var": "allow-raid"
+              }
+            },
+            {
+              "type": "MOVE",
+              "value": "any_to_home",
+              "args": { "toState": "ARENA" },
+              "condition": {
+                "is": "EQUAL",
+                "value": "1",
+                "var": "allow-arena"
+              }
             }
           ]
         }
@@ -367,7 +481,7 @@
             "and": [
               {
                 "not": "SCREEN",
-                "value": "menu-depart-team_1"
+                "value": "menu-depart-team_${farm-party-index}"
               }
             ]
           },
@@ -378,7 +492,7 @@
             },
             {
               "type": "WAIT",
-              "value": "6000"
+              "value": "1500"
             },
             {
               "type": "REPEAT",
@@ -389,7 +503,7 @@
       ]
     },
 
-    "_es-menu": {
+    "_farm-menu": {
       "name": "Farm - Menu Ending Include",
       "statements": [
         {
@@ -462,7 +576,7 @@
         }
       ]
     },
-    "_es-to_results": {
+    "_farm-to_results": {
       "name": "Farm - To Results",
       "statements": [
         {
@@ -498,11 +612,11 @@
         "_common_mr-units",
         "_common_mr-items",
         "_common_mr-friend_request",
-        "_es-to_menu",
+        "_farm-to_menu",
         "_common-no_op"
       ]
     },
-    "_es-to_menu": {
+    "_farm-to_menu": {
       "name": "To Menu",
       "statements": [
         {
@@ -535,13 +649,13 @@
             },
             {
               "type": "MOVE",
-              "value": "menu"
+              "value": "farm-menu"
             }
           ]
         }
       ]
     },
-    "_es-to_battle": {
+    "_farm-to_battle": {
       "name": "To Battle",
       "statements": [
         {
@@ -572,7 +686,7 @@
         }
       ]
     },
-    "_es-from_home": {
+    "_is-at-home": {
       "name": "From Home",
       "statements": [
         {
@@ -763,11 +877,11 @@
           "actions": [
             {
               "type": "INFO",
-              "value": "Orb Available, Starting Mission 0 - ELT"
+              "value": "Orb Available, Starting Mission ${raid-menu-item}"
             },
             {
               "type": "TAP",
-              "value": "menu-raid_0"
+              "value": "menu-raid_${raid-menu-item}"
             },
             {
               "type": "SET",
@@ -776,7 +890,7 @@
             },
             {
               "type": "WAIT",
-              "value": "5000"
+              "value": "4500"
             },
             {
               "type": "REPEAT",
@@ -803,7 +917,8 @@
             { "type": "CALL", "value": "@keepAlive" },
             {
               "type": "MOVE",
-              "value": "raid_to_home"
+              "value": "any_to_home",
+              "args": { "toState": "ARENA" }
             }
           ]
         }
@@ -819,7 +934,7 @@
             "and": [
               {
                 "not": "SCREEN",
-                "value": "menu-depart-team_0"
+                "value": "menu-depart-team_${raid-party-index}"
               }
             ]
           },
@@ -1178,7 +1293,10 @@
             },
             {
               "type": "MOVE",
-              "value": "raid_to_home"
+              "value": "any_to_home",
+              "args": {
+                "toState": "ARENA"
+              }
             }
           ]
         }
@@ -1239,15 +1357,11 @@
       "name"       : "Home - To Farm",
       "includes"   : [
         "_home_daily_fixes",
-        "_es-to_menu",
+        "_farm-to_menu",
         "_common-no_op"
       ],
       "statements" : [
         {
-          "condition" : {
-            "is"    : "BOOLEAN",
-            "value" : "true"
-          },
           "actions"   : [
             {
               "type"  : "MOVE",
@@ -1262,7 +1376,7 @@
       "name": "Home - To Earthshrine",
       "includes": [
         "_home_daily_fixes",
-        "_es-to_menu",
+        "_farm-to_menu",
         "_common-no_op"
       ],
       "statements": [
@@ -1471,18 +1585,38 @@
             },
             {
               "type": "MOVE",
-              "value": "menu"
+              "value": "farm-menu"
             }
           ]
         }
       ]
     },
-    "farm_to_home": {
-      "name": "Farm - To Home",
+
+    "any_to_home": {
+      "name": "Any - To/From Home Screen Router",
       "includes": [
+        "_any_can_move_farm",
+        "_any_can_move_raid",
+        "_any_can_move_arena",
         "_home_daily_fixes",
         "_backup_to_home"
       ],
+      "variables": {
+        "toState": {
+          "value": "FARM",
+          "type": "STRING"
+        }
+      }
+    },
+
+    "_any_can_move_raid": {
+      "name": "Any - Home Can Goto Raid Screen?",
+      "variables": {
+        "toState": {
+          "value": "RAID",
+          "type": "STRING"
+        }
+      },
       "statements": [
         {
           "condition": {
@@ -1490,95 +1624,52 @@
             "value": "menu-home",
             "and": [
               {
+                "is": "EQUAL",
+                "value": "RAID",
+                "var": "toState"
+              }
+            ]
+          },
+          "actions": [
+            {
+              "type": "SET",
+              "var": "setup",
+              "value": "0"
+            },
+            {
+              "type": "SET",
+              "value": "0",
+              "var": "_screen_saver"
+            },
+            {
+              "type": "MOVE",
+              "value": "home_to_raid",
+              "condition": {
                 "is": "EQUAL",
                 "value": "1",
                 "var": "allow-raid"
               }
-            ]
-          },
-          "actions": [
-            {
-              "type": "SET",
-              "var": "setup",
-              "value": "0"
             },
             {
               "type": "SET",
-              "value": "0",
-              "var": "_screen_saver"
+              "value": "ARENA",
+              "var": "toState"
             },
             {
-              "type": "MOVE",
-              "value": "home_to_raid"
-            }
-          ]
-        },
-        {
-          "condition": {
-            "is": "SCREEN",
-            "value": "menu-home",
-            "and": [
-              {
-                "is": "EQUAL",
-                "value": "1",
-                "var": "allow-arena"
-              }
-            ]
-          },
-          "actions": [
-            {
-              "type": "SET",
-              "var": "setup",
-              "value": "0"
-            },
-            {
-              "type": "SET",
-              "value": "0",
-              "var": "_screen_saver"
-            },
-            {
-              "type": "MOVE",
-              "value": "home_to_arena"
-            }
-          ]
-        },
-        {
-          "condition": {
-            "is": "SCREEN",
-            "value": "menu-home",
-            "and": [
-              {
-                "is": "EQUAL",
-                "value": "1",
-                "var": "allow-farm"
-              }
-            ]
-          },
-          "actions": [
-            {
-              "type": "SET",
-              "var": "setup",
-              "value": "0"
-            },
-            {
-              "type": "SET",
-              "value": "0",
-              "var": "_screen_saver"
-            },
-            {
-              "type": "MOVE",
-              "value": "home_to_farm"
+              "type": "REPEAT"
             }
           ]
         }
       ]
     },
-    "raid_to_home": {
-      "name": "Raid - To Home",
-      "includes": [
-        "_home_daily_fixes",
-        "_backup_to_home"
-      ],
+    "_any_can_move_arena": {
+      "name": "Any - Home Can Goto Arena Screen?",
+      "variables": {
+        "toState": {
+          "value": "ARENA",
+          "type": "STRING"
+        }
+      },
       "statements": [
         {
           "condition": {
@@ -1587,94 +1678,51 @@
             "and": [
               {
                 "is": "EQUAL",
+                "value": "ARENA",
+                "var": "toState"
+              }
+            ]
+          },
+          "actions": [
+            {
+              "type": "SET",
+              "var": "setup",
+              "value": "0"
+            },
+            {
+              "type": "SET",
+              "value": "0",
+              "var": "_screen_saver"
+            },
+            {
+              "type": "MOVE",
+              "value": "home_to_arena",
+              "condition": {
+                "is": "EQUAL",
                 "value": "1",
                 "var": "allow-arena"
               }
-            ]
-          },
-          "actions": [
-            {
-              "type": "SET",
-              "var": "setup",
-              "value": "0"
             },
             {
               "type": "SET",
-              "value": "0",
-              "var": "_screen_saver"
+              "value": "FARM",
+              "var": "toState"
             },
             {
-              "type": "MOVE",
-              "value": "home_to_arena"
-            }
-          ]
-        },
-        {
-          "condition": {
-            "is": "SCREEN",
-            "value": "menu-home",
-            "and": [
-              {
-                "is": "EQUAL",
-                "value": "1",
-                "var": "allow-farm"
-              }
-            ]
-          },
-          "actions": [
-            {
-              "type": "SET",
-              "var": "setup",
-              "value": "0"
-            },
-            {
-              "type": "SET",
-              "value": "0",
-              "var": "_screen_saver"
-            },
-            {
-              "type": "MOVE",
-              "value": "home_to_farm"
-            }
-          ]
-        },
-        {
-          "condition": {
-            "is": "SCREEN",
-            "value": "menu-home",
-            "and": [
-              {
-                "is": "EQUAL",
-                "value": "1",
-                "var": "allow-raid"
-              }
-            ]
-          },
-          "actions": [
-            {
-              "type": "SET",
-              "var": "setup",
-              "value": "0"
-            },
-            {
-              "type": "SET",
-              "value": "0",
-              "var": "_screen_saver"
-            },
-            {
-              "type": "MOVE",
-              "value": "home_to_raid"
+              "type": "REPEAT"
             }
           ]
         }
       ]
     },
-    "arena_to_home": {
-      "name": "Arena - To Home",
-      "includes": [
-        "_home_daily_fixes",
-        "_backup_to_home"
-      ],
+    "_any_can_move_farm": {
+      "name": "Any - Home Can Goto Farm Screen?",
+      "variables": {
+        "toState": {
+          "value": "FARM",
+          "type": "STRING"
+        }
+      },
       "statements": [
         {
           "condition": {
@@ -1682,9 +1730,9 @@
             "value": "menu-home",
             "and": [
               {
-                "is":"EQUAL",
-                "var": "allow-farm",
-                "value": "1"
+                "is": "EQUAL",
+                "value": "FARM",
+                "var": "toState"
               }
             ]
           },
@@ -1701,70 +1749,27 @@
             },
             {
               "type": "MOVE",
-              "value": "home_to_farm"
-            }
-          ]
-        },{
-          "condition": {
-            "is": "SCREEN",
-            "value": "menu-home",
-            "and": [
-              {
-                "is":"EQUAL",
-                "var": "allow-raid",
-                "value": "1"
+              "value": "home_to_farm",
+              "condition": {
+                "is": "EQUAL",
+                "value": "1",
+                "var": "allow-farm"
               }
-            ]
-          },
-          "actions": [
-            {
-              "type": "SET",
-              "var": "setup",
-              "value": "0"
             },
             {
               "type": "SET",
-              "value": "0",
-              "var": "_screen_saver"
+              "value": "RAID",
+              "var": "toState"
             },
             {
-              "type": "MOVE",
-              "value": "home_to_raid"
-            }
-          ]
-        },{
-          "condition": {
-            "is": "SCREEN",
-            "value": "menu-home",
-            "and": [
-              {
-                "is":"EQUAL",
-                "var": "allow-arena",
-                "value": "1"
-              }
-            ]
-          },
-          "actions": [
-            {
-              "type": "SET",
-              "var": "setup",
-              "value": "0"
-            },
-            {
-              "type": "SET",
-              "value": "0",
-              "var": "_screen_saver"
-            },
-            {
-              "type": "MOVE",
-              "value": "home_to_arena"
+              "type": "REPEAT"
             }
           ]
         }
       ]
     },
     "_backup_to_home": {
-      "name": "Backup to Home",
+      "name": "Include - Backup to Home Screen",
       "statements": [
         {
           "condition": {
@@ -1793,7 +1798,7 @@
             },
             {
               "type": "WAIT",
-              "value": "5000"
+              "value": "2500"
             },
             {
               "type": "REPEAT",
@@ -2019,7 +2024,8 @@
             },
             {
               "type": "MOVE",
-              "value": "arena_to_home"
+              "value": "any_to_home",
+              "args": {"toState": "FARM"}
             }
           ]
         }

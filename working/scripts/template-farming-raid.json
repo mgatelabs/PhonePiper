@@ -87,8 +87,8 @@
               "type": "CALL",
               "value": "@selectUnitAction",
               "args": {
-                "row": "8",
-                "column": "0"
+                "row": "7",
+                "column": "1"
               }
             },
             {
@@ -145,8 +145,8 @@
               "type": "CALL",
               "value": "@selectUnitAction",
               "args": {
-                "row": "8",
-                "column": "1"
+                "row": "6",
+                "column": "0"
               }
             },
             {
@@ -190,108 +190,6 @@
               "value": "@showUnitActions",
               "args": {
                 "index": "2"
-              }
-            },
-            {
-              "type": "CALL",
-              "value": "@selectUnitAction",
-              "args": {
-                "row": "5",
-                "column": "1"
-              }
-            },
-            {
-              "type": "WAIT",
-              "value": "800"
-            },
-            {
-              "type": "REPEAT",
-              "value": ""
-            }
-          ]
-        },
-        {
-          "condition": {
-            "is": "CALL",
-            "value": "@isBattleReady",
-            "and": [
-              {
-                "is": "CALL",
-                "value": "@isUnitReady",
-                "args": {
-                  "index": "3"
-                }
-              },
-              {
-                "is": "CALL",
-                "value": "@isUnitAtkReady",
-                "args": {
-                  "index": "3"
-                }
-              }
-            ]
-          },
-          "actions": [
-            {
-              "type": "INFO",
-              "value": "Olive"
-            },
-            {
-              "type": "CALL",
-              "value": "@showUnitActions",
-              "args": {
-                "index": "3"
-              }
-            },
-            {
-              "type": "CALL",
-              "value": "@selectUnitAction",
-              "args": {
-                "row": "8",
-                "column": "0"
-              }
-            },
-            {
-              "type": "WAIT",
-              "value": "800"
-            },
-            {
-              "type": "REPEAT",
-              "value": ""
-            }
-          ]
-        },
-        {
-          "condition": {
-            "is": "CALL",
-            "value": "@isBattleReady",
-            "and": [
-              {
-                "is": "CALL",
-                "value": "@isUnitReady",
-                "args": {
-                  "index": "4"
-                }
-              },
-              {
-                "is": "CALL",
-                "value": "@isUnitAtkReady",
-                "args": {
-                  "index": "4"
-                }
-              }
-            ]
-          },
-          "actions": [
-            {
-              "type": "INFO",
-              "value": "Adam"
-            },
-            {
-              "type": "CALL",
-              "value": "@showUnitActions",
-              "args": {
-                "index": "4"
               }
             },
             {

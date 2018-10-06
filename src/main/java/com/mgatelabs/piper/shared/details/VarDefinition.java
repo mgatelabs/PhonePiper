@@ -2,6 +2,8 @@ package com.mgatelabs.piper.shared.details;
 
 import org.apache.commons.lang3.StringUtils;
 
+import java.util.List;
+
 /**
  * Created by @mgatelabs (Michael Fuller) on 9/23/2017 for Phone-Piper
  */
@@ -16,21 +18,23 @@ public class VarDefinition {
     private VarDisplay displayType;
     private int order;
     private boolean skipSave;
+    private List<NameValuePair> values;
 
     public VarDefinition() {
         order = 99;
     }
 
-    public VarDefinition(final String name, final String display, final String value, final VarType type, final VarDisplay displayType, final VarModify modify, final int order, final boolean skipSave, final String tierId) {
-        this.name = name;
-        this.display = display;
-        this.value = value;
-        this.type = type;
-        this.modify = modify;
-        this.displayType = displayType;
-        this.order = order;
-        this.skipSave = skipSave;
-        this.tierId = StringUtils.isBlank(tierId) ? "*" : tierId;
+    public VarDefinition(VarDefinition source) {
+        this.name = source.name;
+        this.display = source.display;
+        this.value = source.value;
+        this.type = source.type;
+        this.modify = source.modify;
+        this.displayType = source.displayType;
+        this.order = source.order;
+        this.skipSave = source.skipSave;
+        this.tierId = StringUtils.isBlank(source.tierId) ? "*" : source.tierId;
+        this.values = source.values;
     }
 
     public String getName() {
@@ -104,6 +108,14 @@ public class VarDefinition {
 
     public void setTierId(String tierId) {
         this.tierId = tierId;
+    }
+
+    public List<NameValuePair> getValues() {
+        return values;
+    }
+
+    public void setValues(List<NameValuePair> values) {
+        this.values = values;
     }
 
     @Override

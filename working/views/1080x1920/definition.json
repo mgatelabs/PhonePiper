@@ -13942,6 +13942,86 @@
     "h" : 183,
     "enabled" : true
   }, {
+    "name" : "Battle - Unit - 0 - Life Bar",
+    "componentId" : "battle-unit-0-life_bar",
+    "x" : 73,
+    "y" : 1347,
+    "w" : 267,
+    "h" : 0,
+    "enabled" : true
+  }, {
+    "name" : "Battle - Unit - 0 - MP Bar",
+    "componentId" : "battle-unit-0-mp_bar",
+    "x" : 369,
+    "y" : 1347,
+    "w" : 136,
+    "h" : 0,
+    "enabled" : true
+  }, {
+    "name" : "Battle - Unit - 1 - Life Bar",
+    "componentId" : "battle-unit-1-life_bar",
+    "x" : 73,
+    "y" : 1541,
+    "w" : 264,
+    "h" : 0,
+    "enabled" : true
+  }, {
+    "name" : "Battle - Unit - 1 - MP Bar",
+    "componentId" : "battle-unit-1-mp_bar",
+    "x" : 366,
+    "y" : 1541,
+    "w" : 135,
+    "h" : 0,
+    "enabled" : true
+  }, {
+    "name" : "Battle - Unit - 2 - Life Bar",
+    "componentId" : "battle-unit-2-life_bar",
+    "x" : 73,
+    "y" : 1735,
+    "w" : 264,
+    "h" : 0,
+    "enabled" : true
+  }, {
+    "name" : "Battle - Unit - 2 - MP Bar",
+    "componentId" : "battle-unit-2-mp_bar",
+    "x" : 367,
+    "y" : 1735,
+    "w" : 134,
+    "h" : 0,
+    "enabled" : true
+  }, {
+    "name" : "Battle - Unit - 3 - Life Bar",
+    "componentId" : "battle-unit-3-life_bar",
+    "x" : 609,
+    "y" : 1347,
+    "w" : 263,
+    "h" : 0,
+    "enabled" : true
+  }, {
+    "name" : "Battle - Unit - 3 - MP Bar",
+    "componentId" : "battle-unit-3-mp_bar",
+    "x" : 901,
+    "y" : 1347,
+    "w" : 136,
+    "h" : 0,
+    "enabled" : true
+  }, {
+    "name" : "Battle - Unit - 4 - Life Bar",
+    "componentId" : "battle-unit-4-life_bar",
+    "x" : 609,
+    "y" : 1541,
+    "w" : 263,
+    "h" : 0,
+    "enabled" : true
+  }, {
+    "name" : "Battle - Unit - 4 - MP Bar",
+    "componentId" : "battle-unit-4-mp_bar",
+    "x" : 901,
+    "y" : 1541,
+    "w" : 135,
+    "h" : 0,
+    "enabled" : true
+  }, {
     "name" : "Battle - Unit 0",
     "componentId" : "battle-unit_0",
     "x" : 35,

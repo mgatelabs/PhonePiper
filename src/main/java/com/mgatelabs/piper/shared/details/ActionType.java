@@ -30,6 +30,7 @@ public enum ActionType {
     EVENT(ActionValueType.EVENT_ID, false, true, true, false), // GENERAL EVENT
     MATH(ActionValueType.MATH, true, true, true, true), // GENERAL EVENT
     CALL(ActionValueType.CALL_ID, false, true, true, true), // GENERAL EVENT
+    RANDOM(ActionValueType.NONE, true, true, true, true), // RANDOM
     INPUT(ActionValueType.INPUT_ID, false, true, true, false); // GENERIC INPUT
 
     private final ActionValueType valueType;

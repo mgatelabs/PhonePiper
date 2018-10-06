@@ -1,0 +1,278 @@
+{
+  "states": {
+
+    "main": {
+      "name": "Feature Test",
+      "includes": [
+        "_variables",
+        "_math",
+        "_random",
+        "_end"
+      ],
+      "variables": {
+        "a": {"type": "INT", "value": "0"},
+        "b": {"type": "INT", "value": "0"}
+      },
+      "statements": [
+        {
+          "actions": [
+            {
+              "type": "INFO",
+              "value": "Starting Test"
+            }
+          ]
+        }
+      ]
+    },
+
+    "_variables": {
+      "name": "Variable Test",
+      "variables": {
+        "a": {"type": "INT", "value": "0"},
+        "b": {"type": "INT", "value": "0"}
+      },
+      "statements": [
+        {
+          "actions": [
+            {
+              "type": "INFO",
+              "value": "Variable Test"
+            },
+            {
+              "type": "SET",
+              "var": "a",
+              "value": "0"
+            },
+            {
+              "type": "SET",
+              "var": "b",
+              "value": "0"
+            },
+            {
+              "type": "SET",
+              "var": "a",
+              "value": "1"
+            },
+            {
+              "type": "INFO",
+              "value": "SET Command failed, expected 1, got ${a}",
+              "condition": {
+                "not":"EQUAL",
+                "var": "a",
+                "value":"1"
+              }
+            },
+            {
+              "type": "SET",
+              "var": "b",
+              "value": "${a}"
+            },
+            {
+              "type": "INFO",
+              "value": "SET Command with variable failed, expected 1, got ${b}",
+              "condition": {
+                "not":"EQUAL",
+                "var": "b",
+                "value":"1"
+              }
+            }
+
+          ]
+        }
+      ]
+    },
+
+    "_math": {
+      "name": "Math Test",
+      "variables": {
+        "a": {"type": "INT", "value": "0"},
+        "b": {"type": "INT", "value": "0"}
+      },
+      "statements": [
+        {
+          "actions": [
+            {
+              "type": "INFO",
+              "value": "Math Test"
+            },
+            {
+              "type": "SET",
+              "var": "a",
+              "value": "0"
+            },
+            {
+              "type": "SET",
+              "var": "b",
+              "value": "1"
+            },
+            {
+              "type": "MATH",
+              "var": "a",
+              "value": "1+1+1+1"
+            },
+            {
+              "type": "INFO",
+              "value": "MATH (1+1+1+1) Command failed, expected 4, got ${a}",
+              "condition": {
+                "not":"EQUAL",
+                "var": "a",
+                "value":"4"
+              }
+            },
+            {
+              "type": "MATH",
+              "var": "a",
+              "value": "1+1-1-1"
+            },
+            {
+              "type": "INFO",
+              "value": "MATH (1+1-1-1) Command failed, expected 0, got ${a}",
+              "condition": {
+                "not":"EQUAL",
+                "var": "a",
+                "value":"0"
+              }
+            },
+            {
+              "type": "MATH",
+              "var": "a",
+              "value": "1+1-1-1"
+            },
+            {
+              "type": "INFO",
+              "value": "MATH (-1-1+1+1) Command failed, expected 0, got ${a}",
+              "condition": {
+                "not":"EQUAL",
+                "var": "a",
+                "value":"0"
+              }
+            },
+            {
+              "type": "MATH",
+              "var": "a",
+              "value": "1+1*1+1"
+            },
+            {
+              "type": "INFO",
+              "value": "MATH (1+1*1+1) Command failed, expected 4, got ${a}",
+              "condition": {
+                "not":"EQUAL",
+                "var": "a",
+                "value":"4"
+              }
+            },
+            {
+              "type": "MATH",
+              "var": "a",
+              "value": "3*${b}"
+            },
+            {
+              "type": "INFO",
+              "value": "MATH (3*${b}) Command failed, expected 3, got ${a}",
+              "condition": {
+                "not":"EQUAL",
+                "var": "a",
+                "value":"3"
+              }
+            },
+            {
+              "type": "MATH",
+              "var": "a",
+              "value": "${a}/${a}"
+            },
+            {
+              "type": "INFO",
+              "value": "MATH (${a}/${a}) Command failed, expected 1, got ${a}",
+              "condition": {
+                "not":"EQUAL",
+                "var": "a",
+                "value":"1"
+              }
+            }
+
+          ]
+        }
+      ]
+    },
+
+    "_random": {
+      "name": "Random Test",
+      "variables": {
+        "a": {"type": "INT", "value": "0"},
+        "b": {"type": "INT", "value": "0"}
+      },
+      "statements": [
+        {
+          "actions": [
+            {
+              "type": "INFO",
+              "value": "Random Test"
+            },
+            {
+              "type": "RANDOM",
+              "var": "a",
+              "args": {
+                "min": "10",
+                "max": "20"
+              }
+            },
+            {
+              "type": "INFO",
+              "value": "RANDOM (10, 20) Command failed, got ${a}",
+              "condition": {
+                "not":"GREATER",
+                "var": "a",
+                "value":"10",
+                "and": [
+                  {
+                    "not":"LESS",
+                    "var": "a",
+                    "value":"20"
+                  }
+                ]
+              }
+            },
+            {
+              "type": "RANDOM",
+              "var": "a",
+              "args": {
+                "min": "10",
+                "max": "11"
+              }
+            },
+            {
+              "type": "INFO",
+              "value": "RANDOM (10, 11) Command failed, got ${a}",
+              "condition": {
+                "not":"EQUAL",
+                "var": "a",
+                "value":"10"
+              }
+            }
+          ]
+        }
+      ]
+    },
+
+    "_end": {
+      "name": "End of Test",
+      "variables": {
+
+      },
+      "statements": [
+        {
+          "actions": [
+            {
+              "type": "INFO",
+              "value": "Test Over"
+            },
+            {
+              "type": "STOP"
+            }
+          ]
+        }
+      ]
+    }
+
+  }
+}

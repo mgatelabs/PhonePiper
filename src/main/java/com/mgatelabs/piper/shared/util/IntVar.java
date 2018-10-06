@@ -9,6 +9,13 @@ import com.mgatelabs.piper.shared.details.VarType;
 public class IntVar implements Var {
 
     public static final IntVar ZERO = new IntVar(0);
+    public static final IntVar ONE = new IntVar(1);
+    public static final IntVar TWO = new IntVar(2);
+    public static final IntVar THREE = new IntVar(3);
+    public static final IntVar FOUR = new IntVar(4);
+    public static final IntVar FIVE = new IntVar(5);
+    public static final IntVar TEN = new IntVar(10);
+    public static final IntVar THOUSAND = new IntVar(1000);
 
     private final int data;
 

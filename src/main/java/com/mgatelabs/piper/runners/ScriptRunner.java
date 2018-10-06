@@ -6,7 +6,23 @@ import com.google.common.collect.ImmutableSet;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 import com.google.common.collect.Sets;
-import com.mgatelabs.piper.shared.details.*;
+import com.mgatelabs.piper.shared.details.ActionDefinition;
+import com.mgatelabs.piper.shared.details.ActionType;
+import com.mgatelabs.piper.shared.details.ComponentDefinition;
+import com.mgatelabs.piper.shared.details.ConditionDefinition;
+import com.mgatelabs.piper.shared.details.ConnectionDefinition;
+import com.mgatelabs.piper.shared.details.DeviceDefinition;
+import com.mgatelabs.piper.shared.details.ScreenDefinition;
+import com.mgatelabs.piper.shared.details.ScriptEnvironment;
+import com.mgatelabs.piper.shared.details.StateCallType;
+import com.mgatelabs.piper.shared.details.StateDefinition;
+import com.mgatelabs.piper.shared.details.StateResult;
+import com.mgatelabs.piper.shared.details.StatementDefinition;
+import com.mgatelabs.piper.shared.details.VarDefinition;
+import com.mgatelabs.piper.shared.details.VarDisplay;
+import com.mgatelabs.piper.shared.details.VarModify;
+import com.mgatelabs.piper.shared.details.VarTierDefinition;
+import com.mgatelabs.piper.shared.details.ViewDefinition;
 import com.mgatelabs.piper.shared.helper.DeviceHelper;
 import com.mgatelabs.piper.shared.helper.InfoTransfer;
 import com.mgatelabs.piper.shared.helper.MapTransfer;
@@ -27,8 +43,8 @@ import com.mgatelabs.piper.shared.util.VarInstance;
 import com.mgatelabs.piper.shared.util.VarManager;
 import com.mgatelabs.piper.shared.util.VarTimer;
 import org.apache.commons.lang3.StringUtils;
-import org.springframework.util.CollectionUtils;
 
+import java.security.SecureRandom;
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
 import java.text.SimpleDateFormat;
@@ -56,6 +72,8 @@ public class ScriptRunner {
         PAUSED,
         STOPPED
     }
+
+    private final SecureRandom SECURE_RANDOM = new SecureRandom();
 
     private static final Pattern SINGLE_VARIABLE = Pattern.compile("^\\$\\{[a-zA-Z0-9_-]+\\}$");
 
@@ -128,7 +146,7 @@ public class ScriptRunner {
         vars.global(varDefinitions);
 
         for (VarDefinition varDefinition : varDefinitions) {
-            if (varDefinition.getDisplayType() == VarDisplay.SECONDS  && varDefinition.getModify() != VarModify.EDITABLE) {
+            if (varDefinition.getDisplayType() == VarDisplay.SECONDS && varDefinition.getModify() != VarModify.EDITABLE) {
                 timers.put(varDefinition.getName(), new VarTimer(false));
             }
         }
@@ -734,6 +752,28 @@ public class ScriptRunner {
                                     logger.finest("MATH: " + expression + " = " + result.toString());
                                 }
                                 putVar(varName, result);
+                            }
+                            break;
+                            case RANDOM: {
+                                final String varName = actionDefinition.getVar();
+                                Var min = IntVar.ZERO;
+                                Var max = IntVar.THOUSAND;
+                                if (actionDefinition.getArguments().containsKey("min")) {
+                                    min = new StringVar(replaceTokens(actionDefinition.getArguments().get("min")));
+                                }
+                                if (actionDefinition.getArguments().containsKey("max")) {
+                                    max = new StringVar(replaceTokens(actionDefinition.getArguments().get("max")));
+                                }
+                                if (min.greater(max) || min.equals(max)) {
+                                    logger.log(Level.SEVERE, "Random needs a min and max that are different and min must be less than max");
+                                    throw new RuntimeException("Random needs a min and max that are different and min must be less than max");
+                                }
+                                int bound = max.toInt() - min.toInt();
+                                int newValue = SECURE_RANDOM.nextInt(bound);
+                                if (logger.isLoggable(Level.FINEST)) {
+                                    logger.finest("RANDOM(" + min.toString() + ", " + max.toString() + ") = " + (min.toInt() + newValue));
+                                }
+                                putVar(varName, new IntVar(min.toInt() + newValue));
                             }
                             break;
                             case TAP:

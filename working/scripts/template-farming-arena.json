@@ -53,6 +53,14 @@
         "hyoyAttempts": {
           "value": "0",
           "type": "INT"
+        },
+        "tt1Attempts": {
+          "value": "0",
+          "type": "INT"
+        },
+        "tt2Attempts": {
+          "value": "0",
+          "type": "INT"
         }
       },
       "statements": [
@@ -745,6 +753,7 @@
             "and": [
               { "is": "EQUAL", "value": "2", "var":"segment"},
               { "is": "EQUAL", "value": "1", "var":"turn"},
+              { "is": "EQUAL", "value": "0", "var":"tt1Attempts"},
               { "is": "CALL", "value": "@isUnitReady", "args": {"index": "1"} },
               { "is": "CALL", "value": "@unitHasMp", "args": {"index": "1"} },
               { "not": "CALL", "value": "@isUnitActionReady", "args": {"index": "1"} }
@@ -758,6 +767,11 @@
             {
               "type": "SET",
               "var": "modified",
+              "value": "1"
+            },
+            {
+              "type": "ADD",
+              "var": "tt1Attempts",
               "value": "1"
             },
             {
@@ -803,6 +817,7 @@
             "and": [
               { "is": "EQUAL", "value": "2", "var":"segment"},
               { "is": "EQUAL", "value": "1", "var":"turn"},
+              { "is": "EQUAL", "value": "0", "var":"tt2Attempts"},
               { "is": "CALL", "value": "@isUnitReady", "args": {"index": "4"} },
               { "is": "CALL", "value": "@unitHasMp", "args": {"index": "4"} },
               { "not": "CALL", "value": "@isUnitActionReady", "args": {"index": "4"} }
@@ -816,6 +831,11 @@
             {
               "type": "SET",
               "var": "modified",
+              "value": "1"
+            },
+            {
+              "type": "ADD",
+              "var": "tt2Attempts",
               "value": "1"
             },
             {
@@ -862,6 +882,7 @@
             "and": [
               { "is": "EQUAL", "value": "2", "var":"segment"},
               { "is": "GREATER", "value": "1", "var":"turn"},
+              { "is": "EQUAL", "value": "0", "var":"tt1Attempts"},
               { "is": "CALL", "value": "@isUnitReady", "args": {"index": "1"} },
               { "is": "CALL", "value": "@unitHasMp", "args": {"index": "1"} },
               { "not": "CALL", "value": "@isUnitActionReady", "args": {"index": "1"} }
@@ -875,6 +896,11 @@
             {
               "type": "SET",
               "var": "modified",
+              "value": "1"
+            },
+            {
+              "type": "ADD",
+              "var": "tt1Attempts",
               "value": "1"
             },
             {
@@ -911,6 +937,62 @@
             "and": [
               { "is": "EQUAL", "value": "2", "var":"segment"},
               { "is": "GREATER", "value": "1", "var":"turn"},
+              { "is": "EQUAL", "value": "1", "var":"tt1Attempts"},
+              { "is": "CALL", "value": "@isUnitReady", "args": {"index": "1"} },
+              { "is": "CALL", "value": "@unitHasMp", "args": {"index": "1"} },
+              { "not": "CALL", "value": "@isUnitActionReady", "args": {"index": "1"} }
+            ]
+          },
+          "actions": [
+            {
+              "type": "INFO",
+              "value": "Setting Up TT A (Turn 2+) (Fix)"
+            },
+            {
+              "type": "SET",
+              "var": "modified",
+              "value": "1"
+            },
+            {
+              "type": "ADD",
+              "var": "tt1Attempts",
+              "value": "1"
+            },
+            {
+              "type": "CALL",
+              "value": "@showUnitActions",
+              "args": {
+                "index": "1"
+              }
+            },
+            {
+              "type": "CALL",
+              "value": "@selectUnitAction",
+              "args": {
+                "row": "9",
+                "column": "0"
+              }
+            },
+            {
+              "type": "WAIT",
+              "value": "1000"
+            },
+            {
+              "type": "REPEAT",
+              "value": ""
+            }
+          ]
+        },
+
+
+        {
+          "condition": {
+            "is": "CALL",
+            "value": "@isBattleReady",
+            "and": [
+              { "is": "EQUAL", "value": "2", "var":"segment"},
+              { "is": "GREATER", "value": "1", "var":"turn"},
+              { "is": "EQUAL", "value": "0", "var":"tt2Attempts"},
               { "is": "CALL", "value": "@isUnitReady", "args": {"index": "4"} },
               { "is": "CALL", "value": "@unitHasMp", "args": {"index": "4"} },
               { "not": "CALL", "value": "@isUnitActionReady", "args": {"index": "4"} }
@@ -924,6 +1006,11 @@
             {
               "type": "SET",
               "var": "modified",
+              "value": "1"
+            },
+            {
+              "type": "ADD",
+              "var": "tt2Attempts",
               "value": "1"
             },
             {
@@ -1254,6 +1341,16 @@
             {
               "type": "SET",
               "var": "hyoyAttempts",
+              "value": "0"
+            },
+            {
+              "type": "SET",
+              "var": "tt1Attempts",
+              "value": "0"
+            },
+            {
+              "type": "SET",
+              "var": "tt2Attempts",
               "value": "0"
             },
             {

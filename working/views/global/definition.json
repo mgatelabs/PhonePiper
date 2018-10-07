@@ -616,6 +616,11 @@
     "points" : [ ],
     "enabled" : false
   }, {
+    "name" : "menu-world-grandshelt_isles-earthshrine",
+    "screenId" : "menu-world-grandshelt_isles-earthshrine",
+    "points" : [ ],
+    "enabled" : false
+  }, {
     "name" : "Menu - World - Lapis",
     "screenId" : "menu-world-lapis",
     "points" : [ ],
@@ -1308,6 +1313,14 @@
   }, {
     "name" : "Menu - Location Earthshrine",
     "componentId" : "menu-location-earthshrine",
+    "x" : 0,
+    "y" : 0,
+    "w" : 1,
+    "h" : 1,
+    "enabled" : false
+  }, {
+    "name" : "menu-location-earthshrine-default",
+    "componentId" : "menu-location-earthshrine-default",
     "x" : 0,
     "y" : 0,
     "w" : 1,

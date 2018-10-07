@@ -12423,6 +12423,71 @@
     } ],
     "enabled" : true
   }, {
+    "name" : "menu-world-grandshelt_isles-earthshrine",
+    "screenId" : "menu-world-grandshelt_isles-earthshrine",
+    "points" : [ {
+      "x" : 342,
+      "y" : 1053,
+      "r" : 39,
+      "g" : 1,
+      "b" : 2
+    }, {
+      "x" : 342,
+      "y" : 1088,
+      "r" : 40,
+      "g" : 2,
+      "b" : 2
+    }, {
+      "x" : 736,
+      "y" : 1053,
+      "r" : 44,
+      "g" : 4,
+      "b" : 3
+    }, {
+      "x" : 737,
+      "y" : 1088,
+      "r" : 39,
+      "g" : 1,
+      "b" : 2
+    }, {
+      "x" : 614,
+      "y" : 1006,
+      "r" : 58,
+      "g" : 161,
+      "b" : 79
+    }, {
+      "x" : 466,
+      "y" : 993,
+      "r" : 46,
+      "g" : 166,
+      "b" : 92
+    }, {
+      "x" : 470,
+      "y" : 944,
+      "r" : 137,
+      "g" : 83,
+      "b" : 47
+    }, {
+      "x" : 551,
+      "y" : 898,
+      "r" : 135,
+      "g" : 104,
+      "b" : 63
+    }, {
+      "x" : 617,
+      "y" : 936,
+      "r" : 105,
+      "g" : 65,
+      "b" : 38
+    }, {
+      "x" : 535,
+      "y" : 971,
+      "r" : 1,
+      "g" : 1,
+      "b" : 1
+    } ],
+    "enabled" : true
+  }, {
     "name" : "menu-world-lapis",
     "screenId" : "menu-world-lapis",
     "points" : [ {
@@ -14478,6 +14543,14 @@
     "y" : 1406,
     "w" : 52,
     "h" : 52,
+    "enabled" : true
+  }, {
+    "name" : "menu-location-earthshrine-default",
+    "componentId" : "menu-location-earthshrine-default",
+    "x" : 484,
+    "y" : 942,
+    "w" : 107,
+    "h" : 82,
     "enabled" : true
   }, {
     "name" : "menu-log_in_again-ok",

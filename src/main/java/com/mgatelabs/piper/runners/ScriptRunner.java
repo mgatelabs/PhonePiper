@@ -648,7 +648,7 @@ public class ScriptRunner {
                                 logger.info("MSG: " + msg);
                             }
                             break;
-                            case FINE: {
+                            case FINER: {
                                 String msg = replaceTokens(actionDefinition.getValue());
                                 logger.finer("MSG: " + msg);
                             }

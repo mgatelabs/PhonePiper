@@ -10,6 +10,7 @@ import java.util.List;
 public class VarDefinition {
 
     private String name;
+    private String description;
     private String tierId;
     private String display;
     private String value;
@@ -26,6 +27,7 @@ public class VarDefinition {
 
     public VarDefinition(VarDefinition source) {
         this.name = source.name;
+        this.description = source.description;
         this.display = source.display;
         this.value = source.value;
         this.type = source.type;
@@ -43,6 +45,14 @@ public class VarDefinition {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
     }
 
     public String getDisplay() {

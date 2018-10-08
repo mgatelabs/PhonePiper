@@ -1,3 +1,4 @@
+//@formatter:off
 {
   "vars": [
     {
@@ -17,7 +18,8 @@
       "type": "INT",
       "modify": "VISIBLE",
       "order": 5,
-      "tierId": "stats"
+      "tierId": "stats",
+      "description": "How many TMR runs have been accomplished"
     },
     {
       "name": "raid_runs",
@@ -26,7 +28,8 @@
       "type": "INT",
       "modify": "VISIBLE",
       "order": 5,
-      "tierId": "stats"
+      "tierId": "stats",
+      "description": "How many RAID runs have been accomplished"
     },
     {
       "name": "arena_runs",
@@ -35,7 +38,8 @@
       "type": "INT",
       "modify": "VISIBLE",
       "order": 5,
-      "tierId": "stats"
+      "tierId": "stats",
+      "description": "How many ARENA runs have been accomplished"
     },
     {
       "name": "menu-item",
@@ -50,7 +54,8 @@
         {"name": "Two", "value": "1"},
         {"name": "Three", "value": "2"},
         {"name": "Four", "value": "3"}
-      ]
+      ],
+      "description": "Which menu item do you wish to farm.  Typically the first item is a Exploration so you would want two or three."
     },
     {
       "name" : "farm-party-index",
@@ -67,7 +72,8 @@
         {"name": "Three", "value": "2"},
         {"name": "Four", "value": "3"},
         {"name": "Five (Right)", "value": "4"}
-      ]
+      ],
+      "description": "Which unit group do you TMR farm with?"
     },
     {
       "name" : "raid-party-index",
@@ -84,7 +90,8 @@
         {"name": "Three", "value": "2"},
         {"name": "Four", "value": "3"},
         {"name": "Five (Right)", "value": "4"}
-      ]
+      ],
+      "description": "Which unit group do you RAID with?"
     },
     {
       "name": "farm-timer",
@@ -93,7 +100,8 @@
       "type": "INT",
       "modify": "EDITABLE",
       "displayType": "SECONDS",
-      "tierId": "farm"
+      "tierId": "farm",
+      "description": "When elapsed time is is greater then this value, farming will stop and another operation will take place."
     },
     {
       "name": "min-energy",
@@ -102,7 +110,8 @@
       "type": "INT",
       "modify":"EDITABLE",
       "order": 20,
-      "tierId": "farm"
+      "tierId": "farm",
+      "description": "TMR farming will stop when this energy level is hit."
     },
     {
       "name": "player-level",
@@ -111,7 +120,8 @@
       "type": "INT",
       "modify":"EDITABLE",
       "order": 20,
-      "tierId": "farm"
+      "tierId": "farm",
+      "description": "What is your player level?  We need to to calculate your available energy reserve."
     },
     {
       "name": "vortex-item",
@@ -125,7 +135,8 @@
         {"name": "One (Top)", "value": "0"},
         {"name": "Two", "value": "1"},
         {"name": "Three", "value": "2"}
-      ]
+      ],
+      "description": "Which vortex item is the raid?"
     },
     {
       "name": "raid-menu-item",
@@ -139,7 +150,8 @@
         {"name": "One (Usually Elt)", "value": "0"},
         {"name": "Two (Usually Pro)", "value": "1"},
         {"name": "Three (Usually Adv)", "value": "2"}
-      ]
+      ],
+      "description": "Which raid menu item do you want to farm?"
     },
     {
       "name": "allow-raid",
@@ -153,7 +165,8 @@
       "values": [
         {"name": "Enabled", "value": "1"},
         {"name": "Disabled", "value": "0"}
-      ]
+      ],
+      "description": "Enable or disable Raiding"
     },
     {
       "name": "alt-raid",
@@ -167,7 +180,8 @@
       "values": [
         {"name": "Enabled", "value": "1"},
         {"name": "Disabled", "value": "0"}
-      ]
+      ],
+      "description": "Is the RAID available on the home banner?  If so enable this."
     },
     {
       "name": "allow-farm",
@@ -181,7 +195,8 @@
       "values": [
         {"name": "Enabled", "value": "1"},
         {"name": "Disabled", "value": "0"}
-      ]
+      ],
+      "description": "Enable / Disable TMR farming"
     },
     {
       "name": "allow-arena",
@@ -195,7 +210,8 @@
       "values": [
         {"name": "Enabled", "value": "1"},
         {"name": "Disabled", "value": "0"}
-      ]
+      ],
+      "description": "Enable / Disable ARENA"
     },
     {
       "name": "refresh-farm",
@@ -205,7 +221,8 @@
       "modify": "EDITABLE",
       "order": 20,
       "skipSave": "true",
-      "tierId": "refresh"
+      "tierId": "refresh",
+      "description": "How many times are you alright with refreshing your NRG?  When this is greater then 0, Transition Energy is ignored."
     },
     {
       "name": "refresh-raid",
@@ -215,7 +232,8 @@
       "modify": "EDITABLE",
       "order": 20,
       "skipSave": "true",
-      "tierId": "refresh"
+      "tierId": "refresh",
+      "description": "How many times are you alright with refreshing your RAID orbs?"
     }, {
       "name" : "arena-party-index",
       "display" : "Battle Index",

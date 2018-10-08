@@ -89,40 +89,44 @@ public class AdbUtils {
         }
     }
 
-    public static boolean event(final String eventId, final AdbShell shell, final boolean batch) {
+    public static boolean event(final String eventId, boolean raw, final AdbShell shell, final boolean batch) {
         final String cmd;
         final int event;
-        switch (eventId.toLowerCase()) {
-            case "power": {
-                event = 26;
+        if (raw) {
+            event = Integer.parseInt(eventId);
+        } else {
+            switch (eventId.toLowerCase()) {
+                case "power": {
+                    event = 26;
+                }
+                break;
+                case "sleep": {
+                    event = 223;
+                }
+                break;
+                case "camera": {
+                    event = 27;
+                }
+                break;
+                case "call": {
+                    event = 5;
+                }
+                break;
+                case "back": {
+                    event = 4;
+                }
+                break;
+                case "brighter": {
+                    event = 221;
+                }
+                break;
+                case "darker": {
+                    event = 220;
+                }
+                break;
+                default:
+                    return false;
             }
-            break;
-            case "sleep": {
-                event = 223;
-            }
-            break;
-            case "camera": {
-                event = 27;
-            }
-            break;
-            case "call": {
-                event = 5;
-            }
-            break;
-            case "back": {
-                event = 4;
-            }
-            break;
-            case "brighter": {
-                event = 221;
-            }
-            break;
-            case "darker": {
-                event = 220;
-            }
-            break;
-            default:
-                return false;
         }
         cmd = "input keyevent " + event;
         if (batch) {

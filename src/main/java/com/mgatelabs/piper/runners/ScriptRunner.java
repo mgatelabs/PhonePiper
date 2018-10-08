@@ -788,14 +788,14 @@ public class ScriptRunner {
                             break;
 
                             case EVENT: {
-                                if (!AdbUtils.event(actionDefinition.getValue(), shell, batchCmds || inBatch)) {
+                                if (!AdbUtils.event(actionDefinition.getValue(), false, shell, batchCmds || inBatch)) {
                                     logger.log(Level.SEVERE, "Unknown event id: " + actionDefinition.getValue());
                                     throw new RuntimeException("Unknown event id: " + actionDefinition.getValue());
                                 }
                             }
                             break;
                             case INPUT: {
-                                if (!AdbUtils.event(valueHandler(actionDefinition.getValue()).toString(), shell, batchCmds || inBatch)) {
+                                if (!AdbUtils.event(valueHandler(actionDefinition.getValue()).toString(), true, shell, batchCmds || inBatch)) {
                                     logger.log(Level.SEVERE, "Unknown event id: " + actionDefinition.getValue());
                                     throw new RuntimeException("Unknown event id: " + actionDefinition.getValue());
                                 }

@@ -21,7 +21,7 @@ public enum ActionType {
     MOVE(ActionValueType.STATE_ID, false, true, false, false), // Move to a new state
     WAIT(ActionValueType.INT, false, true, true, false), // Wait a few MS
     INFO(ActionValueType.STRING, false, true, true, true), // Show a info message
-    FINE(ActionValueType.STRING, false, true, true, true), // Show a fine message
+    FINER(ActionValueType.STRING, false, true, true, true), // Show a finer message
     FINEST(ActionValueType.STRING, false, true, true, true), // Show a finest message
     STOP(ActionValueType.NONE, false, true, true, true), // Stop execution
     SET(ActionValueType.INT, true, true, true, true), // Zero a variable

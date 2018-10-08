@@ -441,7 +441,7 @@ $(function(){
 
                         grp = $('<div class="input-group col-sm-12 col-md-6 col-lg-4" style="margin-bottom: 1em"></div>').appendTo(row);
 
-                        $('<div class="input-group-prepend"></div>').append($('<span class="input-group-text" id=""></span>').text(item.display)).appendTo(grp);
+                        $('<div class="input-group-prepend"></div>').append($('<span class="input-group-text" id=""></span>').text(item.display).attr('title', item.description || '')).appendTo(grp);
 
                         if (item.values && item.values.length > 0) {
                             gen = $('<select class="form-control notWhileRunning"></select>');

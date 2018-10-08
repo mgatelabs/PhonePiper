@@ -113,8 +113,8 @@ public class ActionDefinition {
             case INFO: {
                 return "Info Msg: " + value;
             }
-            case FINE: {
-                return "Fine Msg: " + value;
+            case FINER: {
+                return "Finer Msg: " + value;
             }
             case FINEST: {
                 return "Finest Msg: " + value;

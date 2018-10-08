@@ -149,19 +149,15 @@ public final class ScriptEnvironment {
         }
 
         private void buildStateDefinitions() {
-            for (ScriptDefinition scriptDefinition : scriptDefinitions) {
-                for (StateDefinition stateDefinition : scriptDefinition.getStates().values()) {
-                    TreeNode<StateDefinition> parentState = new TreeNode<StateDefinition>(stateDefinition);
-                    stateDefinition.buildStateDefinitionTree(parentState, ImmutableMap.copyOf(stateDefinitions), 0);
-                    stateDefinition.mergeStatementDefinitions();
-                }
+            for (StateDefinition stateDefinition : stateDefinitions.values()) {
+                TreeNode<StateDefinition> parentState = new TreeNode<StateDefinition>(stateDefinition);
+                stateDefinition.buildStateDefinitionTree(parentState, ImmutableMap.copyOf(stateDefinitions), 0);
+                stateDefinition.mergeStatementDefinitions();
             }
 
             System.out.println("StateDefinition tree:");
-            for (ScriptDefinition scriptDefinition : scriptDefinitions) {
-                for (StateDefinition stateDefinition : scriptDefinition.getStates().values()) {
-                    System.out.println(stateDefinition.getStateDefTree().printNodes());
-                }
+            for (StateDefinition stateDefinition : stateDefinitions.values()) {
+                System.out.println(stateDefinition.getStateDefTree().printNodes());
             }
         }
 

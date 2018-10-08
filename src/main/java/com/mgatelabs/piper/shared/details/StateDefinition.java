@@ -137,36 +137,38 @@ public class StateDefinition {
     }
 
     public void buildStateDefinitionTree(TreeNode<StateDefinition> parent, final ImmutableMap<String, StateDefinition> stateDefinitionMap, int counter) {
-      if (counter > 10) {
-        System.out.println("Tree has exceeded maximum number of depth: ");
-        System.out.println(parent.getRoot().printNodes());
-        return;
-      }
-      counter++;
-
-      setStateDefTree(parent);
-      for (String scriptId : getIncludes()) {
-        if (scriptId.trim().length() > 0) {
-          final TreeNode<StateDefinition> childNode = new TreeNode<StateDefinition>(parent);
-
-          StateDefinition stateDef = stateDefinitionMap.get(scriptId);
-          if (stateDef == null) {
-            childNode.setIdentifier(scriptId);
-            System.out.println("Could not find Script include: " + scriptId + " for states " + getId());
-            continue;
-          }
-
-          childNode.setData(stateDef);
-          stateDef.buildStateDefinitionTree(childNode, stateDefinitionMap, counter);
+        setStateDefTree(parent);
+        if (counter > 10) {
+            System.out.println("Tree has exceeded maximum number of depth: ");
+            System.out.println(parent.getRoot().printNodes());
+            return;
         }
-      }
+        counter++;
+
+        for (String scriptId : getIncludes()) {
+            if (scriptId.trim().length() > 0) {
+                final TreeNode<StateDefinition> childNode = new TreeNode<StateDefinition>(parent);
+
+                StateDefinition stateDef = stateDefinitionMap.get(scriptId);
+                if (stateDef == null) {
+                    childNode.setIdentifier(scriptId);
+                    System.out.println("Could not find Script include: " + scriptId + " for states " + getId());
+                    continue;
+                }
+
+                childNode.setData(stateDef);
+                stateDef.buildStateDefinitionTree(childNode, stateDefinitionMap, counter);
+            }
+        }
     }
 
     public void mergeStatementDefinitions() {
         for (TreeNode<StateDefinition> stateDefTreeNode : getStateDefTree().getChildren()) {
             StateDefinition stateDefinition = stateDefTreeNode.getData();
             stateDefinition.mergeStatementDefinitions();
-            stateDefTreeNode.getParent().getData().getStatements().addAll(stateDefinition.getStatements());
+            StateDefinition parentState = stateDefTreeNode.getParent().getData();
+            parentState.getStatements().addAll(stateDefinition.getStatements());
+            parentState.getVariables().putAll(stateDefinition.getVariables());
         }
     }
 

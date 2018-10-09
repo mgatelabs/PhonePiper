@@ -48,8 +48,8 @@ public class AdbShell {
         return commonHandler(new ProcessBuilder(ADB_PATH, "kill-server"));
     }
 
-    public static String connect(final String address) {
-        return commonHandler(new ProcessBuilder(ADB_PATH, "connect", address));
+    public static String connect(final String address, int port) {
+        return commonHandler(new ProcessBuilder(ADB_PATH, "connect", address + ":" + port));
     }
 
     public static String devices() {
@@ -87,7 +87,7 @@ public class AdbShell {
             String errorString = getStreamAsString(temp.getErrorStream());
 
 
-            return  normalString.replaceAll("\n", "|").replaceAll("\r", "") + errorString.replaceAll("\n", "|").replaceAll("\r", "");
+            return normalString.replaceAll("\n", "|").replaceAll("\r", "") + errorString.replaceAll("\n", "|").replaceAll("\r", "");
         } catch (IOException e) {
             e.printStackTrace();
             return e.getLocalizedMessage();

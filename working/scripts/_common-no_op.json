@@ -410,25 +410,6 @@
               "value": ""
             }
           ]
-        },
-        {
-          "condition": {
-            "var": "_loops",
-            "is": "GREATER",
-            "value": "120",
-            "and": [
-              {
-                "is": "BOOLEAN",
-                "value": "false"
-              }
-            ]
-          },
-          "actions": [
-            {
-              "type": "TAP",
-              "value": "menu-level"
-            }
-          ]
         }
       ]
     },

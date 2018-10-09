@@ -9,6 +9,8 @@ import org.apache.commons.lang3.StringUtils;
 public class ConnectionDefinition {
 
     private String ip;
+    private int adbPort = 5555;
+    private int helperPort = 8080;
     private String adb = "adb";
     private String direct;
     private boolean wifi;
@@ -56,6 +58,22 @@ public class ConnectionDefinition {
 
     public void setThrottle(int throttle) {
         this.throttle = throttle;
+    }
+
+    public int getAdbPort() {
+        return adbPort;
+    }
+
+    public void setAdbPort(int adbPort) {
+        this.adbPort = adbPort;
+    }
+
+    public int getHelperPort() {
+        return helperPort;
+    }
+
+    public void setHelperPort(int helperPort) {
+        this.helperPort = helperPort;
     }
 
     public void push() {

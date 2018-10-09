@@ -1617,6 +1617,7 @@
         "_any_can_move_raid",
         "_any_can_move_arena",
         "_home_daily_fixes",
+        "_common-no_op",
         "_backup_to_home"
       ],
       "variables": {
@@ -1938,7 +1939,7 @@
             },
             {
               "type": "MOVE",
-              "value": "home_to_farm"
+              "value": "any_to_home"
             }
           ]
         }

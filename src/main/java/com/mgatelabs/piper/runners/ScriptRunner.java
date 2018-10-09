@@ -430,7 +430,7 @@ public class ScriptRunner {
                     logger.log(Level.WARNING, "Bad Shell: Will try to reconnect...");
                     if (connectionDefinition.isWifi()) {
                         waitFor(1000);
-                        AdbShell.connect(deviceHelper.getIpAddress());
+                        AdbShell.connect(deviceHelper.getIpAddress(), connectionDefinition.getAdbPort());
                     }
                     waitFor(1000);
                     restartShell();

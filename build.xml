@@ -13,6 +13,7 @@
             <fileset dir="./release" includes="*.log"/>
             <fileset dir="./release/views" includes="**/*.png"/>
             <fileset dir="./release/views" includes="**/*.jpg"/>
+            <fileset dir="./release/states" includes="**/*.json"/>
         </delete>
         <copy file="./target/phone-piper.jar" tofile="./release/phone-piper.jar"/>
         <copy file="./LICENSE.txt" tofile="./release/LICENSE.txt"/>

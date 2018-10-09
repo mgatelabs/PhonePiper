@@ -304,38 +304,6 @@ $(function(){
         });
     });
 
-    controlDeviceSave.click(function(){
-        $.ajax({
-          type: "POST",
-          url: '/piper/device/ip',
-          data: {value: deviceIp.val()}
-        });
-    });
-
-    controlDeviceDirectSave.click(function(){
-        $.ajax({
-          type: "POST",
-          url: '/piper/device/direct',
-          data: {value: deviceDirect.val()}
-        });
-    });
-
-    controlDeviceAdbSave.click(function(){
-        $.ajax({
-          type: "POST",
-          url: '/piper/device/adb',
-          data: {value: deviceAdb.val()}
-        });
-    });
-
-    controlDeviceWifiSave.click(function(){
-        $.ajax({
-          type: "POST",
-          url: '/piper/device/wifi',
-          data: {value: deviceWifi.val()}
-        });
-    });
-
     $('.controlButton').click(function(){
         var ref= $(this), button = ref.attr('controlButton'), componentId = $('#components').val();
         $.ajax({
@@ -353,7 +321,7 @@ $(function(){
                 loadButton.click();
             } else if (ref.hasClass('delete-config')) {
                 configs.splice(index, 1);
-                localStorage.setItem("CONFIGS", JSON.stringify(configs));
+                localStorage.setItem("CONFIGURATIONS", JSON.stringify(configs));
                 buildConfigs();
             } else if (ref.hasClass('modify-config')) {
                 applySelection(configs[index]);

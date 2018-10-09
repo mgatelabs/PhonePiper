@@ -171,9 +171,40 @@
                 <br/>
                 <div class="input-group">
                     <div class="input-group-prepend">
+                        <span class="input-group-text">ADB Port</span>
+                    </div>
+                    <input type="text" class="form-control config-attribute" attrname="device-adbPort" placeholder="5555">
+                </div>
+
+                <br/>
+                <div class="alert alert-dark" role="alert">
+                    The ADB port number for your device.  For real devices 5555 is the default.  For MEmu the value can also be 21503 if your running through NAT mode.
+                </div>
+
+                <br/>
+                <div class="input-group">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text">Helper Port</span>
+                    </div>
+                    <input type="text" class="form-control config-attribute" attrname="device-helperPort" placeholder="8080">
+                </div>
+
+                <br/>
+                <div class="alert alert-dark" role="alert">
+                    The port number for Phone Piper Helper app.  This is typically 8080, unless you changed the MEmu forwarding config for PPH.
+                </div>
+
+                <br/>
+                <div class="input-group">
+                    <div class="input-group-prepend">
                         <span class="input-group-text">ADB</span>
                     </div>
                     <input type="text" class="form-control config-attribute" attrname="device-adb" placeholder="Path to ADB execuable">
+                </div>
+
+                <br/>
+                <div class="alert alert-dark" role="alert">
+                    Path to your ADB executable.  The full path please.  If ADB is available on PATH, you can leave this blank.
                 </div>
 
                 <br/>
@@ -185,13 +216,18 @@
                 </div>
 
                 <br/>
+                <div class="alert alert-dark" role="alert">
+                    Leave blank in most cases.  Used to identity which device to communicate with, if multiple have been connected.
+                </div>
+
+                <br/>
                 <div class="input-group">
                     <div class="input-group-prepend">
                         <span class="input-group-text">Connection</span>
                     </div>
                     <select class="form-control config-attribute" attrname="device-wifi">
                         <option value="true" selected>Remote</option>
-                        <option value="false">USB</option>
+                        <option value="false">USB-Emulated</option>
                     </select>
                 </div>
 

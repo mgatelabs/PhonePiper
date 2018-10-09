@@ -55,7 +55,7 @@ public class WebResource {
     private synchronized boolean checkInitialState() {
         if (connectionDefinition == null) {
             connectionDefinition = new ConnectionDefinition();
-            deviceHelper = new DeviceHelper(connectionDefinition.getIp());
+            deviceHelper = new DeviceHelper(connectionDefinition.getIp(), connectionDefinition.getHelperPort());
             Loggers.webLogger.setLevel(Level.INFO);
             Loggers.fileLogger.setLevel(Level.INFO);
             logger.addHandler(Loggers.webLogger);
@@ -228,7 +228,7 @@ public class WebResource {
                 runner.stopShell();
             }
 
-            String s = AdbShell.connect(deviceHelper.getIpAddress());
+            String s = AdbShell.connect(deviceHelper.getIpAddress(), connectionDefinition.getAdbPort());
             if (runner != null) {
                 runner.restartShell();
             }
@@ -405,6 +405,14 @@ public class WebResource {
                         } else if (field.equalsIgnoreCase("throttle")) {
                             if (StringUtils.isNotBlank(value)) {
                                 tempConnection.setThrottle(Integer.parseInt(value));
+                            }
+                        } else if (field.equalsIgnoreCase("adbPort")) {
+                            if (StringUtils.isNotBlank(value)) {
+                                tempConnection.setAdbPort(Integer.parseInt(value));
+                            }
+                        } else if (field.equalsIgnoreCase("helperPort")) {
+                            if (StringUtils.isNotBlank(value)) {
+                                tempConnection.setHelperPort(Integer.parseInt(value));
                             }
                         }
                     }

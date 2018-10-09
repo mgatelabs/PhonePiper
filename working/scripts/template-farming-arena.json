@@ -85,6 +85,11 @@
               "value": "0"
             },
             {
+              "type": "SET",
+              "var": "availableHpUnits",
+              "value": "0"
+            },
+            {
               "type": "ADD",
               "var": "availableUnits",
               "value": 1,

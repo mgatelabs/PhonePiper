@@ -430,7 +430,7 @@ public class ScriptRunner {
                     logger.log(Level.WARNING, "Bad Shell: Will try to reconnect...");
                     if (connectionDefinition.isWifi()) {
                         waitFor(1000);
-                        AdbShell.connect(deviceHelper.getIpAddress());
+                        AdbShell.connect(deviceHelper.getIpAddress(), connectionDefinition.getAdbPort());
                     }
                     waitFor(1000);
                     restartShell();
@@ -788,14 +788,14 @@ public class ScriptRunner {
                             break;
 
                             case EVENT: {
-                                if (!AdbUtils.event(actionDefinition.getValue(), shell, batchCmds || inBatch)) {
+                                if (!AdbUtils.event(actionDefinition.getValue(), false, shell, batchCmds || inBatch)) {
                                     logger.log(Level.SEVERE, "Unknown event id: " + actionDefinition.getValue());
                                     throw new RuntimeException("Unknown event id: " + actionDefinition.getValue());
                                 }
                             }
                             break;
                             case INPUT: {
-                                if (!AdbUtils.event(valueHandler(actionDefinition.getValue()).toString(), shell, batchCmds || inBatch)) {
+                                if (!AdbUtils.event(valueHandler(actionDefinition.getValue()).toString(), true, shell, batchCmds || inBatch)) {
                                     logger.log(Level.SEVERE, "Unknown event id: " + actionDefinition.getValue());
                                     throw new RuntimeException("Unknown event id: " + actionDefinition.getValue());
                                 }

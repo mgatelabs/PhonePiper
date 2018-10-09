@@ -5,7 +5,6 @@ import com.mgatelabs.piper.shared.helper.DeviceHelper;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
 
 /**
  * Created by @mgatelabs (Michael Fuller) on 9/20/2017 for Phone-Piper
@@ -20,7 +19,7 @@ public class ConnectionPanel extends JInternalFrame {
     public ConnectionPanel(final ConnectionDefinition connectionDefinition) {
         super("Device Connection (Helper)", false, false, false, false);
         this.connectionDefinition = connectionDefinition;
-        deviceHelper = new DeviceHelper(this.connectionDefinition.getIp());
+        deviceHelper = new DeviceHelper(this.connectionDefinition.getIp(), this.connectionDefinition.getHelperPort());
         build();
     }
 

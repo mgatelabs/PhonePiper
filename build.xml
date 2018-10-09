@@ -16,7 +16,7 @@
         </delete>
         <copy file="./target/phone-piper.jar" tofile="./release/phone-piper.jar"/>
         <copy file="./LICENSE.txt" tofile="./release/LICENSE.txt"/>
-        <zip destfile="./target/PhonePiper0.0.13.zip">
+        <zip destfile="./target/PhonePiper0.0.14.zip">
             <fileset dir="./release" includes="**/*"/>
         </zip>
         <delete dir="./release"/>

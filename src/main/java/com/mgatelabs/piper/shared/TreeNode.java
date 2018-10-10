@@ -1,5 +1,7 @@
 package com.mgatelabs.piper.shared;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import org.apache.commons.lang3.StringUtils;
 
 import java.util.Collection;
@@ -12,44 +14,96 @@ import java.util.List;
  * @author Sanadis
  * Creation Date: 9/27/2018
  */
+@JsonPropertyOrder({"id", "description", "level", "root", "leaf", "children"})
 public class TreeNode<T> implements Iterable<TreeNode<T>> {
 
-    private String identifier;
+    private String id;
+    private String description;
     private T data;
     private final TreeNode<T> parent;
     private final List<TreeNode<T>> children;
     private final List<TreeNode<T>> elementsIndex;
 
-    public TreeNode(TreeNode<T> parent) {
-        this(null, parent);
+    public TreeNode(String id, T data) {
+        this(id, data, null);
     }
 
-    public TreeNode(T data) {
-        this(data, null);
-    }
-
-    public TreeNode(T data, TreeNode<T> parent) {
+    public TreeNode(String id, T data, TreeNode<T> parent) {
+        this.id = id;
         this.data = data;
         this.parent = parent;
         this.children = new LinkedList<TreeNode<T>>();
         this.elementsIndex = new LinkedList<TreeNode<T>>();
 
-        if (parent != null) parent.addChildNode(this);
+        if (parent != null)
+            parent.addChildNode(this);
 
-        setIdentifier();
         registerChildForSearch(this);
     }
 
-    public boolean isRoot() {
-        return parent == null;
+    public String getId() {
+        return id;
+    }
+
+    public String getDescription() {
+        if (description == null)
+            return getId();
+        return description;
+    }
+
+    public TreeNode<T> setDescription(String description) {
+        this.description = description;
+        return this;
+    }
+
+    public TreeNode<T> setId(String identifier) {
+        this.id = identifier;
+        return this;
+    }
+
+    public TreeNode<T> setId() {
+        if (data != null) {
+            this.id = data.toString();
+        }
+        return this;
+    }
+
+    public int getLevel() {
+        if (this.isRoot())
+            return 0;
+        else
+            return parent.getLevel() + 1;
     }
 
     public boolean isLeaf() {
         return children.size() == 0;
     }
 
-    public TreeNode<T> addChild(T child) {
-        return addChildNode(new TreeNode<T>(child));
+    public boolean isRoot() {
+        return parent == null;
+    }
+
+    @JsonIgnore
+    public T getData() {
+        return data;
+    }
+
+    public TreeNode<T> setData(T data) {
+        this.data = data;
+        return this;
+    }
+
+    public TreeNode<T> findRoot() {
+      TreeNode<T> parent = getParent();
+      while (parent != null && !parent.isRoot()) {
+        parent = parent.getParent();
+      }
+      return parent;
+    }
+
+    @JsonIgnore
+    public TreeNode<T> getParent() {
+        return parent;
     }
 
     public TreeNode<T> addChildNode(TreeNode<T> childNode) {
@@ -64,49 +118,8 @@ public class TreeNode<T> implements Iterable<TreeNode<T>> {
         return this;
     }
 
-    public T getData() {
-        return data;
-    }
-
-    public TreeNode<T> setData(T data) {
-        this.data = data;
-        setIdentifier();
-        return this;
-    }
-
-    public TreeNode<T> setIdentifier(String identifier) {
-        this.identifier = identifier;
-        return this;
-    }
-
-    public TreeNode<T> setIdentifier() {
-        if (data != null) {
-            this.identifier = data.toString();
-        }
-        return this;
-    }
-
-    public TreeNode<T> getRoot() {
-      TreeNode<T> parent = getParent();
-      while (parent != null && !parent.isRoot()) {
-        parent = parent.getParent();
-      }
-      return parent;
-    }
-
-    public TreeNode<T> getParent() {
-        return parent;
-    }
-
     public List<TreeNode<T>> getChildren() {
         return children;
-    }
-
-    public int getLevel() {
-        if (this.isRoot())
-            return 0;
-        else
-            return parent.getLevel() + 1;
     }
 
     private void registerChildForSearch(TreeNode<T> node) {
@@ -136,6 +149,7 @@ public class TreeNode<T> implements Iterable<TreeNode<T>> {
         throw new IllegalStateException("This node could not be found amoung the children.");
     }
 
+    @JsonIgnore
     public TreeNode<T> getNextSibling() {
       if (parent == null) {
         return null;

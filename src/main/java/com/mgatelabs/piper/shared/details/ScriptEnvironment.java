@@ -1,10 +1,12 @@
 package com.mgatelabs.piper.shared.details;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 import com.mgatelabs.piper.shared.TreeNode;
+import com.mgatelabs.piper.shared.util.JsonTool;
 
 import java.util.List;
 import java.util.Map;
@@ -118,11 +120,6 @@ public final class ScriptEnvironment {
                     scriptDefinitions.add(ScriptDefinition.buildScriptDefinition(scriptId));
                 }
             }
-
-            System.out.println("ScriptDefinition tree:");
-            for (ScriptDefinition scriptDefinition : scriptDefinitions) {
-                System.out.println(scriptDefinition.getScriptDefTree().printNodes());
-            }
         }
 
         private void loadDefinitions(TreeNode<ScriptDefinition> parent) {
@@ -150,14 +147,10 @@ public final class ScriptEnvironment {
 
         private void buildStateDefinitions() {
             for (StateDefinition stateDefinition : stateDefinitions.values()) {
-                TreeNode<StateDefinition> parentState = new TreeNode<StateDefinition>(stateDefinition);
+                TreeNode<StateDefinition> parentState = new TreeNode<StateDefinition>(stateDefinition.getId(), stateDefinition);
+                parentState.setDescription(parentState.getDescription());
                 stateDefinition.buildStateDefinitionTree(parentState, ImmutableMap.copyOf(stateDefinitions), 0);
                 stateDefinition.mergeStatementDefinitions();
-            }
-
-            System.out.println("StateDefinition tree:");
-            for (StateDefinition stateDefinition : stateDefinitions.values()) {
-                System.out.println(stateDefinition.getStateDefTree().printNodes());
             }
         }
 
@@ -169,6 +162,12 @@ public final class ScriptEnvironment {
             }
             buildStateDefinitions();
 
+            try {
+                String test = JsonTool.getInstance().writeValueAsString(scriptDefinitions.get(0).getScriptDefTree());
+                System.out.println(test);
+            } catch (JsonProcessingException e) {
+                e.printStackTrace();
+            }
             return new ScriptEnvironment(scriptDefinitions, action, mode, stateDefinitions, Lists.newArrayList(varDefinitions.values()), Lists.newArrayList(varTiers.values()));
         }
     }

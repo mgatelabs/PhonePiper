@@ -4,14 +4,12 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.google.common.collect.ImmutableList;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 import com.mgatelabs.piper.Runner;
 import com.mgatelabs.piper.shared.TreeNode;
 import com.mgatelabs.piper.shared.util.JsonTool;
 
-import javax.swing.plaf.nimbus.State;
 import java.io.File;
 import java.io.IOException;
 import java.util.List;
@@ -38,7 +36,7 @@ public class ScriptDefinition {
         states = Maps.newLinkedHashMap();
         imports = Lists.newArrayList();
         varTiers = Lists.newArrayList();
-        scriptDefTree = new TreeNode<ScriptDefinition>(this);
+        scriptDefTree = new TreeNode<ScriptDefinition>(scriptId, this);
     }
 
     public void fix() {
@@ -143,7 +141,7 @@ public class ScriptDefinition {
       public static ScriptDefinition buildScriptDefinition(String scriptId) {
           ScriptDefinition scriptDefinition = read(scriptId);
           if (scriptDefinition != null) {
-              TreeNode<ScriptDefinition> scriptDefinitionTree = new TreeNode<ScriptDefinition>(scriptDefinition);
+              TreeNode<ScriptDefinition> scriptDefinitionTree = new TreeNode<ScriptDefinition>(scriptId, scriptDefinition);
               scriptDefinition.buildScriptDefinitionTree(scriptDefinitionTree);
           }
           return scriptDefinition;
@@ -191,16 +189,14 @@ public class ScriptDefinition {
         final List<TreeNode<ScriptDefinition>> toReturn = Lists.newArrayList();
         for (String scriptId : getImports()) {
             if (scriptId.trim().length() > 0) {
-                final TreeNode<ScriptDefinition> childNode = new TreeNode<ScriptDefinition>(parent);
-
                 ScriptDefinition scriptDef = read(scriptId);
+                final TreeNode<ScriptDefinition> childNode = new TreeNode<ScriptDefinition>(scriptId, scriptDef, parent);
+
                 if (scriptDef == null) {
-                    childNode.setIdentifier(scriptId);
                     System.out.println("Could not find Script import: " + scriptId);
                     continue;
                 }
 
-                childNode.setData(scriptDef);
                 scriptDef.buildScriptDefinitionTree(childNode);
             }
         }

@@ -1854,6 +1854,12 @@
     },
     "_backup_to_home": {
       "name": "Include - Backup to Home Screen",
+      "variables": {
+        "backupDelay": {
+          "value": "INT",
+          "type": "0"
+        }
+      },
       "statements": [
         {
           "condition": {
@@ -1861,10 +1867,6 @@
             "value": "menu-home"
           },
           "actions": [
-            {
-              "type": "INFO",
-              "value": "Backing Up"
-            },
             {
               "type": "SET",
               "var": "setup",
@@ -1879,6 +1881,18 @@
             {
               "type": "EVENT",
               "value": "back"
+            },
+            {
+              "type": "RANDOM",
+              "var": "backupDelay",
+              "args": {
+                "min": "2500",
+                "max": "3500"
+              }
+            },
+            {
+              "type": "INFO",
+              "value": "Returning home with ${backupDelay}ms delay"
             },
             {
               "type": "WAIT",

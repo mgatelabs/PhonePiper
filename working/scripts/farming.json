@@ -1616,6 +1616,7 @@
         "_any_can_move_farm",
         "_any_can_move_raid",
         "_any_can_move_arena",
+        "_any_can_extra",
         "_home_daily_fixes",
         "_common-no_op",
         "_backup_to_home"
@@ -1721,6 +1722,70 @@
                 "value": "1",
                 "var": "allow-arena"
               }
+            },
+            {
+              "type": "SET",
+              "value": "EXTRA",
+              "var": "toState"
+            },
+            {
+              "type": "REPEAT"
+            }
+          ]
+        }
+      ]
+    },
+    "_any_can_extra": {
+      "name": "Any - Home Some random action?",
+      "variables": {
+        "toState": {
+          "value": "EXTRA",
+          "type": "STRING"
+        },
+        "extraDelay": {
+          "value": "INT",
+          "type": "0"
+        }
+      },
+      "statements": [
+        {
+          "condition": {
+            "is": "SCREEN",
+            "value": "menu-home",
+            "and": [
+              {
+                "is": "EQUAL",
+                "value": "EXTRA",
+                "var": "toState"
+              }
+            ]
+          },
+          "actions": [
+                        {
+              "type": "SET",
+              "var": "setup",
+              "value": "0"
+            },
+            {
+              "type": "RANDOM",
+              "var": "extraTime",
+              "args": {
+                "min": "5000",
+                "max": "25000"
+              }
+            },
+            {
+              "type": "INFO",
+              "value": "Extra time based delay for ${extraDelay}ms."
+            },
+            {
+              "type": "WAIT",
+              "value": "${extraDelay}"
+            },
+            {
+              "type": "SET",
+              "value": "0",
+              "var": "_screen_saver"
             },
             {
               "type": "SET",
@@ -2010,9 +2075,6 @@
       "statements" : [
         {
           "condition" : {
-            "is": "SCREEN",
-            "value": "menu-arena-main",
-            "and": [{
               "not"   : "SCREEN",
               "value" : "menu-arena-have-orbs",
               "andOr" : [
@@ -2029,7 +2091,6 @@
                   "value" : "menu-arena_screen-top"
                 }
               ]
-            }]
           },
           "actions": [
             {
@@ -2045,7 +2106,7 @@
             {
               "type": "MOVE",
               "value": "any_to_home",
-              "args": {"toState": "FARM"}
+              "args": {"toState": "EXTRA"}
             }
           ]
         }

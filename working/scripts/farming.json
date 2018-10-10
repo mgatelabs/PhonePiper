@@ -1949,14 +1949,14 @@
     "arena-home": {
       "name": "Arena - Menu",
       "includes": [
-        "_common-no_op",
         "_arena-menu-orbs",
         "_arena-menu-rules",
         "_arena-find_depart_team",
         "_arena-menu-opponent-select",
         "_arena-menu-confirm-select",
         "_arena-menu-begin",
-        "_arena-battle-start"
+        "_arena-battle-start",
+        "_common-no_op"
       ],
       "statements": [
         {
@@ -1987,6 +1987,7 @@
               "type": "TAP",
               "value": "menu-arena-setup"
             },
+            { "type": "CALL", "value": "@keepAlive" },
             {
               "type": "SET",
               "value": "0",
@@ -2296,6 +2297,7 @@
         }
       ]
     },
+
     "arena-battle-fight": {
       "name": "Arena - Battle - Fight",
       "includes": [
@@ -2311,7 +2313,7 @@
           "actions": [
             {
               "type": "INFO",
-              "value": "Fighting (You shouod override this, auto isn't good)"
+              "value": "Fighting (You should override this, auto isn't good)"
             },
             {
               "type": "TAP",

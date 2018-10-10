@@ -751,10 +751,10 @@ public class ScriptRunner {
                                 Var min = IntVar.ZERO;
                                 Var max = IntVar.THOUSAND;
                                 if (actionDefinition.getArguments().containsKey("min")) {
-                                    min = new StringVar(replaceTokens(actionDefinition.getArguments().get("min")));
+                                    min = new StringVar(replaceTokens(actionDefinition.getArguments().get("min"))).asInt();
                                 }
                                 if (actionDefinition.getArguments().containsKey("max")) {
-                                    max = new StringVar(replaceTokens(actionDefinition.getArguments().get("max")));
+                                    max = new StringVar(replaceTokens(actionDefinition.getArguments().get("max"))).asInt();
                                 }
                                 if (min.greater(max) || min.equals(max)) {
                                     logger.log(Level.SEVERE, "Random needs a min and max that are different and min must be less than max");

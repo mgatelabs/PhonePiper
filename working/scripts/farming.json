@@ -432,7 +432,7 @@
                 "value": "${farm-timer}",
                 "var": "_seconds",
                 "or": [
-                  { "not": "CALL", "value":"@isMinEnergyAvailable" }
+                  {"is": "EQUAL", "var": "refresh-farm", "value": "0", "and": [ { "not": "CALL", "value":"@isMinEnergyAvailable" } ]}
                 ]
               },
               {
@@ -1616,6 +1616,7 @@
         "_any_can_move_farm",
         "_any_can_move_raid",
         "_any_can_move_arena",
+        "_any_can_extra",
         "_home_daily_fixes",
         "_common-no_op",
         "_backup_to_home"
@@ -1724,6 +1725,70 @@
             },
             {
               "type": "SET",
+              "value": "EXTRA",
+              "var": "toState"
+            },
+            {
+              "type": "REPEAT"
+            }
+          ]
+        }
+      ]
+    },
+    "_any_can_extra": {
+      "name": "Any - Home Some random action?",
+      "variables": {
+        "toState": {
+          "value": "EXTRA",
+          "type": "STRING"
+        },
+        "extraDelay": {
+          "value": "INT",
+          "type": "0"
+        }
+      },
+      "statements": [
+        {
+          "condition": {
+            "is": "SCREEN",
+            "value": "menu-home",
+            "and": [
+              {
+                "is": "EQUAL",
+                "value": "EXTRA",
+                "var": "toState"
+              }
+            ]
+          },
+          "actions": [
+                        {
+              "type": "SET",
+              "var": "setup",
+              "value": "0"
+            },
+            {
+              "type": "RANDOM",
+              "var": "extraDelay",
+              "args": {
+                "min": "5000",
+                "max": "25000"
+              }
+            },
+            {
+              "type": "INFO",
+              "value": "Extra time based delay for ${extraDelay}ms."
+            },
+            {
+              "type": "WAIT",
+              "value": "${extraDelay}"
+            },
+            {
+              "type": "SET",
+              "value": "0",
+              "var": "_screen_saver"
+            },
+            {
+              "type": "SET",
               "value": "FARM",
               "var": "toState"
             },
@@ -1789,6 +1854,12 @@
     },
     "_backup_to_home": {
       "name": "Include - Backup to Home Screen",
+      "variables": {
+        "backupDelay": {
+          "value": "INT",
+          "type": "0"
+        }
+      },
       "statements": [
         {
           "condition": {
@@ -1796,10 +1867,6 @@
             "value": "menu-home"
           },
           "actions": [
-            {
-              "type": "INFO",
-              "value": "Backing Up"
-            },
             {
               "type": "SET",
               "var": "setup",
@@ -1814,6 +1881,18 @@
             {
               "type": "EVENT",
               "value": "back"
+            },
+            {
+              "type": "RANDOM",
+              "var": "backupDelay",
+              "args": {
+                "min": "2500",
+                "max": "3500"
+              }
+            },
+            {
+              "type": "INFO",
+              "value": "Returning home with ${backupDelay}ms delay"
             },
             {
               "type": "WAIT",
@@ -1949,14 +2028,14 @@
     "arena-home": {
       "name": "Arena - Menu",
       "includes": [
-        "_common-no_op",
         "_arena-menu-orbs",
         "_arena-menu-rules",
         "_arena-find_depart_team",
         "_arena-menu-opponent-select",
         "_arena-menu-confirm-select",
         "_arena-menu-begin",
-        "_arena-battle-start"
+        "_arena-battle-start",
+        "_common-no_op"
       ],
       "statements": [
         {
@@ -1987,6 +2066,7 @@
               "type": "TAP",
               "value": "menu-arena-setup"
             },
+            { "type": "CALL", "value": "@keepAlive" },
             {
               "type": "SET",
               "value": "0",
@@ -2009,9 +2089,6 @@
       "statements" : [
         {
           "condition" : {
-            "is": "SCREEN",
-            "value": "menu-arena-main",
-            "and": [{
               "not"   : "SCREEN",
               "value" : "menu-arena-have-orbs",
               "andOr" : [
@@ -2028,7 +2105,6 @@
                   "value" : "menu-arena_screen-top"
                 }
               ]
-            }]
           },
           "actions": [
             {
@@ -2044,7 +2120,7 @@
             {
               "type": "MOVE",
               "value": "any_to_home",
-              "args": {"toState": "FARM"}
+              "args": {"toState": "EXTRA"}
             }
           ]
         }
@@ -2296,6 +2372,7 @@
         }
       ]
     },
+
     "arena-battle-fight": {
       "name": "Arena - Battle - Fight",
       "includes": [
@@ -2311,7 +2388,7 @@
           "actions": [
             {
               "type": "INFO",
-              "value": "Fighting (You shouod override this, auto isn't good)"
+              "value": "Fighting (You should override this, auto isn't good)"
             },
             {
               "type": "TAP",

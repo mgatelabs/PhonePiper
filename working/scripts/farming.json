@@ -432,7 +432,7 @@
                 "value": "${farm-timer}",
                 "var": "_seconds",
                 "or": [
-                  { "not": "CALL", "value":"@isMinEnergyAvailable" }
+                  {"is": "EQUAL", "var": "refresh-farm", "value": "0", "and": [ { "not": "CALL", "value":"@isMinEnergyAvailable" } ]}
                 ]
               },
               {

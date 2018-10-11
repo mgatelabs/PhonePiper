@@ -616,7 +616,7 @@
     "points" : [ ],
     "enabled" : false
   }, {
-    "name" : "menu-world-grandshelt_isles-earthshrine",
+    "name" : "Menu - World - Grandshelt - Earthshrine",
     "screenId" : "menu-world-grandshelt_isles-earthshrine",
     "points" : [ ],
     "enabled" : false
@@ -643,6 +643,11 @@
   }, {
     "name" : "OS - Unable to access data",
     "screenId" : "os-unable_to_access_data",
+    "points" : [ ],
+    "enabled" : false
+  }, {
+    "name" : "raid-summon_menu",
+    "screenId" : "raid-summon_menu",
     "points" : [ ],
     "enabled" : false
   }, {
@@ -911,8 +916,8 @@
     "h" : 1,
     "enabled" : false
   }, {
-    "name" : "Battle - Unit - 4 - Life Bar",
-    "componentId" : "battle-unit-4-life_bar",
+    "name" : "Battle - Unit - 3 - MP Bar",
+    "componentId" : "battle-unit-3-mp_bar",
     "x" : 0,
     "y" : 0,
     "w" : 1,
@@ -1545,6 +1550,14 @@
   }, {
     "name" : "Raid - Summon Results Next",
     "componentId" : "raid-summon_results-next",
+    "x" : 445,
+    "y" : 1660,
+    "w" : 190,
+    "h" : 105,
+    "enabled" : false
+  }, {
+    "name" : "Raid - Summon Results Next",
+    "componentId" : "raid-summon_results-next-2",
     "x" : 445,
     "y" : 1660,
     "w" : 190,

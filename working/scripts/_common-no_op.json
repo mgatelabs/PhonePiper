@@ -27,7 +27,7 @@
     {
       "name": "allow-ss",
       "display": "Enable Screen Saver",
-      "value": "1",
+      "value": "0",
       "type": "INT",
       "modify": "EDITABLE",
       "displayType": "BOOLEAN",
@@ -126,7 +126,7 @@
           "actions": [
             {
               "type": "INFO",
-              "value": "Default operation stops execution"
+              "value": "Stopping operations"
             },
             {
               "type": "STOP"
@@ -174,6 +174,23 @@
             },
             {
               "type": "REPEAT",
+              "value": ""
+            }
+          ]
+        },
+        {
+          "condition": {
+            "is": "SCREEN",
+            "value": "menu-maintenance"
+          },
+          "actions": [
+
+            {
+              "type": "INFO",
+              "value": "Maintenance has been detected, stopping operations"
+            },
+            {
+              "type": "STOP",
               "value": ""
             }
           ]

@@ -576,7 +576,7 @@
     "points" : [ ],
     "enabled" : false
   }, {
-    "name" : "menu-title",
+    "name" : "Menu - Title",
     "screenId" : "menu-title",
     "points" : [ ],
     "enabled" : false
@@ -591,7 +591,7 @@
     "points" : [ ],
     "enabled" : false
   }, {
-    "name" : "menu-vortex-nemeses",
+    "name" : "Menu - Vortex - Nemeses",
     "screenId" : "menu-vortex-nemeses",
     "points" : [ ],
     "enabled" : false
@@ -601,22 +601,22 @@
     "points" : [ ],
     "enabled" : false
   }, {
-    "name" : "menu-world-common",
+    "name" : "Menu - World - Common",
     "screenId" : "menu-world-common",
     "points" : [ ],
     "enabled" : false
   }, {
-    "name" : "menu-world-grandshelt",
+    "name" : "Menu - World - Grandshelt",
     "screenId" : "menu-world-grandshelt",
     "points" : [ ],
     "enabled" : false
   }, {
-    "name" : "menu-world-grandshelt_isles",
+    "name" : "Menu - World - Grandshelt_isles",
     "screenId" : "menu-world-grandshelt_isles",
     "points" : [ ],
     "enabled" : false
   }, {
-    "name" : "menu-world-lapis",
+    "name" : "Menu - World - Lapis",
     "screenId" : "menu-world-lapis",
     "points" : [ ],
     "enabled" : false
@@ -1018,7 +1018,7 @@
     "h" : 1,
     "enabled" : false
   }, {
-    "name" : "menu-arena-opponent_drag",
+    "name" : "Menu - Arena - Opponent Drag",
     "componentId" : "menu-arena-opponent_drag",
     "x" : 0,
     "y" : 0,

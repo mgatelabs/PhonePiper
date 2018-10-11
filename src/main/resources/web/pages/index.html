@@ -178,7 +178,7 @@
 
                 <br/>
                 <div class="alert alert-dark" role="alert">
-                    The ADB port number for your device.  For real devices 5555 is the default.  For MEmu the value can also be 21503 if your running through NAT mode.
+                    The ADB port number for your device.  For real devices 5555 is the default.  For MEmu the value can be somewhere near 21503 if your running through NAT mode.
                 </div>
 
                 <br/>
@@ -229,6 +229,11 @@
                         <option value="true" selected>Remote</option>
                         <option value="false">USB-Emulated</option>
                     </select>
+                </div>
+
+                <br/>
+                <div class="alert alert-dark" role="alert">
+                    If you are running a real device, or MEmu bridged, please choose Remote.  Otherwise choose USB-Emulated.
                 </div>
 
                 <br/>
@@ -356,14 +361,21 @@
 
                 <br/>
 
+                <h3>Test Connection</h3>
+
+                <div class="input-group">
+                    <button type="button" id="controlUpdatePreview" class="btn btn-info whenLoaded notWhileRunning">Get Screen Preview</button>
+                </div>
+
+                <br/>
+                <div class="alert alert-dark" role="alert">
+                    Use this button to test if this App can communicate with ADB & the Phone Helper App.  If everything works, you should see a image appear below.
+                </div>
+
                 <div class="form-group">
-                    <label for="previewImage">Preview</label>
-                    <br/>
                     <img id="previewImage" src="" class="img-fluid" alt="Responsive image">
                 </div>
-                <div class="input-group">
-                    <button type="button" id="controlUpdatePreview" class="btn btn-info whenLoaded notWhileRunning">Update Preview</button>
-                </div>
+
 
             </form>
 

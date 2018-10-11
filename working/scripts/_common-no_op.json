@@ -27,7 +27,7 @@
     {
       "name": "allow-ss",
       "display": "Enable Screen Saver",
-      "value": "1",
+      "value": "0",
       "type": "INT",
       "modify": "EDITABLE",
       "displayType": "BOOLEAN",
@@ -114,7 +114,7 @@
       ]
     },
     "_common-recovery_os": {
-      "name": "Common - Power Device Down",
+      "name": "Common - End Script",
       "includes": [
         "_common-power_down"
       ]
@@ -123,18 +123,10 @@
       "name": "Common - Power Down",
       "statements": [
         {
-          "condition": {
-            "is": "BOOLEAN",
-            "value": "true"
-          },
           "actions": [
             {
               "type": "INFO",
-              "value": "Default operation stops operations and locks the device"
-            },
-            {
-              "type": "EVENT",
-              "value": "power"
+              "value": "Stopping operations"
             },
             {
               "type": "STOP"
@@ -182,6 +174,23 @@
             },
             {
               "type": "REPEAT",
+              "value": ""
+            }
+          ]
+        },
+        {
+          "condition": {
+            "is": "SCREEN",
+            "value": "menu-maintenance"
+          },
+          "actions": [
+
+            {
+              "type": "INFO",
+              "value": "Maintenance has been detected, stopping operations"
+            },
+            {
+              "type": "STOP",
               "value": ""
             }
           ]

@@ -576,7 +576,7 @@
     "points" : [ ],
     "enabled" : false
   }, {
-    "name" : "menu-title",
+    "name" : "Menu - Title",
     "screenId" : "menu-title",
     "points" : [ ],
     "enabled" : false
@@ -591,7 +591,7 @@
     "points" : [ ],
     "enabled" : false
   }, {
-    "name" : "menu-vortex-nemeses",
+    "name" : "Menu - Vortex - Nemeses",
     "screenId" : "menu-vortex-nemeses",
     "points" : [ ],
     "enabled" : false
@@ -601,22 +601,22 @@
     "points" : [ ],
     "enabled" : false
   }, {
-    "name" : "menu-world-common",
+    "name" : "Menu - World - Common",
     "screenId" : "menu-world-common",
     "points" : [ ],
     "enabled" : false
   }, {
-    "name" : "menu-world-grandshelt",
+    "name" : "Menu - World - Grandshelt",
     "screenId" : "menu-world-grandshelt",
     "points" : [ ],
     "enabled" : false
   }, {
-    "name" : "menu-world-grandshelt_isles",
+    "name" : "Menu - World - Grandshelt_isles",
     "screenId" : "menu-world-grandshelt_isles",
     "points" : [ ],
     "enabled" : false
   }, {
-    "name" : "menu-world-lapis",
+    "name" : "Menu - World - Lapis",
     "screenId" : "menu-world-lapis",
     "points" : [ ],
     "enabled" : false
@@ -802,40 +802,16 @@
     "h" : 1,
     "enabled" : false
   }, {
+    "name" : "Battle - Unit - 0 - LB Bar",
+    "componentId" : "battle-unit-0-lb_bar",
+    "x" : 0,
+    "y" : 0,
+    "w" : 1,
+    "h" : 1,
+    "enabled" : false
+  }, {
     "name" : "Battle - Unit - 0 - Life Bar",
     "componentId" : "battle-unit-0-life_bar",
-    "x" : 0,
-    "y" : 0,
-    "w" : 1,
-    "h" : 1,
-    "enabled" : false
-  }, {
-    "name" : "Battle - Unit - 1 - Life Bar",
-    "componentId" : "battle-unit-1-life_bar",
-    "x" : 0,
-    "y" : 0,
-    "w" : 1,
-    "h" : 1,
-    "enabled" : false
-  }, {
-    "name" : "Battle - Unit - 2 - Life Bar",
-    "componentId" : "battle-unit-2-life_bar",
-    "x" : 0,
-    "y" : 0,
-    "w" : 1,
-    "h" : 1,
-    "enabled" : false
-  }, {
-    "name" : "Battle - Unit - 3 - Life Bar",
-    "componentId" : "battle-unit-3-life_bar",
-    "x" : 0,
-    "y" : 0,
-    "w" : 1,
-    "h" : 1,
-    "enabled" : false
-  }, {
-    "name" : "Battle - Unit - 4 - Life Bar",
-    "componentId" : "battle-unit-4-life_bar",
     "x" : 0,
     "y" : 0,
     "w" : 1,
@@ -850,8 +826,40 @@
     "h" : 1,
     "enabled" : false
   }, {
+    "name" : "Battle - Unit - 1 - LB Bar",
+    "componentId" : "battle-unit-1-lb_bar",
+    "x" : 0,
+    "y" : 0,
+    "w" : 1,
+    "h" : 1,
+    "enabled" : false
+  }, {
+    "name" : "Battle - Unit - 1 - Life Bar",
+    "componentId" : "battle-unit-1-life_bar",
+    "x" : 0,
+    "y" : 0,
+    "w" : 1,
+    "h" : 1,
+    "enabled" : false
+  }, {
     "name" : "Battle - Unit - 1 - MP Bar",
     "componentId" : "battle-unit-1-mp_bar",
+    "x" : 0,
+    "y" : 0,
+    "w" : 1,
+    "h" : 1,
+    "enabled" : false
+  }, {
+    "name" : "Battle - Unit - 2 - LB Bar",
+    "componentId" : "battle-unit-2-lb_bar",
+    "x" : 0,
+    "y" : 0,
+    "w" : 1,
+    "h" : 1,
+    "enabled" : false
+  }, {
+    "name" : "Battle - Unit - 2 - Life Bar",
+    "componentId" : "battle-unit-2-life_bar",
     "x" : 0,
     "y" : 0,
     "w" : 1,
@@ -866,8 +874,40 @@
     "h" : 1,
     "enabled" : false
   }, {
+    "name" : "Battle - Unit - 3 - LB Bar",
+    "componentId" : "battle-unit-3-lb_bar",
+    "x" : 0,
+    "y" : 0,
+    "w" : 1,
+    "h" : 1,
+    "enabled" : false
+  }, {
+    "name" : "Battle - Unit - 3 - Life Bar",
+    "componentId" : "battle-unit-3-life_bar",
+    "x" : 0,
+    "y" : 0,
+    "w" : 1,
+    "h" : 1,
+    "enabled" : false
+  }, {
     "name" : "Battle - Unit - 3 - MP Bar",
     "componentId" : "battle-unit-3-mp_bar",
+    "x" : 0,
+    "y" : 0,
+    "w" : 1,
+    "h" : 1,
+    "enabled" : false
+  }, {
+    "name" : "Battle - Unit - 4 - LB Bar",
+    "componentId" : "battle-unit-4-lb_bar",
+    "x" : 0,
+    "y" : 0,
+    "w" : 1,
+    "h" : 1,
+    "enabled" : false
+  }, {
+    "name" : "Battle - Unit - 4 - Life Bar",
+    "componentId" : "battle-unit-4-life_bar",
     "x" : 0,
     "y" : 0,
     "w" : 1,
@@ -1018,7 +1058,7 @@
     "h" : 1,
     "enabled" : false
   }, {
-    "name" : "menu-arena-opponent_drag",
+    "name" : "Menu - Arena - Opponent Drag",
     "componentId" : "menu-arena-opponent_drag",
     "x" : 0,
     "y" : 0,

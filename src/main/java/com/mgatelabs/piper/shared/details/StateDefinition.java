@@ -168,7 +168,12 @@ public class StateDefinition {
             stateDefinition.mergeStatementDefinitions();
             StateDefinition parentState = stateDefTreeNode.getParent().getData();
             parentState.getStatements().addAll(stateDefinition.getStatements());
-            parentState.getVariables().putAll(stateDefinition.getVariables());
+            // Only merge the variables if the parent doesn't have the same variable
+            for (Map.Entry<String, VarDefinition> entry: stateDefinition.getVariables().entrySet()) {
+                if (!parentState.getVariables().containsKey(entry.getKey())) {
+                    parentState.getVariables().put(entry.getKey(), entry.getValue());
+                }
+            }
         }
     }
 

@@ -266,6 +266,214 @@
         {"name": "Four", "value": "3"},
         {"name": "Five (Right)", "value": "4"}
       ]
+    }, {
+      "name" : "arena-rule-black_magic",
+      "display" : "Allow Black Magic",
+      "value" : "1",
+      "type" : "INT",
+      "modify" : "EDITABLE",
+      "displayType" : "STANDARD",
+      "order" : 10,
+      "tierId": "arena-rules",
+      "values": [
+        {"name": "No", "value": "0"},
+        {"name": "Yes", "value": "1"}
+      ]
+    }, {
+      "name" : "arena-rule-white_magic",
+      "display" : "Allow White magic",
+      "value" : "1",
+      "type" : "INT",
+      "modify" : "EDITABLE",
+      "displayType" : "STANDARD",
+      "order" : 10,
+      "tierId": "arena-rules",
+      "values": [
+        {"name": "No", "value": "0"},
+        {"name": "Yes", "value": "1"}
+      ]
+    }, {
+      "name" : "arena-rule-physical_combos",
+      "display" : "Allow Physical combos",
+      "value" : "1",
+      "type" : "INT",
+      "modify" : "EDITABLE",
+      "displayType" : "STANDARD",
+      "order" : 10,
+      "tierId": "arena-rules",
+      "values": [
+        {"name": "No", "value": "0"},
+        {"name": "Yes", "value": "1"}
+      ]
+    }, {
+      "name" : "arena-rule-magic_combos",
+      "display" : "Allow Magic combos",
+      "value" : "1",
+      "type" : "INT",
+      "modify" : "EDITABLE",
+      "displayType" : "STANDARD",
+      "order" : 10,
+      "tierId": "arena-rules",
+      "values": [
+        {"name": "No", "value": "0"},
+        {"name": "Yes", "value": "1"}
+      ]
+    }, {
+      "name" : "arena-rule-recovery",
+      "display" : "Allow Recovery",
+      "value" : "1",
+      "type" : "INT",
+      "modify" : "EDITABLE",
+      "displayType" : "STANDARD",
+      "order" : 10,
+      "tierId": "arena-rules",
+      "values": [
+        {"name": "No", "value": "0"},
+        {"name": "Yes", "value": "1"}
+      ]
+    }, {
+      "name" : "arena-rule-status",
+      "display" : "Allow Status ailments",
+      "value" : "1",
+      "type" : "INT",
+      "modify" : "EDITABLE",
+      "displayType" : "STANDARD",
+      "order" : 10,
+      "tierId": "arena-rules",
+      "values": [
+        {"name": "No", "value": "0"},
+        {"name": "Yes", "value": "1"}
+      ]
+    }, {
+      "name" : "arena-rule-boosts",
+      "display" : "Allow Parameter boosts",
+      "value" : "1",
+      "type" : "INT",
+      "modify" : "EDITABLE",
+      "displayType" : "STANDARD",
+      "order" : 10,
+      "tierId": "arena-rules",
+      "values": [
+        {"name": "No", "value": "0"},
+        {"name": "Yes", "value": "1"}
+      ]
+    }, {
+      "name" : "arena-rule-reductions",
+      "display" : "Allow Parameter reductions",
+      "value" : "1",
+      "type" : "INT",
+      "modify" : "EDITABLE",
+      "displayType" : "STANDARD",
+      "order" : 10,
+      "tierId": "arena-rules",
+      "values": [
+        {"name": "No", "value": "0"},
+        {"name": "Yes", "value": "1"}
+      ]
+    }, {
+      "name" : "arena-rule-light",
+      "display" : "Allow Light",
+      "value" : "1",
+      "type" : "INT",
+      "modify" : "EDITABLE",
+      "displayType" : "STANDARD",
+      "order" : 20,
+      "tierId": "arena-rules",
+      "values": [
+        {"name": "No", "value": "0"},
+        {"name": "Yes", "value": "1"}
+      ]
+    }, {
+      "name" : "arena-rule-dark",
+      "display" : "Allow Dark",
+      "value" : "1",
+      "type" : "INT",
+      "modify" : "EDITABLE",
+      "displayType" : "STANDARD",
+      "order" : 20,
+      "tierId": "arena-rules",
+      "values": [
+        {"name": "No", "value": "0"},
+        {"name": "Yes", "value": "1"}
+      ]
+    }, {
+      "name" : "arena-rule-fire",
+      "display" : "Allow Fire",
+      "value" : "1",
+      "type" : "INT",
+      "modify" : "EDITABLE",
+      "displayType" : "STANDARD",
+      "order" : 20,
+      "tierId": "arena-rules",
+      "values": [
+        {"name": "No", "value": "0"},
+        {"name": "Yes", "value": "1"}
+      ]
+    }, {
+      "name" : "arena-rule-water",
+      "display" : "Allow Water",
+      "value" : "1",
+      "type" : "INT",
+      "modify" : "EDITABLE",
+      "displayType" : "STANDARD",
+      "order" : 20,
+      "tierId": "arena-rules",
+      "values": [
+        {"name": "No", "value": "0"},
+        {"name": "Yes", "value": "1"}
+      ]
+    }, {
+      "name" : "arena-rule-ice",
+      "display" : "Allow Ice",
+      "value" : "1",
+      "type" : "INT",
+      "modify" : "EDITABLE",
+      "displayType" : "STANDARD",
+      "order" : 20,
+      "tierId": "arena-rules",
+      "values": [
+        {"name": "No", "value": "0"},
+        {"name": "Yes", "value": "1"}
+      ]
+    }, {
+      "name" : "arena-rule-earth",
+      "display" : "Allow Earth",
+      "value" : "1",
+      "type" : "INT",
+      "modify" : "EDITABLE",
+      "displayType" : "STANDARD",
+      "order" : 20,
+      "tierId": "arena-rules",
+      "values": [
+        {"name": "No", "value": "0"},
+        {"name": "Yes", "value": "1"}
+      ]
+    }, {
+      "name" : "arena-rule-lightning",
+      "display" : "Allow Lightning",
+      "value" : "1",
+      "type" : "INT",
+      "modify" : "EDITABLE",
+      "displayType" : "STANDARD",
+      "order" : 20,
+      "tierId": "arena-rules",
+      "values": [
+        {"name": "No", "value": "0"},
+        {"name": "Yes", "value": "1"}
+      ]
+    }, {
+      "name" : "arena-rule-wind",
+      "display" : "Allow Wind",
+      "value" : "1",
+      "type" : "INT",
+      "modify" : "EDITABLE",
+      "displayType" : "STANDARD",
+      "order" : 20,
+      "tierId": "arena-rules",
+      "values": [
+        {"name": "No", "value": "0"},
+        {"name": "Yes", "value": "1"}
+      ]
     }
   ],
   "varTiers": [
@@ -274,7 +482,8 @@
     {"title":"Farming", "id":"farm"},
     {"title":"Raid", "id":"raid"},
     {"title":"Refresh", "id":"refresh"},
-    {"title":"Arena", "id":"arena"}
+    {"title":"Arena", "id":"arena"},
+    {"title":"Arena Rules", "id":"arena-rules"}
   ],
   "imports": [
     "_common-no_op",
@@ -286,15 +495,6 @@
     "_common-utils"
   ],
   "states": {
-
-    "_common-power_down": {
-      "name": "Common - Power Down",
-      "statements": [{
-        "condition": {
-          "is": "BOOLEAN", "value": "false"
-        }
-      }]
-    },
 
     "main": {
       "name": "Main - Farming Switcher",

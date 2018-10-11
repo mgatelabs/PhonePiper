@@ -114,7 +114,7 @@
       ]
     },
     "_common-recovery_os": {
-      "name": "Common - Power Device Down",
+      "name": "Common - End Script",
       "includes": [
         "_common-power_down"
       ]
@@ -123,18 +123,10 @@
       "name": "Common - Power Down",
       "statements": [
         {
-          "condition": {
-            "is": "BOOLEAN",
-            "value": "true"
-          },
           "actions": [
             {
               "type": "INFO",
-              "value": "Default operation stops operations and locks the device"
-            },
-            {
-              "type": "EVENT",
-              "value": "power"
+              "value": "Default operation stops execution"
             },
             {
               "type": "STOP"

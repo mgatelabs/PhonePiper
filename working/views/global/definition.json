@@ -802,40 +802,16 @@
     "h" : 1,
     "enabled" : false
   }, {
+    "name" : "Battle - Unit - 0 - LB Bar",
+    "componentId" : "battle-unit-0-lb_bar",
+    "x" : 0,
+    "y" : 0,
+    "w" : 1,
+    "h" : 1,
+    "enabled" : false
+  }, {
     "name" : "Battle - Unit - 0 - Life Bar",
     "componentId" : "battle-unit-0-life_bar",
-    "x" : 0,
-    "y" : 0,
-    "w" : 1,
-    "h" : 1,
-    "enabled" : false
-  }, {
-    "name" : "Battle - Unit - 1 - Life Bar",
-    "componentId" : "battle-unit-1-life_bar",
-    "x" : 0,
-    "y" : 0,
-    "w" : 1,
-    "h" : 1,
-    "enabled" : false
-  }, {
-    "name" : "Battle - Unit - 2 - Life Bar",
-    "componentId" : "battle-unit-2-life_bar",
-    "x" : 0,
-    "y" : 0,
-    "w" : 1,
-    "h" : 1,
-    "enabled" : false
-  }, {
-    "name" : "Battle - Unit - 3 - Life Bar",
-    "componentId" : "battle-unit-3-life_bar",
-    "x" : 0,
-    "y" : 0,
-    "w" : 1,
-    "h" : 1,
-    "enabled" : false
-  }, {
-    "name" : "Battle - Unit - 4 - Life Bar",
-    "componentId" : "battle-unit-4-life_bar",
     "x" : 0,
     "y" : 0,
     "w" : 1,
@@ -850,8 +826,40 @@
     "h" : 1,
     "enabled" : false
   }, {
+    "name" : "Battle - Unit - 1 - LB Bar",
+    "componentId" : "battle-unit-1-lb_bar",
+    "x" : 0,
+    "y" : 0,
+    "w" : 1,
+    "h" : 1,
+    "enabled" : false
+  }, {
+    "name" : "Battle - Unit - 1 - Life Bar",
+    "componentId" : "battle-unit-1-life_bar",
+    "x" : 0,
+    "y" : 0,
+    "w" : 1,
+    "h" : 1,
+    "enabled" : false
+  }, {
     "name" : "Battle - Unit - 1 - MP Bar",
     "componentId" : "battle-unit-1-mp_bar",
+    "x" : 0,
+    "y" : 0,
+    "w" : 1,
+    "h" : 1,
+    "enabled" : false
+  }, {
+    "name" : "Battle - Unit - 2 - LB Bar",
+    "componentId" : "battle-unit-2-lb_bar",
+    "x" : 0,
+    "y" : 0,
+    "w" : 1,
+    "h" : 1,
+    "enabled" : false
+  }, {
+    "name" : "Battle - Unit - 2 - Life Bar",
+    "componentId" : "battle-unit-2-life_bar",
     "x" : 0,
     "y" : 0,
     "w" : 1,
@@ -866,8 +874,40 @@
     "h" : 1,
     "enabled" : false
   }, {
+    "name" : "Battle - Unit - 3 - LB Bar",
+    "componentId" : "battle-unit-3-lb_bar",
+    "x" : 0,
+    "y" : 0,
+    "w" : 1,
+    "h" : 1,
+    "enabled" : false
+  }, {
+    "name" : "Battle - Unit - 3 - Life Bar",
+    "componentId" : "battle-unit-3-life_bar",
+    "x" : 0,
+    "y" : 0,
+    "w" : 1,
+    "h" : 1,
+    "enabled" : false
+  }, {
     "name" : "Battle - Unit - 3 - MP Bar",
     "componentId" : "battle-unit-3-mp_bar",
+    "x" : 0,
+    "y" : 0,
+    "w" : 1,
+    "h" : 1,
+    "enabled" : false
+  }, {
+    "name" : "Battle - Unit - 4 - LB Bar",
+    "componentId" : "battle-unit-4-lb_bar",
+    "x" : 0,
+    "y" : 0,
+    "w" : 1,
+    "h" : 1,
+    "enabled" : false
+  }, {
+    "name" : "Battle - Unit - 4 - Life Bar",
+    "componentId" : "battle-unit-4-life_bar",
     "x" : 0,
     "y" : 0,
     "w" : 1,

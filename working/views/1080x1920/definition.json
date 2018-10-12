@@ -798,17 +798,11 @@
     "name" : "Battle - Unit - 0 - LB Not Full",
     "screenId" : "battle-unit-0_notfull",
     "points" : [ {
-      "x" : 504,
-      "y" : 1294,
-      "r" : 0,
-      "g" : 0,
-      "b" : 37
-    }, {
-      "x" : 506,
-      "y" : 1291,
-      "r" : 0,
-      "g" : 0,
-      "b" : 37
+      "x" : 508,
+      "y" : 1289,
+      "r" : 6,
+      "g" : 6,
+      "b" : 55
     } ],
     "enabled" : true
   }, {
@@ -1091,17 +1085,11 @@
     "name" : "Battle - Unit - 1 - LB Not Full",
     "screenId" : "battle-unit-1_notfull",
     "points" : [ {
-      "x" : 501,
-      "y" : 1488,
-      "r" : 0,
-      "g" : 0,
-      "b" : 46
-    }, {
-      "x" : 503,
-      "y" : 1485,
-      "r" : 4,
-      "g" : 5,
-      "b" : 51
+      "x" : 505,
+      "y" : 1483,
+      "r" : 17,
+      "g" : 18,
+      "b" : 74
     } ],
     "enabled" : true
   }, {
@@ -1330,17 +1318,11 @@
     "name" : "Battle - Unit - 2 - LB Not Full",
     "screenId" : "battle-unit-2_notfull",
     "points" : [ {
-      "x" : 501,
-      "y" : 1682,
-      "r" : 0,
-      "g" : 0,
-      "b" : 45
-    }, {
-      "x" : 503,
-      "y" : 1679,
-      "r" : 4,
-      "g" : 4,
-      "b" : 50
+      "x" : 505,
+      "y" : 1677,
+      "r" : 16,
+      "g" : 17,
+      "b" : 73
     } ],
     "enabled" : true
   }, {
@@ -1569,17 +1551,11 @@
     "name" : "Battle - Unit - 3 - LB Not Full",
     "screenId" : "battle-unit-3_notfull",
     "points" : [ {
-      "x" : 1036,
-      "y" : 1295,
-      "r" : 1,
-      "g" : 1,
-      "b" : 60
-    }, {
-      "x" : 1039,
-      "y" : 1290,
-      "r" : 0,
-      "g" : 0,
-      "b" : 59
+      "x" : 1040,
+      "y" : 1289,
+      "r" : 20,
+      "g" : 22,
+      "b" : 79
     } ],
     "enabled" : true
   }, {
@@ -1766,17 +1742,11 @@
     "name" : "Battle - Unit - 4 - LB Not Full",
     "screenId" : "battle-unit-4_notfull",
     "points" : [ {
-      "x" : 1038,
-      "y" : 1485,
-      "r" : 5,
-      "g" : 6,
-      "b" : 55
-    }, {
-      "x" : 1036,
-      "y" : 1489,
-      "r" : 1,
-      "g" : 1,
-      "b" : 59
+      "x" : 1040,
+      "y" : 1483,
+      "r" : 19,
+      "g" : 21,
+      "b" : 77
     } ],
     "enabled" : true
   }, {
@@ -14370,11 +14340,11 @@
   }, {
     "name" : "Battle - Unit - 0 - LB Bar",
     "componentId" : "battle-unit-0-lb_bar",
-    "x" : 0,
-    "y" : 0,
-    "w" : 1,
+    "x" : 399,
+    "y" : 1289,
+    "w" : 3,
     "h" : 1,
-    "enabled" : false
+    "enabled" : true
   }, {
     "name" : "Battle - Unit - 0 - Life Bar",
     "componentId" : "battle-unit-0-life_bar",
@@ -14394,11 +14364,11 @@
   }, {
     "name" : "Battle - Unit - 1 - LB Bar",
     "componentId" : "battle-unit-1-lb_bar",
-    "x" : 0,
-    "y" : 0,
-    "w" : 1,
+    "x" : 395,
+    "y" : 1484,
+    "w" : 5,
     "h" : 1,
-    "enabled" : false
+    "enabled" : true
   }, {
     "name" : "Battle - Unit - 1 - Life Bar",
     "componentId" : "battle-unit-1-life_bar",
@@ -14418,11 +14388,11 @@
   }, {
     "name" : "Battle - Unit - 2 - LB Bar",
     "componentId" : "battle-unit-2-lb_bar",
-    "x" : 0,
-    "y" : 0,
-    "w" : 1,
-    "h" : 1,
-    "enabled" : false
+    "x" : 435,
+    "y" : 1678,
+    "w" : 5,
+    "h" : 2,
+    "enabled" : true
   }, {
     "name" : "Battle - Unit - 2 - Life Bar",
     "componentId" : "battle-unit-2-life_bar",
@@ -14442,11 +14412,11 @@
   }, {
     "name" : "Battle - Unit - 3 - LB Bar",
     "componentId" : "battle-unit-3-lb_bar",
-    "x" : 0,
-    "y" : 0,
-    "w" : 1,
+    "x" : 957,
+    "y" : 1290,
+    "w" : 4,
     "h" : 1,
-    "enabled" : false
+    "enabled" : true
   }, {
     "name" : "Battle - Unit - 3 - Life Bar",
     "componentId" : "battle-unit-3-life_bar",
@@ -14466,11 +14436,11 @@
   }, {
     "name" : "Battle - Unit - 4 - LB Bar",
     "componentId" : "battle-unit-4-lb_bar",
-    "x" : 0,
-    "y" : 0,
-    "w" : 1,
+    "x" : 930,
+    "y" : 1484,
+    "w" : 5,
     "h" : 1,
-    "enabled" : false
+    "enabled" : true
   }, {
     "name" : "Battle - Unit - 4 - Life Bar",
     "componentId" : "battle-unit-4-life_bar",

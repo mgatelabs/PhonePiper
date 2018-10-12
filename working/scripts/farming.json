@@ -1656,6 +1656,39 @@
         {
           "condition": {
             "is": "SCREEN",
+            "value": "menu-world-grandshelt_isles", "and": [{
+              "is": "SCREEN",
+              "value": "menu-world-grandshelt_isles-earthshrine"
+            }]
+          },
+          "actions": [
+            {
+              "type": "INFO",
+              "value": "Found Grandshelf Isles, found Earth Shrine"
+            },
+            {
+              "type": "SET",
+              "var": "setup",
+              "value": "0"
+            },
+            { "type": "CALL", "value": "@keepAlive" },
+            {
+              "type": "TAP",
+              "value": "menu-location-earthshrine-default"
+            },
+            {
+              "type": "WAIT",
+              "value": "2000"
+            },
+            {
+              "type": "REPEAT",
+              "value": ""
+            }
+          ]
+        },
+        {
+          "condition": {
+            "is": "SCREEN",
             "value": "menu-world-grandshelt_isles"
           },
           "actions": [
@@ -1724,7 +1757,7 @@
             },
             {
               "type": "WAIT",
-              "value": "5000"
+              "value": "2000"
             },
             {
               "type": "REPEAT",

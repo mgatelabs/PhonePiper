@@ -616,6 +616,11 @@
     "points" : [ ],
     "enabled" : false
   }, {
+    "name" : "Menu - World - Grandshelt - Earthshrine",
+    "screenId" : "menu-world-grandshelt_isles-earthshrine",
+    "points" : [ ],
+    "enabled" : false
+  }, {
     "name" : "Menu - World - Lapis",
     "screenId" : "menu-world-lapis",
     "points" : [ ],
@@ -638,6 +643,11 @@
   }, {
     "name" : "OS - Unable to access data",
     "screenId" : "os-unable_to_access_data",
+    "points" : [ ],
+    "enabled" : false
+  }, {
+    "name" : "raid-summon_menu",
+    "screenId" : "raid-summon_menu",
     "points" : [ ],
     "enabled" : false
   }, {
@@ -906,8 +916,8 @@
     "h" : 1,
     "enabled" : false
   }, {
-    "name" : "Battle - Unit - 4 - Life Bar",
-    "componentId" : "battle-unit-4-life_bar",
+    "name" : "Battle - Unit - 3 - MP Bar",
+    "componentId" : "battle-unit-3-mp_bar",
     "x" : 0,
     "y" : 0,
     "w" : 1,
@@ -1314,6 +1324,14 @@
     "h" : 1,
     "enabled" : false
   }, {
+    "name" : "menu-location-earthshrine-default",
+    "componentId" : "menu-location-earthshrine-default",
+    "x" : 0,
+    "y" : 0,
+    "w" : 1,
+    "h" : 1,
+    "enabled" : false
+  }, {
     "name" : "menu-log_in_again-ok",
     "componentId" : "menu-log_in_again-ok",
     "x" : 0,
@@ -1532,6 +1550,14 @@
   }, {
     "name" : "Raid - Summon Results Next",
     "componentId" : "raid-summon_results-next",
+    "x" : 445,
+    "y" : 1660,
+    "w" : 190,
+    "h" : 105,
+    "enabled" : false
+  }, {
+    "name" : "Raid - Summon Results Next",
+    "componentId" : "raid-summon_results-next-2",
     "x" : 445,
     "y" : 1660,
     "w" : 190,

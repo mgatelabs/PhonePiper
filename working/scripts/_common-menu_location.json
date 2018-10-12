@@ -1,12 +1,10 @@
 {
-  "vars": [
-    {
+  "vars": [{
       "name": "min-energy",
       "value": "1",
       "type": "INT",
       "modify":"EDITABLE"
-    },
-    {
+    },{
       "name": "menu-item",
       "display": "Menu Item",
       "value": "0",
@@ -20,269 +18,21 @@
   "states": {
 
     "_common-ml-mission": {
-      "name": "Common - Missions - Item 0",
-      "statements": [
-        {
-          "condition": {
-            "is": "SCREEN",
-            "value": "menu-missions-select",
-            "and": [
-              {
-                "is": "EQUAL",
-                "var": "menu-item",
-                "value": "0"
-              },
-              { "is": "CALL", "value":"@isMinEnergyAvailable" }
-            ]
-          },
-          "actions": [
-            {
-              "type": "INFO",
-              "value": "Clicking Mission Item 0"
-            },
-            {
-              "type": "TAP",
-              "value": "menu-mission_list-item_0"
-            },
-            {
-              "type": "WAIT",
-              "value": "200"
-            },
-            {
-              "type": "REPEAT",
-              "value": ""
-            }
+      "name": "Common - Missions",
+      "statements": [{
+        "condition": {
+          "is": "SCREEN", "value": "menu-missions-select",
+          "and": [
+            {"is": "CALL", "value":"@isMinEnergyAvailable" }
           ]
         },
-        {
-          "condition": {
-            "is": "SCREEN",
-            "value": "menu-missions-select",
-            "and": [
-              {
-                "is": "EQUAL",
-                "var": "menu-item",
-                "value": "1"
-              },
-              { "is": "CALL", "value":"@isMinEnergyAvailable" }
-            ]
-          },
-          "actions": [
-            {
-              "type": "INFO",
-              "value": "Clicking Mission Item 1"
-            },
-            {
-              "type": "TAP",
-              "value": "menu-mission_list-item_1"
-            },
-            {
-              "type": "WAIT",
-              "value": "200"
-            },
-            {
-              "type": "REPEAT",
-              "value": ""
-            }
-          ]
-        },
-        {
-          "condition": {
-            "is": "SCREEN",
-            "value": "menu-missions-select",
-            "and": [
-              {
-                "is": "EQUAL",
-                "var": "menu-item",
-                "value": "2"
-              },
-              { "is": "CALL", "value":"@isMinEnergyAvailable" }
-            ]
-          },
-          "actions": [
-            {
-              "type": "INFO",
-              "value": "Clicking Mission Item 2"
-            },
-            {
-              "type": "TAP",
-              "value": "menu-mission_list-item_2"
-            },
-            {
-              "type": "WAIT",
-              "value": "200"
-            },
-            {
-              "type": "REPEAT",
-              "value": ""
-            }
-          ]
-        },
-        {
-          "condition": {
-            "is": "SCREEN",
-            "value": "menu-missions-select",
-            "and": [
-              {
-                "is": "EQUAL",
-                "var": "menu-item",
-                "value": "3"
-              },
-              { "is": "CALL", "value":"@isMinEnergyAvailable" }
-            ]
-          },
-          "actions": [
-            {
-              "type": "INFO",
-              "value": "Clicking Mission Item 3"
-            },
-            {
-              "type": "TAP",
-              "value": "menu-mission_list-item_3"
-            },
-            {
-              "type": "WAIT",
-              "value": "200"
-            },
-            {
-              "type": "REPEAT",
-              "value": ""
-            }
-          ]
-        }
-      ]
-    },
-
-    "_common-ml-mission_0": {
-      "name": "Common - Missions - Item 0",
-      "statements": [
-        {
-          "condition": {
-            "is": "SCREEN",
-            "value": "menu-missions-select",
-            "and": [
-              { "is": "CALL", "value":"@isMinEnergyAvailable" }
-            ]
-          },
-          "actions": [
-            {
-              "type": "INFO",
-              "value": "Clicking Mission Item 0"
-            },
-            {
-              "type": "TAP",
-              "value": "menu-mission_list-item_0"
-            },
-            {
-              "type": "WAIT",
-              "value": "2000"
-            },
-            {
-              "type": "REPEAT",
-              "value": ""
-            }
-          ]
-        }
-      ]
-    },
-
-    "_common-ml-mission_1": {
-      "name": "Common - Missions - Item 1",
-      "statements": [
-        {
-          "condition": {
-            "is": "SCREEN",
-            "value": "menu-missions-select",
-            "and": [
-              { "is": "CALL", "value":"@isMinEnergyAvailable" }
-            ]
-          },
-          "actions": [
-            {
-              "type": "INFO",
-              "value": "Clicking Mission Item 1"
-            },
-            {
-              "type": "TAP",
-              "value": "menu-mission_list-item_1"
-            },
-            {
-              "type": "WAIT",
-              "value": "200"
-            },
-            {
-              "type": "REPEAT",
-              "value": ""
-            }
-          ]
-        }
-      ]
-    },
-
-    "_common-ml-mission_2": {
-      "name": "Common - Missions - Item 2",
-      "statements": [
-        {
-          "condition": {
-            "is": "SCREEN",
-            "value": "menu-missions-select",
-            "and": [
-              { "is": "CALL", "value":"@isMinEnergyAvailable" }
-            ]
-          },
-          "actions": [
-            {
-              "type": "INFO",
-              "value": "Clicking Mission Item 2"
-            },
-            {
-              "type": "TAP",
-              "value": "menu-mission_list-item_2"
-            },
-            {
-              "type": "WAIT",
-              "value": "200"
-            },
-            {
-              "type": "REPEAT",
-              "value": ""
-            }
-          ]
-        }
-      ]
-    },
-
-    "_common-ml-mission_3": {
-      "name": "Common - Missions - Item 3",
-      "statements": [
-        {
-          "condition": {
-            "is": "SCREEN",
-            "value": "menu-missions-select",
-            "and": [
-              { "is": "CALL", "value":"@isMinEnergyAvailable" }
-            ]
-          },
-          "actions": [
-            {
-              "type": "INFO",
-              "value": "Clicking Mission Item 3"
-            },
-            {
-              "type": "TAP",
-              "value": "menu-mission_list-item_3"
-            },
-            {
-              "type": "WAIT",
-              "value": "200"
-            },
-            {
-              "type": "REPEAT",
-              "value": ""
-            }
-          ]
-        }
-      ]
+        "actions": [{
+          "type": "INFO", "value": "Clicking Mission Item ${menu-item}"}, {
+          "type": "TAP", "value": "menu-mission_list-item_${menu-item}"}, {
+          "type": "WAIT", "value": "200"}, {
+          "type": "REPEAT", "value": ""}
+        ]
+      }]
     },
 
     "_common-ml-goals": {
@@ -317,6 +67,7 @@
         }
       ]
     },
+
     "_common-ml-goals-quick": {
       "name": "Common - Goals (Quick)",
       "statements": [

@@ -179,14 +179,14 @@ public class ScriptDetailComponent extends JPanel {
                     if (varName.length() > 0) {
 
                         for (VarDefinition varDefinition : scriptDefinition.getVars()) {
-                            if (varDefinition.getName().equals(varName)) {
+                            if (varDefinition.getDescription().equals(varName)) {
                                 showMessage("Duplicate Variable", "A variable with the name: " + varName + " already exists!");
                                 return;
                             }
                         }
 
                         VarDefinition varDefinition = new VarDefinition();
-                        varDefinition.setName(varName);
+                        varDefinition.setDescription(varName);
                         varDefinition.setType(VarType.INT);
                         varDefinition.setValue("0");
 
@@ -194,7 +194,7 @@ public class ScriptDetailComponent extends JPanel {
 
                         VariableNode node = new VariableNode(varDefinition);
                         variableNode.add(node);
-                        variableNodes.put(varDefinition.getName(), node);
+                        variableNodes.put(varDefinition.getDescription(), node);
 
                     }
                     scriptDetailComponent.setupForNewVariable();

@@ -140,23 +140,21 @@ public class StateDefinition {
         setStateDefTree(parent);
         if (counter > 10) {
             System.out.println("Tree has exceeded maximum number of depth: ");
-            System.out.println(parent.getRoot().printNodes());
+            System.out.println(parent.findRoot().printNodes());
             return;
         }
         counter++;
 
         for (String scriptId : getIncludes()) {
             if (scriptId.trim().length() > 0) {
-                final TreeNode<StateDefinition> childNode = new TreeNode<StateDefinition>(parent);
-
                 StateDefinition stateDef = stateDefinitionMap.get(scriptId);
+                final TreeNode<StateDefinition> childNode = new TreeNode<StateDefinition>(scriptId, stateDef, parent);
+
                 if (stateDef == null) {
-                    childNode.setIdentifier(scriptId);
                     System.out.println("Could not find Script include: " + scriptId + " for states " + getId());
                     continue;
                 }
-
-                childNode.setData(stateDef);
+                childNode.setDescription(stateDef.getDescription());
                 stateDef.buildStateDefinitionTree(childNode, stateDefinitionMap, counter);
             }
         }

@@ -32,7 +32,39 @@
       "modify": "EDITABLE",
       "displayType": "BOOLEAN",
       "order": 10
+    },
+    {
+      "name": "os-icon",
+      "display": "App Icon",
+      "value": "a",
+      "type": "STRING",
+      "modify": "EDITABLE",
+      "order": 20,
+      "tierId": "os",
+      "values": [
+        {"name": "A", "value": "a"},
+        {"name": "B", "value": "b"},
+        {"name": "C", "value": "c"}
+      ],
+      "description": "Which menu item do you wish to farm.  Typically the first item is a Exploration so you would want two or three."
+    },
+    {
+      "name": "os-recovery",
+      "display": "Recovery",
+      "value": "0",
+      "type": "INT",
+      "modify": "EDITABLE",
+      "order": 20,
+      "tierId": "os",
+      "values": [
+        {"name": "Stop", "value": "0"},
+        {"name": "Recover", "value": "1"}
+      ],
+      "description": "Which menu item do you wish to farm.  Typically the first item is a Exploration so you would want two or three."
     }
+  ],
+  "varTiers": [
+    {"title":"OS", "id":"os"}
   ],
   "states": {
     "main": {
@@ -338,20 +370,60 @@
         {
           "condition": {
             "is": "SCREEN",
-            "value": "os-home"
+            "value": "os-home",
+            "or": [
+              {
+                "is": "SCREEN",
+                "value": "os-home-top"
+              },
+              {
+                "is": "SCREEN",
+                "value": "os-home-bottom"
+              },
+              {
+                "is": "SCREEN",
+                "value": "os-home-left"
+              },
+              {
+                "is": "SCREEN",
+                "value": "os-home-right"
+              }
+            ]
           },
           "actions": [
             {
               "type": "INFO",
-              "value": "Home Screen Detected!"
+              "value": "Home Screen Detected, resuming",
+              "condition": {
+                "is": "EQUAL",
+                "var": "os-recovery",
+                "value": "1"
+              }
             },
             {
               "type": "TAP",
-              "value": "os-app-icon"
+              "value": "os-app-icon_${os-icon}",
+              "condition": {
+                "is": "EQUAL",
+                "var": "os-recovery",
+                "value": "1"
+              }
             },
             {
               "type": "MOVE",
-              "value": "log-in"
+              "value": "log-in",
+              "condition": {
+                "is": "EQUAL",
+                "var": "os-recovery",
+                "value": "1"
+              }
+            },
+            {
+              "type": "INFO",
+              "value": "Stopping due to recovery"
+            },
+            {
+              "type": "STOP"
             }
           ]
         },

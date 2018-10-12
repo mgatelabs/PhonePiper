@@ -641,6 +641,26 @@
     "points" : [ ],
     "enabled" : false
   }, {
+    "name" : "OS - Home - Bottom",
+    "screenId" : "os-home-bottom",
+    "points" : [ ],
+    "enabled" : false
+  }, {
+    "name" : "OS - Home - Left",
+    "screenId" : "os-home-left",
+    "points" : [ ],
+    "enabled" : false
+  }, {
+    "name" : "OS - Home - Right",
+    "screenId" : "os-home-right",
+    "points" : [ ],
+    "enabled" : false
+  }, {
+    "name" : "OS - Home - Top",
+    "screenId" : "os-home-top",
+    "points" : [ ],
+    "enabled" : false
+  }, {
     "name" : "OS - Unable to access data",
     "screenId" : "os-unable_to_access_data",
     "points" : [ ],
@@ -1516,8 +1536,24 @@
     "h" : 1,
     "enabled" : false
   }, {
-    "name" : "OS - App - Icon",
-    "componentId" : "os-app-icon",
+    "name" : "OS - App - Icon A",
+    "componentId" : "os-app-icon_a",
+    "x" : 0,
+    "y" : 0,
+    "w" : 1,
+    "h" : 1,
+    "enabled" : false
+  }, {
+    "name" : "OS - App - Icon B",
+    "componentId" : "os-app-icon_b",
+    "x" : 0,
+    "y" : 0,
+    "w" : 1,
+    "h" : 1,
+    "enabled" : false
+  }, {
+    "name" : "OS - App - Icon C",
+    "componentId" : "os-app-icon_c",
     "x" : 0,
     "y" : 0,
     "w" : 1,

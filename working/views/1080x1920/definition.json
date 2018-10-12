@@ -12784,6 +12784,242 @@
     "points" : [ ],
     "enabled" : false
   }, {
+    "name" : "OS - Home - Bottom",
+    "screenId" : "os-home-bottom",
+    "points" : [ {
+      "x" : 379,
+      "y" : 1091,
+      "r" : 0,
+      "g" : 0,
+      "b" : 0
+    }, {
+      "x" : 419,
+      "y" : 1091,
+      "r" : 1,
+      "g" : 253,
+      "b" : 255
+    }, {
+      "x" : 459,
+      "y" : 1091,
+      "r" : 0,
+      "g" : 255,
+      "b" : 3
+    }, {
+      "x" : 499,
+      "y" : 1091,
+      "r" : 253,
+      "g" : 3,
+      "b" : 0
+    }, {
+      "x" : 540,
+      "y" : 1091,
+      "r" : 255,
+      "g" : 255,
+      "b" : 255
+    }, {
+      "x" : 579,
+      "y" : 1092,
+      "r" : 0,
+      "g" : 255,
+      "b" : 0
+    }, {
+      "x" : 617,
+      "y" : 1091,
+      "r" : 1,
+      "g" : 0,
+      "b" : 252
+    }, {
+      "x" : 661,
+      "y" : 1093,
+      "r" : 254,
+      "g" : 254,
+      "b" : 6
+    }, {
+      "x" : 700,
+      "y" : 1091,
+      "r" : 255,
+      "g" : 255,
+      "b" : 255
+    } ],
+    "enabled" : true
+  }, {
+    "name" : "OS - Home - Left",
+    "screenId" : "os-home-left",
+    "points" : [ {
+      "x" : 209,
+      "y" : 602,
+      "r" : 255,
+      "g" : 255,
+      "b" : 255
+    }, {
+      "x" : 209,
+      "y" : 642,
+      "r" : 255,
+      "g" : 255,
+      "b" : 0
+    }, {
+      "x" : 209,
+      "y" : 679,
+      "r" : 0,
+      "g" : 0,
+      "b" : 254
+    }, {
+      "x" : 209,
+      "y" : 722,
+      "r" : 0,
+      "g" : 255,
+      "b" : 6
+    }, {
+      "x" : 209,
+      "y" : 762,
+      "r" : 255,
+      "g" : 255,
+      "b" : 255
+    }, {
+      "x" : 209,
+      "y" : 799,
+      "r" : 253,
+      "g" : 2,
+      "b" : 0
+    }, {
+      "x" : 209,
+      "y" : 841,
+      "r" : 3,
+      "g" : 254,
+      "b" : 3
+    }, {
+      "x" : 209,
+      "y" : 881,
+      "r" : 1,
+      "g" : 255,
+      "b" : 253
+    }, {
+      "x" : 209,
+      "y" : 922,
+      "r" : 0,
+      "g" : 0,
+      "b" : 0
+    } ],
+    "enabled" : true
+  }, {
+    "name" : "OS - Home - Right",
+    "screenId" : "os-home-right",
+    "points" : [ {
+      "x" : 869,
+      "y" : 601,
+      "r" : 255,
+      "g" : 255,
+      "b" : 255
+    }, {
+      "x" : 869,
+      "y" : 642,
+      "r" : 255,
+      "g" : 255,
+      "b" : 1
+    }, {
+      "x" : 869,
+      "y" : 682,
+      "r" : 0,
+      "g" : 1,
+      "b" : 252
+    }, {
+      "x" : 870,
+      "y" : 720,
+      "r" : 0,
+      "g" : 255,
+      "b" : 0
+    }, {
+      "x" : 869,
+      "y" : 762,
+      "r" : 255,
+      "g" : 255,
+      "b" : 255
+    }, {
+      "x" : 869,
+      "y" : 802,
+      "r" : 253,
+      "g" : 1,
+      "b" : 0
+    }, {
+      "x" : 869,
+      "y" : 842,
+      "r" : 0,
+      "g" : 255,
+      "b" : 0
+    }, {
+      "x" : 869,
+      "y" : 881,
+      "r" : 1,
+      "g" : 255,
+      "b" : 253
+    }, {
+      "x" : 869,
+      "y" : 921,
+      "r" : 0,
+      "g" : 0,
+      "b" : 0
+    } ],
+    "enabled" : true
+  }, {
+    "name" : "OS - Home - Top",
+    "screenId" : "os-home-top",
+    "points" : [ {
+      "x" : 380,
+      "y" : 431,
+      "r" : 0,
+      "g" : 0,
+      "b" : 0
+    }, {
+      "x" : 419,
+      "y" : 431,
+      "r" : 0,
+      "g" : 255,
+      "b" : 255
+    }, {
+      "x" : 458,
+      "y" : 431,
+      "r" : 3,
+      "g" : 253,
+      "b" : 5
+    }, {
+      "x" : 500,
+      "y" : 431,
+      "r" : 254,
+      "g" : 0,
+      "b" : 0
+    }, {
+      "x" : 539,
+      "y" : 431,
+      "r" : 255,
+      "g" : 255,
+      "b" : 255
+    }, {
+      "x" : 579,
+      "y" : 429,
+      "r" : 0,
+      "g" : 255,
+      "b" : 0
+    }, {
+      "x" : 620,
+      "y" : 431,
+      "r" : 2,
+      "g" : 0,
+      "b" : 252
+    }, {
+      "x" : 660,
+      "y" : 431,
+      "r" : 254,
+      "g" : 255,
+      "b" : 0
+    }, {
+      "x" : 700,
+      "y" : 431,
+      "r" : 255,
+      "g" : 255,
+      "b" : 255
+    } ],
+    "enabled" : true
+  }, {
     "name" : "OS - Unable to access data",
     "screenId" : "os-unable_to_access_data",
     "points" : [ {
@@ -14132,6 +14368,14 @@
     "h" : 183,
     "enabled" : true
   }, {
+    "name" : "Battle - Unit - 0 - LB Bar",
+    "componentId" : "battle-unit-0-lb_bar",
+    "x" : 0,
+    "y" : 0,
+    "w" : 1,
+    "h" : 1,
+    "enabled" : false
+  }, {
     "name" : "Battle - Unit - 0 - Life Bar",
     "componentId" : "battle-unit-0-life_bar",
     "x" : 73,
@@ -14147,6 +14391,14 @@
     "w" : 136,
     "h" : 0,
     "enabled" : true
+  }, {
+    "name" : "Battle - Unit - 1 - LB Bar",
+    "componentId" : "battle-unit-1-lb_bar",
+    "x" : 0,
+    "y" : 0,
+    "w" : 1,
+    "h" : 1,
+    "enabled" : false
   }, {
     "name" : "Battle - Unit - 1 - Life Bar",
     "componentId" : "battle-unit-1-life_bar",
@@ -14164,6 +14416,14 @@
     "h" : 0,
     "enabled" : true
   }, {
+    "name" : "Battle - Unit - 2 - LB Bar",
+    "componentId" : "battle-unit-2-lb_bar",
+    "x" : 0,
+    "y" : 0,
+    "w" : 1,
+    "h" : 1,
+    "enabled" : false
+  }, {
     "name" : "Battle - Unit - 2 - Life Bar",
     "componentId" : "battle-unit-2-life_bar",
     "x" : 73,
@@ -14180,6 +14440,14 @@
     "h" : 0,
     "enabled" : true
   }, {
+    "name" : "Battle - Unit - 3 - LB Bar",
+    "componentId" : "battle-unit-3-lb_bar",
+    "x" : 0,
+    "y" : 0,
+    "w" : 1,
+    "h" : 1,
+    "enabled" : false
+  }, {
     "name" : "Battle - Unit - 3 - Life Bar",
     "componentId" : "battle-unit-3-life_bar",
     "x" : 609,
@@ -14195,6 +14463,14 @@
     "w" : 136,
     "h" : 0,
     "enabled" : true
+  }, {
+    "name" : "Battle - Unit - 4 - LB Bar",
+    "componentId" : "battle-unit-4-lb_bar",
+    "x" : 0,
+    "y" : 0,
+    "w" : 1,
+    "h" : 1,
+    "enabled" : false
   }, {
     "name" : "Battle - Unit - 4 - Life Bar",
     "componentId" : "battle-unit-4-life_bar",
@@ -14796,13 +15072,29 @@
     "h" : 156,
     "enabled" : true
   }, {
-    "name" : "OS - App - Icon",
-    "componentId" : "os-app-icon",
-    "x" : 0,
-    "y" : 0,
-    "w" : 1,
-    "h" : 1,
-    "enabled" : false
+    "name" : "OS - App - Icon A",
+    "componentId" : "os-app-icon_a",
+    "x" : 510,
+    "y" : 1236,
+    "w" : 40,
+    "h" : 42,
+    "enabled" : true
+  }, {
+    "name" : "OS - App - Icon B",
+    "componentId" : "os-app-icon_b",
+    "x" : 511,
+    "y" : 1556,
+    "w" : 65,
+    "h" : 46,
+    "enabled" : true
+  }, {
+    "name" : "OS - App - Icon C",
+    "componentId" : "os-app-icon_c",
+    "x" : 514,
+    "y" : 1654,
+    "w" : 52,
+    "h" : 56,
+    "enabled" : true
   }, {
     "name" : "OS - Unable to access data - OK",
     "componentId" : "os-unable_to_access_data-ok",

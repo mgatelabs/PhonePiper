@@ -8,6 +8,7 @@ import com.google.common.collect.Maps;
 import com.mgatelabs.piper.shared.TreeNode;
 import com.mgatelabs.piper.shared.util.JsonTool;
 
+import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
 
@@ -161,6 +162,15 @@ public final class ScriptEnvironment {
                 loadDefinitions(scriptDefinition.getScriptDefTree());
             }
             buildStateDefinitions();
+
+            List<VarTierDefinition> sortedVarTierDefinitions = Lists.newArrayList(varTiers.values());
+
+            sortedVarTierDefinitions.sort(new Comparator<VarTierDefinition>() {
+                @Override
+                public int compare(VarTierDefinition o1, VarTierDefinition o2) {
+                    return o1.getId().compareTo(o2.getId());
+                }
+            });
 
             try {
                 String test = JsonTool.getInstance().writeValueAsString(scriptDefinitions.get(0).getScriptDefTree());

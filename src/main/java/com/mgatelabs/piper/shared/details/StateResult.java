@@ -2,59 +2,76 @@ package com.mgatelabs.piper.shared.details;
 
 import com.mgatelabs.piper.shared.util.Var;
 
+import java.util.Stack;
+
 /**
  * Created by @mgatelabs (Michael Fuller) on 9/4/2017 for Phone-Piper
  */
 public class StateResult {
 
-  private final ActionType type;
-  private final ActionDefinition actionDefinition;
-  private final StateResult priorStateResult;
-  private int actionIndex;
-  private final StateDefinition stateDefinition;
-  private Var result;
+    private final ActionType type;
+    private final ActionDefinition actionDefinition;
+    private final StateResult priorStateResult;
+    private final Stack<ProcessingStateInfo> stack;
+    private Var result;
 
-  public static final StateResult REPEAT = new StateResult(ActionType.REPEAT, null, null, 0, null);
-  public static final StateResult RETURN = new StateResult(ActionType.RETURN, null, null, 0, null);
+    public static StateResult REPEAT(Stack<ProcessingStateInfo> stack) {
+        return new StateResult(ActionType.REPEAT, null, null, stack);
+    }
 
-  public StateResult(ActionType type, ActionDefinition actionDefinition, StateResult priorStateResult, int actionIndex, StateDefinition stateDefinition) {
-    this.type = type;
-    this.actionDefinition = actionDefinition;
-    this.priorStateResult = priorStateResult;
-    this.actionIndex = actionIndex;
-    this.stateDefinition = stateDefinition;
-    this.result = null;
-  }
+    public static StateResult SOFT_REPEAT(Stack<ProcessingStateInfo> stack) {
+        return new StateResult(ActionType.SOFT_REPEAT, null, null, stack);
+    }
 
-  public Var getResult() {
-    return result;
-  }
+    public static StateResult RETURN(Stack<ProcessingStateInfo> stack) {
+        return new StateResult(ActionType.RETURN, null, null, stack);
+    }
 
-  public void setResult(Var result) {
-    this.result = result;
-  }
+    public static StateResult STOP(Stack<ProcessingStateInfo> stack) {
+        return new StateResult(ActionType.STOP, null, null, stack);
+    }
 
-  public ActionType getType() {
-    return type;
-  }
+    public StateResult(ActionType type, ActionDefinition actionDefinition, StateResult priorStateResult, Stack<ProcessingStateInfo> stack) {
+        this.type = type;
+        this.actionDefinition = actionDefinition;
+        this.priorStateResult = priorStateResult;
+        this.stack = new Stack<>();
+        for (ProcessingStateInfo state : stack) {
+            this.stack.push(new ProcessingStateInfo(state));
+        }
+        this.result = null;
+    }
 
-  public String getValue() {
-    return actionDefinition.getValue();
-  }
+    public Var getResult() {
+        return result;
+    }
 
-  public ActionDefinition getActionDefinition() {
-    return actionDefinition;
-  }
+    public void setResult(Var result) {
+        this.result = result;
+    }
 
-  public StateResult getPriorStateResult() {
-    return priorStateResult;
-  }
+    public ActionType getType() {
+        return type;
+    }
 
-  public int getActionIndex() {
-    return actionIndex;
-  }
+    public String getValue() {
+        return actionDefinition.getValue();
+    }
 
-  public StateDefinition getStateDefinition() {
-    return stateDefinition;
-  }
+    public ActionDefinition getActionDefinition() {
+        return actionDefinition;
+    }
+
+    public StateResult getPriorStateResult() {
+        return priorStateResult;
+    }
+
+    public Stack<ProcessingStateInfo> getStack() {
+        return stack;
+    }
+
+    @Override
+    public String toString() {
+        return type.name() + (result != null ? (" [" + result.toString() + "]") : "");
+    }
 }

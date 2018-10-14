@@ -1,6 +1,7 @@
 package com.mgatelabs.piper.shared.util;
 
 import com.google.common.collect.Maps;
+import com.mgatelabs.piper.shared.details.ExecutableLink;
 import com.mgatelabs.piper.shared.details.StateDefinition;
 import com.mgatelabs.piper.shared.details.VarDefinition;
 
@@ -35,14 +36,14 @@ public class VarManager {
         }
     }
 
-    public void state(StateDefinition stateDefinition, Map<String, String> arguments, Logger logger) {
+    public void state(ExecutableLink executableState, Map<String, String> arguments, Logger logger) {
         calls.clear();
-        if (!stateDefinition.getId().equalsIgnoreCase(currentSceneId)) {
+        if (!executableState.getId().equalsIgnoreCase(currentSceneId)) {
             // Only reset the state if the state is different
-            currentSceneId = stateDefinition.getId();
+            currentSceneId = executableState.getId();
             state.clear();
             // Set with default arguments
-            for (Map.Entry<String, VarDefinition> entry : stateDefinition.getVariables().entrySet()) {
+            for (Map.Entry<String, VarDefinition> entry : executableState.getVariables().entrySet()) {
                 state.put(entry.getKey(), new VarInstance(entry.getValue()));
             }
             // Override with arguments
@@ -60,10 +61,10 @@ public class VarManager {
     }
 
     // Future use
-    public void push(StateDefinition stateDefinition, Map<String, String> arguments) {
+    public void push(ExecutableLink executableState, Map<String, String> arguments) {
         Map<String, VarInstance> callArgs = Maps.newHashMap();
         // Set with default arguments
-        for (Map.Entry<String, VarDefinition> entry: stateDefinition.getVariables().entrySet()) {
+        for (Map.Entry<String, VarDefinition> entry: executableState.getVariables().entrySet()) {
             callArgs.put(entry.getKey(), new VarInstance(entry.getValue()));
         }
         // Override with arguments

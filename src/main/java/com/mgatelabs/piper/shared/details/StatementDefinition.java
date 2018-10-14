@@ -38,7 +38,7 @@ public class StatementDefinition {
         this.description = description;
     }
 
-    public Set<String> determineScreenIds(final Set<String> exploredStates, final Map<String, StateDefinition> states) {
+    public Set<String> determineScreenIds(final Set<String> exploredStates, final Map<String, ExecutableLink> states) {
         final Set<String> found = Sets.newHashSet();
         if (getCondition() != null) {
             found.addAll(getCondition().determineScreenIds(exploredStates, states));

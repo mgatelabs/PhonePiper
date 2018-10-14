@@ -18,6 +18,7 @@ public enum ActionType {
     PIXEL(ActionValueType.NONE, false, true, true, true), // Swipe
     REPEAT(ActionValueType.NONE, false, true, false, false),
     RETURN(ActionValueType.NONE, false, false, true, true),
+    SOFT_REPEAT(ActionValueType.NONE, false, false, false, false),
     MOVE(ActionValueType.STATE_ID, false, true, false, false), // Move to a new state
     WAIT(ActionValueType.INT, false, true, true, false), // Wait a few MS
     INFO(ActionValueType.STRING, false, true, true, true), // Show a info message

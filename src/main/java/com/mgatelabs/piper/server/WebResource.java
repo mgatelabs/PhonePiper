@@ -3,6 +3,7 @@ package com.mgatelabs.piper.server;
 import com.google.common.base.Charsets;
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableMap;
+import com.google.common.collect.ImmutableSet;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 import com.google.common.io.Resources;
@@ -606,7 +607,10 @@ public class WebResource {
                 }
             });
 
-            stateDefinitions.addAll(frameChoices.getScriptEnvironment().getFilteredStates().values());
+            Collection<ExecutableLink> executableLinks = frameChoices.getScriptEnvironment().getExecutableStates(ImmutableSet.of(StateType.STATE)).values();
+            for (ExecutableLink link: executableLinks) {
+                stateDefinitions.add(link.getLink().getState());
+            }
 
             for (StateDefinition definition : stateDefinitions) {
                 result.getStates().add(new NamedValueDescriptionItem(definition.getName(), definition.getId(), definition.getDescription()));
@@ -626,6 +630,14 @@ public class WebResource {
             }
 
             result.getVariables().addAll(runner.getVariables());
+            result.getVariables().sort(new Comparator<VarDefinition>() {
+                @Override
+                public int compare(VarDefinition o1, VarDefinition o2) {
+                    int firstTry = Integer.compare(o1.getOrder(), o2.getOrder());
+                    if (firstTry != 0) return firstTry;
+                    return o1.getName().compareTo(o2.getName());
+                }
+            });
             result.getVariableTiers().addAll(runner.getVariableTiers());
 
             result.setWebLevel(Loggers.webLogger.getLevel().getName());

@@ -862,9 +862,9 @@ public class ScriptRunner {
                                 int time = valueHandler(actionDefinition.getValue()).toInt();
                                 if (time > 0) {
                                     waitFor(time);
-                                } else {
-                                    logger.log(Level.SEVERE, "Invalid wait time: " + actionDefinition.getValue());
-                                    throw new RuntimeException("Invalid wait time: " + actionDefinition.getValue());
+                                } else if (time < 0) {
+                                    logger.log(Level.SEVERE, "Invalid wait time: " + actionDefinition.getValue() + " = " + time);
+                                    throw new RuntimeException("Invalid wait time: " + actionDefinition.getValue() + " = " + time);
                                 }
                             }
                             break;

@@ -151,11 +151,19 @@ public class ActionDefinition {
                 return "Call: " + value;
             case RETURN:
                 return "RETURN";
+            case SOFT_REPEAT:
+                return "SOFT REPEAT";
+            case PIXEL:
+                return "PIXEL";
+            case COMPONENT:
+                return "COMPONENT";
+            case RANDOM:
+                return "RANDOM";
         }
         return "???";
     }
 
-    public Set<String> determineScreenIds(final Set<String> exploredStates, final Map<String, StateDefinition> states) {
+    public Set<String> determineScreenIds(final Set<String> exploredStates, final Map<String, ExecutableLink> states) {
         Set<String> found = Sets.newHashSet();
 
         if (getCondition() != null) {
@@ -163,8 +171,12 @@ public class ActionDefinition {
         }
 
         if (getType() == ActionType.CALL) {
-            StateDefinition otherDefinition = states.get(getValue());
-            found.addAll(otherDefinition.determineScreenIds(exploredStates, states));
+            ExecutableLink otherDefinition = states.get(getValue());
+            if (otherDefinition != null) {
+                found.addAll(otherDefinition.getLink().getState().determineScreenIds(exploredStates, states));
+            } else {
+                throw new RuntimeException("Could not find executable state: " + getValue());
+            }
         }
 
         return found;

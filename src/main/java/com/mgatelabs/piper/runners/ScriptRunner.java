@@ -12,11 +12,14 @@ import com.mgatelabs.piper.shared.details.ComponentDefinition;
 import com.mgatelabs.piper.shared.details.ConditionDefinition;
 import com.mgatelabs.piper.shared.details.ConnectionDefinition;
 import com.mgatelabs.piper.shared.details.DeviceDefinition;
+import com.mgatelabs.piper.shared.details.ExecutableLink;
+import com.mgatelabs.piper.shared.details.ProcessingStateInfo;
 import com.mgatelabs.piper.shared.details.ScreenDefinition;
 import com.mgatelabs.piper.shared.details.ScriptEnvironment;
 import com.mgatelabs.piper.shared.details.StateCallType;
-import com.mgatelabs.piper.shared.details.StateDefinition;
+import com.mgatelabs.piper.shared.details.StateLink;
 import com.mgatelabs.piper.shared.details.StateResult;
+import com.mgatelabs.piper.shared.details.StateType;
 import com.mgatelabs.piper.shared.details.StatementDefinition;
 import com.mgatelabs.piper.shared.details.VarDefinition;
 import com.mgatelabs.piper.shared.details.VarDisplay;
@@ -61,6 +64,8 @@ import java.util.logging.Logger;
 import java.util.regex.Pattern;
 
 /**
+ * Used to run an ScriptEnvironment program
+ *
  * Created by @mgatelabs (Michael Fuller) on 9/4/2017 for Phone-Piper
  */
 public class ScriptRunner {
@@ -140,7 +145,7 @@ public class ScriptRunner {
 
         logger.finer("Extracting Variables");
 
-        List<VarDefinition> varDefinitions = Lists.newArrayList(scriptEnvironment.getVarDefinitions());
+        List<VarDefinition> varDefinitions = Lists.newArrayList(scriptEnvironment.getVarDefinitions().values());
         vars.global(varDefinitions);
 
         for (VarDefinition varDefinition : varDefinitions) {
@@ -179,9 +184,6 @@ public class ScriptRunner {
         transferStateMap.putAll(generateStateInfo());
 
         transferMap = new MapTransfer();
-        //ComponentDefinition miniMapArea = components.get("dungeon-mini_map-area");
-        //ComponentDefinition miniMapAreaCenter = components.get("dungeon-mini_map-center");
-        //transferMap.setup(deviceDefinition.getWidth(), 12, 4, miniMapArea.getW(), miniMapArea.getH(), miniMapArea.getX(), miniMapArea.getY(), miniMapAreaCenter.getW(), miniMapAreaCenter.getH());
 
         validScreenIds = null;
 
@@ -283,12 +285,14 @@ public class ScriptRunner {
 
         Map<String, StateTransfer> results = Maps.newHashMap();
 
-        for (Map.Entry<String, StateDefinition> stateEntry : scriptEnvironment.getFilteredStates().entrySet()) {
+        final ImmutableMap<String, ExecutableLink> executables = scriptEnvironment.getExecutableStates(ImmutableSet.of(StateType.STATE, StateType.FUNCTION));
+
+        for (Map.Entry<String, ExecutableLink> executionEntry : scriptEnvironment.getExecutableStates(ImmutableSet.of(StateType.STATE)).entrySet()) {
             StateTransfer stateTransfer = new StateTransfer();
-            stateTransfer.setStateId(stateEntry.getKey());
+            stateTransfer.setStateId(executionEntry.getKey());
             List<String> determinedScreenIds = Lists.newArrayList();
 
-            List<String> unfilteredScreenIds = stateEntry.getValue().determineScreenIds(ImmutableSet.of(), scriptEnvironment.getStateDefinitions());
+            Set<String> unfilteredScreenIds = executionEntry.getValue().getLink().determineStateIds(ImmutableSet.of(), executables);
             Set<String> tempScreenIds = Sets.newHashSet();
 
             for (String tempScreenId : unfilteredScreenIds) {
@@ -317,7 +321,7 @@ public class ScriptRunner {
                     continue;
                 }
                 if (!screenDefinition.isEnabled() || screenDefinition.getPoints() == null || (screenDefinition.getPoints() != null && screenDefinition.getPoints().isEmpty())) {
-                    logger.log(Level.SEVERE, "Disabled Screen: " + screenDefinition.getScreenId() + " for state: " + stateEntry.getValue().getId());
+                    logger.log(Level.SEVERE, "Disabled Screen: " + screenDefinition.getScreenId() + " for state: " + executionEntry.getValue().getId());
                     continue;
                 }
                 boolean valid = true;
@@ -401,20 +405,20 @@ public class ScriptRunner {
 
             ImageWrapper imageWrapper;
 
-            StateDefinition stateDefinition = scriptEnvironment.getStateDefinitions().get(stateName);
+            ExecutableLink currentExecutionLink = scriptEnvironment.getExecutableState(stateName);
 
-            if (stateDefinition == null) {
-                logger.log(Level.SEVERE, "Cannot find state with id: " + stateName);
+            if (currentExecutionLink == null) {
+                logger.log(Level.SEVERE, "Cannot find executable state with id: " + stateName);
                 setStatus(Status.INIT);
-                throw new RuntimeException("Cannot find state with id: " + stateName);
+                throw new RuntimeException("Cannot find executable state with id: " + stateName);
             } else {
-                logger.log(Level.FINE, "Found initial state with id: " + stateName);
+                logger.log(Level.FINE, "Found initial executable state with id: " + stateName);
             }
 
             // Always reset the loop counter
             putVar(VAR_LOOPS, IntVar.ZERO);
 
-            vars.state(stateDefinition, Maps.newHashMap(), logger);
+            vars.state(currentExecutionLink, Maps.newHashMap(), logger);
 
             while (isRunning()) {
 
@@ -480,7 +484,7 @@ public class ScriptRunner {
                 while (keepRunning && isRunning()) {
                     keepRunning = false;
 
-                    final StateResult result = getStateResult(stateDefinition, imageWrapper, 0);
+                    final StateResult result = getStateResult(currentExecutionLink, imageWrapper);
 
                     switch (result.getType()) {
                         case STOP: {
@@ -488,8 +492,8 @@ public class ScriptRunner {
                             return;
                         }
                         case MOVE: {
-                            stateDefinition = scriptEnvironment.getStateDefinitions().get(result.getValue());
-                            if (stateDefinition == null) {
+                            currentExecutionLink = scriptEnvironment.getExecutableState(result.getValue());
+                            if (currentExecutionLink == null) {
                                 logger.log(Level.SEVERE, "Cannot find state with id: " + result.getValue());
                                 throw new RuntimeException("Cannot find state with id: " + result.getValue());
                             }
@@ -498,12 +502,13 @@ public class ScriptRunner {
                             for (Map.Entry<String, String> entry : result.getActionDefinition().getArguments().entrySet()) {
                                 stateArguments.put(entry.getKey(), replaceTokens(entry.getValue()));
                             }
-                            logger.fine("Running State: " + stateDefinition.getName());
-                            vars.state(stateDefinition, stateArguments, logger);
-                            currentStateId = stateDefinition.getId();
+                            logger.fine("Running State: " + currentExecutionLink.getName());
+                            vars.state(currentExecutionLink, stateArguments, logger);
+                            currentStateId = currentExecutionLink.getId();
                             keepRunning = false;
                         }
                         break;
+                        case SOFT_REPEAT:
                         case REPEAT: {
                             keepRunning = false;
                         }
@@ -524,12 +529,12 @@ public class ScriptRunner {
         }
     }
 
-    private StateResult getStateResult(StateDefinition stateDefinition, ImageWrapper imageWrapper, int startingAction) {
+    private StateResult getStateResult(ExecutableLink executableState, ImageWrapper imageWrapper) {
         if (deviceHelper != null) {
-            logger.finer("Helper: /check/" + stateDefinition.getId());
+            logger.finer("Helper: /check/" + executableState.getId());
 
             long startTime = System.nanoTime();
-            validScreenIds = deviceHelper.check(stateDefinition.getId());
+            validScreenIds = deviceHelper.check(executableState.getId());
             long endTime = System.nanoTime();
 
             long dif = endTime - startTime;
@@ -539,12 +544,22 @@ public class ScriptRunner {
 
             logger.fine("Screen State checked in " + THREE_DECIMAL.format(lastImageDuration) + "s");
 
-            if (logger.getLevel() == Level.FINEST) {
+            if (logger.isLoggable(Level.FINEST)) {
                 logger.log(Level.FINEST, "Valid Screens: " + Joiner.on(",").join(validScreenIds));
             }
         }
-
-        return state(stateDefinition, imageWrapper, startingAction, StateCallType.STATE, ImmutableMap.of(), false);
+        Stack<ProcessingStateInfo> stateStack = new Stack<>();
+        stateStack.push(new ProcessingStateInfo(executableState.getLink()));
+        StateResult result = null;
+        try {
+            result = executeState(stateStack, executableState, imageWrapper, StateCallType.STATE, ImmutableMap.of(), false);
+        } catch (Exception ex) {
+            logger.severe(generateStackInfo(stateStack, true) + " - Exception: " + ex.getMessage());
+            // Auto STOP
+            return StateResult.STOP(stateStack);
+        }
+        stateStack.pop();
+        return result;
     }
 
     private String lapEvent(String id) {
@@ -574,29 +589,70 @@ public class ScriptRunner {
         return status == Status.RUNNING;
     }
 
-    private StateResult state(final StateDefinition stateDefinition, final ImageWrapper imageWrapper, int startingAction, StateCallType callType, Map<String, String> arguments, boolean inBatch) {
+    /**
+     * This get a executable state ready to run
+     */
+    private StateResult executeState(Stack<ProcessingStateInfo> stateStack, final ExecutableLink executableState, final ImageWrapper imageWrapper, StateCallType callType, Map<String, String> arguments, boolean inBatch) {
         if (callType == StateCallType.CALL) {
-            logger.fine("Calling State: " + stateDefinition.getName());
-            vars.push(stateDefinition, arguments);
+            vars.push(executableState, arguments);
         } else if (callType == StateCallType.CONDITION) {
-            logger.fine("Condition State: " + stateDefinition.getName());
-            vars.push(stateDefinition, arguments);
+            vars.push(executableState, arguments);
         }
 
+        StateResult stateResult = executableStateProcessor(stateStack, executableState.getLink(), imageWrapper, callType, inBatch);
+
+        return stateResult;
+    }
+
+    /**
+     * Generate a basic trace
+     */
+    private String generateStackInfo(Stack<ProcessingStateInfo> stack) {
+        return generateStackInfo(stack, false);
+    }
+
+    /**
+     * Generate a basic trace
+     */
+    private String generateStackInfo(Stack<ProcessingStateInfo> stack, boolean force) {
+        if (logger.isLoggable(Level.FINEST) || force) {
+            StringBuilder sb = new StringBuilder();
+            for (int i = 0; i < stack.size(); i++) {
+                ProcessingStateInfo state = stack.get(i);
+                if (i > 0) {
+                    sb.append(" - ");
+                }
+                sb.append(state.getLink().getScriptId()).append(".").append(state.getLink().getState().getId()).append("[").append(state.getStateIndex());
+                if (state.getActionIndex() >= 0)
+                    sb.append(",").append(state.getActionIndex());
+                else if (state.getActionIndex() == -1)
+                    sb.append(", condition");
+                else if (state.getActionIndex() == -2)
+                    sb.append(", includes");
+                sb.append("] ");
+            }
+            return sb.toString();
+        }
+        return "";
+    }
+
+    private StateResult executableStateProcessor(Stack<ProcessingStateInfo> stateStack, StateLink executableState, final ImageWrapper imageWrapper, StateCallType callType, boolean inBatch) {
         boolean batchCmds = false;
         StateResult priorResult;
         StateResult stateResult = null;
-        for (StatementDefinition statementDefinition : stateDefinition.getStatements()) {
-            boolean checkStatus = check(statementDefinition.getCondition(), imageWrapper);
+        final ProcessingStateInfo stateTracker = stateStack.peek();
+        int statementIndex = 0;
+        for (StatementDefinition statementDefinition : executableState.getState().getStatements()) {
+            stateTracker.setStateIndex(statementIndex++);
+            stateTracker.setActionIndex(-1);
+            boolean checkStatus = check(stateStack, statementDefinition.getCondition(), imageWrapper);
             if (logger.isLoggable(Level.FINEST) && statementDefinition.getCondition() != null) {
-                logger.finest("CHECK: " + ConditionDefinition.getConditionString(statementDefinition.getCondition()) + " - " + checkStatus);
+                logger.finest(generateStackInfo(stateStack) + "CHECK: " + ConditionDefinition.getConditionString(statementDefinition.getCondition()) + " - " + checkStatus);
             }
             if (checkStatus) {
+                int actionIndex = 0;
                 for (ActionDefinition actionDefinition : statementDefinition.getActions()) {
-                    final int actionIndex = statementDefinition.getActions().indexOf(actionDefinition);
-                    if (actionIndex < startingAction)
-                        continue;
-
+                    stateTracker.setActionIndex(actionIndex++);
                     // Skip actions not allowed for the current state mode
                     if (callType == StateCallType.CALL && !actionDefinition.getType().isAllowedForCall()) {
                         continue;
@@ -607,52 +663,52 @@ public class ScriptRunner {
                     }
 
                     // Actions can have conditions
-                    if (actionDefinition.getCondition() != null && !check(actionDefinition.getCondition(), imageWrapper)) {
+                    if (actionDefinition.getCondition() != null && !check(stateStack, actionDefinition.getCondition(), imageWrapper)) {
                         if (logger.isLoggable(Level.FINEST)) {
-                            logger.finest("Action Skip: " + ConditionDefinition.getConditionString(actionDefinition.getCondition()));
+                            logger.finest(generateStackInfo(stateStack) + "Action Skipped: " + ConditionDefinition.getConditionString(actionDefinition.getCondition()));
                         }
                         continue;
                     } else if (actionDefinition.getCondition() != null) {
                         if (logger.isLoggable(Level.FINEST)) {
-                            logger.finest("Action Run: " + ConditionDefinition.getConditionString(actionDefinition.getCondition()));
+                            logger.finest(generateStackInfo(stateStack) + "Action Allowed: " + ConditionDefinition.getConditionString(actionDefinition.getCondition()));
                         }
                     }
 
                     priorResult = stateResult;
-                    stateResult = new StateResult(actionDefinition.getType(), actionDefinition, priorResult, actionIndex, stateDefinition);
+                    stateResult = new StateResult(actionDefinition.getType(), actionDefinition, priorResult, stateStack);
 
-                    final int loopIndex;
+                    final int loopMax;
                     if (!StringUtils.isEmpty(actionDefinition.getCount())) {
                         Var v = valueHandler(actionDefinition.getCount());
-                        loopIndex = v.toInt();
+                        loopMax = v.toInt();
                     } else {
-                        loopIndex = 1;
+                        loopMax = 1;
                     }
 
-                    for (int looper = 0; looper < loopIndex; looper++) {
+                    for (int loopIndex = 0; loopIndex < loopMax; loopIndex++) {
                         if (!stillRunning()) {
-                            return new StateResult(ActionType.STOP, actionDefinition, priorResult, actionIndex, stateDefinition);
+                            return new StateResult(ActionType.STOP, actionDefinition, priorResult, stateStack);
                         }
 
                         switch (actionDefinition.getType()) {
                             case INFO: {
                                 String msg = replaceTokens(actionDefinition.getValue());
-                                logger.info("MSG: " + msg);
+                                logger.info(generateStackInfo(stateStack) + "MSG: " + msg);
                             }
                             break;
                             case FINER: {
                                 String msg = replaceTokens(actionDefinition.getValue());
-                                logger.finer("MSG: " + msg);
+                                logger.finer(generateStackInfo(stateStack) + "FINER: " + msg);
                             }
                             break;
                             case FINEST: {
                                 String msg = replaceTokens(actionDefinition.getValue());
-                                logger.finest("MSG: " + msg);
+                                logger.finest(generateStackInfo(stateStack) + "FINEST: " + msg);
                             }
                             break;
                             case BATCH: {
                                 if (inBatch) {
-                                    logger.log(Level.FINEST, "Skipping batch request, already in batch");
+                                    logger.log(Level.FINEST, generateStackInfo(stateStack) + "Skipping batch request, already in batch");
                                 } else if ("START".equalsIgnoreCase(actionDefinition.getValue())) {
                                     batchCmds = true;
                                 } else if (batchCmds) {
@@ -741,7 +797,7 @@ public class ScriptRunner {
                                 String expression = expr.toString();
                                 Var result = Mather.evaluate(expression, varInstance.getType());
                                 if (logger.isLoggable(Level.FINEST)) {
-                                    logger.finest("MATH: " + expression + " = " + result.toString());
+                                    logger.finest(generateStackInfo(stateStack) + " MATH: " + expression + " = " + result.toString());
                                 }
                                 putVar(varName, result);
                             }
@@ -763,7 +819,7 @@ public class ScriptRunner {
                                 int bound = max.toInt() - min.toInt();
                                 int newValue = SECURE_RANDOM.nextInt(bound);
                                 if (logger.isLoggable(Level.FINEST)) {
-                                    logger.finest("RANDOM(" + min.toString() + ", " + max.toString() + ") = " + (min.toInt() + newValue));
+                                    logger.finest(generateStackInfo(stateStack) + "RANDOM(" + min.toString() + ", " + max.toString() + ") = " + (min.toInt() + newValue));
                                 }
                                 putVar(varName, new IntVar(min.toInt() + newValue));
                             }
@@ -818,12 +874,19 @@ public class ScriptRunner {
                                 if (!callName.startsWith("@")) {
                                     throw new RuntimeException("All calls must start with a @: " + actionDefinition.getValue());
                                 }
-                                final StateDefinition callDefinition = scriptEnvironment.getStateDefinitions().get(callName);
+                                final ExecutableLink callDefinition = scriptEnvironment.getExecutableState(callName);
                                 final Map<String, String> callArguments = Maps.newHashMap();
                                 for (Map.Entry<String, String> entry : actionDefinition.getArguments().entrySet()) {
                                     callArguments.put(entry.getKey(), replaceTokens(entry.getValue()));
                                 }
-                                final StateResult callResult = state(callDefinition, imageWrapper, 0, StateCallType.CALL, callArguments, batchCmds);
+                                stateStack.push(new ProcessingStateInfo(callDefinition.getLink()));
+                                final StateResult callResult = executeState(stateStack, callDefinition, imageWrapper, StateCallType.CALL, callArguments, batchCmds);
+
+                                if (logger.isLoggable(Level.FINEST)) {
+                                    logger.finest(generateStackInfo(callResult.getStack()) + " " + callResult.toString());
+                                }
+
+                                stateStack.pop();
                                 vars.pop();
                                 if (callResult.getResult() != null && !StringUtils.isEmpty(actionDefinition.getVar())) {
                                     putVar(actionDefinition.getVar(), callResult.getResult());
@@ -844,12 +907,27 @@ public class ScriptRunner {
                 }
             }
         }
+
         if (callType != StateCallType.STATE) {
-            return StateResult.RETURN;
+            return StateResult.RETURN(stateStack);
         }
-        return StateResult.REPEAT;
+
+        for (StateLink children : executableState.getIncludes()) {
+            stateTracker.setActionIndex(-2);
+            stateStack.push(new ProcessingStateInfo(children));
+            StateResult childResult = executableStateProcessor(stateStack, children, imageWrapper, callType, inBatch);
+            stateStack.pop();
+            if (childResult.getType() != ActionType.SOFT_REPEAT) {
+                return childResult;
+            }
+        }
+
+        return StateResult.SOFT_REPEAT(stateStack);
     }
 
+    /**
+     * Look at the given text and replace any token with variables
+     */
     private String replaceTokens(String text) {
         if (text != null) {
             int startIndex;
@@ -872,6 +950,9 @@ public class ScriptRunner {
         return text;
     }
 
+    /**
+     * Turn tokens into REGEX for searching purposes
+     */
     private String replaceTokensForRegex(String text) {
         if (text != null) {
             int startIndex;
@@ -889,13 +970,25 @@ public class ScriptRunner {
 
     private void waitFor(long milli) {
         try {
-            Thread.sleep(milli);
+            final long startTime = System.nanoTime();
+            final long endTime = startTime + TimeUnit.MILLISECONDS.toNanos(milli);
+
+            while (true) {
+                if (System.nanoTime() >= endTime) return;
+                if (!isRunning()) {
+                    return;
+                }
+                Thread.sleep(25);
+            }
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
     }
 
-    private boolean check(final ConditionDefinition conditionDefinition, ImageWrapper imageWrapper) {
+    /**
+     * Perform a condition check
+     */
+    private boolean check(Stack<ProcessingStateInfo> stateStack, final ConditionDefinition conditionDefinition, ImageWrapper imageWrapper) {
         if (conditionDefinition == null) return true;
         boolean result = false;
         boolean checkAnd = true;
@@ -933,12 +1026,19 @@ public class ScriptRunner {
                 if (!callName.startsWith("@")) {
                     throw new RuntimeException("All condition calls must start with a @: " + conditionDefinition.getValue());
                 }
-                final StateDefinition callDefinition = scriptEnvironment.getStateDefinitions().get(callName);
+                final ExecutableLink callDefinition = scriptEnvironment.getExecutableState(callName);
                 final Map<String, String> callArguments = Maps.newHashMap();
                 for (Map.Entry<String, String> entry : conditionDefinition.getArguments().entrySet()) {
                     callArguments.put(entry.getKey(), replaceTokens(entry.getValue()));
                 }
-                final StateResult callResult = state(callDefinition, imageWrapper, 0, StateCallType.CONDITION, callArguments, false);
+                stateStack.push(new ProcessingStateInfo(callDefinition.getLink()));
+                final StateResult callResult = executeState(stateStack, callDefinition, imageWrapper, StateCallType.CONDITION, callArguments, false);
+                stateStack.pop();
+
+                if (logger.isLoggable(Level.FINEST)) {
+                    logger.finest(generateStackInfo(callResult.getStack()) + " " + callResult.toString());
+                }
+
                 vars.pop();
                 if (callResult.getResult() == null) {
                     throw new RuntimeException("All condition calls must return a 0 or 1");
@@ -974,7 +1074,7 @@ public class ScriptRunner {
         // If we have a AND handle it
         if (!failure && result && checkAnd && !conditionDefinition.getAnd().isEmpty()) {
             for (ConditionDefinition sub : conditionDefinition.getAnd()) {
-                if (!check(sub, imageWrapper)) {
+                if (!check(stateStack, sub, imageWrapper)) {
                     result = false;
                     break;
                 }
@@ -989,7 +1089,7 @@ public class ScriptRunner {
         if (result && !conditionDefinition.getAndOr().isEmpty()) {
             result = false; // force failure
             for (ConditionDefinition sub : conditionDefinition.getAndOr()) {
-                if (check(sub, imageWrapper)) {
+                if (check(stateStack, sub, imageWrapper)) {
                     result = true;
                     break;
                 }
@@ -999,7 +1099,7 @@ public class ScriptRunner {
         // If we failed, but have a OR, check the OR
         if (!result && !conditionDefinition.getOr().isEmpty()) {
             for (ConditionDefinition sub : conditionDefinition.getOr()) {
-                if (check(sub, imageWrapper)) {
+                if (check(stateStack, sub, imageWrapper)) {
                     result = true;
                     break;
                 }
@@ -1011,7 +1111,7 @@ public class ScriptRunner {
 
     public List<VarDefinition> getVariables() {
         List<VarDefinition> vars = Lists.newArrayList();
-        for (VarDefinition varDefinition : scriptEnvironment.getVarDefinitions()) {
+        for (VarDefinition varDefinition : scriptEnvironment.getVarDefinitions().values()) {
             switch (varDefinition.getModify()) {
                 case HIDDEN:
                     continue;
@@ -1032,13 +1132,19 @@ public class ScriptRunner {
 
     public List<VarTierDefinition> getVariableTiers() {
         List<VarTierDefinition> vars = Lists.newArrayList();
-        vars.addAll(scriptEnvironment.getVarTiers());
+        vars.addAll(scriptEnvironment.getVarTiers().values());
+        vars.sort(new Comparator<VarTierDefinition>() {
+            @Override
+            public int compare(VarTierDefinition o1, VarTierDefinition o2) {
+                return o1.getId().compareTo(o2.getId());
+            }
+        });
         return vars;
     }
 
     public List<VarDefinition> getRawEditVariables() {
         List<VarDefinition> vars = Lists.newArrayList();
-        for (VarDefinition varDefinition : scriptEnvironment.getVarDefinitions()) {
+        for (VarDefinition varDefinition : scriptEnvironment.getVarDefinitions().values()) {
             switch (varDefinition.getModify()) {
                 case HIDDEN:
                     continue;
@@ -1055,12 +1161,7 @@ public class ScriptRunner {
     }
 
     private VarDefinition getVarDefinition(String name) {
-        for (VarDefinition varDefinition : scriptEnvironment.getVarDefinitions()) {
-            if (varDefinition.getName().equals(name)) {
-                return varDefinition;
-            }
-        }
-        return null;
+        return scriptEnvironment.getVarDefinitions().get(name);
     }
 
     public void updateVariableFromUserInput(String key, String value) {

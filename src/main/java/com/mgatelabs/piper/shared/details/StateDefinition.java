@@ -86,7 +86,7 @@ public class StateDefinition {
 //    return scriptDefinition;
 //  }
 
-    public List<String> determineScreenIds(final Set<String> exploredStates, final Map<String, StateDefinition> states) {
+    public List<String> determineScreenIds(final Set<String> exploredStates, final Map<String, ExecutableLink> states) {
         if (exploredStates.contains(id)) {
             return ImmutableList.of();
         }

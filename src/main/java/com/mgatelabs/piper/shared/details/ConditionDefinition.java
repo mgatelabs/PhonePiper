@@ -135,12 +135,16 @@ public class ConditionDefinition {
         this.var = var;
     }
 
-    public Set<String> determineScreenIds(final Set<String> exploredStates, final Map<String, StateDefinition> states) {
+    public Set<String> determineScreenIds(final Set<String> exploredStates, final Map<String, ExecutableLink> states) {
         Set<String> screenIds = Sets.newHashSet();
 
         if (getUsedCondition() == ConditionType.CALL) {
-            StateDefinition stateDefinition = states.get(value);
-            screenIds.addAll(stateDefinition.determineScreenIds(exploredStates, states));
+            ExecutableLink stateDefinition = states.get(value);
+            if (stateDefinition != null) {
+                screenIds.addAll(stateDefinition.getLink().getState().determineScreenIds(exploredStates, states));
+            } else {
+                throw new RuntimeException("Could not find executable state: " + getValue());
+            }
         } else if (getUsedCondition() == ConditionType.SCREEN) {
             screenIds.add(value);
         }

@@ -281,15 +281,15 @@
       ]
     },
 
-    "_common_mr-reset": {
-      "name": "Common - Reset",
+    "_reset-include_menu_results": {
+      "name": "Reset - TMR Results",
       "statements": [
         {
-          "condition": {
-            "is": "BOOLEAN",
-            "value": "true"
-          },
           "actions": [
+            {
+              "type": "INFO",
+              "value": "Reset TMR Counts"
+            },
             {
               "type": "SET",
               "value": "0",

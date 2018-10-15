@@ -532,6 +532,7 @@ $(function(){
         var configForm = $('#config');
 
         $('#configName').val('');
+        $('#configStateName').val('');
 
 
         // Remove extra fields
@@ -553,6 +554,7 @@ $(function(){
     function extractConfig() {
 
         var title = $('#configName').val();
+        var stateName = $('#configStateName').val();
 
         var device1 = $('#device1').val();
         var viewList = [];
@@ -579,6 +581,7 @@ $(function(){
         });
 
         var data = {
+            stateName: stateName || (scriptList && scriptList[0]) || '',
             device: device1 || '',
             views: viewList,
             scripts: scriptList,
@@ -622,6 +625,8 @@ $(function(){
         resetConfigPage();
 
         $('#configName').val(j.title || '');
+
+        $('#configStateName').val(j.stateName || '');
 
         // Device
         var device1 = $('#device1').val('');

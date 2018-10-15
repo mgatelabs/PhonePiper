@@ -11,7 +11,7 @@
   ],
   "states": {
     "_common_battle-three_attack": {
-      "name": "Common Battle - Three Attack",
+      "name": "Common Battle - Two or Three Attack",
       "statements": [
         {
           "condition": {
@@ -24,7 +24,7 @@
           "actions": [
             {
               "type": "INFO",
-              "value": "Three Attack"
+              "value": "Two Attack"
             },
             { "type": "CALL", "value": "@keepAlive" },
             {
@@ -46,15 +46,40 @@
               }
             },
             {
+              "type": "BATCH",
+              "value": "END"
+            },
+            {
+              "type": "REPEAT",
+              "value": ""
+            }
+          ]
+        },
+        {
+          "condition": {
+            "is": "CALL",
+            "value": "@isBattleReady",
+            "and": [
+              {
+                "var": "_loops",
+                "is": "GREATER",
+                "value": "8"
+              },
+              { "is": "CALL", "value": "@isUnitReady", "args": {"index": "2"} }
+            ]
+          },
+          "actions": [
+            {
+              "type": "INFO",
+              "value": "Third Attack"
+            },
+            { "type": "CALL", "value": "@keepAlive" },
+            {
               "type": "CALL",
               "value": "@tapUnit",
               "args": {
                 "index": "2"
               }
-            },
-            {
-              "type": "BATCH",
-              "value": "END"
             },
             {
               "type": "REPEAT",

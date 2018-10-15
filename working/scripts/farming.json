@@ -491,8 +491,7 @@
     "_common-menu_location",
     "_common-menu_results",
     "_common-menu_vortex",
-    "_common-battle",
-    "_common-utils"
+    "_common-battle"
   ],
   "states": {
 
@@ -981,8 +980,8 @@
         }
       ]
     },
-    "_es-reset": {
-      "name": "Earthshrine - Reset",
+    "_reset-include_farming": {
+      "name": "Reset - Farming",
       "statements": [
         {
           "condition": {
@@ -994,6 +993,10 @@
               "type": "SET",
               "value": "0",
               "var": "setup"
+            },
+            {
+              "type": "INFO",
+              "value": "Reset Run Count"
             },
             {
               "type": "SET",
@@ -1012,14 +1015,6 @@
             }
           ]
         }
-      ]
-    },
-    "reset": {
-      "name": "Common - Reset",
-      "includes": [
-        "_es-reset",
-        "_common_mr-reset",
-        "_common-reset"
       ]
     },
     "raid-home": {

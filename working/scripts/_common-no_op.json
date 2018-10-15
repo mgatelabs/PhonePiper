@@ -88,7 +88,18 @@
     "reset": {
       "name": "Common - Reset",
       "includes": [
+        "_reset-include_*",
         "_common-reset"
+      ],
+      "statements": [
+        {
+          "actions": [
+            {
+              "type": "INFO",
+              "value": "Resetting State"
+            }
+          ]
+        }
       ]
     },
     "_common-screen_saver": {
@@ -498,15 +509,19 @@
       "name": "Common - Reset",
       "statements": [
         {
-          "condition": {
-            "is": "BOOLEAN",
-            "value": "true"
-          },
           "actions": [
+            {
+              "type": "INFO",
+              "value": "Reset Loops"
+            },
             {
               "type": "SET",
               "value": "0",
               "var": "_loops"
+            },
+            {
+              "type": "INFO",
+              "value": "Reset No-Op"
             },
             {
               "type": "SET",
@@ -514,13 +529,16 @@
               "var": "_seconds"
             },
             {
+              "type": "INFO",
+              "value": "Reset Screen Saver"
+            },
+            {
               "type": "SET",
               "value": "0",
               "var": "_screen_saver"
             },
             {
-              "type": "MOVE",
-              "value": "main"
+              "type": "STOP"
             }
           ]
         }

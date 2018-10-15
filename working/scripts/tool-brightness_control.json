@@ -1,8 +1,8 @@
 {
   "states": {
 
-    "common_utils-brighter": {
-      "name": "Common - Brighten Screen",
+    "tool-brighter_screen": {
+      "name": "Tool - Brighten Screen",
       "statements": [
         {
           "condition": {
@@ -34,8 +34,8 @@
       ]
     },
 
-    "common_utils-darker": {
-      "name": "Common - Dim Screen",
+    "tool-dim_screen": {
+      "name": "Tool - Dim Screen",
       "statements": [
         {
           "condition": {

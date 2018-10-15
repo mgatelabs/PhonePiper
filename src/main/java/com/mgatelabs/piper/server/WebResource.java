@@ -97,7 +97,7 @@ public class WebResource {
                 }
             }
             if (varStateDefinition.getItems().size() > 0) {
-                varStateDefinition.save(frameChoices.getScriptEnvironment().getScriptDefinitions().get(0).getScriptId());
+                varStateDefinition.save(frameChoices.getStateNameOrDefault());
             }
         }
     }
@@ -361,7 +361,7 @@ public class WebResource {
         List<String> scripts = Lists.newArrayList();
         scripts.addAll(request.getScripts());
 
-        frameChoices = new FrameChoices(Constants.ACTION_RUN, Constants.MODE_SCRIPT, "", request.getDevice(), views, scripts);
+        frameChoices = new FrameChoices(Constants.ACTION_RUN, Constants.MODE_SCRIPT, request.getStateName(), "", request.getDevice(), views, scripts);
 
         if (frameChoices.isValid()) {
             final PrepResult result = new PrepResult(StatusEnum.OK);
@@ -370,8 +370,8 @@ public class WebResource {
 
             runner = new ScriptRunner(connectionDefinition, deviceHelper, frameChoices.getScriptEnvironment(), frameChoices.getDeviceDefinition(), frameChoices.getViewDefinition());
 
-            if (VarStateDefinition.exists(frameChoices.getScriptName())) {
-                VarStateDefinition varStateDefinition = VarStateDefinition.read(frameChoices.getScriptName());
+            if (VarStateDefinition.exists(frameChoices.getStateNameOrDefault())) {
+                VarStateDefinition varStateDefinition = VarStateDefinition.read(frameChoices.getStateNameOrDefault());
                 for (VarDefinition varDefinition : varStateDefinition.getItems()) {
                     runner.updateVariableFromUserInput(varDefinition.getName(), varDefinition.getValue());
                 }
@@ -480,7 +480,7 @@ public class WebResource {
 
         thread = null;
 
-        frameChoices = new FrameChoices(Constants.ACTION_EDIT, Constants.MODE_VIEW, "", request.getDevice(), request.getViews(), request.getScripts());
+        frameChoices = new FrameChoices(Constants.ACTION_EDIT, Constants.MODE_VIEW, null, "", request.getDevice(), request.getViews(), request.getScripts());
 
         if (frameChoices.isValid()) {
             final PrepResult result = new PrepResult(StatusEnum.OK);

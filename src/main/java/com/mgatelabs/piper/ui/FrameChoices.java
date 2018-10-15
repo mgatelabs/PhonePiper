@@ -1,16 +1,17 @@
 package com.mgatelabs.piper.ui;
 
-import com.google.common.collect.Lists;
-import com.mgatelabs.piper.shared.TreeNode;
-import com.mgatelabs.piper.shared.details.*;
+import com.mgatelabs.piper.shared.details.DeviceDefinition;
+import com.mgatelabs.piper.shared.details.ScriptDefinition;
+import com.mgatelabs.piper.shared.details.ScriptEnvironment;
+import com.mgatelabs.piper.shared.details.ViewDefinition;
 import com.mgatelabs.piper.shared.mapper.MapDefinition;
 import com.mgatelabs.piper.ui.utils.Constants;
 
 import java.io.File;
 import java.util.List;
+import java.util.regex.Pattern;
 
 /**
- *
  * Created by @mgatelabs (Michael Fuller) on 9/20/2017
  */
 public class FrameChoices {
@@ -23,11 +24,14 @@ public class FrameChoices {
     private final String deviceName;
     private final String mapName;
     private final String viewName;
+    private final String stateName;
 
     private final ScriptEnvironment.Mode mode;
     private final ScriptEnvironment.Action action;
 
-    public FrameChoices(String actionId, String modeId, String mapId, String deviceId, List<String> views, List<String> scripts) {
+    public FrameChoices(String actionId, String modeId, String stateName, String mapId, String deviceId, List<String> views, List<String> scripts) {
+
+        this.stateName = stateName;
 
         switch (modeId) {
             case Constants.MODE_SCRIPT:
@@ -122,6 +126,13 @@ public class FrameChoices {
         } else {
             this.viewDefinition = null;
         }
+    }
+
+    public static Pattern SAFE_STATE_NAME = Pattern.compile("[a-zA-Z0-9_-]+");
+
+    public String getStateNameOrDefault() {
+        if (SAFE_STATE_NAME.matcher(stateName).matches()) return stateName;
+        return scriptEnvironment.getScriptDefinitions().get(0).getScriptId();
     }
 
     public boolean isValid() {

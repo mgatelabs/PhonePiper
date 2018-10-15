@@ -8,6 +8,7 @@ import java.util.Map;
  */
 public class LoadRequest {
     private String title;
+    private String stateName;
     private String device;
     private List<String> views;
     private List<String> scripts;
@@ -19,6 +20,14 @@ public class LoadRequest {
 
     public void setTitle(String title) {
         this.title = title;
+    }
+
+    public String getStateName() {
+        return stateName;
+    }
+
+    public void setStateName(String stateName) {
+        this.stateName = stateName;
     }
 
     public String getDevice() {

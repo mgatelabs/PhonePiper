@@ -508,9 +508,9 @@
         "_farm-to_results",
         "_farm-to_menu",
         "_farm-to_battle",
-        "_any_can_move_farm",
-        "_any_can_move_raid",
-        "_any_can_move_arena",
+        "_any_router_to_farm",
+        "_any_router_to_raid",
+        "_any_router_to_arena",
         "_home_daily_fixes",
         "_common-no_op"
       ]
@@ -1846,9 +1846,7 @@
     "any_to_home": {
       "name": "Any - To/From Home Screen Router",
       "includes": [
-        "_any_can_move_farm",
-        "_any_can_move_raid",
-        "_any_can_move_arena",
+        "_any_router_to_*",
         "_any_can_extra",
         "_home_daily_fixes",
         "_common-no_op",
@@ -1862,7 +1860,7 @@
       }
     },
 
-    "_any_can_move_raid": {
+    "_any_router_to_raid": {
       "name": "Any - Home Can Goto Raid Screen?",
       "variables": {
         "toState": {
@@ -1915,7 +1913,7 @@
         }
       ]
     },
-    "_any_can_move_arena": {
+    "_any_router_to_arena": {
       "name": "Any - Home Can Goto Arena Screen?",
       "variables": {
         "toState": {
@@ -2032,7 +2030,7 @@
         }
       ]
     },
-    "_any_can_move_farm": {
+    "_any_router_to_farm": {
       "name": "Any - Home Can Goto Farm Screen?",
       "variables": {
         "toState": {

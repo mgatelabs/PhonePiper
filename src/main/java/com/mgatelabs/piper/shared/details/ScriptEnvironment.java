@@ -7,9 +7,11 @@ import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 import com.google.common.collect.Sets;
 
+import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.regex.Pattern;
 
 /**
  * Used to store the environment information
@@ -155,7 +157,7 @@ public final class ScriptEnvironment {
 
             // Verify
             Set<ExecutableLink> badLinks = Sets.newHashSet();
-            for (ExecutableLink link: executableLinks.values()) {
+            for (ExecutableLink link : executableLinks.values()) {
                 try {
                     link.getLink().determineStateIds(Sets.newHashSet(), executableLinks);
                     link.setValid(true);
@@ -165,7 +167,7 @@ public final class ScriptEnvironment {
                 }
             }
 
-            for (ExecutableLink link: badLinks) {
+            for (ExecutableLink link : badLinks) {
                 executableLinks.remove(link.getId());
             }
 
@@ -225,12 +227,14 @@ public final class ScriptEnvironment {
             while (!needles.isEmpty()) {
                 for (StateLink link : needles) {
                     for (String includeState : link.getState().getIncludes()) {
-                        StateLink includeLink = universe.get(includeState);
-                        if (includeLink != null) {
-                            if (link.addLink(includeLink)) {
-                                if (!includeLink.isBuilt()) {
-                                    includeLink.setBuilt(true);
-                                    future.add(includeLink);
+                        List<StateLink> links = getLinksFor(includeState, universe);
+                        for (StateLink includeLink : links) {
+                            if (includeLink != null) {
+                                if (link.addLink(includeLink)) {
+                                    if (!includeLink.isBuilt()) {
+                                        includeLink.setBuilt(true);
+                                        future.add(includeLink);
+                                    }
                                 }
                             }
                         }
@@ -241,6 +245,35 @@ public final class ScriptEnvironment {
                 needles.addAll(future);
                 future.clear();
             }
+        }
+
+        /**
+         * If the link contains a *, allow it to look for any characters in that spot
+         */
+        private List<StateLink> getLinksFor(String filter, Map<String, StateLink> universe) {
+            List<StateLink> links = Lists.newArrayList();
+
+            if (filter.contains("*")) {
+                Pattern p = Pattern.compile(filter.replaceAll("\\*", ".*"));
+                for (Map.Entry<String, StateLink> entry : universe.entrySet()) {
+                    if (p.matcher(entry.getKey()).matches()) {
+                        links.add(entry.getValue());
+                    }
+                }
+                // Make sure they are sorted by name
+                links.sort(new Comparator<StateLink>() {
+                    @Override
+                    public int compare(StateLink o1, StateLink o2) {
+                        return o1.getState().getId().compareTo(o2.getState().getId());
+                    }
+                });
+            } else {
+                StateLink link = universe.get(filter);
+                if (link != null) {
+                    links.add(link);
+                }
+            }
+            return links;
         }
 
         /**

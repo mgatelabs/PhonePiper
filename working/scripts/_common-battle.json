@@ -724,12 +724,6 @@
     },
     "@isEsperReady": {
       "name": "Function - Is Esper Ready",
-      "variables": {
-        "index": {
-          "value": "0",
-          "type": "INT"
-        }
-      },
       "statements": [
         {
           "condition": {

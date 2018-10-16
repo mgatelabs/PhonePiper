@@ -1,15 +1,23 @@
+//@formatter:off
 {
   "states": {
     "@unitHasHp": {
       "name": "Function - Does this unit have % Health?",
       "variables": {
+        // Required: Valid values include 0 - 4.
+        "index": {
+          "value": "0",
+          "type": "INT"
+        },
+        // Optional: Pass in a value between 1 and 100.  Decimals are available, Ex. 22.34
         "percent": {
           "value": "75",
           "type": "FLOAT"
         },
-        "index": {
-          "value": "0",
-          "type": "INT"
+        // Optional: By default you don't need to pass in anything, except pass in "menu" when you're on the battle menu screen
+        "mode": {
+          "value": "unit",
+          "type": "STRING"
         },
         "w": {
           "value": "0",
@@ -44,7 +52,7 @@
         {
           "actions": [
             {
-              "type": "COMPONENT", "value": "battle-unit-${index}-life_bar", "args": {"w": "w", "x": "x", "y": "y"}
+              "type": "COMPONENT", "value": "battle-${mode}-${index}-life_bar", "args": {"w": "w", "x": "x", "y": "y"}
             },
             {
               "type": "MATH",
@@ -96,6 +104,22 @@
                     "is": "GREATER",
                     "var": "b",
                     "value": "200"
+                  }
+                ]
+              }
+            },
+            {
+              "type": "RETURN",
+              "value": "1",
+              "condition": {
+                "is": "GREATER",
+                "var": "g",
+                "value": "140",
+                "and": [
+                  {
+                    "is": "EQUAL",
+                    "var": "mode",
+                    "value": "menu"
                   }
                 ]
               }

@@ -156,7 +156,7 @@
     } ],
     "enabled" : true
   }, {
-    "name" : "Battle - Actions",
+    "name" : "Battle - Abilities",
     "screenId" : "battle-actions",
     "points" : [ {
       "x" : 914,
@@ -14226,7 +14226,7 @@
     "h" : 75,
     "enabled" : true
   }, {
-    "name" : "battle-actions-back",
+    "name" : "Battle - Abilities - Back",
     "componentId" : "battle-actions-back",
     "x" : 890,
     "y" : 1790,
@@ -14248,6 +14248,126 @@
     "y" : 1808,
     "w" : 225,
     "h" : 87,
+    "enabled" : true
+  }, {
+    "name" : "Battle - Menu - 0 HP Bar",
+    "componentId" : "battle-menu-0_hp_bar",
+    "x" : 208,
+    "y" : 686,
+    "w" : 298,
+    "h" : 0,
+    "enabled" : true
+  }, {
+    "name" : "Battle - Menu - 0 LB Bar",
+    "componentId" : "battle-menu-0_lb_bar",
+    "x" : 361,
+    "y" : 622,
+    "w" : 1,
+    "h" : 0,
+    "enabled" : true
+  }, {
+    "name" : "Battle - Menu - 0 MP Bar",
+    "componentId" : "battle-menu-0_mp_bar",
+    "x" : 208,
+    "y" : 737,
+    "w" : 298,
+    "h" : 0,
+    "enabled" : true
+  }, {
+    "name" : "Battle - Menu - 1 HP Bar",
+    "componentId" : "battle-menu-1_hp_bar",
+    "x" : 208,
+    "y" : 990,
+    "w" : 297,
+    "h" : 0,
+    "enabled" : true
+  }, {
+    "name" : "Battle - Menu - 1 LB Bar",
+    "componentId" : "battle-menu-1_lb_bar",
+    "x" : 361,
+    "y" : 926,
+    "w" : 1,
+    "h" : 0,
+    "enabled" : true
+  }, {
+    "name" : "Battle - Menu - 1 MP Bar",
+    "componentId" : "battle-menu-1_mp_bar",
+    "x" : 210,
+    "y" : 1040,
+    "w" : 297,
+    "h" : 0,
+    "enabled" : true
+  }, {
+    "name" : "Battle - Menu - 2 HP Bar",
+    "componentId" : "battle-menu-2_hp_bar",
+    "x" : 208,
+    "y" : 1292,
+    "w" : 297,
+    "h" : 0,
+    "enabled" : true
+  }, {
+    "name" : "Battle - Menu - 2 LB Bar",
+    "componentId" : "battle-menu-2_lb_bar",
+    "x" : 361,
+    "y" : 1228,
+    "w" : 1,
+    "h" : 0,
+    "enabled" : true
+  }, {
+    "name" : "Battle - Menu - 2 MP Bar",
+    "componentId" : "battle-menu-2_mp_bar",
+    "x" : 209,
+    "y" : 1343,
+    "w" : 297,
+    "h" : 0,
+    "enabled" : true
+  }, {
+    "name" : "Battle - Menu - 3 HP Bar",
+    "componentId" : "battle-menu-3_hp_bar",
+    "x" : 742,
+    "y" : 686,
+    "w" : 297,
+    "h" : 0,
+    "enabled" : true
+  }, {
+    "name" : "Battle - Menu - 3 LB Bar",
+    "componentId" : "battle-menu-3_lb_bar",
+    "x" : 894,
+    "y" : 622,
+    "w" : 1,
+    "h" : 0,
+    "enabled" : true
+  }, {
+    "name" : "Battle - Menu - 3 MP Bar",
+    "componentId" : "battle-menu-3_mp_bar",
+    "x" : 742,
+    "y" : 737,
+    "w" : 298,
+    "h" : 0,
+    "enabled" : true
+  }, {
+    "name" : "Battle - Menu - 4 HP Bar",
+    "componentId" : "battle-menu-4_hp_bar",
+    "x" : 741,
+    "y" : 990,
+    "w" : 298,
+    "h" : 0,
+    "enabled" : true
+  }, {
+    "name" : "Battle - Menu - 4 LB Bar",
+    "componentId" : "battle-menu-4_lb_bar",
+    "x" : 894,
+    "y" : 926,
+    "w" : 1,
+    "h" : 0,
+    "enabled" : true
+  }, {
+    "name" : "Battle - Menu - 4 MP Bar",
+    "componentId" : "battle-menu-4_mp_bar",
+    "x" : 742,
+    "y" : 1040,
+    "w" : 298,
+    "h" : 0,
     "enabled" : true
   }, {
     "name" : "battle-menu-back",

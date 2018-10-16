@@ -30,7 +30,7 @@
     "points" : [ ],
     "enabled" : false
   }, {
-    "name" : "Battle - Actions",
+    "name" : "Battle - Abilities",
     "screenId" : "battle-actions",
     "points" : [ ],
     "enabled" : false
@@ -666,27 +666,27 @@
     "points" : [ ],
     "enabled" : false
   }, {
-    "name" : "raid-summon_menu",
+    "name" : "Raid - Summon Menu",
     "screenId" : "raid-summon_menu",
     "points" : [ ],
     "enabled" : false
   }, {
-    "name" : "units-enhance_units",
+    "name" : "Units - Enhance Units",
     "screenId" : "units-enhance_units",
     "points" : [ ],
     "enabled" : false
   }, {
-    "name" : "units-fuse",
+    "name" : "Units - Fuse",
     "screenId" : "units-fuse",
     "points" : [ ],
     "enabled" : false
   }, {
-    "name" : "units-material_units",
+    "name" : "Units - Material Units",
     "screenId" : "units-material_units",
     "points" : [ ],
     "enabled" : false
   }, {
-    "name" : "units-select_base",
+    "name" : "Units - Select Base",
     "screenId" : "units-select_base",
     "points" : [ ],
     "enabled" : false
@@ -696,23 +696,23 @@
     "points" : [ ],
     "enabled" : false
   }, {
-    "name" : "units-select_base-two_unit",
+    "name" : "Units - Select Base - Two Unit",
     "screenId" : "units-select_base-two_unit",
     "points" : [ ],
     "enabled" : false
   }, {
-    "name" : "vortex-unlock-free",
+    "name" : "Vortex - Unlock - Free",
     "screenId" : "vortex-unlock-free",
     "points" : [ ],
     "enabled" : false
   }, {
-    "name" : "vortex-unlock-paid",
+    "name" : "Vortex - Unlock - Paid",
     "screenId" : "vortex-unlock-paid",
     "points" : [ ],
     "enabled" : false
   } ],
   "components" : [ {
-    "name" : "arena-party-select",
+    "name" : "Arena - Party - Select",
     "componentId" : "arena-party-select",
     "x" : 615,
     "y" : 1015,
@@ -720,7 +720,7 @@
     "h" : 85,
     "enabled" : false
   }, {
-    "name" : "battle-actions-back",
+    "name" : "Battle - Abilities - Back",
     "componentId" : "battle-actions-back",
     "x" : 0,
     "y" : 0,
@@ -742,6 +742,126 @@
     "y" : 1808,
     "w" : 225,
     "h" : 87,
+    "enabled" : false
+  }, {
+    "name" : "Battle - Menu - 0 HP Bar",
+    "componentId" : "battle-menu-0_hp_bar",
+    "x" : 0,
+    "y" : 0,
+    "w" : 1,
+    "h" : 1,
+    "enabled" : false
+  }, {
+    "name" : "Battle - Menu - 0 LB Edge",
+    "componentId" : "battle-menu-0_lb_bar",
+    "x" : 0,
+    "y" : 0,
+    "w" : 1,
+    "h" : 1,
+    "enabled" : false
+  }, {
+    "name" : "Battle - Menu - 0 MP Bar",
+    "componentId" : "battle-menu-0_mp_bar",
+    "x" : 0,
+    "y" : 0,
+    "w" : 1,
+    "h" : 1,
+    "enabled" : false
+  }, {
+    "name" : "Battle - Menu - 1 HP Bar",
+    "componentId" : "battle-menu-1_hp_bar",
+    "x" : 0,
+    "y" : 0,
+    "w" : 1,
+    "h" : 1,
+    "enabled" : false
+  }, {
+    "name" : "Battle - Menu - 1 LB Edge",
+    "componentId" : "battle-menu-1_lb_bar",
+    "x" : 0,
+    "y" : 0,
+    "w" : 1,
+    "h" : 1,
+    "enabled" : false
+  }, {
+    "name" : "Battle - Menu - 1 MP Bar",
+    "componentId" : "battle-menu-1_mp_bar",
+    "x" : 0,
+    "y" : 0,
+    "w" : 1,
+    "h" : 1,
+    "enabled" : false
+  }, {
+    "name" : "Battle - Menu - 2 HP Bar",
+    "componentId" : "battle-menu-2_hp_bar",
+    "x" : 0,
+    "y" : 0,
+    "w" : 1,
+    "h" : 1,
+    "enabled" : false
+  }, {
+    "name" : "Battle - Menu - 2 LB Edge",
+    "componentId" : "battle-menu-2_lb_bar",
+    "x" : 0,
+    "y" : 0,
+    "w" : 1,
+    "h" : 1,
+    "enabled" : false
+  }, {
+    "name" : "Battle - Menu - 2 MP Bar",
+    "componentId" : "battle-menu-2_mp_bar",
+    "x" : 0,
+    "y" : 0,
+    "w" : 1,
+    "h" : 1,
+    "enabled" : false
+  }, {
+    "name" : "Battle - Menu - 3 HP Bar",
+    "componentId" : "battle-menu-3_hp_bar",
+    "x" : 0,
+    "y" : 0,
+    "w" : 1,
+    "h" : 1,
+    "enabled" : false
+  }, {
+    "name" : "Battle - Menu - 3 LB Edge",
+    "componentId" : "battle-menu-3_lb_bar",
+    "x" : 0,
+    "y" : 0,
+    "w" : 1,
+    "h" : 1,
+    "enabled" : false
+  }, {
+    "name" : "Battle - Menu - 3 MP Bar",
+    "componentId" : "battle-menu-3_mp_bar",
+    "x" : 0,
+    "y" : 0,
+    "w" : 1,
+    "h" : 1,
+    "enabled" : false
+  }, {
+    "name" : "Battle - Menu - 4 HP Bar",
+    "componentId" : "battle-menu-4_hp_bar",
+    "x" : 0,
+    "y" : 0,
+    "w" : 1,
+    "h" : 1,
+    "enabled" : false
+  }, {
+    "name" : "Battle - Menu - 4 LB Edge",
+    "componentId" : "battle-menu-4_lb_bar",
+    "x" : 0,
+    "y" : 0,
+    "w" : 1,
+    "h" : 1,
+    "enabled" : false
+  }, {
+    "name" : "Battle - Menu - 4 MP Bar",
+    "componentId" : "battle-menu-4_mp_bar",
+    "x" : 0,
+    "y" : 0,
+    "w" : 1,
+    "h" : 1,
     "enabled" : false
   }, {
     "name" : "Battle - Menu - Back",
@@ -930,14 +1050,6 @@
   }, {
     "name" : "Battle - Unit - 4 - LB Bar",
     "componentId" : "battle-unit-4-lb_bar",
-    "x" : 0,
-    "y" : 0,
-    "w" : 1,
-    "h" : 1,
-    "enabled" : false
-  }, {
-    "name" : "Battle - Unit - 3 - MP Bar",
-    "componentId" : "battle-unit-3-mp_bar",
     "x" : 0,
     "y" : 0,
     "w" : 1,

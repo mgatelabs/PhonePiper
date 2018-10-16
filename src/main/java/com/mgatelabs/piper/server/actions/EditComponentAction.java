@@ -6,8 +6,8 @@ import com.mgatelabs.piper.shared.image.ImageWrapper;
 import com.mgatelabs.piper.shared.image.PngImageWrapper;
 import com.mgatelabs.piper.ui.dialogs.ImagePixelPickerDialog;
 import com.mgatelabs.piper.ui.dialogs.PickerHandler;
-
-import java.util.logging.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Created by @mgatelabs (Michael Fuller) on 9/22/2018.
@@ -15,7 +15,7 @@ import java.util.logging.Logger;
 public class EditComponentAction implements EditActionInterface {
 
     @Override
-    public String execute(final String id, final String value, final EditHolder holder, Logger logger) {
+    public String execute(final String id, final String value, final EditHolder holder) {
         ComponentDefinition componentDefinition = holder.getComponentForId(id);
         if (componentDefinition == null) return "Could not find component with id: " + id;
 
@@ -25,7 +25,7 @@ public class EditComponentAction implements EditActionInterface {
             return ("Local preview missing, please update the image first");
         }
 
-        ImagePixelPickerDialog imagePixelPickerDialog = new ImagePixelPickerDialog(ImagePixelPickerDialog.Mode.BOX, null, new EditHandler(holder, componentDefinition, logger));
+        ImagePixelPickerDialog imagePixelPickerDialog = new ImagePixelPickerDialog(ImagePixelPickerDialog.Mode.BOX, null, new EditHandler(holder, componentDefinition));
 
         int x = componentDefinition.getX() >= holder.getDeviceDefinition().getWidth() ? 0 : componentDefinition.getX();
         int y = componentDefinition.getY() >= holder.getDeviceDefinition().getHeight() ? 0 : componentDefinition.getY();
@@ -42,14 +42,13 @@ public class EditComponentAction implements EditActionInterface {
 
     public static class EditHandler implements PickerHandler {
 
-        EditHolder holder;
-        ComponentDefinition componentDefinition;
-        Logger logger;
+        private final Logger logger = LoggerFactory.getLogger(this.getClass());
+        private final EditHolder holder;
+        private final ComponentDefinition componentDefinition;
 
-        public EditHandler(EditHolder holder, ComponentDefinition componentDefinition, Logger logger) {
+        public EditHandler(EditHolder holder, ComponentDefinition componentDefinition) {
             this.holder = holder;
             this.componentDefinition = componentDefinition;
-            this.logger = logger;
         }
 
         @Override

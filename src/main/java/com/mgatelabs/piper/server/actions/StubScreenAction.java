@@ -5,16 +5,19 @@ import com.mgatelabs.piper.server.EditHolder;
 import com.mgatelabs.piper.shared.details.ScreenDefinition;
 import com.mgatelabs.piper.ui.utils.Constants;
 import org.apache.commons.lang3.StringUtils;
-
-import java.util.logging.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  *
  * Created by @mgatelabs (Michael Fuller) on 9/24/2018
  */
 public class StubScreenAction implements EditActionInterface {
+
+    private Logger logger = LoggerFactory.getLogger(this.getClass());
+
     @Override
-    public String execute(final String id, final String value, final EditHolder holder, Logger logger) {
+    public String execute(final String id, final String value, final EditHolder holder) {
 
         if (StringUtils.isNotBlank(id) && Constants.ID_PATTERN.matcher(id).matches()) {
 

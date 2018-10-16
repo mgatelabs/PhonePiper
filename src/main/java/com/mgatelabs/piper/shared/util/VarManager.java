@@ -4,11 +4,12 @@ import com.google.common.collect.Maps;
 import com.mgatelabs.piper.shared.details.ExecutableLink;
 import com.mgatelabs.piper.shared.details.StateDefinition;
 import com.mgatelabs.piper.shared.details.VarDefinition;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.List;
 import java.util.Map;
 import java.util.Stack;
-import java.util.logging.Logger;
 
 /**
  *
@@ -16,14 +17,14 @@ import java.util.logging.Logger;
  */
 public class VarManager {
 
-    Map<String, VarInstance> globals;
-    Map<String, VarInstance> state;
-    Stack<Map<String, VarInstance>> calls;
-    Logger logger;
+    private final Logger logger = LoggerFactory.getLogger(this.getClass());
+    private final Map<String, VarInstance> globals;
+    private final Map<String, VarInstance> state;
+    private final Stack<Map<String, VarInstance>> calls;
 
     private String currentSceneId = null;
 
-    public VarManager(Logger logger) {
+    public VarManager() {
         globals = Maps.newHashMap();
         state = Maps.newHashMap();
         calls = new Stack<>();
@@ -36,7 +37,7 @@ public class VarManager {
         }
     }
 
-    public void state(ExecutableLink executableState, Map<String, String> arguments, Logger logger) {
+    public void state(ExecutableLink executableState, Map<String, String> arguments) {
         calls.clear();
         if (!executableState.getId().equalsIgnoreCase(currentSceneId)) {
             // Only reset the state if the state is different
@@ -52,11 +53,11 @@ public class VarManager {
                 if (varInstance != null) {
                     varInstance.update(new StringVar(arg.getValue()));
                 } else {
-                    logger.severe("Argument " + arg.getKey() + " does not related to a state variable");
+                    logger.error("Argument " + arg.getKey() + " does not related to a state variable");
                 }
             }
         } else {
-            logger.fine("Not updating variables for state, current state is next state");
+            logger.debug("Not updating variables for state, current state is next state");
         }
     }
 
@@ -73,7 +74,7 @@ public class VarManager {
             if (varInstance != null) {
                 varInstance.update(new StringVar(arg.getValue()));
             } else {
-                logger.severe("Argument " + arg.getKey() + " does not related to a Call variable");
+                logger.error("Argument " + arg.getKey() + " does not related to a Call variable");
             }
         }
         calls.push(callArgs);
@@ -81,7 +82,7 @@ public class VarManager {
 
     public void pop() {
         if (calls.size() == 0) {
-            logger.severe("Out of Call Pops");
+            logger.error("Out of Call Pops");
         }
         calls.pop();
     }

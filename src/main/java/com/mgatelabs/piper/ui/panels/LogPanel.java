@@ -1,5 +1,6 @@
 package com.mgatelabs.piper.ui.panels;
 
+import ch.qos.logback.classic.spi.ILoggingEvent;
 import com.google.common.collect.ImmutableList;
 import com.mgatelabs.piper.ui.utils.WebLogHandler;
 
@@ -10,7 +11,6 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.logging.LogRecord;
 
 /**
  * Created by @mgatelabs (Michael Fuller) on 9/25/2017 for Phone-Piper
@@ -63,14 +63,15 @@ public class LogPanel extends JPanel {
         timer = new Timer(1000, new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                ImmutableList<LogRecord> records = webLogHandler.getEvents();
+                ImmutableList<ILoggingEvent> records = webLogHandler.getEvents();
                 try {
                     if (records.size() > 0) {
                         final String[] cols = new String[4];
-                        for (LogRecord logRecord : records) {
-                            cols[0] = logRecord.getSourceClassName().substring(logRecord.getSourceClassName().lastIndexOf('.'));
-                            cols[1] = sdf.format(new Date(logRecord.getMillis()));
-                            cols[2] = logRecord.getLevel().getName();
+                        for (ILoggingEvent logRecord : records) {
+                            StackTraceElement callerData = logRecord.getCallerData()[0];
+                            cols[0] = callerData.getClassName().substring(callerData.getClassName().lastIndexOf('.')) + "." + callerData.getMethodName() + "(" + callerData.getLineNumber() + ")";
+                            cols[1] = sdf.format(new Date(logRecord.getTimeStamp()));
+                            cols[2] = logRecord.getLevel().toString();
                             cols[3] = logRecord.getMessage();
                             defaultTableModel.insertRow(0, cols);
                         }

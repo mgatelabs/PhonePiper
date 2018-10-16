@@ -6,6 +6,8 @@ import com.google.common.collect.ImmutableSet;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 import com.google.common.collect.Sets;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.Comparator;
 import java.util.List;
@@ -90,6 +92,8 @@ public final class ScriptEnvironment {
     }
 
     public static final class Builder {
+
+        private final Logger logger = LoggerFactory.getLogger(this.getClass());
         private List<String> scriptIds = Lists.newArrayList();
         private Action action;
         private Mode mode;

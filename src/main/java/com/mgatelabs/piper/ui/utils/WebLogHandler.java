@@ -1,51 +1,71 @@
 package com.mgatelabs.piper.ui.utils;
 
+import ch.qos.logback.classic.AsyncAppender;
+import ch.qos.logback.classic.Level;
+import ch.qos.logback.classic.Logger;
+import ch.qos.logback.classic.LoggerContext;
+import ch.qos.logback.classic.spi.ILoggingEvent;
 import com.google.common.collect.ImmutableList;
+import org.slf4j.LoggerFactory;
 
 import java.util.concurrent.ArrayBlockingQueue;
 import java.util.concurrent.BlockingQueue;
-import java.util.logging.Handler;
-import java.util.logging.LogRecord;
-
 /**
  * Created by @mgatelabs (Michael Fuller) on 9/25/2017 for Phone-Piper
  */
-public class WebLogHandler extends Handler {
+public class WebLogHandler extends AsyncAppender implements LogAppender {
 
-    public BlockingQueue<LogRecord> events = new ArrayBlockingQueue<>(200);
+    private final BlockingQueue<ILoggingEvent> events = new ArrayBlockingQueue<>(200);
+    private Level logLevel = Level.INFO;
 
     public WebLogHandler() {
+        setName(this.getClass().getSimpleName());
+        LoggerContext loggerContext = ((ch.qos.logback.classic.Logger) LoggerFactory.getLogger(Logger.ROOT_LOGGER_NAME)).getLoggerContext();
+        loggerContext.addTurboFilter(getDefaultTurboFilter(loggerContext));
 
+        setContext(loggerContext);
+        setIncludeCallerData(true);
+
+        addAppender(this);
+
+        startAppender(this);
     }
 
     @Override
-    public void publish(LogRecord record) {
-        if (isLoggable(record)) {
-            //record.ge
+    protected void append(ILoggingEvent iLoggingEvent) {
+        if (isLoggable(iLoggingEvent.getLevel())) {
+            super.preprocess(iLoggingEvent);
             synchronized (events) {
                 while (events.size() >= 200) {
                     events.poll();
                 }
-                events.add(record);
+                events.add(iLoggingEvent);
             }
         }
     }
 
-    @Override
-    public void flush() {
-
-    }
-
-    @Override
-    public void close() throws SecurityException {
-
-    }
-
-    public ImmutableList<LogRecord> getEvents() {
+    public ImmutableList<ILoggingEvent> getEvents() {
         synchronized (events) {
-            ImmutableList<LogRecord> temp = ImmutableList.copyOf(events);
+            ImmutableList<ILoggingEvent> temp = ImmutableList.copyOf(events);
             events.clear();
             return temp;
         }
+    }
+
+    @Override
+    public Level getLevel() {
+        return logLevel;
+    }
+
+    @Override
+    public Level setLevel(Level logLevel) {
+//        for (Filter filter : getCopyOfAttachedFiltersList()) {
+//            if (filter instanceof ThresholdFilter) {
+//                ((ThresholdFilter) filter).setLevel(logLevel.toString());
+//            }
+//        }
+        Level priorLevel = getLevel();
+        this.logLevel = logLevel;
+        return priorLevel;
     }
 }

@@ -132,6 +132,7 @@ public class ScriptDefinition {
 
     public static ScriptDefinition read(String scriptId) {
         final File deviceFile = getFileFor(scriptId);
+
         if (deviceFile.exists()) {
             final ObjectMapper objectMapper = JsonTool.getInstance();
             try {

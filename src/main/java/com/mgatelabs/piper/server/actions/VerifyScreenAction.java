@@ -5,16 +5,20 @@ import com.mgatelabs.piper.shared.details.ScreenDefinition;
 import com.mgatelabs.piper.shared.image.ImageWrapper;
 import com.mgatelabs.piper.shared.image.PngImageWrapper;
 import com.mgatelabs.piper.shared.image.SamplePoint;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.File;
-import java.util.logging.Logger;
 
 /**
  * Created by @mgatelabs (Michael Fuller) on 9/22/2018.
  */
 public class VerifyScreenAction implements EditActionInterface {
+
+    private final Logger logger = LoggerFactory.getLogger(this.getClass());
+
     @Override
-    public String execute(final String id, final String value, final EditHolder holder, Logger logger) {
+    public String execute(final String id, final String value, final EditHolder holder) {
         ScreenDefinition screenDefinition = holder.getScreenForId(id);
         if (screenDefinition == null) return "Could not find screen with id: " + id;
 

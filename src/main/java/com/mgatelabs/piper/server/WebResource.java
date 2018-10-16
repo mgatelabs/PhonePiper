@@ -1,11 +1,9 @@
 package com.mgatelabs.piper.server;
 
+import ch.qos.logback.classic.Level;
+import ch.qos.logback.classic.spi.ILoggingEvent;
 import com.google.common.base.Charsets;
-import com.google.common.collect.ImmutableList;
-import com.google.common.collect.ImmutableMap;
-import com.google.common.collect.ImmutableSet;
-import com.google.common.collect.Lists;
-import com.google.common.collect.Maps;
+import com.google.common.collect.*;
 import com.google.common.io.Resources;
 import com.mgatelabs.piper.Runner;
 import com.mgatelabs.piper.runners.ScriptRunner;
@@ -23,6 +21,8 @@ import com.mgatelabs.piper.ui.panels.LogPanel;
 import com.mgatelabs.piper.ui.panels.RunScriptPanel;
 import com.mgatelabs.piper.ui.utils.Constants;
 import org.apache.commons.lang3.StringUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.web.bind.annotation.RequestBody;
 
 import javax.ws.rs.*;
@@ -32,7 +32,6 @@ import java.io.File;
 import java.io.IOException;
 import java.net.URL;
 import java.util.*;
-import java.util.logging.*;
 
 /**
  * Created by @mgatelabs (Michael Fuller) on 2/13/2018.
@@ -51,16 +50,13 @@ public class WebResource {
     private static FrameChoices frameChoices;
     private static DeviceHelper deviceHelper;
 
-    private Logger logger = Logger.getLogger("WebResource");
+    private final Logger logger = LoggerFactory.getLogger(this.getClass());
 
     private synchronized boolean checkInitialState() {
         if (connectionDefinition == null) {
+            Loggers.init();
             connectionDefinition = new ConnectionDefinition();
             deviceHelper = new DeviceHelper(connectionDefinition.getIp(), connectionDefinition.getHelperPort());
-            Loggers.webLogger.setLevel(Level.INFO);
-            Loggers.fileLogger.setLevel(Level.INFO);
-            logger.addHandler(Loggers.webLogger);
-            logger.setLevel(Level.FINEST);
             return true;
         }
         return false;
@@ -295,13 +291,13 @@ public class WebResource {
             result.getVariables().addAll(runner.getVariables());
         }
 
-        final ImmutableList<LogRecord> records = Loggers.webLogger.getEvents();
+        final ImmutableList<ILoggingEvent> records = Loggers.webHandler.getEvents();
 
-        for (LogRecord record : records) {
-
+        for (ILoggingEvent record : records) {
+            StackTraceElement callerData = record.getCallerData()[0];
             String sourceName;
-            if (record.getSourceClassName() != null && record.getSourceClassName().lastIndexOf('.') > 0) {
-                sourceName = record.getSourceClassName().substring(record.getSourceClassName().lastIndexOf('.') + 1);
+            if (callerData.getClassName() != null && callerData.getClassName().lastIndexOf('.') > 0) {
+                sourceName = callerData.getClassName().substring(callerData.getClassName().lastIndexOf('.') + 1) + "." + callerData.getMethodName() + "(" + callerData.getLineNumber() + ")";
             } else if (record.getLoggerName() != null) {
                 sourceName = record.getLoggerName();
             } else {
@@ -311,8 +307,8 @@ public class WebResource {
             result.getLogs().add(
                     new StatusLog(
                             sourceName,
-                            LogPanel.sdf.format(new Date(record.getMillis())),
-                            record.getLevel().getName(),
+                            LogPanel.sdf.format(new Date(record.getTimeStamp())),
+                            record.getLevel().toString(),
                             record.getMessage()
                     )
             );
@@ -524,7 +520,7 @@ public class WebResource {
                 result.put("msg", "Unknown Action");
                 result.put("status", "false");
             } else {
-                result.put("msg", editActionInterface.execute(id, value, editHolder, logger));
+                result.put("msg", editActionInterface.execute(id, value, editHolder));
                 result.put("status", "true");
             }
         } else {
@@ -550,11 +546,22 @@ public class WebResource {
     }
 
     @POST
+    @Path("/process/level/console/{level}")
+    @Produces("application/json")
+    public Map<String, String> setConsoleLevel(@PathParam("level") String level) {
+        checkInitialState();
+        Loggers.consoleHandler.setLevel(Level.toLevel(level, Level.ERROR));
+        Map<String, String> result = Maps.newHashMap();
+        result.put("status", "true");
+        return result;
+    }
+
+    @POST
     @Path("/process/level/web/{level}")
     @Produces("application/json")
     public Map<String, String> setWebLevel(@PathParam("level") String level) {
         checkInitialState();
-        updateLoggerFor(Loggers.webLogger, java.util.logging.Level.parse(level));
+        Loggers.webHandler.setLevel(Level.toLevel(level, Level.ERROR));
         Map<String, String> result = Maps.newHashMap();
         result.put("status", "true");
         return result;
@@ -565,19 +572,10 @@ public class WebResource {
     @Produces("application/json")
     public Map<String, String> setFileLevel(@PathParam("level") String level) {
         checkInitialState();
-        updateLoggerFor(Loggers.fileLogger, java.util.logging.Level.parse(level));
+        Loggers.fileHandler.setLevel(Level.toLevel(level, Level.ERROR));
         Map<String, String> result = Maps.newHashMap();
         result.put("status", "true");
         return result;
-    }
-
-    private void updateLoggerFor(Handler handler, Level level) {
-        handler.setLevel(level);
-        if (runner != null) {
-            Level determined = Loggers.webLogger.getLevel().intValue() < Loggers.fileLogger.getLevel().intValue() ? Loggers.webLogger.getLevel() : Loggers.fileLogger.getLevel();
-            logger.info("Setting log Level to " + determined.toString());
-            runner.updateLogger(determined);
-        }
     }
 
     @GET
@@ -640,8 +638,8 @@ public class WebResource {
             });
             result.getVariableTiers().addAll(runner.getVariableTiers());
 
-            result.setWebLevel(Loggers.webLogger.getLevel().getName());
-            result.setFileLevel(Loggers.fileLogger.getLevel().getName());
+            result.setWebLevel(Loggers.webHandler.getLevel().toString());
+            result.setFileLevel(Loggers.fileHandler.getLevel().toString());
 
             return result;
         } else {

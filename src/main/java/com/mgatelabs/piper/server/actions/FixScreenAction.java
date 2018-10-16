@@ -9,18 +9,18 @@ import com.mgatelabs.piper.shared.image.PngImageWrapper;
 import com.mgatelabs.piper.shared.image.SamplePoint;
 import com.mgatelabs.piper.ui.dialogs.ImagePixelPickerDialog;
 import com.mgatelabs.piper.ui.dialogs.PickerHandler;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.File;
-import java.util.ArrayList;
 import java.util.List;
-import java.util.logging.Logger;
 
 /**
  * Created by @mgatelabs (Michael Fuller) on 9/22/2018.
  */
 public class FixScreenAction implements EditActionInterface {
     @Override
-    public String execute(final String id, final String value, final EditHolder holder, Logger logger) {
+    public String execute(final String id, final String value, final EditHolder holder) {
         ScreenDefinition screenDefinition = holder.getScreenForId(id);
         if (screenDefinition == null) return "Could not find screen with id: " + id;
 
@@ -40,7 +40,7 @@ public class FixScreenAction implements EditActionInterface {
                 }
             }
 
-            ImagePixelPickerDialog imagePixelPickerDialog = new ImagePixelPickerDialog(ImagePixelPickerDialog.Mode.PIXELS, null, new EditHandler(holder, screenDefinition, newPoints, logger));
+            ImagePixelPickerDialog imagePixelPickerDialog = new ImagePixelPickerDialog(ImagePixelPickerDialog.Mode.PIXELS, null, new EditHandler(holder, screenDefinition, newPoints));
             imagePixelPickerDialog.setup(wrapper, newPoints);
             imagePixelPickerDialog.start();
 
@@ -52,15 +52,14 @@ public class FixScreenAction implements EditActionInterface {
 
     public static class EditHandler implements PickerHandler {
 
-        EditHolder holder;
-        ScreenDefinition screenDefinition;
-        Logger logger;
-        List<SamplePoint> copy;
+        private final Logger logger = LoggerFactory.getLogger(this.getClass());
+        private final EditHolder holder;
+        private final ScreenDefinition screenDefinition;
+        private final List<SamplePoint> copy;
 
-        public EditHandler(EditHolder holder, ScreenDefinition screenDefinition, List<SamplePoint> copy, Logger logger) {
+        public EditHandler(EditHolder holder, ScreenDefinition screenDefinition, List<SamplePoint> copy) {
             this.holder = holder;
             this.screenDefinition = screenDefinition;
-            this.logger = logger;
             this.copy = copy;
         }
 

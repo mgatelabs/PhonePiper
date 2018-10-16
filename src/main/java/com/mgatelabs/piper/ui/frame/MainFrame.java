@@ -1,7 +1,10 @@
 package com.mgatelabs.piper.ui.frame;
 
 import com.mgatelabs.piper.Runner;
-import com.mgatelabs.piper.shared.details.*;
+import com.mgatelabs.piper.shared.details.ConnectionDefinition;
+import com.mgatelabs.piper.shared.details.DeviceDefinition;
+import com.mgatelabs.piper.shared.details.ScriptEnvironment;
+import com.mgatelabs.piper.shared.details.ViewDefinition;
 import com.mgatelabs.piper.shared.mapper.MapDefinition;
 import com.mgatelabs.piper.shared.util.AdbShell;
 import com.mgatelabs.piper.shared.util.Loggers;
@@ -181,7 +184,7 @@ public class MainFrame extends JFrame {
 
         desktopPane = new JDesktopPane();
 
-        logPanel = new LogPanel(Loggers.webLogger);
+        logPanel = new LogPanel(Loggers.webHandler);
 
         int column0Top = 0;
         int column1Top = 0;
@@ -224,7 +227,7 @@ public class MainFrame extends JFrame {
         }
 
         if (showRunScript) {
-            runScriptPanel = new RunScriptPanel(connectionPanel.getDeviceHelper(), connectionDefinition, shell, deviceDefinition, viewDefinition, scriptEnvironment, mapPanel, Loggers.webLogger);
+            runScriptPanel = new RunScriptPanel(connectionPanel.getDeviceHelper(), connectionDefinition, shell, deviceDefinition, viewDefinition, scriptEnvironment, mapPanel, Loggers.webHandler);
             //runScriptPanel.setLocation(0, column0Top);
             //column0Top += runScriptPanel.getHeight();
 

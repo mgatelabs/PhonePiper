@@ -333,13 +333,26 @@
 
                 <div class="input-group">
                     <div class="input-group-prepend">
+                        <span class="input-group-text">Console</span>
+                    </div>
+                    <select id="consoleLogging" class="form-control logging" mode="console">
+                        <option value="ERROR">Error</option>
+                        <option value="INFO" selected>Info</option>
+                        <option value="DEBUG">Debug</option>
+                        <option value="TRACE">Trace</option>
+                        <option value="OFF">Off</option>
+                    </select>
+                </div>
+                <br/>
+                <div class="input-group">
+                    <div class="input-group-prepend">
                         <span class="input-group-text">Web</span>
                     </div>
                     <select id="webLogging" class="form-control logging" mode="web">
-                        <option value="SEVERE">Severe</option>
+                        <option value="ERROR">Error</option>
                         <option value="INFO" selected>Info</option>
-                        <option value="FINER">Finer</option>
-                        <option value="FINEST">Finest</option>
+                        <option value="DEBUG">Debug</option>
+                        <option value="TRACE">Trace</option>
                         <option value="OFF">Off</option>
                     </select>
                 </div>
@@ -349,10 +362,10 @@
                         <span class="input-group-text">File</span>
                     </div>
                     <select id="fileLogging" class="form-control logging" mode="file">
-                        <option value="SEVERE">Severe</option>
+                        <option value="ERROR">Error</option>
                         <option value="INFO" selected>Info</option>
-                        <option value="FINER">Finer</option>
-                        <option value="FINEST">Finest</option>
+                        <option value="DEBUG">Debug</option>
+                        <option value="TRACE">Trace</option>
                         <option value="OFF">Off</option>
                     </select>
                 </div>

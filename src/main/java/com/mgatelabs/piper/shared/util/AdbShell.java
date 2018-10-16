@@ -4,22 +4,19 @@ import com.google.common.base.Joiner;
 import com.google.common.collect.Lists;
 import com.mgatelabs.piper.shared.details.DeviceDefinition;
 import org.apache.commons.lang3.StringUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.*;
 import java.util.List;
-import java.util.logging.Handler;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 /**
  * Created by @mgatelabs (Michael Fuller) on 9/12/2017 for Phone-Piper
  */
 public class AdbShell {
 
-    Logger logger = Logger.getLogger("AdbShell");
-
+    private final Logger logger = LoggerFactory.getLogger(this.getClass());
     public static String ADB_PATH = "adb";
-
     public static String ADB_DIRECT = "";
 
     private ProcessBuilder builder;
@@ -102,7 +99,7 @@ public class AdbShell {
 
         endLineKey = device.getAdbEndLine();
 
-        logger.finest("Starting ADb Shell");
+        logger.trace("Starting ADb Shell");
 
         if (StringUtils.isNotBlank(ADB_DIRECT)) {
             builder = new ProcessBuilder(ADB_PATH, "-s", ADB_DIRECT, "shell");
@@ -114,7 +111,7 @@ public class AdbShell {
         try {
             adb = builder.start();
             if (!adb.isAlive()) {
-                logger.severe("Adb Exit Code: " + adb.exitValue());
+                logger.error("Adb Exit Code: " + adb.exitValue());
                 ready = false;
                 return;
             }
@@ -130,15 +127,6 @@ public class AdbShell {
             e.printStackTrace();
             ready = false;
         }
-    }
-
-    public void attachhandler(final Handler handler) {
-        logger.removeHandler(handler);
-        logger.addHandler(handler);
-    }
-
-    public void setLevel(Level newLevel) {
-        logger.setLevel(newLevel);
     }
 
     public void shutdown() {
@@ -165,12 +153,12 @@ public class AdbShell {
 
     public synchronized boolean exec(String adbCommand) {
         if (!ready) {
-            logger.severe("Adb Not Ready");
+            logger.error("Adb Not Ready");
             return false;
         }
 
         if (!adb.isAlive()) {
-            logger.severe("Adb Exit Code: " + adb.exitValue());
+            logger.error("Adb Exit Code: " + adb.exitValue());
             ready = false;
             return false;
         }
@@ -213,9 +201,7 @@ public class AdbShell {
 
             long endTime = System.nanoTime();
             long diff = endTime - startTime;
-            if (logger.isLoggable(Level.SEVERE)) {
-                logger.finest("AdbCommand: " + adbCommand + " (" + String.format("%2.2f", ((float) diff / 1000000000.0)) + "s)");
-            }
+            logger.trace("AdbCommand: " + adbCommand + " (" + String.format("%2.2f", ((float) diff / 1000000000.0)) + "s)");
             return true;
         } catch (Exception ex) {
             ex.printStackTrace();

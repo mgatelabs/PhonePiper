@@ -4,16 +4,20 @@ import com.mgatelabs.piper.server.EditHolder;
 import com.mgatelabs.piper.shared.details.ComponentDefinition;
 import com.mgatelabs.piper.shared.image.ImageWrapper;
 import com.mgatelabs.piper.shared.util.AdbUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.File;
-import java.util.logging.Logger;
 
 /**
  * Created by @mgatelabs (Michael Fuller) on 9/22/2018.
  */
 public class UpdateComponentImageAction implements EditActionInterface {
+
+    private Logger logger = LoggerFactory.getLogger(this.getClass());
+
     @Override
-    public String execute(final String id, final String value, final EditHolder holder, Logger logger) {
+    public String execute(final String id, final String value, final EditHolder holder) {
         ComponentDefinition componentDefinition = holder.getComponentForId(id);
         if (componentDefinition == null) return "Could not find component with id: " + id;
         AdbUtils.persistScreen(holder.getShell());
@@ -21,6 +25,7 @@ public class UpdateComponentImageAction implements EditActionInterface {
         if (wrapper != null && wrapper.isReady()) {
             File previewPath = ComponentDefinition.getPreviewPath(holder.getViewDefinition().getViewId(), componentDefinition.getComponentId());
             if (!wrapper.savePng(previewPath)) {
+                logger.error("Failed to update component image");
                 return ("Failed to update component image");
             } else {
                 return ("Component image updated");

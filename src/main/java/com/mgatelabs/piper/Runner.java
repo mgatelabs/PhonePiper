@@ -1,5 +1,7 @@
 package com.mgatelabs.piper;
 
+import ch.qos.logback.classic.Level;
+import ch.qos.logback.classic.Logger;
 import com.google.common.collect.Lists;
 import com.mgatelabs.piper.server.ServerRunner;
 import com.mgatelabs.piper.shared.details.ScriptEnvironment;
@@ -12,6 +14,7 @@ import com.mgatelabs.piper.ui.frame.MainFrame;
 import com.mgatelabs.piper.ui.frame.StartupFrame;
 import com.mgatelabs.piper.ui.utils.Constants;
 import org.apache.commons.lang3.StringUtils;
+import org.slf4j.LoggerFactory;
 import org.springframework.boot.builder.SpringApplicationBuilder;
 
 import javax.swing.*;
@@ -57,11 +60,9 @@ public class Runner {
             }
         }
     }
-
     public static void main(final String[] args) {
         handleStaticArgs(args);
-
-        Loggers.init();
+//        Loggers.init();
 
         System.out.println("Working Directory: " + WORKING_DIRECTORY.getAbsolutePath());
 

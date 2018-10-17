@@ -470,24 +470,10 @@ public class ScriptRunner {
     }
 
     private StateResult getStateResult(ExecutableLink executableState, ImageWrapper imageWrapper) {
-        if (deviceHelper != null) {
-            logger.debug("Helper: /check/" + executableState.getId());
-
-            long startTime = System.nanoTime();
-            validScreenIds = deviceHelper.check(executableState.getId());
-            long endTime = System.nanoTime();
-
-            long dif = endTime - startTime;
-
-            lastImageDate = new Date();
-            lastImageDuration = ((float) dif / 1000000000.0f);
-
-            logger.debug("Screen State checked in " + THREE_DECIMAL.format(lastImageDuration) + "s");
-            logger.trace("Valid Screens: " + Joiner.on(",").join(validScreenIds));
-        }
+        refreshViews(false);
         Stack<ProcessingStateInfo> stateStack = new Stack<>();
         stateStack.push(new ProcessingStateInfo(executableState.getLink()));
-        StateResult result = null;
+        StateResult result;
         try {
             result = executeState(stateStack, executableState, imageWrapper, StateCallType.STATE, ImmutableMap.of(), false);
         } catch (Exception ex) {
@@ -497,6 +483,55 @@ public class ScriptRunner {
         }
         stateStack.pop();
         return result;
+    }
+
+    private synchronized void refreshViews(boolean captureAgain) {
+        if (deviceHelper != null) {
+
+            if (captureAgain) {
+
+                if (!shell.isReady()) {
+                    logger.warn("Bad Shell: Will try to reconnect...");
+                    if (connectionDefinition.isWifi()) {
+                        waitFor(1000);
+                        AdbShell.connect(deviceHelper.getIpAddress(), connectionDefinition.getAdbPort());
+                    }
+                    waitFor(1000);
+                    restartShell();
+                    waitFor(1000);
+                }
+
+                long startTime = System.nanoTime();
+
+                if (!AdbUtils.persistScreen(shell)) {
+                    logger.warn("Helper Image Failure");
+                    waitFor(250);
+                    return;
+                }
+                long endTime = System.nanoTime();
+                long dif = endTime - startTime;
+
+                lastImageDate = new Date();
+                lastImageDuration = ((float) dif / 1000000000.0f);
+                logger.debug("Helper Image Persisted in " + THREE_DECIMAL.format(lastImageDuration) + "s");
+            }
+
+            logger.debug("Helper: /check/" + vars.getCurrentSceneId());
+
+            long startTime = System.nanoTime();
+            validScreenIds = deviceHelper.check(vars.getCurrentSceneId());
+            long endTime = System.nanoTime();
+
+            long dif = endTime - startTime;
+
+            lastImageDate = new Date();
+            lastImageDuration = ((float) dif / 1000000000.0f);
+
+            logger.debug("Screen State checked in " + THREE_DECIMAL.format(lastImageDuration) + "s");
+            logger.trace("Valid Screens: " + Joiner.on(",").join(validScreenIds));
+        } else {
+            logger.error("Unable to REFRESH screen");
+        }
     }
 
     private String lapEvent(String id) {
@@ -741,6 +776,10 @@ public class ScriptRunner {
                                 putVar(varName, result);
                             }
                             break;
+                            case REFRESH: {
+                                // Simply tell the system to refresh the view, this may take a second
+                                refreshViews(true);
+                            } break;
                             case RANDOM: {
                                 final String varName = actionDefinition.getVar();
                                 Var min = IntVar.ZERO;

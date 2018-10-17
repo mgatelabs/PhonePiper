@@ -159,6 +159,8 @@ public class ActionDefinition {
                 return "COMPONENT";
             case RANDOM:
                 return "RANDOM";
+            case REFRESH:
+                return "REFRESH SCREEN";
         }
         return "???";
     }

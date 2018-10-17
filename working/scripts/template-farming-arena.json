@@ -1,3 +1,4 @@
+//@formatter:off
 {
   "vars": [],
   "imports": [
@@ -30,6 +31,10 @@
           "value": "0",
           "type": "INT"
         },
+        "resurgence": {
+          "value": "0",
+          "type": "INT"
+        },
         "availableUnits": {
           "value": "0",
           "type": "INT"
@@ -39,6 +44,10 @@
           "type": "INT"
         },
         "availableHpUnits": {
+          "value": "0",
+          "type": "INT"
+        },
+        "aliveUnits": {
           "value": "0",
           "type": "INT"
         },
@@ -65,6 +74,11 @@
       },
       "statements": [
 
+        ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        // INSPECTION
+        ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+        // SHE How many units are available to use
         {
           "condition": {
             "is": "CALL",
@@ -97,7 +111,7 @@
               "value": 1,
               "condition": { "is": "CALL", "value": "@isUnitReady", "args": {"index": "2"} }
             },
-            // Skip #3 the healer
+            // Skip the Healer #3
             {
               "type": "ADD",
               "var": "availableUnits",
@@ -122,6 +136,7 @@
           ]
         },
 
+        // With the battle menu open, lets check the health and mp for every unit
         {
           "condition": {
             "is": "SCREEN",
@@ -131,11 +146,13 @@
             ]
           },
           "actions": [
+            // How many have decent health?
             {
               "type": "SET",
               "var": "availableHpUnits",
               "value": "0"
             },
+
             {
               "type": "ADD",
               "var": "availableHpUnits",
@@ -154,12 +171,45 @@
               "value": 1,
               "condition": { "is": "CALL", "value": "@unitHasHp", "args": {"index": "2", "mode": "menu", "percent" : "80"} }
             },
+            // Skip the Healer #3
             {
               "type": "ADD",
               "var": "availableHpUnits",
               "value": 1,
               "condition": { "is": "CALL", "value": "@unitHasHp", "args": {"index": "4", "mode": "menu", "percent" : "80"} }
             },
+            // How many are alive?
+            {
+              "type": "SET",
+              "var": "aliveUnits",
+              "value": "0"
+            },
+            {
+              "type": "ADD",
+              "var": "aliveUnits",
+              "value": 1,
+              "condition": { "is": "CALL", "value": "@unitHasHp", "args": {"index": "0", "mode": "menu", "percent" : "0"} }
+            },
+            {
+              "type": "ADD",
+              "var": "aliveUnits",
+              "value": 1,
+              "condition": { "is": "CALL", "value": "@unitHasHp", "args": {"index": "1", "mode": "menu", "percent" : "0"} }
+            },
+            {
+              "type": "ADD",
+              "var": "aliveUnits",
+              "value": 1,
+              "condition": { "is": "CALL", "value": "@unitHasHp", "args": {"index": "2", "mode": "menu", "percent" : "0"} }
+            },
+            // Skip the Healer #3
+            {
+              "type": "ADD",
+              "var": "aliveUnits",
+              "value": 1,
+              "condition": { "is": "CALL", "value": "@unitHasHp", "args": {"index": "4", "mode": "menu", "percent" : "0"} }
+            },
+            // How many have enough MP?
             {
               "type": "SET",
               "var": "availableMpUnits",
@@ -183,6 +233,7 @@
               "value": 1,
               "condition": { "is": "CALL", "value": "@unitHasMp", "args": {"index": "2", "mode": "menu", "percent" : "25"} }
             },
+            // Skip the Healer #3
             {
               "type": "ADD",
               "var": "availableMpUnits",
@@ -215,7 +266,11 @@
             }
           ]
         },
+        ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        // HEALER (AYAKA)
+        ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
+        // If everyone is alive she will always do Elysium
         {
           "condition": {
             "is": "CALL",
@@ -225,7 +280,8 @@
               { "is": "CALL", "value": "@isUnitReady", "args": {"index": "3"} },
               { "is": "CALL", "value": "@unitHasMp", "args": {"index": "3", "percent" : "25"} },
               { "is": "EQUAL", "value": "0", "var":"elysium"},
-              { "is": "EQUAL", "value": "4", "var":"availableUnits"}
+              { "is": "EQUAL", "value": "4", "var":"availableUnits"},
+              { "is": "EQUAL", "value": "4", "var":"aliveUnits"}
             ]
           },
           "actions": [
@@ -291,6 +347,7 @@
           ]
         },
 
+        // Are we having MP issues?
         {
           "condition": {
             "is": "CALL",
@@ -363,6 +420,7 @@
           ]
         },
 
+        // If she has HER lb, use it
         {
           "condition": {
             "is": "CALL",
@@ -420,6 +478,7 @@
           ]
         },
 
+        // We have 4 alive units, but someone is not able to move, let's clense the slate clean
         {
           "condition": {
             "is": "CALL",
@@ -429,7 +488,8 @@
               { "is": "CALL", "value": "@isUnitReady", "args": {"index": "3"} },
               { "is": "CALL", "value": "@unitHasMp", "args": {"index": "3", "percent" : "25"} },
               { "is": "EQUAL", "value": "0", "var":"purify"},
-              { "is": "LESS", "value": "4", "var":"availableUnits"}
+              { "is": "LESS", "value": "4", "var":"availableUnits"},
+              { "is": "EQUAL", "value": "4", "var":"aliveUnits"}
             ]
           },
           "actions": [
@@ -495,6 +555,7 @@
           ]
         },
 
+        // We can't purify+, and someone can't move, so use Stop Detatch
         {
           "condition": {
             "is": "CALL",
@@ -503,7 +564,8 @@
               { "is": "EQUAL", "value": "0", "var":"segment"},
               { "is": "CALL", "value": "@isUnitReady", "args": {"index": "3"} },
               { "is": "CALL", "value": "@unitHasMp", "args": {"index": "3", "percent" : "25"} },
-              { "is": "LESS", "value": "4", "var":"availableUnits"}
+              { "is": "LESS", "value": "4", "var":"availableUnits"},
+              { "is": "EQUAL", "value": "4", "var":"aliveUnits"}
             ]
           },
           "actions": [
@@ -564,12 +626,90 @@
           ]
         },
 
+        // Someone is down, we need to revive with Resurgence+
         {
           "condition": {
             "is": "CALL",
             "value": "@isBattleReady",
             "and": [
               { "is": "EQUAL", "value": "0", "var":"segment"},
+              { "is": "EQUAL", "value": "0", "var":"resurgence"},
+              { "is": "CALL", "value": "@isUnitReady", "args": {"index": "3"} },
+              { "is": "CALL", "value": "@unitHasMp", "args": {"index": "3", "percent" : "25"} },
+              { "is": "LESS", "value": "4", "var":"aliveUnits"}
+            ]
+          },
+          "actions": [
+            {
+              "type": "INFO",
+              "value": "Ayaka Used Resurgence+"
+            },
+            {
+              "type": "SET",
+              "var": "segment",
+              "value": "1"
+            },
+            {
+              "type": "SET",
+              "var": "resurgence",
+              "value": "5"
+            },
+            {
+              "type": "CALL",
+              "value": "@showUnitActions",
+              "args": {
+                "index": "3"
+              }
+            },
+            {
+              "type": "CALL",
+              "value": "@selectUnitAction",
+              "args": {
+                "row": "9",
+                "column": "1"
+              }
+            },
+            {
+              "type": "WAIT",
+              "value": "400"
+            },
+            {
+              "type": "CALL",
+              "value": "@tapUnit",
+              "args": {
+                "index": "3"
+              }
+            },
+            {
+              "type": "WAIT",
+              "value": "400"
+            },
+            {
+              "type": "CALL",
+              "value": "@tapUnit",
+              "args": {
+                "index": "3"
+              }
+            },
+            {
+              "type": "WAIT",
+              "value": "2000"
+            },
+            {
+              "type": "REPEAT",
+              "value": ""
+            }
+          ]
+        },
+
+        // Just heal
+        {
+          "condition": {
+            "is": "CALL",
+            "value": "@isBattleReady",
+            "and": [
+              { "is": "EQUAL", "value": "0", "var":"segment"},
+              { "is": "EQUAL", "value": "1", "var":"arena-rule-white_magic"},
               { "is": "CALL", "value": "@unitHasMp", "args": {"index": "3", "percent" : "25"} },
               { "is": "CALL", "value": "@isUnitReady", "args": {"index": "3"} },
               { "var": "availableHpUnits", "is": "LESS", "value": "4"}
@@ -598,6 +738,77 @@
               "args": {
                 "row": "4",
                 "column": "1"
+              }
+            },
+            {
+              "type": "WAIT",
+              "value": "400"
+            },
+            {
+              "type": "CALL",
+              "value": "@tapUnit",
+              "args": {
+                "index": "3"
+              }
+            },
+            {
+              "type": "WAIT",
+              "value": "400"
+            },
+            {
+              "type": "CALL",
+              "value": "@tapUnit",
+              "args": {
+                "index": "3"
+              }
+            },
+            {
+              "type": "WAIT",
+              "value": "2000"
+            },
+            {
+              "type": "REPEAT",
+              "value": ""
+            }
+          ]
+        },
+
+        // Just purify
+        {
+          "condition": {
+            "is": "CALL",
+            "value": "@isBattleReady",
+            "and": [
+              { "is": "EQUAL", "value": "0", "var":"segment"},
+              { "is": "EQUAL", "value": "0", "var":"arena-rule-white_magic"},
+              { "is": "CALL", "value": "@unitHasMp", "args": {"index": "3", "percent" : "25"} },
+              { "is": "CALL", "value": "@isUnitReady", "args": {"index": "3"} },
+              { "var": "availableHpUnits", "is": "LESS", "value": "4"}
+            ]
+          },
+          "actions": [
+            {
+              "type": "INFO",
+              "value": "Ayaka Used Curaja (Big Heal) Needed"
+            },
+            {
+              "type": "SET",
+              "var": "segment",
+              "value": "1"
+            },
+            {
+              "type": "CALL",
+              "value": "@showUnitActions",
+              "args": {
+                "index": "3"
+              }
+            },
+            {
+              "type": "CALL",
+              "value": "@selectUnitAction",
+              "args": {
+                "row": "8",
+                "column": "0"
               }
             },
             {
@@ -684,6 +895,7 @@
             "value": "@isBattleReady",
             "and": [
               { "is": "EQUAL", "value": "0", "var":"segment"},
+              { "is": "EQUAL", "value": "1", "var":"arena-rule-white_magic"},
               { "is": "CALL", "value": "@unitHasMp", "args": {"index": "3", "percent" : "25"} },
               { "is": "CALL", "value": "@isUnitReady", "args": {"index": "3"} }
             ]
@@ -711,6 +923,75 @@
               "args": {
                 "row": "4",
                 "column": "1"
+              }
+            },
+            {
+              "type": "WAIT",
+              "value": "400"
+            },
+            {
+              "type": "CALL",
+              "value": "@tapUnit",
+              "args": {
+                "index": "3"
+              }
+            },
+            {
+              "type": "WAIT",
+              "value": "400"
+            },
+            {
+              "type": "CALL",
+              "value": "@tapUnit",
+              "args": {
+                "index": "3"
+              }
+            },
+            {
+              "type": "WAIT",
+              "value": "2000"
+            },
+            {
+              "type": "REPEAT",
+              "value": ""
+            }
+          ]
+        },
+
+        {
+          "condition": {
+            "is": "CALL",
+            "value": "@isBattleReady",
+            "and": [
+              { "is": "EQUAL", "value": "0", "var":"segment"},
+              { "is": "EQUAL", "value": "0", "var":"arena-rule-white_magic"},
+              { "is": "CALL", "value": "@unitHasMp", "args": {"index": "3", "percent" : "25"} },
+              { "is": "CALL", "value": "@isUnitReady", "args": {"index": "3"} }
+            ]
+          },
+          "actions": [
+            {
+              "type": "INFO",
+              "value": "Ayaka Used Purify (Minor Heal) Default"
+            },
+            {
+              "type": "SET",
+              "var": "segment",
+              "value": "1"
+            },
+            {
+              "type": "CALL",
+              "value": "@showUnitActions",
+              "args": {
+                "index": "3"
+              }
+            },
+            {
+              "type": "CALL",
+              "value": "@selectUnitAction",
+              "args": {
+                "row": "8",
+                "column": "0"
               }
             },
             {
@@ -819,6 +1100,7 @@
           ]
         },
 
+        // At this point, I would hit reload for speed purposes, but it better to always reset everything
         {
           "condition": {
             "is": "CALL",
@@ -1596,6 +1878,17 @@
               "condition": {
                 "is": "GREATER",
                 "var": "purify",
+                "value": "0"
+              }
+            },
+
+            {
+              "type": "ADD",
+              "var": "resurgence",
+              "value": "-1",
+              "condition": {
+                "is": "GREATER",
+                "var": "resurgence",
                 "value": "0"
               }
             },

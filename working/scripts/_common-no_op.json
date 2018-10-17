@@ -6,6 +6,7 @@
       "type": "INT",
       "modify": "VISIBLE",
       "display": "Screen Saver",
+      "tierId": "timers",
       "displayType": "SECONDS"
     },
     {
@@ -14,6 +15,7 @@
       "type": "INT",
       "modify": "VISIBLE",
       "display": "Elapsed Time",
+      "tierId": "timers",
       "displayType": "SECONDS"
     },
     {
@@ -22,6 +24,7 @@
       "type": "INT",
       "modify": "VISIBLE",
       "display": "NoOp",
+      "tierId": "timers",
       "displayType": "SECONDS"
     },
     {
@@ -64,7 +67,8 @@
     }
   ],
   "varTiers": [
-    {"title":"OS", "id":"os"}
+    {"title":"OS", "id":"os"},
+    {"title":"Timers", "id":"timers"}
   ],
   "states": {
     "main": {

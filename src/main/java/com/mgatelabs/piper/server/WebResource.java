@@ -9,6 +9,7 @@ import com.mgatelabs.piper.Runner;
 import com.mgatelabs.piper.runners.ScriptRunner;
 import com.mgatelabs.piper.server.actions.*;
 import com.mgatelabs.piper.server.entities.*;
+import com.mgatelabs.piper.shared.ScriptThread;
 import com.mgatelabs.piper.shared.details.*;
 import com.mgatelabs.piper.shared.helper.DeviceHelper;
 import com.mgatelabs.piper.shared.image.ImageWrapper;
@@ -16,9 +17,6 @@ import com.mgatelabs.piper.shared.util.AdbShell;
 import com.mgatelabs.piper.shared.util.AdbUtils;
 import com.mgatelabs.piper.shared.util.Loggers;
 import com.mgatelabs.piper.ui.FrameChoices;
-import com.mgatelabs.piper.ui.frame.StartupFrame;
-import com.mgatelabs.piper.ui.panels.LogPanel;
-import com.mgatelabs.piper.ui.panels.RunScriptPanel;
 import com.mgatelabs.piper.ui.utils.Constants;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
@@ -41,7 +39,7 @@ public class WebResource {
 
     // This can change
     private static ScriptRunner runner;
-    private static RunScriptPanel.ScriptThread thread;
+    private static ScriptThread thread;
 
     private static EditHolder editHolder;
 
@@ -307,7 +305,7 @@ public class WebResource {
             result.getLogs().add(
                     new StatusLog(
                             sourceName,
-                            LogPanel.sdf.format(new Date(record.getTimeStamp())),
+                            Constants.sdf.format(new Date(record.getTimeStamp())),
                             record.getLevel().toString(),
                             record.getMessage()
                     )
@@ -328,7 +326,7 @@ public class WebResource {
 
         if (runner != null) {
             if (thread == null) {
-                thread = new RunScriptPanel.ScriptThread(runner, stateId);
+                thread = new ScriptThread(runner, stateId);
                 thread.start();
             } else {
                 runner.setStatus(ScriptRunner.Status.PAUSED);
@@ -606,7 +604,7 @@ public class WebResource {
             });
 
             Collection<ExecutableLink> executableLinks = frameChoices.getScriptEnvironment().getExecutableStates(ImmutableSet.of(StateType.STATE)).values();
-            for (ExecutableLink link: executableLinks) {
+            for (ExecutableLink link : executableLinks) {
                 stateDefinitions.add(link.getLink().getState());
             }
 
@@ -681,9 +679,9 @@ public class WebResource {
         checkInitialState();
 
         Map<String, List<String>> values = Maps.newHashMap();
-        values.put("devices", StartupFrame.arrayToList(StartupFrame.listJsonFilesIn(new File(Runner.WORKING_DIRECTORY, StartupFrame.PATH_DEVICES))));
-        values.put("views", StartupFrame.arrayToList(StartupFrame.listFoldersFilesIn(new File(Runner.WORKING_DIRECTORY, StartupFrame.PATH_VIEWS))));
-        values.put("scripts", StartupFrame.arrayToList(StartupFrame.listJsonFilesIn(new File(Runner.WORKING_DIRECTORY, StartupFrame.PATH_SCRIPTS))));
+        values.put("devices", Constants.arrayToList(Constants.listJsonFilesIn(new File(Runner.WORKING_DIRECTORY, Constants.PATH_DEVICES))));
+        values.put("views", Constants.arrayToList(Constants.listFoldersFilesIn(new File(Runner.WORKING_DIRECTORY, Constants.PATH_VIEWS))));
+        values.put("scripts", Constants.arrayToList(Constants.listJsonFilesIn(new File(Runner.WORKING_DIRECTORY, Constants.PATH_SCRIPTS))));
         return values;
     }
 

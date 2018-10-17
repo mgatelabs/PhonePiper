@@ -584,6 +584,95 @@
     } ],
     "enabled" : true
   }, {
+    "name" : "Battle - Menu - Arena",
+    "screenId" : "battle-menu-arena",
+    "points" : [ {
+      "x" : 896,
+      "y" : 1503,
+      "r" : 32,
+      "g" : 9,
+      "b" : 77
+    }, {
+      "x" : 875,
+      "y" : 1527,
+      "r" : 23,
+      "g" : 10,
+      "b" : 49
+    }, {
+      "x" : 915,
+      "y" : 95,
+      "r" : 0,
+      "g" : 0,
+      "b" : 0
+    }, {
+      "x" : 914,
+      "y" : 107,
+      "r" : 0,
+      "g" : 74,
+      "b" : 183
+    }, {
+      "x" : 904,
+      "y" : 117,
+      "r" : 0,
+      "g" : 83,
+      "b" : 177
+    }, {
+      "x" : 1042,
+      "y" : 193,
+      "r" : 0,
+      "g" : 32,
+      "b" : 125
+    }, {
+      "x" : 1052,
+      "y" : 183,
+      "r" : 0,
+      "g" : 43,
+      "b" : 137
+    }, {
+      "x" : 26,
+      "y" : 258,
+      "r" : 88,
+      "g" : 2,
+      "b" : 1
+    }, {
+      "x" : 25,
+      "y" : 248,
+      "r" : 80,
+      "g" : 4,
+      "b" : 3
+    }, {
+      "x" : 1054,
+      "y" : 248,
+      "r" : 77,
+      "g" : 1,
+      "b" : 0
+    }, {
+      "x" : 1054,
+      "y" : 259,
+      "r" : 89,
+      "g" : 1,
+      "b" : 0
+    }, {
+      "x" : 843,
+      "y" : 93,
+      "r" : 255,
+      "g" : 242,
+      "b" : 215
+    }, {
+      "x" : 838,
+      "y" : 91,
+      "r" : 255,
+      "g" : 241,
+      "b" : 216
+    }, {
+      "x" : 826,
+      "y" : 117,
+      "r" : 245,
+      "g" : 225,
+      "b" : 195
+    } ],
+    "enabled" : true
+  }, {
     "name" : "Battle - Message",
     "screenId" : "battle-message",
     "points" : [ {
@@ -809,125 +898,41 @@
     "name" : "Battle - Unit - 0 - Is Ready",
     "screenId" : "battle-unit-0_ready",
     "points" : [ {
-      "x" : 530,
-      "y" : 1260,
-      "r" : 0,
-      "g" : 0,
-      "b" : 0
+      "x" : 142,
+      "y" : 1219,
+      "r" : 5,
+      "g" : 36,
+      "b" : 100
     }, {
-      "x" : 530,
-      "y" : 1252,
-      "r" : 0,
-      "g" : 0,
-      "b" : 0
+      "x" : 142,
+      "y" : 1208,
+      "r" : 77,
+      "g" : 113,
+      "b" : 163
     }, {
-      "x" : 530,
-      "y" : 1235,
-      "r" : 0,
-      "g" : 0,
-      "b" : 0
-    }, {
-      "x" : 530,
-      "y" : 1223,
-      "r" : 0,
-      "g" : 0,
-      "b" : 0
-    }, {
-      "x" : 530,
-      "y" : 1211,
-      "r" : 0,
-      "g" : 0,
-      "b" : 0
-    }, {
-      "x" : 520,
+      "x" : 142,
       "y" : 1201,
       "r" : 0,
       "g" : 0,
       "b" : 0
     }, {
-      "x" : 513,
+      "x" : 138,
+      "y" : 1219,
+      "r" : 5,
+      "g" : 35,
+      "b" : 97
+    }, {
+      "x" : 138,
+      "y" : 1208,
+      "r" : 78,
+      "g" : 111,
+      "b" : 162
+    }, {
+      "x" : 138,
       "y" : 1201,
       "r" : 0,
       "g" : 0,
       "b" : 0
-    }, {
-      "x" : 506,
-      "y" : 1201,
-      "r" : 0,
-      "g" : 0,
-      "b" : 0
-    }, {
-      "x" : 506,
-      "y" : 1208,
-      "r" : 0,
-      "g" : 30,
-      "b" : 81
-    }, {
-      "x" : 513,
-      "y" : 1208,
-      "r" : 0,
-      "g" : 27,
-      "b" : 79
-    }, {
-      "x" : 518,
-      "y" : 1208,
-      "r" : 0,
-      "g" : 26,
-      "b" : 74
-    }, {
-      "x" : 523,
-      "y" : 1213,
-      "r" : 0,
-      "g" : 24,
-      "b" : 70
-    }, {
-      "x" : 523,
-      "y" : 1223,
-      "r" : 0,
-      "g" : 22,
-      "b" : 64
-    }, {
-      "x" : 523,
-      "y" : 1235,
-      "r" : 0,
-      "g" : 30,
-      "b" : 83
-    }, {
-      "x" : 517,
-      "y" : 1235,
-      "r" : 0,
-      "g" : 4,
-      "b" : 60
-    }, {
-      "x" : 517,
-      "y" : 1223,
-      "r" : 0,
-      "g" : 4,
-      "b" : 56
-    }, {
-      "x" : 517,
-      "y" : 1215,
-      "r" : 0,
-      "g" : 0,
-      "b" : 50
-    }, {
-      "x" : 515,
-      "y" : 1213,
-      "r" : 0,
-      "g" : 0,
-      "b" : 50
-    }, {
-      "x" : 511,
-      "y" : 1213,
-      "r" : 0,
-      "g" : 0,
-      "b" : 50
-    }, {
-      "x" : 506,
-      "y" : 1213,
-      "r" : 0,
-      "g" : 0,
-      "b" : 54
     } ],
     "enabled" : true
   }, {
@@ -1096,65 +1101,41 @@
     "name" : "Battle - Unit - 1 - Is Ready",
     "screenId" : "battle-unit-1_ready",
     "points" : [ {
-      "x" : 526,
-      "y" : 1408,
+      "x" : 149,
+      "y" : 1395,
       "r" : 0,
       "g" : 0,
       "b" : 0
     }, {
-      "x" : 520,
-      "y" : 1408,
+      "x" : 144,
+      "y" : 1395,
       "r" : 0,
-      "g" : 24,
-      "b" : 71
-    }, {
-      "x" : 513,
-      "y" : 1408,
-      "r" : 0,
-      "g" : 0,
-      "b" : 48
-    }, {
-      "x" : 513,
-      "y" : 1403,
-      "r" : 0,
-      "g" : 26,
-      "b" : 73
-    }, {
-      "x" : 513,
-      "y" : 1412,
-      "r" : 0,
-      "g" : 0,
-      "b" : 47
-    }, {
-      "x" : 520,
-      "y" : 1412,
-      "r" : 0,
-      "g" : 22,
-      "b" : 65
-    }, {
-      "x" : 526,
-      "y" : 1412,
-      "r" : 0,
-      "g" : 0,
+      "g" : 1,
       "b" : 0
     }, {
-      "x" : 513,
-      "y" : 1421,
-      "r" : 0,
-      "g" : 3,
-      "b" : 52
+      "x" : 144,
+      "y" : 1402,
+      "r" : 77,
+      "g" : 113,
+      "b" : 161
     }, {
-      "x" : 520,
-      "y" : 1421,
-      "r" : 0,
-      "g" : 27,
-      "b" : 73
+      "x" : 149,
+      "y" : 1402,
+      "r" : 76,
+      "g" : 112,
+      "b" : 162
     }, {
-      "x" : 526,
-      "y" : 1421,
-      "r" : 0,
-      "g" : 0,
-      "b" : 0
+      "x" : 149,
+      "y" : 1411,
+      "r" : 3,
+      "g" : 34,
+      "b" : 91
+    }, {
+      "x" : 144,
+      "y" : 1411,
+      "r" : 4,
+      "g" : 31,
+      "b" : 86
     } ],
     "enabled" : true
   }, {
@@ -1329,59 +1310,41 @@
     "name" : "Battle - Unit - 2 - Is Ready",
     "screenId" : "battle-unit-2_ready",
     "points" : [ {
-      "x" : 523,
-      "y" : 1593,
+      "x" : 149,
+      "y" : 1589,
       "r" : 0,
       "g" : 0,
       "b" : 0
     }, {
-      "x" : 518,
-      "y" : 1598,
-      "r" : 0,
-      "g" : 23,
-      "b" : 69
+      "x" : 149,
+      "y" : 1596,
+      "r" : 76,
+      "g" : 112,
+      "b" : 162
     }, {
-      "x" : 513,
-      "y" : 1603,
-      "r" : 0,
-      "g" : 0,
-      "b" : 48
+      "x" : 149,
+      "y" : 1605,
+      "r" : 4,
+      "g" : 34,
+      "b" : 94
     }, {
-      "x" : 513,
-      "y" : 1612,
-      "r" : 0,
-      "g" : 5,
-      "b" : 56
-    }, {
-      "x" : 520,
-      "y" : 1612,
-      "r" : 0,
-      "g" : 23,
-      "b" : 66
-    }, {
-      "x" : 527,
-      "y" : 1612,
-      "r" : 0,
-      "g" : 0,
-      "b" : 0
-    }, {
-      "x" : 527,
-      "y" : 1620,
-      "r" : 0,
-      "g" : 0,
-      "b" : 0
-    }, {
-      "x" : 520,
-      "y" : 1620,
-      "r" : 0,
+      "x" : 156,
+      "y" : 1605,
+      "r" : 3,
       "g" : 30,
-      "b" : 80
+      "b" : 85
     }, {
-      "x" : 513,
-      "y" : 1620,
+      "x" : 156,
+      "y" : 1596,
+      "r" : 76,
+      "g" : 112,
+      "b" : 164
+    }, {
+      "x" : 156,
+      "y" : 1589,
       "r" : 0,
-      "g" : 3,
-      "b" : 55
+      "g" : 0,
+      "b" : 0
     } ],
     "enabled" : true
   }, {
@@ -1562,59 +1525,41 @@
     "name" : "Battle - Unit - 3 - Is Ready",
     "screenId" : "battle-unit-3_ready",
     "points" : [ {
-      "x" : 1057,
-      "y" : 1206,
+      "x" : 689,
+      "y" : 1201,
       "r" : 0,
       "g" : 0,
       "b" : 0
     }, {
-      "x" : 1053,
-      "y" : 1210,
-      "r" : 0,
-      "g" : 23,
-      "b" : 70
+      "x" : 689,
+      "y" : 1208,
+      "r" : 76,
+      "g" : 112,
+      "b" : 160
     }, {
-      "x" : 1048,
-      "y" : 1215,
-      "r" : 0,
-      "g" : 0,
-      "b" : 49
+      "x" : 689,
+      "y" : 1216,
+      "r" : 1,
+      "g" : 32,
+      "b" : 87
     }, {
-      "x" : 1048,
-      "y" : 1226,
-      "r" : 0,
-      "g" : 4,
-      "b" : 54
-    }, {
-      "x" : 1054,
-      "y" : 1226,
-      "r" : 0,
-      "g" : 26,
-      "b" : 72
-    }, {
-      "x" : 1061,
-      "y" : 1226,
-      "r" : 0,
-      "g" : 0,
-      "b" : 0
-    }, {
-      "x" : 1061,
-      "y" : 1234,
-      "r" : 0,
-      "g" : 0,
-      "b" : 0
-    }, {
-      "x" : 1054,
-      "y" : 1234,
-      "r" : 0,
+      "x" : 694,
+      "y" : 1216,
+      "r" : 4,
       "g" : 30,
-      "b" : 83
+      "b" : 87
     }, {
-      "x" : 1048,
-      "y" : 1234,
+      "x" : 694,
+      "y" : 1208,
+      "r" : 77,
+      "g" : 113,
+      "b" : 163
+    }, {
+      "x" : 694,
+      "y" : 1201,
       "r" : 0,
-      "g" : 4,
-      "b" : 58
+      "g" : 0,
+      "b" : 0
     } ],
     "enabled" : true
   }, {
@@ -1753,59 +1698,47 @@
     "name" : "Battle - Unit - 4 - Is Ready",
     "screenId" : "battle-unit-4_ready",
     "points" : [ {
-      "x" : 1057,
-      "y" : 1400,
+      "x" : 672,
+      "y" : 1408,
+      "r" : 4,
+      "g" : 31,
+      "b" : 87
+    }, {
+      "x" : 672,
+      "y" : 1395,
       "r" : 0,
       "g" : 0,
       "b" : 0
     }, {
-      "x" : 1053,
-      "y" : 1404,
-      "r" : 0,
-      "g" : 23,
-      "b" : 70
+      "x" : 679,
+      "y" : 1408,
+      "r" : 4,
+      "g" : 33,
+      "b" : 89
     }, {
-      "x" : 1048,
-      "y" : 1409,
-      "r" : 0,
-      "g" : 0,
-      "b" : 49
-    }, {
-      "x" : 1048,
-      "y" : 1420,
-      "r" : 0,
-      "g" : 4,
-      "b" : 54
-    }, {
-      "x" : 1054,
-      "y" : 1420,
-      "r" : 0,
-      "g" : 26,
-      "b" : 71
-    }, {
-      "x" : 1061,
-      "y" : 1420,
+      "x" : 679,
+      "y" : 1395,
       "r" : 0,
       "g" : 0,
       "b" : 0
     }, {
-      "x" : 1061,
-      "y" : 1426,
+      "x" : 676,
+      "y" : 1395,
       "r" : 0,
       "g" : 0,
       "b" : 0
     }, {
-      "x" : 1054,
-      "y" : 1426,
-      "r" : 0,
-      "g" : 29,
-      "b" : 80
+      "x" : 676,
+      "y" : 1408,
+      "r" : 4,
+      "g" : 33,
+      "b" : 89
     }, {
-      "x" : 1048,
-      "y" : 1426,
-      "r" : 0,
-      "g" : 3,
-      "b" : 55
+      "x" : 676,
+      "y" : 1402,
+      "r" : 76,
+      "g" : 112,
+      "b" : 163
     } ],
     "enabled" : true
   }, {
@@ -14250,120 +14183,120 @@
     "h" : 87,
     "enabled" : true
   }, {
-    "name" : "Battle - Menu - 0 HP Bar",
-    "componentId" : "battle-menu-0_hp_bar",
-    "x" : 208,
-    "y" : 686,
-    "w" : 298,
-    "h" : 0,
-    "enabled" : true
-  }, {
     "name" : "Battle - Menu - 0 LB Bar",
-    "componentId" : "battle-menu-0_lb_bar",
+    "componentId" : "battle-menu-0-lb_bar",
     "x" : 361,
     "y" : 622,
     "w" : 1,
     "h" : 0,
     "enabled" : true
   }, {
+    "name" : "Battle - Menu - 0 HP Bar",
+    "componentId" : "battle-menu-0-life_bar",
+    "x" : 208,
+    "y" : 686,
+    "w" : 298,
+    "h" : 0,
+    "enabled" : true
+  }, {
     "name" : "Battle - Menu - 0 MP Bar",
-    "componentId" : "battle-menu-0_mp_bar",
+    "componentId" : "battle-menu-0-mp_bar",
     "x" : 208,
     "y" : 737,
     "w" : 298,
     "h" : 0,
     "enabled" : true
   }, {
-    "name" : "Battle - Menu - 1 HP Bar",
-    "componentId" : "battle-menu-1_hp_bar",
-    "x" : 208,
-    "y" : 990,
-    "w" : 297,
-    "h" : 0,
-    "enabled" : true
-  }, {
     "name" : "Battle - Menu - 1 LB Bar",
-    "componentId" : "battle-menu-1_lb_bar",
+    "componentId" : "battle-menu-1-lb_bar",
     "x" : 361,
     "y" : 926,
     "w" : 1,
     "h" : 0,
     "enabled" : true
   }, {
+    "name" : "Battle - Menu - 1 HP Bar",
+    "componentId" : "battle-menu-1-life_bar",
+    "x" : 208,
+    "y" : 990,
+    "w" : 297,
+    "h" : 0,
+    "enabled" : true
+  }, {
     "name" : "Battle - Menu - 1 MP Bar",
-    "componentId" : "battle-menu-1_mp_bar",
+    "componentId" : "battle-menu-1-mp_bar",
     "x" : 210,
     "y" : 1040,
     "w" : 297,
     "h" : 0,
     "enabled" : true
   }, {
-    "name" : "Battle - Menu - 2 HP Bar",
-    "componentId" : "battle-menu-2_hp_bar",
-    "x" : 208,
-    "y" : 1292,
-    "w" : 297,
-    "h" : 0,
-    "enabled" : true
-  }, {
     "name" : "Battle - Menu - 2 LB Bar",
-    "componentId" : "battle-menu-2_lb_bar",
+    "componentId" : "battle-menu-2-lb_bar",
     "x" : 361,
     "y" : 1228,
     "w" : 1,
     "h" : 0,
     "enabled" : true
   }, {
+    "name" : "Battle - Menu - 2 HP Bar",
+    "componentId" : "battle-menu-2-life_bar",
+    "x" : 208,
+    "y" : 1292,
+    "w" : 297,
+    "h" : 0,
+    "enabled" : true
+  }, {
     "name" : "Battle - Menu - 2 MP Bar",
-    "componentId" : "battle-menu-2_mp_bar",
+    "componentId" : "battle-menu-2-mp_bar",
     "x" : 209,
     "y" : 1343,
     "w" : 297,
     "h" : 0,
     "enabled" : true
   }, {
-    "name" : "Battle - Menu - 3 HP Bar",
-    "componentId" : "battle-menu-3_hp_bar",
-    "x" : 742,
-    "y" : 686,
-    "w" : 297,
-    "h" : 0,
-    "enabled" : true
-  }, {
     "name" : "Battle - Menu - 3 LB Bar",
-    "componentId" : "battle-menu-3_lb_bar",
+    "componentId" : "battle-menu-3-lb_bar",
     "x" : 894,
     "y" : 622,
     "w" : 1,
     "h" : 0,
     "enabled" : true
   }, {
+    "name" : "Battle - Menu - 3 HP Bar",
+    "componentId" : "battle-menu-3-life_bar",
+    "x" : 742,
+    "y" : 686,
+    "w" : 297,
+    "h" : 0,
+    "enabled" : true
+  }, {
     "name" : "Battle - Menu - 3 MP Bar",
-    "componentId" : "battle-menu-3_mp_bar",
+    "componentId" : "battle-menu-3-mp_bar",
     "x" : 742,
     "y" : 737,
     "w" : 298,
     "h" : 0,
     "enabled" : true
   }, {
-    "name" : "Battle - Menu - 4 HP Bar",
-    "componentId" : "battle-menu-4_hp_bar",
-    "x" : 741,
-    "y" : 990,
-    "w" : 298,
-    "h" : 0,
-    "enabled" : true
-  }, {
     "name" : "Battle - Menu - 4 LB Bar",
-    "componentId" : "battle-menu-4_lb_bar",
+    "componentId" : "battle-menu-4-lb_bar",
     "x" : 894,
     "y" : 926,
     "w" : 1,
     "h" : 0,
     "enabled" : true
   }, {
+    "name" : "Battle - Menu - 4 HP Bar",
+    "componentId" : "battle-menu-4-life_bar",
+    "x" : 741,
+    "y" : 990,
+    "w" : 298,
+    "h" : 0,
+    "enabled" : true
+  }, {
     "name" : "Battle - Menu - 4 MP Bar",
-    "componentId" : "battle-menu-4_mp_bar",
+    "componentId" : "battle-menu-4-mp_bar",
     "x" : 742,
     "y" : 1040,
     "w" : 298,

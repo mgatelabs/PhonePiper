@@ -24,6 +24,10 @@ public class VarManager {
 
     private String currentSceneId = null;
 
+    public String getCurrentSceneId() {
+        return currentSceneId;
+    }
+
     public VarManager() {
         globals = Maps.newHashMap();
         state = Maps.newHashMap();

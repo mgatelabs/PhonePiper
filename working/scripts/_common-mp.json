@@ -1,15 +1,23 @@
+//@formatter:off
 {
   "states": {
     "@unitHasMp": {
       "name": "Function - Does this unit have % MP?",
       "variables": {
+        // Required: Valid values include 0 - 4.
+        "index": {
+          "value": "0",
+          "type": "INT"
+        },
+        // Optional: Pass in a value between 1 and 100.  Decimals are available, Ex. 22.34
         "percent": {
           "value": "50",
           "type": "FLOAT"
         },
-        "index": {
-          "value": "0",
-          "type": "INT"
+        // Optional: By default you don't need to pass in anything, except pass in "menu" when you're on the battle menu screen
+        "mode": {
+          "value": "unit",
+          "type": "STRING"
         },
         "w": {
           "value": "0",
@@ -40,7 +48,7 @@
         {
           "actions": [
             {
-              "type": "COMPONENT", "value": "battle-unit-${index}-mp_bar", "args": {"w": "w", "x": "x", "y": "y"}
+              "type": "COMPONENT", "value": "battle-${mode}-${index}-mp_bar", "args": {"w": "w", "x": "x", "y": "y"}
             },
             {
               "type": "MATH",

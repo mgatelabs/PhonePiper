@@ -166,12 +166,14 @@ public final class ScriptEnvironment {
                     link.getLink().determineStateIds(Sets.newHashSet(), executableLinks);
                     link.setValid(true);
                 } catch (Exception ex) {
+                    logger.error(ex.getMessage());
                     link.setValid(false);
                     badLinks.add(link);
                 }
             }
 
             for (ExecutableLink link : badLinks) {
+                logger.error("Bad Reference: " + link.getId());
                 executableLinks.remove(link.getId());
             }
 

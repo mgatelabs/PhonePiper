@@ -434,15 +434,18 @@
           },
           "actions": [
             {
-              "type": "INFO",
-              "value": "Ayaka Has Her LB, what sort of world are we living in?  Pressing the button (TM)"
+              "condition": {
+                "not": "CALL",
+                "value": "@readyUnitLbSafely",
+                "args": {
+                  "index": "3"
+                }
+              },
+              "type": "CONTINUE"
             },
             {
-              "type": "CALL",
-              "value": "@readyUnitLb",
-              "args": {
-                "index": "3"
-              }
+              "type": "INFO",
+              "value": "Ayaka Has Her LB, what sort of world are we living in?  Pressing the button (TM)"
             },
             {
               "type": "SET",

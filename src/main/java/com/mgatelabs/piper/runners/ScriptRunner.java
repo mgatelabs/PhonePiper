@@ -661,6 +661,11 @@ public class ScriptRunner {
                         loopMax = 1;
                     }
 
+                    if (actionDefinition.getType() == ActionType.CONTINUE) {
+                        // Get out of the current statement block
+                        break;
+                    }
+
                     for (int loopIndex = 0; loopIndex < loopMax; loopIndex++) {
                         if (!stillRunning()) {
                             return new StateResult(ActionType.STOP, actionDefinition, priorResult, stateStack);

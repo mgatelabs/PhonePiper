@@ -156,6 +156,53 @@
     } ],
     "enabled" : true
   }, {
+    "name" : "Battle - Abilities - Lb - Available",
+    "screenId" : "battle-abilities-lb-available",
+    "points" : [ {
+      "x" : 494,
+      "y" : 1208,
+      "r" : 110,
+      "g" : 50,
+      "b" : 0
+    }, {
+      "x" : 494,
+      "y" : 1199,
+      "r" : 255,
+      "g" : 203,
+      "b" : 0
+    }, {
+      "x" : 490,
+      "y" : 1199,
+      "r" : 255,
+      "g" : 205,
+      "b" : 0
+    }, {
+      "x" : 500,
+      "y" : 1199,
+      "r" : 255,
+      "g" : 209,
+      "b" : 0
+    }, {
+      "x" : 490,
+      "y" : 1208,
+      "r" : 110,
+      "g" : 52,
+      "b" : 0
+    }, {
+      "x" : 485,
+      "y" : 1208,
+      "r" : 109,
+      "g" : 51,
+      "b" : 0
+    }, {
+      "x" : 485,
+      "y" : 1199,
+      "r" : 255,
+      "g" : 202,
+      "b" : 0
+    } ],
+    "enabled" : true
+  }, {
     "name" : "Battle - Abilities",
     "screenId" : "battle-actions",
     "points" : [ {
@@ -6736,12 +6783,6 @@
       "r" : 2,
       "g" : 36,
       "b" : 104
-    }, {
-      "x" : 76,
-      "y" : 707,
-      "r" : 0,
-      "g" : 71,
-      "b" : 119
     }, {
       "x" : 81,
       "y" : 707,
@@ -14839,18 +14880,18 @@
   }, {
     "name" : "Menu - Home - Special",
     "componentId" : "menu-home-special",
-    "x" : 87,
-    "y" : 484,
-    "w" : 446,
-    "h" : 159,
+    "x" : 150,
+    "y" : 730,
+    "w" : 190,
+    "h" : 30,
     "enabled" : true
   }, {
     "name" : "Menu - Home - Vortex",
     "componentId" : "menu-home-vortex",
-    "x" : 220,
-    "y" : 830,
-    "w" : 170,
-    "h" : 120,
+    "x" : 235,
+    "y" : 911,
+    "w" : 105,
+    "h" : 53,
     "enabled" : true
   }, {
     "name" : "Menu - island-grandshelt",

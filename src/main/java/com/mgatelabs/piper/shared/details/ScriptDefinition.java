@@ -159,10 +159,13 @@ public class ScriptDefinition {
             } catch (JsonParseException e) {
                 System.out.println(scriptId);
                 e.printStackTrace();
+                throw new RuntimeException(e.getMessage());
             } catch (JsonMappingException e) {
                 e.printStackTrace();
+                throw new RuntimeException(e.getMessage());
             } catch (IOException e) {
                 e.printStackTrace();
+                throw new RuntimeException(e.getMessage());
             }
         }
         return null;

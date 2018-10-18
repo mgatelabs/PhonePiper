@@ -2679,7 +2679,7 @@
             },
             {
               "type": "TAP",
-              "value": "screen-center-small"
+              "value": "menu-arena-results-ok"
             },
             {
               "type": "WAIT",

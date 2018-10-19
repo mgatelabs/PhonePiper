@@ -1,0 +1,1559 @@
+//@formatter:off
+{
+  "vars": [],
+  "imports": [
+
+  ],
+  "states": {
+
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    // HEALER (AYAKA)
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+    "_arena-battle-healer": {
+      "name": "Arena - Battle - Healer",
+      "description":"Action for your healer",
+      "variables": {
+        "elysium": {
+          "value": "0",
+          "type": "INT"
+        },
+        "purify": {
+          "value": "0",
+          "type": "INT"
+        },
+        "resurgence": {
+          "value": "0",
+          "type": "INT"
+        }
+      },
+      "statements": [
+
+        // If everyone is alive she will always do Elysium
+        {
+          "condition": {
+            "is": "CALL",
+            "value": "@isBattleReady",
+            "and": [
+              { "is": "EQUAL", "value": "0", "var":"segment"},
+              { "is": "CALL", "value": "@isUnitReady", "args": {"index": "3"} },
+              { "is": "CALL", "value": "@unitHasMp", "args": {"index": "3", "percent" : "25"} },
+              { "is": "EQUAL", "value": "0", "var":"elysium"},
+              { "is": "EQUAL", "value": "4", "var":"availableUnits"},
+              { "is": "EQUAL", "value": "4", "var":"aliveUnits"}
+            ]
+          },
+          "actions": [
+            {
+              "type": "INFO",
+              "value": "Ayaka Used Elysium (Heal + Barrier with 6 Turn Cool down)"
+            },
+            {
+              "type": "SET",
+              "var": "elysium",
+              "value": "6"
+            },
+            {
+              "type": "SET",
+              "var": "segment",
+              "value": "1"
+            },
+            {
+              "type": "CALL",
+              "value": "@showUnitActions",
+              "args": {
+                "index": "3"
+              }
+            },
+            {
+              "type": "CALL",
+              "value": "@selectUnitAction",
+              "args": {
+                "row": "9",
+                "column": "0"
+              }
+            },
+            {
+              "type": "WAIT",
+              "value": "400"
+            },
+            {
+              "type": "CALL",
+              "value": "@tapUnit",
+              "args": {
+                "index": "3"
+              }
+            },
+            {
+              "type": "WAIT",
+              "value": "400"
+            },
+            {
+              "type": "CALL",
+              "value": "@tapUnit",
+              "args": {
+                "index": "3"
+              }
+            },
+            {
+              "type": "WAIT",
+              "value": "400"
+            },
+            {
+              "type": "REPEAT",
+              "value": ""
+            }
+          ]
+        },
+
+        // Are we having MP issues?
+        {
+          "condition": {
+            "is": "CALL",
+            "value": "@isBattleReady",
+            "and": [
+              { "is": "EQUAL", "value": "0", "var":"segment"},
+              { "is": "CALL", "value": "@isUnitReady", "args": {"index": "3"} },
+              { "is": "CALL", "value": "@unitHasMp", "args": {"index": "3", "percent" : "25"} },
+              { "is": "EQUAL", "value": "0", "var":"elysium"},
+              { "is": "EQUAL", "value": "4", "var":"availableUnits"},
+              { "is": "LESS", "value": "4", "var":"availableMpUnits"},
+              { "is": "CALL", "value": "@unitHasMp", "args": {"index": "3", "percent" : "25"} }
+            ]
+          },
+          "actions": [
+            {
+              "type": "INFO",
+              "value": "Ayaka Needs to Heal and Recover MP"
+            },
+            {
+              "type": "SET",
+              "var": "segment",
+              "value": "1"
+            },
+            {
+              "type": "CALL",
+              "value": "@showUnitActions",
+              "args": {
+                "index": "3"
+              }
+            },
+            {
+              "type": "CALL",
+              "value": "@selectUnitAction",
+              "args": {
+                "row": "7",
+                "column": "1"
+              }
+            },
+            {
+              "type": "WAIT",
+              "value": "400"
+            },
+            {
+              "type": "CALL",
+              "value": "@tapUnit",
+              "args": {
+                "index": "4"
+              }
+            },
+            {
+              "type": "WAIT",
+              "value": "400"
+            },
+            {
+              "type": "CALL",
+              "value": "@tapUnit",
+              "args": {
+                "index": "3"
+              }
+            },
+            {
+              "type": "WAIT",
+              "value": "400"
+            },
+            {
+              "type": "REPEAT",
+              "value": ""
+            }
+          ]
+        },
+
+        // If she has HER lb, use it
+        {
+          "condition": {
+            "is": "CALL",
+            "value": "@isBattleReady",
+            "and": [
+              { "is": "EQUAL", "value": "0", "var":"segment"},
+              { "is": "CALL", "value": "@isUnitReady", "args": {"index": "3"} },
+              { "is": "CALL", "value": "@isUnitLbReady", "args": {"index": "3"} },
+              { "not": "CALL", "value": "@isUnitLbSelected", "args": {"index": "3"} }
+            ]
+          },
+          "actions": [
+            {
+              "condition": {
+                "not": "CALL",
+                "value": "@readyUnitLbSafely",
+                "args": {
+                  "index": "3"
+                }
+              },
+              "type": "CONTINUE"
+            },
+            {
+              "type": "INFO",
+              "value": "Ayaka Has Her LB, what sort of world are we living in?  Pressing the button (TM)"
+            },
+            {
+              "type": "SET",
+              "var": "segment",
+              "value": "1"
+            },
+            {
+              "type": "CALL",
+              "value": "@tapUnit",
+              "args": {
+                "index": "3"
+              }
+            },
+            {
+              "type": "WAIT",
+              "value": "200"
+            },
+            {
+              "type": "CALL",
+              "value": "@tapUnit",
+              "args": {
+                "index": "3"
+              }
+            },
+            {
+              "type": "WAIT",
+              "value": "2000"
+            },
+            {
+              "type": "REPEAT",
+              "value": ""
+            }
+          ]
+        },
+
+        // We have 4 alive units, but someone is not able to move, let's clense the slate clean
+        {
+          "condition": {
+            "is": "CALL",
+            "value": "@isBattleReady",
+            "and": [
+              { "is": "EQUAL", "value": "0", "var":"segment"},
+              { "is": "CALL", "value": "@isUnitReady", "args": {"index": "3"} },
+              { "is": "CALL", "value": "@unitHasMp", "args": {"index": "3", "percent" : "25"} },
+              { "is": "EQUAL", "value": "0", "var":"purify"},
+              { "is": "LESS", "value": "4", "var":"availableUnits"},
+              { "is": "EQUAL", "value": "4", "var":"aliveUnits"}
+            ]
+          },
+          "actions": [
+            {
+              "type": "INFO",
+              "value": "Ayaka Used Purify+ (Cure Status + Barrier with 4 Turn Cool down)"
+            },
+            {
+              "type": "SET",
+              "var": "purify",
+              "value": "4"
+            },
+            {
+              "type": "SET",
+              "var": "segment",
+              "value": "1"
+            },
+            {
+              "type": "CALL",
+              "value": "@showUnitActions",
+              "args": {
+                "index": "3"
+              }
+            },
+            {
+              "type": "CALL",
+              "value": "@selectUnitAction",
+              "args": {
+                "row": "10",
+                "column": "0"
+              }
+            },
+            {
+              "type": "WAIT",
+              "value": "400"
+            },
+            {
+              "type": "CALL",
+              "value": "@tapUnit",
+              "args": {
+                "index": "3"
+              }
+            },
+            {
+              "type": "WAIT",
+              "value": "400"
+            },
+            {
+              "type": "CALL",
+              "value": "@tapUnit",
+              "args": {
+                "index": "3"
+              }
+            },
+            {
+              "type": "WAIT",
+              "value": "2000"
+            },
+            {
+              "type": "REPEAT",
+              "value": ""
+            }
+          ]
+        },
+
+        // We can't purify+, and someone can't move, so use Stop Detatch
+        {
+          "condition": {
+            "is": "CALL",
+            "value": "@isBattleReady",
+            "and": [
+              { "is": "EQUAL", "value": "0", "var":"segment"},
+              { "is": "CALL", "value": "@isUnitReady", "args": {"index": "3"} },
+              { "is": "CALL", "value": "@unitHasMp", "args": {"index": "3", "percent" : "25"} },
+              { "is": "LESS", "value": "4", "var":"availableUnits"},
+              { "is": "EQUAL", "value": "4", "var":"aliveUnits"}
+            ]
+          },
+          "actions": [
+            {
+              "type": "INFO",
+              "value": "Ayaka Used Stop Detach (Cure Stop)"
+            },
+            {
+              "type": "SET",
+              "var": "segment",
+              "value": "1"
+            },
+            {
+              "type": "CALL",
+              "value": "@showUnitActions",
+              "args": {
+                "index": "3"
+              }
+            },
+            {
+              "type": "CALL",
+              "value": "@selectUnitAction",
+              "args": {
+                "row": "6",
+                "column": "1"
+              }
+            },
+            {
+              "type": "WAIT",
+              "value": "400"
+            },
+            {
+              "type": "CALL",
+              "value": "@tapUnit",
+              "args": {
+                "index": "3"
+              }
+            },
+            {
+              "type": "WAIT",
+              "value": "400"
+            },
+            {
+              "type": "CALL",
+              "value": "@tapUnit",
+              "args": {
+                "index": "3"
+              }
+            },
+            {
+              "type": "WAIT",
+              "value": "2000"
+            },
+            {
+              "type": "REPEAT",
+              "value": ""
+            }
+          ]
+        },
+
+        // Someone is down, we need to revive with Resurgence+
+        {
+          "condition": {
+            "is": "CALL",
+            "value": "@isBattleReady",
+            "and": [
+              { "is": "EQUAL", "value": "0", "var":"segment"},
+              { "is": "EQUAL", "value": "0", "var":"resurgence"},
+              { "is": "CALL", "value": "@isUnitReady", "args": {"index": "3"} },
+              { "is": "CALL", "value": "@unitHasMp", "args": {"index": "3", "percent" : "25"} },
+              { "is": "LESS", "value": "4", "var":"aliveUnits"}
+            ]
+          },
+          "actions": [
+            {
+              "type": "INFO",
+              "value": "Ayaka Used Resurgence+"
+            },
+            {
+              "type": "SET",
+              "var": "segment",
+              "value": "1"
+            },
+            {
+              "type": "SET",
+              "var": "resurgence",
+              "value": "5"
+            },
+            {
+              "type": "CALL",
+              "value": "@showUnitActions",
+              "args": {
+                "index": "3"
+              }
+            },
+            {
+              "type": "CALL",
+              "value": "@selectUnitAction",
+              "args": {
+                "row": "9",
+                "column": "1"
+              }
+            },
+            {
+              "type": "WAIT",
+              "value": "400"
+            },
+            {
+              "type": "CALL",
+              "value": "@tapUnit",
+              "args": {
+                "index": "3"
+              }
+            },
+            {
+              "type": "WAIT",
+              "value": "400"
+            },
+            {
+              "type": "CALL",
+              "value": "@tapUnit",
+              "args": {
+                "index": "3"
+              }
+            },
+            {
+              "type": "WAIT",
+              "value": "2000"
+            },
+            {
+              "type": "REPEAT",
+              "value": ""
+            }
+          ]
+        },
+
+        // Just heal
+        {
+          "condition": {
+            "is": "CALL",
+            "value": "@isBattleReady",
+            "and": [
+              { "is": "EQUAL", "value": "0", "var":"segment"},
+              { "is": "EQUAL", "value": "1", "var":"arena-rule-white_magic"},
+              { "is": "CALL", "value": "@unitHasMp", "args": {"index": "3", "percent" : "25"} },
+              { "is": "CALL", "value": "@isUnitReady", "args": {"index": "3"} },
+              { "var": "availableHpUnits", "is": "LESS", "value": "4"}
+            ]
+          },
+          "actions": [
+            {
+              "type": "INFO",
+              "value": "Ayaka Used Curaja (Big Heal) Needed"
+            },
+            {
+              "type": "SET",
+              "var": "segment",
+              "value": "1"
+            },
+            {
+              "type": "CALL",
+              "value": "@showUnitActions",
+              "args": {
+                "index": "3"
+              }
+            },
+            {
+              "type": "CALL",
+              "value": "@selectUnitAction",
+              "args": {
+                "row": "4",
+                "column": "1"
+              }
+            },
+            {
+              "type": "WAIT",
+              "value": "400"
+            },
+            {
+              "type": "CALL",
+              "value": "@tapUnit",
+              "args": {
+                "index": "3"
+              }
+            },
+            {
+              "type": "WAIT",
+              "value": "400"
+            },
+            {
+              "type": "CALL",
+              "value": "@tapUnit",
+              "args": {
+                "index": "3"
+              }
+            },
+            {
+              "type": "WAIT",
+              "value": "2000"
+            },
+            {
+              "type": "REPEAT",
+              "value": ""
+            }
+          ]
+        },
+
+        // Just purify
+        {
+          "condition": {
+            "is": "CALL",
+            "value": "@isBattleReady",
+            "and": [
+              { "is": "EQUAL", "value": "0", "var":"segment"},
+              { "is": "EQUAL", "value": "0", "var":"arena-rule-white_magic"},
+              { "is": "CALL", "value": "@unitHasMp", "args": {"index": "3", "percent" : "25"} },
+              { "is": "CALL", "value": "@isUnitReady", "args": {"index": "3"} },
+              { "var": "availableHpUnits", "is": "LESS", "value": "4"}
+            ]
+          },
+          "actions": [
+            {
+              "type": "INFO",
+              "value": "Ayaka Used Curaja (Big Heal) Needed"
+            },
+            {
+              "type": "SET",
+              "var": "segment",
+              "value": "1"
+            },
+            {
+              "type": "CALL",
+              "value": "@showUnitActions",
+              "args": {
+                "index": "3"
+              }
+            },
+            {
+              "type": "CALL",
+              "value": "@selectUnitAction",
+              "args": {
+                "row": "8",
+                "column": "0"
+              }
+            },
+            {
+              "type": "WAIT",
+              "value": "400"
+            },
+            {
+              "type": "CALL",
+              "value": "@tapUnit",
+              "args": {
+                "index": "3"
+              }
+            },
+            {
+              "type": "WAIT",
+              "value": "400"
+            },
+            {
+              "type": "CALL",
+              "value": "@tapUnit",
+              "args": {
+                "index": "3"
+              }
+            },
+            {
+              "type": "WAIT",
+              "value": "2000"
+            },
+            {
+              "type": "REPEAT",
+              "value": ""
+            }
+          ]
+        },
+
+        {
+          "condition": {
+            "is": "CALL",
+            "value": "@isBattleReady",
+            "and": [
+              { "is": "EQUAL", "value": "0", "var":"segment"},
+              { "is": "CALL", "value": "@isUnitReady", "args": {"index": "3"} },
+              { "is": "CALL", "value": "@isEsperReady" }
+            ]
+          },
+          "actions": [
+            {
+              "type": "INFO",
+              "value": "Ayaka is using ESPER"
+            },
+            {
+              "type": "CALL",
+              "value": "@readyUnitEsper",
+              "args": {
+                "index": "3"
+              }
+            },
+            {
+              "type": "CALL",
+              "value": "@tapUnit",
+              "args": {
+                "index": "3"
+              }
+            },
+            {
+              "type": "WAIT",
+              "value": "1200"
+            },
+            {
+              "type": "SET",
+              "var": "segment",
+              "value": "1"
+            },
+            {
+              "type": "REPEAT",
+              "value": ""
+            }
+          ]
+        },
+
+        {
+          "condition": {
+            "is": "CALL",
+            "value": "@isBattleReady",
+            "and": [
+              { "is": "EQUAL", "value": "0", "var":"segment"},
+              { "is": "EQUAL", "value": "1", "var":"arena-rule-white_magic"},
+              { "is": "CALL", "value": "@unitHasMp", "args": {"index": "3", "percent" : "25"} },
+              { "is": "CALL", "value": "@isUnitReady", "args": {"index": "3"} }
+            ]
+          },
+          "actions": [
+            {
+              "type": "INFO",
+              "value": "Ayaka Used Curaja (Big Heal) Default"
+            },
+            {
+              "type": "SET",
+              "var": "segment",
+              "value": "1"
+            },
+            {
+              "type": "CALL",
+              "value": "@showUnitActions",
+              "args": {
+                "index": "3"
+              }
+            },
+            {
+              "type": "CALL",
+              "value": "@selectUnitAction",
+              "args": {
+                "row": "4",
+                "column": "1"
+              }
+            },
+            {
+              "type": "WAIT",
+              "value": "400"
+            },
+            {
+              "type": "CALL",
+              "value": "@tapUnit",
+              "args": {
+                "index": "3"
+              }
+            },
+            {
+              "type": "WAIT",
+              "value": "400"
+            },
+            {
+              "type": "CALL",
+              "value": "@tapUnit",
+              "args": {
+                "index": "3"
+              }
+            },
+            {
+              "type": "WAIT",
+              "value": "2000"
+            },
+            {
+              "type": "REPEAT",
+              "value": ""
+            }
+          ]
+        },
+
+        {
+          "condition": {
+            "is": "CALL",
+            "value": "@isBattleReady",
+            "and": [
+              { "is": "EQUAL", "value": "0", "var":"segment"},
+              { "is": "EQUAL", "value": "0", "var":"arena-rule-white_magic"},
+              { "is": "CALL", "value": "@unitHasMp", "args": {"index": "3", "percent" : "25"} },
+              { "is": "CALL", "value": "@isUnitReady", "args": {"index": "3"} }
+            ]
+          },
+          "actions": [
+            {
+              "type": "INFO",
+              "value": "Ayaka Used Purify (Minor Heal) Default"
+            },
+            {
+              "type": "SET",
+              "var": "segment",
+              "value": "1"
+            },
+            {
+              "type": "CALL",
+              "value": "@showUnitActions",
+              "args": {
+                "index": "3"
+              }
+            },
+            {
+              "type": "CALL",
+              "value": "@selectUnitAction",
+              "args": {
+                "row": "8",
+                "column": "0"
+              }
+            },
+            {
+              "type": "WAIT",
+              "value": "400"
+            },
+            {
+              "type": "CALL",
+              "value": "@tapUnit",
+              "args": {
+                "index": "3"
+              }
+            },
+            {
+              "type": "WAIT",
+              "value": "400"
+            },
+            {
+              "type": "CALL",
+              "value": "@tapUnit",
+              "args": {
+                "index": "3"
+              }
+            },
+            {
+              "type": "WAIT",
+              "value": "2000"
+            },
+            {
+              "type": "REPEAT",
+              "value": ""
+            }
+          ]
+        },
+
+        {
+          "condition": {
+            "is": "CALL",
+            "value": "@isBattleReady",
+            "and": [
+              { "is": "EQUAL", "value": "0", "var":"segment"},
+              { "is": "CALL", "value": "@isUnitReady", "args": {"index": "3"} }
+            ]
+          },
+          "actions": [
+            {
+              "type": "INFO",
+              "value": "Ayaka Guards, no other option"
+            },
+            {
+              "type": "SET",
+              "var": "segment",
+              "value": "1"
+            },
+            {
+              "type": "CALL",
+              "value": "@readyUnitGuard",
+              "args": {
+                "index": "3"
+              }
+            },
+            {
+              "type": "WAIT",
+              "value": "400"
+            },
+            {
+              "type": "CALL",
+              "value": "@tapUnit",
+              "args": {
+                "index": "3"
+              }
+            },
+            {
+              "type": "WAIT",
+              "value": "2000"
+            },
+            {
+              "type": "REPEAT",
+              "value": ""
+            }
+          ]
+        },
+
+        {
+          "condition": {
+            "is": "CALL",
+            "value": "@isBattleReady",
+            "and": [
+              { "is": "EQUAL", "value": "0", "var":"segment"}
+            ]
+          },
+          "actions": [
+            {
+              "type": "INFO",
+              "value": "Ayaka might be dead, continue"
+            },
+            {
+              "type": "SET",
+              "var": "segment",
+              "value": "1"
+            },
+            {
+              "type": "REPEAT",
+              "value": ""
+            }
+          ]
+        }
+
+      ]
+    },
+
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    // FIGHT
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+    "_arena-battle-fight-abilities": {
+      "name": "Arena - Battle - Abilities",
+      "description":"Setup your units to attack",
+      "variables": {
+        "modified": {
+          "value": "0",
+          "type": "INT"
+        },
+        "hyoyAttempts": {
+          "value": "0",
+          "type": "INT"
+        },
+        "tt1Attempts": {
+          "value": "0",
+          "type": "INT"
+        },
+        "tt2Attempts": {
+          "value": "0",
+          "type": "INT"
+        }
+      },
+      "statements": [
+        {
+          "condition":
+          {
+            "is": "CALL",
+            "value": "@isBattleReady",
+            "and": [
+              { "is": "EQUAL", "value": "2", "var":"segment"},
+              { "is": "CALL", "value": "@isUnitReady", "args": {"index": "0"} },
+              { "is": "CALL", "value": "@unitHasMp", "args": {"index": "0"} },
+              { "not": "CALL", "value": "@isUnitActionReady", "args": {"index": "0"} }
+            ]
+          },
+          "actions": [
+            {
+              "type": "INFO",
+              "value": "Setting Up Hyoh"
+            },
+            {
+              "type": "SET",
+              "var": "modified",
+              "value": "1"
+            },
+            {
+              "type": "CALL",
+              "value": "@showUnitActions",
+              "args": {
+                "index": "0"
+              }
+            },
+            {
+              "type": "CALL",
+              "value": "@selectUnitAction",
+              "args": {
+                "row": "10",
+                "column": "1"
+              },
+              "condition": {
+                "is": "EQUAL",
+                "var": "hyoyAttempts",
+                "value": "0"
+              }
+            },
+            {
+              "type": "CALL",
+              "value": "@selectUnitAction",
+              "args": {
+                "row": "11",
+                "column": "0"
+              },
+              "condition": {
+                "is": "GREATER",
+                "var": "hyoyAttempts",
+                "value": "0"
+              }
+            },
+            {
+              "type": "ADD",
+              "var": "hyoyAttempts",
+              "value": "1"
+            },
+            {
+              "type": "WAIT",
+              "value": "1000"
+            },
+            {
+              "type": "REPEAT",
+              "value": ""
+            }
+          ]
+        },
+
+        {
+          "condition": {
+            "is": "CALL",
+            "value": "@isBattleReady",
+            "and": [
+              { "is": "EQUAL", "value": "2", "var":"segment"},
+              { "is": "CALL", "value": "@isUnitReady", "args": {"index": "2"} },
+              { "is": "CALL", "value": "@unitHasMp", "args": {"index": "2"} },
+              { "not": "CALL", "value": "@isUnitActionReady", "args": {"index": "2"} }
+            ]
+          },
+          "actions": [
+            {
+              "type": "INFO",
+              "value": "Setting Up Awakened Rain"
+            },
+            {
+              "type": "SET",
+              "var": "modified",
+              "value": "1"
+            },
+            {
+              "type": "CALL",
+              "value": "@showUnitActions",
+              "args": {
+                "index": "2"
+              }
+            },
+            {
+              "type": "CALL",
+              "value": "@selectUnitAction",
+              "args": {
+                "row": "10",
+                "column": "0"
+              }
+            },
+            {
+              "type": "WAIT",
+              "value": "1000"
+            },
+            {
+              "type": "REPEAT",
+              "value": ""
+            }
+          ]
+        },
+
+        {
+          "condition": {
+            "is": "CALL",
+            "value": "@isBattleReady",
+            "and": [
+              { "is": "EQUAL", "value": "2", "var":"segment"},
+              { "is": "EQUAL", "value": "1", "var":"turn"},
+              { "is": "EQUAL", "value": "0", "var":"tt1Attempts"},
+              { "is": "CALL", "value": "@isUnitReady", "args": {"index": "1"} },
+              { "is": "CALL", "value": "@unitHasMp", "args": {"index": "1"} },
+              { "not": "CALL", "value": "@isUnitActionReady", "args": {"index": "1"} }
+            ]
+          },
+          "actions": [
+            {
+              "type": "INFO",
+              "value": "Setting Up TT A (Turn 1)"
+            },
+            {
+              "type": "SET",
+              "var": "modified",
+              "value": "1"
+            },
+            {
+              "type": "ADD",
+              "var": "tt1Attempts",
+              "value": "1"
+            },
+            {
+              "type": "CALL",
+              "value": "@showUnitActions",
+              "args": {
+                "index": "1"
+              }
+            },
+            {
+              "type": "CALL",
+              "value": "@selectUnitAction",
+              "args": {
+                "row": "7",
+                "column": "0"
+              }
+            },
+            {
+              "type": "SLOW_UP",
+              "value": "battle-skill-top-slider",
+              "count": "1"
+            },
+            {
+              "type": "TAP",
+              "value": "battle-skill-top-5",
+              "count": "4"
+            },
+            {
+              "type": "WAIT",
+              "value": "1000"
+            },
+            {
+              "type": "REPEAT",
+              "value": ""
+            }
+          ]
+        },
+
+        {
+          "condition": {
+            "is": "CALL",
+            "value": "@isBattleReady",
+            "and": [
+              { "is": "EQUAL", "value": "2", "var":"segment"},
+              { "is": "EQUAL", "value": "1", "var":"turn"},
+              { "is": "EQUAL", "value": "0", "var":"tt2Attempts"},
+              { "is": "CALL", "value": "@isUnitReady", "args": {"index": "4"} },
+              { "is": "CALL", "value": "@unitHasMp", "args": {"index": "4"} },
+              { "not": "CALL", "value": "@isUnitActionReady", "args": {"index": "4"} }
+            ]
+          },
+          "actions": [
+            {
+              "type": "INFO",
+              "value": "Setting Up TT B (Turn 1)"
+            },
+            {
+              "type": "SET",
+              "var": "modified",
+              "value": "1"
+            },
+            {
+              "type": "ADD",
+              "var": "tt2Attempts",
+              "value": "1"
+            },
+            {
+              "type": "CALL",
+              "value": "@showUnitActions",
+              "args": {
+                "index": "4"
+              }
+            },
+            {
+              "type": "CALL",
+              "value": "@selectUnitAction",
+              "args": {
+                "row": "7",
+                "column": "1"
+              }
+            },
+            {
+              "type": "SLOW_UP",
+              "value": "battle-skill-top-slider",
+              "count": "2"
+            },
+            {
+              "type": "TAP",
+              "value": "battle-skill-top-2",
+              "count": "4"
+            },
+            {
+              "type": "WAIT",
+              "value": "1000"
+            },
+            {
+              "type": "REPEAT",
+              "value": ""
+            }
+          ]
+        },
+
+
+        {
+          "condition": {
+            "is": "CALL",
+            "value": "@isBattleReady",
+            "and": [
+              { "is": "EQUAL", "value": "2", "var":"segment"},
+              { "is": "GREATER", "value": "1", "var":"turn"},
+              { "is": "EQUAL", "value": "0", "var":"tt1Attempts"},
+              { "is": "CALL", "value": "@isUnitReady", "args": {"index": "1"} },
+              { "is": "CALL", "value": "@unitHasMp", "args": {"index": "1"} },
+              { "not": "CALL", "value": "@isUnitActionReady", "args": {"index": "1"} }
+            ]
+          },
+          "actions": [
+            {
+              "type": "INFO",
+              "value": "Setting Up TT A (Turn 2+)"
+            },
+            {
+              "type": "SET",
+              "var": "modified",
+              "value": "1"
+            },
+            {
+              "type": "ADD",
+              "var": "tt1Attempts",
+              "value": "1"
+            },
+            {
+              "type": "CALL",
+              "value": "@showUnitActions",
+              "args": {
+                "index": "1"
+              }
+            },
+            {
+              "type": "CALL",
+              "value": "@selectUnitAction",
+              "args": {
+                "row": "8",
+                "column": "0"
+              }
+            },
+            {
+              "type": "WAIT",
+              "value": "1000"
+            },
+            {
+              "type": "REPEAT",
+              "value": ""
+            }
+          ]
+        },
+
+        {
+          "condition": {
+            "is": "CALL",
+            "value": "@isBattleReady",
+            "and": [
+              { "is": "EQUAL", "value": "2", "var":"segment"},
+              { "is": "GREATER", "value": "1", "var":"turn"},
+              { "is": "EQUAL", "value": "1", "var":"tt1Attempts"},
+              { "is": "CALL", "value": "@isUnitReady", "args": {"index": "1"} },
+              { "is": "CALL", "value": "@unitHasMp", "args": {"index": "1"} },
+              { "not": "CALL", "value": "@isUnitActionReady", "args": {"index": "1"} }
+            ]
+          },
+          "actions": [
+            {
+              "type": "INFO",
+              "value": "Setting Up TT A (Turn 2+) (Fix)"
+            },
+            {
+              "type": "SET",
+              "var": "modified",
+              "value": "1"
+            },
+            {
+              "type": "ADD",
+              "var": "tt1Attempts",
+              "value": "1"
+            },
+            {
+              "type": "CALL",
+              "value": "@showUnitActions",
+              "args": {
+                "index": "1"
+              }
+            },
+            {
+              "type": "CALL",
+              "value": "@selectUnitAction",
+              "args": {
+                "row": "9",
+                "column": "0"
+              }
+            },
+            {
+              "type": "WAIT",
+              "value": "1000"
+            },
+            {
+              "type": "REPEAT",
+              "value": ""
+            }
+          ]
+        },
+
+        {
+          "condition": {
+            "is": "CALL",
+            "value": "@isBattleReady",
+            "and": [
+              { "is": "EQUAL", "value": "2", "var":"segment"},
+              { "is": "GREATER", "value": "1", "var":"turn"},
+              { "is": "EQUAL", "value": "0", "var":"tt2Attempts"},
+              { "is": "CALL", "value": "@isUnitReady", "args": {"index": "4"} },
+              { "is": "CALL", "value": "@unitHasMp", "args": {"index": "4"} },
+              { "not": "CALL", "value": "@isUnitActionReady", "args": {"index": "4"} }
+            ]
+          },
+          "actions": [
+            {
+              "type": "INFO",
+              "value": "Setting Up TT B (Turn 2+)"
+            },
+            {
+              "type": "SET",
+              "var": "modified",
+              "value": "1"
+            },
+            {
+              "type": "ADD",
+              "var": "tt2Attempts",
+              "value": "1"
+            },
+            {
+              "type": "CALL",
+              "value": "@showUnitActions",
+              "args": {
+                "index": "4"
+              }
+            },
+            {
+              "type": "CALL",
+              "value": "@selectUnitAction",
+              "args": {
+                "row": "8",
+                "column": "1"
+              }
+            },
+            {
+              "type": "WAIT",
+              "value": "1000"
+            },
+            {
+              "type": "REPEAT",
+              "value": ""
+            }
+          ]
+        }
+      ]
+    },
+
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    // LB
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+    "_arena-battle-fight-lb": {
+      "name": "Arena - Battle - LB",
+      "description":"Setup your units to LB",
+      "variables": {
+      },
+      "statements": [
+        {
+          "condition": {
+            "is": "CALL",
+            "value": "@isBattleReady",
+            "and": [
+              { "is": "EQUAL", "value": "3", "var":"segment"},
+              { "is": "LESS", "value": "5", "var":"lbAttempts"},
+              { "is": "CALL", "value": "@isUnitReady", "args": {"index": "0"} },
+              { "is": "CALL", "value": "@isUnitLbReady", "args": {"index": "0"} },
+              { "not": "CALL", "value": "@isUnitLbSelected", "args": {"index": "0"} },
+              { "is": "CALL", "value": "@isUnitReady", "args": {"index": "2"} },
+              { "is": "CALL", "value": "@isUnitLbReady", "args": {"index": "2"} }
+            ]
+          },
+          "actions": [
+            {
+              "type": "ADD",
+              "var": "lbAttempts",
+              "value": "1"
+            },
+            {
+              "condition": {
+                "not": "CALL",
+                "value": "@readyUnitLbSafely",
+                "args": {
+                  "index": "0"
+                }
+              },
+              "type": "CONTINUE"
+            },
+            {
+              "type": "SET",
+              "var": "modified",
+              "value": "1"
+            },
+            {
+              "type": "REPEAT",
+              "value": ""
+            }
+          ]
+        },
+
+        {
+          "condition": {
+            "is": "CALL",
+            "value": "@isBattleReady",
+            "and": [
+              { "is": "EQUAL", "value": "3", "var":"segment"},
+              { "is": "LESS", "value": "5", "var":"lbAttempts"},
+              { "is": "CALL", "value": "@isUnitReady", "args": {"index": "1"} },
+              { "is": "CALL", "value": "@isUnitLbReady", "args": {"index": "1"} },
+              { "not": "CALL", "value": "@isUnitLbSelected", "args": {"index": "1"} },
+              { "is": "CALL", "value": "@isUnitReady", "args": {"index": "4"} },
+              { "is": "CALL", "value": "@isUnitLbReady", "args": {"index": "4"} }
+            ]
+          },
+          "actions": [
+            {
+              "type": "ADD",
+              "var": "lbAttempts",
+              "value": "1"
+            },
+            {
+              "condition": {
+                "not": "CALL",
+                "value": "@readyUnitLbSafely",
+                "args": {
+                  "index": "1"
+                }
+              },
+              "type": "CONTINUE"
+            },
+            {
+              "type": "SET",
+              "var": "modified",
+              "value": "1"
+            },
+            {
+              "type": "REPEAT",
+              "value": ""
+            }
+          ]
+        },
+
+        {
+          "condition": {
+            "is": "CALL",
+            "value": "@isBattleReady",
+            "and": [
+              { "is": "EQUAL", "value": "3", "var":"segment"},
+              { "is": "LESS", "value": "5", "var":"lbAttempts"},
+              { "is": "CALL", "value": "@isUnitReady", "args": {"index": "2"} },
+              { "is": "CALL", "value": "@isUnitLbReady", "args": {"index": "2"} },
+              { "not": "CALL", "value": "@isUnitLbSelected", "args": {"index": "2"} },
+              { "is": "CALL", "value": "@isUnitReady", "args": {"index": "0"} },
+              { "is": "CALL", "value": "@isUnitLbReady", "args": {"index": "0"} }
+            ]
+          },
+          "actions": [
+            {
+              "type": "ADD",
+              "var": "lbAttempts",
+              "value": "1"
+            },
+            {
+              "condition": {
+                "not": "CALL",
+                "value": "@readyUnitLbSafely",
+                "args": {
+                  "index": "2"
+                }
+              },
+              "type": "CONTINUE"
+            },
+            {
+              "type": "SET",
+              "var": "modified",
+              "value": "1"
+            },
+            {
+              "type": "REPEAT",
+              "value": ""
+            }
+          ]
+        },
+
+        {
+          "condition": {
+            "is": "CALL",
+            "value": "@isBattleReady",
+            "and": [
+              { "is": "EQUAL", "value": "3", "var":"segment"},
+              { "is": "LESS", "value": "5", "var":"lbAttempts"},
+              { "is": "CALL", "value": "@isUnitReady", "args": {"index": "4"} },
+              { "is": "CALL", "value": "@isUnitLbReady", "args": {"index": "4"} },
+              { "not": "CALL", "value": "@isUnitLbSelected", "args": {"index": "4"} },
+              { "is": "CALL", "value": "@isUnitReady", "args": {"index": "1"} },
+              { "is": "CALL", "value": "@isUnitLbReady", "args": {"index": "1"} }
+            ]
+          },
+          "actions": [
+            {
+              "type": "ADD",
+              "var": "lbAttempts",
+              "value": "1"
+            },
+            {
+              "condition": {
+                "not": "CALL",
+                "value": "@readyUnitLbSafely",
+                "args": {
+                  "index": "4"
+                }
+              },
+              "type": "CONTINUE"
+            },
+            {
+              "type": "CALL",
+              "value": "@readyUnitLb",
+              "args": {
+                "index": "4"
+              }
+            },
+            {
+              "type": "SET",
+              "var": "modified",
+              "value": "1"
+            },
+            {
+              "type": "REPEAT",
+              "value": ""
+            }
+          ]
+        }
+      ]
+    },
+
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    // CLEANUP
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+    "_arena-battle-fight-cleanup": {
+      "name": "Arena - Battle - Cleanup",
+      "description":"Tap Units",
+      "variables": {
+
+      },
+      "statements": [
+        {
+          "condition": { "is": "EQUAL", "value": "4", "var":"segment"},
+          "actions": [
+            // RESET YOUR CUSTOM COUNTERS
+            {
+              "type": "SET",
+              "var": "hyoyAttempts",
+              "value": "0"
+            },
+            {
+              "type": "SET",
+              "var": "tt1Attempts",
+              "value": "0"
+            },
+            {
+              "type": "SET",
+              "var": "tt2Attempts",
+              "value": "0"
+            },
+            // UPDATE COOLDOWN COUNTS
+            {
+              "type": "ADD",
+              "var": "elysium",
+              "value": "-1",
+              "condition": {
+                "is": "GREATER",
+                "var": "elysium",
+                "value": "0"
+              }
+            },
+            {
+              "type": "ADD",
+              "var": "purify",
+              "value": "-1",
+              "condition": {
+                "is": "GREATER",
+                "var": "purify",
+                "value": "0"
+              }
+            },
+            {
+              "type": "ADD",
+              "var": "resurgence",
+              "value": "-1",
+              "condition": {
+                "is": "GREATER",
+                "var": "resurgence",
+                "value": "0"
+              }
+            }
+          ]
+        }
+      ]
+    }
+
+  }
+}

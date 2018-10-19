@@ -587,11 +587,11 @@ public class ScriptRunner {
                 public String toString() {
                     String string = logStackTraceInfo(stack);
                     sb.append(string);
-                    return string;
+                    sb.append(' ').append(additionalMessages).toString();
+                    return sb.toString();
                 }
             });
         }
-
         return sb.append(' ').append(additionalMessages).toString();
     }
 
@@ -650,6 +650,11 @@ public class ScriptRunner {
                         logStackTraceInfo(stateStack, "Action Allowed: " + ConditionDefinition.getConditionString(actionDefinition.getCondition()));
                     }
 
+                    if (actionDefinition.getType() == ActionType.CONTINUE) {
+                        // Get out of the current statement block
+                        break;
+                    }
+
                     priorResult = stateResult;
                     stateResult = new StateResult(actionDefinition.getType(), actionDefinition, priorResult, stateStack);
 
@@ -659,11 +664,6 @@ public class ScriptRunner {
                         loopMax = v.toInt();
                     } else {
                         loopMax = 1;
-                    }
-
-                    if (actionDefinition.getType() == ActionType.CONTINUE) {
-                        // Get out of the current statement block
-                        break;
                     }
 
                     for (int loopIndex = 0; loopIndex < loopMax; loopIndex++) {

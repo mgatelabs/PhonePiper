@@ -98,7 +98,7 @@
               "condition": {
                 "is": "GREATER",
                 "var": "g",
-                "value": "200",
+                "value": "120",
                 "or": [
                   {
                     "is": "GREATER",

@@ -2628,8 +2628,15 @@
         }
       ]
     },
+
     "_arena-battle-fight": {
       "name": "Arena - Battle - Common Fight",
+      "variables": {
+        "enemy_health_seen": {
+          "type": "INT",
+          "value": "0"
+        }
+      },
       "statements": [
         {
           "condition": {
@@ -2664,6 +2671,30 @@
             {
               "type": "REPEAT",
               "value": ""
+            }
+          ]
+        },
+        {
+          "condition": {
+            "is": "SCREEN",
+            "value": "battle-enemy_bar",
+            "and": [
+              {
+                "var": "enemy_health_seen",
+                "is": "EQUAL",
+                "value": "0"
+              }
+            ]
+          },
+          "actions": [
+            {
+              "type": "SET",
+              "var": "enemy_health_seen",
+              "value": "1"
+            },
+            {
+              "type": "INFO",
+              "value": "Enemy health bar has been seen"
             }
           ]
         },
@@ -2756,8 +2787,46 @@
               "value": "arena-home"
             }
           ]
+        },
+        {
+          "condition": {
+            "not": "SCREEN",
+            "value": "battle-enemy_bar",
+            "and": [
+              {
+                "var": "enemy_health_seen",
+                "is": "EQUAL",
+                "value": "1"
+              },
+              {
+                "var": "_loops",
+                "is": "GREATER",
+                "value": "15"
+              }
+            ]
+          },
+          "actions": [
+            {
+              "type": "INFO",
+              "value": "Enemy health bar is missing, tapping to finish"
+            },
+            {
+              "type": "SET",
+              "var": "enemy_health_seen",
+              "value": "1"
+            },
+            {
+              "type": "TAP",
+              "value": "menu-arena-results-ok"
+            },
+            {
+              "type": "WAIT",
+              "value": "500"
+            }
+          ]
         }
       ]
     }
+
   }
 }

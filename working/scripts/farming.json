@@ -2628,12 +2628,13 @@
         }
       ]
     },
+
     "_arena-battle-fight": {
       "name": "Arena - Battle - Common Fight",
       "variables": {
         "enemy_health_seen": {
           "type": "INT",
-          "value": "-1"
+          "value": "0"
         }
       },
       "statements": [
@@ -2681,7 +2682,7 @@
               {
                 "var": "enemy_health_seen",
                 "is": "EQUAL",
-                "value": "-1"
+                "value": "0"
               }
             ]
           },
@@ -2689,7 +2690,7 @@
             {
               "type": "SET",
               "var": "enemy_health_seen",
-              "value": "0"
+              "value": "1"
             },
             {
               "type": "INFO",
@@ -2795,10 +2796,10 @@
               {
                 "var": "enemy_health_seen",
                 "is": "EQUAL",
-                "value": "0"
+                "value": "1"
               },
               {
-                "var": "_loop",
+                "var": "_loops",
                 "is": "GREATER",
                 "value": "15"
               }
@@ -2826,5 +2827,6 @@
         }
       ]
     }
+
   }
 }

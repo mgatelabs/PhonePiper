@@ -45,6 +45,11 @@
     "points" : [ ],
     "enabled" : false
   }, {
+    "name" : "Battle - Enemy Bar",
+    "screenId" : "battle-enemy_bar",
+    "points" : [ ],
+    "enabled" : false
+  }, {
     "name" : "Battle - Esper - Not Full",
     "screenId" : "battle-esper-notfull",
     "points" : [ ],

@@ -2675,38 +2675,6 @@
         },
         {
           "condition": {
-            "not": "SCREEN",
-            "value": "battle-enemy_bar",
-            "and": [
-              {
-                "var": "enemy_health_seen",
-                "is": "EQUAL",
-                "value": "0"
-              },
-              {
-                "var": "_loop",
-                "is": "GREATER",
-                "value": "15"
-              }
-            ]
-          },
-          "actions": [
-            {
-              "type": "INFO",
-              "value": "Enemy health bar is missing, tapping to finish"
-            },
-            {
-              "type": "TAP",
-              "value": "menu-arena-results-ok"
-            },
-            {
-              "type": "WAIT",
-              "value": "500"
-            }
-          ]
-        },
-        {
-          "condition": {
             "is": "SCREEN",
             "value": "battle-enemy_bar",
             "and": [
@@ -2816,6 +2784,43 @@
             {
               "type": "MOVE",
               "value": "arena-home"
+            }
+          ]
+        },
+        {
+          "condition": {
+            "not": "SCREEN",
+            "value": "battle-enemy_bar",
+            "and": [
+              {
+                "var": "enemy_health_seen",
+                "is": "EQUAL",
+                "value": "0"
+              },
+              {
+                "var": "_loop",
+                "is": "GREATER",
+                "value": "15"
+              }
+            ]
+          },
+          "actions": [
+            {
+              "type": "INFO",
+              "value": "Enemy health bar is missing, tapping to finish"
+            },
+            {
+              "type": "SET",
+              "var": "enemy_health_seen",
+              "value": "1"
+            },
+            {
+              "type": "TAP",
+              "value": "menu-arena-results-ok"
+            },
+            {
+              "type": "WAIT",
+              "value": "500"
             }
           ]
         }

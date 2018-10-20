@@ -2,6 +2,7 @@ package com.mgatelabs.piper.server;
 
 import ch.qos.logback.classic.Level;
 import ch.qos.logback.classic.spi.ILoggingEvent;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.common.base.Charsets;
 import com.google.common.collect.*;
 import com.google.common.io.Resources;
@@ -15,6 +16,7 @@ import com.mgatelabs.piper.shared.helper.DeviceHelper;
 import com.mgatelabs.piper.shared.image.ImageWrapper;
 import com.mgatelabs.piper.shared.util.AdbShell;
 import com.mgatelabs.piper.shared.util.AdbUtils;
+import com.mgatelabs.piper.shared.util.JsonTool;
 import com.mgatelabs.piper.shared.util.Loggers;
 import com.mgatelabs.piper.ui.FrameChoices;
 import com.mgatelabs.piper.ui.utils.Constants;
@@ -104,9 +106,9 @@ public class WebResource {
         final ValueResult valueResult = new ValueResult();
         try {
             runner.pressComponent(componentId, ActionType.valueOf(buttonId));
-            valueResult.setStatus("OK");
+            valueResult.setStatus("ok");
         } catch (Exception ex) {
-            valueResult.setStatus("FAIL");
+            valueResult.setStatus("error");
         }
         return valueResult;
     }
@@ -126,9 +128,9 @@ public class WebResource {
                 runner.restartShell();
             }
             valueResult.setValue(s);
-            valueResult.setStatus("OK");
+            valueResult.setStatus("ok");
         } catch (Exception ex) {
-            valueResult.setStatus("FAIL");
+            valueResult.setStatus("error");
         }
         return valueResult;
     }
@@ -142,21 +144,21 @@ public class WebResource {
         if (runner != null) {
             try {
                 runner.restartShell();
-                valueResult.setStatus("OK");
+                valueResult.setStatus("ok");
             } catch (Exception ex) {
-                valueResult.setStatus("FAIL");
+                valueResult.setStatus("error");
                 ex.printStackTrace();
             }
         } else if (editHolder != null) {
             try {
                 editHolder.restartShell();
-                valueResult.setStatus("OK");
+                valueResult.setStatus("ok");
             } catch (Exception ex) {
-                valueResult.setStatus("FAIL");
+                valueResult.setStatus("error");
                 ex.printStackTrace();
             }
         } else {
-            valueResult.setStatus("FAIL");
+            valueResult.setStatus("error");
         }
         return valueResult;
     }
@@ -177,13 +179,13 @@ public class WebResource {
                     runner.restartShell();
                 }
                 valueResult.setValue(s);
-                valueResult.setStatus("OK");
+                valueResult.setStatus("ok");
             } catch (Exception ex) {
-                valueResult.setStatus("FAIL");
+                valueResult.setStatus("error");
                 ex.printStackTrace();
             }
         } else {
-            valueResult.setStatus("FAIL");
+            valueResult.setStatus("error");
         }
         return valueResult;
     }
@@ -203,9 +205,9 @@ public class WebResource {
                 runner.restartShell();
             }
             valueResult.setValue(s);
-            valueResult.setStatus("OK");
+            valueResult.setStatus("ok");
         } catch (Exception ex) {
-            valueResult.setStatus("FAIL");
+            valueResult.setStatus("error");
             valueResult.setValue(ex.getLocalizedMessage());
             ex.printStackTrace();
         }
@@ -228,9 +230,9 @@ public class WebResource {
                 runner.restartShell();
             }
             valueResult.setValue(s);
-            valueResult.setStatus("OK");
+            valueResult.setStatus("ok");
         } catch (Exception ex) {
-            valueResult.setStatus("FAIL");
+            valueResult.setStatus("error");
             valueResult.setValue(ex.getLocalizedMessage());
             ex.printStackTrace();
         }
@@ -246,9 +248,9 @@ public class WebResource {
         try {
             String s = AdbShell.devices();
             valueResult.setValue(s);
-            valueResult.setStatus("OK");
+            valueResult.setStatus("ok");
         } catch (Exception ex) {
-            valueResult.setStatus("FAIL");
+            valueResult.setStatus("error");
             valueResult.setValue(ex.getLocalizedMessage());
             ex.printStackTrace();
         }
@@ -331,9 +333,9 @@ public class WebResource {
             } else {
                 runner.setStatus(ScriptRunner.Status.PAUSED);
             }
-            result.put("status", "true");
+            result.put("status", "ok");
         } else {
-            result.put("status", "false");
+            result.put("status", "error");
         }
 
         return result;
@@ -358,7 +360,7 @@ public class WebResource {
         frameChoices = new FrameChoices(Constants.ACTION_RUN, Constants.MODE_SCRIPT, request.getStateName(), "", request.getDevice(), views, scripts);
 
         if (frameChoices.isValid()) {
-            final PrepResult result = new PrepResult(StatusEnum.OK);
+            final PrepResult result = new PrepResult(StatusEnum.ok);
 
             editHolder = null;
 
@@ -374,7 +376,7 @@ public class WebResource {
             return result;
 
         } else {
-            return new PrepResult(StatusEnum.FAIL);
+            return new PrepResult(StatusEnum.error);
         }
     }
 
@@ -434,9 +436,9 @@ public class WebResource {
             runner.setStatus(ScriptRunner.Status.PAUSED);
             thread = null;
             runner = null;
-            result.put("status", "true");
+            result.put("status", "ok");
         } else {
-            result.put("status", "false");
+            result.put("status", "error");
         }
 
         return result;
@@ -455,9 +457,9 @@ public class WebResource {
             runner.setStatus(ScriptRunner.Status.PAUSED);
             thread = null;
             runner = null;
-            result.put("status", "true");
+            result.put("status", "ok");
         } else {
-            result.put("status", "false");
+            result.put("status", "error");
         }
 
         return result;
@@ -477,7 +479,7 @@ public class WebResource {
         frameChoices = new FrameChoices(Constants.ACTION_EDIT, Constants.MODE_VIEW, null, "", request.getDevice(), request.getViews(), request.getScripts());
 
         if (frameChoices.isValid()) {
-            final PrepResult result = new PrepResult(StatusEnum.OK);
+            final PrepResult result = new PrepResult(StatusEnum.ok);
             if (runner != null) {
                 if (runner.isRunning()) {
                     runner.setStatus(ScriptRunner.Status.PAUSED);
@@ -488,7 +490,7 @@ public class WebResource {
             deviceHelper = editHolder.getDeviceHelper();
             return result;
         } else {
-            return new PrepResult(StatusEnum.FAIL);
+            return new PrepResult(StatusEnum.error);
         }
     }
 
@@ -516,14 +518,14 @@ public class WebResource {
             EditActionInterface editActionInterface = ACTIONS.get(actionId);
             if (editActionInterface == null) {
                 result.put("msg", "Unknown Action");
-                result.put("status", "false");
+                result.put("status", "error");
             } else {
                 result.put("msg", editActionInterface.execute(id, value, editHolder));
-                result.put("status", "true");
+                result.put("status", "ok");
             }
         } else {
             result.put("msg", "Edit engine isn't running");
-            result.put("status", "false");
+            result.put("status", "error");
         }
         return result;
     }
@@ -536,9 +538,9 @@ public class WebResource {
         Map<String, String> result = Maps.newHashMap();
         if (editHolder != null) {
             editHolder = null;
-            result.put("status", "true");
+            result.put("status", "ok");
         } else {
-            result.put("status", "false");
+            result.put("status", "error");
         }
         return result;
     }
@@ -550,7 +552,7 @@ public class WebResource {
         checkInitialState();
         Loggers.consoleHandler.setLevel(Level.toLevel(level, Level.ERROR));
         Map<String, String> result = Maps.newHashMap();
-        result.put("status", "true");
+        result.put("status", "ok");
         return result;
     }
 
@@ -561,7 +563,7 @@ public class WebResource {
         checkInitialState();
         Loggers.webHandler.setLevel(Level.toLevel(level, Level.ERROR));
         Map<String, String> result = Maps.newHashMap();
-        result.put("status", "true");
+        result.put("status", "ok");
         return result;
     }
 
@@ -572,7 +574,7 @@ public class WebResource {
         checkInitialState();
         Loggers.fileHandler.setLevel(Level.toLevel(level, Level.ERROR));
         Map<String, String> result = Maps.newHashMap();
-        result.put("status", "true");
+        result.put("status", "ok");
         return result;
     }
 
@@ -585,11 +587,11 @@ public class WebResource {
         checkInitialState();
 
         if (editHolder != null) {
-            return new PrepResult(StatusEnum.OK);
+            return new PrepResult(StatusEnum.ok);
         }
 
         if (frameChoices != null) {
-            final PrepResult result = new PrepResult(StatusEnum.OK);
+            final PrepResult result = new PrepResult(StatusEnum.ok);
 
             final SortedSet<StateDefinition> stateDefinitions = new TreeSet<>(new Comparator<StateDefinition>() {
                 @Override
@@ -637,11 +639,12 @@ public class WebResource {
             result.getVariableTiers().addAll(runner.getVariableTiers());
 
             result.setWebLevel(Loggers.webHandler.getLevel().toString());
+            result.setConsoleLevel(Loggers.consoleHandler.getLevel().toString());
             result.setFileLevel(Loggers.fileHandler.getLevel().toString());
 
             return result;
         } else {
-            return new PrepResult(StatusEnum.FAIL);
+            return new PrepResult(StatusEnum.error);
         }
     }
 
@@ -652,7 +655,7 @@ public class WebResource {
     public PrepResult editViewInfo(@RequestBody Map<String, String> values) {
         checkInitialState();
         if (editHolder != null) {
-            PrepResult results = new PrepResult(StatusEnum.OK);
+            PrepResult results = new PrepResult(StatusEnum.ok);
 
             for (ScreenDefinition screenDefinition : editHolder.getViewDefinition().getScreens()) {
                 results.getScreens().add(new NamedValueItem(screenDefinition.getName(), screenDefinition.getScreenId()));
@@ -668,7 +671,7 @@ public class WebResource {
             return results;
 
         } else {
-            return new PrepResult(StatusEnum.FAIL);
+            return new PrepResult(StatusEnum.error);
         }
     }
 
@@ -679,10 +682,104 @@ public class WebResource {
         checkInitialState();
 
         Map<String, List<String>> values = Maps.newHashMap();
-        values.put("devices", Constants.arrayToList(Constants.listJsonFilesIn(new File(Runner.WORKING_DIRECTORY, Constants.PATH_DEVICES))));
+        values.put("devices", Constants.arrayToList(Constants.listJsonFilesIn(new File(Runner.WORKING_DIRECTORY, Constants.PATH_DEVICES), true)));
         values.put("views", Constants.arrayToList(Constants.listFoldersFilesIn(new File(Runner.WORKING_DIRECTORY, Constants.PATH_VIEWS))));
-        values.put("scripts", Constants.arrayToList(Constants.listJsonFilesIn(new File(Runner.WORKING_DIRECTORY, Constants.PATH_SCRIPTS))));
+        values.put("scripts", Constants.arrayToList(Constants.listJsonFilesIn(new File(Runner.WORKING_DIRECTORY, Constants.PATH_SCRIPTS), true)));
         return values;
+    }
+
+    @GET
+    @Path("/files/list")
+    public FileListResult listFiles() {
+        final FileListResult result = new FileListResult();
+        final List<String> views = Constants.arrayToList(Constants.listFoldersFilesIn(new File(Runner.WORKING_DIRECTORY, Constants.PATH_VIEWS)));
+        final List<String> scripts = Constants.arrayToList(Constants.listJsonFilesIn(new File(Runner.WORKING_DIRECTORY, Constants.PATH_SCRIPTS), false));
+        result.getViews().addAll(views);
+        result.getScripts().addAll(scripts);
+        return result;
+    }
+
+    @GET
+    @Path("/configs")
+    public ConfigListResponse listConfigs() {
+        final File configPath = new File(Runner.WORKING_DIRECTORY, Constants.PATH_CONFIGS);
+        final ObjectMapper objectMapper = JsonTool.getInstance();
+        final List<LoadRequest> result = Lists.newArrayList();
+        final List<String> configNames = Constants.arrayToList(Constants.listJsonFilesIn(configPath, false));
+
+        for (String configName: configNames) {
+            if (StringUtils.isBlank(configName)) continue;
+            File configFile = new File(configPath, configName + ".json");
+            try {
+                LoadRequest loadRequest = objectMapper.readValue(configFile, LoadRequest.class);
+                result.add(loadRequest);
+            } catch (Exception ex) {
+                logger.error(configName + ": " + ex.getMessage());
+            }
+        }
+        result.sort(new Comparator<LoadRequest>() {
+            @Override
+            public int compare(LoadRequest o1, LoadRequest o2) {
+                return o1.getTitle().compareTo(o2.getTitle());
+            }
+        });
+        return new ConfigListResponse(result);
+    }
+
+    @POST
+    @Path("/configs")
+    public Map<String, String> saveConfigs(@RequestBody LoadRequest request) {
+        final File configPath = new File(Runner.WORKING_DIRECTORY, Constants.PATH_CONFIGS);
+        if (StringUtils.isBlank(request.getStateName())) {
+            return errorResponse("StateName was blank, save canceled");
+        }
+        if (!Constants.ID_PATTERN.matcher(request.getStateName()).matches()) {
+            return errorResponse("StateName was not formatted correctly, save canceled");
+        }
+        final ObjectMapper objectMapper = JsonTool.getInstance();
+        final File configFile = new File(configPath, request.getStateName() + ".json");
+        try {
+            objectMapper.writeValue(configFile, request);
+            return okResponse("File saved");
+        } catch (Exception ex) {
+            logger.error("Save Failed: " + ex.getMessage());
+            return errorResponse(ex.getMessage());
+        }
+    }
+
+    @DELETE
+    @Path("/configs/{stateName}")
+    public Map<String, String> saveConfigs(@PathParam("stateName") String stateName) {
+        final File configPath = new File(Runner.WORKING_DIRECTORY, Constants.PATH_CONFIGS);
+        if (StringUtils.isBlank(stateName)) {
+            return errorResponse("StateName was blank, delete canceled");
+        }
+        if (!Constants.ID_PATTERN.matcher(stateName).matches()) {
+            return errorResponse("StateName was not formatted correctly, delete canceled");
+        }
+        final File configFile = new File(configPath, stateName + ".json");
+        try {
+            if (configFile.exists()) {
+                if (configFile.delete()) {
+                    return okResponse("File deleted");
+                } else {
+                    return errorResponse("Could not delete file");
+                }
+            } else {
+                return errorResponse("File not found");
+            }
+        } catch (Exception ex) {
+            logger.error("Delete Failed: " + ex.getMessage());
+            return errorResponse(ex.getMessage());
+        }
+    }
+
+    private Map<String, String> errorResponse(String msg) {
+        return ImmutableMap.of("status", "error", "msg", msg);
+    }
+
+    private Map<String, String> okResponse(String msg) {
+        return ImmutableMap.of("status", "ok", "msg", msg);
     }
 
     @GET

@@ -4,6 +4,8 @@ import com.google.common.collect.ImmutableSet;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 import com.google.common.collect.Sets;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.List;
 import java.util.Map;
@@ -15,6 +17,8 @@ import java.util.Set;
  * Created by @mgatelabs (Michael Fuller) on 10/13/2018 for Phone-Piper.
  */
 public class StateLink {
+
+    private final Logger logger = LoggerFactory.getLogger(this.getClass());
 
     private final String scriptId;
     private final StateDefinition state;
@@ -104,11 +108,14 @@ public class StateLink {
     }
 
     public Set<String> determineStateIds(final Set<String> exploredStates, final Map<String, ExecutableLink> globalStates) {
+        logger.debug("determineStateIds: " + this.scriptId + "." + this.state.getId());
         if (exploredStates.contains(state.getId())) return ImmutableSet.of();
         Set<String> screenIds = Sets.newHashSet();
         Set<String> copy = Sets.newHashSet(exploredStates);
         copy.add(state.getId());
+        int i = 0;
         for (StatementDefinition statementDefinition : state.getStatements()) {
+            logger.trace("determineStateIds: " + this.scriptId + "." + this.state.getId() + "[" + (i++)+ "]");
             screenIds.addAll(statementDefinition.determineScreenIds(copy, globalStates));
         }
         for (StateLink include : this.getIncludes()) {

@@ -151,6 +151,8 @@ public class ActionDefinition {
                 return "Call: " + value;
             case RETURN:
                 return "RETURN";
+            case CONTINUE:
+                return "CONTINUE";
             case SOFT_REPEAT:
                 return "SOFT REPEAT";
             case PIXEL:

@@ -1,0 +1,258 @@
+//@formatter:off
+{
+  "vars": [],
+  "imports": [],
+  "states": {
+
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    // COMMON
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+    "_arena-battle-common": {
+      "name": "Arena - Battle - Common Variables",
+      "description":"Variables for segment and turn",
+      "variables": {
+        "segment": {
+          "value": "-1",
+          "type": "INT"
+        },
+        "turn": {
+          "value": "1",
+          "type": "INT"
+        },
+        "lbAttempts": {
+          "value": "0",
+          "type": "INT"
+        },
+        "modified": {
+          "value": "0",
+          "type": "INT"
+        }
+      },
+      "statements": [
+
+      ]
+    },
+
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    // INSPECTION
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+    "_arena-battle-health-check": {
+      "name": "Arena - Battle - Health Checks",
+      "description":"Check and see how many units have HP, MP and are alive or stopped",
+      "variables": {
+        "availableUnits": {
+          "value": "0",
+          "type": "INT"
+        },
+        "availableMpUnits": {
+          "value": "0",
+          "type": "INT"
+        },
+        "availableHpUnits": {
+          "value": "0",
+          "type": "INT"
+        },
+        "aliveUnits": {
+          "value": "0",
+          "type": "INT"
+        }
+      },
+      "statements": [
+        // Check how many units are available to use
+        {
+          "condition": {
+            "is": "CALL",
+            "value": "@isBattleReady",
+            "and": [
+              { "is": "EQUAL", "value": "-1", "var":"segment"}
+            ]
+          },
+          "actions": [
+            {
+              "type": "SET",
+              "var": "availableUnits",
+              "value": "0"
+            },
+            {
+              "type": "ADD",
+              "var": "availableUnits",
+              "value": 1,
+              "condition": { "is": "CALL", "value": "@isUnitReady", "args": {"index": "0"} }
+            },
+            {
+              "type": "ADD",
+              "var": "availableUnits",
+              "value": 1,
+              "condition": { "is": "CALL", "value": "@isUnitReady", "args": {"index": "1"} }
+            },
+            {
+              "type": "ADD",
+              "var": "availableUnits",
+              "value": 1,
+              "condition": { "is": "CALL", "value": "@isUnitReady", "args": {"index": "2"} }
+            },
+            // Skip the Healer #3
+            {
+              "type": "ADD",
+              "var": "availableUnits",
+              "value": 1,
+              "condition": { "is": "CALL", "value": "@isUnitReady", "args": {"index": "4"} }
+            },
+            {
+              "type": "FINER",
+              "value": "Opening Battle Menu"
+            },
+            {
+              "type": "TAP",
+              "value": "battle-menu"
+            },
+            {
+              "type": "WAIT",
+              "value": "400"
+            },
+            {
+              "type": "REPEAT"
+            }
+          ]
+        },
+
+        // With the battle menu open, lets check the health and mp for every unit
+        {
+          "condition": {
+            "is": "SCREEN",
+            "value": "battle-menu-arena",
+            "and": [
+              { "is": "EQUAL", "value": "-1", "var":"segment"}
+            ]
+          },
+          "actions": [
+            // How many have decent health?
+            {
+              "type": "SET",
+              "var": "availableHpUnits",
+              "value": "0"
+            },
+
+            {
+              "type": "ADD",
+              "var": "availableHpUnits",
+              "value": 1,
+              "condition": { "is": "CALL", "value": "@unitHasHp", "args": {"index": "0", "mode": "menu", "percent" : "80"} }
+            },
+            {
+              "type": "ADD",
+              "var": "availableHpUnits",
+              "value": 1,
+              "condition": { "is": "CALL", "value": "@unitHasHp", "args": {"index": "1", "mode": "menu", "percent" : "80"} }
+            },
+            {
+              "type": "ADD",
+              "var": "availableHpUnits",
+              "value": 1,
+              "condition": { "is": "CALL", "value": "@unitHasHp", "args": {"index": "2", "mode": "menu", "percent" : "80"} }
+            },
+            // Skip the Healer #3
+            {
+              "type": "ADD",
+              "var": "availableHpUnits",
+              "value": 1,
+              "condition": { "is": "CALL", "value": "@unitHasHp", "args": {"index": "4", "mode": "menu", "percent" : "80"} }
+            },
+            // How many are alive?
+            {
+              "type": "SET",
+              "var": "aliveUnits",
+              "value": "0"
+            },
+            {
+              "type": "ADD",
+              "var": "aliveUnits",
+              "value": 1,
+              "condition": { "is": "CALL", "value": "@unitHasHp", "args": {"index": "0", "mode": "menu", "percent" : "0"} }
+            },
+            {
+              "type": "ADD",
+              "var": "aliveUnits",
+              "value": 1,
+              "condition": { "is": "CALL", "value": "@unitHasHp", "args": {"index": "1", "mode": "menu", "percent" : "0"} }
+            },
+            {
+              "type": "ADD",
+              "var": "aliveUnits",
+              "value": 1,
+              "condition": { "is": "CALL", "value": "@unitHasHp", "args": {"index": "2", "mode": "menu", "percent" : "0"} }
+            },
+            // Skip the Healer #3
+            {
+              "type": "ADD",
+              "var": "aliveUnits",
+              "value": 1,
+              "condition": { "is": "CALL", "value": "@unitHasHp", "args": {"index": "4", "mode": "menu", "percent" : "0"} }
+            },
+            // How many have enough MP?
+            {
+              "type": "SET",
+              "var": "availableMpUnits",
+              "value": "0"
+            },
+            {
+              "type": "ADD",
+              "var": "availableMpUnits",
+              "value": 1,
+              "condition": { "is": "CALL", "value": "@unitHasMp", "args": {"index": "0", "mode": "menu", "percent" : "25"} }
+            },
+            {
+              "type": "ADD",
+              "var": "availableMpUnits",
+              "value": 1,
+              "condition": { "is": "CALL", "value": "@unitHasMp", "args": {"index": "1", "mode": "menu", "percent" : "25"} }
+            },
+            {
+              "type": "ADD",
+              "var": "availableMpUnits",
+              "value": 1,
+              "condition": { "is": "CALL", "value": "@unitHasMp", "args": {"index": "2", "mode": "menu", "percent" : "25"} }
+            },
+            // Skip the Healer #3
+            {
+              "type": "ADD",
+              "var": "availableMpUnits",
+              "value": 1,
+              "condition": { "is": "CALL", "value": "@unitHasMp", "args": {"index": "4", "mode": "menu", "percent" : "25"} }
+            },
+            {
+              "type": "FINER",
+              "value": "Closing Battle Menu"
+            },
+            {
+              "type": "TAP",
+              "value": "battle-menu-back"
+            },
+            {
+              "type": "WAIT",
+              "value": "400"
+            },
+            {
+              "type": "SET",
+              "var": "segment",
+              "value": "0"
+            },
+            {
+              "type": "INFO",
+              "value": "Found ${aliveUnits} Alive, ${availableUnits} Available, ${availableHpUnits} Hp above 80% and ${availableMpUnits} MP above 25% units on Turn ${turn}"
+            },
+            {
+              "type": "REPEAT"
+            }
+          ]
+        }
+
+      ]
+    }
+
+
+
+  }
+}

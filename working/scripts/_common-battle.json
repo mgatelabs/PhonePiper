@@ -314,7 +314,7 @@
             },
             {
               "type": "WAIT",
-              "value": "200"
+              "value": "500"
             },
             {
               "type": "RETURN"
@@ -344,7 +344,7 @@
             },
             {
               "type": "WAIT",
-              "value": "200"
+              "value": "500"
             },
             {
               "type": "RETURN"
@@ -370,7 +370,7 @@
             },
             {
               "type": "WAIT",
-              "value": "200"
+              "value": "500"
             },
             {
               "type": "RETURN"
@@ -418,7 +418,7 @@
             },
             {
               "type": "WAIT",
-              "value": "200"
+              "value": "500"
             },
             {
               "type": "RETURN"
@@ -461,6 +461,78 @@
         }
       ]
     },
+    "@readyUnitLbSafely": {
+      "name": "Function - Ready Unit LB Safely",
+      "variables": {
+        "index": {
+          "value": "0",
+          "type": "INT"
+        }
+      },
+      "statements": [
+        {
+          "actions": [
+            {
+              "type": "CALL",
+              "value": "@showUnitActions",
+              "args": {
+                "index": "${index}"
+              }
+            },
+            {
+              "type": "REFRESH"
+            },
+            {
+              "condition":{
+                "not": "SCREEN",
+                "value": "battle-abilities-lb-available"
+              },
+              "type": "CONTINUE"
+            },
+            {
+              "type": "FINER",
+              "value": "LB Available"
+            },
+            {
+              "type": "TAP",
+              "value": "battle-skill-top-0",
+              "count": "1"
+            },
+            {
+              "type": "WAIT",
+              "value": "500"
+            },
+            {
+              "type": "RETURN",
+              "value": "1"
+            }
+          ]
+        },
+        {
+          "actions": [
+            {
+              "type": "FINER",
+              "value": "LB wasn't actually available"
+            },
+            {
+              "type": "TAP",
+              "value": "battle-actions-back"
+            },
+            {
+              "type": "WAIT",
+              "value": "500"
+            },
+            {
+              "type": "REFRESH"
+            },
+            {
+              "type": "RETURN",
+              "value": "0"
+            }
+          ]
+        }
+      ]
+    },
     "@readyUnitEsper": {
       "name": "Function - Ready Unit Esper",
       "variables": {
@@ -486,7 +558,7 @@
             },
             {
               "type": "WAIT",
-              "value": "200"
+              "value": "500"
             },
             {
               "type": "RETURN"

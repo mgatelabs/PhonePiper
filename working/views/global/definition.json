@@ -30,6 +30,11 @@
     "points" : [ ],
     "enabled" : false
   }, {
+    "name" : "Battle - Abilities - Lb - Available",
+    "screenId" : "battle-abilities-lb-available",
+    "points" : [ ],
+    "enabled" : false
+  }, {
     "name" : "Battle - Abilities",
     "screenId" : "battle-actions",
     "points" : [ ],

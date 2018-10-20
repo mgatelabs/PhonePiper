@@ -106,9 +106,9 @@ public class WebResource {
         final ValueResult valueResult = new ValueResult();
         try {
             runner.pressComponent(componentId, ActionType.valueOf(buttonId));
-            valueResult.setStatus("OK");
+            valueResult.setStatus("ok");
         } catch (Exception ex) {
-            valueResult.setStatus("FAIL");
+            valueResult.setStatus("error");
         }
         return valueResult;
     }
@@ -128,9 +128,9 @@ public class WebResource {
                 runner.restartShell();
             }
             valueResult.setValue(s);
-            valueResult.setStatus("OK");
+            valueResult.setStatus("ok");
         } catch (Exception ex) {
-            valueResult.setStatus("FAIL");
+            valueResult.setStatus("error");
         }
         return valueResult;
     }
@@ -144,21 +144,21 @@ public class WebResource {
         if (runner != null) {
             try {
                 runner.restartShell();
-                valueResult.setStatus("OK");
+                valueResult.setStatus("ok");
             } catch (Exception ex) {
-                valueResult.setStatus("FAIL");
+                valueResult.setStatus("error");
                 ex.printStackTrace();
             }
         } else if (editHolder != null) {
             try {
                 editHolder.restartShell();
-                valueResult.setStatus("OK");
+                valueResult.setStatus("ok");
             } catch (Exception ex) {
-                valueResult.setStatus("FAIL");
+                valueResult.setStatus("error");
                 ex.printStackTrace();
             }
         } else {
-            valueResult.setStatus("FAIL");
+            valueResult.setStatus("error");
         }
         return valueResult;
     }
@@ -179,13 +179,13 @@ public class WebResource {
                     runner.restartShell();
                 }
                 valueResult.setValue(s);
-                valueResult.setStatus("OK");
+                valueResult.setStatus("ok");
             } catch (Exception ex) {
-                valueResult.setStatus("FAIL");
+                valueResult.setStatus("error");
                 ex.printStackTrace();
             }
         } else {
-            valueResult.setStatus("FAIL");
+            valueResult.setStatus("error");
         }
         return valueResult;
     }
@@ -205,9 +205,9 @@ public class WebResource {
                 runner.restartShell();
             }
             valueResult.setValue(s);
-            valueResult.setStatus("OK");
+            valueResult.setStatus("ok");
         } catch (Exception ex) {
-            valueResult.setStatus("FAIL");
+            valueResult.setStatus("error");
             valueResult.setValue(ex.getLocalizedMessage());
             ex.printStackTrace();
         }
@@ -230,9 +230,9 @@ public class WebResource {
                 runner.restartShell();
             }
             valueResult.setValue(s);
-            valueResult.setStatus("OK");
+            valueResult.setStatus("ok");
         } catch (Exception ex) {
-            valueResult.setStatus("FAIL");
+            valueResult.setStatus("error");
             valueResult.setValue(ex.getLocalizedMessage());
             ex.printStackTrace();
         }
@@ -248,9 +248,9 @@ public class WebResource {
         try {
             String s = AdbShell.devices();
             valueResult.setValue(s);
-            valueResult.setStatus("OK");
+            valueResult.setStatus("ok");
         } catch (Exception ex) {
-            valueResult.setStatus("FAIL");
+            valueResult.setStatus("error");
             valueResult.setValue(ex.getLocalizedMessage());
             ex.printStackTrace();
         }
@@ -333,9 +333,9 @@ public class WebResource {
             } else {
                 runner.setStatus(ScriptRunner.Status.PAUSED);
             }
-            result.put("status", "true");
+            result.put("status", "ok");
         } else {
-            result.put("status", "false");
+            result.put("status", "error");
         }
 
         return result;
@@ -360,7 +360,7 @@ public class WebResource {
         frameChoices = new FrameChoices(Constants.ACTION_RUN, Constants.MODE_SCRIPT, request.getStateName(), "", request.getDevice(), views, scripts);
 
         if (frameChoices.isValid()) {
-            final PrepResult result = new PrepResult(StatusEnum.OK);
+            final PrepResult result = new PrepResult(StatusEnum.ok);
 
             editHolder = null;
 
@@ -376,7 +376,7 @@ public class WebResource {
             return result;
 
         } else {
-            return new PrepResult(StatusEnum.FAIL);
+            return new PrepResult(StatusEnum.error);
         }
     }
 
@@ -436,9 +436,9 @@ public class WebResource {
             runner.setStatus(ScriptRunner.Status.PAUSED);
             thread = null;
             runner = null;
-            result.put("status", "true");
+            result.put("status", "ok");
         } else {
-            result.put("status", "false");
+            result.put("status", "error");
         }
 
         return result;
@@ -457,9 +457,9 @@ public class WebResource {
             runner.setStatus(ScriptRunner.Status.PAUSED);
             thread = null;
             runner = null;
-            result.put("status", "true");
+            result.put("status", "ok");
         } else {
-            result.put("status", "false");
+            result.put("status", "error");
         }
 
         return result;
@@ -479,7 +479,7 @@ public class WebResource {
         frameChoices = new FrameChoices(Constants.ACTION_EDIT, Constants.MODE_VIEW, null, "", request.getDevice(), request.getViews(), request.getScripts());
 
         if (frameChoices.isValid()) {
-            final PrepResult result = new PrepResult(StatusEnum.OK);
+            final PrepResult result = new PrepResult(StatusEnum.ok);
             if (runner != null) {
                 if (runner.isRunning()) {
                     runner.setStatus(ScriptRunner.Status.PAUSED);
@@ -490,7 +490,7 @@ public class WebResource {
             deviceHelper = editHolder.getDeviceHelper();
             return result;
         } else {
-            return new PrepResult(StatusEnum.FAIL);
+            return new PrepResult(StatusEnum.error);
         }
     }
 
@@ -518,14 +518,14 @@ public class WebResource {
             EditActionInterface editActionInterface = ACTIONS.get(actionId);
             if (editActionInterface == null) {
                 result.put("msg", "Unknown Action");
-                result.put("status", "false");
+                result.put("status", "error");
             } else {
                 result.put("msg", editActionInterface.execute(id, value, editHolder));
-                result.put("status", "true");
+                result.put("status", "ok");
             }
         } else {
             result.put("msg", "Edit engine isn't running");
-            result.put("status", "false");
+            result.put("status", "error");
         }
         return result;
     }
@@ -538,9 +538,9 @@ public class WebResource {
         Map<String, String> result = Maps.newHashMap();
         if (editHolder != null) {
             editHolder = null;
-            result.put("status", "true");
+            result.put("status", "ok");
         } else {
-            result.put("status", "false");
+            result.put("status", "error");
         }
         return result;
     }
@@ -552,7 +552,7 @@ public class WebResource {
         checkInitialState();
         Loggers.consoleHandler.setLevel(Level.toLevel(level, Level.ERROR));
         Map<String, String> result = Maps.newHashMap();
-        result.put("status", "true");
+        result.put("status", "ok");
         return result;
     }
 
@@ -563,7 +563,7 @@ public class WebResource {
         checkInitialState();
         Loggers.webHandler.setLevel(Level.toLevel(level, Level.ERROR));
         Map<String, String> result = Maps.newHashMap();
-        result.put("status", "true");
+        result.put("status", "ok");
         return result;
     }
 
@@ -574,7 +574,7 @@ public class WebResource {
         checkInitialState();
         Loggers.fileHandler.setLevel(Level.toLevel(level, Level.ERROR));
         Map<String, String> result = Maps.newHashMap();
-        result.put("status", "true");
+        result.put("status", "ok");
         return result;
     }
 
@@ -587,11 +587,11 @@ public class WebResource {
         checkInitialState();
 
         if (editHolder != null) {
-            return new PrepResult(StatusEnum.OK);
+            return new PrepResult(StatusEnum.ok);
         }
 
         if (frameChoices != null) {
-            final PrepResult result = new PrepResult(StatusEnum.OK);
+            final PrepResult result = new PrepResult(StatusEnum.ok);
 
             final SortedSet<StateDefinition> stateDefinitions = new TreeSet<>(new Comparator<StateDefinition>() {
                 @Override
@@ -643,7 +643,7 @@ public class WebResource {
 
             return result;
         } else {
-            return new PrepResult(StatusEnum.FAIL);
+            return new PrepResult(StatusEnum.error);
         }
     }
 
@@ -654,7 +654,7 @@ public class WebResource {
     public PrepResult editViewInfo(@RequestBody Map<String, String> values) {
         checkInitialState();
         if (editHolder != null) {
-            PrepResult results = new PrepResult(StatusEnum.OK);
+            PrepResult results = new PrepResult(StatusEnum.ok);
 
             for (ScreenDefinition screenDefinition : editHolder.getViewDefinition().getScreens()) {
                 results.getScreens().add(new NamedValueItem(screenDefinition.getName(), screenDefinition.getScreenId()));
@@ -670,7 +670,7 @@ public class WebResource {
             return results;
 
         } else {
-            return new PrepResult(StatusEnum.FAIL);
+            return new PrepResult(StatusEnum.error);
         }
     }
 

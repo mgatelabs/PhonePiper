@@ -3,6 +3,7 @@
 /working/*.log
 /working/connection.json
 /working/selections*.json
+/working/configs/*.json
 /working/views/*recovery*
 /working/views/local*
 /working/state/*.json

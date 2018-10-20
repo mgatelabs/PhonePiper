@@ -362,7 +362,7 @@ $(function(){
           type: "GET",
           url: '/piper/process/info',
           success: function(result){
-            if (result.status == 'OK') {
+            if (result.status == 'ok') {
                 states.empty();
                 components.empty();
                 var i, valueLoop, item, grp, label, input, button, def;
@@ -432,6 +432,8 @@ $(function(){
                     variableForm.hide();
                 }
                 statusCheck();
+            } else {
+                alert(result.msg || "Error");
             }
           },
           dataType: 'json'
@@ -443,7 +445,7 @@ $(function(){
           type: "GET",
           url: '/piper/edit/view/info',
           success: function(result){
-            if (result.status == 'OK') {
+            if (result.status == 'ok') {
                 editScreens.empty();
                 editComponents.empty();
                 var i, item, grp, label, input, button;
@@ -456,6 +458,8 @@ $(function(){
                 if (firstTime) {
                     statusCheck();
                 }
+            } else {
+                alert(result.msg || "Error");
             }
           },
           dataType: 'json'
@@ -700,7 +704,7 @@ $(function(){
             'Content-Type': 'application/json'
         },
       success: function(result){
-        if (result.status == 'OK') {
+        if (result.status == 'ok') {
             loadProcessInfo(true);
             $('[href="#run"]').tab('show');
         }
@@ -719,7 +723,7 @@ editViewButton.click(function(){
             'Content-Type': 'application/json'
         },
       success: function(result){
-        if (result.status == 'OK') {
+        if (result.status == 'ok') {
             loadEditViewInfo(true);
             $('[href="#edit"]').tab('show');
         }

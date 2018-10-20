@@ -29,6 +29,7 @@ public class Constants {
     public static final Pattern ID_PATTERN = Pattern.compile("^[a-zA-Z0-9-_]+$");
     public static final String PATH_DEVICES = "./devices";
     public static final String PATH_VIEWS = "./views";
+    public static final String PATH_CONFIGS = "./configs";
     public static final String PATH_SCRIPTS = "./scripts";
 
     public static final SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
@@ -37,13 +38,13 @@ public class Constants {
         return s == null ? "" : s;
     }
 
-    public static String[] listJsonFilesIn(File dir) {
+    public static String[] listJsonFilesIn(File dir, final boolean skipIncludes) {
         List<String> itemList = Lists.newArrayList();
         itemList.add("");
         for (File f : dir.listFiles(new FilenameFilter() {
             @Override
             public boolean accept(File dir, String name) {
-                return name.endsWith(".json") && !name.startsWith("_");
+                return name.endsWith(".json") && (!skipIncludes || (!name.startsWith("_") && skipIncludes));
             }
         })) {
             itemList.add(f.getName().substring(0, f.getName().length() - 5));

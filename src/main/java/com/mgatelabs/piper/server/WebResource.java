@@ -2,6 +2,7 @@ package com.mgatelabs.piper.server;
 
 import ch.qos.logback.classic.Level;
 import ch.qos.logback.classic.spi.ILoggingEvent;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.common.base.Charsets;
 import com.google.common.collect.*;
 import com.google.common.io.Resources;
@@ -15,6 +16,7 @@ import com.mgatelabs.piper.shared.helper.DeviceHelper;
 import com.mgatelabs.piper.shared.image.ImageWrapper;
 import com.mgatelabs.piper.shared.util.AdbShell;
 import com.mgatelabs.piper.shared.util.AdbUtils;
+import com.mgatelabs.piper.shared.util.JsonTool;
 import com.mgatelabs.piper.shared.util.Loggers;
 import com.mgatelabs.piper.ui.FrameChoices;
 import com.mgatelabs.piper.ui.utils.Constants;
@@ -679,10 +681,104 @@ public class WebResource {
         checkInitialState();
 
         Map<String, List<String>> values = Maps.newHashMap();
-        values.put("devices", Constants.arrayToList(Constants.listJsonFilesIn(new File(Runner.WORKING_DIRECTORY, Constants.PATH_DEVICES))));
+        values.put("devices", Constants.arrayToList(Constants.listJsonFilesIn(new File(Runner.WORKING_DIRECTORY, Constants.PATH_DEVICES), true)));
         values.put("views", Constants.arrayToList(Constants.listFoldersFilesIn(new File(Runner.WORKING_DIRECTORY, Constants.PATH_VIEWS))));
-        values.put("scripts", Constants.arrayToList(Constants.listJsonFilesIn(new File(Runner.WORKING_DIRECTORY, Constants.PATH_SCRIPTS))));
+        values.put("scripts", Constants.arrayToList(Constants.listJsonFilesIn(new File(Runner.WORKING_DIRECTORY, Constants.PATH_SCRIPTS), true)));
         return values;
+    }
+
+    @GET
+    @Path("/files/list")
+    public FileListResult listFiles() {
+        final FileListResult result = new FileListResult();
+        final List<String> views = Constants.arrayToList(Constants.listFoldersFilesIn(new File(Runner.WORKING_DIRECTORY, Constants.PATH_VIEWS)));
+        final List<String> scripts = Constants.arrayToList(Constants.listJsonFilesIn(new File(Runner.WORKING_DIRECTORY, Constants.PATH_SCRIPTS), false));
+        result.getViews().addAll(views);
+        result.getScripts().addAll(scripts);
+        return result;
+    }
+
+    @GET
+    @Path("/configs")
+    public ConfigListResponse listConfigs() {
+        final File configPath = new File(Runner.WORKING_DIRECTORY, Constants.PATH_CONFIGS);
+        final ObjectMapper objectMapper = JsonTool.getInstance();
+        final List<LoadRequest> result = Lists.newArrayList();
+        final List<String> configNames = Constants.arrayToList(Constants.listJsonFilesIn(configPath, false));
+
+        for (String configName: configNames) {
+            if (StringUtils.isBlank(configName)) continue;
+            File configFile = new File(configPath, configName + ".json");
+            try {
+                LoadRequest loadRequest = objectMapper.readValue(configFile, LoadRequest.class);
+                result.add(loadRequest);
+            } catch (Exception ex) {
+                logger.error(configName + ": " + ex.getMessage());
+            }
+        }
+        result.sort(new Comparator<LoadRequest>() {
+            @Override
+            public int compare(LoadRequest o1, LoadRequest o2) {
+                return o1.getTitle().compareTo(o2.getTitle());
+            }
+        });
+        return new ConfigListResponse(result);
+    }
+
+    @POST
+    @Path("/configs")
+    public Map<String, String> saveConfigs(@RequestBody LoadRequest request) {
+        final File configPath = new File(Runner.WORKING_DIRECTORY, Constants.PATH_CONFIGS);
+        if (StringUtils.isBlank(request.getStateName())) {
+            return errorResponse("StateName was blank, save canceled");
+        }
+        if (!Constants.ID_PATTERN.matcher(request.getStateName()).matches()) {
+            return errorResponse("StateName was not formatted correctly, save canceled");
+        }
+        final ObjectMapper objectMapper = JsonTool.getInstance();
+        final File configFile = new File(configPath, request.getStateName() + ".json");
+        try {
+            objectMapper.writeValue(configFile, request);
+            return okResponse("File saved");
+        } catch (Exception ex) {
+            logger.error("Save Failed: " + ex.getMessage());
+            return errorResponse(ex.getMessage());
+        }
+    }
+
+    @DELETE
+    @Path("/configs/{stateName}")
+    public Map<String, String> saveConfigs(@PathParam("stateName") String stateName) {
+        final File configPath = new File(Runner.WORKING_DIRECTORY, Constants.PATH_CONFIGS);
+        if (StringUtils.isBlank(stateName)) {
+            return errorResponse("StateName was blank, delete canceled");
+        }
+        if (!Constants.ID_PATTERN.matcher(stateName).matches()) {
+            return errorResponse("StateName was not formatted correctly, delete canceled");
+        }
+        final File configFile = new File(configPath, stateName + ".json");
+        try {
+            if (configFile.exists()) {
+                if (configFile.delete()) {
+                    return okResponse("File deleted");
+                } else {
+                    return errorResponse("Could not delete file");
+                }
+            } else {
+                return errorResponse("File not found");
+            }
+        } catch (Exception ex) {
+            logger.error("Delete Failed: " + ex.getMessage());
+            return errorResponse(ex.getMessage());
+        }
+    }
+
+    private Map<String, String> errorResponse(String msg) {
+        return ImmutableMap.of("status", "error", "msg", msg);
+    }
+
+    private Map<String, String> okResponse(String msg) {
+        return ImmutableMap.of("status", "ok", "msg", msg);
     }
 
     @GET

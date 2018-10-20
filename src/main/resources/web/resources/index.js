@@ -320,9 +320,7 @@ $(function(){
                 applySelection(configs[index]);
                 loadButton.click();
             } else if (ref.hasClass('delete-config')) {
-                configs.splice(index, 1);
-                localStorage.setItem("CONFIGURATIONS", JSON.stringify(configs));
-                buildConfigs();
+                deleteConfigurations(configs[index]);
             } else if (ref.hasClass('modify-config')) {
                 applySelection(configs[index]);
                 $('[href="#config"]').tab('show');
@@ -601,23 +599,22 @@ $(function(){
             return;
         }
 
-        var i = 0, found = false;
-        for (i = 0; i < configs.length; i++) {
-            if (configs[i].title == data.title) {
-                found = true;
-                break;
-            }
-        }
-
-        if (found) {
-            configs.splice(i, 1, data);
-        } else  {
-            configs.push(data);
-        }
-
-        localStorage.setItem("CONFIGURATIONS", JSON.stringify(configs));
-
-        buildConfigs();
+        $.ajax({
+          type: "POST",
+          url: '/piper/configs',
+          data: JSON.stringify(data),
+          headers: {
+                'Content-Type': 'application/json'
+            },
+          success: function(result){
+                if (result.status == 'ok') {
+                    loadConfigurations();
+                } else {
+                    alert(result.msg || "Error");
+                }
+          },
+          dataType: 'json'
+        });
     }
 
     function applySelection(j) {
@@ -761,17 +758,35 @@ editViewButton.click(function(){
     }
 
     function loadConfigurations() {
-        var configData = localStorage.getItem("CONFIGURATIONS");
-        if (configData) {
-            configData = JSON.parse(configData);
-            configs = [];
-            var i;
-            for (i = 0; i < configData.length; i++) {
-                configs.push(configData[i]);
+        $.ajax({
+          type: "GET",
+          url: '/piper/configs',
+          success: function(result){
+            if (result.status == 'ok') {
+                configs = result.configs;
+                buildConfigs();
+            } else {
+                alert(result.msg || "Error");
             }
-            buildConfigs();
-        }
+          },
+          dataType: 'json'
+        });
     }
+
+    function deleteConfigurations(config) {
+            $.ajax({
+              type: "DELETE",
+              url: '/piper/configs/' + config.stateName,
+              success: function(result){
+                if (result.status == 'ok') {
+                    loadConfigurations();
+                } else {
+                    alert(result.msg || "Error");
+                }
+              },
+              dataType: 'json'
+            });
+        }
 
     $('#new-config').click(function(){
         resetConfigPage();

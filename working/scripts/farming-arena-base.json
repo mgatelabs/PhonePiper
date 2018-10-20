@@ -17,7 +17,7 @@
     //   B. "_arena-battle-fight-abilities"
     //   C. "_arena-battle-fight-lb"
     //   D. "_arena-battle-fight-cleanup"
-    // 3. Load the scripts so your override is after template-farming-arena.json
+    // 3. Load the scripts so your override is after farming-arena-base.json
     //
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 

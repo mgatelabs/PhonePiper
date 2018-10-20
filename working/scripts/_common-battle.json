@@ -370,7 +370,7 @@
             },
             {
               "type": "WAIT",
-              "value": "500"
+              "value": "750"
             },
             {
               "type": "RETURN"

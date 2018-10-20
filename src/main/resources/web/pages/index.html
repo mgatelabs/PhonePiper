@@ -73,7 +73,7 @@
                     <a class="nav-link" id="device-tab" data-toggle="tab" href="#device" role="tab" aria-controls="device" aria-selected="false">Settings</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" id="console-tab" data-toggle="tab" href="#console" role="tab" aria-controls="console" aria-selected="false">Console</a>
+                    <a class="nav-link" id="console-tab" data-toggle="tab" href="#console" role="tab" aria-controls="console" aria-selected="false">Logging</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" id="about-tab" data-toggle="tab" href="#about" role="tab" aria-controls="console" aria-selected="false">About</a>
@@ -334,48 +334,6 @@
 
             <form id="player-form" class="col-sm-12">
 
-                <h3>Logging</h3>
-
-                <div class="input-group">
-                    <div class="input-group-prepend">
-                        <span class="input-group-text">Console</span>
-                    </div>
-                    <select id="consoleLogging" class="form-control logging" mode="console">
-                        <option value="ERROR">Error</option>
-                        <option value="INFO" selected>Info</option>
-                        <option value="DEBUG">Debug</option>
-                        <option value="TRACE">Trace</option>
-                        <option value="OFF">Off</option>
-                    </select>
-                </div>
-                <br/>
-                <div class="input-group">
-                    <div class="input-group-prepend">
-                        <span class="input-group-text">Web</span>
-                    </div>
-                    <select id="webLogging" class="form-control logging" mode="web">
-                        <option value="ERROR">Error</option>
-                        <option value="INFO" selected>Info</option>
-                        <option value="DEBUG">Debug</option>
-                        <option value="TRACE">Trace</option>
-                        <option value="OFF">Off</option>
-                    </select>
-                </div>
-                <br/>
-                <div class="input-group">
-                    <div class="input-group-prepend">
-                        <span class="input-group-text">File</span>
-                    </div>
-                    <select id="fileLogging" class="form-control logging" mode="file">
-                        <option value="ERROR">Error</option>
-                        <option value="INFO" selected>Info</option>
-                        <option value="DEBUG">Debug</option>
-                        <option value="TRACE">Trace</option>
-                        <option value="OFF">Off</option>
-                    </select>
-                </div>
-                <br/>
-
                 <h3>ADB</h3>
 
                 <div class="input-group">
@@ -465,6 +423,55 @@
 
         </div>
         <div class="tab-pane fade" id="console" role="tabpanel" aria-labelledby="console-tab">
+
+            <div class="container-fluid">
+
+                <div class="row">
+                    <div class="col-md-4">
+                        <div class="input-group">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text">Console</span>
+                            </div>
+                            <select id="consoleLogging" class="form-control logging" mode="console">
+                                <option value="ERROR">Error</option>
+                                <option value="INFO" selected>Info</option>
+                                <option value="DEBUG">Debug</option>
+                                <option value="TRACE">Trace</option>
+                                <option value="OFF">Off</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="input-group">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text">Web</span>
+                            </div>
+                            <select id="webLogging" class="form-control logging" mode="web">
+                                <option value="ERROR">Error</option>
+                                <option value="INFO" selected>Info</option>
+                                <option value="DEBUG">Debug</option>
+                                <option value="TRACE">Trace</option>
+                                <option value="OFF">Off</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="input-group">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text">File</span>
+                            </div>
+                            <select id="fileLogging" class="form-control logging" mode="file">
+                                <option value="ERROR">Error</option>
+                                <option value="INFO" selected>Info</option>
+                                <option value="DEBUG">Debug</option>
+                                <option value="TRACE">Trace</option>
+                                <option value="OFF">Off</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
             <div id="logs" class="container-fluid"></div>
         </div>
         <div class="tab-pane fade" id="about" role="tabpanel" aria-labelledby="about-tab">

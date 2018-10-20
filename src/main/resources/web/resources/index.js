@@ -372,6 +372,7 @@ $(function(){
                 for (i = 0; i < result.components.length; i++) {
                 components.append($('<option></option>').attr('value', result.components[i].value).text(result.components[i].name));
                 }
+                $('#consoleLogging').val(result.consoleLevel);
                 $('#webLogging').val(result.webLevel);
                 $('#fileLogging').val(result.fileLevel);
                 variableContainer.empty();

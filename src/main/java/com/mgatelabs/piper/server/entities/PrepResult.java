@@ -16,6 +16,7 @@ public class PrepResult {
     private StatusEnum status;
     private String webLevel;
     private String fileLevel;
+    private String consoleLevel;
 
     private List<NamedValueDescriptionItem> states;
     private List<NamedValueItem> components;
@@ -46,6 +47,14 @@ public class PrepResult {
 
     public void setFileLevel(String fileLevel) {
         this.fileLevel = fileLevel;
+    }
+
+    public String getConsoleLevel() {
+        return consoleLevel;
+    }
+
+    public void setConsoleLevel(String consoleLevel) {
+        this.consoleLevel = consoleLevel;
     }
 
     public void setStatus(StatusEnum status) {

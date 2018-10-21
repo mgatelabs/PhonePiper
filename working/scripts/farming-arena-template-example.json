@@ -40,7 +40,144 @@
       },
       "statements": [
 
-        // If everyone is alive she will always do Elysium
+        // If she has HER lb, use it
+        {
+          "condition": {
+            "is": "CALL",
+            "value": "@isBattleReady",
+            "and": [
+              { "is": "EQUAL", "value": "0", "var":"segment"},
+              { "is": "CALL", "value": "@isUnitReady", "args": {"index": "3"} },
+              { "is": "CALL", "value": "@isUnitLbReady", "args": {"index": "3"} },
+              { "not": "CALL", "value": "@isUnitLbSelected", "args": {"index": "3"} }
+            ]
+          },
+          "actions": [
+            {
+              "condition": {
+                "not": "CALL",
+                "value": "@readyUnitLbSafely",
+                "args": {
+                  "index": "3"
+                }
+              },
+              "type": "CONTINUE"
+            },
+            {
+              "type": "INFO",
+              "value": "Ayaka Has Her LB, what sort of world are we living in?  Pressing the button (TM)"
+            },
+            {
+              "type": "SET",
+              "var": "segment",
+              "value": "1"
+            },
+            // Tap to choose herself
+            {
+              "type": "CALL",
+              "value": "@tapUnit",
+              "args": {
+                "index": "3"
+              }
+            },
+            {
+              "type": "WAIT",
+              "value": "200"
+            },
+            // tap to activate
+            {
+              "type": "CALL",
+              "value": "@tapUnit",
+              "args": {
+                "index": "3"
+              }
+            },
+            {
+              "type": "WAIT",
+              "value": "2000"
+            },
+            {
+              "type": "REPEAT",
+              "value": ""
+            }
+          ]
+        },
+
+        // Are we having MP issues?
+        {
+          "condition": {
+            "is": "CALL",
+            "value": "@isBattleReady",
+            "and": [
+              { "is": "EQUAL", "value": "0", "var":"segment"},
+              { "is": "CALL", "value": "@isUnitReady", "args": {"index": "3"} },
+              { "is": "CALL", "value": "@unitHasMp", "args": {"index": "3", "percent" : "25"} },
+              { "is": "EQUAL", "value": "4", "var":"availableUnits"},
+              { "is": "LESS", "value": "4", "var":"availableMpUnits"},
+              { "is": "CALL", "value": "@unitHasMp", "args": {"index": "3", "percent" : "25"} }
+            ]
+          },
+          "actions": [
+            {
+              "type": "INFO",
+              "value": "Ayaka Needs to Heal and Recover MP"
+            },
+            {
+              "type": "SET",
+              "var": "segment",
+              "value": "1"
+            },
+            {
+              "type": "CALL",
+              "value": "@showUnitActions",
+              "args": {
+                "index": "3"
+              }
+            },
+            {
+              "type": "CALL",
+              "value": "@selectUnitAction",
+              "args": {
+                "row": "7",
+                "column": "1"
+              }
+            },
+            {
+              "type": "WAIT",
+              "value": "400"
+            },
+            // tap someone else, #2 is rain, they never die
+            {
+              "type": "CALL",
+              "value": "@tapUnit",
+              "args": {
+                "index": "2"
+              }
+            },
+            {
+              "type": "WAIT",
+              "value": "400"
+            },
+            // tap to activate
+            {
+              "type": "CALL",
+              "value": "@tapUnit",
+              "args": {
+                "index": "3"
+              }
+            },
+            {
+              "type": "WAIT",
+              "value": "400"
+            },
+            {
+              "type": "REPEAT",
+              "value": ""
+            }
+          ]
+        },
+
+        // If everyone is alive she will always do Elysium to heal and add a barrior
         {
           "condition": {
             "is": "CALL",
@@ -117,145 +254,7 @@
           ]
         },
 
-        // Are we having MP issues?
-        {
-          "condition": {
-            "is": "CALL",
-            "value": "@isBattleReady",
-            "and": [
-              { "is": "EQUAL", "value": "0", "var":"segment"},
-              { "is": "CALL", "value": "@isUnitReady", "args": {"index": "3"} },
-              { "is": "CALL", "value": "@unitHasMp", "args": {"index": "3", "percent" : "25"} },
-              { "is": "EQUAL", "value": "0", "var":"elysium"},
-              { "is": "EQUAL", "value": "4", "var":"availableUnits"},
-              { "is": "LESS", "value": "4", "var":"availableMpUnits"},
-              { "is": "CALL", "value": "@unitHasMp", "args": {"index": "3", "percent" : "25"} }
-            ]
-          },
-          "actions": [
-            {
-              "type": "INFO",
-              "value": "Ayaka Needs to Heal and Recover MP"
-            },
-            {
-              "type": "SET",
-              "var": "segment",
-              "value": "1"
-            },
-            {
-              "type": "CALL",
-              "value": "@showUnitActions",
-              "args": {
-                "index": "3"
-              }
-            },
-            {
-              "type": "CALL",
-              "value": "@selectUnitAction",
-              "args": {
-                "row": "7",
-                "column": "1"
-              }
-            },
-            {
-              "type": "WAIT",
-              "value": "400"
-            },
-            // tap someone else, #2 is rain, they never die
-            {
-              "type": "CALL",
-              "value": "@tapUnit",
-              "args": {
-                "index": "2"
-              }
-            },
-            {
-              "type": "WAIT",
-              "value": "400"
-            },
-            // tap to activate
-            {
-              "type": "CALL",
-              "value": "@tapUnit",
-              "args": {
-                "index": "3"
-              }
-            },
-            {
-              "type": "WAIT",
-              "value": "400"
-            },
-            {
-              "type": "REPEAT",
-              "value": ""
-            }
-          ]
-        },
-
-        // If she has HER lb, use it
-        {
-          "condition": {
-            "is": "CALL",
-            "value": "@isBattleReady",
-            "and": [
-              { "is": "EQUAL", "value": "0", "var":"segment"},
-              { "is": "CALL", "value": "@isUnitReady", "args": {"index": "3"} },
-              { "is": "CALL", "value": "@isUnitLbReady", "args": {"index": "3"} },
-              { "not": "CALL", "value": "@isUnitLbSelected", "args": {"index": "3"} }
-            ]
-          },
-          "actions": [
-            {
-              "condition": {
-                "not": "CALL",
-                "value": "@readyUnitLbSafely",
-                "args": {
-                  "index": "3"
-                }
-              },
-              "type": "CONTINUE"
-            },
-            {
-              "type": "INFO",
-              "value": "Ayaka Has Her LB, what sort of world are we living in?  Pressing the button (TM)"
-            },
-            {
-              "type": "SET",
-              "var": "segment",
-              "value": "1"
-            },
-            // Tap to choose herself
-            {
-              "type": "CALL",
-              "value": "@tapUnit",
-              "args": {
-                "index": "3"
-              }
-            },
-            {
-              "type": "WAIT",
-              "value": "200"
-            },
-            // tap to activate
-            {
-              "type": "CALL",
-              "value": "@tapUnit",
-              "args": {
-                "index": "3"
-              }
-            },
-            {
-              "type": "WAIT",
-              "value": "2000"
-            },
-            {
-              "type": "REPEAT",
-              "value": ""
-            }
-          ]
-        },
-
-        // We have 4 alive units, but someone is not able to move, let's clense the slate clean
+        // We have 4 alive units, but someone is not able to move, let's cleanse the slate clean
         {
           "condition": {
             "is": "CALL",

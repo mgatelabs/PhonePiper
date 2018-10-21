@@ -371,6 +371,19 @@
         {"name": "Yes", "value": "1"}
       ]
     }, {
+      "name" : "arena-rule-death",
+      "display" : "Allow Death",
+      "value" : "1",
+      "type" : "INT",
+      "modify" : "EDITABLE",
+      "displayType" : "STANDARD",
+      "order" : 10,
+      "tierId": "arena-rules",
+      "values": [
+        {"name": "No", "value": "0"},
+        {"name": "Yes", "value": "1"}
+      ]
+    }, {
       "name" : "arena-rule-light",
       "display" : "Allow Light",
       "value" : "1",

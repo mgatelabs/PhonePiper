@@ -480,7 +480,15 @@
               }
             },
             {
+              "type": "FINER",
+              "value": "Refreshing Screen"
+            },
+            {
               "type": "REFRESH"
+            },
+            {
+              "type": "FINER",
+              "value": "Checking screen"
             },
             {
               "condition":{

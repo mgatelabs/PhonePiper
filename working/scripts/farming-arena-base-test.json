@@ -1,0 +1,39 @@
+//@formatter:off
+{
+  "vars": [],
+  "imports": [
+
+  ],
+  "states": {
+
+    "arena-battle-test-lb": {
+      "name": "Arena - Battle - (Test LB)",
+      "includes": [
+        "_arena-battle-fight",
+        "_common-no_op"
+      ],
+      "statements": [
+        {
+          "condition": {
+            "is": "SCREEN",
+            "value": "game-battle-repeat"
+          },
+          "actions": [
+            {
+              "type": "INFO",
+              "value": "Moving to Fight"
+            },
+            {
+              "type": "MOVE",
+              "value": "arena-battle-fight",
+              "args": {
+                "segment": "3"
+              }
+            }
+          ]
+        }
+      ]
+    }
+
+  }
+}

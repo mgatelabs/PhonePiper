@@ -161,17 +161,19 @@
               "type": "WAIT",
               "value": "400"
             },
+            // tap someone else, #2 is rain, they never die
             {
               "type": "CALL",
               "value": "@tapUnit",
               "args": {
-                "index": "4"
+                "index": "2"
               }
             },
             {
               "type": "WAIT",
               "value": "400"
             },
+            // tap to activate
             {
               "type": "CALL",
               "value": "@tapUnit",
@@ -222,6 +224,7 @@
               "var": "segment",
               "value": "1"
             },
+            // Tap to choose herself
             {
               "type": "CALL",
               "value": "@tapUnit",
@@ -233,6 +236,7 @@
               "type": "WAIT",
               "value": "200"
             },
+            // tap to activate
             {
               "type": "CALL",
               "value": "@tapUnit",

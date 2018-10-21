@@ -635,10 +635,13 @@ public class ScriptRunner {
                     stateTracker.setActionIndex(actionIndex++);
                     // Skip actions not allowed for the current state mode
                     if (callType == StateCallType.CALL && !actionDefinition.getType().isAllowedForCall()) {
+                        logger.trace("Action " + actionDefinition.getType() + " has been skipped");
                         continue;
                     } else if (callType == StateCallType.STATE && !actionDefinition.getType().isAllowedForState()) {
+                        logger.trace("Action " + actionDefinition.getType() + " has been skipped");
                         continue;
                     } else if (callType == StateCallType.CONDITION && !actionDefinition.getType().isAllowedForCondition()) {
+                        logger.trace("Action " + actionDefinition.getType() + " has been skipped");
                         continue;
                     }
 

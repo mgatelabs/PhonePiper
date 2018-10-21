@@ -4,16 +4,16 @@ package com.mgatelabs.piper.shared.details;
  * Created by @mgatelabs (Michael Fuller) on 9/3/2017 for Phone-Piper
  */
 public enum ActionType {
-    TAP(ActionValueType.COMPONENT_ID, false, true, true, false), // Screen Tap
-    BATCH(ActionValueType.START_STOP, false, true, true, false), // Screen Tap
-    SWIPE_UP(ActionValueType.COMPONENT_ID, false, true, true, false), // Swipe
-    SLOW_UP(ActionValueType.COMPONENT_ID, false, true, true, false), // Swipe
-    SWIPE_RIGHT(ActionValueType.COMPONENT_ID, false, true, true, false), // Swipe
-    SWIPE_DOWN(ActionValueType.COMPONENT_ID, false, true, true, false), // Swipe
-    SLOW_DOWN(ActionValueType.COMPONENT_ID, false, true, true, false), // Swipe
-    SLOW_RIGHT(ActionValueType.COMPONENT_ID, false, true, true, false), // Swipe
-    SLOW_LEFT(ActionValueType.COMPONENT_ID, false, true, true, false), // Swipe
-    SWIPE_LEFT(ActionValueType.COMPONENT_ID, false, true, true, false), // Swipe
+    TAP(ActionValueType.COMPONENT_ID, false, true, true, true), // Screen Tap
+    BATCH(ActionValueType.START_STOP, false, true, true, true), // Screen Tap
+    SWIPE_UP(ActionValueType.COMPONENT_ID, false, true, true, true), // Swipe
+    SLOW_UP(ActionValueType.COMPONENT_ID, false, true, true, true), // Swipe
+    SWIPE_RIGHT(ActionValueType.COMPONENT_ID, false, true, true, true), // Swipe
+    SWIPE_DOWN(ActionValueType.COMPONENT_ID, false, true, true, true), // Swipe
+    SLOW_DOWN(ActionValueType.COMPONENT_ID, false, true, true, true), // Swipe
+    SLOW_RIGHT(ActionValueType.COMPONENT_ID, false, true, true, true), // Swipe
+    SLOW_LEFT(ActionValueType.COMPONENT_ID, false, true, true, true), // Swipe
+    SWIPE_LEFT(ActionValueType.COMPONENT_ID, false, true, true, true), // Swipe
     COMPONENT(ActionValueType.COMPONENT_ID, false, true, true, true), // Swipe
     PIXEL(ActionValueType.NONE, false, true, true, true), // Swipe
     REPEAT(ActionValueType.NONE, false, true, false, false),

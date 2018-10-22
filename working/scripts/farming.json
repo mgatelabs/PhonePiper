@@ -170,7 +170,10 @@
         {"name": "30-35 Minutes", "value": "6"},
         {"name": "40-45 Minutes", "value": "7"},
         {"name": "50-55 Minutes", "value": "8"},
-        {"name": "55-60 Minutes", "value": "9"}
+        {"name": "55-60 Minutes", "value": "9"},
+        {"name": "1:55-2:00", "value": "23"},
+        {"name": "2:55-3:00", "value": "35"},
+        {"name": "3:55-4:00", "value": "47"}
       ]
     },
     {

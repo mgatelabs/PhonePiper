@@ -540,11 +540,22 @@
         "_farm-to_results",
         "_farm-to_menu",
         "_farm-to_battle",
-        "_any_router_to_farm",
-        "_any_router_to_raid",
-        "_any_router_to_arena",
         "_home_daily_fixes",
         "_common-no_op"
+      ],
+      "statements": [
+        {
+          "condition": {
+            "is": "SCREEN",
+            "value": "menu-home"
+          },
+          "actions": [
+            {
+              "type": "MOVE",
+              "value": "any_to_home"
+            }
+          ]
+        }
       ]
     },
     "farm-menu": {
@@ -1885,7 +1896,17 @@
           "value": "FARM",
           "type": "STRING"
         }
-      }
+      },
+      "statements":[
+        {
+          "actions": [
+            {
+              "type": "FINER",
+              "value": "Looking for logic for ${toState}"
+            }
+          ]
+        }
+      ]
     },
 
     "_any_router_to_raid": {

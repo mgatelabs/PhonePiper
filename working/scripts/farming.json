@@ -152,6 +152,26 @@
         {"name": "Three (Usually Adv)", "value": "2"}
       ],
       "description": "Which raid menu item do you want to farm?"
+    }, {
+      "name" : "extra_delay_minutes",
+      "display" : "Extra Delay",
+      "value" : "0",
+      "type" : "INT",
+      "modify" : "EDITABLE",
+      "displayType" : "STANDARD",
+      "order" : 20,
+      "values": [
+        {"name": "1-5 Minutes", "value": "0"},
+        {"name": "5-10 Minutes", "value": "1"},
+        {"name": "10-15 Minutes", "value": "2"},
+        {"name": "15-20 Minutes", "value": "3"},
+        {"name": "20-25 Minutes", "value": "4"},
+        {"name": "25-30 Minutes", "value": "5"},
+        {"name": "30-35 Minutes", "value": "6"},
+        {"name": "40-45 Minutes", "value": "7"},
+        {"name": "50-55 Minutes", "value": "8"},
+        {"name": "55-60 Minutes", "value": "9"}
+      ]
     },
     {
       "name": "allow-raid",
@@ -1982,8 +2002,8 @@
           "type": "STRING"
         },
         "extraDelay": {
-          "value": "INT",
-          "type": "0"
+          "type": "INT",
+          "value": "0"
         }
       },
       "statements": [
@@ -2009,18 +2029,22 @@
               "type": "RANDOM",
               "var": "extraDelay",
               "args": {
-                "min": "5000",
-                "max": "25000"
+                "min": "5",
+                "max": "300"
               }
+            },
+            {
+              "type": "MATH",
+              "value": "(((${extra_delay_minutes}*5)*60)+${extraDelay})*1000",
+              "var": "extraDelay"
             },
             {
               "type": "INFO",
               "value": "Extra time based delay for ${extraDelay}ms."
             },
             {
-              "type": "WAIT",
-              "value": "${extraDelay}"
-            },
+              "type": "WAIT", "value": "${extraDelay}" },
+            { "type": "CALL", "value": "@keepAlive" },
             {
               "type": "SET",
               "value": "0",

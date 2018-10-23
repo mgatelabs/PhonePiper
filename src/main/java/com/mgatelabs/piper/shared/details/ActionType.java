@@ -15,6 +15,8 @@ public enum ActionType {
     SLOW_LEFT(ActionValueType.COMPONENT_ID, false, true, true, true), // Swipe
     SWIPE_LEFT(ActionValueType.COMPONENT_ID, false, true, true, true), // Swipe
     COMPONENT(ActionValueType.COMPONENT_ID, false, true, true, true), // Swipe
+    DATE(ActionValueType.NONE, false, true, true, true), // Swipe
+    TIME(ActionValueType.NONE, false, true, true, true), // Swipe
     PIXEL(ActionValueType.NONE, false, true, true, true), // Swipe
     REPEAT(ActionValueType.NONE, false, true, false, false),
     RETURN(ActionValueType.NONE, false, false, true, true),

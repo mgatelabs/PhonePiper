@@ -2032,10 +2032,6 @@
         "toState": {
           "value": "EXTRA",
           "type": "STRING"
-        },
-        "extraDelay": {
-          "type": "INT",
-          "value": "0"
         }
       },
       "statements": [
@@ -2052,35 +2048,9 @@
             ]
           },
           "actions": [
-                        {
-              "type": "SET",
-              "var": "setup",
-              "value": "0"
-            },
             {
-              "type": "RANDOM",
-              "var": "extraDelay",
-              "args": {
-                "min": "5",
-                "max": "300"
-              }
-            },
-            {
-              "type": "MATH",
-              "value": "(((${extra_delay_minutes}*5)*60)+${extraDelay})*1000",
-              "var": "extraDelay"
-            },
-            {
-              "type": "INFO",
-              "value": "Extra time based delay for ${extraDelay}ms."
-            },
-            {
-              "type": "WAIT", "value": "${extraDelay}" },
-            { "type": "CALL", "value": "@keepAlive" },
-            {
-              "type": "SET",
-              "value": "0",
-              "var": "_screen_saver"
+              "type": "MOVE",
+              "value": "extra"
             },
             {
               "type": "SET",
@@ -2094,6 +2064,7 @@
         }
       ]
     },
+
     "_any_router_to_farm": {
       "name": "Any - Home Can Goto Farm Screen?",
       "variables": {
@@ -2196,6 +2167,58 @@
             {
               "type": "REPEAT",
               "value": ""
+            }
+          ]
+        }
+      ]
+    },
+    "extra": {
+      "name": "Extra (Wait)",
+      "variables": {
+        "extraDelay": {
+          "type": "INT",
+          "value": "0"
+        }
+      },
+      "statements": [
+        {
+          "actions": [
+            {
+              "type": "SET",
+              "var": "setup",
+              "value": "0"
+            },
+            {
+              "type": "RANDOM",
+              "var": "extraDelay",
+              "args": {
+                "min": "5",
+                "max": "300"
+              }
+            },
+            {
+              "type": "MATH",
+              "value": "(((${extra_delay_minutes}*5)*60)+${extraDelay})*1000",
+              "var": "extraDelay"
+            },
+            {
+              "type": "INFO",
+              "value": "Extra time based delay for ${extraDelay}ms."
+            },
+            {
+              "type": "WAIT", "value": "${extraDelay}" },
+            { "type": "CALL", "value": "@keepAlive" },
+            {
+              "type": "SET",
+              "value": "0",
+              "var": "_screen_saver"
+            },
+            {
+              "type": "MOVE",
+              "value": "any_to_home",
+              "args": {
+                "toState": "FARM"
+              }
             }
           ]
         }

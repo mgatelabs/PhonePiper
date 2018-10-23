@@ -701,6 +701,30 @@ public class ScriptRunner {
                                 }
                             }
                             break;
+                            case DATE: {
+                                Calendar c = Calendar.getInstance();
+                                if (actionDefinition.getArguments().containsKey("y")) {
+                                    putVar(actionDefinition.getArguments().get("y"), new IntVar( c.get(Calendar.YEAR) ));
+                                }
+                                if (actionDefinition.getArguments().containsKey("m")) {
+                                    putVar(actionDefinition.getArguments().get("m"), new IntVar( c.get(Calendar.MONTH) + 1));
+                                }
+                                if (actionDefinition.getArguments().containsKey("d")) {
+                                    putVar(actionDefinition.getArguments().get("d"), new IntVar( c.get(Calendar.DATE) ));
+                                }
+                            } break;
+                            case TIME: {
+                                Calendar c = Calendar.getInstance();
+                                if (actionDefinition.getArguments().containsKey("h")) {
+                                    putVar(actionDefinition.getArguments().get("h"), new IntVar( c.get(Calendar.HOUR_OF_DAY) ));
+                                }
+                                if (actionDefinition.getArguments().containsKey("m")) {
+                                    putVar(actionDefinition.getArguments().get("m"), new IntVar( c.get(Calendar.MINUTE) + 1));
+                                }
+                                if (actionDefinition.getArguments().containsKey("s")) {
+                                    putVar(actionDefinition.getArguments().get("s"), new IntVar( c.get(Calendar.SECOND) ));
+                                }
+                            } break;
                             case COMPONENT: {
                                 ComponentDefinition componentDefinition = components.get(replaceTokens(actionDefinition.getValue()));
                                 if (componentDefinition == null) {

@@ -798,13 +798,21 @@
         }
       ]
     },
+    // Leave this alone, override "_farm-battle" instead
     "farm-battle": {
       "name": "Farm - Battle",
       "includes": [
-        "_common_battle-three_attack",
+        "_farm-battle",
         "_common-screen_saver",
         "_es-from_battle_to_results",
         "_common-no_op"
+      ]
+    },
+    // Override this state
+    "_farm-battle": {
+      "name": "Farm - Battle",
+      "includes": [
+        "_common_battle-three_attack"
       ]
     },
     "_es-from_battle_to_results": {

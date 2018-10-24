@@ -2,44 +2,10 @@
   "vars": [],
   "imports": [],
   "states": {
-    "_farm-find_depart_team": {
-      "name": "Farm - Find Depart Team",
-      "statements": [
-        {
-          "condition": {
-            "is": "SCREEN",
-            "value": "menu-depart",
-            "and": [
-              {
-                "not": "SCREEN",
-                "value": "menu-depart-team_1"
-              }
-            ]
-          },
-          "actions": [
-            {
-              "type": "SWIPE_RIGHT",
-              "value": "menu-depart-units"
-            },
-            {
-              "type": "WAIT",
-              "value": "6000"
-            },
-            {
-              "type": "REPEAT",
-              "value": ""
-            }
-          ]
-        }
-      ]
-    },
-    "farm-battle": {
+    "_farm-battle": {
       "name": "Farm - Battle - Auto (Override)",
       "includes": [
-        "_common_battle-repeat",
-        "_common-screen_saver",
-        "_es-from_battle_to_results",
-        "_common-no_op"
+        "_common_battle-auto"
       ]
     }
   }

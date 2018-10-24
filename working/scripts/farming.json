@@ -161,6 +161,7 @@
       "displayType" : "STANDARD",
       "order" : 20,
       "values": [
+        {"name": "Skip", "value": "-1"},
         {"name": "1-5 Minutes", "value": "0"},
         {"name": "5-10 Minutes", "value": "1"},
         {"name": "10-15 Minutes", "value": "2"},
@@ -565,13 +566,12 @@
       "name": "Farm - Menu",
       "includes": [
         "_common-screen_saver",
-        "_common-ml-goals",
-        "_common-ml-friend_0",
-        "_common-ml-friend_none",
         "_common-ml-mission",
-        "_farm-find_depart_team",
-        "_common-ml-depart",
-        "_farm-menu",
+        "_common-ml-goals",
+        "_farm-menu-friends",
+        "_farm-menu-find_depart_team",
+        "_farm-menu-depart",
+        "_farm-menu-to_battle",
         "_common-no_op"
       ],
       "statements": [
@@ -734,8 +734,20 @@
         }
       ]
     },
-
-    "_farm-find_depart_team": {
+    "_farm-menu-depart": {
+      "name": "Farm - Menu - Depart",
+      "includes": [
+        "_common-ml-depart"
+      ]
+    },
+    "_farm-menu-friends": {
+      "name": "Farm - Menu - Depart",
+      "includes": [
+        "_common-ml-friend_0",
+        "_common-ml-friend_none"
+      ]
+    },
+    "_farm-menu-find_depart_team": {
       "name": "Farm - Find Depart Team",
       "statements": [
         {
@@ -767,7 +779,7 @@
       ]
     },
 
-    "_farm-menu": {
+    "_farm-menu-to_battle": {
       "name": "Farm - Menu Ending Include",
       "statements": [
         {
@@ -798,13 +810,21 @@
         }
       ]
     },
+    // Leave this alone, override "_farm-battle" instead
     "farm-battle": {
       "name": "Farm - Battle",
       "includes": [
-        "_common_battle-three_attack",
+        "_farm-battle",
         "_common-screen_saver",
         "_es-from_battle_to_results",
         "_common-no_op"
+      ]
+    },
+    // Override this state
+    "_farm-battle": {
+      "name": "Farm - Battle",
+      "includes": [
+        "_common_battle-three_attack"
       ]
     },
     "_es-from_battle_to_results": {
@@ -2024,10 +2044,6 @@
         "toState": {
           "value": "EXTRA",
           "type": "STRING"
-        },
-        "extraDelay": {
-          "type": "INT",
-          "value": "0"
         }
       },
       "statements": [
@@ -2044,35 +2060,9 @@
             ]
           },
           "actions": [
-                        {
-              "type": "SET",
-              "var": "setup",
-              "value": "0"
-            },
             {
-              "type": "RANDOM",
-              "var": "extraDelay",
-              "args": {
-                "min": "5",
-                "max": "300"
-              }
-            },
-            {
-              "type": "MATH",
-              "value": "(((${extra_delay_minutes}*5)*60)+${extraDelay})*1000",
-              "var": "extraDelay"
-            },
-            {
-              "type": "INFO",
-              "value": "Extra time based delay for ${extraDelay}ms."
-            },
-            {
-              "type": "WAIT", "value": "${extraDelay}" },
-            { "type": "CALL", "value": "@keepAlive" },
-            {
-              "type": "SET",
-              "value": "0",
-              "var": "_screen_saver"
+              "type": "MOVE",
+              "value": "extra"
             },
             {
               "type": "SET",
@@ -2086,6 +2076,7 @@
         }
       ]
     },
+
     "_any_router_to_farm": {
       "name": "Any - Home Can Goto Farm Screen?",
       "variables": {
@@ -2189,6 +2180,72 @@
               "type": "REPEAT",
               "value": ""
             }
+          ]
+        }
+      ]
+    },
+    "extra": {
+      "name": "Extra (Wait)",
+      "includes": [
+        "_extra",
+        "_extra_end"
+      ]
+    },
+    "_extra": {
+      "name": "Extra (Wait)",
+      "variables": {
+        "extraDelay": {
+          "type": "INT",
+          "value": "0"
+        }
+      },
+      "statements": [
+        {
+          "actions": [
+            {
+              "type": "SET",
+              "var": "setup",
+              "value": "0"
+            },
+            {
+              "condition": {
+                "is":"EQUAL",
+                "var": "extra_delay_minutes",
+                "value": "-1"
+              },
+              "type":"CONTINUE"
+            },
+            {
+              "type": "RANDOM",
+              "var": "extraDelay",
+              "args": {
+                "min": "5",
+                "max": "300"
+              }
+            },
+            {
+              "type": "MATH",
+              "value": "(((${extra_delay_minutes}*5)*60)+${extraDelay})*1000",
+              "var": "extraDelay"
+            },
+            {
+              "type": "INFO",
+              "value": "Extra time based delay for ${extraDelay}ms."
+            },
+            {
+              "type": "WAIT", "value": "${extraDelay}" }
+          ]
+        }
+      ]
+    },
+    "_extra_end": {
+      "name": "Extra (Wait Ending)",
+      "statements": [
+        {
+          "actions": [
+            { "type": "CALL", "value": "@keepAlive" },
+            {"type": "SET", "value": "0", "var": "_screen_saver"},
+            {"type": "MOVE", "value": "any_to_home", "args": {"toState": "FARM"}}
           ]
         }
       ]

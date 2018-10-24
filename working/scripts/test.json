@@ -7,6 +7,7 @@
         "_variables",
         "_math",
         "_random",
+        "_time",
         "_end"
       ],
       "variables": {
@@ -248,6 +249,73 @@
                 "var": "a",
                 "value":"10"
               }
+            }
+          ]
+        }
+      ]
+    },
+
+    "_time": {
+      "name": "Time Test",
+      "variables": {
+        "h": {"type": "INT", "value": "0"},
+        "h2": {"type": "INT", "value": "0"},
+        "m": {"type": "INT", "value": "0"},
+        "s": {"type": "INT", "value": "0"}
+      },
+      "statements": [
+        {
+          "actions": [
+            {
+              "type": "INFO",
+              "value": "Time Test"
+            },
+            {
+              "type": "TIME",
+              "args": {
+                "h": "h",
+                "m": "m",
+                "s": "s"
+              }
+            },
+            {
+              "type": "INFO",
+              "value": "Current Time ${h}:${m}:${s}"
+            },
+            {
+              "type": "TIME",
+              "args": {
+                "tz": "GMT",
+                "h": "h",
+                "m": "m",
+                "s": "s"
+              }
+            },
+            {
+              "type": "INFO",
+              "value": "GMT Time ${h}:${m}:${s}"
+            },
+            {
+              "type": "TIME",
+              "args": {
+                "tz": "GMT+1",
+                "h": "h2",
+                "m": "m",
+                "s": "s"
+              }
+            },
+            {
+              "type": "INFO",
+              "value": "GMT+1 Time ${h2}:${m}:${s}"
+            },
+            {
+              "condition":{
+                "not":"EQUAL",
+                "var":"h2",
+                "value":"${h}"
+              },
+              "type": "INFO",
+              "value": "TimeZone worked"
             }
           ]
         }

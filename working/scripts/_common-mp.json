@@ -85,6 +85,10 @@
               "args": {"x": "${x}", "y": "${y}", "r":"r"}
             },
             {
+              "type": "FINEST",
+              "value": "R = ${r}"
+            },
+            {
               "type": "RETURN",
               "value": "1",
               "condition": {

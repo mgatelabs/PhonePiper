@@ -702,7 +702,12 @@ public class ScriptRunner {
                             }
                             break;
                             case DATE: {
-                                Calendar c = Calendar.getInstance();
+                                Calendar c;
+                                if (actionDefinition.getArguments().containsKey("tz")) {
+                                    c = Calendar.getInstance(TimeZone.getTimeZone(actionDefinition.getArguments().get("tz")));
+                                } else {
+                                    c = Calendar.getInstance();
+                                }
                                 if (actionDefinition.getArguments().containsKey("y")) {
                                     putVar(actionDefinition.getArguments().get("y"), new IntVar( c.get(Calendar.YEAR) ));
                                 }
@@ -714,7 +719,12 @@ public class ScriptRunner {
                                 }
                             } break;
                             case TIME: {
-                                Calendar c = Calendar.getInstance();
+                                Calendar c;
+                                if (actionDefinition.getArguments().containsKey("tz")) {
+                                    c = Calendar.getInstance(TimeZone.getTimeZone(actionDefinition.getArguments().get("tz")));
+                                } else {
+                                    c = Calendar.getInstance();
+                                }
                                 if (actionDefinition.getArguments().containsKey("h")) {
                                     putVar(actionDefinition.getArguments().get("h"), new IntVar( c.get(Calendar.HOUR_OF_DAY) ));
                                 }

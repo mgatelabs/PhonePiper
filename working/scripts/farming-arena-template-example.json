@@ -880,6 +880,85 @@
     },
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    // SPEED
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+    "_arena-battle-fight-speed": {
+      "name": "Arena - Battle - Speed",
+      "description":"Can be used to reload your last action, but for units with different or changing skills, just skip",
+      "variables": {
+
+      },
+      "statements": [
+        {
+          "condition": {
+            "is": "CALL",
+            "value": "@isBattleReady",
+            "and": [
+              { "is": "EQUAL", "value": "1", "var":"segment"},
+              { "not": "EQUAL", "value": "2", "var":"turn"}
+            ]
+          },
+          "actions": [
+            {
+              "type": "INFO",
+              "value": "Skipping Reload, moving to Abilities setup"
+            }
+          ]
+        },
+        {
+          "condition": {
+            "is": "CALL",
+            "value": "@isBattleReady",
+            "and": [
+              { "is": "EQUAL", "value": "1", "var":"segment"},
+              { "is": "EQUAL", "value": "2", "var":"turn"}
+            ]
+          },
+          "actions": [
+            {
+              "type": "INFO",
+              "value": "Pressing Reload, turn 1 skills could be available again"
+            },
+            {
+              "type": "TAP",
+              "value": "battle-reload"
+            },
+            {
+              "type": "WAIT",
+              "value": "800"
+            }
+          ]
+        },
+        {
+          "condition": {
+            "is": "CALL",
+            "value": "@isBattleReady",
+            "and": [
+              { "is": "EQUAL", "value": "1", "var":"segment"}
+            ]
+          },
+          "actions": [
+            {
+              "type": "SET",
+              "var": "segment",
+              "value": "2"
+            },
+            {
+              "type": "SET",
+              "var": "segment",
+              "value": "2"
+            },
+            {
+              "type": "REPEAT",
+              "value": ""
+            }
+          ]
+        }
+      ]
+    },
+
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     // FIGHT
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 

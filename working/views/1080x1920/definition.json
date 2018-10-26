@@ -14420,7 +14420,7 @@
     "componentId" : "battle-menu-0-life_bar",
     "x" : 208,
     "y" : 686,
-    "w" : 298,
+    "w" : 297,
     "h" : 0,
     "enabled" : true
   }, {
@@ -14444,7 +14444,7 @@
     "componentId" : "battle-menu-1-life_bar",
     "x" : 208,
     "y" : 989,
-    "w" : 299,
+    "w" : 297,
     "h" : 0,
     "enabled" : true
   }, {
@@ -14514,9 +14514,9 @@
   }, {
     "name" : "Battle - Menu - 4 HP Bar",
     "componentId" : "battle-menu-4-life_bar",
-    "x" : 741,
+    "x" : 742,
     "y" : 989,
-    "w" : 299,
+    "w" : 297,
     "h" : 0,
     "enabled" : true
   }, {

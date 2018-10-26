@@ -87,8 +87,8 @@
               "type": "CALL",
               "value": "@selectUnitAction",
               "args": {
-                "row": "7",
-                "column": "1"
+                "row": "6",
+                "column": "0"
               }
             },
             {
@@ -145,7 +145,7 @@
               "type": "CALL",
               "value": "@selectUnitAction",
               "args": {
-                "row": "6",
+                "row": "3",
                 "column": "0"
               }
             },
@@ -196,8 +196,8 @@
               "type": "CALL",
               "value": "@selectUnitAction",
               "args": {
-                "row": "4",
-                "column": "0"
+                "row": "8",
+                "column": "1"
               }
             },
             {
@@ -219,14 +219,14 @@
                 "is": "CALL",
                 "value": "@isUnitReady",
                 "args": {
-                  "index": "2"
+                  "index": "3"
                 }
               },
               {
                 "is": "CALL",
                 "value": "@isUnitAtkReady",
                 "args": {
-                  "index": "4"
+                  "index": "3"
                 }
               }
             ]
@@ -240,15 +240,15 @@
               "type": "CALL",
               "value": "@showUnitActions",
               "args": {
-                "index": "4"
+                "index": "3"
               }
             },
             {
               "type": "CALL",
               "value": "@selectUnitAction",
               "args": {
-                "row": "6",
-                "column": "0"
+                "row": "3",
+                "column": "1"
               }
             },
             {

@@ -45,6 +45,7 @@
     "extra_wait": {
       "name": "Extra (Wait)",
       "includes": [
+        "_common-screen_saver",
         "_extra",
         "_common-no_op"
       ]

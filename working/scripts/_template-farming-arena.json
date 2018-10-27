@@ -202,7 +202,7 @@
               "type": "SET",
               "var": "unitAvailable3",
               "value": "1",
-              "condition": { "is": "CALL", "value": "@isUnitReady", "args": {"index": "2"} }
+              "condition": { "is": "CALL", "value": "@isUnitReady", "args": {"index": "3"} }
             },
             {
               "type": "SET",

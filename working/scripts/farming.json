@@ -1846,11 +1846,44 @@
             {
               "type": "SLOW_LEFT",
               "value": "screen-center-large",
-              "count": "3"
+              "count": "5"
             },
             {
               "type": "TAP",
               "value": "menu-island-grandshelt"
+            },
+            {
+              "type": "WAIT",
+              "value": "5000"
+            },
+            {
+              "type": "REPEAT",
+              "value": ""
+            }
+          ]
+        },
+        {
+          "condition": {
+            "is": "SCREEN",
+            "value": "menu-world-paladia"
+          },
+          "actions": [
+            {
+              "type": "INFO",
+              "value": "Found Paladia, Getting back to Lapis"
+            },
+            { "type": "CALL", "value": "@keepAlive" },
+            {
+              "type": "TAP",
+              "value": "menu-world-to_lapis"
+            },
+            {
+              "type": "WAIT",
+              "value": "500"
+            },
+            {
+              "type": "TAP",
+              "value": "menu-world-to_lapis-leave"
             },
             {
               "type": "WAIT",

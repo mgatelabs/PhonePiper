@@ -646,6 +646,11 @@
     "points" : [ ],
     "enabled" : false
   }, {
+    "name" : "Menu - World - Paladia",
+    "screenId" : "menu-world-paladia",
+    "points" : [ ],
+    "enabled" : false
+  }, {
     "name" : "Menu - Worlds",
     "screenId" : "menu-worlds",
     "points" : [ ],
@@ -1675,6 +1680,22 @@
     "w" : 1,
     "h" : 1,
     "enabled" : false
+  }, {
+    "name" : "Menu - World - To Lapis",
+    "componentId" : "menu-world-to_lapis",
+    "x" : 0,
+    "y" : 0,
+    "w" : 1,
+    "h" : 1,
+    "enabled" : false
+  }, {
+    "name" : "Menu - World - To Lapis - Leave",
+    "componentId" : "menu-world-to_lapis-leave",
+    "x" : 682,
+    "y" : 1032,
+    "w" : 152,
+    "h" : 62,
+    "enabled" : true
   }, {
     "name" : "Menu - Worlds",
     "componentId" : "menu-worlds",

@@ -511,6 +511,16 @@
     "points" : [ ],
     "enabled" : false
   }, {
+    "name" : "Menu - Quest Cleared",
+    "screenId" : "menu-quest_cleared",
+    "points" : [ ],
+    "enabled" : false
+  }, {
+    "name" : "Menu - Quest Erase",
+    "screenId" : "menu-quest_erase",
+    "points" : [ ],
+    "enabled" : false
+  }, {
     "name" : "Menu - Quest Restart",
     "screenId" : "menu-quest_restart",
     "points" : [ ],
@@ -643,6 +653,11 @@
   }, {
     "name" : "Menu - World - Lapis",
     "screenId" : "menu-world-lapis",
+    "points" : [ ],
+    "enabled" : false
+  }, {
+    "name" : "Menu - World - Paladia",
+    "screenId" : "menu-world-paladia",
     "points" : [ ],
     "enabled" : false
   }, {
@@ -1548,6 +1563,22 @@
     "h" : 1,
     "enabled" : false
   }, {
+    "name" : "Menu - Quest Cleared - OK",
+    "componentId" : "menu-quest_cleared-ok",
+    "x" : 0,
+    "y" : 0,
+    "w" : 1,
+    "h" : 1,
+    "enabled" : false
+  }, {
+    "name" : "Menu - Quest Erase - Yes",
+    "componentId" : "menu-quest_erase-yes",
+    "x" : 0,
+    "y" : 0,
+    "w" : 1,
+    "h" : 1,
+    "enabled" : false
+  }, {
     "name" : "Menu - Quest Restart - No",
     "componentId" : "menu-quest_restart-no",
     "x" : 0,
@@ -1675,6 +1706,22 @@
     "w" : 1,
     "h" : 1,
     "enabled" : false
+  }, {
+    "name" : "Menu - World - To Lapis",
+    "componentId" : "menu-world-to_lapis",
+    "x" : 0,
+    "y" : 0,
+    "w" : 1,
+    "h" : 1,
+    "enabled" : false
+  }, {
+    "name" : "Menu - World - To Lapis - Leave",
+    "componentId" : "menu-world-to_lapis-leave",
+    "x" : 682,
+    "y" : 1032,
+    "w" : 152,
+    "h" : 62,
+    "enabled" : true
   }, {
     "name" : "Menu - Worlds",
     "componentId" : "menu-worlds",

@@ -566,9 +566,9 @@
       "name": "Farm - Menu",
       "includes": [
         "_common-screen_saver",
+        "_farm-menu-friends",
         "_common-ml-mission",
         "_common-ml-goals",
-        "_farm-menu-friends",
         "_farm-menu-find_depart_team",
         "_farm-menu-depart",
         "_farm-menu-to_battle",
@@ -1846,11 +1846,44 @@
             {
               "type": "SLOW_LEFT",
               "value": "screen-center-large",
-              "count": "3"
+              "count": "5"
             },
             {
               "type": "TAP",
               "value": "menu-island-grandshelt"
+            },
+            {
+              "type": "WAIT",
+              "value": "5000"
+            },
+            {
+              "type": "REPEAT",
+              "value": ""
+            }
+          ]
+        },
+        {
+          "condition": {
+            "is": "SCREEN",
+            "value": "menu-world-paladia"
+          },
+          "actions": [
+            {
+              "type": "INFO",
+              "value": "Found Paladia, Getting back to Lapis"
+            },
+            { "type": "CALL", "value": "@keepAlive" },
+            {
+              "type": "TAP",
+              "value": "menu-world-to_lapis"
+            },
+            {
+              "type": "WAIT",
+              "value": "500"
+            },
+            {
+              "type": "TAP",
+              "value": "menu-world-to_lapis-leave"
             },
             {
               "type": "WAIT",
@@ -2187,6 +2220,7 @@
     "extra": {
       "name": "Extra (Wait)",
       "includes": [
+        "_common-screen_saver",
         "_extra",
         "_extra_end"
       ]
@@ -2197,16 +2231,20 @@
         "extraDelay": {
           "type": "INT",
           "value": "0"
+        },
+        "segment": {
+          "type": "INT",
+          "value": "0"
         }
       },
       "statements": [
         {
+          "condition": {
+            "var": "segment",
+            "is":"EQUAL",
+            "value": "0"
+          },
           "actions": [
-            {
-              "type": "SET",
-              "var": "setup",
-              "value": "0"
-            },
             {
               "condition": {
                 "is":"EQUAL",
@@ -2233,7 +2271,86 @@
               "value": "Extra time based delay for ${extraDelay}ms."
             },
             {
-              "type": "WAIT", "value": "${extraDelay}" }
+              "type": "SET",
+              "var": "segment",
+              "value": "1"
+            }
+          ]
+        },
+        {
+          "condition": {
+            "is": "GREATER",
+            "var": "extraDelay",
+            "value": "60000",
+            "and": [
+              {
+                "is":"EQUAL",
+                "var": "segment",
+                "value": "1"
+              }
+            ]
+          },
+          "actions": [
+            {
+              "type": "ADD",
+              "var": "extraDelay",
+              "value": "-60000"
+            },
+            {
+              "type": "INFO",
+              "value": "Extra time based delay for 60000ms, remaining ${extraDelay}ms."
+            },
+            {"type": "WAIT", "value": "60000" },
+            { "type": "CALL", "value": "@keepAlive" },
+            {"type": "REPEAT"}
+          ]
+        },
+        {
+          "condition": {
+            "is": "GREATER",
+            "var": "extraDelay",
+            "value": "0",
+            "and": [
+              {
+                "is":"EQUAL",
+                "var": "segment",
+                "value": "1"
+              }
+            ]
+          },
+          "actions": [
+            {
+              "type": "INFO",
+              "value": "Extra time based delay for ${extraDelay}ms."
+            },
+            {"type": "WAIT", "value": "${extraDelay}" },
+            { "type": "CALL", "value": "@keepAlive" },
+            {
+              "type": "SET",
+              "var": "extraDelay",
+              "value": "0"
+            }
+          ]
+        },
+        {
+          "condition": {
+            "not": "GREATER",
+            "var": "extraDelay",
+            "value": "0",
+            "and": [
+              {
+                "is":"EQUAL",
+                "var": "segment",
+                "value": "1"
+              }
+            ]
+          },
+          "actions": [
+            {
+              "type": "SET",
+              "var": "segment",
+              "value": "2"
+            }
           ]
         }
       ]
@@ -2242,9 +2359,13 @@
       "name": "Extra (Wait Ending)",
       "statements": [
         {
+          "condition": {
+            "not":"EQUAL",
+            "var": "segment",
+            "value": "1"
+          },
           "actions": [
             { "type": "CALL", "value": "@keepAlive" },
-            {"type": "SET", "value": "0", "var": "_screen_saver"},
             {"type": "MOVE", "value": "any_to_home", "args": {"toState": "FARM"}}
           ]
         }
@@ -2343,6 +2464,48 @@
             {
               "type": "TAP",
               "value": "menu-quest_restart-no"
+            },
+            {
+              "type": "REPEAT",
+              "value": ""
+            }
+          ]
+        },
+        {
+          "condition": {
+            "is": "SCREEN",
+            "value": "menu-quest_erase"
+          },
+          "actions": [
+            {
+              "type": "INFO",
+              "value": "Found Quest Erase Screen, returning to Home..."
+            },
+            { "type": "CALL", "value": "@keepAlive" },
+            {
+              "type": "TAP",
+              "value": "menu-quest_erase-yes"
+            },
+            {
+              "type": "REPEAT",
+              "value": ""
+            }
+          ]
+        },
+        {
+          "condition": {
+            "is": "SCREEN",
+            "value": "menu-quest_cleared"
+          },
+          "actions": [
+            {
+              "type": "INFO",
+              "value": "Found Quest Cleared Screen, returning to Title..."
+            },
+            { "type": "CALL", "value": "@keepAlive" },
+            {
+              "type": "TAP",
+              "value": "menu-quest_cleared-ok"
             },
             {
               "type": "REPEAT",

@@ -260,7 +260,7 @@ $(function(){
               url: '/piper/process/unload',
               success: function(result){
                 statusCheck();
-                $('[href="#config"]').tab('show');
+                $('[href="#home"]').tab('show');
               }
             });
         }
@@ -273,7 +273,7 @@ $(function(){
                 url: '/piper/process/kill',
                 success: function(result){
                     statusCheck();
-                    $('[href="#config"]').tab('show');
+                    $('[href="#home"]').tab('show');
                 }
             });
         }
@@ -286,7 +286,7 @@ $(function(){
               url: '/piper/edit/unload',
               success: function(result){
                 statusCheck();
-                $('[href="#config"]').tab('show');
+                $('[href="#home"]').tab('show');
               }
             });
         }

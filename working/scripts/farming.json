@@ -2474,6 +2474,48 @@
         {
           "condition": {
             "is": "SCREEN",
+            "value": "menu-quest_erase"
+          },
+          "actions": [
+            {
+              "type": "INFO",
+              "value": "Found Quest Erase Screen, returning to Home..."
+            },
+            { "type": "CALL", "value": "@keepAlive" },
+            {
+              "type": "TAP",
+              "value": "menu-quest_erase-yes"
+            },
+            {
+              "type": "REPEAT",
+              "value": ""
+            }
+          ]
+        },
+        {
+          "condition": {
+            "is": "SCREEN",
+            "value": "menu-quest_cleared"
+          },
+          "actions": [
+            {
+              "type": "INFO",
+              "value": "Found Quest Cleared Screen, returning to Title..."
+            },
+            { "type": "CALL", "value": "@keepAlive" },
+            {
+              "type": "TAP",
+              "value": "menu-quest_cleared-ok"
+            },
+            {
+              "type": "REPEAT",
+              "value": ""
+            }
+          ]
+        },
+        {
+          "condition": {
+            "is": "SCREEN",
             "value": "menu-home"
           },
           "actions": [

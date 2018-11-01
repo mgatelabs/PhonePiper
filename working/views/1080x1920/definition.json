@@ -6738,6 +6738,166 @@
     } ],
     "enabled" : true
   }, {
+    "name" : "Menu - Expedition - Confirm",
+    "screenId" : "menu-expedition-confirm",
+    "points" : [ {
+      "x" : 388,
+      "y" : 1376,
+      "r" : 0,
+      "g" : 73,
+      "b" : 164
+    }, {
+      "x" : 398,
+      "y" : 1366,
+      "r" : 0,
+      "g" : 87,
+      "b" : 182
+    }, {
+      "x" : 660,
+      "y" : 1451,
+      "r" : 0,
+      "g" : 31,
+      "b" : 123
+    }, {
+      "x" : 670,
+      "y" : 1441,
+      "r" : 0,
+      "g" : 29,
+      "b" : 120
+    }, {
+      "x" : 952,
+      "y" : 617,
+      "r" : 255,
+      "g" : 255,
+      "b" : 255
+    }, {
+      "x" : 956,
+      "y" : 621,
+      "r" : 255,
+      "g" : 255,
+      "b" : 255
+    }, {
+      "x" : 960,
+      "y" : 625,
+      "r" : 255,
+      "g" : 255,
+      "b" : 255
+    }, {
+      "x" : 952,
+      "y" : 625,
+      "r" : 255,
+      "g" : 255,
+      "b" : 255
+    }, {
+      "x" : 960,
+      "y" : 617,
+      "r" : 255,
+      "g" : 255,
+      "b" : 255
+    }, {
+      "x" : 136,
+      "y" : 1287,
+      "r" : 250,
+      "g" : 250,
+      "b" : 250
+    }, {
+      "x" : 141,
+      "y" : 1282,
+      "r" : 250,
+      "g" : 250,
+      "b" : 250
+    }, {
+      "x" : 161,
+      "y" : 1296,
+      "r" : 99,
+      "g" : 99,
+      "b" : 99
+    }, {
+      "x" : 167,
+      "y" : 1291,
+      "r" : 99,
+      "g" : 99,
+      "b" : 99
+    } ],
+    "enabled" : true
+  }, {
+    "name" : "Menu - Expedition - Depart",
+    "screenId" : "menu-expedition-depart",
+    "points" : [ {
+      "x" : 58,
+      "y" : 1784,
+      "r" : 0,
+      "g" : 128,
+      "b" : 183
+    }, {
+      "x" : 78,
+      "y" : 1762,
+      "r" : 0,
+      "g" : 190,
+      "b" : 237
+    }, {
+      "x" : 457,
+      "y" : 1862,
+      "r" : 0,
+      "g" : 122,
+      "b" : 188
+    }, {
+      "x" : 480,
+      "y" : 1839,
+      "r" : 0,
+      "g" : 105,
+      "b" : 174
+    }, {
+      "x" : 900,
+      "y" : 1047,
+      "r" : 0,
+      "g" : 35,
+      "b" : 56
+    }, {
+      "x" : 905,
+      "y" : 1047,
+      "r" : 0,
+      "g" : 34,
+      "b" : 53
+    }, {
+      "x" : 910,
+      "y" : 1047,
+      "r" : 0,
+      "g" : 34,
+      "b" : 53
+    }, {
+      "x" : 915,
+      "y" : 1047,
+      "r" : 0,
+      "g" : 31,
+      "b" : 50
+    }, {
+      "x" : 537,
+      "y" : 608,
+      "r" : 0,
+      "g" : 69,
+      "b" : 117
+    }, {
+      "x" : 541,
+      "y" : 608,
+      "r" : 0,
+      "g" : 68,
+      "b" : 115
+    }, {
+      "x" : 545,
+      "y" : 608,
+      "r" : 0,
+      "g" : 68,
+      "b" : 115
+    }, {
+      "x" : 549,
+      "y" : 608,
+      "r" : 0,
+      "g" : 68,
+      "b" : 115
+    } ],
+    "enabled" : true
+  }, {
     "name" : "Menu - Expedition - Item - 0",
     "screenId" : "menu-expedition-item-0",
     "points" : [ {
@@ -6881,8 +7041,56 @@
   }, {
     "name" : "Menu - Expedition - Item - 1 - Complete",
     "screenId" : "menu-expedition-item-1-complete",
-    "points" : [ ],
-    "enabled" : false
+    "points" : [ {
+      "x" : 314,
+      "y" : 1176,
+      "r" : 0,
+      "g" : 19,
+      "b" : 29
+    }, {
+      "x" : 314,
+      "y" : 1179,
+      "r" : 0,
+      "g" : 19,
+      "b" : 29
+    }, {
+      "x" : 314,
+      "y" : 1183,
+      "r" : 0,
+      "g" : 20,
+      "b" : 30
+    }, {
+      "x" : 314,
+      "y" : 1187,
+      "r" : 0,
+      "g" : 19,
+      "b" : 29
+    }, {
+      "x" : 314,
+      "y" : 1192,
+      "r" : 0,
+      "g" : 19,
+      "b" : 29
+    }, {
+      "x" : 314,
+      "y" : 1196,
+      "r" : 0,
+      "g" : 19,
+      "b" : 29
+    }, {
+      "x" : 314,
+      "y" : 1201,
+      "r" : 0,
+      "g" : 19,
+      "b" : 29
+    }, {
+      "x" : 314,
+      "y" : 1206,
+      "r" : 0,
+      "g" : 19,
+      "b" : 29
+    } ],
+    "enabled" : true
   }, {
     "name" : "Menu - Expedition - Item - 2",
     "screenId" : "menu-expedition-item-2",
@@ -6915,8 +7123,56 @@
   }, {
     "name" : "Menu - Expedition - Item - 2 - Complete",
     "screenId" : "menu-expedition-item-2-complete",
-    "points" : [ ],
-    "enabled" : false
+    "points" : [ {
+      "x" : 310,
+      "y" : 1450,
+      "r" : 0,
+      "g" : 19,
+      "b" : 28
+    }, {
+      "x" : 310,
+      "y" : 1454,
+      "r" : 0,
+      "g" : 19,
+      "b" : 29
+    }, {
+      "x" : 310,
+      "y" : 1459,
+      "r" : 0,
+      "g" : 19,
+      "b" : 28
+    }, {
+      "x" : 310,
+      "y" : 1464,
+      "r" : 0,
+      "g" : 19,
+      "b" : 28
+    }, {
+      "x" : 310,
+      "y" : 1469,
+      "r" : 0,
+      "g" : 19,
+      "b" : 28
+    }, {
+      "x" : 310,
+      "y" : 1474,
+      "r" : 0,
+      "g" : 19,
+      "b" : 28
+    }, {
+      "x" : 310,
+      "y" : 1479,
+      "r" : 0,
+      "g" : 19,
+      "b" : 28
+    }, {
+      "x" : 310,
+      "y" : 1484,
+      "r" : 0,
+      "g" : 19,
+      "b" : 28
+    } ],
+    "enabled" : true
   }, {
     "name" : "Menu - Expedition - Item - 3",
     "screenId" : "menu-expedition-item-3",
@@ -6949,8 +7205,62 @@
   }, {
     "name" : "Menu - Expedition - Item - 3 - Complete",
     "screenId" : "menu-expedition-item-3-complete",
-    "points" : [ ],
-    "enabled" : false
+    "points" : [ {
+      "x" : 300,
+      "y" : 1720,
+      "r" : 0,
+      "g" : 18,
+      "b" : 27
+    }, {
+      "x" : 300,
+      "y" : 1724,
+      "r" : 0,
+      "g" : 18,
+      "b" : 27
+    }, {
+      "x" : 300,
+      "y" : 1727,
+      "r" : 0,
+      "g" : 19,
+      "b" : 29
+    }, {
+      "x" : 300,
+      "y" : 1731,
+      "r" : 0,
+      "g" : 18,
+      "b" : 27
+    }, {
+      "x" : 300,
+      "y" : 1735,
+      "r" : 0,
+      "g" : 18,
+      "b" : 27
+    }, {
+      "x" : 300,
+      "y" : 1739,
+      "r" : 0,
+      "g" : 18,
+      "b" : 27
+    }, {
+      "x" : 300,
+      "y" : 1743,
+      "r" : 0,
+      "g" : 18,
+      "b" : 27
+    }, {
+      "x" : 300,
+      "y" : 1747,
+      "r" : 0,
+      "g" : 18,
+      "b" : 27
+    }, {
+      "x" : 300,
+      "y" : 1750,
+      "r" : 0,
+      "g" : 18,
+      "b" : 27
+    } ],
+    "enabled" : true
   }, {
     "name" : "Menu - Expedition - New",
     "screenId" : "menu-expedition-new",
@@ -7035,6 +7345,47 @@
     } ],
     "enabled" : true
   }, {
+    "name" : "Menu - Expedition - New - 0 - Super",
+    "screenId" : "menu-expedition-new-0-super",
+    "points" : [ {
+      "x" : 1007,
+      "y" : 756,
+      "r" : 114,
+      "g" : 7,
+      "b" : 148
+    }, {
+      "x" : 1013,
+      "y" : 762,
+      "r" : 112,
+      "g" : 7,
+      "b" : 146
+    }, {
+      "x" : 929,
+      "y" : 775,
+      "r" : 0,
+      "g" : 40,
+      "b" : 66
+    }, {
+      "x" : 865,
+      "y" : 838,
+      "r" : 0,
+      "g" : 40,
+      "b" : 66
+    }, {
+      "x" : 928,
+      "y" : 900,
+      "r" : 0,
+      "g" : 40,
+      "b" : 66
+    }, {
+      "x" : 993,
+      "y" : 838,
+      "r" : 0,
+      "g" : 40,
+      "b" : 66
+    } ],
+    "enabled" : true
+  }, {
     "name" : "Menu - Expedition - Ongoing",
     "screenId" : "menu-expedition-ongoing",
     "points" : [ {
@@ -7115,6 +7466,35 @@
       "r" : 254,
       "g" : 247,
       "b" : 240
+    } ],
+    "enabled" : true
+  }, {
+    "name" : "Menu - Expedition - Results - Next",
+    "screenId" : "menu-expedition-results-next",
+    "points" : [ {
+      "x" : 439,
+      "y" : 1803,
+      "r" : 0,
+      "g" : 60,
+      "b" : 153
+    }, {
+      "x" : 449,
+      "y" : 1793,
+      "r" : 0,
+      "g" : 59,
+      "b" : 162
+    }, {
+      "x" : 630,
+      "y" : 1878,
+      "r" : 0,
+      "g" : 62,
+      "b" : 155
+    }, {
+      "x" : 640,
+      "y" : 1868,
+      "r" : 0,
+      "g" : 64,
+      "b" : 155
     } ],
     "enabled" : true
   }, {
@@ -16194,6 +16574,38 @@
     "h" : 79,
     "enabled" : true
   }, {
+    "name" : "Menu - Expedition - Auto fill",
+    "componentId" : "menu-expedition-auto_fill",
+    "x" : 160,
+    "y" : 1780,
+    "w" : 190,
+    "h" : 50,
+    "enabled" : true
+  }, {
+    "name" : "Menu - Expedition - Confirm - Depart",
+    "componentId" : "menu-expedition-confirm-depart",
+    "x" : 420,
+    "y" : 1390,
+    "w" : 200,
+    "h" : 50,
+    "enabled" : true
+  }, {
+    "name" : "Menu - Expedition - Confirm - Item",
+    "componentId" : "menu-expedition-confirm-item",
+    "x" : 865,
+    "y" : 960,
+    "w" : 42,
+    "h" : 43,
+    "enabled" : true
+  }, {
+    "name" : "Menu - Expedition - Depart",
+    "componentId" : "menu-expedition-depart",
+    "x" : 720,
+    "y" : 1770,
+    "w" : 170,
+    "h" : 80,
+    "enabled" : true
+  }, {
     "name" : "Menu - Expedition - Item - 0",
     "componentId" : "menu-expedition-item-0",
     "x" : 340,
@@ -16224,6 +16636,54 @@
     "y" : 1640,
     "w" : 290,
     "h" : 70,
+    "enabled" : true
+  }, {
+    "name" : "Menu - Expedition - New",
+    "componentId" : "menu-expedition-new",
+    "x" : 150,
+    "y" : 610,
+    "w" : 90,
+    "h" : 40,
+    "enabled" : true
+  }, {
+    "name" : "Menu- Expedition - New - 0",
+    "componentId" : "menu-expedition-new-0",
+    "x" : 360,
+    "y" : 780,
+    "w" : 320,
+    "h" : 110,
+    "enabled" : true
+  }, {
+    "name" : "Menu- Expedition - New - 1",
+    "componentId" : "menu-expedition-new-1",
+    "x" : 420,
+    "y" : 1070,
+    "w" : 230,
+    "h" : 80,
+    "enabled" : true
+  }, {
+    "name" : "Menu- Expedition - New - 2",
+    "componentId" : "menu-expedition-new-2",
+    "x" : 454,
+    "y" : 1324,
+    "w" : 216,
+    "h" : 106,
+    "enabled" : true
+  }, {
+    "name" : "Menu - Expedition - Ongoing",
+    "componentId" : "menu-expedition-ongoing",
+    "x" : 510,
+    "y" : 610,
+    "w" : 128,
+    "h" : 41,
+    "enabled" : true
+  }, {
+    "name" : "Menu - Expedition - Results - Next",
+    "componentId" : "menu-expedition-results-next",
+    "x" : 470,
+    "y" : 1810,
+    "w" : 140,
+    "h" : 55,
     "enabled" : true
   }, {
     "name" : "Menu - Friend Request - No",

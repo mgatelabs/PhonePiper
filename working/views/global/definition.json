@@ -490,6 +490,11 @@
     "points" : [ ],
     "enabled" : false
   }, {
+    "name" : "Menu - Expedition - Results - Units",
+    "screenId" : "menu-expedition-results-units",
+    "points" : [ ],
+    "enabled" : false
+  }, {
     "name" : "Menu - Friend Request",
     "screenId" : "menu-friend_request",
     "points" : [ ],

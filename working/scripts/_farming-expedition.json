@@ -424,10 +424,14 @@
             "is": "EQUAL",
             "var": "segment",
             "value": "1",
-            "and": [
+            "andOr": [
               {
                 "is": "SCREEN",
                 "value": "menu-expedition-results-next"
+              },
+              {
+                "is": "SCREEN",
+                "value": "menu-expedition-results-units"
               }
             ]
           },
@@ -442,11 +446,7 @@
             },
             {
               "type": "WAIT",
-              "value": "3000"
-            },
-            {
-              "type": "TAP",
-              "value": "menu-expedition-results-next"
+              "value": "1000"
             },
             {
               "type": "SET",

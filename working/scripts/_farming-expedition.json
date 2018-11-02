@@ -500,6 +500,44 @@
             ],
             "andOr": [
               {
+                "is": "SCREEN",
+                "value": "menu-expedition-item-0"
+              },
+              {
+                "is": "SCREEN",
+                "value": "menu-expedition-item-1"
+              },
+              {
+                "is": "SCREEN",
+                "value": "menu-expedition-item-2"
+              },
+              {
+                "is": "SCREEN",
+                "value": "menu-expedition-item-3"
+              }
+            ]
+          },
+          "actions": [
+            {
+              "type": "INFO",
+              "value": "Expeditions are full, leaving"
+            },
+            {"type": "MOVE", "value": "any_to_home", "args": {"toState": "EXTRA"}}
+          ]
+        },
+        {
+          "condition": {
+            "is": "EQUAL",
+            "var": "segment",
+            "value": "1",
+            "and": [
+              {
+                "is": "SCREEN",
+                "value": "menu-expedition-ongoing"
+              }
+            ],
+            "andOr": [
+              {
                 "not": "SCREEN",
                 "value": "menu-expedition-item-0"
               },

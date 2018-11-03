@@ -31,7 +31,7 @@ Set of user editable scripts to control android apps.
     * Build from source
     * https://github.com/mgatelabs/PhonePiperHelper
 4. Get this app
-    * Release version (This is really out of date)
+    * Release version
     * https://github.com/mgatelabs/PhonePiper/releases
     * Build from source (Use Intellij Community edition)
 5. Make sure ADB works

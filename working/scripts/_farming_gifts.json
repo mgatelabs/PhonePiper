@@ -1,0 +1,252 @@
+//@formatter:off
+{
+  "vars": [
+    {
+      "name": "allow-gifts",
+      "display": "Send Gifts",
+      "value": "1",
+      "type": "INT",
+      "modify": "EDITABLE",
+      "displayType": "BOOLEAN",
+      "order": 10,
+      "tierId": "enable",
+      "values": [
+        {"name": "Enabled", "value": "1"},
+        {"name": "Disabled", "value": "0"}
+      ],
+      "description": "Enable / Disable Sending Friend Gifts"
+    },
+    {
+      "name": "_route_from_send_gifts",
+      "display": "After Send Gifts",
+      "value": "EXTRA",
+      "type": "STRING",
+      "modify": "EDITABLE",
+      "order": 10,
+      "tierId": "state-route",
+      "description": "Enable / Disable Sending Friend Gifts"
+    }
+  ],
+  "states":{
+
+    // Inject our code into the router
+    "_any_router_to_send_gifts": {
+      "name": "Any - Home Can Goto Friends?",
+      "variables": {
+        "toState": {
+          "value": "GIFT",
+          "type": "STRING"
+        }
+      },
+      "statements": [
+        {
+          "condition": {
+            "is": "SCREEN",
+            "value": "menu-home",
+            "and": [
+              {
+                "is": "EQUAL",
+                "value": "GIFT",
+                "var": "toState"
+              }
+            ]
+          },
+          "actions": [
+            {
+              "type": "SET",
+              "var": "setup",
+              "value": "0"
+            },
+            {
+              "type": "SET",
+              "value": "0",
+              "var": "_screen_saver"
+            },
+            {
+              "type": "MOVE",
+              "value": "home_to_send_gifts",
+              "condition": {
+                "is": "EQUAL",
+                "value": "1",
+                "var": "allow-gifts"
+              }
+            },
+            {
+              "type": "SET",
+              "var": "toState",
+              "value": "${_route_from_send_gifts}"
+            },
+            {
+              "type": "REPEAT"
+            }
+          ]
+        }
+      ]
+    },
+
+    // Logic to move to expedition screen
+    "home_to_send_gifts": {
+      "name": "Home - To Gifts",
+      "includes": [
+        "_home_daily_fixes",
+        "_common-no_op"
+      ],
+      "statements": [
+        {
+          "condition": {
+            "is": "SCREEN",
+            "value": "menu-home"
+          },
+          "actions": [
+            {
+              "type": "INFO",
+              "value": "Going to Friends"
+            },
+            { "type": "CALL", "value": "@keepAlive" },
+            {
+              "type": "TAP",
+              "value": "menu-home-friends"
+            },
+            {
+              "type": "WAIT",
+              "value": "3000"
+            },
+            {
+              "type": "REPEAT",
+              "value": ""
+            }
+          ]
+        },
+        {
+          "condition": {
+            "is": "SCREEN",
+            "value": "menu-friends"
+          },
+          "actions": [
+            {
+              "type": "INFO",
+              "value": "Found Friends Screen"
+            },
+            {
+              "type": "MOVE",
+              "value": "send_gifts"
+            }
+          ]
+        }
+      ]
+    },
+
+    // Actual expedtion logic
+    "send_gifts": {
+      "name": "Send Gifts",
+      "includes": [
+        "_send_gifts",
+        "_common-no_op"
+      ]
+    },
+
+    "_send_gifts": {
+      "name": "Send Gifts - Logic",
+      "includes": [],
+      "statements": [
+        // Friends Screen
+        {
+          "condition": {
+            "is": "SCREEN",
+            "value": "menu-friends"
+          },
+          "actions": [
+            {
+              "type": "INFO",
+              "value": "Moving to Gifts"
+            },
+            {
+              "type": "TAP",
+              "value": "menu-friends-gifts"
+            },
+            { "type": "CALL", "value": "@keepAlive" },
+            {
+              "type": "WAIT",
+              "value": "1000"
+            },
+            {
+              "type": "REPEAT"
+            }
+          ]
+        },
+        // Receive Screen
+        {
+          "condition": {
+            "is": "SCREEN",
+            "value": "menu-friends-receive"
+          },
+          "actions": [
+            {
+              "type": "INFO",
+              "value": "Found Receive Screen, switching to send"
+            },
+            {
+              "type": "TAP",
+              "value": "menu-friends-receive-send"
+            },
+            {
+              "type": "WAIT",
+              "value": "1000"
+            },
+            { "type": "CALL", "value": "@keepAlive" },
+            {
+              "type": "REPEAT"
+            }
+          ]
+        },
+        // Send All
+        {
+          "condition": {
+            "is": "SCREEN",
+            "value": "menu-friends-send",
+            "and": [
+              {
+                "is": "SCREEN",
+                "value": "menu-friends-send-available"
+              }
+            ]
+          },
+          "actions": [
+            {
+              "type": "INFO",
+              "value": "Gifts can be sent, attempting to send"
+            },
+            {
+              "type": "TAP",
+              "value":  "menu-friends-send-all"
+            },
+            {
+              "type": "WAIT",
+              "value": "1000"
+            },
+            { "type": "CALL", "value": "@keepAlive" },
+            {
+              "type": "REPEAT"
+            }
+          ]
+        },
+        // Nothing to Send
+        {
+          "condition": {
+            "is": "SCREEN",
+            "value": "menu-friends-send"
+          },
+          "actions": [
+            {
+              "type": "INFO",
+              "value": "Nothing to send, returning"
+            },
+            { "type": "CALL", "value": "@keepAlive" },
+            {"type": "MOVE", "value": "any_to_home", "args": {"toState": "${_route_from_send_gifts}"}}
+          ]
+        }
+      ]
+    }
+
+  }
+}

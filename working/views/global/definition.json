@@ -475,8 +475,28 @@
     "points" : [ ],
     "enabled" : false
   }, {
+    "name" : "Menu - Expedition - New - 0 - B",
+    "screenId" : "menu-expedition-new-0-b",
+    "points" : [ ],
+    "enabled" : false
+  }, {
+    "name" : "Menu - Expedition - New - 0 - C",
+    "screenId" : "menu-expedition-new-0-c",
+    "points" : [ ],
+    "enabled" : false
+  }, {
+    "name" : "Menu - Expedition - New - 0 - D",
+    "screenId" : "menu-expedition-new-0-d",
+    "points" : [ ],
+    "enabled" : false
+  }, {
     "name" : "Menu - Expedition - New - 0 - Super",
     "screenId" : "menu-expedition-new-0-super",
+    "points" : [ ],
+    "enabled" : false
+  }, {
+    "name" : "Menu - Expedition - New - 1 - B",
+    "screenId" : "menu-expedition-new-1-b",
     "points" : [ ],
     "enabled" : false
   }, {

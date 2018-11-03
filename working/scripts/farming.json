@@ -520,7 +520,8 @@
     {"title":"Raid", "id":"raid"},
     {"title":"Refresh", "id":"refresh"},
     {"title":"Arena", "id":"arena"},
-    {"title":"Arena Rules", "id":"arena-rules"}
+    {"title":"Arena Rules", "id":"arena-rules"},
+    {"title":"Routes", "id":"state-route"}
   ],
   "imports": [
     "_common-no_op",
@@ -529,6 +530,7 @@
     "_common-menu_results",
     "_common-menu_vortex",
     "_common-battle",
+    "_farming_gifts",
     "_farming-expedition"
   ],
   "states": {
@@ -696,6 +698,11 @@
                     "is": "EQUAL",
                     "value": "1",
                     "var": "allow-expedition"
+                  },
+                  {
+                    "is": "EQUAL",
+                    "value": "1",
+                    "var": "allow-gifts"
                   }
                 ]
               }

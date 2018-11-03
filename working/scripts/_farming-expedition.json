@@ -15,6 +15,16 @@
         {"name": "Disabled", "value": "0"}
       ],
       "description": "Enable / Disable ARENA"
+    },
+    {
+      "name": "_route_from_expedition",
+      "display": "After Expedition",
+      "value": "GIFT",
+      "type": "STRING",
+      "modify": "EDITABLE",
+      "order": 10,
+      "tierId": "state-route",
+      "description": "Enable / Disable Sending Friend Gifts"
     }
   ],
   "states":{
@@ -63,7 +73,7 @@
             },
             {
               "type": "SET",
-              "value": "EXTRA",
+              "value": "${_route_from_expedition}",
               "var": "toState"
             },
             {
@@ -522,7 +532,7 @@
               "type": "INFO",
               "value": "Expeditions are full, leaving"
             },
-            {"type": "MOVE", "value": "any_to_home", "args": {"toState": "EXTRA"}}
+            {"type": "MOVE", "value": "any_to_home", "args": {"toState": "${_route_from_expedition}"}}
           ]
         },
         {
@@ -621,12 +631,27 @@
             "and": [
               {
                 "is": "SCREEN",
-                "value": "menu-expedition-new"
-              },
-              {
-                "is": "SCREEN",
-                "value": "menu-expedition-new-0-super"
+                "value": "menu-expedition-new",
+                "andOr": [
+                  {
+                    "is": "SCREEN",
+                    "value": "menu-expedition-new-0-super"
+                  },
+                  {
+                    "is": "SCREEN",
+                    "value": "menu-expedition-new-0-b"
+                  },
+                  {
+                    "is": "SCREEN",
+                    "value": "menu-expedition-new-0-c"
+                  },
+                  {
+                    "is": "SCREEN",
+                    "value": "menu-expedition-new-0-d"
+                  }
+                ]
               }
+
             ]
           },
           "actions": [
@@ -651,6 +676,39 @@
             "and": [
               {
                 "is": "SCREEN",
+                "value": "menu-expedition-new",
+                "andOr": [
+                  {
+                    "is": "SCREEN",
+                    "value": "menu-expedition-new-1-b"
+                  }
+                ]
+              }
+
+            ]
+          },
+          "actions": [
+            {
+              "type": "INFO",
+              "value": "Tapping Supersite Expedition"
+            },
+            {
+              "type": "TAP",
+              "value": "menu-expedition-new-1"
+            },
+            {
+              "type": "REPEAT"
+            }
+          ]
+        },
+        {
+          "condition": {
+            "is": "EQUAL",
+            "var": "segment",
+            "value": "2",
+            "and": [
+              {
+                "is": "SCREEN",
                 "value": "menu-expedition-new"
               }
             ]
@@ -660,7 +718,7 @@
               "type": "INFO",
               "value": "Out of Supercites, returning"
             },
-            {"type": "MOVE", "value": "any_to_home", "args": {"toState": "EXTRA"}}
+            {"type": "MOVE", "value": "any_to_home", "args": {"toState": "${_route_from_expedition}"}}
           ]
         },
         {
@@ -680,7 +738,7 @@
               "type": "INFO",
               "value": "Expeditions full, returning"
             },
-            {"type": "MOVE", "value": "any_to_home", "args": {"toState": "EXTRA"}}
+            {"type": "MOVE", "value": "any_to_home", "args": {"toState": "${_route_from_expedition}"}}
           ]
         },
         {

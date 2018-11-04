@@ -500,6 +500,11 @@
     "points" : [ ],
     "enabled" : false
   }, {
+    "name" : "Menu - Expedition - New - 1 - C",
+    "screenId" : "menu-expedition-new-1-c",
+    "points" : [ ],
+    "enabled" : false
+  }, {
     "name" : "Menu - Expedition - Ongoing",
     "screenId" : "menu-expedition-ongoing",
     "points" : [ ],

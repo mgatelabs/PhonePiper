@@ -681,6 +681,10 @@
                   {
                     "is": "SCREEN",
                     "value": "menu-expedition-new-1-b"
+                  },
+                  {
+                    "is": "SCREEN",
+                    "value": "menu-expedition-new-1-c"
                   }
                 ]
               }

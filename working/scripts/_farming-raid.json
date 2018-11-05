@@ -592,14 +592,10 @@
         }
       ]
     },
-    "_reset-include_farming": {
+    "_reset-include_raid": {
       "name": "Reset - Raid",
       "statements": [
         {
-          "condition": {
-            "is": "BOOLEAN",
-            "value": "true"
-          },
           "actions": [
             {
               "type": "INFO",

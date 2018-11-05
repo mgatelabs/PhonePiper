@@ -287,6 +287,25 @@
           ]
         }
       ]
+    },
+
+    "_reset-include_send_gifts": {
+      "name": "Reset - Gifts",
+      "statements": [
+        {
+          "actions": [
+            {
+              "type": "INFO",
+              "value": "Reset Send Gift Date"
+            },
+            {
+              "type": "SET",
+              "value": "-1",
+              "var": "gift-date"
+            }
+          ]
+        }
+      ]
     }
 
   }

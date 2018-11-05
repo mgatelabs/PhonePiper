@@ -856,6 +856,30 @@
           ]
         }
       ]
+    },
+
+    "_reset-include_expedition": {
+      "name": "Reset - Expedition",
+      "statements": [
+        {
+          "actions": [
+            {
+              "type": "INFO",
+              "value": "Reset Expedition Counts"
+            },
+            {
+              "type": "SET",
+              "value": "0",
+              "var": "expedition-finished"
+            },
+            {
+              "type": "SET",
+              "value": "0",
+              "var": "expedition-started"
+            }
+          ]
+        }
+      ]
     }
 
   }

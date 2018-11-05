@@ -990,7 +990,7 @@
     },
 
     "_reset-include_arena": {
-      "name": "Reset - Farming",
+      "name": "Reset - Arena",
       "statements": [
         {
           "condition": {

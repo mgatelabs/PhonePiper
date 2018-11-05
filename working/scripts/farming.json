@@ -1316,11 +1316,25 @@
         }
       ]
     },
+
     "log-in": {
       "name": "Common - Recovery Log In (Override)",
+      "variables": {
+        "firstLoop": {
+          "type": "INT",
+          "value": "0"
+        }
+      },
       "includes": [
+        "_log-in-once-*",
+        "_log-in-end_once",
+        "_log-in-common",
         "_home_daily_fixes"
-      ],
+      ]
+    },
+
+    "_log-in-common":{
+      "name": "Common - Recovery Log In (Override)",
       "statements": [
         {
           "condition": {
@@ -1471,6 +1485,26 @@
             {
               "type": "MOVE",
               "value": "any_to_home"
+            }
+          ]
+        }
+      ]
+    },
+
+    "_log-in-end_once":{
+      "name": "Common - Recovery Log In (Override)",
+      "statements": [
+        {
+          "condition": {
+            "is": "EQUAL",
+            "var": "firstLoop",
+            "value": "0"
+          },
+          "actions": [
+            {
+              "type": "SET",
+              "var": "firstLoop",
+              "value": "1"
             }
           ]
         }

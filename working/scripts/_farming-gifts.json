@@ -7,7 +7,6 @@
       "value": "1",
       "type": "INT",
       "modify": "EDITABLE",
-      "displayType": "BOOLEAN",
       "order": 10,
       "tierId": "enable",
       "values": [
@@ -15,6 +14,16 @@
         {"name": "Disabled", "value": "0"}
       ],
       "description": "Enable / Disable Sending Friend Gifts"
+    },
+    {
+      "name": "gift-date",
+      "display": "Gift Last Date",
+      "value": "-1",
+      "type": "INT",
+      "modify": "VISIBLE",
+      "order": 10,
+      "tierId": "stats",
+      "description": "Last day gifts were sent on, gifts will not be sent on the same day (America/Los_Angeles time-zone)"
     },
     {
       "name": "_route_from_send_gifts",
@@ -36,6 +45,10 @@
         "toState": {
           "value": "GIFT",
           "type": "STRING"
+        },
+        "temp-gift-date": {
+          "type": "INT",
+          "value": "-1"
         }
       },
       "statements": [
@@ -53,6 +66,13 @@
           },
           "actions": [
             {
+              "type": "DATE",
+              "args": {
+                "tz": "UTC-8",
+                "d": "temp-gift-date"
+              }
+            },
+            {
               "type": "SET",
               "var": "setup",
               "value": "0"
@@ -68,7 +88,14 @@
               "condition": {
                 "is": "EQUAL",
                 "value": "1",
-                "var": "allow-gifts"
+                "var": "allow-gifts",
+                "and": [
+                  {
+                    "not": "EQUAL",
+                    "var": "temp-gift-date",
+                    "value": "${gift-date}"
+                  }
+                ]
               }
             },
             {
@@ -86,7 +113,7 @@
 
     // Logic to move to expedition screen
     "home_to_send_gifts": {
-      "name": "Home - To Gifts",
+      "name": "Home - To Send Gifts",
       "includes": [
         "_home_daily_fixes",
         "_common-no_op"
@@ -221,6 +248,13 @@
               "value":  "menu-friends-send-all"
             },
             {
+              "type": "DATE",
+              "args": {
+                "tz": "UTC-8",
+                "d": "gift-date"
+              }
+            },
+            {
               "type": "WAIT",
               "value": "1000"
             },
@@ -240,6 +274,13 @@
             {
               "type": "INFO",
               "value": "Nothing to send, returning"
+            },
+            {
+              "type": "DATE",
+              "args": {
+                "tz": "UTC-8",
+                "d": "gift-date"
+              }
             },
             { "type": "CALL", "value": "@keepAlive" },
             {"type": "MOVE", "value": "any_to_home", "args": {"toState": "${_route_from_send_gifts}"}}

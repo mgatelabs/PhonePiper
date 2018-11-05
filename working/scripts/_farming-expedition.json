@@ -17,6 +17,26 @@
       "description": "Enable / Disable ARENA"
     },
     {
+      "name": "expedition-finished",
+      "display": "Finsihed Expeditions",
+      "value": "0",
+      "type": "INT",
+      "modify": "VISIBLE",
+      "order": 10,
+      "tierId": "stats",
+      "description": "How many expeditions have been completed"
+    },
+    {
+      "name": "expedition-started",
+      "display": "Started Expeditions",
+      "value": "0",
+      "type": "INT",
+      "modify": "VISIBLE",
+      "order": 10,
+      "tierId": "stats",
+      "description": "How many expeditions have been started"
+    },
+    {
       "name": "_route_from_expedition",
       "display": "After Expedition",
       "value": "GIFT",
@@ -260,7 +280,12 @@
           "actions": [
             {
               "type": "INFO",
-              "value": "Receiving Expedition Reward #3"
+              "value": "Receiving Expedition Reward #4"
+            },
+            {
+              "type": "ADD",
+              "var": "expedition-finished",
+              "value": "1"
             },
             {
               "type": "TAP",
@@ -308,7 +333,12 @@
           "actions": [
             {
               "type": "INFO",
-              "value": "Receiving Expedition Reward #2"
+              "value": "Receiving Expedition Reward #3"
+            },
+            {
+              "type": "ADD",
+              "var": "expedition-finished",
+              "value": "1"
             },
             {
               "type": "TAP",
@@ -356,7 +386,12 @@
           "actions": [
             {
               "type": "INFO",
-              "value": "Receiving Expedition Reward #1"
+              "value": "Receiving Expedition Reward #2"
+            },
+            {
+              "type": "ADD",
+              "var": "expedition-finished",
+              "value": "1"
             },
             {
               "type": "TAP",
@@ -404,7 +439,12 @@
           "actions": [
             {
               "type": "INFO",
-              "value": "Receiving Expedition Reward #0"
+              "value": "Receiving Expedition Reward #1"
+            },
+            {
+              "type": "ADD",
+              "var": "expedition-finished",
+              "value": "1"
             },
             {
               "type": "TAP",
@@ -617,10 +657,7 @@
       "name": "Expeditions - New",
       "includes": [],
       "variables": {
-        //"receiving": {
-        //  "type": "INT",
-        //  "value": "0"
-        //}
+
       },
       "statements": [
         {
@@ -799,6 +836,11 @@
             {
               "type": "TAP",
               "value": "menu-expedition-confirm-item"
+            },
+            {
+              "type": "ADD",
+              "var": "expedition-started",
+              "value": "1"
             },
             {
               "type": "WAIT",

@@ -11,8 +11,9 @@
       "order": 10,
       "tierId": "enable",
       "values": [
+        {"name": "Disabled", "value": "0"},
         {"name": "Enabled", "value": "1"},
-        {"name": "Disabled", "value": "0"}
+        {"name": "Supercites Only", "value": "2"}
       ],
       "description": "Enable / Disable ARENA"
     },
@@ -86,8 +87,8 @@
               "type": "MOVE",
               "value": "home_to_expedition",
               "condition": {
-                "is": "EQUAL",
-                "value": "1",
+                "not": "EQUAL",
+                "value": "0",
                 "var": "allow-expedition"
               }
             },
@@ -673,7 +674,43 @@
                   {
                     "is": "SCREEN",
                     "value": "menu-expedition-new-0-super"
-                  },
+                  }
+                ]
+              }
+
+            ]
+          },
+          "actions": [
+            {
+              "type": "INFO",
+              "value": "Starting Supercite Expedition #1"
+            },
+            {
+              "type": "TAP",
+              "value": "menu-expedition-new-0"
+            },
+            {
+              "type": "REPEAT"
+            }
+          ]
+        },
+        {
+          "condition": {
+            "is": "EQUAL",
+            "var": "segment",
+            "value": "2",
+            "and": [
+              {
+                "is": "SCREEN",
+                "value": "menu-expedition-new",
+                "and": [
+                  {
+                    "is": "EQUAL",
+                    "value": "1",
+                    "var": "allow-expedition"
+                  }
+                ],
+                "andOr": [
                   {
                     "is": "SCREEN",
                     "value": "menu-expedition-new-0-b"
@@ -694,7 +731,7 @@
           "actions": [
             {
               "type": "INFO",
-              "value": "Tapping Supersite Expedition"
+              "value": "Starting Standard Expedition #1"
             },
             {
               "type": "TAP",
@@ -714,6 +751,13 @@
               {
                 "is": "SCREEN",
                 "value": "menu-expedition-new",
+                "and": [
+                  {
+                    "is": "EQUAL",
+                    "value": "1",
+                    "var": "allow-expedition"
+                  }
+                ],
                 "andOr": [
                   {
                     "is": "SCREEN",
@@ -731,7 +775,7 @@
           "actions": [
             {
               "type": "INFO",
-              "value": "Tapping Supersite Expedition"
+              "value": "Starting Standard Expedition #2"
             },
             {
               "type": "TAP",

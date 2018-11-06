@@ -317,8 +317,8 @@
                     "var": "allow-arena"
                   },
                   {
-                    "is": "EQUAL",
-                    "value": "1",
+                    "not": "EQUAL",
+                    "value": "0",
                     "var": "allow-expedition"
                   },
                   {

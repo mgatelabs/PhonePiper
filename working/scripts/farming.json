@@ -125,6 +125,21 @@
       "description": "Enable / Disable TMR farming"
     },
     {
+      "name": "leave-farm",
+      "display": "Leave?",
+      "value": "1",
+      "type": "INT",
+      "modify": "EDITABLE",
+      "displayType": "BOOLEAN",
+      "order": 10,
+      "tierId": "farm",
+      "values": [
+        {"name": "Leave", "value": "1"},
+        {"name": "Stay", "value": "0"}
+      ],
+      "description": "Can farming leave to do other tasks when the timer or min-enegy is reached?"
+    },
+    {
       "name": "refresh-farm",
       "display": "Farm - Refreshes",
       "value": "0",
@@ -309,24 +324,7 @@
               {
                 "is": "EQUAL",
                 "value": "1",
-                "var": "allow-raid",
-                "or": [
-                  {
-                    "is": "EQUAL",
-                    "value": "1",
-                    "var": "allow-arena"
-                  },
-                  {
-                    "not": "EQUAL",
-                    "value": "0",
-                    "var": "allow-expedition"
-                  },
-                  {
-                    "is": "EQUAL",
-                    "value": "1",
-                    "var": "allow-gifts"
-                  }
-                ]
+                "var": "leave-farm"
               }
             ]
           },

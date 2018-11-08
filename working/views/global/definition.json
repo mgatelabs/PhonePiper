@@ -1336,6 +1336,14 @@
     "h" : 1,
     "enabled" : false
   }, {
+    "name" : "Menu - Home - Raid Event",
+    "componentId" : "menu-home-raid_event",
+    "x" : 0,
+    "y" : 0,
+    "w" : 1,
+    "h" : 1,
+    "enabled" : false
+  }, {
     "name" : "Menu - Arena - Begin",
     "componentId" : "menu-arena-begin",
     "x" : 0,

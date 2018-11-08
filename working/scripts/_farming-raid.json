@@ -13,21 +13,6 @@
       "description": "How many times are you alright with refreshing your RAID orbs?"
     },
     {
-      "name": "alt-raid",
-      "display": "Home Raid",
-      "value": "0",
-      "type": "INT",
-      "modify": "EDITABLE",
-      "displayType": "BOOLEAN",
-      "order": 10,
-      "tierId": "raid",
-      "values": [
-        {"name": "Enabled", "value": "1"},
-        {"name": "Disabled", "value": "0"}
-      ],
-      "description": "Is the RAID available on the home banner?  If so enable this."
-    },
-    {
       "name": "allow-raid",
       "display": "Raid",
       "value": "0",
@@ -37,7 +22,9 @@
       "order": 10,
       "tierId": "enable",
       "values": [
-        {"name": "Enabled", "value": "1"},
+        {"name": "Event Link", "value": "3"},
+        {"name": "Banner Link", "value": "2"},
+        {"name": "Vortex Item", "value": "1"},
         {"name": "Disabled", "value": "0"}
       ],
       "description": "Enable or disable Raiding"
@@ -142,8 +129,8 @@
               "type": "MOVE",
               "value": "home_to_raid",
               "condition": {
-                "is": "EQUAL",
-                "value": "1",
+                "not": "EQUAL",
+                "value": "0",
                 "var": "allow-raid"
               }
             },
@@ -503,15 +490,15 @@
             "and": [
               {
                 "is": "EQUAL",
-                "var": "alt-raid",
-                "value": "1"
+                "var": "allow-raid",
+                "value": "2"
               }
             ]
           },
           "actions": [
             {
               "type": "INFO",
-              "value": "Going to Vortex (Alt)"
+              "value": "Going to Banner"
             },
             { "type": "CALL", "value": "@keepAlive" },
             {
@@ -520,7 +507,7 @@
             },
             {
               "type": "WAIT",
-              "value": "6000"
+              "value": "4000"
             },
             {
               "type": "REPEAT",
@@ -531,7 +518,46 @@
         {
           "condition": {
             "is": "SCREEN",
-            "value": "menu-home"
+            "value": "menu-home",
+            "and": [
+              {
+                "is": "EQUAL",
+                "var": "allow-raid",
+                "value": "3"
+              }
+            ]
+          },
+          "actions": [
+            {
+              "type": "INFO",
+              "value": "Going to Event Link"
+            },
+            { "type": "CALL", "value": "@keepAlive" },
+            {
+              "type": "TAP",
+              "value": "menu-home-raid_event"
+            },
+            {
+              "type": "WAIT",
+              "value": "4000"
+            },
+            {
+              "type": "REPEAT",
+              "value": ""
+            }
+          ]
+        },
+        {
+          "condition": {
+            "is": "SCREEN",
+            "value": "menu-home",
+            "and": [
+              {
+                "is": "EQUAL",
+                "var": "allow-raid",
+                "value": "1"
+              }
+            ]
           },
           "actions": [
             {

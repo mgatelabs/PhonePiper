@@ -18176,6 +18176,14 @@
     "h" : 79,
     "enabled" : true
   }, {
+    "name" : "Menu - Home - Raid Event",
+    "componentId" : "menu-home-raid_event",
+    "x" : 122,
+    "y" : 491,
+    "w" : 65,
+    "h" : 52,
+    "enabled" : true
+  }, {
     "name" : "Menu - Home - Special",
     "componentId" : "menu-home-special",
     "x" : 150,

@@ -420,6 +420,106 @@
     "points" : [ ],
     "enabled" : false
   }, {
+    "name" : "Menu - Expedition - Confirm",
+    "screenId" : "menu-expedition-confirm",
+    "points" : [ ],
+    "enabled" : false
+  }, {
+    "name" : "Menu - Expedition - Depart",
+    "screenId" : "menu-expedition-depart",
+    "points" : [ ],
+    "enabled" : false
+  }, {
+    "name" : "Menu - Expedition - Item - 0",
+    "screenId" : "menu-expedition-item-0",
+    "points" : [ ],
+    "enabled" : false
+  }, {
+    "name" : "Menu - Expedition - Item - 0 - Complete",
+    "screenId" : "menu-expedition-item-0-complete",
+    "points" : [ ],
+    "enabled" : false
+  }, {
+    "name" : "Menu - Expedition - Item - 1",
+    "screenId" : "menu-expedition-item-1",
+    "points" : [ ],
+    "enabled" : false
+  }, {
+    "name" : "Menu - Expedition - Item - 1 - Complete",
+    "screenId" : "menu-expedition-item-1-complete",
+    "points" : [ ],
+    "enabled" : false
+  }, {
+    "name" : "Menu - Expedition - Item - 2",
+    "screenId" : "menu-expedition-item-2",
+    "points" : [ ],
+    "enabled" : false
+  }, {
+    "name" : "Menu - Expedition - Item - 2 - Complete",
+    "screenId" : "menu-expedition-item-2-complete",
+    "points" : [ ],
+    "enabled" : false
+  }, {
+    "name" : "Menu - Expedition - Item - 3",
+    "screenId" : "menu-expedition-item-3",
+    "points" : [ ],
+    "enabled" : false
+  }, {
+    "name" : "Menu - Expedition - Item - 3 - Complete",
+    "screenId" : "menu-expedition-item-3-complete",
+    "points" : [ ],
+    "enabled" : false
+  }, {
+    "name" : "Menu - Expedition - New",
+    "screenId" : "menu-expedition-new",
+    "points" : [ ],
+    "enabled" : false
+  }, {
+    "name" : "Menu - Expedition - New - 0 - B",
+    "screenId" : "menu-expedition-new-0-b",
+    "points" : [ ],
+    "enabled" : false
+  }, {
+    "name" : "Menu - Expedition - New - 0 - C",
+    "screenId" : "menu-expedition-new-0-c",
+    "points" : [ ],
+    "enabled" : false
+  }, {
+    "name" : "Menu - Expedition - New - 0 - D",
+    "screenId" : "menu-expedition-new-0-d",
+    "points" : [ ],
+    "enabled" : false
+  }, {
+    "name" : "Menu - Expedition - New - 0 - Super",
+    "screenId" : "menu-expedition-new-0-super",
+    "points" : [ ],
+    "enabled" : false
+  }, {
+    "name" : "Menu - Expedition - New - 1 - B",
+    "screenId" : "menu-expedition-new-1-b",
+    "points" : [ ],
+    "enabled" : false
+  }, {
+    "name" : "Menu - Expedition - New - 1 - C",
+    "screenId" : "menu-expedition-new-1-c",
+    "points" : [ ],
+    "enabled" : false
+  }, {
+    "name" : "Menu - Expedition - Ongoing",
+    "screenId" : "menu-expedition-ongoing",
+    "points" : [ ],
+    "enabled" : false
+  }, {
+    "name" : "Menu - Expedition - Results - Next",
+    "screenId" : "menu-expedition-results-next",
+    "points" : [ ],
+    "enabled" : false
+  }, {
+    "name" : "Menu - Expedition - Results - Units",
+    "screenId" : "menu-expedition-results-units",
+    "points" : [ ],
+    "enabled" : false
+  }, {
     "name" : "Menu - Friend Request",
     "screenId" : "menu-friend_request",
     "points" : [ ],
@@ -445,6 +545,26 @@
     "points" : [ ],
     "enabled" : false
   }, {
+    "name" : "Menu - Friends",
+    "screenId" : "menu-friends",
+    "points" : [ ],
+    "enabled" : false
+  }, {
+    "name" : "Menu - Friends - Receive",
+    "screenId" : "menu-friends-receive",
+    "points" : [ ],
+    "enabled" : false
+  }, {
+    "name" : "Menu - Friends - Send",
+    "screenId" : "menu-friends-send",
+    "points" : [ ],
+    "enabled" : false
+  }, {
+    "name" : "Menu - Friends - Send - Available",
+    "screenId" : "menu-friends-send-available",
+    "points" : [ ],
+    "enabled" : false
+  }, {
     "name" : "Menu - Goal List",
     "screenId" : "menu-goal_list",
     "points" : [ ],
@@ -462,6 +582,11 @@
   }, {
     "name" : "Menu - Home - Daily",
     "screenId" : "menu-home-daily",
+    "points" : [ ],
+    "enabled" : false
+  }, {
+    "name" : "Menu - Home - Expedition - Available",
+    "screenId" : "menu-home-expedition-available",
     "points" : [ ],
     "enabled" : false
   }, {
@@ -1211,6 +1336,14 @@
     "h" : 1,
     "enabled" : false
   }, {
+    "name" : "Menu - Home - Raid Event",
+    "componentId" : "menu-home-raid_event",
+    "x" : 0,
+    "y" : 0,
+    "w" : 1,
+    "h" : 1,
+    "enabled" : false
+  }, {
     "name" : "Menu - Arena - Begin",
     "componentId" : "menu-arena-begin",
     "x" : 0,
@@ -1363,6 +1496,118 @@
     "h" : 79,
     "enabled" : false
   }, {
+    "name" : "Menu - Expedition - Auto fill",
+    "componentId" : "menu-expedition-auto_fill",
+    "x" : 0,
+    "y" : 0,
+    "w" : 1,
+    "h" : 1,
+    "enabled" : false
+  }, {
+    "name" : "Menu - Expedition - Confirm - Depart",
+    "componentId" : "menu-expedition-confirm-depart",
+    "x" : 0,
+    "y" : 0,
+    "w" : 1,
+    "h" : 1,
+    "enabled" : false
+  }, {
+    "name" : "Menu - Expedition - Confirm - Item",
+    "componentId" : "menu-expedition-confirm-item",
+    "x" : 0,
+    "y" : 0,
+    "w" : 1,
+    "h" : 1,
+    "enabled" : false
+  }, {
+    "name" : "Menu - Expedition - Depart",
+    "componentId" : "menu-expedition-depart",
+    "x" : 0,
+    "y" : 0,
+    "w" : 1,
+    "h" : 1,
+    "enabled" : false
+  }, {
+    "name" : "Menu - Expedition - Item - 0",
+    "componentId" : "menu-expedition-item-0",
+    "x" : 0,
+    "y" : 0,
+    "w" : 1,
+    "h" : 1,
+    "enabled" : false
+  }, {
+    "name" : "Menu - Expedition - Item - 1",
+    "componentId" : "menu-expedition-item-1",
+    "x" : 0,
+    "y" : 0,
+    "w" : 1,
+    "h" : 1,
+    "enabled" : false
+  }, {
+    "name" : "Menu - Expedition - Item - 2",
+    "componentId" : "menu-expedition-item-2",
+    "x" : 0,
+    "y" : 0,
+    "w" : 1,
+    "h" : 1,
+    "enabled" : false
+  }, {
+    "name" : "Menu - Expedition - Item - 3",
+    "componentId" : "menu-expedition-item-3",
+    "x" : 0,
+    "y" : 0,
+    "w" : 1,
+    "h" : 1,
+    "enabled" : false
+  }, {
+    "name" : "Menu - Expedition - New",
+    "componentId" : "menu-expedition-new",
+    "x" : 0,
+    "y" : 0,
+    "w" : 1,
+    "h" : 1,
+    "enabled" : false
+  }, {
+    "name" : "Menu- Expedition - New - 0",
+    "componentId" : "menu-expedition-new-0",
+    "x" : 0,
+    "y" : 0,
+    "w" : 1,
+    "h" : 1,
+    "enabled" : false
+  }, {
+    "name" : "Menu- Expedition - New - 1",
+    "componentId" : "menu-expedition-new-1",
+    "x" : 0,
+    "y" : 0,
+    "w" : 1,
+    "h" : 1,
+    "enabled" : false
+  }, {
+    "name" : "Menu- Expedition - New - 2",
+    "componentId" : "menu-expedition-new-2",
+    "x" : 0,
+    "y" : 0,
+    "w" : 1,
+    "h" : 1,
+    "enabled" : false
+  }, {
+    "name" : "Menu - Expedition - Ongoing",
+    "componentId" : "menu-expedition-ongoing",
+    "x" : 0,
+    "y" : 0,
+    "w" : 1,
+    "h" : 1,
+    "enabled" : false
+  }, {
+    "name" : "Menu - Expedition - Results - Next",
+    "componentId" : "menu-expedition-results-next",
+    "x" : 0,
+    "y" : 0,
+    "w" : 1,
+    "h" : 1,
+    "enabled" : false
+  }, {
     "name" : "Menu - Friend Request - No",
     "componentId" : "menu-friend_request-no",
     "x" : 70,
@@ -1403,6 +1648,30 @@
     "h" : 1347,
     "enabled" : false
   }, {
+    "name" : "Menu - Friends - Gifts",
+    "componentId" : "menu-friends-gifts",
+    "x" : 0,
+    "y" : 0,
+    "w" : 1,
+    "h" : 1,
+    "enabled" : false
+  }, {
+    "name" : "Menu - Friends - Receive - Send",
+    "componentId" : "menu-friends-receive-send",
+    "x" : 0,
+    "y" : 0,
+    "w" : 1,
+    "h" : 1,
+    "enabled" : false
+  }, {
+    "name" : "Menu - Friends - Send - All",
+    "componentId" : "menu-friends-send-all",
+    "x" : 0,
+    "y" : 0,
+    "w" : 1,
+    "h" : 1,
+    "enabled" : false
+  }, {
     "name" : "Menu - Goal List - Back",
     "componentId" : "menu-goal_list-back",
     "x" : 37,
@@ -1427,7 +1696,15 @@
     "h" : 1,
     "enabled" : false
   }, {
-    "name" : "menu-home-daily-claim",
+    "name" : "Menu - Home - Button",
+    "componentId" : "menu-home-button",
+    "x" : 0,
+    "y" : 0,
+    "w" : 1,
+    "h" : 1,
+    "enabled" : false
+  }, {
+    "name" : "Menu - Home - Daily - Claim",
     "componentId" : "menu-home-daily-claim",
     "x" : 0,
     "y" : 0,
@@ -1435,7 +1712,23 @@
     "h" : 1,
     "enabled" : false
   }, {
-    "name" : "menu-home-login_bonus-ok",
+    "name" : "Menu - Home - Expedition",
+    "componentId" : "menu-home-expedition",
+    "x" : 0,
+    "y" : 0,
+    "w" : 1,
+    "h" : 1,
+    "enabled" : false
+  }, {
+    "name" : "Menu - Home - Friends",
+    "componentId" : "menu-home-friends",
+    "x" : 0,
+    "y" : 0,
+    "w" : 1,
+    "h" : 1,
+    "enabled" : false
+  }, {
+    "name" : "Menu - Home - Login Bonus - OK",
     "componentId" : "menu-home-login_bonus-ok",
     "x" : 0,
     "y" : 0,
@@ -1491,7 +1784,7 @@
     "h" : 1,
     "enabled" : false
   }, {
-    "name" : "menu-location-earthshrine-default",
+    "name" : "Menu - Location - Earthshrine - Default",
     "componentId" : "menu-location-earthshrine-default",
     "x" : 0,
     "y" : 0,
@@ -1507,7 +1800,7 @@
     "h" : 1,
     "enabled" : false
   }, {
-    "name" : "menu-messages-back",
+    "name" : "Menu - Messages - Back",
     "componentId" : "menu-messages-back",
     "x" : 0,
     "y" : 0,

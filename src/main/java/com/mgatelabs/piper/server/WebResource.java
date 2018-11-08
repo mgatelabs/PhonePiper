@@ -56,7 +56,7 @@ public class WebResource {
         if (connectionDefinition == null) {
             Loggers.init();
             connectionDefinition = new ConnectionDefinition();
-            deviceHelper = new DeviceHelper(connectionDefinition.getIp(), connectionDefinition.getHelperPort());
+            deviceHelper = new DeviceHelper(connectionDefinition);
             return true;
         }
         return false;
@@ -420,7 +420,7 @@ public class WebResource {
         }
         connectionDefinition = tempConnection;
         connectionDefinition.push();
-        deviceHelper.setIpAddress(connectionDefinition.getIp());
+        deviceHelper.setConnectionDefinition(connectionDefinition);
     }
 
     @POST

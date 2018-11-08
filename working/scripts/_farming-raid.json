@@ -22,10 +22,24 @@
       "order": 10,
       "tierId": "enable",
       "values": [
+        {"name": "Enabled", "value": "1"},
+        {"name": "Disabled", "value": "0"}
+      ],
+      "description": "Enable or disable Raiding"
+    },
+    {
+      "name": "raid-method",
+      "display": "Method",
+      "value": "3",
+      "type": "INT",
+      "modify": "EDITABLE",
+      "displayType": "BOOLEAN",
+      "order": 10,
+      "tierId": "raid",
+      "values": [
         {"name": "Event Link", "value": "3"},
         {"name": "Banner Link", "value": "2"},
-        {"name": "Vortex Item", "value": "1"},
-        {"name": "Disabled", "value": "0"}
+        {"name": "Vortex Item", "value": "1"}
       ],
       "description": "Enable or disable Raiding"
     },
@@ -61,7 +75,7 @@
     },
     {
       "name" : "raid-party-index",
-      "display" : "Raid Party",
+      "display" : "Party",
       "value" : "0",
       "type" : "INT",
       "modify" : "EDITABLE",
@@ -75,7 +89,7 @@
         {"name": "Four", "value": "3"},
         {"name": "Five (Right)", "value": "4"}
       ],
-      "description": "Which unit group do you RAID with?"
+      "description": "Which party, unit group do you RAID with?"
     },
     {
       "name": "raid_runs",
@@ -129,8 +143,8 @@
               "type": "MOVE",
               "value": "home_to_raid",
               "condition": {
-                "not": "EQUAL",
-                "value": "0",
+                "is": "EQUAL",
+                "value": "1",
                 "var": "allow-raid"
               }
             },
@@ -490,7 +504,7 @@
             "and": [
               {
                 "is": "EQUAL",
-                "var": "allow-raid",
+                "var": "raid-method",
                 "value": "2"
               }
             ]
@@ -522,7 +536,7 @@
             "and": [
               {
                 "is": "EQUAL",
-                "var": "allow-raid",
+                "var": "raid-method",
                 "value": "3"
               }
             ]
@@ -554,7 +568,7 @@
             "and": [
               {
                 "is": "EQUAL",
-                "var": "allow-raid",
+                "var": "raid-method",
                 "value": "1"
               }
             ]

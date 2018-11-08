@@ -26,7 +26,7 @@ public class EditHolder {
         this.connectionDefinition = connectionDefinition;
         this.viewDefinition = viewDefinition;
         this.deviceHelper = deviceHelper;
-        deviceHelper.setIpAddress(connectionDefinition.getIp());
+        deviceHelper.setConnectionDefinition(connectionDefinition);
         this.shell = shell;
     }
 

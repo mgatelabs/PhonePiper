@@ -33,14 +33,14 @@
       "modify": "EDITABLE",
       "order": 10,
       "tierId": "state-route",
-      "description": "Enable / Disable Sending Friend Gifts"
+      "description": "Where to go next after Sending Gifts is finished.  Default is EXTRA to wait a while."
     }
   ],
   "states":{
 
     // Inject our code into the router
     "_any_router_to_send_gifts": {
-      "name": "Any - Home Can Goto Friends?",
+      "name": "Any - Home Can Send Gifts?",
       "variables": {
         "toState": {
           "value": "GIFT",

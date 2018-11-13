@@ -36,6 +36,7 @@ $(function(){
     var playerForm = $('#player-form');
     var variableForm = $('#variable-form');
     var variableContainer = $('#variable-container');
+    var myTabContent = $('#myTabContent');
     var loadedForm = $('#loaded-form');
 
     var controlAdb = $('.controlAdb');
@@ -377,16 +378,51 @@ $(function(){
                 $('#fileLogging').val(result.fileLevel);
                 variableContainer.empty();
                 linkedVariables = {};
-                var varTiers = {};
+                var varTiers = {}, varTab, tabRow, tabContainer, varNavLink;
+                var varTabs = {};
+                var myTabContent = $('#myTabContent');
+                // Remove all existing links
+                var dropdownVarLinks = $('#dropdownVarLinks').empty();
+                // Remove all custom variable tabs
+                $('.var-container').remove();
+                // Create the variable tabs
+                if (result.variableTabs && result.variableTabs.length > 0) {
+                    for (i = 0; i < result.variableTabs.length; i++) {
+                        varTab = $('<div class="tab-pane fade var-container" role="tabpanel" aria-labelledby="vars-tab"></div>').attr('id',"vt_"+result.variableTabs[i].id).attr('aria-labelledby',"vt_"+result.variableTabs[i].id+'-tab').appendTo(myTabContent);
+                        tabRow = $('<div class="row"></div>').appendTo(varTab);
+                        tabContainer = $("<div class=\"container-fluid\"></div>").appendTo(tabRow);
+                        varTabs[result.variableTabs[i].id] = tabContainer;
+                        // Create the click link
+                        varNavLink = $('<a class="nav-link" data-toggle="tab" role="tab" aria-selected="false"></a>')
+                            .attr('aria-controls', "vt_"+result.variableTabs[i].id)
+                            .attr('href', '#' + "vt_"+result.variableTabs[i].id)
+                            .attr('id', "vt_"+result.variableTabs[i].id+'-tab')
+                            .text(result.variableTabs[i].title)
+                            .appendTo(dropdownVarLinks);
+                    }
+                }
+                // Create the default variable link
+                $('<a class="nav-link" id="vars-tab" data-toggle="tab" href="#vars" role="tab" aria-controls="vars" aria-selected="false">Variables</a>').appendTo(dropdownVarLinks)
+                // Setup the default tab
+                varTabs['*'] = $('#variable-container');
+
+                var tabTo;
+
+                // Create the Variable Tiers
                 if (result.variableTiers && result.variableTiers.length > 0) {
                     for (i = 0; i < result.variableTiers.length; i++) {
-                        def = $('<div></div>').appendTo(variableContainer);
+                        tabTo = varTabs[result.variableTiers[i].tabId || '*'];
+                        if (!tabTo) { // default to the falback tab
+                            tabTo = varTabs['*'];
+                        }
+                        def = $('<div></div>').appendTo(tabTo);
                         def.append($('<h3></h3>').text(result.variableTiers[i].title));
                         varTiers[result.variableTiers[i].id] = $('<div class="row"></div>').appendTo(def);
                     }
                 }
 
-                def = $('<div></div>').appendTo(variableContainer);
+                // Fallback tier
+                def = $('<div></div>').appendTo(varTabs['*']);
                 def.append($('<h3></h3>').text('General'));
                 varTiers['*'] = $('<div class="row"></div>').appendTo(def);
 
@@ -402,13 +438,17 @@ $(function(){
                         if (item.tierId) {
                             row = varTiers[item.tierId];
                         }
-                        if (!row) {
+                        if (!row) { // Default to the fallback tier
                             row = varTiers['*'];
                         }
 
-                        grp = $('<div class="input-group col-sm-12 col-md-6 col-lg-4" style="margin-bottom: 1em"></div>').appendTo(row);
+                        grp = $('<div class="input-group col-sm-12 col-md-6 col-lg-4" style="margin-bottom: 1em"></div>')
+                            .appendTo(row);
 
-                        $('<div class="input-group-prepend"></div>').append($('<span class="input-group-text" id=""></span>').text(item.display).attr('title', item.description || '')).appendTo(grp);
+                        $('<div class="input-group-prepend"></div>')
+                            .append($('<span class="input-group-text" id=""></span>')
+                                .text(item.display).attr('title', item.description || ''))
+                            .appendTo(grp);
 
                         if (item.values && item.values.length > 0) {
                             gen = $('<select class="form-control notWhileRunning"></select>');
@@ -417,9 +457,9 @@ $(function(){
                             }
                             linkedVariables[item.name] = gen;
                         } else if (item.displayType == 'BOOLEAN') {
-                           linkedVariables[item.name] = $('<select class="form-control notWhileRunning"><option value="0">False</option><option value="1">True</option></select>')
-                       } else {
-                            linkedVariables[item.name] = $('<input type="text" class="form-control notWhileRunning"/>');
+                           linkedVariables[item.name] = $('<select class="form-control notWhileRunning updateVariable"><option value="0">False</option><option value="1">True</option></select>')
+                        } else {
+                            linkedVariables[item.name] = $('<input type="text" class="form-control notWhileRunning updateVariable"/>');
                         }
 
                         linkedVariables[item.name].data('key', item.name).val(formatVariable(item)).attr('id', 'var_' + item.name).appendTo(grp);
@@ -467,12 +507,12 @@ $(function(){
         });
     }
 
-    variableContainer.on('change', 'select, input', function(){
+    myTabContent.on('change', 'select.updateVariable, input.updateVariable', function(){
         var ref = $(this);
         ref.addClass('updatedValue');
     });
 
-    variableContainer.on('click', 'button.updateVariable', function(){
+    myTabContent.on('click', 'button.updateVariable', function(){
         var ref = $(this), key = ref.data('key'), input = linkedVariables[key];
         input.removeClass('updatedValue');
         if (input.val()) {

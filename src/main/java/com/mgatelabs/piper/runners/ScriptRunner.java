@@ -75,8 +75,7 @@ public class ScriptRunner {
 
     private Map<String, VarTimer> timers;
 
-    //private static final String VAR_SECONDS = "_seconds";
-    private static final String VAR_LOOPS = "_loops";
+    //private static final String VAR_LOOPS = "_loops";
 
     public ScriptRunner(ConnectionDefinition connectionDefinition, DeviceHelper deviceHelper, ScriptEnvironment scriptEnvironment, DeviceDefinition deviceDefinition, ViewDefinition viewDefinition) {
         this.scriptEnvironment = scriptEnvironment;
@@ -356,7 +355,7 @@ public class ScriptRunner {
             }
 
             // Always reset the loop counter
-            putVar(VAR_LOOPS, IntVar.ZERO);
+            //putVar(VAR_LOOPS, IntVar.ZERO);
 
             vars.state(currentExecutionLink, Maps.newHashMap());
 
@@ -1159,6 +1158,18 @@ public class ScriptRunner {
         vars.sort(new Comparator<VarTierDefinition>() {
             @Override
             public int compare(VarTierDefinition o1, VarTierDefinition o2) {
+                return o1.getId().compareTo(o2.getId());
+            }
+        });
+        return vars;
+    }
+
+    public List<VarTabDefinition> getVariableTabs() {
+        List<VarTabDefinition> vars = Lists.newArrayList();
+        vars.addAll(scriptEnvironment.getVarTabs().values());
+        vars.sort(new Comparator<VarTabDefinition>() {
+            @Override
+            public int compare(VarTabDefinition o1, VarTabDefinition o2) {
                 return o1.getId().compareTo(o2.getId());
             }
         });

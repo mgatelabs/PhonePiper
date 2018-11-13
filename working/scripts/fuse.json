@@ -111,11 +111,6 @@
             },
             {
               "type": "SET",
-              "value": "0",
-              "var": "_seconds"
-            },
-            {
-              "type": "SET",
               "value": "1",
               "var": "step"
             },
@@ -160,11 +155,6 @@
             },
             {
               "type": "SET",
-              "value": "0",
-              "var": "_seconds"
-            },
-            {
-              "type": "SET",
               "value": "2",
               "var": "step"
             },
@@ -193,11 +183,6 @@
             {
               "type": "INFO",
               "value": "Choosing Unit"
-            },
-            {
-              "type": "SET",
-              "value": "0",
-              "var": "_seconds"
             },
             {
               "type": "SET",
@@ -234,11 +219,6 @@
             {
               "type": "INFO",
               "value": "Fusing"
-            },
-            {
-              "type": "SET",
-              "value": "0",
-              "var": "_seconds"
             },
             {
               "type": "SET",
@@ -292,11 +272,6 @@
             },
             {
               "type": "SET",
-              "value": "0",
-              "var": "_seconds"
-            },
-            {
-              "type": "SET",
               "value": "6",
               "var": "step"
             },
@@ -326,11 +301,6 @@
             {
               "type": "INFO",
               "value": "Skiping"
-            },
-            {
-              "type": "SET",
-              "value": "0",
-              "var": "_seconds"
             },
             {
               "type": "SET",

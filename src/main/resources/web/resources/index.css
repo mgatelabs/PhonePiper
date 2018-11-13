@@ -1,3 +1,7 @@
 .updatedValue {
     background-color:#f7b2b2;
 }
+
+.dropdown-menu a.nav-link {
+    color:black !important;
+}

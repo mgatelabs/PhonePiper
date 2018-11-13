@@ -63,8 +63,11 @@
                 <li class="nav-item whenRun">
                     <a class="nav-link" id="run-tab" data-toggle="tab" href="#run" role="tab" aria-controls="run" aria-selected="false">Run</a>
                 </li>
-                <li class="nav-item whenRun">
-                    <a class="nav-link" id="vars-tab" data-toggle="tab" href="#vars" role="tab" aria-controls="vars" aria-selected="false">Variables</a>
+                <li class="nav-item whenRun dropdown">
+                    <a class="nav-link dropdown-toggle" id="dropdownVars" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Variables</a>
+                    <div class="dropdown-menu" id="dropdownVarLinks" aria-labelledby="dropdownVars">
+                        <a class="nav-link" id="vars-tab" data-toggle="tab" href="#vars" role="tab" aria-controls="vars" aria-selected="false">Variables</a>
+                    </div>
                 </li>
                 <li class="nav-item whenEdit">
                     <a class="nav-link" id="edit-tab" data-toggle="tab" href="#edit" role="tab" aria-controls="edit" aria-selected="false">Edit</a>
@@ -410,17 +413,13 @@
 
         </div>
         <div class="tab-pane fade" id="vars" role="tabpanel" aria-labelledby="vars-tab">
-
             <div class="row">
                 <form id="variable-form" class="col-sm-12" style="display:none;">
                     <div id="variable-container" class="container-fluid">
 
-
-
                     </div>
                 </form>
             </div>
-
         </div>
         <div class="tab-pane fade" id="console" role="tabpanel" aria-labelledby="console-tab">
 

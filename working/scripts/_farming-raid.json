@@ -103,7 +103,7 @@
     }
   ],
   "varTiers": [
-    {"title":"Raid", "id":"raid"}
+    {"title":"Raid", "id":"raid", "tabId":"raid"}
   ],
   "states":{
 

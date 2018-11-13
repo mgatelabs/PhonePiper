@@ -3,12 +3,12 @@ package com.mgatelabs.piper.server.entities;
 import com.google.common.collect.Lists;
 import com.mgatelabs.piper.server.StatusEnum;
 import com.mgatelabs.piper.shared.details.VarDefinition;
+import com.mgatelabs.piper.shared.details.VarTabDefinition;
 import com.mgatelabs.piper.shared.details.VarTierDefinition;
 
 import java.util.List;
 
 /**
- *
  * Created by @mgatelabs (Michael Fuller) on 2/15/2018
  */
 public class PrepResult {
@@ -23,6 +23,7 @@ public class PrepResult {
     private List<NamedValueItem> screens;
     private List<VarDefinition> variables;
     private List<VarTierDefinition> variableTiers;
+    private List<VarTabDefinition> variableTabs;
 
     public PrepResult(StatusEnum status) {
         this.status = status;
@@ -31,6 +32,7 @@ public class PrepResult {
         screens = Lists.newArrayList();
         variables = Lists.newArrayList();
         variableTiers = Lists.newArrayList();
+        variableTabs = Lists.newArrayList();
     }
 
     public String getWebLevel() {
@@ -83,6 +85,10 @@ public class PrepResult {
 
     public List<VarTierDefinition> getVariableTiers() {
         return variableTiers;
+    }
+
+    public List<VarTabDefinition> getVariableTabs() {
+        return variableTabs;
     }
 
     public void setVariableTiers(List<VarTierDefinition> variableTiers) {

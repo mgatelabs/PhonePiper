@@ -637,6 +637,7 @@ public class WebResource {
                 }
             });
             result.getVariableTiers().addAll(runner.getVariableTiers());
+            result.getVariableTabs().addAll(runner.getVariableTabs());
 
             result.setWebLevel(Loggers.webHandler.getLevel().toString());
             result.setConsoleLevel(Loggers.consoleHandler.getLevel().toString());

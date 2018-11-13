@@ -295,8 +295,8 @@
     }
   ],
   "varTiers": [
-    {"title":"Arena", "id":"arena"},
-    {"title":"Arena Rules", "id":"arena-rules"}
+    {"title":"Arena", "id":"arena", "tabId":"arena"},
+    {"title":"Arena Rules", "id":"arena-rules", "tabId":"arena"}
   ],
   "states":{
 

@@ -171,6 +171,28 @@
         "_expedition-ongoing",
         "_expedition-new",
         "_common-no_op"
+      ],
+      "variables": {
+        "safety": {
+          "type": "INT",
+          "value": "0"
+        }
+      },
+      "statements": [
+        // A safety switch to stop the system from getting stuck, 500 iterations
+        {
+          "actions": [
+            {
+              "type": "ADD",
+              "var": "safety",
+              "value": "1"
+            },
+            {
+              "condition": {"var":"safety", "is": "GREATER", "value": "500"},
+              "type": "MOVE", "value": "any_to_home", "args": {"toState": "${_route_from_expedition}"}
+            }
+          ]
+        }
       ]
     },
 
@@ -209,6 +231,27 @@
             {
               "type": "WAIT",
               "value": "1000"
+            },
+            {
+              "type": "REFRESH"
+            },
+            {
+              "condition": {
+                "is": "SCREEN",
+                "value": "menu-expedition-ongoing"
+              },
+              "type": "SET",
+              "var": "segment",
+              "value": "1"
+            },
+            {
+              "condition": {
+                "is": "SCREEN",
+                "value": "menu-expedition-new"
+              },
+              "type": "SET",
+              "var": "segment",
+              "value": "2"
             },
             {
               "type": "REPEAT"
@@ -547,9 +590,7 @@
               {
                 "is": "SCREEN",
                 "value": "menu-expedition-ongoing"
-              }
-            ],
-            "andOr": [
+              },
               {
                 "is": "SCREEN",
                 "value": "menu-expedition-item-0"

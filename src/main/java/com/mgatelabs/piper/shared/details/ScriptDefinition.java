@@ -25,6 +25,7 @@ public class ScriptDefinition {
     private List<String> imports;
     private List<VarDefinition> vars;
     private List<VarTierDefinition> varTiers;
+    private List<VarTabDefinition> varTabs;
     private Map<String, StateDefinition> states;
 
     @SuppressWarnings("unused")
@@ -56,6 +57,9 @@ public class ScriptDefinition {
         }
         if (varTiers == null) {
             varTiers = Lists.newArrayList();
+        }
+        if (varTabs == null) {
+            varTabs = Lists.newArrayList();
         }
         if (imports == null) {
             imports = Lists.newArrayList();
@@ -128,6 +132,14 @@ public class ScriptDefinition {
     @SuppressWarnings("unused")
     public void setVarTiers(List<VarTierDefinition> varTiers) {
         this.varTiers = varTiers;
+    }
+
+    public List<VarTabDefinition> getVarTabs() {
+        return varTabs;
+    }
+
+    public void setVarTabs(List<VarTabDefinition> varTabs) {
+        this.varTabs = varTabs;
     }
 
     public static ScriptDefinition read(String scriptId) {

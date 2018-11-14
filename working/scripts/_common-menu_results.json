@@ -47,7 +47,7 @@
     }
   ],
   "varTiers": [
-    {"title":"TMR%", "id":"tmr"}
+    {"title":"TMR%", "id":"tmr", "tabId": "stats"}
   ],
   "states": {
 

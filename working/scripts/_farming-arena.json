@@ -111,6 +111,19 @@
         {"name": "Yes", "value": "1"}
       ]
     }, {
+      "name" : "arena-rule-multi_abilities",
+      "display" : "Allow Multiple use abilities",
+      "value" : "1",
+      "type" : "INT",
+      "modify" : "EDITABLE",
+      "displayType" : "STANDARD",
+      "order" : 10,
+      "tierId": "arena-rules",
+      "values": [
+        {"name": "No", "value": "0"},
+        {"name": "Yes", "value": "1"}
+      ]
+    }, {
       "name" : "arena-rule-recovery",
       "display" : "Allow Recovery",
       "value" : "1",
@@ -282,8 +295,8 @@
     }
   ],
   "varTiers": [
-    {"title":"Arena", "id":"arena"},
-    {"title":"Arena Rules", "id":"arena-rules"}
+    {"title":"Arena", "id":"arena", "tabId":"arena"},
+    {"title":"Arena Rules", "id":"arena-rules", "tabId":"arena"}
   ],
   "states":{
 

@@ -10,7 +10,18 @@
       "displayType": "SECONDS"
     },
     {
-      "name": "_seconds",
+      "name": "_module",
+      "description": "Total Elspased Time while inside a module",
+      "value": "0",
+      "type": "INT",
+      "modify": "VISIBLE",
+      "display": "Module Time",
+      "tierId": "timers",
+      "displayType": "SECONDS"
+    },
+    {
+      "name": "_elapsed",
+      "description": "Total Elspased Time",
       "value": "0",
       "type": "INT",
       "modify": "VISIBLE",
@@ -20,6 +31,7 @@
     },
     {
       "name": "_loops",
+      "description": "Safety timer to stop operations after a long period",
       "value": "0",
       "type": "INT",
       "modify": "VISIBLE",
@@ -67,8 +79,8 @@
     }
   ],
   "varTiers": [
-    {"title":"OS", "id":"os"},
-    {"title":"Timers", "id":"timers"}
+    {"title":"OS", "id":"os", "tabId": "controls"},
+    {"title":"Timers", "id":"timers", "tabId": "stats"}
   ],
   "states": {
     "main": {
@@ -530,7 +542,12 @@
             {
               "type": "SET",
               "value": "0",
-              "var": "_seconds"
+              "var": "_module"
+            },
+            {
+              "type": "SET",
+              "value": "0",
+              "var": "_elapsed"
             },
             {
               "type": "INFO",
@@ -550,6 +567,23 @@
     },
     "@keepAlive": {
       "name": "Function - Keep Alive",
+      "statements": [
+        {
+          "actions": [
+            {
+              "type": "SET",
+              "var": "_loops",
+              "value": "0"
+            },
+            {
+              "type": "RETURN"
+            }
+          ]
+        }
+      ]
+    },
+    "@resetModuleTimer": {
+      "name": "Function - Reset Module Timer",
       "statements": [
         {
           "actions": [

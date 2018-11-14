@@ -152,11 +152,19 @@
     }
   ],
   "varTiers": [
+    {"title":"Stats", "id":"stats", "tabId":"stats"},
+    {"title":"Enable", "id":"enable", "tabId":"controls"},
+    {"title":"Farming", "id":"farm", "tabId":"farming"},
+    {"title":"Refresh", "id":"refresh", "tabId":"lapis"},
+    {"title":"Routes", "id":"state-route", "tabId":"controls"}
+  ],
+  "varTabs": [
     {"title":"Stats", "id":"stats"},
-    {"title":"Enable", "id":"enable"},
-    {"title":"Farming", "id":"farm"},
-    {"title":"Refresh", "id":"refresh"},
-    {"title":"Routes", "id":"state-route"}
+    {"title":"Arena", "id":"arena"},
+    {"title":"Farming", "id":"farming"},
+    {"title":"Lapis", "id":"lapis"},
+    {"title":"Raid", "id":"raid"},
+    {"title":"Controls", "id":"controls"}
   ],
   "imports": [
     "_common-no_op",
@@ -316,7 +324,7 @@
               {
                 "is": "GREATER",
                 "value": "${farm-timer}",
-                "var": "_seconds",
+                "var": "_module",
                 "or": [
                   {"is": "EQUAL", "var": "refresh-farm", "value": "0", "and": [ { "not": "CALL", "value":"@isMinEnergyAvailable" } ]}
                 ]
@@ -337,11 +345,6 @@
               "type": "SET",
               "var": "setup",
               "value": "0"
-            },
-            {
-              "type": "SET",
-              "value": "0",
-              "var": "_seconds"
             },
             {
               "type": "MOVE",
@@ -1008,6 +1011,12 @@
             {
               "type": "FINER",
               "value": "Looking for logic for ${toState}"
+            },
+            // Reset the module timer
+            {
+              "type": "SET",
+              "value": "0",
+              "var": "_module"
             }
           ]
         }

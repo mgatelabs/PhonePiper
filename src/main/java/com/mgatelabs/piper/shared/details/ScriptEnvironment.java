@@ -43,14 +43,16 @@ public final class ScriptEnvironment {
     private final Map<String, ExecutableLink> executionMap;
     private final Map<String, VarDefinition> varDefinitions;
     private final Map<String, VarTierDefinition> varTiers;
+    private final Map<String, VarTabDefinition> varTabs;
 
-    private ScriptEnvironment(List<ScriptDefinition> scriptDefinitions, Action action, Mode mode, Map<String, ExecutableLink> executionMap, Map<String, VarDefinition> varDefinitions, Map<String, VarTierDefinition> varTiers) {
+    private ScriptEnvironment(List<ScriptDefinition> scriptDefinitions, Action action, Mode mode, Map<String, ExecutableLink> executionMap, Map<String, VarDefinition> varDefinitions, Map<String, VarTierDefinition> varTiers, Map<String, VarTabDefinition> varTabs) {
         this.scriptDefinitions = ImmutableList.copyOf(scriptDefinitions);
         this.executionMap = ImmutableMap.copyOf(executionMap);
         this.action = action;
         this.mode = mode;
         this.varDefinitions = varDefinitions;
         this.varTiers = varTiers;
+        this.varTabs = varTabs;
     }
 
     public List<ScriptDefinition> getScriptDefinitions() {
@@ -71,6 +73,10 @@ public final class ScriptEnvironment {
 
     public Map<String, VarTierDefinition> getVarTiers() {
         return ImmutableMap.copyOf(varTiers);
+    }
+
+    public Map<String, VarTabDefinition> getVarTabs() {
+        return ImmutableMap.copyOf(varTabs);
     }
 
     public ImmutableMap<String, ExecutableLink> getExecutableStates(ImmutableSet<StateType> types) {
@@ -143,12 +149,19 @@ public final class ScriptEnvironment {
 
             // Build global variables and tiers from the highest override first.  Higher values will override lower variables
             Map<String, VarTierDefinition> foundVarTiers = Maps.newHashMap();
+            Map<String, VarTabDefinition> foundVarTabs = Maps.newHashMap();
             Map<String, VarDefinition> foundVars = Maps.newHashMap();
             for (ScriptDefinition scriptDefinition : scriptDefinitions) {
                 // Collect VarTiers
                 for (VarTierDefinition varTierDefinition : scriptDefinition.getVarTiers()) {
                     if (!foundVarTiers.containsKey(varTierDefinition.getId())) {
                         foundVarTiers.put(varTierDefinition.getId(), varTierDefinition);
+                    }
+                }
+                // Collect VarTabs
+                for (VarTabDefinition varTabDefinition : scriptDefinition.getVarTabs()) {
+                    if (!foundVarTabs.containsKey(varTabDefinition.getId())) {
+                        foundVarTabs.put(varTabDefinition.getId(), varTabDefinition);
                     }
                 }
                 // Collect Variables
@@ -177,7 +190,7 @@ public final class ScriptEnvironment {
                 executableLinks.remove(link.getId());
             }
 
-            return new ScriptEnvironment(scriptDefinitions, action, mode, executableLinks, foundVars, foundVarTiers);
+            return new ScriptEnvironment(scriptDefinitions, action, mode, executableLinks, foundVars, foundVarTiers, foundVarTabs);
         }
 
         /**

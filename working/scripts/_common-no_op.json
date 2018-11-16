@@ -511,7 +511,13 @@
           "actions": [
             {
               "type": "INFO",
-              "value": "Too many cycles, stopping run"
+              "value": "Too many cycles ${_loops}, stopping run"
+            },
+            // Reset the counter, so the app will run after turning it back on
+            {
+              "type": "SET",
+              "var": "_loops",
+              "value": "0"
             },
             {
               "type": "STOP",

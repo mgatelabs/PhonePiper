@@ -292,6 +292,16 @@
         {"name": "No", "value": "0"},
         {"name": "Yes", "value": "1"}
       ]
+    },
+    {
+      "name": "_route_from_arena",
+      "display": "After Arena",
+      "value": "EXPEDITION",
+      "type": "STRING",
+      "modify": "EDITABLE",
+      "order": 10,
+      "tierId": "state-route",
+      "description": "Where to go next after Arena is finished.  Default is EXPEDITION to check expeditions."
     }
   ],
   "varTiers": [
@@ -395,7 +405,7 @@
             {
               "type": "MOVE",
               "value": "any_to_home",
-              "args": {"toState": "EXPEDITION"}
+              "args": {"toState": "${_route_from_arena}"}
             }
           ]
         }
@@ -940,7 +950,7 @@
             },
             {
               "type": "SET",
-              "value": "EXTRA",
+              "value": "${_route_from_arena}",
               "var": "toState"
             },
             {
@@ -996,6 +1006,26 @@
             {
               "type": "MOVE",
               "value": "arena-home"
+            }
+          ]
+        },
+        {
+          "condition": {
+            "is": "GREATER",
+            "var": "_loops",
+            "value": "60"
+          },
+          "actions": [
+            {
+              "type": "INFO",
+              "value": "Could not find Arena screen, switching to ${_route_from_arena}"
+            },
+            {
+              "type": "MOVE",
+              "value": "any_to_home",
+              "args": {
+                "toState": "${_route_from_arena}"
+              }
             }
           ]
         }

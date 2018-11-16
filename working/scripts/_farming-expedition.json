@@ -94,8 +94,8 @@
             },
             {
               "type": "SET",
-              "value": "${_route_from_expedition}",
-              "var": "toState"
+              "var": "toState",
+              "value": "${_route_from_expedition}"
             },
             {
               "type": "REPEAT"
@@ -157,6 +157,26 @@
             {
               "type": "MOVE",
               "value": "expedition"
+            }
+          ]
+        },
+        {
+          "condition": {
+            "is": "GREATER",
+            "var": "_loops",
+            "value": "60"
+          },
+          "actions": [
+            {
+              "type": "INFO",
+              "value": "Could not find Expedition screen, switching to ${_route_from_expedition}"
+            },
+            {
+              "type": "MOVE",
+              "value": "any_to_home",
+              "args": {
+                "toState": "${_route_from_expedition}"
+              }
             }
           ]
         }

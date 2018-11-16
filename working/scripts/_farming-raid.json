@@ -100,6 +100,16 @@
       "order": 5,
       "tierId": "stats",
       "description": "How many RAID runs have been accomplished"
+    },
+    {
+      "name": "_route_from_raid",
+      "display": "After Raid",
+      "value": "ARENA",
+      "type": "STRING",
+      "modify": "EDITABLE",
+      "order": 10,
+      "tierId": "state-route",
+      "description": "Where to go next after Raid is finished.  Default is ARENA to Arena."
     }
   ],
   "varTiers": [
@@ -150,7 +160,7 @@
             },
             {
               "type": "SET",
-              "value": "ARENA",
+              "value": "${_route_from_raid}",
               "var": "toState"
             },
             {
@@ -619,13 +629,13 @@
           "actions": [
             {
               "type": "INFO",
-              "value": "Could not find Raid, switching to home"
+              "value": "Could not find Raid, switching to ${_route_from_raid}"
             },
             {
               "type": "MOVE",
               "value": "any_to_home",
               "args": {
-                "toState": "ARENA"
+                "toState": "${_route_from_raid}"
               }
             }
           ]

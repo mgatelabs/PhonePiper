@@ -159,6 +159,26 @@
               "value": "send_gifts"
             }
           ]
+        },
+        {
+          "condition": {
+            "is": "GREATER",
+            "var": "_loops",
+            "value": "60"
+          },
+          "actions": [
+            {
+              "type": "INFO",
+              "value": "Could not find Expedition screen, switching to ${_route_from_send_gifts}"
+            },
+            {
+              "type": "MOVE",
+              "value": "any_to_home",
+              "args": {
+                "toState": "${_route_from_send_gifts}"
+              }
+            }
+          ]
         }
       ]
     },

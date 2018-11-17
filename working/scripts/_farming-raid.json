@@ -105,6 +105,7 @@
       "name": "_route_from_raid",
       "display": "After Raid",
       "value": "ARENA",
+      "varValueId": "ROUTES",
       "type": "STRING",
       "modify": "EDITABLE",
       "order": 10,
@@ -114,6 +115,9 @@
   ],
   "varTiers": [
     {"title":"Raid", "id":"raid", "tabId":"raid"}
+  ],
+  "varValues": [
+    {"group":"ROUTES", "title":"Raid", "value":"RAID"}
   ],
   "states":{
 

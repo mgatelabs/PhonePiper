@@ -44,8 +44,9 @@ public final class ScriptEnvironment {
     private final Map<String, VarDefinition> varDefinitions;
     private final Map<String, VarTierDefinition> varTiers;
     private final Map<String, VarTabDefinition> varTabs;
+    private final Map<String, Set<VarValueDefinition>> varValues;
 
-    private ScriptEnvironment(List<ScriptDefinition> scriptDefinitions, Action action, Mode mode, Map<String, ExecutableLink> executionMap, Map<String, VarDefinition> varDefinitions, Map<String, VarTierDefinition> varTiers, Map<String, VarTabDefinition> varTabs) {
+    private ScriptEnvironment(List<ScriptDefinition> scriptDefinitions, Action action, Mode mode, Map<String, ExecutableLink> executionMap, Map<String, VarDefinition> varDefinitions, Map<String, VarTierDefinition> varTiers, Map<String, VarTabDefinition> varTabs, Map<String, Set<VarValueDefinition>> varValues) {
         this.scriptDefinitions = ImmutableList.copyOf(scriptDefinitions);
         this.executionMap = ImmutableMap.copyOf(executionMap);
         this.action = action;
@@ -53,6 +54,7 @@ public final class ScriptEnvironment {
         this.varDefinitions = varDefinitions;
         this.varTiers = varTiers;
         this.varTabs = varTabs;
+        this.varValues = varValues;
     }
 
     public List<ScriptDefinition> getScriptDefinitions() {
@@ -70,6 +72,24 @@ public final class ScriptEnvironment {
     public Map<String, VarDefinition> getVarDefinitions() {
         return ImmutableMap.copyOf(varDefinitions);
     }
+
+    public List<NameValuePair> getVarValues(String groupId) {
+        List<NameValuePair> list = Lists.newArrayList();
+        Set<VarValueDefinition> defs = varValues.get(groupId);
+        if (defs != null) {
+            for (VarValueDefinition varValueDefinition : defs) {
+                list.add(new NameValuePair(varValueDefinition.getTitle(), varValueDefinition.getValue()));
+            }
+            list.sort(new Comparator<NameValuePair>() {
+                @Override
+                public int compare(NameValuePair o1, NameValuePair o2) {
+                    return o1.getName().compareTo(o2.getName());
+                }
+            });
+        }
+        return ImmutableList.copyOf(list);
+    }
+
 
     public Map<String, VarTierDefinition> getVarTiers() {
         return ImmutableMap.copyOf(varTiers);
@@ -150,6 +170,7 @@ public final class ScriptEnvironment {
             // Build global variables and tiers from the highest override first.  Higher values will override lower variables
             Map<String, VarTierDefinition> foundVarTiers = Maps.newHashMap();
             Map<String, VarTabDefinition> foundVarTabs = Maps.newHashMap();
+            Map<String, Set<VarValueDefinition>> foundVarValues = Maps.newHashMap();
             Map<String, VarDefinition> foundVars = Maps.newHashMap();
             for (ScriptDefinition scriptDefinition : scriptDefinitions) {
                 // Collect VarTiers
@@ -163,6 +184,20 @@ public final class ScriptEnvironment {
                     if (!foundVarTabs.containsKey(varTabDefinition.getId())) {
                         foundVarTabs.put(varTabDefinition.getId(), varTabDefinition);
                     }
+                }
+                // Collect VarValues
+                for (VarValueDefinition varValueDefinition : scriptDefinition.getVarValues()) {
+                    Set<VarValueDefinition> list;
+                    if (!foundVarValues.containsKey(varValueDefinition.getGroup())) {
+                        foundVarValues.put(varValueDefinition.getGroup(), Sets.newTreeSet(new Comparator<VarValueDefinition>() {
+                            @Override
+                            public int compare(VarValueDefinition o1, VarValueDefinition o2) {
+                                return o1.getValue().compareTo(o2.getValue());
+                            }
+                        }));
+                    }
+                    list = foundVarValues.get(varValueDefinition.getGroup());
+                    list.add(varValueDefinition);
                 }
                 // Collect Variables
                 for (VarDefinition varDefinition : scriptDefinition.getVars()) {
@@ -190,7 +225,7 @@ public final class ScriptEnvironment {
                 executableLinks.remove(link.getId());
             }
 
-            return new ScriptEnvironment(scriptDefinitions, action, mode, executableLinks, foundVars, foundVarTiers, foundVarTabs);
+            return new ScriptEnvironment(scriptDefinitions, action, mode, executableLinks, foundVars, foundVarTiers, foundVarTabs, foundVarValues);
         }
 
         /**

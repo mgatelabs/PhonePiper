@@ -6,11 +6,15 @@
       "display": "After TMR Farming",
       "value": "RAID",
       "type": "STRING",
+      "varValueId": "ROUTES",
       "modify": "EDITABLE",
       "order": 10,
       "tierId": "state-route",
       "description": "Where to go next after TMR Farming is finished.  Default is RAID to Raid."
     }
+  ],
+  "varValues": [
+    {"group":"ROUTES", "title":"TMR Farm", "value":"FARM"}
   ],
   "states":{
 

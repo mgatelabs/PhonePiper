@@ -298,6 +298,7 @@
       "display": "After Arena",
       "value": "EXPEDITION",
       "type": "STRING",
+      "varValueId": "ROUTES",
       "modify": "EDITABLE",
       "order": 10,
       "tierId": "state-route",
@@ -307,6 +308,9 @@
   "varTiers": [
     {"title":"Arena", "id":"arena", "tabId":"arena"},
     {"title":"Arena Rules", "id":"arena-rules", "tabId":"arena"}
+  ],
+  "varValues": [
+    {"group":"ROUTES", "title":"Arena", "value":"ARENA"}
   ],
   "states":{
 

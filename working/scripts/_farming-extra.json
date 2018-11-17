@@ -6,11 +6,15 @@
       "display": "After Extra Wait",
       "value": "FARM",
       "type": "STRING",
+      "varValueId": "ROUTES",
       "modify": "EDITABLE",
       "order": 10,
       "tierId": "state-route",
       "description": "Where to go next after Waiting is finished.  Default is FARM to TMR Farm."
     }
+  ],
+  "varValues": [
+    {"group":"ROUTES", "title":"Wait", "value":"EXTRA"}
   ],
   "states": {
 

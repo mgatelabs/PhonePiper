@@ -17,12 +17,12 @@
     },
     {
       "name": "gift-date",
-      "display": "Gift Last Date",
+      "display": "Last Date",
       "value": "-1",
       "type": "INT",
       "modify": "VISIBLE",
       "order": 10,
-      "tierId": "stats",
+      "tierId": "stats-gifts",
       "description": "Last day gifts were sent on, gifts will not be sent on the same day (America/Los_Angeles time-zone)"
     },
     {
@@ -36,6 +36,9 @@
       "tierId": "state-route",
       "description": "Where to go next after Sending Gifts is finished.  Default is EXTRA to wait a while."
     }
+  ],
+  "varTiers": [
+    {"title":"Gifting", "id":"stats-gifts", "tabId":"stats"}
   ],
   "varValues": [
     {"group":"ROUTES", "title":"Send Gifts", "value":"GIFT"}

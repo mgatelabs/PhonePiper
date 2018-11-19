@@ -19,12 +19,12 @@
     },
     {
       "name": "expedition-finished",
-      "display": "Finsihed Expeditions",
+      "display": "Finished Expeditions",
       "value": "0",
       "type": "INT",
       "modify": "VISIBLE",
       "order": 10,
-      "tierId": "stats",
+      "tierId": "stats-expedition",
       "description": "How many expeditions have been completed"
     },
     {
@@ -34,7 +34,7 @@
       "type": "INT",
       "modify": "VISIBLE",
       "order": 10,
-      "tierId": "stats",
+      "tierId": "stats-expedition",
       "description": "How many expeditions have been started"
     },
     {
@@ -48,6 +48,9 @@
       "tierId": "state-route",
       "description": "Where to go next after Expeditions is finished.  Default is GIFT to send gifts."
     }
+  ],
+  "varTiers": [
+    {"title":"Expeditions", "id":"stats-expedition", "tabId":"stats"}
   ],
   "varValues": [
     {"group":"ROUTES", "title":"Expedition", "value":"EXPEDITION"}

@@ -312,6 +312,12 @@
 
     "farm-results": {
       "name": "Farm - Results",
+      "variables":{
+        "safety": {
+          "type": "INT",
+          "value": "0"
+        }
+      },
       "includes": [
         "_common-screen_saver",
         "_common_mr-points",
@@ -320,6 +326,31 @@
         "_common_mr-friend_request",
         "_farm-to_menu",
         "_common-no_op"
+      ],
+      "statements": [
+        // Safety script to tap, the next area if the screen pauses for 30 seconds, may two times
+        {
+          "condition": {
+            "is": "LESS",
+            "var": "safety",
+            "value": "2",
+            "and": [
+              {
+                "is": "GREATER",
+                "var": "_loops",
+                "value": "30"
+              }
+            ]
+          },
+          "actions": [
+            { "type": "ADD", "var": "safety", "value": "1"},
+            { "type": "INFO", "value": "Screen is pausing, attempting to click to continue #${safety}" },
+            { "type": "CALL", "value": "@keepAlive" },
+            { "type": "TAP", "value": "menu-results-next" },
+            { "type": "WAIT", "value": "500" },
+            { "type": "REPEAT" }
+          ]
+        }
       ]
     },
 

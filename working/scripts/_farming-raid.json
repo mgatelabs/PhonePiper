@@ -528,7 +528,6 @@
               "type": "INFO",
               "value": "Going to Banner"
             },
-            { "type": "CALL", "value": "@keepAlive" },
             {
               "type": "TAP",
               "value": "menu-home-special"
@@ -560,7 +559,6 @@
               "type": "INFO",
               "value": "Going to Event Link"
             },
-            { "type": "CALL", "value": "@keepAlive" },
             {
               "type": "TAP",
               "value": "menu-home-raid_event"
@@ -592,7 +590,6 @@
               "type": "INFO",
               "value": "Going to Vortex"
             },
-            { "type": "CALL", "value": "@keepAlive" },
             {
               "type": "TAP",
               "value": "menu-home-vortex"

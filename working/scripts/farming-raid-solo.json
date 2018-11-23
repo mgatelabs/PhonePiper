@@ -1,0 +1,594 @@
+{
+  "vars": [
+
+    {
+      "name": "raid-breaker-index",
+      "display": "Breaker Unit Index",
+      "value": "-1",
+      "type": "INT",
+      "modify": "EDITABLE",
+      "order": 0,
+      "tierId": "raid-breaker",
+      "values": [
+        {"name": "Off", "value": "-1"},
+        {"name": "1", "value": "0"},
+        {"name": "2", "value": "1"},
+        {"name": "3", "value": "2"},
+        {"name": "4", "value": "3"},
+        {"name": "5", "value": "4"}
+      ],
+      "description": "The unit index of your breaker"
+    },
+    {
+      "name": "raid-breaker-col",
+      "display": "Breaker Skill Column",
+      "value": "0",
+      "type": "INT",
+      "modify": "EDITABLE",
+      "order": 10,
+      "tierId": "raid-breaker",
+      "description": "The column location of the skill, 0 for left, 1 for right"
+    },
+    {
+      "name": "raid-breaker-row",
+      "display": "Breaker Skill Row",
+      "value": "0",
+      "type": "INT",
+      "modify": "EDITABLE",
+      "order": 10,
+      "tierId": "raid-breaker",
+      "description": "The row location of the skill, The first row is 0"
+    },
+    {
+      "name": "raid-thief-index",
+      "display": "Thief Unit Index",
+      "value": "-1",
+      "type": "INT",
+      "modify": "EDITABLE",
+      "order": 0,
+      "tierId": "raid-thief",
+      "values": [
+        {"name": "Off", "value": "-1"},
+        {"name": "1", "value": "0"},
+        {"name": "2", "value": "1"},
+        {"name": "3", "value": "2"},
+        {"name": "4", "value": "3"},
+        {"name": "5", "value": "4"}
+      ],
+      "description": "The unit index of your thief"
+    },
+    {
+      "name": "raid-thief-col",
+      "display": "Thief Skill Column",
+      "value": "0",
+      "type": "INT",
+      "modify": "EDITABLE",
+      "order": 10,
+      "tierId": "raid-thief",
+      "description": "The column location of the skill, 0 for left, 1 for right"
+    },
+    {
+      "name": "raid-thief-row",
+      "display": "Thief Skill Row",
+      "value": "0",
+      "type": "INT",
+      "modify": "EDITABLE",
+      "order": 10,
+      "tierId": "raid-thief",
+      "description": "The row location of the skill, The first row is 0"
+    },
+    {
+      "name": "raid-dmg-index",
+      "display": "Damage Unit Index",
+      "value": "0",
+      "type": "INT",
+      "modify": "EDITABLE",
+      "order": 0,
+      "tierId": "raid-dmg",
+      "values": [
+        {"name": "1", "value": "0"},
+        {"name": "2", "value": "1"},
+        {"name": "3", "value": "2"},
+        {"name": "4", "value": "3"},
+        {"name": "5", "value": "4"}
+      ],
+      "description": "The unit index of your damage dealer"
+    },
+    {
+      "name": "raid-dmg-col",
+      "display": "Damage Skill Column",
+      "value": "0",
+      "type": "INT",
+      "modify": "EDITABLE",
+      "order": 10,
+      "tierId": "raid-dmg",
+      "description": "The column location of the skill, 0 for left, 1 for right"
+    },
+    {
+      "name": "raid-dmg-row",
+      "display": "Damage Skill Row",
+      "value": "0",
+      "type": "INT",
+      "modify": "EDITABLE",
+      "order": 10,
+      "tierId": "raid-dmg",
+      "description": "The row location of the skill, The first row is 0"
+    },
+    {
+      "name": "raid-ex-1-index",
+      "display": "Extra Unit 1 Index",
+      "value": "-1",
+      "type": "INT",
+      "modify": "EDITABLE",
+      "order": 0,
+      "tierId": "raid-extra",
+      "values": [
+        {"name": "Off", "value": "-1"},
+        {"name": "1", "value": "0"},
+        {"name": "2", "value": "1"},
+        {"name": "3", "value": "2"},
+        {"name": "4", "value": "3"},
+        {"name": "5", "value": "4"},
+        {"name": "6 (Friend)", "value": "5"}
+      ],
+      "description": "The unit index of your extra attacker"
+    },
+    {
+      "name": "raid-ex-2-index",
+      "display": "Extra Unit 2 Index",
+      "value": "-1",
+      "type": "INT",
+      "modify": "EDITABLE",
+      "order": 0,
+      "tierId": "raid-extra",
+      "values": [
+        {"name": "Off", "value": "-1"},
+        {"name": "1", "value": "0"},
+        {"name": "2", "value": "1"},
+        {"name": "3", "value": "2"},
+        {"name": "4", "value": "3"},
+        {"name": "5", "value": "4"},
+        {"name": "6 (Friend)", "value": "5"}
+      ],
+      "description": "The unit index of your extra attacker"
+    },
+    {
+      "name": "raid-ex-3-index",
+      "display": "Extra Unit 3 Index",
+      "value": "-1",
+      "type": "INT",
+      "modify": "EDITABLE",
+      "order": 0,
+      "tierId": "raid-extra",
+      "values": [
+        {"name": "Off", "value": "-1"},
+        {"name": "1", "value": "0"},
+        {"name": "2", "value": "1"},
+        {"name": "3", "value": "2"},
+        {"name": "4", "value": "3"},
+        {"name": "5", "value": "4"},
+        {"name": "6 (Friend)", "value": "5"}
+      ],
+      "description": "The unit index of your extra attacker"
+    },
+    {
+      "name": "raid-ex-4-index",
+      "display": "Extra Unit 4 Index",
+      "value": "-1",
+      "type": "INT",
+      "modify": "EDITABLE",
+      "order": 0,
+      "tierId": "raid-extra",
+      "values": [
+        {"name": "Off", "value": "-1"},
+        {"name": "1", "value": "0"},
+        {"name": "2", "value": "1"},
+        {"name": "3", "value": "2"},
+        {"name": "4", "value": "3"},
+        {"name": "5", "value": "4"},
+        {"name": "6 (Friend)", "value": "5"}
+      ],
+      "description": "The unit index of your extra attacker"
+    }
+
+  ],
+  "varTiers": [
+    {"title":"Breaker", "id":"raid-breaker", "tabId":"raid"},
+    {"title":"Thief", "id":"raid-thief", "tabId":"raid"},
+    {"title":"Damage", "id":"raid-dmg", "tabId":"raid"},
+    {"title":"Extra", "id":"raid-extra", "tabId":"raid"}
+  ],
+  "imports": [],
+  "states": {
+
+    "raid-battle": {
+      "name": "Raid - Battle (Override)",
+      "includes": [
+        "_raid_battle-auto",
+        "_raid-battle-message",
+        "_raid-to_results",
+        "_common-no_op"
+      ],
+      "variables": {
+        "InLoop": {
+          "value": "0",
+          "type": "INT"
+        }
+      }
+    },
+    "_raid_battle-auto": {
+      "name": "Raid - Battle - Auto",
+      "statements": [
+        {
+          "condition": {
+            "is": "CALL",
+            "value": "@isBattleReady",
+            "and": [
+              {
+                "is": "EQUAL",
+                "value": "1",
+                "var":"InLoop"
+              }
+            ]
+          },
+          "actions": [
+            {
+              "type": "INFO",
+              "value": "Pressing Repeat, for speed purposes"
+            },
+            {
+              "type": "TAP",
+              "value": "battle-repeat"
+            },
+            {
+              "type": "SET",
+              "value": "0",
+              "var": "InLoop"
+            },
+            {
+              "type": "WAIT",
+              "value": "1200"
+            },
+            {
+              "type": "REPEAT",
+              "value": ""
+            }
+          ]
+        },
+        {
+          "condition": {
+            "is": "CALL",
+            "value": "@isBattleReady",
+            "and": [
+              {
+                "not": "EQUAL",
+                "var": "raid-breaker-index",
+                "value": "-1"
+              },
+              {
+                "is": "CALL",
+                "value": "@isUnitReady",
+                "args": {
+                  "index": "${raid-breaker-index}"
+                }
+              },
+              {
+                "is": "CALL",
+                "value": "@isUnitAtkReady",
+                "args": {
+                  "index": "${raid-breaker-index}"
+                }
+              }
+            ]
+          },
+          "actions": [
+            {
+              "type": "INFO",
+              "value": "Break Setup"
+            },
+            {
+              "type": "CALL",
+              "value": "@showUnitActions",
+              "args": {
+                "index": "${raid-breaker-index}"
+              }
+            },
+            {
+              "type": "CALL",
+              "value": "@selectUnitAction",
+              "args": {
+                "row": "${raid-breaker-row}",
+                "column": "${raid-breaker-col}"
+              }
+            },
+            {
+              "type": "WAIT",
+              "value": "400"
+            },
+            {
+              "type": "REPEAT",
+              "value": ""
+            }
+          ]
+        },
+        {
+          "condition": {
+            "is": "CALL",
+            "value": "@isBattleReady",
+            "and": [
+              {
+                "not": "EQUAL",
+                "var": "raid-thief-index",
+                "value": "-1"
+              },
+              {
+                "is": "CALL",
+                "value": "@isUnitReady",
+                "args": {
+                  "index": "${raid-thief-index}"
+                }
+              },
+              {
+                "is": "CALL",
+                "value": "@isUnitAtkReady",
+                "args": {
+                  "index": "${raid-thief-index}"
+                }
+              }
+            ]
+          },
+          "actions": [
+            {
+              "type": "INFO",
+              "value": "Thief Setup"
+            },
+            {
+              "type": "CALL",
+              "value": "@showUnitActions",
+              "args": {
+                "index": "${raid-thief-index}"
+              }
+            },
+            {
+              "type": "CALL",
+              "value": "@selectUnitAction",
+              "args": {
+                "row": "${raid-thief-row}",
+                "column": "${raid-thief-col}"
+              }
+            },
+            {
+              "type": "WAIT",
+              "value": "400"
+            },
+            {
+              "type": "REPEAT",
+              "value": ""
+            }
+          ]
+        },
+        {
+          "condition": {
+            "is": "CALL",
+            "value": "@isBattleReady",
+            "and": [
+              {
+                "is": "CALL",
+                "value": "@isUnitReady",
+                "args": {
+                  "index": "${raid-dmg-index}"
+                }
+              },
+              {
+                "is": "CALL",
+                "value": "@isUnitAtkReady",
+                "args": {
+                  "index": "${raid-dmg-index}"
+                }
+              }
+            ]
+          },
+          "actions": [
+            {
+              "type": "INFO",
+              "value": "Damage Setup"
+            },
+            {
+              "type": "CALL",
+              "value": "@showUnitActions",
+              "args": {
+                "index": "${raid-dmg-index}"
+              }
+            },
+            {
+              "type": "CALL",
+              "value": "@selectUnitAction",
+              "args": {
+                "row": "${raid-dmg-row}",
+                "column": "${raid-dmg-col}"
+              }
+            },
+            {
+              "type": "WAIT",
+              "value": "400"
+            },
+            {
+              "type": "REPEAT",
+              "value": ""
+            }
+          ]
+        },
+        {
+          "condition": {
+            "is": "CALL",
+            "value": "@isBattleReady",
+            "and": [
+              {
+                "is": "CALL",
+                "value": "@isUnitActionReady",
+                "args": {
+                  "index": "${raid-dmg-index}"
+                }
+              }
+            ]
+          },
+          "actions": [
+            {
+              "type": "INFO",
+              "value": "Fighting"
+            },
+            {
+              "type": "BATCH",
+              "value": "START"
+            },
+            {
+              "condition": {
+                "not": "EQUAL",
+                "var": "raid-breaker-index",
+                "value": "-1"
+              },
+              "type": "INFO",
+              "value": "Breaking"
+            },
+            {
+              "condition": {
+                "not": "EQUAL",
+                "var": "raid-breaker-index",
+                "value": "-1"
+              },
+              "type": "CALL",
+              "value": "@tapUnit",
+              "args": {
+                "index": "${raid-breaker-index}"
+              }
+            },
+            {
+              "condition": {
+                "not": "EQUAL",
+                "var": "raid-thief-index",
+                "value": "-1"
+              },
+              "type": "INFO",
+              "value": "Stealing"
+            },
+            {
+              "condition": {
+                "not": "EQUAL",
+                "var": "raid-thief-index",
+                "value": "-1"
+              },
+              "type": "CALL",
+              "value": "@tapUnit",
+              "args": {
+                "index": "${raid-thief-index}"
+              }
+            },
+            {
+              "type": "INFO",
+              "value": "Blasting"
+            },
+            {
+              "type": "CALL",
+              "value": "@tapUnit",
+              "args": {
+                "index": "${raid-dmg-index}"
+              }
+            },
+            {
+              "condition": {
+                "not": "EQUAL",
+                "var": "raid-ex-1-index",
+                "value": "-1"
+              },
+              "type": "INFO",
+              "value": "Extra Attack 1"
+            },
+            {
+              "condition": {
+                "not": "EQUAL",
+                "var": "raid-ex-1-index",
+                "value": "-1"
+              },
+              "type": "CALL",
+              "value": "@tapUnit",
+              "args": {
+                "index": "${raid-ex-1-index}"
+              }
+            },
+            {
+              "condition": {
+                "not": "EQUAL",
+                "var": "raid-ex-2-index",
+                "value": "-1"
+              },
+              "type": "INFO",
+              "value": "Extra Attack 2"
+            },
+            {
+              "condition": {
+                "not": "EQUAL",
+                "var": "raid-ex-2-index",
+                "value": "-1"
+              },
+              "type": "CALL",
+              "value": "@tapUnit",
+              "args": {
+                "index": "${raid-ex-2-index}"
+              }
+            },
+            {
+              "condition": {
+                "not": "EQUAL",
+                "var": "raid-ex-3-index",
+                "value": "-1"
+              },
+              "type": "INFO",
+              "value": "Extra Attack 3"
+            },
+            {
+              "condition": {
+                "not": "EQUAL",
+                "var": "raid-ex-3-index",
+                "value": "-1"
+              },
+              "type": "CALL",
+              "value": "@tapUnit",
+              "args": {
+                "index": "${raid-ex-3-index}"
+              }
+            },
+            {
+              "condition": {
+                "not": "EQUAL",
+                "var": "raid-ex-4-index",
+                "value": "-1"
+              },
+              "type": "INFO",
+              "value": "Extra Attack 4"
+            },
+            {
+              "condition": {
+                "not": "EQUAL",
+                "var": "raid-ex-4-index",
+                "value": "-1"
+              },
+              "type": "CALL",
+              "value": "@tapUnit",
+              "args": {
+                "index": "${raid-ex-4-index}"
+              }
+            },
+            {
+              "type": "BATCH",
+              "value": "END"
+            },
+            {
+              "type": "REPEAT",
+              "value": ""
+            }
+          ]
+        }
+      ]
+    }
+  }
+}

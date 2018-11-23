@@ -513,6 +513,26 @@
       "statements": [
         {
           "condition": {
+            "is": "GREATER",
+            "var": "_loops",
+            "value": "60"
+          },
+          "actions": [
+            {
+              "type": "INFO",
+              "value": "Could not find Raid, switching to ${_route_from_raid}"
+            },
+            {
+              "type": "MOVE",
+              "value": "any_to_home",
+              "args": {
+                "toState": "${_route_from_raid}"
+              }
+            }
+          ]
+        },
+        {
+          "condition": {
             "is": "SCREEN",
             "value": "menu-home",
             "and": [
@@ -618,26 +638,6 @@
             {
               "type": "MOVE",
               "value": "raid-home"
-            }
-          ]
-        },
-        {
-          "condition": {
-            "is": "GREATER",
-            "var": "_loops",
-            "value": "60"
-          },
-          "actions": [
-            {
-              "type": "INFO",
-              "value": "Could not find Raid, switching to ${_route_from_raid}"
-            },
-            {
-              "type": "MOVE",
-              "value": "any_to_home",
-              "args": {
-                "toState": "${_route_from_raid}"
-              }
             }
           ]
         }

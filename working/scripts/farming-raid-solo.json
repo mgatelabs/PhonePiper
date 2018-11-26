@@ -27,7 +27,11 @@
       "modify": "EDITABLE",
       "order": 10,
       "tierId": "raid-breaker",
-      "description": "The column location of the skill, 0 for left, 1 for right"
+      "description": "The column location of the skill, 0 for left, 1 for right",
+      "values": [
+        {"name": "Left", "value": "0"},
+        {"name": "Right", "value": "1"}
+      ]
     },
     {
       "name": "raid-breaker-row",
@@ -65,7 +69,11 @@
       "modify": "EDITABLE",
       "order": 10,
       "tierId": "raid-thief",
-      "description": "The column location of the skill, 0 for left, 1 for right"
+      "description": "The column location of the skill, 0 for left, 1 for right",
+      "values": [
+        {"name": "Left", "value": "0"},
+        {"name": "Right", "value": "1"}
+      ]
     },
     {
       "name": "raid-thief-row",
@@ -102,7 +110,11 @@
       "modify": "EDITABLE",
       "order": 10,
       "tierId": "raid-dmg",
-      "description": "The column location of the skill, 0 for left, 1 for right"
+      "description": "The column location of the skill, 0 for left, 1 for right",
+      "values": [
+        {"name": "Left", "value": "0"},
+        {"name": "Right", "value": "1"}
+      ]
     },
     {
       "name": "raid-dmg-row",

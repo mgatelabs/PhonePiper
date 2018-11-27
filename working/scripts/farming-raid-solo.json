@@ -246,11 +246,11 @@
           "actions": [
             {
               "type": "INFO",
-              "value": "Pressing Repeat, for speed purposes"
+              "value": "Pressing Reload, for speed purposes"
             },
             {
               "type": "TAP",
-              "value": "battle-repeat"
+              "value": "battle-reload"
             },
             {
               "type": "SET",

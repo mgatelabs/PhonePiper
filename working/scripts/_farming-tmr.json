@@ -480,7 +480,24 @@
         "_farm-to_menu",
         "_common-no_op"
       ],
+      "variables": {
+        "_first": {
+          "type": "INT",
+          "value": "0"
+        }
+      },
       "statements": [
+        {
+          "condition": {
+            "is": "EQUAL",
+            "var": "_first",
+            "value": "0"
+          },
+          "actions": [
+            { "type": "CALL", "value": "@keepAlive" },
+            { "type": "SET", "var": "_first", "value": "1"}
+          ]
+        },
         // Why is this here?
         {
           "condition": {

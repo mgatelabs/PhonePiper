@@ -223,7 +223,7 @@ $(function(){
                 if (data.variables.length > 0) {
                     for (i = 0; i < data.variables.length; i++) {
                         item = data.variables[i];
-                        if (linkedVariables[item.name])
+                        if (linkedVariables[item.name] && !linkedVariables[item.name].is(":focus"))
                             linkedVariables[item.name].val(formatVariable(item));
                     }
                 }
@@ -451,7 +451,7 @@ $(function(){
                             .appendTo(grp);
 
                         if (item.values && item.values.length > 0) {
-                            gen = $('<select class="form-control notWhileRunning"></select>');
+                            gen = $('<select class="form-control notWhileRunning updateVariable"></select>');
                             for (valueLoop = 0; valueLoop < item.values.length; valueLoop++) {
                                 gen.append($('<option></option>').text(item.values[valueLoop].name).attr('value', item.values[valueLoop].value));
                             }

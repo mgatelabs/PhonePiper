@@ -498,38 +498,23 @@
             { "type": "SET", "var": "_first", "value": "1"}
           ]
         },
-        // Why is this here?
-        {
+        { // After 5 minutes of trying, give up
           "condition": {
-            "is": "SCREEN",
-            "value": "battle-menu"
+            "is": "GREATER",
+            "var": "_loops",
+            "value": "300"
           },
           "actions": [
             {
               "type": "INFO",
-              "value": "Returning to Battle"
-            },
-            { "type": "CALL", "value": "@keepAlive" },
-            {
-              "type": "ADD",
-              "var": "raid_runs",
-              "value": "1"
-            },
-            {
-              "type": "TAP",
-              "value": "battle-menu-back"
-            },
-            {
-              "type": "WAIT",
-              "value": "5000"
+              "value": "Could not find farming location, switching to ${_route_from_tmr}"
             },
             {
               "type": "MOVE",
-              "value": "raid-battle"
-            },
-            {
-              "type": "REPEAT",
-              "value": ""
+              "value": "any_to_home",
+              "args": {
+                "toState": "${_route_from_tmr}"
+              }
             }
           ]
         },
@@ -543,7 +528,6 @@
               "type": "INFO",
               "value": "Going to World"
             },
-            { "type": "CALL", "value": "@keepAlive" },
             {
               "type": "TAP",
               "value": "menu-worlds"
@@ -572,7 +556,6 @@
               "var": "setup",
               "value": "0"
             },
-            { "type": "CALL", "value": "@keepAlive" },
             {
               "type": "TAP",
               "value": "menu-location-earthshrine-default"
@@ -602,7 +585,6 @@
               "var": "setup",
               "value": "0"
             },
-            { "type": "CALL", "value": "@keepAlive" },
             {
               "type": "SLOW_RIGHT",
               "value": "screen-center-large",
@@ -651,7 +633,6 @@
               "var": "setup",
               "value": "0"
             },
-            { "type": "CALL", "value": "@keepAlive" },
             {
               "type": "TAP",
               "value": "menu-island-grandshelt_isles"
@@ -681,7 +662,6 @@
               "var": "setup",
               "value": "0"
             },
-            { "type": "CALL", "value": "@keepAlive" },
             {
               "type": "SLOW_LEFT",
               "value": "screen-center-large",
@@ -711,7 +691,6 @@
               "type": "INFO",
               "value": "Found Paladia, Getting back to Lapis"
             },
-            { "type": "CALL", "value": "@keepAlive" },
             {
               "type": "TAP",
               "value": "menu-world-to_lapis"
@@ -768,6 +747,7 @@
               "type": "INFO",
               "value": "Found Mission Select"
             },
+            { "type": "CALL", "value": "@keepAlive" },
             {
               "type": "MOVE",
               "value": "farm-menu"

@@ -2,7 +2,7 @@
   "vars": [
 
     {
-      "name": "unit0-job",
+      "name": "raid-unit0-job",
       "display": "Unit 1 Job",
       "value": "-1",
       "type": "INT",
@@ -17,7 +17,7 @@
       "description": "The job for unit 1"
     },
     {
-      "name": "unit0-col",
+      "name": "raid-unit0-col",
       "display": "Unit 1 Ability Column",
       "value": "0",
       "type": "INT",
@@ -31,7 +31,7 @@
       ]
     },
     {
-      "name": "unit0-row",
+      "name": "raid-unit0-row",
       "display": "Unit 1 Ability Row",
       "value": "0",
       "type": "INT",
@@ -42,7 +42,7 @@
     },
 
     {
-      "name": "unit1-job",
+      "name": "raid-unit1-job",
       "display": "Unit 2 Job",
       "value": "-1",
       "type": "INT",
@@ -57,7 +57,7 @@
       "description": "The job for unit 2"
     },
     {
-      "name": "unit1-col",
+      "name": "raid-unit1-col",
       "display": "Unit 2 Ability Column",
       "value": "0",
       "type": "INT",
@@ -71,7 +71,7 @@
       ]
     },
     {
-      "name": "unit1-row",
+      "name": "raid-unit1-row",
       "display": "Unit 2 Ability Row",
       "value": "0",
       "type": "INT",
@@ -83,7 +83,7 @@
 
 
     {
-      "name": "unit2-job",
+      "name": "raid-unit2-job",
       "display": "Unit 3 Job",
       "value": "-1",
       "type": "INT",
@@ -98,7 +98,7 @@
       "description": "The job for unit 3"
     },
     {
-      "name": "unit2-col",
+      "name": "raid-unit2-col",
       "display": "Unit 3 Ability Column",
       "value": "0",
       "type": "INT",
@@ -112,7 +112,7 @@
       ]
     },
     {
-      "name": "unit2-row",
+      "name": "raid-unit2-row",
       "display": "Unit 3 Ability Row",
       "value": "0",
       "type": "INT",
@@ -124,7 +124,7 @@
 
 
     {
-      "name": "unit3-job",
+      "name": "raid-unit3-job",
       "display": "Unit 4 Job",
       "value": "-1",
       "type": "INT",
@@ -139,7 +139,7 @@
       "description": "The job for unit 4"
     },
     {
-      "name": "unit3-col",
+      "name": "raid-unit3-col",
       "display": "Unit 4 Ability Column",
       "value": "0",
       "type": "INT",
@@ -153,7 +153,7 @@
       ]
     },
     {
-      "name": "unit3-row",
+      "name": "raid-unit3-row",
       "display": "Unit 4 Ability Row",
       "value": "0",
       "type": "INT",
@@ -165,7 +165,7 @@
 
 
     {
-      "name": "unit4-job",
+      "name": "raid-unit4-job",
       "display": "Unit 5 Job",
       "value": "-1",
       "type": "INT",
@@ -180,7 +180,7 @@
       "description": "The job for unit 5"
     },
     {
-      "name": "unit4-col",
+      "name": "raid-unit4-col",
       "display": "Unit 5 Ability Column",
       "value": "0",
       "type": "INT",
@@ -194,7 +194,7 @@
       ]
     },
     {
-      "name": "unit4-row",
+      "name": "raid-unit4-row",
       "display": "Unit 5 Ability Row",
       "value": "0",
       "type": "INT",
@@ -205,7 +205,7 @@
     },
 
     {
-      "name": "tap-0",
+      "name": "raid-tap-0",
       "display": "1st Tap",
       "value": "-1",
       "type": "INT",
@@ -224,7 +224,7 @@
       "description": "The job for unit 1"
     },
     {
-      "name": "tap-1",
+      "name": "raid-tap-1",
       "display": "2nd Tap",
       "value": "-1",
       "type": "INT",
@@ -243,7 +243,7 @@
       "description": "The job for unit 1"
     },
     {
-      "name": "tap-2",
+      "name": "raid-tap-2",
       "display": "3rd Tap",
       "value": "-1",
       "type": "INT",
@@ -262,7 +262,7 @@
       "description": "The job for unit 1"
     },
     {
-      "name": "tap-3",
+      "name": "raid-tap-3",
       "display": "4th Tap",
       "value": "-1",
       "type": "INT",
@@ -281,7 +281,7 @@
       "description": "The job for unit 1"
     },
     {
-      "name": "tap-4",
+      "name": "raid-tap-4",
       "display": "5th Tap",
       "value": "-1",
       "type": "INT",
@@ -300,7 +300,7 @@
       "description": "The job for unit 1"
     },
     {
-      "name": "tap-5",
+      "name": "raid-tap-5",
       "display": "6th Tap",
       "value": "-1",
       "type": "INT",
@@ -349,6 +349,92 @@
       }
     },
 
+    "@raid-setup-unit": {
+      "name": "Raid - Battle - Unit Setup",
+      "variables": {
+        "index": {
+          "value": "0",
+          "type": "INT"
+        },
+        "job": {
+          "value": "0",
+          "type": "INT"
+        },
+        "skill-row": {
+          "value": "0",
+          "type": "INT"
+        },
+        "skill-column": {
+          "value": "0",
+          "type": "INT"
+        }
+      },
+      "statements": [
+
+        {
+          "condition": {
+            "is": "CALL",
+            "value": "@isBattleReady",
+            "and": [
+              {
+                "is": "EQUAL",
+                "var": "job",
+                "value": "1"
+              },
+              {
+                "is": "CALL",
+                "value": "@isUnitReady",
+                "args": {
+                  "index": "${index}"
+                }
+              },
+              {
+                "is": "CALL",
+                "value": "@isUnitAtkReady",
+                "args": {
+                  "index": "${index}"
+                }
+              }
+            ]
+          },
+          "actions": [
+            {
+              "type": "INFO",
+              "value": "Unit ${index} Setup"
+            },
+            {
+              "type": "CALL",
+              "value": "@showUnitActions",
+              "args": {
+                "index": "${index}"
+              }
+            },
+            {
+              "type": "CALL",
+              "value": "@selectUnitAction",
+              "args": {
+                "row": "${skill-row}",
+                "column": "${skill-column}"
+              }
+            },
+            {
+              "type": "RETURN",
+              "value": "1"
+            }
+          ]
+        },
+        {
+          "actions": [
+            {
+              "type": "RETURN",
+              "value": "0"
+            }
+          ]
+        }
+
+      ]
+    },
+
     "_raid_battle-setup": {
       "name": "Raid - Battle - Auto",
       "statements": [
@@ -392,288 +478,87 @@
         {
           "condition": {
             "is": "CALL",
-            "value": "@isBattleReady",
-            "and": [
-              {
-                "not": "EQUAL",
-                "var": "raid-unit0",
-                "value": "1"
-              },
-              {
-                "is": "CALL",
-                "value": "@isUnitReady",
-                "args": {
-                  "index": "0"
-                }
-              },
-              {
-                "is": "CALL",
-                "value": "@isUnitAtkReady",
-                "args": {
-                  "index": "0"
-                }
-              }
-            ]
+            "value": "@raid-setup-unit",
+            "args": {
+              "index": "0",
+              "job": "${raid-unit0-job}",
+              "skill-row": "${raid-unit0-row}",
+              "skill-column": "${raid-unit0-col}"
+            }
           },
           "actions": [
-            {
-              "type": "INFO",
-              "value": "Unit 0 Setup"
-            },
-            {
-              "type": "CALL",
-              "value": "@showUnitActions",
-              "args": {
-                "index": "0"
-              }
-            },
-            {
-              "type": "CALL",
-              "value": "@selectUnitAction",
-              "args": {
-                "row": "${unit0-row}",
-                "column": "${unit0-col}"
-              }
-            },
-            {
-              "type": "WAIT",
-              "value": "400"
-            },
-            {
-              "type": "REPEAT",
-              "value": ""
-            }
+            { "type": "WAIT", "value": "400" },
+            { "type": "REPEAT", "value": "" }
           ]
         },
         // Unit 1
         {
           "condition": {
             "is": "CALL",
-            "value": "@isBattleReady",
-            "and": [
-              {
-                "not": "EQUAL",
-                "var": "raid-unit1",
-                "value": "1"
-              },
-              {
-                "is": "CALL",
-                "value": "@isUnitReady",
-                "args": {
-                  "index": "1"
-                }
-              },
-              {
-                "is": "CALL",
-                "value": "@isUnitAtkReady",
-                "args": {
-                  "index": "1"
-                }
-              }
-            ]
+            "value": "@raid-setup-unit",
+            "args": {
+              "index": "1",
+              "job": "${raid-unit1-job}",
+              "skill-row": "${raid-unit1-row}",
+              "skill-column": "${raid-unit1-col}"
+            }
           },
           "actions": [
-            {
-              "type": "INFO",
-              "value": "Unit 2 Setup"
-            },
-            {
-              "type": "CALL",
-              "value": "@showUnitActions",
-              "args": {
-                "index": "1"
-              }
-            },
-            {
-              "type": "CALL",
-              "value": "@selectUnitAction",
-              "args": {
-                "row": "${unit1-row}",
-                "column": "${unit1-col}"
-              }
-            },
-            {
-              "type": "WAIT",
-              "value": "400"
-            },
-            {
-              "type": "REPEAT",
-              "value": ""
-            }
+            { "type": "WAIT", "value": "400" },
+            { "type": "REPEAT", "value": "" }
           ]
         },
         // Unit 2
         {
           "condition": {
             "is": "CALL",
-            "value": "@isBattleReady",
-            "and": [
-              {
-                "not": "EQUAL",
-                "var": "raid-unit2",
-                "value": "1"
-              },
-              {
-                "is": "CALL",
-                "value": "@isUnitReady",
-                "args": {
-                  "index": "2"
-                }
-              },
-              {
-                "is": "CALL",
-                "value": "@isUnitAtkReady",
-                "args": {
-                  "index": "2"
-                }
-              }
-            ]
+            "value": "@raid-setup-unit",
+            "args": {
+              "index": "2",
+              "job": "${raid-unit2-job}",
+              "skill-row": "${raid-unit2-row}",
+              "skill-column": "${raid-unit2-col}"
+            }
           },
           "actions": [
-            {
-              "type": "INFO",
-              "value": "Unit 3 Setup"
-            },
-            {
-              "type": "CALL",
-              "value": "@showUnitActions",
-              "args": {
-                "index": "2"
-              }
-            },
-            {
-              "type": "CALL",
-              "value": "@selectUnitAction",
-              "args": {
-                "row": "${unit2-row}",
-                "column": "${unit2-col}"
-              }
-            },
-            {
-              "type": "WAIT",
-              "value": "400"
-            },
-            {
-              "type": "REPEAT",
-              "value": ""
-            }
+            { "type": "WAIT", "value": "400" },
+            { "type": "REPEAT", "value": "" }
           ]
         },
         // Unit 3
         {
           "condition": {
             "is": "CALL",
-            "value": "@isBattleReady",
-            "and": [
-              {
-                "not": "EQUAL",
-                "var": "raid-unit3",
-                "value": "1"
-              },
-              {
-                "is": "CALL",
-                "value": "@isUnitReady",
-                "args": {
-                  "index": "3"
-                }
-              },
-              {
-                "is": "CALL",
-                "value": "@isUnitAtkReady",
-                "args": {
-                  "index": "3"
-                }
-              }
-            ]
+            "value": "@raid-setup-unit",
+            "args": {
+              "index": "3",
+              "job": "${raid-unit3-job}",
+              "skill-row": "${raid-unit3-row}",
+              "skill-column": "${raid-unit3-col}"
+            }
           },
           "actions": [
-            {
-              "type": "INFO",
-              "value": "Unit 4 Setup"
-            },
-            {
-              "type": "CALL",
-              "value": "@showUnitActions",
-              "args": {
-                "index": "3"
-              }
-            },
-            {
-              "type": "CALL",
-              "value": "@selectUnitAction",
-              "args": {
-                "row": "${unit3-row}",
-                "column": "${unit3-col}"
-              }
-            },
-            {
-              "type": "WAIT",
-              "value": "400"
-            },
-            {
-              "type": "REPEAT",
-              "value": ""
-            }
+            { "type": "WAIT", "value": "400" },
+            { "type": "REPEAT", "value": "" }
           ]
         },
         // Unit 4
         {
           "condition": {
             "is": "CALL",
-            "value": "@isBattleReady",
-            "and": [
-              {
-                "not": "EQUAL",
-                "var": "raid-unit4",
-                "value": "1"
-              },
-              {
-                "is": "CALL",
-                "value": "@isUnitReady",
-                "args": {
-                  "index": "4"
-                }
-              },
-              {
-                "is": "CALL",
-                "value": "@isUnitAtkReady",
-                "args": {
-                  "index": "4"
-                }
-              }
-            ]
+            "value": "@raid-setup-unit",
+            "args": {
+              "index": "4",
+              "job": "${raid-unit4-job}",
+              "skill-row": "${raid-unit4-row}",
+              "skill-column": "${raid-unit4-col}"
+            }
           },
           "actions": [
-            {
-              "type": "INFO",
-              "value": "Unit 5 Setup"
-            },
-            {
-              "type": "CALL",
-              "value": "@showUnitActions",
-              "args": {
-                "index": "4"
-              }
-            },
-            {
-              "type": "CALL",
-              "value": "@selectUnitAction",
-              "args": {
-                "row": "${unit4-row}",
-                "column": "${unit4-col}"
-              }
-            },
-            {
-              "type": "WAIT",
-              "value": "400"
-            },
-            {
-              "type": "REPEAT",
-              "value": ""
-            }
+            { "type": "WAIT", "value": "400" },
+            { "type": "REPEAT", "value": "" }
           ]
         }
-
       ]
     },
 
@@ -698,73 +583,73 @@
             {
               "condition": {
                 "not": "EQUAL",
-                "var": "tap-0",
+                "var": "raid-tap-0",
                 "value": "-1"
               },
               "type": "CALL",
               "value": "@tapUnit",
               "args": {
-                "index": "${tap-0}"
+                "index": "${raid-tap-0}"
               }
             },
             {
               "condition": {
                 "not": "EQUAL",
-                "var": "tap-1",
+                "var": "raid-tap-1",
                 "value": "-1"
               },
               "type": "CALL",
               "value": "@tapUnit",
               "args": {
-                "index": "${tap-1}"
+                "index": "${raid-tap-1}"
               }
             },
             {
               "condition": {
                 "not": "EQUAL",
-                "var": "tap-2",
+                "var": "raid-tap-2",
                 "value": "-1"
               },
               "type": "CALL",
               "value": "@tapUnit",
               "args": {
-                "index": "${tap-2}"
+                "index": "${raid-tap-2}"
               }
             },
             {
               "condition": {
                 "not": "EQUAL",
-                "var": "tap-3",
+                "var": "raid-tap-3",
                 "value": "-1"
               },
               "type": "CALL",
               "value": "@tapUnit",
               "args": {
-                "index": "${tap-3}"
+                "index": "${raid-tap-3}"
               }
             },
             {
               "condition": {
                 "not": "EQUAL",
-                "var": "tap-4",
+                "var": "raid-tap-4",
                 "value": "-1"
               },
               "type": "CALL",
               "value": "@tapUnit",
               "args": {
-                "index": "${tap-4}"
+                "index": "${raid-tap-4}"
               }
             },
             {
               "condition": {
                 "not": "EQUAL",
-                "var": "tap-5",
+                "var": "raid-tap-5",
                 "value": "-1"
               },
               "type": "CALL",
               "value": "@tapUnit",
               "args": {
-                "index": "${tap-5}"
+                "index": "${raid-tap-5}"
               }
             },
             {

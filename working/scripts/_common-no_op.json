@@ -288,6 +288,26 @@
         {
           "condition": {
             "is": "SCREEN",
+            "value": "menu-arena-event_ended"
+          },
+          "actions": [
+            {
+              "type": "TAP",
+              "value": "menu-arena-event_ended-ok"
+            },
+            {
+              "type": "WAIT",
+              "value": "1500"
+            },
+            {
+              "type": "REPEAT",
+              "value": ""
+            }
+          ]
+        },
+        {
+          "condition": {
+            "is": "SCREEN",
             "value": "menu-logo"
           },
           "actions": [

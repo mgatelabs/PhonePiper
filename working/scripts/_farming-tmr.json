@@ -765,7 +765,7 @@
     },
 
     "_farm-menu-friends": {
-      "name": "Farm - Menu - Depart",
+      "name": "Farm - Menu - Friends",
       "includes": [
         "_common-ml-friend_0",
         "_common-ml-friend_none"

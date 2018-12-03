@@ -292,11 +292,25 @@
         {"name": "No", "value": "0"},
         {"name": "Yes", "value": "1"}
       ]
+    },
+    {
+      "name": "_route_from_arena",
+      "display": "After Arena",
+      "value": "EXPEDITION",
+      "type": "STRING",
+      "varValueId": "ROUTES",
+      "modify": "EDITABLE",
+      "order": 10,
+      "tierId": "state-route",
+      "description": "Where to go next after Arena is finished.  Default is EXPEDITION to check expeditions."
     }
   ],
   "varTiers": [
     {"title":"Arena", "id":"arena", "tabId":"arena"},
     {"title":"Arena Rules", "id":"arena-rules", "tabId":"arena"}
+  ],
+  "varValues": [
+    {"group":"ROUTES", "title":"Arena", "value":"ARENA"}
   ],
   "states":{
 
@@ -395,7 +409,7 @@
             {
               "type": "MOVE",
               "value": "any_to_home",
-              "args": {"toState": "EXPEDITION"}
+              "args": {"toState": "${_route_from_arena}"}
             }
           ]
         }
@@ -940,7 +954,7 @@
             },
             {
               "type": "SET",
-              "value": "EXTRA",
+              "value": "${_route_from_arena}",
               "var": "toState"
             },
             {
@@ -957,7 +971,24 @@
         "_home_daily_fixes",
         "_common-no_op"
       ],
+      "variables": {
+        "_first": {
+          "type": "INT",
+          "value": "0"
+        }
+      },
       "statements": [
+        {
+          "condition": {
+            "is": "EQUAL",
+            "var": "_first",
+            "value": "0"
+          },
+          "actions": [
+            { "type": "CALL", "value": "@keepAlive" },
+            { "type": "SET", "var": "_first", "value": "1"}
+          ]
+        },
         {
           "condition": {
             "is": "SCREEN",
@@ -996,6 +1027,26 @@
             {
               "type": "MOVE",
               "value": "arena-home"
+            }
+          ]
+        },
+        {
+          "condition": {
+            "is": "GREATER",
+            "var": "_loops",
+            "value": "60"
+          },
+          "actions": [
+            {
+              "type": "INFO",
+              "value": "Could not find Arena screen, switching to ${_route_from_arena}"
+            },
+            {
+              "type": "MOVE",
+              "value": "any_to_home",
+              "args": {
+                "toState": "${_route_from_arena}"
+              }
             }
           ]
         }

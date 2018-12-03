@@ -1145,6 +1145,9 @@ public class ScriptRunner {
                     }
                     final VarDefinition copy = new VarDefinition(varDefinition);
                     copy.setValue(var.toString());
+                    if (varDefinition.getVarValueId() != null && varDefinition.getVarValueId().length() > 0) {
+                        copy.setValues(scriptEnvironment.getVarValues(varDefinition.getVarValueId()));
+                    }
                     vars.add(copy);
                     break;
             }

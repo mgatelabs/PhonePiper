@@ -31,13 +31,24 @@
     },
     {
       "name": "_loops",
-      "description": "Safety timer to stop operations after a long period",
+      "description": "Safety timer to stop operations after a long period of inactivity",
       "value": "0",
       "type": "INT",
       "modify": "VISIBLE",
       "display": "NoOp",
       "tierId": "timers",
-      "displayType": "SECONDS"
+      "displayType": "SECONDS",
+      "order": "5"
+    },
+    {
+      "name": "_loops_max",
+      "description": "The amount of time before the app shuts down due to inactivity",
+      "value": "900",
+      "type": "INT",
+      "modify": "EDITABLE",
+      "display": "Max NoOp",
+      "displayType": "SECONDS",
+      "order": "5"
     },
     {
       "name": "allow-ss",
@@ -46,7 +57,7 @@
       "type": "INT",
       "modify": "EDITABLE",
       "displayType": "BOOLEAN",
-      "order": 10
+      "order": "10"
     },
     {
       "name": "os-icon",
@@ -54,7 +65,7 @@
       "value": "a",
       "type": "STRING",
       "modify": "EDITABLE",
-      "order": 20,
+      "order": "20",
       "tierId": "os",
       "values": [
         {"name": "A", "value": "a"},
@@ -263,6 +274,26 @@
             {
               "type": "TAP",
               "value": "menu-connection_error_2-ok"
+            },
+            {
+              "type": "WAIT",
+              "value": "1500"
+            },
+            {
+              "type": "REPEAT",
+              "value": ""
+            }
+          ]
+        },
+        {
+          "condition": {
+            "is": "SCREEN",
+            "value": "menu-arena-event_ended"
+          },
+          "actions": [
+            {
+              "type": "TAP",
+              "value": "menu-arena-event_ended-ok"
             },
             {
               "type": "WAIT",
@@ -506,12 +537,18 @@
           "condition": {
             "var": "_loops",
             "is": "GREATER",
-            "value": "900"
+            "value": "${_loops_max}"
           },
           "actions": [
             {
               "type": "INFO",
-              "value": "Too many cycles, stopping run"
+              "value": "Too many cycles ${_loops}, stopping run"
+            },
+            // Reset the counter, so the app will run after turning it back on
+            {
+              "type": "SET",
+              "var": "_loops",
+              "value": "0"
             },
             {
               "type": "STOP",

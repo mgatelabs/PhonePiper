@@ -310,6 +310,11 @@
     "points" : [ ],
     "enabled" : false
   }, {
+    "name" : "Menu - Arena - Event Ended",
+    "screenId" : "menu-arena-event_ended",
+    "points" : [ ],
+    "enabled" : false
+  }, {
     "name" : "Menu - Arena Orbs",
     "screenId" : "menu-arena-have-orbs",
     "points" : [ ],
@@ -1336,16 +1341,16 @@
     "h" : 1,
     "enabled" : false
   }, {
-    "name" : "Menu - Home - Raid Event",
-    "componentId" : "menu-home-raid_event",
+    "name" : "Menu - Arena - Begin",
+    "componentId" : "menu-arena-begin",
     "x" : 0,
     "y" : 0,
     "w" : 1,
     "h" : 1,
     "enabled" : false
   }, {
-    "name" : "Menu - Arena - Begin",
-    "componentId" : "menu-arena-begin",
+    "name" : "Menu - Arena - Event Ended - OK",
+    "componentId" : "menu-arena-event_ended-ok",
     "x" : 0,
     "y" : 0,
     "w" : 1,
@@ -1730,6 +1735,14 @@
   }, {
     "name" : "Menu - Home - Login Bonus - OK",
     "componentId" : "menu-home-login_bonus-ok",
+    "x" : 0,
+    "y" : 0,
+    "w" : 1,
+    "h" : 1,
+    "enabled" : false
+  }, {
+    "name" : "Menu - Home - Raid Event",
+    "componentId" : "menu-home-raid_event",
     "x" : 0,
     "y" : 0,
     "w" : 1,

@@ -2,7 +2,7 @@
 {
   "vars": [],
   "imports": [
-    "_template-farming-arena",
+    "_farming-arena-utils",
     "_common-mp",
     "_common-hp"
   ],

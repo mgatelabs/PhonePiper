@@ -12,6 +12,7 @@ public class VarDefinition {
     private String name;
     private String description;
     private String tierId;
+    private String varValueId;
     private String display;
     private String value;
     private VarType type;
@@ -29,6 +30,7 @@ public class VarDefinition {
         this.name = source.name;
         this.description = source.description;
         this.display = source.display;
+        this.varValueId = source.varValueId;
         this.value = source.value;
         this.type = source.type;
         this.modify = source.modify;
@@ -61,6 +63,10 @@ public class VarDefinition {
 
     public void setDisplay(String display) {
         this.display = display;
+    }
+
+    public String getVarValueId() {
+        return varValueId;
     }
 
     public String getValue() {

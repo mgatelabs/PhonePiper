@@ -238,6 +238,11 @@
                 "var": "segment"
               },
               {
+                "is": "EQUAL",
+                "value": "1",
+                "var": "arena-rule-boosts"
+              },
+              {
                 "is": "CALL",
                 "value": "@isUnitReady",
                 "args": {
@@ -343,6 +348,11 @@
                 "var": "segment"
               },
               {
+                "is": "EQUAL",
+                "value": "1",
+                "var": "arena-rule-boosts"
+              },
+              {
                 "is": "CALL",
                 "value": "@isUnitReady",
                 "args": {
@@ -436,7 +446,7 @@
             }
           ]
         },
-        // We can't purify+, and someone can't move, so use Stop Detatch
+        // We can't purify+, and someone can't move, so use Stop Detach
         {
           "condition": {
             "is": "CALL",
@@ -541,6 +551,11 @@
                 "is": "EQUAL",
                 "value": "0",
                 "var": "segment"
+              },
+              {
+                "is": "EQUAL",
+                "value": "1",
+                "var": "arena-rule-boosts"
               },
               {
                 "is": "EQUAL",
@@ -767,7 +782,7 @@
           "actions": [
             {
               "type": "INFO",
-              "value": "Ayaka Used Curaja (Big Heal) Needed"
+              "value": "Ayaka Used Purify (Small Heal + Ailments)"
             },
             {
               "type": "SET",
@@ -1322,7 +1337,7 @@
               "type": "CALL",
               "value": "@selectUnitAction",
               "args": {
-                "row": "10",
+                "row": "11",
                 "column": "1"
               },
               "condition": {
@@ -1335,7 +1350,7 @@
               "type": "CALL",
               "value": "@selectUnitAction",
               "args": {
-                "row": "11",
+                "row": "12",
                 "column": "0"
               },
               "condition": {

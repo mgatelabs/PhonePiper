@@ -43,7 +43,7 @@ public class ViewDefinition {
         }
         for (ScreenDefinition screenDefinition : source.getScreens()) {
             if (tempScreens.containsKey(screenDefinition.getScreenId())) {
-                if (overwrite && !tempScreens.get(screenDefinition.getScreenId()).isEnabled()) {
+                if (overwrite && screenDefinition.isEnabled()) {
                     // Only replace items that are not enabled
                     tempScreens.remove(screenDefinition.getScreenId());
                     tempScreens.put(screenDefinition.getScreenId(), screenDefinition);

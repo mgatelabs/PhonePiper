@@ -84,7 +84,7 @@
         "is" : "SCREEN","value" : "units-sell-confirm-popup"},
       "actions": [{
         "type": "TAP", "value": "units-sell-confirm_1"}, {
-        "type": "WAIT", "value": "250"}, {
+        "type": "WAIT", "value": "450"}, {
         "type": "TAP", "value": "units-sell-confirm_2"}, {
         "type": "REPEAT"}
       ]

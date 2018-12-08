@@ -298,7 +298,7 @@
       "display": "After Arena",
       "value": "EXPEDITION",
       "type": "STRING",
-      "varValueId": "ROUTES",
+      "varValueId": "ROUTES","varValueId": "ROUTES",
       "modify": "EDITABLE",
       "order": 10,
       "tierId": "state-route",

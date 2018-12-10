@@ -282,13 +282,13 @@
           "actions": [
             {
               "type": "INFO",
-              "value": "Out of Orbs, going home"
+              "value": "Out of Orbs, going to ${_route_from_raid}"
             },
             { "type": "CALL", "value": "@keepAlive" },
             {
               "type": "MOVE",
               "value": "any_to_home",
-              "args": { "toState": "ARENA" }
+              "args": { "toState": "${_route_from_raid}" }
             }
           ]
         }

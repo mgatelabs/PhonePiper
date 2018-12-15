@@ -1831,17 +1831,17 @@
               "value": "@selectUnitAction",
               "args": {
                 "row": "7",
-                "column": "1"
+                "column": "0"
               }
             },
             {
               "type": "SLOW_UP",
               "value": "battle-skill-top-slider",
-              "count": "2"
+              "count": "1"
             },
             {
               "type": "TAP",
-              "value": "battle-skill-top-2",
+              "value": "battle-skill-top-5",
               "count": "4"
             },
             {
@@ -1925,7 +1925,7 @@
               "value": "@selectUnitAction",
               "args": {
                 "row": "8",
-                "column": "1"
+                "column": "0"
               }
             },
             {
@@ -1937,8 +1937,8 @@
               "type": "CALL",
               "value": "@selectUnitAction",
               "args": {
-                "row": "9",
-                "column": "0"
+                "row": "8",
+                "column": "1"
               }
             },
             {

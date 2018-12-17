@@ -39,6 +39,11 @@
               },
               {
                 "is": "EQUAL",
+                "value": "1",
+                "var": "arena-rule-reductions"
+              },
+              {
+                "is": "EQUAL",
                 "value": "2",
                 "var": "segment"
               },
@@ -124,6 +129,11 @@
                 "is": "EQUAL",
                 "value": "1",
                 "var": "arena-rule-earth"
+              },
+              {
+                "is": "EQUAL",
+                "value": "1",
+                "var": "arena-rule-reductions"
               },
               {
                 "is": "EQUAL",
@@ -216,6 +226,11 @@
               },
               {
                 "is": "EQUAL",
+                "value": "1",
+                "var": "arena-rule-reductions"
+              },
+              {
+                "is": "EQUAL",
                 "value": "2",
                 "var": "segment"
               },
@@ -296,6 +311,11 @@
                 "is": "EQUAL",
                 "value": "1",
                 "var": "arena-rule-earth"
+              },
+              {
+                "is": "EQUAL",
+                "value": "1",
+                "var": "arena-rule-reductions"
               },
               {
                 "is": "EQUAL",

@@ -18209,6 +18209,14 @@
     "h" : 53,
     "enabled" : true
   }, {
+    "name" : "Menu - Friends - Share",
+    "componentId" : "menu-friends-share",
+    "x" : 697,
+    "y" : 1100,
+    "w" : 283,
+    "h" : 60,
+    "enabled" : true
+  }, {
     "name" : "Menu - Goal List - Back",
     "componentId" : "menu-goal_list-back",
     "x" : 37,

@@ -16,6 +16,20 @@
       "description": "Enable / Disable Sending Friend Gifts"
     },
     {
+      "name": "allow-share",
+      "display": "Share?",
+      "value": "0",
+      "type": "INT",
+      "modify": "EDITABLE",
+      "order": 10,
+      "tierId": "enable",
+      "values": [
+        {"name": "Enabled", "value": "1"},
+        {"name": "Disabled", "value": "0"}
+      ],
+      "description": "Enable / Disable Tapping Friend - Share, to get the daily reward"
+    },
+    {
       "name": "gift-date",
       "display": "Last Date",
       "value": "-1",
@@ -219,7 +233,63 @@
     "_send_gifts": {
       "name": "Send Gifts - Logic",
       "includes": [],
+      "variables": {
+        "shared": {
+          "type":"INT",
+          "value": "0"
+        }
+      },
       "statements": [
+        // Friends Screen Share
+        {
+          "condition": {
+            "is": "SCREEN",
+            "value": "menu-friends",
+            "and": [
+              {
+                "is":"EQUAL",
+                "var": "allow-share",
+                "value": "1"
+              },
+              {
+                "is":"EQUAL",
+                "var": "shared",
+                "value": "0"
+              }
+            ]
+          },
+          "actions": [
+            {
+              "type": "INFO",
+              "value": "Sharing"
+            },
+            {
+              "type": "SET",
+              "var": "shared",
+              "value": "1"
+            },
+            {
+              "type": "TAP",
+              "value": "menu-friends-share"
+            },
+            { "type": "CALL", "value": "@keepAlive" },
+            {
+              "type": "WAIT",
+              "value": "3000"
+            },
+            {
+              "type": "EVENT",
+              "value": "back"
+            },
+            {
+              "type": "WAIT",
+              "value": "3000"
+            },
+            {
+              "type": "REPEAT"
+            }
+          ]
+        },
         // Friends Screen
         {
           "condition": {

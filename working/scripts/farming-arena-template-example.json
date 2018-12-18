@@ -1266,6 +1266,26 @@
         "modified": {
           "value": "0",
           "type": "INT"
+        },
+        "unit0Attempts": {
+          "value": "0",
+          "type": "INT"
+        },
+        "unit1Attempts": {
+          "value": "0",
+          "type": "INT"
+        },
+        "unit2Attempts": {
+          "value": "0",
+          "type": "INT"
+        },
+        "unit3Attempts": {
+          "value": "0",
+          "type": "INT"
+        },
+        "unit4Attempts": {
+          "value": "0",
+          "type": "INT"
         }
       },
       "includes":[
@@ -1276,12 +1296,6 @@
     "_arena-battle-fight-abilities-include_0": {
       "name": "Arena - Battle - Abilities - For Slot 1",
       "description": "Setup your units to attack - For Slot 1",
-      "variables": {
-        "hyoyAttempts": {
-          "value": "0",
-          "type": "INT"
-        }
-      },
       "statements": [
         {
           "condition": {
@@ -1292,6 +1306,11 @@
                 "is": "EQUAL",
                 "value": "2",
                 "var": "segment"
+              },
+              {
+                "not": "GREATER",
+                "var": "unit0Attempts",
+                "value": "2"
               },
               {
                 "is": "CALL",
@@ -1342,7 +1361,7 @@
               },
               "condition": {
                 "is": "EQUAL",
-                "var": "hyoyAttempts",
+                "var": "unit0Attempts",
                 "value": "0"
               }
             },
@@ -1355,13 +1374,13 @@
               },
               "condition": {
                 "is": "GREATER",
-                "var": "hyoyAttempts",
+                "var": "unit0Attempts",
                 "value": "0"
               }
             },
             {
               "type": "ADD",
-              "var": "hyoyAttempts",
+              "var": "unit0Attempts",
               "value": "1"
             },
             {
@@ -1380,12 +1399,6 @@
     "_arena-battle-fight-abilities-include_1": {
       "name": "Arena - Battle - Abilities - For Slot 2",
       "description": "Setup your units to attack - For Slot 2",
-      "variables": {
-        "tt1Attempts": {
-          "value": "0",
-          "type": "INT"
-        }
-      },
       "statements": [
         {
           "condition": {
@@ -1410,7 +1423,7 @@
               {
                 "is": "EQUAL",
                 "value": "0",
-                "var": "tt1Attempts"
+                "var": "unit1Attempts"
               },
               {
                 "is": "CALL",
@@ -1447,7 +1460,7 @@
             },
             {
               "type": "ADD",
-              "var": "tt1Attempts",
+              "var": "unit1Attempts",
               "value": "1"
             },
             {
@@ -1499,7 +1512,7 @@
               {
                 "is": "EQUAL",
                 "value": "0",
-                "var": "tt1Attempts"
+                "var": "unit1Attempts"
               },
               {
                 "is": "CALL",
@@ -1536,7 +1549,7 @@
             },
             {
               "type": "ADD",
-              "var": "tt1Attempts",
+              "var": "unit1Attempts",
               "value": "1"
             },
             {
@@ -1596,7 +1609,7 @@
               {
                 "is": "EQUAL",
                 "value": "1",
-                "var": "tt1Attempts"
+                "var": "unit1Attempts"
               },
               {
                 "is": "CALL",
@@ -1633,7 +1646,7 @@
             },
             {
               "type": "ADD",
-              "var": "tt1Attempts",
+              "var": "unit1Attempts",
               "value": "1"
             },
             {
@@ -1679,6 +1692,11 @@
                 "var": "segment"
               },
               {
+                "is": "EQUAL",
+                "value": "0",
+                "var": "unit2Attempts"
+              },
+              {
                 "is": "CALL",
                 "value": "@isUnitReady",
                 "args": {
@@ -1709,6 +1727,11 @@
             {
               "type": "SET",
               "var": "modified",
+              "value": "1"
+            },
+            {
+              "type": "SET",
+              "var": "unit2Attempts",
               "value": "1"
             },
             {
@@ -1749,12 +1772,6 @@
     "_arena-battle-fight-abilities-include_4": {
       "name": "Arena - Battle - Abilities - For Slot 5",
       "description": "Setup your units to attack - For Slot 5",
-      "variables": {
-        "tt2Attempts": {
-          "value": "0",
-          "type": "INT"
-        }
-      },
       "statements": [
         {
           "condition": {
@@ -1779,7 +1796,7 @@
               {
                 "is": "EQUAL",
                 "value": "0",
-                "var": "tt2Attempts"
+                "var": "unit4Attempts"
               },
               {
                 "is": "CALL",
@@ -1816,7 +1833,7 @@
             },
             {
               "type": "ADD",
-              "var": "tt2Attempts",
+              "var": "unit4Attempts",
               "value": "1"
             },
             {
@@ -1868,7 +1885,7 @@
               {
                 "is": "EQUAL",
                 "value": "0",
-                "var": "tt2Attempts"
+                "var": "unit4Attempts"
               },
               {
                 "is": "CALL",
@@ -1905,7 +1922,7 @@
             },
             {
               "type": "ADD",
-              "var": "tt2Attempts",
+              "var": "unit4Attempts",
               "value": "1"
             },
             {
@@ -2325,17 +2342,27 @@
             // RESET YOUR CUSTOM COUNTERS
             {
               "type": "SET",
-              "var": "hyoyAttempts",
+              "var": "unit0Attempts",
               "value": "0"
             },
             {
               "type": "SET",
-              "var": "tt1Attempts",
+              "var": "unit1Attempts",
               "value": "0"
             },
             {
               "type": "SET",
-              "var": "tt2Attempts",
+              "var": "unit2Attempts",
+              "value": "0"
+            },
+            {
+              "type": "SET",
+              "var": "unit3Attempts",
+              "value": "0"
+            },
+            {
+              "type": "SET",
+              "var": "unit4Attempts",
               "value": "0"
             },
             // UPDATE COOLDOWN COUNTS

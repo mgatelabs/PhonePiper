@@ -24,6 +24,11 @@
                 "var": "segment"
               },
               {
+                "is": "EQUAL",
+                "value": "0",
+                "var": "unit0Attempts"
+              },
+              {
                 "is": "CALL",
                 "value": "@isUnitReady",
                 "args": {
@@ -54,6 +59,11 @@
             {
               "type": "SET",
               "var": "modified",
+              "value": "1"
+            },
+            {
+              "type": "SET",
+              "var": "unit0Attempts",
               "value": "1"
             },
             {

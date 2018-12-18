@@ -48,6 +48,11 @@
                 "var": "segment"
               },
               {
+                "is": "EQUAL",
+                "value": "0",
+                "var": "unit4Attempts"
+              },
+              {
                 "is": "CALL",
                 "value": "@isUnitReady",
                 "args": {
@@ -78,6 +83,11 @@
             {
               "type": "SET",
               "var": "modified",
+              "value": "1"
+            },
+            {
+              "type": "SET",
+              "var": "unit4Attempts",
               "value": "1"
             },
             {
@@ -141,6 +151,11 @@
                 "var": "segment"
               },
               {
+                "is": "EQUAL",
+                "value": "0",
+                "var": "unit4Attempts"
+              },
+              {
                 "is": "CALL",
                 "value": "@isUnitReady",
                 "args": {
@@ -171,6 +186,11 @@
             {
               "type": "SET",
               "var": "modified",
+              "value": "1"
+            },
+            {
+              "type": "SET",
+              "var": "unit4Attempts",
               "value": "1"
             },
             {
@@ -235,6 +255,11 @@
                 "var": "segment"
               },
               {
+                "is": "EQUAL",
+                "value": "0",
+                "var": "unit4Attempts"
+              },
+              {
                 "is": "CALL",
                 "value": "@isUnitReady",
                 "args": {
@@ -265,6 +290,11 @@
             {
               "type": "SET",
               "var": "modified",
+              "value": "1"
+            },
+            {
+              "type": "SET",
+              "var": "unit4Attempts",
               "value": "1"
             },
             {
@@ -323,6 +353,11 @@
                 "var": "segment"
               },
               {
+                "is": "EQUAL",
+                "value": "0",
+                "var": "unit4Attempts"
+              },
+              {
                 "is": "CALL",
                 "value": "@isUnitReady",
                 "args": {
@@ -349,6 +384,11 @@
             {
               "type": "INFO",
               "value": "Setting Up Dark Fina"
+            },
+            {
+              "type": "SET",
+              "var": "unit4Attempts",
+              "value": "1"
             },
             {
               "type": "SET",

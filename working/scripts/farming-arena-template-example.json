@@ -113,7 +113,7 @@
             },
             {
               "type": "WAIT",
-              "value": "2000"
+              "value": "4000"
             },
             {
               "type": "REPEAT",
@@ -218,7 +218,7 @@
             },
             {
               "type": "WAIT",
-              "value": "400"
+              "value": "1400"
             },
             {
               "type": "REPEAT",
@@ -438,7 +438,7 @@
             },
             {
               "type": "WAIT",
-              "value": "2000"
+              "value": "4000"
             },
             {
               "type": "REPEAT",
@@ -533,7 +533,7 @@
             },
             {
               "type": "WAIT",
-              "value": "2000"
+              "value": "4000"
             },
             {
               "type": "REPEAT",

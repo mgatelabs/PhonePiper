@@ -226,6 +226,7 @@
       "name": "Send Gifts",
       "includes": [
         "_send_gifts",
+        "_home_daily_fixes",
         "_common-no_op"
       ]
     },

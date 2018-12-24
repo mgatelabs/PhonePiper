@@ -72,6 +72,19 @@
         {"name": "Yes", "value": "1"}
       ]
     }, {
+      "name" : "arena-rule-multi_hit_magical_combos",
+      "display" : "Allow Multi-hit magical combos",
+      "value" : "1",
+      "type" : "INT",
+      "modify" : "EDITABLE",
+      "displayType" : "STANDARD",
+      "order" : 10,
+      "tierId": "arena-rules",
+      "values": [
+        {"name": "No", "value": "0"},
+        {"name": "Yes", "value": "1"}
+      ]
+    }, {
       "name" : "arena-rule-white_magic",
       "display" : "Allow White magic",
       "value" : "1",

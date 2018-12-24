@@ -1,6 +1,35 @@
 //@formatter:off
 {
-  "vars": [],
+  "vars": [
+    {
+      "name" : "arena-lb-0_3",
+      "display" : "Allow LB 1 and 3",
+      "value" : "1",
+      "type" : "INT",
+      "modify" : "EDITABLE",
+      "displayType" : "STANDARD",
+      "order" : 0,
+      "tierId": "arena",
+      "values": [
+        {"name": "Off", "value": "0"},
+        {"name": "On", "value": "1"}
+      ]
+    },
+    {
+      "name" : "arena-lb-1_4",
+      "display" : "Allow LB 2 and 5",
+      "value" : "1",
+      "type" : "INT",
+      "modify" : "EDITABLE",
+      "displayType" : "STANDARD",
+      "order" : 0,
+      "tierId": "arena",
+      "values": [
+        {"name": "Off", "value": "0"},
+        {"name": "On", "value": "1"}
+      ]
+    }
+  ],
   "imports": [
   ],
   "states": {
@@ -2000,6 +2029,11 @@
                 "var": "segment"
               },
               {
+                "is": "EQUAL",
+                "value": "1",
+                "var": "arena-lb-0_3"
+              },
+              {
                 "is": "LESS",
                 "value": "5",
                 "var": "lbAttempts"
@@ -2077,6 +2111,11 @@
                 "is": "EQUAL",
                 "value": "3",
                 "var": "segment"
+              },
+              {
+                "is": "EQUAL",
+                "value": "1",
+                "var": "arena-lb-0_3"
               },
               {
                 "is": "LESS",
@@ -2167,6 +2206,11 @@
                 "var": "segment"
               },
               {
+                "is": "EQUAL",
+                "value": "1",
+                "var": "arena-lb-1_4"
+              },
+              {
                 "is": "LESS",
                 "value": "5",
                 "var": "lbAttempts"
@@ -2244,6 +2288,11 @@
                 "is": "EQUAL",
                 "value": "3",
                 "var": "segment"
+              },
+              {
+                "is": "EQUAL",
+                "value": "1",
+                "var": "arena-lb-1_4"
               },
               {
                 "is": "LESS",

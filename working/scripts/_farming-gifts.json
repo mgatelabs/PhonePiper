@@ -132,7 +132,7 @@
       ]
     },
 
-    // Logic to move to expedition screen
+    // Logic to move to Friends screen
     "home_to_send_gifts": {
       "name": "Home - To Send Gifts",
       "includes": [
@@ -221,12 +221,12 @@
       ]
     },
 
-    // Actual expedtion logic
+    // Actual Gifting logic
     "send_gifts": {
       "name": "Send Gifts",
       "includes": [
-        "_send_gifts",
         "_home_daily_fixes",
+        "_send_gifts",
         "_common-no_op"
       ]
     },

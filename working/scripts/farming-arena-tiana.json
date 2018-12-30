@@ -100,9 +100,12 @@
               "count": "2"
             },
             {
-              "type": "TAP",
-              "value": "battle-skill-top-2",
-              "count": "2"
+              "type": "CALL",
+              "value": "@tapAbilityItem",
+              "args": {
+                "index": "2",
+                "count": "2"
+              }
             },
             {
               "type": "WAIT",

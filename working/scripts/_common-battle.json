@@ -674,6 +674,60 @@
         }
       ]
     },
+    "@tapAbilityItem": {
+      "name": "Function - Tap Ability Item",
+      "variables": {
+        "index": {
+          "value": "0",
+          "type": "INT"
+        },
+        "count": {
+          "value": "1",
+          "type": "INT"
+        }
+      },
+      "statements": [
+        {
+          "actions": [
+            {
+              "type": "TAP",
+              "value": "battle-skill-top-${index}",
+              "count": "1"
+            },
+            {
+              "condition": {
+                "is":"EQUAL",
+                "var": "device-type",
+                "value": "1"
+              },
+              "type": "WAIT",
+              "value": "500"
+            },
+            {
+              "type": "ADD",
+              "var": "count",
+              "value": "-1"
+            },
+            {
+              "condition": {
+                "is":"GREATER",
+                "var": "count",
+                "value": "0"
+              },
+              "type": "CALL",
+              "value": "@tapAbilityItem",
+              "args": {
+                "index": "${index}",
+                "count": "${count}"
+              }
+            },
+            {
+              "type": "RETURN"
+            }
+          ]
+        }
+      ]
+    },
     "@readyUnitLb": {
       "name": "Function - Ready Unit LB",
       "variables": {

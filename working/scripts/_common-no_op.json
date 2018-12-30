@@ -88,6 +88,17 @@
         {"name": "Recover", "value": "1"}
       ],
       "description": "Which menu item do you wish to farm.  Typically the first item is a Exploration so you would want two or three."
+    },
+    {
+      "name": "device-type",
+      "display" : "Device Type",
+      "value": "0",
+      "type": "INT",
+      "modify":"EDITABLE",
+      "values":[
+        {"name": "Emulated", "value": "1"},
+        {"name": "Physical", "value": "0"}
+      ]
     }
   ],
   "varTiers": [

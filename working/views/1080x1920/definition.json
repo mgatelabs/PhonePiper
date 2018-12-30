@@ -18601,6 +18601,14 @@
     "h" : 56,
     "enabled" : true
   }, {
+    "name" : "OS - App - Icon D",
+    "componentId" : "os-app-icon_d",
+    "x" : 500,
+    "y" : 1410,
+    "w" : 70,
+    "h" : 80,
+    "enabled" : true
+  }, {
     "name" : "OS - Unable to access data - OK",
     "componentId" : "os-unable_to_access_data-ok",
     "x" : 875,

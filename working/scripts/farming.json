@@ -379,7 +379,8 @@
         "_log-in-once-*",
         "_log-in-end_once",
         "_log-in-common",
-        "_home_daily_fixes"
+        "_home_daily_fixes",
+        "_common-connection_fix"
       ]
     },
 

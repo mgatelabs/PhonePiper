@@ -72,6 +72,19 @@
         {"name": "Yes", "value": "1"}
       ]
     }, {
+      "name" : "arena-rule-multi_hit_magical_combos",
+      "display" : "Allow Multi-hit magical combos",
+      "value" : "1",
+      "type" : "INT",
+      "modify" : "EDITABLE",
+      "displayType" : "STANDARD",
+      "order" : 10,
+      "tierId": "arena-rules",
+      "values": [
+        {"name": "No", "value": "0"},
+        {"name": "Yes", "value": "1"}
+      ]
+    }, {
       "name" : "arena-rule-white_magic",
       "display" : "Allow White magic",
       "value" : "1",
@@ -298,7 +311,7 @@
       "display": "After Arena",
       "value": "EXPEDITION",
       "type": "STRING",
-      "varValueId": "ROUTES",
+      "varValueId": "ROUTES","varValueId": "ROUTES",
       "modify": "EDITABLE",
       "order": 10,
       "tierId": "state-route",
@@ -878,8 +891,13 @@
             "and": [
               {
                 "var": "enemy_health_seen",
-                "is": "EQUAL",
-                "value": "1"
+                "is": "GREATER",
+                "value": "0"
+              },
+              {
+                "var": "enemy_health_seen",
+                "is": "LESS",
+                "value": "4"
               },
               {
                 "var": "_loops",
@@ -891,12 +909,17 @@
           "actions": [
             {
               "type": "INFO",
-              "value": "Enemy health bar is missing, tapping to finish"
+              "value": "Enemy health bar is missing, tapping to finish (TM)"
+            },
+            {
+              "type": "ADD",
+              "var": "enemy_health_seen",
+              "value": "1"
             },
             {
               "type": "SET",
-              "var": "enemy_health_seen",
-              "value": "2"
+              "var": "_loops",
+              "value": "0"
             },
             {
               "type": "TAP",

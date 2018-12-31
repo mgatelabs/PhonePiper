@@ -1,0 +1,224 @@
+//@formatter:off
+{
+  "vars": [],
+  "imports": [
+
+  ],
+  "states": {
+
+    // Grim Lord Sakura Override
+    "_arena-battle-fight-abilities-include_1": {
+      "name": "Arena - Battle - Abilities - For Slot 2",
+      "description": "Setup your units to attack - For Slot 2",
+      "statements": [
+
+
+        {
+          "condition": {
+            "is": "CALL",
+            "value": "@isBattleReady",
+            "and": [
+              {
+                "is": "EQUAL",
+                "value": "1",
+                "var": "arena-rule-magic_combos"
+              },
+              {
+                "is": "EQUAL",
+                "value": "1",
+                "var": "arena-rule-fire"
+              },
+              {
+                "is": "EQUAL",
+                "value": "1",
+                "var": "arena-rule-dark"
+              },
+              {
+                "is": "EQUAL",
+                "value": "2",
+                "var": "segment"
+              },
+              {
+                "is": "EQUAL",
+                "value": "0",
+                "var": "unit1Attempts"
+              },
+              {
+                "is": "CALL",
+                "value": "@isUnitReady",
+                "args": {
+                  "index": "1"
+                }
+              },
+              {
+                "is": "CALL",
+                "value": "@unitHasMp",
+                "args": {
+                  "index": "1"
+                }
+              },
+              {
+                "not": "CALL",
+                "value": "@isUnitActionReady",
+                "args": {
+                  "index": "1"
+                }
+              }
+            ]
+          },
+          "actions": [
+            {
+              "type": "INFO",
+              "value": "Setting Up Grim Lord Sakura"
+            },
+            {
+              "type": "SET",
+              "var": "modified",
+              "value": "1"
+            },
+            {
+              "type": "SET",
+              "var": "unit1Attempts",
+              "value": "1"
+            },
+            {
+              "type": "CALL",
+              "value": "@showUnitActions",
+              "args": {
+                "index": "1"
+              }
+            },
+            {
+              "type": "CALL",
+              "value": "@selectUnitAction",
+              "args": {
+                "row": "7",
+                "column": "1"
+              }
+            },
+            {
+              "type": "SLOW_UP",
+              "value": "battle-skill-top-slider",
+              "count": "6"
+            },
+            {
+              "type": "CALL",
+              "value": "@tapAbilityItem",
+              "args": {
+                "index": "2",
+                "count": "3"
+              }
+            },
+            {
+              "type": "WAIT",
+              "value": "1000"
+            },
+            {
+              "type": "REPEAT",
+              "value": ""
+            }
+          ]
+        },
+
+        {
+          "condition": {
+            "is": "CALL",
+            "value": "@isBattleReady",
+            "and": [
+              {
+                "is": "EQUAL",
+                "value": "1",
+                "var": "arena-rule-magic_combos"
+              },
+              {
+                "is": "EQUAL",
+                "value": "2",
+                "var": "segment"
+              },
+              {
+                "is": "EQUAL",
+                "value": "0",
+                "var": "unit1Attempts"
+              },
+              {
+                "is": "CALL",
+                "value": "@isUnitReady",
+                "args": {
+                  "index": "1"
+                }
+              },
+              {
+                "is": "CALL",
+                "value": "@unitHasMp",
+                "args": {
+                  "index": "1"
+                }
+              },
+              {
+                "not": "CALL",
+                "value": "@isUnitActionReady",
+                "args": {
+                  "index": "1"
+                }
+              }
+            ]
+          },
+          "actions": [
+            {
+              "type": "INFO",
+              "value": "Setting Up Grim Lord Sakura"
+            },
+            {
+              "type": "SET",
+              "var": "modified",
+              "value": "1"
+            },
+            {
+              "type": "SET",
+              "var": "unit1Attempts",
+              "value": "1"
+            },
+            {
+              "type": "CALL",
+              "value": "@showUnitActions",
+              "args": {
+                "index": "1"
+              }
+            },
+            {
+              "type": "CALL",
+              "value": "@selectUnitAction",
+              "args": {
+                "row": "7",
+                "column": "1"
+              }
+            },
+            {
+              "type": "SLOW_UP",
+              "value": "battle-skill-top-slider",
+              "count": "4"
+            },
+            {
+              "type": "TAP",
+              "value": "battle-skill-top-5",
+              "count": "3"
+            },
+            {
+              "type": "WAIT",
+              "value": "1000"
+            },
+            {
+              "type": "REPEAT",
+              "value": ""
+            }
+          ]
+        }
+
+
+
+
+      ]
+    }
+
+  }
+}

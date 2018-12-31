@@ -1677,6 +1677,14 @@
     "h" : 1,
     "enabled" : false
   }, {
+    "name" : "Menu - Friends - Share",
+    "componentId" : "menu-friends-share",
+    "x" : 0,
+    "y" : 0,
+    "w" : 1,
+    "h" : 1,
+    "enabled" : false
+  }, {
     "name" : "Menu - Goal List - Back",
     "componentId" : "menu-goal_list-back",
     "x" : 37,
@@ -2055,6 +2063,14 @@
   }, {
     "name" : "OS - App - Icon C",
     "componentId" : "os-app-icon_c",
+    "x" : 0,
+    "y" : 0,
+    "w" : 1,
+    "h" : 1,
+    "enabled" : false
+  }, {
+    "name" : "OS - App - Icon D",
+    "componentId" : "os-app-icon_d",
     "x" : 0,
     "y" : 0,
     "w" : 1,

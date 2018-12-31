@@ -70,7 +70,8 @@
       "values": [
         {"name": "A", "value": "a"},
         {"name": "B", "value": "b"},
-        {"name": "C", "value": "c"}
+        {"name": "C", "value": "c"},
+        {"name": "D", "value": "d"}
       ],
       "description": "Which menu item do you wish to farm.  Typically the first item is a Exploration so you would want two or three."
     },
@@ -87,6 +88,17 @@
         {"name": "Recover", "value": "1"}
       ],
       "description": "Which menu item do you wish to farm.  Typically the first item is a Exploration so you would want two or three."
+    },
+    {
+      "name": "device-type",
+      "display" : "Device Type",
+      "value": "0",
+      "type": "INT",
+      "modify":"EDITABLE",
+      "values":[
+        {"name": "Emulated", "value": "1"},
+        {"name": "Physical", "value": "0"}
+      ]
     }
   ],
   "varTiers": [
@@ -205,7 +217,7 @@
         }
       ]
     },
-    "_common-no_op": {
+    "_common-connection_fix": {
       "name": "Common - No-Op",
       "statements": [
         {
@@ -228,6 +240,34 @@
             }
           ]
         },
+        {
+          "condition": {
+            "is": "SCREEN",
+            "value": "menu-connection_error_2"
+          },
+          "actions": [
+            {
+              "type": "TAP",
+              "value": "menu-connection_error_2-ok"
+            },
+            {
+              "type": "WAIT",
+              "value": "1500"
+            },
+            {
+              "type": "REPEAT",
+              "value": ""
+            }
+          ]
+        }
+      ]
+    },
+    "_common-no_op": {
+      "name": "Common - No-Op",
+      "includes":[
+        "_common-connection_fix"
+      ],
+      "statements": [
         {
           "condition": {
             "is": "SCREEN",
@@ -261,26 +301,6 @@
             },
             {
               "type": "STOP",
-              "value": ""
-            }
-          ]
-        },
-        {
-          "condition": {
-            "is": "SCREEN",
-            "value": "menu-connection_error_2"
-          },
-          "actions": [
-            {
-              "type": "TAP",
-              "value": "menu-connection_error_2-ok"
-            },
-            {
-              "type": "WAIT",
-              "value": "1500"
-            },
-            {
-              "type": "REPEAT",
               "value": ""
             }
           ]

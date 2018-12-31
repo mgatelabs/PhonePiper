@@ -1,0 +1,61 @@
+//@formatter:off
+{
+  "vars": [],
+  "imports": [
+  ],
+  "states": {
+
+    "test-enegy": {
+      "name": "Test - Energy Levels",
+      "variables": {
+        "energy": {
+          "type": "INT",
+          "value": "1"
+        },
+        "max-energy": {
+          "type": "INT",
+          "value": "0"
+        }
+      },
+      "statements": [
+        {
+          "actions": [
+            { "type": "CALL", "value": "@maxEnergyValue", "var": "max-energy" },
+            {
+              "condition": {
+                "is": "GREATER",
+                "var": "energy",
+                "value": "${max-energy}"
+              },
+              "type": "STOP"
+            },
+            {
+              "condition": {
+                "is": "CALL",
+                "value": "@isEnergyAvailable",
+                "args": {
+                  "energy": "${energy}"
+                }
+              },
+              "type": "INFO",
+              "value": "Energy ${energy} Available"
+            },
+            {
+              "type": "ADD",
+              "var":"energy",
+              "value": "1"
+            },
+            {
+              "type": "MOVE",
+              "value": "test-enegy",
+              "args": {
+                "energy": "${energy}"
+              }
+            }
+          ]
+        }
+      ]
+    }
+
+  }
+}

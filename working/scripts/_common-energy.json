@@ -12,6 +12,13 @@
       "value": "1",
       "type": "INT",
       "modify":"EDITABLE"
+    },
+    {
+      "name": "energy-shift-y",
+      "display" : "Energy - Y Shift",
+      "value": "0",
+      "type": "INT",
+      "modify":"EDITABLE"
     }
   ],
   "states": {
@@ -69,8 +76,37 @@
 
     "@isMinEnergyAvailable": {
       "name": "Function - Is Minimum Energy Available",
+      "statements": [
+        {
+          "actions":[
+            {
+              "condition": {
+                "is": "CALL",
+                "value": "@isEnergyAvailable",
+                "args": {
+                  "energy": "${min-energy}"
+                }
+              },
+              "type": "RETURN",
+              "value": "1"
+            },
+            {
+              "type": "RETURN",
+              "value": "0"
+            }
+          ]
+        }
+      ]
+    },
+
+    "@isEnergyAvailable": {
+      "name": "Function - Is Minimum Energy Available",
       "variables": {
         "totalEnergy": {
+          "value": "0",
+          "type": "INT"
+        },
+        "energy": {
           "value": "0",
           "type": "INT"
         },
@@ -107,7 +143,7 @@
         {
           "condition": {
             "is": "LESS",
-            "var": "min-energy",
+            "var": "energy",
             "value": "1"
           },
           "actions": [
@@ -124,8 +160,13 @@
               "type": "COMPONENT", "value": "menu-energy_bar", "args": {"w": "w", "x": "x", "y": "y"}
             },
             {
+              "type": "ADD",
+              "var": "y",
+              "value": "${energy-shift-y}"
+            },
+            {
               "type": "MATH",
-              "value": "((${min-energy}/${totalEnergy})*${w})+1",
+              "value": "((${energy}/${totalEnergy})*${w})+1",
               "var": "energyFloatX"
             },
             {

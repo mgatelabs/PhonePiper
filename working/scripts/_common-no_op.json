@@ -217,7 +217,7 @@
         }
       ]
     },
-    "_common-no_op": {
+    "_common-connection_fix": {
       "name": "Common - No-Op",
       "statements": [
         {
@@ -240,6 +240,34 @@
             }
           ]
         },
+        {
+          "condition": {
+            "is": "SCREEN",
+            "value": "menu-connection_error_2"
+          },
+          "actions": [
+            {
+              "type": "TAP",
+              "value": "menu-connection_error_2-ok"
+            },
+            {
+              "type": "WAIT",
+              "value": "1500"
+            },
+            {
+              "type": "REPEAT",
+              "value": ""
+            }
+          ]
+        }
+      ]
+    },
+    "_common-no_op": {
+      "name": "Common - No-Op",
+      "includes":[
+        "_common-connection_fix"
+      ],
+      "statements": [
         {
           "condition": {
             "is": "SCREEN",
@@ -273,26 +301,6 @@
             },
             {
               "type": "STOP",
-              "value": ""
-            }
-          ]
-        },
-        {
-          "condition": {
-            "is": "SCREEN",
-            "value": "menu-connection_error_2"
-          },
-          "actions": [
-            {
-              "type": "TAP",
-              "value": "menu-connection_error_2-ok"
-            },
-            {
-              "type": "WAIT",
-              "value": "1500"
-            },
-            {
-              "type": "REPEAT",
               "value": ""
             }
           ]

@@ -12,7 +12,7 @@
       "description": "Setup your units to attack - For Slot 2",
       "statements": [
 
-
+        // Grim - Eldritch Wave x 3
         {
           "condition": {
             "is": "CALL",
@@ -32,6 +32,11 @@
                 "is": "EQUAL",
                 "value": "1",
                 "var": "arena-rule-dark"
+              },
+              {
+                "is": "EQUAL",
+                "value": "1",
+                "var": "arena-rule-reductions"
               },
               {
                 "is": "EQUAL",
@@ -120,6 +125,7 @@
           ]
         },
 
+        // Grim - Soul Barrage x 3
         {
           "condition": {
             "is": "CALL",
@@ -213,9 +219,6 @@
             }
           ]
         }
-
-
-
 
       ]
     }

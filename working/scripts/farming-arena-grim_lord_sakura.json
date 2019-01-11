@@ -26,6 +26,11 @@
               {
                 "is": "EQUAL",
                 "value": "1",
+                "var": "arena-rule-multi_abilities"
+              },
+              {
+                "is": "EQUAL",
+                "value": "1",
                 "var": "arena-rule-fire"
               },
               {
@@ -138,6 +143,11 @@
               },
               {
                 "is": "EQUAL",
+                "value": "1",
+                "var": "arena-rule-multi_abilities"
+              },
+              {
+                "is": "EQUAL",
                 "value": "2",
                 "var": "segment"
               },
@@ -208,6 +218,101 @@
               "type": "TAP",
               "value": "battle-skill-top-5",
               "count": "3"
+            },
+            {
+              "type": "WAIT",
+              "value": "1000"
+            },
+            {
+              "type": "REPEAT",
+              "value": ""
+            }
+          ]
+        },
+
+        // Grim - Eldritch Wave x 1
+        {
+          "condition": {
+            "is": "CALL",
+            "value": "@isBattleReady",
+            "and": [
+              {
+                "is": "EQUAL",
+                "value": "1",
+                "var": "arena-rule-fire"
+              },
+              {
+                "is": "EQUAL",
+                "value": "1",
+                "var": "arena-rule-dark"
+              },
+              {
+                "is": "EQUAL",
+                "value": "1",
+                "var": "arena-rule-reductions"
+              },
+              {
+                "is": "EQUAL",
+                "value": "2",
+                "var": "segment"
+              },
+              {
+                "is": "EQUAL",
+                "value": "0",
+                "var": "unit1Attempts"
+              },
+              {
+                "is": "CALL",
+                "value": "@isUnitReady",
+                "args": {
+                  "index": "1"
+                }
+              },
+              {
+                "is": "CALL",
+                "value": "@unitHasMp",
+                "args": {
+                  "index": "1"
+                }
+              },
+              {
+                "not": "CALL",
+                "value": "@isUnitActionReady",
+                "args": {
+                  "index": "1"
+                }
+              }
+            ]
+          },
+          "actions": [
+            {
+              "type": "INFO",
+              "value": "Setting Up Grim Lord Sakura"
+            },
+            {
+              "type": "SET",
+              "var": "modified",
+              "value": "1"
+            },
+            {
+              "type": "SET",
+              "var": "unit1Attempts",
+              "value": "1"
+            },
+            {
+              "type": "CALL",
+              "value": "@showUnitActions",
+              "args": {
+                "index": "1"
+              }
+            },
+            {
+              "type": "CALL",
+              "value": "@selectUnitAction",
+              "args": {
+                "row": "14",
+                "column": "0"
+              }
             },
             {
               "type": "WAIT",

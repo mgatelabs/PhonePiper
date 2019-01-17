@@ -17903,6 +17903,14 @@
     "h" : 135,
     "enabled" : true
   }, {
+    "name" : "Menu - Arena - 2nd Opponent",
+    "componentId" : "menu-arena-opponent_second",
+    "x" : 43,
+    "y" : 1084,
+    "w" : 992,
+    "h" : 129,
+    "enabled" : true
+  }, {
     "name" : "Menu - Arena - Rank Up - OK",
     "componentId" : "menu-arena-rank_up-ok",
     "x" : 401,

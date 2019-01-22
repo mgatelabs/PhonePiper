@@ -182,7 +182,7 @@
           "actions": [
             {
               "type": "INFO",
-              "value": "Setting Up Grim Lord Sakura"
+              "value": "Setting Up Grim Lord Sakura, Soul Barrage x 3"
             },
             {
               "type": "SET",
@@ -215,9 +215,12 @@
               "count": "4"
             },
             {
-              "type": "TAP",
-              "value": "battle-skill-top-5",
-              "count": "3"
+              "type": "CALL",
+              "value": "@tapAbilityItem",
+              "args": {
+                "index": "5",
+                "count": "3"
+              }
             },
             {
               "type": "WAIT",

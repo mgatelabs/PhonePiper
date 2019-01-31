@@ -259,6 +259,46 @@
               "value": ""
             }
           ]
+        },
+        {
+          "condition": {
+            "is": "SCREEN",
+            "value": "menu-high_traffic"
+          },
+          "actions": [
+            {
+              "type": "TAP",
+              "value": "menu-high-traffic-ok"
+            },
+            {
+              "type": "WAIT",
+              "value": "60000"
+            },
+            {
+              "type": "REPEAT",
+              "value": ""
+            }
+          ]
+        },
+        {
+          "condition": {
+            "is": "SCREEN",
+            "value": "menu-download_data"
+          },
+          "actions": [
+            {
+              "type": "TAP",
+              "value": "menu-download_data-yes"
+            },
+            {
+              "type": "WAIT",
+              "value": "30000"
+            },
+            {
+              "type": "REPEAT",
+              "value": ""
+            }
+          ]
         }
       ]
     },

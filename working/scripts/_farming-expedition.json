@@ -16,6 +16,20 @@
         {"name": "Supercites Only", "value": "2"}
       ],
       "description": "Control automating Supercite, D, C & B Expeditions"
+    },{
+      "name": "allow-expedition-cave",
+      "display": "Expedition",
+      "value": "1",
+      "type": "INT",
+      "modify": "EDITABLE",
+      "displayType": "BOOLEAN",
+      "order": 10,
+      "tierId": "enable",
+      "values": [
+        {"name": "Disabled", "value": "0"},
+        {"name": "Enabled", "value": "1"}
+      ],
+      "description": "Control automating Moogle Cave Expeditions"
     },
     {
       "name": "expedition-finished",
@@ -236,7 +250,28 @@
               "type": "MOVE", "value": "any_to_home", "args": {"toState": "${_route_from_expedition}"}
             }
           ]
+        },
+        {
+          "condition": {
+            "is": "SCREEN",
+            "value": "menu-expedition-details"
+          },
+          "actions": [
+            {
+              "type": "TAP",
+              "value": "menu-expedition-details-x"
+            },
+            {
+              "type": "WAIT",
+              "value": "1500"
+            },
+            {
+              "type": "REPEAT",
+              "value": ""
+            }
+          ]
         }
+
       ]
     },
 
@@ -840,6 +875,45 @@
                   {
                     "is": "EQUAL",
                     "value": "1",
+                    "var": "allow-expedition-cave"
+                  }
+                ],
+                "andOr": [
+                  {
+                    "is": "SCREEN",
+                    "value": "menu-expedition-new-0-moogle"
+                  }
+                ]
+              }
+            ]
+          },
+          "actions": [
+            {
+              "type": "INFO",
+              "value": "Starting Moogle Expedition"
+            },
+            {
+              "type": "TAP",
+              "value": "menu-expedition-new-0"
+            },
+            {
+              "type": "REPEAT"
+            }
+          ]
+        },
+        {
+          "condition": {
+            "is": "EQUAL",
+            "var": "segment",
+            "value": "2",
+            "and": [
+              {
+                "is": "SCREEN",
+                "value": "menu-expedition-new",
+                "and": [
+                  {
+                    "is": "EQUAL",
+                    "value": "1",
                     "var": "allow-expedition"
                   }
                 ],
@@ -939,6 +1013,36 @@
             {
               "type": "TAP",
               "value": "menu-expedition-depart"
+            },
+            {
+              "type": "REPEAT"
+            }
+          ]
+        },
+        {
+          "condition": {
+            "is": "EQUAL",
+            "var": "segment",
+            "value": "2",
+            "and": [
+              {
+                "is": "SCREEN",
+                "value": "menu-expedition-depart-cave"
+              }
+            ]
+          },
+          "actions": [
+            {
+              "type": "INFO",
+              "value": "Starting Moogle Cave Expedition"
+            },
+            {
+              "type": "WAIT",
+              "value": "1000"
+            },
+            {
+              "type": "TAP",
+              "value": "menu-expedition-depart-cave"
             },
             {
               "type": "REPEAT"

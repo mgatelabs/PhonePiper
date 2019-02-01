@@ -77,8 +77,8 @@
               "type": "CALL",
               "value": "@selectUnitAction",
               "args": {
-                "row": "12",
-                "column": "0"
+                "row": "9",
+                "column": "1"
               }
             },
             {

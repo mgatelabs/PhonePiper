@@ -485,6 +485,11 @@
     "points" : [ ],
     "enabled" : false
   }, {
+    "name" : "Menu - Expedition - Item - 4",
+    "screenId" : "menu-expedition-item-4",
+    "points" : [ ],
+    "enabled" : false
+  }, {
     "name" : "Menu - Expedition - Item - 3 - Complete",
     "screenId" : "menu-expedition-item-3-complete",
     "points" : [ ],

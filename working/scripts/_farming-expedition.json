@@ -685,6 +685,10 @@
               {
                 "is": "SCREEN",
                 "value": "menu-expedition-item-3"
+              },
+              {
+                "is": "SCREEN",
+                "value": "menu-expedition-item-4"
               }
             ]
           },
@@ -723,6 +727,10 @@
               {
                 "not": "SCREEN",
                 "value": "menu-expedition-item-3"
+              },
+              {
+                "not": "SCREEN",
+                "value": "menu-expedition-item-4"
               }
             ]
           },
@@ -890,11 +898,15 @@
           "actions": [
             {
               "type": "INFO",
-              "value": "Starting Moogle Expedition"
+              "value": "Clicking Moogle Cave Expedition"
             },
             {
               "type": "TAP",
               "value": "menu-expedition-new-0"
+            },
+            {
+              "type": "WAIT",
+              "value": "1000"
             },
             {
               "type": "REPEAT"
@@ -1034,15 +1046,20 @@
           "actions": [
             {
               "type": "INFO",
-              "value": "Starting Moogle Cave Expedition"
-            },
-            {
-              "type": "WAIT",
-              "value": "1000"
+              "value": "Departing Moogle Cave Expedition"
             },
             {
               "type": "TAP",
               "value": "menu-expedition-depart-cave"
+            },
+            {
+              "type": "WAIT",
+              "value": "2000"
+            },
+            {
+              "type": "ADD",
+              "var": "expedition-started",
+              "value": "1"
             },
             {
               "type": "REPEAT"

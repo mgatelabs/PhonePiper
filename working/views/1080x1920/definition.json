@@ -7138,6 +7138,41 @@
     } ],
     "enabled" : true
   }, {
+    "name" : "Menu - Expedition - Item - 4",
+    "screenId" : "menu-expedition-item-4",
+    "points" : [ {
+      "x" : 1006,
+      "y" : 1839,
+      "r" : 0,
+      "g" : 0,
+      "b" : 0
+    }, {
+      "x" : 1008,
+      "y" : 1841,
+      "r" : 0,
+      "g" : 0,
+      "b" : 0
+    }, {
+      "x" : 1010,
+      "y" : 1843,
+      "r" : 0,
+      "g" : 0,
+      "b" : 0
+    }, {
+      "x" : 1012,
+      "y" : 1845,
+      "r" : 0,
+      "g" : 0,
+      "b" : 0
+    }, {
+      "x" : 1014,
+      "y" : 1847,
+      "r" : 0,
+      "g" : 0,
+      "b" : 0
+    } ],
+    "enabled" : true
+  }, {
     "name" : "Menu - Expedition - New",
     "screenId" : "menu-expedition-new",
     "points" : [ {

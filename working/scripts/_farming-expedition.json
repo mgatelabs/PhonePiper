@@ -642,6 +642,44 @@
                 "is": "EQUAL",
                 "var": "receiving",
                 "value": "1"
+              },
+              {
+                "is": "SCREEN",
+                "value": "menu-expedition-ongoing",
+                "or": [
+                  {
+                    "is": "SCREEN",
+                    "value": "menu-expedition-new"
+                  }
+                ]
+              }
+            ]
+          },
+          "actions": [
+            {
+              "type": "INFO",
+              "value": "Receiving Over"
+            },
+            {
+              "type": "SET",
+              "var": "receiving",
+              "value": "0"
+            },
+            {
+              "type": "REPEAT"
+            }
+          ]
+        },
+        {
+          "condition": {
+            "is": "EQUAL",
+            "var": "segment",
+            "value": "1",
+            "and": [
+              {
+                "is": "EQUAL",
+                "var": "receiving",
+                "value": "1"
               }
             ]
           },

@@ -635,30 +635,28 @@
         {
           "condition": {
             "is": "EQUAL",
-            "var": "segment",
+            "var": "receiving",
             "value": "1",
-            "and": [
+            "andOr": [
               {
-                "is": "EQUAL",
-                "var": "receiving",
-                "value": "1"
+                "is": "SCREEN",
+                "value": "menu-expedition-ongoing"
               },
               {
                 "is": "SCREEN",
-                "value": "menu-expedition-ongoing",
-                "or": [
-                  {
-                    "is": "SCREEN",
-                    "value": "menu-expedition-new"
-                  },
-                  {
-                    "is": "SCREEN",
-                    "value": "menu-expedition-new"
-                  }
-                ]
+                "value": "menu-expedition-new"
+              },
+              {
+                "is": "SCREEN",
+                "value": "menu-expedition-depart"
+              },
+              {
+                "is": "SCREEN",
+                "value": "menu-expedition-depart-cave"
               }
             ]
-          },
+          }
+          ,
           "actions": [
             {
               "type": "INFO",

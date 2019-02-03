@@ -650,6 +650,10 @@
                   {
                     "is": "SCREEN",
                     "value": "menu-expedition-new"
+                  },
+                  {
+                    "is": "SCREEN",
+                    "value": "menu-expedition-new"
                   }
                 ]
               }
@@ -939,6 +943,11 @@
               "value": "Clicking Moogle Cave Expedition"
             },
             {
+              "type": "SET",
+              "var": "receiving",
+              "value": "0"
+            },
+            {
               "type": "TAP",
               "value": "menu-expedition-new-0"
             },
@@ -985,6 +994,11 @@
             {
               "type": "INFO",
               "value": "Starting Standard Expedition #2"
+            },
+            {
+              "type": "SET",
+              "var": "receiving",
+              "value": "0"
             },
             {
               "type": "TAP",
@@ -1053,6 +1067,11 @@
               "value": "Starting Supersite Expedition"
             },
             {
+              "type": "SET",
+              "var": "receiving",
+              "value": "0"
+            },
+            {
               "type": "TAP",
               "value": "menu-expedition-auto_fill"
             },
@@ -1085,6 +1104,11 @@
             {
               "type": "INFO",
               "value": "Departing Moogle Cave Expedition"
+            },
+            {
+              "type": "SET",
+              "var": "receiving",
+              "value": "0"
             },
             {
               "type": "TAP",
@@ -1120,6 +1144,11 @@
             {
               "type": "INFO",
               "value": "Daparting Supersite Expedition"
+            },
+            {
+              "type": "SET",
+              "var": "receiving",
+              "value": "0"
             },
             {
               "type": "TAP",

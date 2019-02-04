@@ -16,6 +16,20 @@
         {"name": "Supercites Only", "value": "2"}
       ],
       "description": "Control automating Supercite, D, C & B Expeditions"
+    },{
+      "name": "allow-expedition-cave",
+      "display": "TMR Expedition",
+      "value": "1",
+      "type": "INT",
+      "modify": "EDITABLE",
+      "displayType": "BOOLEAN",
+      "order": 10,
+      "tierId": "enable",
+      "values": [
+        {"name": "Disabled", "value": "0"},
+        {"name": "Enabled", "value": "1"}
+      ],
+      "description": "Control automating Moogle Cave Expeditions"
     },
     {
       "name": "expedition-finished",
@@ -236,7 +250,28 @@
               "type": "MOVE", "value": "any_to_home", "args": {"toState": "${_route_from_expedition}"}
             }
           ]
+        },
+        {
+          "condition": {
+            "is": "SCREEN",
+            "value": "menu-expedition-details"
+          },
+          "actions": [
+            {
+              "type": "TAP",
+              "value": "menu-expedition-details-x"
+            },
+            {
+              "type": "WAIT",
+              "value": "1500"
+            },
+            {
+              "type": "REPEAT",
+              "value": ""
+            }
+          ]
         }
+
       ]
     },
 
@@ -600,6 +635,46 @@
         {
           "condition": {
             "is": "EQUAL",
+            "var": "receiving",
+            "value": "1",
+            "andOr": [
+              {
+                "is": "SCREEN",
+                "value": "menu-expedition-ongoing"
+              },
+              {
+                "is": "SCREEN",
+                "value": "menu-expedition-new"
+              },
+              {
+                "is": "SCREEN",
+                "value": "menu-expedition-depart"
+              },
+              {
+                "is": "SCREEN",
+                "value": "menu-expedition-depart-cave"
+              }
+            ]
+          }
+          ,
+          "actions": [
+            {
+              "type": "INFO",
+              "value": "Receiving Over"
+            },
+            {
+              "type": "SET",
+              "var": "receiving",
+              "value": "0"
+            },
+            {
+              "type": "REPEAT"
+            }
+          ]
+        },
+        {
+          "condition": {
+            "is": "EQUAL",
             "var": "segment",
             "value": "1",
             "and": [
@@ -650,6 +725,10 @@
               {
                 "is": "SCREEN",
                 "value": "menu-expedition-item-3"
+              },
+              {
+                "is": "SCREEN",
+                "value": "menu-expedition-item-4"
               }
             ]
           },
@@ -688,6 +767,10 @@
               {
                 "not": "SCREEN",
                 "value": "menu-expedition-item-3"
+              },
+              {
+                "not": "SCREEN",
+                "value": "menu-expedition-item-4"
               }
             ]
           },
@@ -840,6 +923,54 @@
                   {
                     "is": "EQUAL",
                     "value": "1",
+                    "var": "allow-expedition-cave"
+                  }
+                ],
+                "andOr": [
+                  {
+                    "is": "SCREEN",
+                    "value": "menu-expedition-new-0-moogle"
+                  }
+                ]
+              }
+            ]
+          },
+          "actions": [
+            {
+              "type": "INFO",
+              "value": "Clicking Moogle Cave Expedition"
+            },
+            {
+              "type": "SET",
+              "var": "receiving",
+              "value": "0"
+            },
+            {
+              "type": "TAP",
+              "value": "menu-expedition-new-0"
+            },
+            {
+              "type": "WAIT",
+              "value": "1000"
+            },
+            {
+              "type": "REPEAT"
+            }
+          ]
+        },
+        {
+          "condition": {
+            "is": "EQUAL",
+            "var": "segment",
+            "value": "2",
+            "and": [
+              {
+                "is": "SCREEN",
+                "value": "menu-expedition-new",
+                "and": [
+                  {
+                    "is": "EQUAL",
+                    "value": "1",
                     "var": "allow-expedition"
                   }
                 ],
@@ -861,6 +992,11 @@
             {
               "type": "INFO",
               "value": "Starting Standard Expedition #2"
+            },
+            {
+              "type": "SET",
+              "var": "receiving",
+              "value": "0"
             },
             {
               "type": "TAP",
@@ -929,6 +1065,11 @@
               "value": "Starting Supersite Expedition"
             },
             {
+              "type": "SET",
+              "var": "receiving",
+              "value": "0"
+            },
+            {
               "type": "TAP",
               "value": "menu-expedition-auto_fill"
             },
@@ -953,6 +1094,46 @@
             "and": [
               {
                 "is": "SCREEN",
+                "value": "menu-expedition-depart-cave"
+              }
+            ]
+          },
+          "actions": [
+            {
+              "type": "INFO",
+              "value": "Departing Moogle Cave Expedition"
+            },
+            {
+              "type": "SET",
+              "var": "receiving",
+              "value": "0"
+            },
+            {
+              "type": "TAP",
+              "value": "menu-expedition-depart-cave"
+            },
+            {
+              "type": "WAIT",
+              "value": "2000"
+            },
+            {
+              "type": "ADD",
+              "var": "expedition-started",
+              "value": "1"
+            },
+            {
+              "type": "REPEAT"
+            }
+          ]
+        },
+        {
+          "condition": {
+            "is": "EQUAL",
+            "var": "segment",
+            "value": "2",
+            "and": [
+              {
+                "is": "SCREEN",
                 "value": "menu-expedition-confirm"
               }
             ]
@@ -961,6 +1142,11 @@
             {
               "type": "INFO",
               "value": "Daparting Supersite Expedition"
+            },
+            {
+              "type": "SET",
+              "var": "receiving",
+              "value": "0"
             },
             {
               "type": "TAP",

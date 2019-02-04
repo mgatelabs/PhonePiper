@@ -305,6 +305,19 @@
         {"name": "No", "value": "0"},
         {"name": "Yes", "value": "1"}
       ]
+    }, {
+      "name" : "arena-opponent-choice",
+      "display" : "Opponent Selection",
+      "value" : "menu-arena-opponent_first",
+      "type" : "STRING",
+      "modify" : "EDITABLE",
+      "displayType" : "STANDARD",
+      "order" : 20,
+      "tierId": "arena",
+      "values": [
+        {"name": "1st", "value": "menu-arena-opponent_first"},
+        {"name": "2nd", "value": "menu-arena-opponent_second"}
+      ]
     },
     {
       "name": "_route_from_arena",
@@ -552,7 +565,7 @@
           "actions": [
             {
               "type": "TAP",
-              "value": "menu-arena-opponent_first"
+              "value": "${arena-opponent-choice}"
             },
             {
               "type": "WAIT",

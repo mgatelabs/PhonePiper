@@ -420,6 +420,11 @@
     "points" : [ ],
     "enabled" : false
   }, {
+    "name" : "Menu - Download Data",
+    "screenId" : "menu-download_data",
+    "points" : [ ],
+    "enabled" : false
+  }, {
     "name" : "Menu - Energy Recovery",
     "screenId" : "menu-energy_recovery",
     "points" : [ ],
@@ -432,6 +437,16 @@
   }, {
     "name" : "Menu - Expedition - Depart",
     "screenId" : "menu-expedition-depart",
+    "points" : [ ],
+    "enabled" : false
+  }, {
+    "name" : "Menu - Expedition - Depart - Cave",
+    "screenId" : "menu-expedition-depart-cave",
+    "points" : [ ],
+    "enabled" : false
+  }, {
+    "name" : "Menu - Expedition - Details",
+    "screenId" : "menu-expedition-details",
     "points" : [ ],
     "enabled" : false
   }, {
@@ -470,6 +485,11 @@
     "points" : [ ],
     "enabled" : false
   }, {
+    "name" : "Menu - Expedition - Item - 4",
+    "screenId" : "menu-expedition-item-4",
+    "points" : [ ],
+    "enabled" : false
+  }, {
     "name" : "Menu - Expedition - Item - 3 - Complete",
     "screenId" : "menu-expedition-item-3-complete",
     "points" : [ ],
@@ -492,6 +512,11 @@
   }, {
     "name" : "Menu - Expedition - New - 0 - D",
     "screenId" : "menu-expedition-new-0-d",
+    "points" : [ ],
+    "enabled" : false
+  }, {
+    "name" : "Menu - Expedition - New - 0 - Moogle",
+    "screenId" : "menu-expedition-new-0-moogle",
     "points" : [ ],
     "enabled" : false
   }, {
@@ -577,6 +602,11 @@
   }, {
     "name" : "Menu - Goal List - Next",
     "screenId" : "menu-goal_list-next",
+    "points" : [ ],
+    "enabled" : false
+  }, {
+    "name" : "Menu - High Traffic",
+    "screenId" : "menu-high_traffic",
     "points" : [ ],
     "enabled" : false
   }, {
@@ -1389,6 +1419,14 @@
     "h" : 1,
     "enabled" : false
   }, {
+    "name" : "Menu - Arena - 2nd Opponent",
+    "componentId" : "menu-arena-opponent_second",
+    "x" : 0,
+    "y" : 0,
+    "w" : 1,
+    "h" : 1,
+    "enabled" : false
+  }, {
     "name" : "Menu - Arena - Rank Up - OK",
     "componentId" : "menu-arena-rank_up-ok",
     "x" : 0,
@@ -1477,6 +1515,14 @@
     "h" : 1,
     "enabled" : false
   }, {
+    "name" : "Menu - Download Data - Yes",
+    "componentId" : "menu-download_data-yes",
+    "x" : 0,
+    "y" : 0,
+    "w" : 1,
+    "h" : 1,
+    "enabled" : false
+  }, {
     "name" : "Menu - Energy Bar",
     "componentId" : "menu-energy_bar",
     "x" : 103,
@@ -1527,6 +1573,22 @@
   }, {
     "name" : "Menu - Expedition - Depart",
     "componentId" : "menu-expedition-depart",
+    "x" : 0,
+    "y" : 0,
+    "w" : 1,
+    "h" : 1,
+    "enabled" : false
+  }, {
+    "name" : "Menu - Expedition - Depart - Cave",
+    "componentId" : "menu-expedition-depart-cave",
+    "x" : 0,
+    "y" : 0,
+    "w" : 1,
+    "h" : 1,
+    "enabled" : false
+  }, {
+    "name" : "Menu - Expedition - Details - X",
+    "componentId" : "menu-expedition-details-x",
     "x" : 0,
     "y" : 0,
     "w" : 1,
@@ -1699,6 +1761,14 @@
     "y" : 1646,
     "w" : 195,
     "h" : 80,
+    "enabled" : false
+  }, {
+    "name" : "Menu - High Traffic - OK",
+    "componentId" : "menu-high-traffic-ok",
+    "x" : 0,
+    "y" : 0,
+    "w" : 1,
+    "h" : 1,
     "enabled" : false
   }, {
     "name" : "Menu - Home Arena",

@@ -12,7 +12,9 @@ $(function(){
     var states = $('#states');
     var components = $('#components');
     var editComponents = $('#edit-components');
+    editComponents.change(updateScreenComponentNames);
     var editScreens = $('#edit-screens');
+    editScreens.change(updateScreenComponentNames);
 
     var editForm = $('#edit-form');
 
@@ -505,6 +507,13 @@ $(function(){
           },
           dataType: 'json'
         });
+    }
+
+    function updateScreenComponentNames() {
+        var component_id = editComponents.val();
+        $('#ComponentName').text('c-' + component_id + '.png');
+        var screen_id = editScreens.val();
+        $('#ScreenName').text('s-' + screen_id + '.png');
     }
 
     myTabContent.on('change', 'select.updateVariable, input.updateVariable', function(){

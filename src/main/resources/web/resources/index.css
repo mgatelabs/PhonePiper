@@ -5,3 +5,8 @@
 .dropdown-menu a.nav-link {
     color:black !important;
 }
+
+.FileName {
+    padding: 4px;
+    font-weight: bold;
+}

@@ -441,7 +441,7 @@
         },
         {
           "condition" : {
-            "not"   : "SCREEN",
+            "is"   : "SCREEN",
             "value" : "menu-home"
           },
           "actions": [

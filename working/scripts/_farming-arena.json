@@ -438,6 +438,29 @@
               "args": {"toState": "${_route_from_arena}"}
             }
           ]
+        },
+        {
+          "condition" : {
+            "not"   : "SCREEN",
+            "value" : "menu-home"
+          },
+          "actions": [
+            {
+              "type": "INFO",
+              "value": "At wrong screen, going home"
+            },
+            { "type": "CALL", "value": "@keepAlive" },
+            {
+              "type": "SET",
+              "value": "0",
+              "var": "_screen_saver"
+            },
+            {
+              "type": "MOVE",
+              "value": "any_to_home",
+              "args": {"toState": "${_route_from_arena}"}
+            }
+          ]
         }
       ]
     },

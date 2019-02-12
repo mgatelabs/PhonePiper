@@ -10,8 +10,8 @@
   ],
   "states": {
 
-    "start": {
-      "name": "Start Battle",
+    "main": {
+      "name": "Menu",
       "includes": [
         "_common-ml-mission",
         "_common-ml-goals",
@@ -35,23 +35,20 @@
       ]
     },
 
-    "wait": {
-      "name": "Wait for end",
-      "includes": [
-        "_common_mr-points",
-        "_common_mr-units",
-        "_common_mr-items",
-        "_common_mr-friend_request"
-      ],
+    /*
+    So you can setup wave 1, and continue on wave 2
+    */
+    "fight-wave2": {
+      "name": "Fight (Start on Wave 2)",
       "statements": [
         {
-          "condition": {
-            "is": "SCREEN", "value": "menu-missions-select"
-          },
           "actions": [
             {
               "type": "MOVE",
-              "value": "start"
+              "value": "fight",
+              "args": {
+                "wave": "2"
+              }
             }
           ]
         }
@@ -78,28 +75,6 @@
         }
       },
       "statements": [
-
-        /*
-        {
-          "condition": {
-            "is": "CALL",
-            "value": "@isBattleReady",
-            "and": [
-              {
-                "is": "EQUAL",
-                "var": "wave",
-                "value": "5"
-              }
-            ]
-          },
-          "actions": [
-            {
-              "type": "MOVE",
-              "value": "wait"
-            }
-          ]
-        },
-        */
 
         {
           "condition": {
@@ -325,8 +300,6 @@
             }
           ]
         },
-
-
         {
           "condition": {
             "is": "SCREEN", "value": "menu-missions-select"
@@ -334,7 +307,7 @@
           "actions": [
             {
               "type": "MOVE",
-              "value": "start"
+              "value": "main"
             }
           ]
         }

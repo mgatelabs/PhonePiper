@@ -26,6 +26,7 @@ $(function(){
     var playPauseButton = $('#controlPlayPause');
     var unloadButton = $('#controlUnload');
     var killButton = $('#controlKill');
+    var dumpStateButton = $('#controlDumpState');
     var unloadEdit = $('#unloadEdit');
 
 
@@ -280,6 +281,17 @@ $(function(){
                 }
             });
         }
+    });
+
+    dumpStateButton.click(function(){
+        $.ajax({
+            type: "POST",
+            url: '/piper/dump/state',
+            dataType: 'json',
+            success: function(result){
+                console.log(result);
+            }
+        });
     });
 
     unloadEdit.click(function(){

@@ -1,5 +1,6 @@
 package com.mgatelabs.piper.shared.util;
 
+import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.Maps;
 import com.mgatelabs.piper.shared.details.ExecutableLink;
 import com.mgatelabs.piper.shared.details.StateDefinition;
@@ -32,6 +33,10 @@ public class VarManager {
         globals = Maps.newHashMap();
         state = Maps.newHashMap();
         calls = new Stack<>();
+    }
+
+    public Map<String, VarInstance> GetStateVariables() {
+        return ImmutableMap.copyOf(state);
     }
 
     public void global(List<VarDefinition> definitions) {

@@ -114,6 +114,16 @@ public class WebResource {
     }
 
     @POST
+    @Path("/dump/state")
+    @Produces(MediaType.APPLICATION_JSON)
+    public synchronized Map<String, String> dumpState() {
+        if (runner != null) {
+            return runner.getStateVariables();
+        }
+        return ImmutableMap.of();
+    }
+
+    @POST
     @Path("/adb/usb")
     @Produces(MediaType.APPLICATION_JSON)
     public synchronized ValueResult adbUseUSB() {

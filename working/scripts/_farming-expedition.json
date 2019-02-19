@@ -800,6 +800,36 @@
             "and": [
               {
                 "is": "SCREEN",
+                "value": "menu-expedition-depart-cave"
+              }
+            ]
+          },
+          "actions": [
+            {
+              "type": "INFO",
+              "value": "In a bad state, backing up"
+            },
+            {
+              "type": "EVENT",
+              "value": "back"
+            },
+            {
+              "type": "WAIT",
+              "value": "1000"
+            },
+            {
+              "type": "REPEAT"
+            }
+          ]
+        },
+        {
+          "condition": {
+            "is": "EQUAL",
+            "var": "segment",
+            "value": "1",
+            "and": [
+              {
+                "is": "SCREEN",
                 "value": "menu-expedition-new"
               }
             ]

@@ -10,3 +10,20 @@
     padding: 4px;
     font-weight: bold;
 }
+
+
+.export-link {
+    float:right;
+    display: inline-block;
+    cursor:pointer;
+}
+
+.export-all-container {
+    display: block;
+    text-align: center;
+}
+
+.export-all-link
+{
+    cursor: pointer;
+}

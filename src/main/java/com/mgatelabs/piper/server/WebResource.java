@@ -2,6 +2,7 @@ package com.mgatelabs.piper.server;
 
 import ch.qos.logback.classic.Level;
 import ch.qos.logback.classic.spi.ILoggingEvent;
+import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.common.base.Charsets;
 import com.google.common.collect.*;
@@ -81,7 +82,7 @@ public class WebResource {
     @POST
     @Path("/variable")
     @Produces(MediaType.APPLICATION_JSON)
-    public synchronized void setDeviceIp(@FormParam("key") String key, @FormParam("value") String value) {
+    public synchronized void setVariable(@FormParam("key") String key, @FormParam("value") String value) {
         checkInitialState();
         if (runner != null) {
             runner.updateVariableFromUserInput(key, value);
@@ -95,6 +96,26 @@ public class WebResource {
             if (varStateDefinition.getItems().size() > 0) {
                 varStateDefinition.save(frameChoices.getStateNameOrDefault());
             }
+        }
+    }
+
+    @POST
+    @Path("/variables")
+    @Produces(MediaType.APPLICATION_JSON)
+    public synchronized void setVariables(@FormParam("content") String contentStr) {
+        try {
+            final ObjectMapper objectMapper = JsonTool.getInstance();
+            TypeReference<HashMap<String, Object>> typeRef
+                    = new TypeReference<HashMap<String, Object>>() {
+            };
+            Map<String, String> content = objectMapper.readValue(contentStr, typeRef);
+            for (Map.Entry<String, String> entry : content.entrySet()) {
+                String key = entry.getKey();
+                String value = entry.getValue();
+                setVariable(key, value);
+            }
+        } catch (Exception ex) {
+            ex.printStackTrace();
         }
     }
 

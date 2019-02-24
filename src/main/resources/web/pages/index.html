@@ -69,6 +69,9 @@
                         <a class="nav-link" id="vars-tab" data-toggle="tab" href="#vars" role="tab" aria-controls="vars" aria-selected="false">Variables</a>
                     </div>
                 </li>
+                <li class="nav-item whenLoaded">
+                    <a class="nav-link" id="imports-tab" data-toggle="tab" href="#imports" role="tab" aria-controls="imports" aria-selected="false">Import/Export</a>
+                </li>
                 <li class="nav-item whenEdit">
                     <a class="nav-link" id="edit-tab" data-toggle="tab" href="#edit" role="tab" aria-controls="edit" aria-selected="false">Edit</a>
                 </li>
@@ -424,6 +427,21 @@
                 </form>
             </div>
         </div>
+
+        <div class="tab-pane fade" id="imports" role="tabpanel" aria-labelledby="imports-tab">
+            <div class="row">
+                <form id="import-form" class="col-sm-12">
+
+                    <textarea id="import-text-area" cols="80" rows="6"></textarea>
+
+                    <div class="input-group">
+                        <button type="button" class="btn import-action btn-info notWhileRunning whenLoaded">Import</button>
+                    </div>
+
+                </form>
+            </div>
+        </div>
+
         <div class="tab-pane fade" id="console" role="tabpanel" aria-labelledby="console-tab">
 
             <div class="container-fluid">

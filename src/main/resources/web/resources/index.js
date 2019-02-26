@@ -432,6 +432,7 @@ $(function(){
                         }
                         def = $('<div class="var-tier-item"></div>').appendTo(tabTo);
                         $('<a href="#" class="export-link">Export Tier</a>').appendTo(def);
+                        $('<a href="#" class="reset-link">Reset Tier</a>').appendTo(def);
                         def.append($('<h3></h3>').text(result.variableTiers[i].title));
 
                         varTiers[result.variableTiers[i].id] = $('<div class="row"></div>').appendTo(def);
@@ -551,7 +552,7 @@ $(function(){
     $('#myTabContent').on('click', '.export-link', function(){
         var parent = $(this).parent('.var-tier-item');
         var items = {};
-        $('.updateVariable', parent).each(function(){
+        $('button.updateVariable', parent).each(function(){
             var ref = $(this), key = ref.data('key'), input = linkedVariables[key];
             items[key] = input.val();
         });
@@ -559,10 +560,30 @@ $(function(){
         $('[href="#imports"]').tab('show');
     });
 
+    $('#myTabContent').on('click', '.reset-link', function(){
+        var parent = $(this).parent('.var-tier-item');
+        var items = [];
+        $('button.updateVariable', parent).each(function(){
+            var ref = $(this), key = ref.data('key');
+            items.push(key);
+        });
+        $.ajax({
+            type: "POST",
+            url: '/piper/reset',
+            data: {items: JSON.stringify(items)},
+            success: function(){
+                // Reset red markings
+                $('input.updatedValue,select.updatedValue').removeClass('updatedValue');
+                statusCheck();
+            }
+        });WebRes
+
+    });
+
     $('#myTabContent').on('click', '.export-all-link', function(){
             var parent = $(this).parents('.var-tier-tab');
             var items = {};
-            $('.updateVariable', parent).each(function(){
+            $('button.updateVariable', parent).each(function(){
                 var ref = $(this), key = ref.data('key'), input = linkedVariables[key];
                 items[key] = input.val();
             });
@@ -579,8 +600,10 @@ $(function(){
                   url: '/piper/variables',
                   data: {content: content},
                   success: function(){
-                    statusCheck();
-                  }
+                        // Reset red markings
+                        $('input.updatedValue,select.updatedValue').removeClass('updatedValue');
+                        statusCheck();
+                    }
                 });
             }
         }

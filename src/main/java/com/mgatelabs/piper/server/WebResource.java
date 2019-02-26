@@ -120,6 +120,26 @@ public class WebResource {
     }
 
     @POST
+    @Path("/reset")
+    @Produces(MediaType.APPLICATION_JSON)
+    public synchronized void resetVariables(@FormParam("items") String itemStr) {
+        if (runner != null) {
+            try {
+                final ObjectMapper objectMapper = JsonTool.getInstance();
+                TypeReference<ArrayList<String>> typeRef
+                        = new TypeReference<ArrayList<String>>() {
+                };
+                List<String> items = objectMapper.readValue(itemStr, typeRef);
+                for (String key : items) {
+                    setVariable(key, runner.getDefaultVariableValue(key));
+                }
+            } catch (Exception ex) {
+                ex.printStackTrace();
+            }
+        }
+    }
+
+    @POST
     @Path("/button")
     @Produces(MediaType.APPLICATION_JSON)
     public synchronized ValueResult buttonPress(@FormParam("componentId") String componentId, @FormParam("buttonId") String buttonId) {

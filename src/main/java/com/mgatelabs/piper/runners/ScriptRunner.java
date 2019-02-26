@@ -1247,6 +1247,14 @@ public class ScriptRunner {
         }
     }
 
+    public String getDefaultVariableValue(String key) {
+        VarDefinition definition = getVarDefinition(key);
+        if (definition != null) {
+            return definition.getValue();
+        }
+        return "";
+    }
+
     public void pressComponent(String componentId, ActionType actionType) {
         switch (actionType) {
             case SWIPE_UP:

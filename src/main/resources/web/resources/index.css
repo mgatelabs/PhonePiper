@@ -16,6 +16,14 @@
     float:right;
     display: inline-block;
     cursor:pointer;
+    padding: 4px;
+}
+
+.reset-link {
+    float:right;
+    display: inline-block;
+    cursor:pointer;
+    padding: 4px;
 }
 
 .export-all-container {

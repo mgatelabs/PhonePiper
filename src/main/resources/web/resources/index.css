@@ -5,3 +5,33 @@
 .dropdown-menu a.nav-link {
     color:black !important;
 }
+
+.FileName {
+    padding: 4px;
+    font-weight: bold;
+}
+
+
+.export-link {
+    float:right;
+    display: inline-block;
+    cursor:pointer;
+    padding: 4px;
+}
+
+.reset-link {
+    float:right;
+    display: inline-block;
+    cursor:pointer;
+    padding: 4px;
+}
+
+.export-all-container {
+    display: block;
+    text-align: center;
+}
+
+.export-all-link
+{
+    cursor: pointer;
+}

@@ -214,8 +214,7 @@
             "is": "CALL",
             "value": "@isBattleReady",
             "and": [
-              { "is": "EQUAL", "value": "3", "var":"segment"},
-              { "is": "EQUAL", "value": "1", "var":"modified"}
+              { "is": "EQUAL", "value": "3", "var":"segment"}
             ]
           },
           "actions": [

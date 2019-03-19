@@ -12,6 +12,109 @@
       "description": "Setup your units to attack - For Slot 2",
       "statements": [
 
+        // Grim - Soul Barrage x 3
+        {
+          "condition": {
+            "is": "CALL",
+            "value": "@isBattleReady",
+            "and": [
+              {
+                "is": "EQUAL",
+                "value": "1",
+                "var": "arena-rule-magic_combos"
+              },
+              {
+                "is": "EQUAL",
+                "value": "1",
+                "var": "arena-rule-multi_abilities"
+              },
+              {
+                "is": "EQUAL",
+                "value": "2",
+                "var": "segment"
+              },
+              {
+                "is": "EQUAL",
+                "value": "0",
+                "var": "unit1Attempts"
+              },
+              {
+                "is": "CALL",
+                "value": "@isUnitReady",
+                "args": {
+                  "index": "1"
+                }
+              },
+              {
+                "is": "CALL",
+                "value": "@unitHasMp",
+                "args": {
+                  "index": "1"
+                }
+              },
+              {
+                "not": "CALL",
+                "value": "@isUnitActionReady",
+                "args": {
+                  "index": "1"
+                }
+              }
+            ]
+          },
+          "actions": [
+            {
+              "type": "INFO",
+              "value": "Setting Up Grim Lord Sakura, Soul Barrage x 3"
+            },
+            {
+              "type": "SET",
+              "var": "modified",
+              "value": "1"
+            },
+            {
+              "type": "SET",
+              "var": "unit1Attempts",
+              "value": "1"
+            },
+            {
+              "type": "CALL",
+              "value": "@showUnitActions",
+              "args": {
+                "index": "1"
+              }
+            },
+            {
+              "type": "CALL",
+              "value": "@selectUnitAction",
+              "args": {
+                "row": "7",
+                "column": "1"
+              }
+            },
+            {
+              "type": "SLOW_UP",
+              "value": "battle-skill-top-slider",
+              "count": "4"
+            },
+            {
+              "type": "CALL",
+              "value": "@tapAbilityItem",
+              "args": {
+                "index": "5",
+                "count": "3"
+              }
+            },
+            {
+              "type": "WAIT",
+              "value": "1000"
+            },
+            {
+              "type": "REPEAT",
+              "value": ""
+            }
+          ]
+        },
+
         // Grim - Eldritch Wave x 3
         {
           "condition": {
@@ -130,7 +233,7 @@
           ]
         },
 
-        // Grim - Soul Barrage x 3
+        // Grim - Lightning x 2
         {
           "condition": {
             "is": "CALL",
@@ -144,7 +247,7 @@
               {
                 "is": "EQUAL",
                 "value": "1",
-                "var": "arena-rule-multi_abilities"
+                "var": "arena-rule-lightning"
               },
               {
                 "is": "EQUAL",
@@ -172,7 +275,7 @@
               },
               {
                 "not": "CALL",
-                "value": "@isUnitActionReady",
+                "value": "@isUnitMagicReady",
                 "args": {
                   "index": "1"
                 }
@@ -182,7 +285,7 @@
           "actions": [
             {
               "type": "INFO",
-              "value": "Setting Up Grim Lord Sakura, Soul Barrage x 3"
+              "value": "Setting Up Grim Lord Sakura, Lightning x 2"
             },
             {
               "type": "SET",
@@ -205,12 +308,12 @@
               "type": "CALL",
               "value": "@selectUnitAction",
               "args": {
-                "row": "7",
-                "column": "1"
+                "row": "8",
+                "column": "0"
               }
             },
             {
-              "type": "SLOW_UP",
+              "type": "SLOW_DOWN",
               "value": "battle-skill-top-slider",
               "count": "4"
             },
@@ -218,8 +321,8 @@
               "type": "CALL",
               "value": "@tapAbilityItem",
               "args": {
-                "index": "5",
-                "count": "3"
+                "index": "0",
+                "count": "2"
               }
             },
             {

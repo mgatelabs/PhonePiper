@@ -2,6 +2,7 @@ package com.mgatelabs.piper.server;
 
 import ch.qos.logback.classic.Level;
 import ch.qos.logback.classic.spi.ILoggingEvent;
+import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.common.base.Charsets;
 import com.google.common.collect.*;
@@ -81,7 +82,7 @@ public class WebResource {
     @POST
     @Path("/variable")
     @Produces(MediaType.APPLICATION_JSON)
-    public synchronized void setDeviceIp(@FormParam("key") String key, @FormParam("value") String value) {
+    public synchronized void setVariable(@FormParam("key") String key, @FormParam("value") String value) {
         checkInitialState();
         if (runner != null) {
             runner.updateVariableFromUserInput(key, value);
@@ -99,6 +100,46 @@ public class WebResource {
     }
 
     @POST
+    @Path("/variables")
+    @Produces(MediaType.APPLICATION_JSON)
+    public synchronized void setVariables(@FormParam("content") String contentStr) {
+        try {
+            final ObjectMapper objectMapper = JsonTool.getInstance();
+            TypeReference<HashMap<String, Object>> typeRef
+                    = new TypeReference<HashMap<String, Object>>() {
+            };
+            Map<String, String> content = objectMapper.readValue(contentStr, typeRef);
+            for (Map.Entry<String, String> entry : content.entrySet()) {
+                String key = entry.getKey();
+                String value = entry.getValue();
+                setVariable(key, value);
+            }
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+    }
+
+    @POST
+    @Path("/reset")
+    @Produces(MediaType.APPLICATION_JSON)
+    public synchronized void resetVariables(@FormParam("items") String itemStr) {
+        if (runner != null) {
+            try {
+                final ObjectMapper objectMapper = JsonTool.getInstance();
+                TypeReference<ArrayList<String>> typeRef
+                        = new TypeReference<ArrayList<String>>() {
+                };
+                List<String> items = objectMapper.readValue(itemStr, typeRef);
+                for (String key : items) {
+                    setVariable(key, runner.getDefaultVariableValue(key));
+                }
+            } catch (Exception ex) {
+                ex.printStackTrace();
+            }
+        }
+    }
+
+    @POST
     @Path("/button")
     @Produces(MediaType.APPLICATION_JSON)
     public synchronized ValueResult buttonPress(@FormParam("componentId") String componentId, @FormParam("buttonId") String buttonId) {
@@ -111,6 +152,16 @@ public class WebResource {
             valueResult.setStatus("error");
         }
         return valueResult;
+    }
+
+    @POST
+    @Path("/dump/state")
+    @Produces(MediaType.APPLICATION_JSON)
+    public synchronized Map<String, String> dumpState() {
+        if (runner != null) {
+            return runner.getStateVariables();
+        }
+        return ImmutableMap.of();
     }
 
     @POST

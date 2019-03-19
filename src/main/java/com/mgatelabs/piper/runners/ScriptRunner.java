@@ -1155,6 +1155,15 @@ public class ScriptRunner {
         return vars;
     }
 
+    public Map<String, String> getStateVariables() {
+        final Map<String, String> result = Maps.newHashMap();
+        final Map<String, VarInstance> stateVars = vars.GetStateVariables();
+        for (Map.Entry<String, VarInstance> entry: stateVars.entrySet()) {
+            result.put(entry.getKey(), entry.getValue().getVar().toString());
+        }
+        return result;
+    }
+
     public List<VarTierDefinition> getVariableTiers() {
         List<VarTierDefinition> vars = Lists.newArrayList();
         vars.addAll(scriptEnvironment.getVarTiers().values());
@@ -1236,6 +1245,14 @@ public class ScriptRunner {
             }
             vars.update(key, v);
         }
+    }
+
+    public String getDefaultVariableValue(String key) {
+        VarDefinition definition = getVarDefinition(key);
+        if (definition != null) {
+            return definition.getValue();
+        }
+        return "";
     }
 
     public void pressComponent(String componentId, ActionType actionType) {

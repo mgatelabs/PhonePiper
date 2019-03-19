@@ -12,7 +12,9 @@ $(function(){
     var states = $('#states');
     var components = $('#components');
     var editComponents = $('#edit-components');
+    editComponents.change(updateScreenComponentNames);
     var editScreens = $('#edit-screens');
+    editScreens.change(updateScreenComponentNames);
 
     var editForm = $('#edit-form');
 
@@ -24,8 +26,8 @@ $(function(){
     var playPauseButton = $('#controlPlayPause');
     var unloadButton = $('#controlUnload');
     var killButton = $('#controlKill');
+    var dumpStateButton = $('#controlDumpState');
     var unloadEdit = $('#unloadEdit');
-
 
     var controlDeviceSave = $('#controlDeviceSave');
     var controlDeviceDirectSave = $('#controlDeviceDirectSave');
@@ -280,6 +282,17 @@ $(function(){
         }
     });
 
+    dumpStateButton.click(function(){
+        $.ajax({
+            type: "POST",
+            url: '/piper/dump/state',
+            dataType: 'json',
+            success: function(result){
+                console.log(result);
+            }
+        });
+    });
+
     unloadEdit.click(function(){
         if (!unloadEdit.hasClass('disabled')) {
             $.ajax({
@@ -388,7 +401,9 @@ $(function(){
                 // Create the variable tabs
                 if (result.variableTabs && result.variableTabs.length > 0) {
                     for (i = 0; i < result.variableTabs.length; i++) {
-                        varTab = $('<div class="tab-pane fade var-container" role="tabpanel" aria-labelledby="vars-tab"></div>').attr('id',"vt_"+result.variableTabs[i].id).attr('aria-labelledby',"vt_"+result.variableTabs[i].id+'-tab').appendTo(myTabContent);
+                        varTab = $('<div class="tab-pane fade var-container var-tier-tab" role="tabpanel" aria-labelledby="vars-tab"></div>').attr('id',"vt_"+result.variableTabs[i].id).attr('aria-labelledby',"vt_"+result.variableTabs[i].id+'-tab').appendTo(myTabContent);
+                        var temp = $('<div class="export-all-container"></div>').appendTo(varTab);
+                        $('<a href="#" class="export-all-link">Export Tab</a>').appendTo(temp);
                         tabRow = $('<div class="row"></div>').appendTo(varTab);
                         tabContainer = $("<div class=\"container-fluid\"></div>").appendTo(tabRow);
                         varTabs[result.variableTabs[i].id] = tabContainer;
@@ -412,11 +427,14 @@ $(function(){
                 if (result.variableTiers && result.variableTiers.length > 0) {
                     for (i = 0; i < result.variableTiers.length; i++) {
                         tabTo = varTabs[result.variableTiers[i].tabId || '*'];
-                        if (!tabTo) { // default to the falback tab
+                        if (!tabTo) { // default to the fallback tab
                             tabTo = varTabs['*'];
                         }
-                        def = $('<div></div>').appendTo(tabTo);
+                        def = $('<div class="var-tier-item"></div>').appendTo(tabTo);
+                        $('<a href="#" class="export-link">Export Tier</a>').appendTo(def);
+                        $('<a href="#" class="reset-link">Reset Tier</a>').appendTo(def);
                         def.append($('<h3></h3>').text(result.variableTiers[i].title));
+
                         varTiers[result.variableTiers[i].id] = $('<div class="row"></div>').appendTo(def);
                     }
                 }
@@ -507,6 +525,13 @@ $(function(){
         });
     }
 
+    function updateScreenComponentNames() {
+        var component_id = editComponents.val();
+        $('#ComponentName').text('c-' + component_id + '.png');
+        var screen_id = editScreens.val();
+        $('#ScreenName').text('s-' + screen_id + '.png');
+    }
+
     myTabContent.on('change', 'select.updateVariable, input.updateVariable', function(){
         var ref = $(this);
         ref.addClass('updatedValue');
@@ -524,6 +549,65 @@ $(function(){
         }
     });
 
+    $('#myTabContent').on('click', '.export-link', function(){
+        var parent = $(this).parent('.var-tier-item');
+        var items = {};
+        $('button.updateVariable', parent).each(function(){
+            var ref = $(this), key = ref.data('key'), input = linkedVariables[key];
+            items[key] = input.val();
+        });
+        $('#import-text-area').val(JSON.stringify(items));
+        $('[href="#imports"]').tab('show');
+    });
+
+    $('#myTabContent').on('click', '.reset-link', function(){
+        var parent = $(this).parent('.var-tier-item');
+        var items = [];
+        $('button.updateVariable', parent).each(function(){
+            var ref = $(this), key = ref.data('key');
+            items.push(key);
+        });
+        $.ajax({
+            type: "POST",
+            url: '/piper/reset',
+            data: {items: JSON.stringify(items)},
+            success: function(){
+                // Reset red markings
+                $('input.updatedValue,select.updatedValue').removeClass('updatedValue');
+                statusCheck();
+            }
+        });WebRes
+
+    });
+
+    $('#myTabContent').on('click', '.export-all-link', function(){
+            var parent = $(this).parents('.var-tier-tab');
+            var items = {};
+            $('button.updateVariable', parent).each(function(){
+                var ref = $(this), key = ref.data('key'), input = linkedVariables[key];
+                items[key] = input.val();
+            });
+            $('#import-text-area').val(JSON.stringify(items));
+            $('[href="#imports"]').tab('show');
+        });
+
+    $('.import-action').click(function(){
+        if (!$(this).hasClass('disabled')) {
+            var content = $('#import-text-area').val();
+            if (content) {
+                $.ajax({
+                  type: "POST",
+                  url: '/piper/variables',
+                  data: {content: content},
+                  success: function(){
+                        // Reset red markings
+                        $('input.updatedValue,select.updatedValue').removeClass('updatedValue');
+                        statusCheck();
+                    }
+                });
+            }
+        }
+    });
 
     ///////////////////////////////////////////////////////////////////////////
     // EDIT

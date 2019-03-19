@@ -69,6 +69,9 @@
                         <a class="nav-link" id="vars-tab" data-toggle="tab" href="#vars" role="tab" aria-controls="vars" aria-selected="false">Variables</a>
                     </div>
                 </li>
+                <li class="nav-item whenLoaded">
+                    <a class="nav-link" id="imports-tab" data-toggle="tab" href="#imports" role="tab" aria-controls="imports" aria-selected="false">Import/Export</a>
+                </li>
                 <li class="nav-item whenEdit">
                     <a class="nav-link" id="edit-tab" data-toggle="tab" href="#edit" role="tab" aria-controls="edit" aria-selected="false">Edit</a>
                 </li>
@@ -292,6 +295,7 @@
                     <button type="button" id="controlPlayPause" class="btn btn-primary">Play/Pause</button>
                     <button type="button" id="controlUnload" class="btn btn-danger notWhileRunning">Unload</button>
                     <button type="button" id="controlKill" class="btn btn-danger">Kill</button>
+                    <button type="button" id="controlDumpState" class="btn btn-secondary">Dump State</button>
                 </div>
 
 
@@ -393,6 +397,7 @@
                     <button type="button" class="btn btn-info edit-action notWhileRunning whenLoaded" editvalue="verifyScreen"     lst="edit-screens">Verify (Disk)</button>
                     <button type="button" class="btn btn-info edit-action notWhileRunning whenLoaded" editvalue="liveVerifyScreen" lst="edit-screens">Verify (Live)</button>
                     <button type="button" class="btn btn-info edit-action notWhileRunning whenLoaded" editvalue="updateScreen"     lst="edit-screens">Update Image</button>
+                    <span class="FileName" id="ScreenName"></span>
                 </div>
 
                 <div class="form-group">
@@ -405,6 +410,7 @@
                         <button type="button" class="edit-action notWhileRunning btn btn-info notWhileRunning whenLoaded prompt-name" editvalue="stubComponent">Stub</button>
                         <button type="button" class="edit-action notWhileRunning btn btn-info notWhileRunning whenLoaded" lst="edit-components" editvalue="editComponent">Edit</button>
                         <button type="button" class="edit-action notWhileRunning btn btn-info notWhileRunning whenLoaded" lst="edit-components" editvalue="updateComponent">Update</button>
+                        <span class="FileName" id="ComponentName"></span>
                     </div>
                 </div>
 
@@ -421,6 +427,21 @@
                 </form>
             </div>
         </div>
+
+        <div class="tab-pane fade" id="imports" role="tabpanel" aria-labelledby="imports-tab">
+            <div class="row">
+                <form id="import-form" class="col-sm-12">
+
+                    <textarea id="import-text-area" cols="80" rows="6"></textarea>
+
+                    <div class="input-group">
+                        <button type="button" class="btn import-action btn-info notWhileRunning whenLoaded">Import</button>
+                    </div>
+
+                </form>
+            </div>
+        </div>
+
         <div class="tab-pane fade" id="console" role="tabpanel" aria-labelledby="console-tab">
 
             <div class="container-fluid">

@@ -2,7 +2,7 @@
 {
   "vars": [
     {
-      "name": "arena-lillith_5-twice_col",
+      "name": "arena-lilith_5-twice_col",
       "display": "Serpentine Tail - Column",
       "value": "0",
       "type": "INT",
@@ -16,7 +16,7 @@
       ]
     },
     {
-      "name": "arena-lillith_5-twice_row",
+      "name": "arena-lilith_5-twice_row",
       "display": "Serpentine Tail - Row",
       "value": "0",
       "type": "INT",
@@ -26,7 +26,7 @@
       "description": "The row location of the skill, The first row is 0"
     },
     {
-      "name": "arena-lillith_5-kom_col",
+      "name": "arena-lilith_5-kom_col",
       "display": "Kiss of Midnight - Column",
       "value": "0",
       "type": "INT",
@@ -40,7 +40,7 @@
       ]
     },
     {
-      "name": "arena-lillith_5-kom_row",
+      "name": "arena-lilith_5-kom_row",
       "display": "Kiss of Midnight - Row",
       "value": "0",
       "type": "INT",
@@ -50,7 +50,7 @@
       "description": "The row location of the skill, The first row is 0"
     },
     {
-      "name": "arena-lillith_5-dlash_col",
+      "name": "arena-lilith_5-dlash_col",
       "display": "Dawn Lash - Column",
       "value": "0",
       "type": "INT",
@@ -64,7 +64,7 @@
       ]
     },
     {
-      "name": "arena-lillith_5-dlash_row",
+      "name": "arena-lilith_5-dlash_row",
       "display": "Dawn Lash - Row",
       "value": "0",
       "type": "INT",
@@ -74,7 +74,7 @@
       "description": "The row location of the skill, The first row is 0"
     },
     {
-      "name": "arena-lillith_5-dlush_col",
+      "name": "arena-lilith_5-dlush_col",
       "display": "Dawn Lush - Column",
       "value": "0",
       "type": "INT",
@@ -88,7 +88,7 @@
       ]
     },
     {
-      "name": "arena-lillith_5-dlush_row",
+      "name": "arena-lilith_5-dlush_row",
       "display": "Dawn Lush - Row",
       "value": "0",
       "type": "INT",
@@ -99,7 +99,7 @@
     }
   ],
   "varTiers": [
-    {"title":"Lillith - Position 5", "id":"arena-lilith_5", "tabId":"arena"}
+    {"title":"Lilith - Position 5", "id":"arena-lilith_5", "tabId":"arena"}
   ],
   "imports": [
 
@@ -245,7 +245,7 @@
           "actions": [
             {
               "type": "INFO",
-              "value": "Setting Up Lillith - Position 5 - Kiss of Midnight X 2"
+              "value": "Setting Up Lilith - Position 5 - Kiss of Midnight X 2"
             },
             {
               "type": "SET",
@@ -270,10 +270,10 @@
                 "value": "@readyDualCastSafely",
                 "args": {
                   "index": "4",
-                  "row0": "${arena-lillith_5-twice_row}",
-                  "column0": "${arena-lillith_5-twice_col}",
-                  "row1": "${arena-lillith_5-twice_row}",
-                  "column1": "${arena-lillith_5-twice_col}"
+                  "row0": "${arena-lilith_5-twice_row}",
+                  "column0": "${arena-lilith_5-twice_col}",
+                  "row1": "${arena-lilith_5-twice_row}",
+                  "column1": "${arena-lilith_5-twice_col}"
                 }
               },
               "type": "REPEAT",
@@ -346,7 +346,7 @@
           "actions": [
             {
               "type": "INFO",
-              "value": "Setting Up Lillith - Position 5 - Dawn Lash X 2"
+              "value": "Setting Up Lilith - Position 5 - Dawn Lash X 2"
             },
             {
               "type": "SET",
@@ -371,10 +371,10 @@
                 "value": "@readyDualCastSafely",
                 "args": {
                   "index": "4",
-                  "row0": "${arena-lillith_5-twice_row}",
-                  "column0": "${arena-lillith_5-twice_col}",
-                  "row1": "${arena-lillith_5-dlash_row}",
-                  "column1": "${arena-lillith_5-dlash_col}"
+                  "row0": "${arena-lilith_5-twice_row}",
+                  "column0": "${arena-lilith_5-twice_col}",
+                  "row1": "${arena-lilith_5-dlash_row}",
+                  "column1": "${arena-lilith_5-dlash_col}"
                 }
               },
               "type": "REPEAT",
@@ -447,7 +447,7 @@
           "actions": [
             {
               "type": "INFO",
-              "value": "Setting Up Lillith - Position 5 - Dawn Lash X 2"
+              "value": "Setting Up Lilith - Position 5 - Dawn Lash X 2"
             },
             {
               "type": "SET",
@@ -472,10 +472,10 @@
                 "value": "@readyDualCastSafely",
                 "args": {
                   "index": "4",
-                  "row0": "${arena-lillith_5-twice_row}",
-                  "column0": "${arena-lillith_5-twice_col}",
-                  "row1": "${arena-lillith_5-dlush_row}",
-                  "column1": "${arena-lillith_5-dlush_col}"
+                  "row0": "${arena-lilith_5-twice_row}",
+                  "column0": "${arena-lilith_5-twice_col}",
+                  "row1": "${arena-lilith_5-dlush_row}",
+                  "column1": "${arena-lilith_5-dlush_col}"
                 }
               },
               "type": "REPEAT",
@@ -549,7 +549,7 @@
           "actions": [
             {
               "type": "INFO",
-              "value": "Setting Up Lillith - Position 5 - Kiss of Midnight"
+              "value": "Setting Up Lilith - Position 5 - Kiss of Midnight"
             },
             {
               "type": "SET",
@@ -574,8 +574,8 @@
                 "value": "@readyActionSafely",
                 "args": {
                   "index": "4",
-                  "row0": "${arena-lillith_5-twice_row}",
-                  "column0": "${arena-lillith_5-twice_col}"
+                  "row0": "${arena-lilith_5-twice_row}",
+                  "column0": "${arena-lilith_5-twice_col}"
                 }
               },
               "type": "REPEAT",
@@ -638,7 +638,7 @@
           "actions": [
             {
               "type": "INFO",
-              "value": "Setting Up Lillith - Position 5 - Dawn Lash"
+              "value": "Setting Up Lilith - Position 5 - Dawn Lash"
             },
             {
               "type": "SET",
@@ -663,8 +663,8 @@
                 "value": "@readyActionSafely",
                 "args": {
                   "index": "4",
-                  "row0": "${arena-lillith_5-dlash_row}",
-                  "column0": "${arena-lillith_5-dlash_col}"
+                  "row0": "${arena-lilith_5-dlash_row}",
+                  "column0": "${arena-lilith_5-dlash_col}"
                 }
               },
               "type": "REPEAT",
@@ -732,7 +732,7 @@
           "actions": [
             {
               "type": "INFO",
-              "value": "Setting Up Lillith - Position 5 - Dawn Lash X 2"
+              "value": "Setting Up Lilith - Position 5 - Dawn Lash X 2"
             },
             {
               "type": "SET",
@@ -757,8 +757,8 @@
                 "value": "@readyDualCastSafely",
                 "args": {
                   "index": "4",
-                  "row0": "${arena-lillith_5-dlush_row}",
-                  "column0": "${arena-lillith_5-dlush_col}"
+                  "row0": "${arena-lilith_5-dlush_row}",
+                  "column0": "${arena-lilith_5-dlush_col}"
                 }
               },
               "type": "REPEAT",

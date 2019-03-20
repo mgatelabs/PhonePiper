@@ -293,6 +293,10 @@
         "index": {
           "value": "0",
           "type": "INT"
+        },
+        "count": {
+          "value": "1",
+          "type": "INT"
         }
       },
       "statements": [
@@ -310,7 +314,8 @@
             },
             {
               "type": "TAP",
-              "value": "battle-skill-top-${index}"
+              "value": "battle-skill-top-${index}",
+              "count": "${count}"
             },
             {
               "type": "WAIT",
@@ -340,7 +345,8 @@
             },
             {
               "type": "TAP",
-              "value": "battle-skill-top-${index}"
+              "value": "battle-skill-top-${index}",
+              "count": "${count}"
             },
             {
               "type": "WAIT",
@@ -967,6 +973,405 @@
         }
       ]
     },
+
+    "@readyActionSafely": {
+      "name": "Function - Ready Action Safely",
+      "variables": {
+        "index": {
+          "value": "0",
+          "type": "INT"
+        },
+        "row0": {
+          "value": "0",
+          "type": "INT"
+        },
+        "column0": {
+          "value": "0",
+          "type": "INT"
+        }
+      },
+      "statements": [
+        {
+          "actions": [
+            {
+              "type": "CALL",
+              "value": "@showUnitActions",
+              "args": {
+                "index": "${index}"
+              }
+            },
+            {
+              "type": "CALL",
+              "value": "@selectUnitAction",
+              "args": {
+                "row": "${row0}",
+                "column": "${column0}"
+              }
+            },
+            {
+              "type": "FINER",
+              "value": "Refreshing Screen"
+            },
+            {
+              "type": "REFRESH"
+            },
+            {
+              "type": "FINER",
+              "value": "Checking screen"
+            },
+            {
+              "condition":{
+                "not": "SCREEN",
+                "value": "battle-actions"
+              },
+              "type": "CONTINUE"
+            },
+            {
+              "type": "RETURN",
+              "value": "1"
+            }
+          ]
+        },
+        {
+          "actions": [
+            {
+              "type": "FINER",
+              "value": "We had problems"
+            },
+            {
+              "type": "REFRESH"
+            },
+            {
+              "condition":{
+                "is": "SCREEN",
+                "value": "battle-actions"
+              },
+              "type": "TAP",
+              "value": "battle-actions-back"
+            },
+            {
+              "type": "REFRESH"
+            },
+            {
+              "type": "WAIT",
+              "value": "500"
+            },
+            {
+              "type": "REFRESH"
+            },
+            {
+              "type": "RETURN",
+              "value": "0"
+            }
+          ]
+        }
+      ]
+    },
+
+    "@readyDualCastSafely": {
+      "name": "Function - Ready Dual Cast Safely",
+      "variables": {
+        "index": {
+          "value": "0",
+          "type": "INT"
+        },
+        "row0": {
+          "value": "0",
+          "type": "INT"
+        },
+        "column0": {
+          "value": "0",
+          "type": "INT"
+        },
+        "row1": {
+          "value": "0",
+          "type": "INT"
+        },
+        "column1": {
+          "value": "0",
+          "type": "INT"
+        }
+      },
+      "statements": [
+        {
+          "actions": [
+            {
+              "type": "CALL",
+              "value": "@showUnitActions",
+              "args": {
+                "index": "${index}"
+              }
+            },
+            {
+              "type": "CALL",
+              "value": "@selectUnitAction",
+              "args": {
+                "row": "${row0}",
+                "column": "${column0}"
+              }
+            },
+            {
+              "type": "FINER",
+              "value": "Refreshing Screen"
+            },
+            {
+              "type": "REFRESH"
+            },
+            {
+              "type": "FINER",
+              "value": "Checking screen"
+            },
+            {
+              "condition":{
+                "not": "SCREEN",
+                "value": "battle-actions"
+              },
+              "type": "CONTINUE"
+            },
+            {
+              "type": "FINER",
+              "value": "Still on Action Screen"
+            },
+            {
+              "type": "SWIPE_DOWN",
+              "value": "battle-skill-top-slider",
+              "count": "${row0}"
+            },
+            {
+              "condition": {
+                "not": "CALL",
+                "value": "@selectDualActionSafely",
+                "args": {
+                  "row": "${row1}",
+                  "column": "${column2}"
+                }
+              },
+              "type": "CONTINUE"
+            },
+            {
+              "type": "WAIT",
+              "value": "500"
+            },
+            {
+              "type": "RETURN",
+              "value": "1"
+            }
+          ]
+        },
+        {
+          "actions": [
+            {
+              "type": "FINER",
+              "value": "We had problems"
+            },
+            {
+              "type": "REFRESH"
+            },
+            {
+              "condition":{
+                "is": "SCREEN",
+                "value": "battle-actions"
+              },
+              "type": "TAP",
+              "value": "battle-actions-back"
+            },
+            {
+              "type": "REFRESH"
+            },
+            {
+              "type": "WAIT",
+              "value": "500"
+            },
+            {
+              "type": "REFRESH"
+            },
+            {
+              "type": "RETURN",
+              "value": "0"
+            }
+          ]
+        }
+      ]
+    },
+
+    "@selectDualActionSafely": {
+      "name": "Function - Select a unit's action two times",
+      "variables": {
+        "row": {
+          "value": "0",
+          "type": "INT"
+        },
+        "column": {
+          "value": "0",
+          "type": "INT"
+        },
+        "index": {
+          "value": "0",
+          "type": "INT"
+        },
+        "safety": {
+          "value": "0",
+          "type": "INT"
+        }
+      },
+      "statements": [
+        // No need to drill down
+        {
+          "condition": {
+            "is": "LESS",
+            "var": "row",
+            "value": "3"
+          },
+          "actions": [
+            {
+              "type": "SET",
+              "value": "1",
+              "var": "safety"
+            },
+            {
+              "type": "MATH",
+              "value": "${row}+(${column}*3)",
+              "var": "index"
+            },
+            {
+              "type": "TAP",
+              "value": "battle-skill-top-${index}"
+            },
+            {
+              "type": "WAIT",
+              "value": "500"
+            },
+            {
+              "type": "REFRESH"
+            },
+            {
+              "condition":{
+                "not": "SCREEN",
+                "value": "battle-actions"
+              },
+              "type": "CONTINUE"
+            },
+            {
+              "type": "TAP",
+              "value": "battle-skill-top-${index}"
+            },
+            {
+              "type": "WAIT",
+              "value": "500"
+            },
+            {
+              "type": "REFRESH"
+            },
+            {
+              "condition":{
+                "not": "SCREEN",
+                "value": "battle-actions"
+              },
+              "type": "CONTINUE"
+            },
+            {
+              "type": "RETURN",
+              "value": "1"
+            }
+          ]
+        },
+        // Need to drill down
+        {
+          "condition": {
+            "is": "EQUAL",
+            "var": "safety",
+            "value": "0"
+          },
+          "actions": [
+            {
+              "type": "MATH",
+              "value": "${row}-2",
+              "var": "row"
+            },
+            {
+              "type": "SLOW_UP",
+              "value": "battle-skill-top-slider",
+              "count": "${row}"
+            },
+            {
+              "type": "MATH",
+              "value": "2+(${column}*3)",
+              "var": "index"
+            },
+            {
+              "type": "TAP",
+              "value": "battle-skill-top-${index}"
+            },
+            {
+              "type": "WAIT",
+              "value": "500"
+            },
+            {
+              "type": "REFRESH"
+            },
+            {
+              "condition":{
+                "not": "SCREEN",
+                "value": "battle-actions"
+              },
+              "type": "CONTINUE"
+            },
+            {
+              "type": "TAP",
+              "value": "battle-skill-top-${index}"
+            },
+            {
+              "type": "WAIT",
+              "value": "500"
+            },
+            {
+              "type": "REFRESH"
+            },
+            {
+              "condition":{
+                "not": "SCREEN",
+                "value": "battle-actions"
+              },
+              "type": "CONTINUE"
+            },
+            {
+              "type": "RETURN",
+              "value": "1"
+            }
+          ]
+        },
+        // Failover
+        {
+          "actions": [
+            {
+              "type": "REFRESH"
+            },
+            {
+              "condition":{
+                "is": "SCREEN",
+                "value": "battle-actions"
+              },
+              "type": "TAP",
+              "value": "battle-actions-back"
+            },
+            {
+              "type": "REFRESH"
+            },
+            {
+              "type": "WAIT",
+              "value": "500"
+            },
+            {
+              "type": "RETURN",
+              "value": "1"
+            }
+          ]
+        }
+      ]
+    },
+
+
+
     "@readyUnitEsper": {
       "name": "Function - Ready Unit Esper",
       "variables": {

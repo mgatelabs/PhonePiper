@@ -126,11 +126,6 @@
                 "var": "segment"
               },
               {
-                "is": "EQUAL",
-                "value": "1",
-                "var": "arena-lb-1_4"
-              },
-              {
                 "is": "LESS",
                 "value": "5",
                 "var": "lbAttempts"
@@ -201,7 +196,7 @@
                 "is": "CALL",
                 "value": "@isUnitReady",
                 "args": {
-                  "index": "2"
+                  "index": "4"
                 }
               },
               {
@@ -223,21 +218,21 @@
                 "is": "CALL",
                 "value": "@unitHasMp",
                 "args": {
-                  "index": "2"
+                  "index": "4"
                 }
               },
               {
                 "not": "CALL",
                 "value": "@isUnitActionReady",
                 "args": {
-                  "index": "2"
+                  "index": "4"
                 }
               },
               {
                 "not": "CALL",
                 "value": "@isUnitLbReady",
                 "args": {
-                  "index": "2"
+                  "index": "4"
                 }
               }
             ]
@@ -307,7 +302,7 @@
                 "is": "CALL",
                 "value": "@isUnitReady",
                 "args": {
-                  "index": "2"
+                  "index": "4"
                 }
               },
               {
@@ -324,21 +319,21 @@
                 "is": "CALL",
                 "value": "@unitHasMp",
                 "args": {
-                  "index": "2"
+                  "index": "4"
                 }
               },
               {
                 "not": "CALL",
                 "value": "@isUnitActionReady",
                 "args": {
-                  "index": "2"
+                  "index": "4"
                 }
               },
               {
                 "not": "CALL",
                 "value": "@isUnitLbReady",
                 "args": {
-                  "index": "2"
+                  "index": "4"
                 }
               }
             ]
@@ -408,7 +403,7 @@
                 "is": "CALL",
                 "value": "@isUnitReady",
                 "args": {
-                  "index": "2"
+                  "index": "4"
                 }
               },
               {
@@ -425,21 +420,21 @@
                 "is": "CALL",
                 "value": "@unitHasMp",
                 "args": {
-                  "index": "2"
+                  "index": "4"
                 }
               },
               {
                 "not": "CALL",
                 "value": "@isUnitActionReady",
                 "args": {
-                  "index": "2"
+                  "index": "4"
                 }
               },
               {
                 "not": "CALL",
                 "value": "@isUnitLbReady",
                 "args": {
-                  "index": "2"
+                  "index": "4"
                 }
               }
             ]
@@ -510,7 +505,7 @@
                 "is": "CALL",
                 "value": "@isUnitReady",
                 "args": {
-                  "index": "2"
+                  "index": "4"
                 }
               },
               {
@@ -527,21 +522,21 @@
                 "is": "CALL",
                 "value": "@unitHasMp",
                 "args": {
-                  "index": "2"
+                  "index": "4"
                 }
               },
               {
                 "not": "CALL",
                 "value": "@isUnitActionReady",
                 "args": {
-                  "index": "2"
+                  "index": "4"
                 }
               },
               {
                 "not": "CALL",
                 "value": "@isUnitLbReady",
                 "args": {
-                  "index": "2"
+                  "index": "4"
                 }
               }
             ]
@@ -604,7 +599,7 @@
                 "is": "CALL",
                 "value": "@isUnitReady",
                 "args": {
-                  "index": "2"
+                  "index": "4"
                 }
               },
               {
@@ -616,21 +611,21 @@
                 "is": "CALL",
                 "value": "@unitHasMp",
                 "args": {
-                  "index": "2"
+                  "index": "4"
                 }
               },
               {
                 "not": "CALL",
                 "value": "@isUnitActionReady",
                 "args": {
-                  "index": "2"
+                  "index": "4"
                 }
               },
               {
                 "not": "CALL",
                 "value": "@isUnitLbReady",
                 "args": {
-                  "index": "2"
+                  "index": "4"
                 }
               }
             ]
@@ -698,7 +693,7 @@
                 "is": "CALL",
                 "value": "@isUnitReady",
                 "args": {
-                  "index": "2"
+                  "index": "4"
                 }
               },
               {
@@ -710,21 +705,21 @@
                 "is": "CALL",
                 "value": "@unitHasMp",
                 "args": {
-                  "index": "2"
+                  "index": "4"
                 }
               },
               {
                 "not": "CALL",
                 "value": "@isUnitActionReady",
                 "args": {
-                  "index": "2"
+                  "index": "4"
                 }
               },
               {
                 "not": "CALL",
                 "value": "@isUnitLbReady",
                 "args": {
-                  "index": "2"
+                  "index": "4"
                 }
               }
             ]

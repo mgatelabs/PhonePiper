@@ -96,6 +96,30 @@
       "order": 10,
       "tierId": "arena-lilith_5",
       "description": "The row location of the skill, The first row is 0"
+    },
+    {
+      "name": "arena-lilith_5-lh_col",
+      "display": "Love Hungry - Column",
+      "value": "0",
+      "type": "INT",
+      "modify": "EDITABLE",
+      "order": 10,
+      "tierId": "arena-lilith_5",
+      "description": "The column location of the skill, 0 for left, 1 for right",
+      "values": [
+        {"name": "Left", "value": "0"},
+        {"name": "Right", "value": "1"}
+      ]
+    },
+    {
+      "name": "arena-lilith_5-lh_row",
+      "display": "Love Hungry - Row",
+      "value": "0",
+      "type": "INT",
+      "modify": "EDITABLE",
+      "order": 10,
+      "tierId": "arena-lilith_5",
+      "description": "The row location of the skill, The first row is 0"
     }
   ],
   "varTiers": [
@@ -215,6 +239,11 @@
                 "var": "arena-rule-dark"
               },
               {
+                "is": "EQUAL",
+                "value": "1",
+                "var": "arena-rule-status"
+              },
+              {
                 "is": "CALL",
                 "value": "@unitHasMp",
                 "args": {
@@ -316,6 +345,11 @@
                 "var": "arena-rule-fire"
               },
               {
+                "is": "EQUAL",
+                "value": "1",
+                "var": "arena-rule-status"
+              },
+              {
                 "is": "CALL",
                 "value": "@unitHasMp",
                 "args": {
@@ -415,6 +449,11 @@
                 "is": "EQUAL",
                 "value": "1",
                 "var": "arena-rule-dark"
+              },
+              {
+                "is": "EQUAL",
+                "value": "1",
+                "var": "arena-rule-status"
               },
               {
                 "is": "CALL",
@@ -519,6 +558,11 @@
                 "var": "arena-rule-dark"
               },
               {
+                "is": "EQUAL",
+                "value": "1",
+                "var": "arena-rule-status"
+              },
+              {
                 "is": "CALL",
                 "value": "@unitHasMp",
                 "args": {
@@ -606,6 +650,11 @@
                 "is": "EQUAL",
                 "value": "1",
                 "var": "arena-rule-fire"
+              },
+              {
+                "is": "EQUAL",
+                "value": "1",
+                "var": "arena-rule-status"
               },
               {
                 "is": "CALL",
@@ -702,6 +751,11 @@
                 "var": "arena-rule-dark"
               },
               {
+                "is": "EQUAL",
+                "value": "1",
+                "var": "arena-rule-status"
+              },
+              {
                 "is": "CALL",
                 "value": "@unitHasMp",
                 "args": {
@@ -765,7 +819,90 @@
               "value": "0"
             }
           ]
-        } // End Dark
+        }// Dark
+
+        { // Auto Revive (Trolling)
+          "condition": {
+            "is": "CALL",
+            "value": "@isBattleReady",
+            "and": [
+              {
+                "is": "EQUAL",
+                "value": "2",
+                "var": "segment"
+              },
+              {
+                "is": "LESS",
+                "value": "3",
+                "var": "unit4Attempts"
+              },
+              {
+                "is": "CALL",
+                "value": "@isUnitReady",
+                "args": {
+                  "index": "4"
+                }
+              },
+              {
+                "is": "CALL",
+                "value": "@unitHasMp",
+                "args": {
+                  "index": "4"
+                }
+              },
+              {
+                "not": "CALL",
+                "value": "@isUnitActionReady",
+                "args": {
+                  "index": "4"
+                }
+              },
+              {
+                "not": "CALL",
+                "value": "@isUnitLbReady",
+                "args": {
+                  "index": "4"
+                }
+              }
+            ]
+          },
+          "actions": [
+            {
+              "type": "INFO",
+              "value": "Setting Up Lilith - Position 5 - Love Hungry"
+            },
+            {
+              "type": "SET",
+              "var": "modified",
+              "value": "1"
+            },
+            {
+              "type": "ADD",
+              "var": "unit4Attempts",
+              "value": "1"
+            },
+            {
+              "type": "CALL",
+              "value": "@showUnitActions",
+              "args": {
+                "index": "4"
+              }
+            },
+            {
+              "condition": {
+                "is": "CALL",
+                "value": "@readyDualCastSafely",
+                "args": {
+                  "index": "4",
+                  "row0": "${arena-lilith_5-lh_row}",
+                  "column0": "${arena-lilith_5-lh_col}"
+                }
+              },
+              "type": "REPEAT",
+              "value": ""
+            }
+          ]
+        } // Auto Revive (Trolling)
 
       ]
     }

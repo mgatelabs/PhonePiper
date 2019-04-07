@@ -1143,7 +1143,7 @@
                 "value": "@selectDualActionSafely",
                 "args": {
                   "row": "${row1}",
-                  "column": "${column2}"
+                  "column": "${column1}"
                 }
               },
               "type": "CONTINUE"

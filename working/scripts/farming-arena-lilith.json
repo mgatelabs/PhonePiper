@@ -179,6 +179,10 @@
           },
           "actions": [
             {
+              "type": "INFO",
+              "value": "Setting Up Lilith - Position 5 - LB"
+            },
+            {
               "type": "ADD",
               "var": "lbAttempts",
               "value": "1"
@@ -296,8 +300,8 @@
                   "index": "4",
                   "row0": "${arena-lilith_5-twice_row}",
                   "column0": "${arena-lilith_5-twice_col}",
-                  "row1": "${arena-lilith_5-twice_row}",
-                  "column1": "${arena-lilith_5-twice_col}"
+                  "row1": "${arena-lilith_5-kom_row}",
+                  "column1": "${arena-lilith_5-kom_col}"
                 }
               },
               "type": "REPEAT",

@@ -23,6 +23,7 @@
 
     "arena-battle-fight": {
       "name": "Arena - Battle - Fight (Override)",
+      "description": "!",
       "description":"You should not really modify this, but instead create overrides that overlay this code",
       "includes": [
         // Variables: ["segment", "turn", "lbAttempts", "modified"]

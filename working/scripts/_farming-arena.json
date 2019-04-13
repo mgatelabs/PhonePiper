@@ -342,6 +342,7 @@
 
     "arena-home": {
       "name": "Arena - Menu",
+      "description": "Start inside the Arena menu",
       "includes": [
         "_arena-menu-orbs",
         "_arena-menu-rules",
@@ -687,6 +688,7 @@
 
     "arena-battle-setup": {
       "name": "Arena - Battle - Setup",
+      "description": "!",
       "includes": [
         "_arena-battle-fight",
         "_common-no_op"
@@ -713,6 +715,7 @@
 
     "arena-battle-fight": {
       "name": "Arena - Battle - Fight",
+      "description": "!",
       "includes": [
         "_arena-battle-fight",
         "_common-no_op"
@@ -1026,6 +1029,7 @@
 
     "home_to_arena": {
       "name": "Home - To Arena",
+      "description": "Navigate to the Arena",
       "includes": [
         "_home_daily_fixes",
         "_common-no_op"

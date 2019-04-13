@@ -108,18 +108,21 @@
   "states": {
     "main": {
       "name": "Common - Main Template",
+      "description": "!",
       "includes": [
         "_common-power_down"
       ]
     },
     "recovery": {
       "name": "Common - Recovery Template",
+      "description": "!",
       "includes": [
         "_common-recovery_os"
       ]
     },
     "log-in": {
       "name": "Common - Recovery Login Template",
+      "description": "!",
       "includes": [
         "_common-power_down"
       ]

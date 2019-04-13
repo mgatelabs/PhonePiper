@@ -20,6 +20,7 @@
 
     "farm-menu": {
       "name": "Farm - Menu",
+      "description": "Start inside the Earthshrine menu",
       "includes": [
         "_common-screen_saver",
         "_farm-menu-friends",
@@ -231,6 +232,7 @@
     // Leave this alone, override "_farm-battle" instead
     "farm-battle": {
       "name": "Farm - Battle",
+      "description": "!",
       "includes": [
         "_farm-battle",
         "_common-screen_saver",
@@ -312,6 +314,7 @@
 
     "farm-results": {
       "name": "Farm - Results",
+      "description": "!",
       "variables":{
         "safety": {
           "type": "INT",
@@ -456,6 +459,7 @@
 
     "home_to_farm": {
       "name"       : "Home - To Farm",
+      "description": "!",
       "includes"   : [
         "_home_daily_fixes",
         "_farm-to_menu",
@@ -475,6 +479,7 @@
 
     "home_to_earthshrine": {
       "name": "Home - To Earthshrine",
+      "description": "Navigate to the Earthshrine and farm",
       "includes": [
         "_home_daily_fixes",
         "_farm-to_menu",

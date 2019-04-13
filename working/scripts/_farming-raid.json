@@ -174,8 +174,10 @@
         }
       ]
     },
+
     "raid-home": {
       "name": "Raid - Menu",
+      "description": "Start in the Raid menu",
       "includes": [
         "_common-ml-goals-quick",
         "_common-ml-friend_0",
@@ -325,6 +327,7 @@
         }
       ]
     },
+
     "_raid-depart": {
       "name": "Raid - Depart",
       "statements": [
@@ -355,6 +358,7 @@
         }
       ]
     },
+
     "_raid-to_battle": {
       "name": "To Raid Battle",
       "statements": [
@@ -394,8 +398,10 @@
         }
       ]
     },
+
     "raid-battle": {
       "name": "Raid - Battle",
+      "description": "!",
       "includes": [
         "_common_battle-auto",
         "_raid-battle-message",
@@ -468,6 +474,7 @@
     },
     "raid-results": {
       "name": "Raid - Result",
+      "description": "!",
       "includes": [
         "_common_mr-raid_points",
         "_common_mr-raid_damage",
@@ -503,8 +510,10 @@
         }
       ]
     },
+
     "home_to_raid": {
       "name": "Home - To Raid",
+      "description": "Navigate to the Raid menu",
       "includes": [
         "_home_daily_fixes",
         "_common-vtx-items",
@@ -660,6 +669,7 @@
         }
       ]
     },
+
     "_reset-include_raid": {
       "name": "Reset - Raid",
       "statements": [

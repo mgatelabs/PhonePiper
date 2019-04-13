@@ -129,6 +129,7 @@
     // Logic to move to expedition screen
     "home_to_expedition": {
       "name": "Home - To Expedition",
+      "description": "Navigate to the Expedition menu",
       "includes": [
         "_home_daily_fixes",
         "_common-no_op"
@@ -224,6 +225,7 @@
     // Actual expedtion logic
     "expedition": {
       "name": "Expeditions",
+      "description": "Start inside the Expedition menu",
       "includes": [
         "_expedition-start",
         "_expedition-ongoing",

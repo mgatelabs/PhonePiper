@@ -44,6 +44,7 @@
   "states": {
     "main": {
       "name": "Fuse",
+      "description": "Start on the Unit Enhancement screen and Fusion/Sale Units tab.  Fuse the first unit by yourself and setup all the filters and sort orders.  The first screen should be LVL Ascending, the second screen should be LVL Descending",
       "includes": [
         "_fuse-select_base",
         "_fuse-enhance_units",

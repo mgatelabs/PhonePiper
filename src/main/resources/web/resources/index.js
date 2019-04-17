@@ -50,6 +50,7 @@ $(function(){
     var logItems = [];
 
     var configList = $('#config-list');
+    var shortcutList = $('#shortcut-list');
 
     var configs = [];
 
@@ -342,6 +343,10 @@ $(function(){
         }
     });
 
+    shortcutList.on('click', 'button', function(){
+            var ref = $(this), value = ref.attr('state');
+            states.val(value);
+        });
 
     function doubleWide(numb) {
         if (numb < 10) {
@@ -383,6 +388,7 @@ $(function(){
                 for (i = 0; i < result.states.length; i++) {
                 states.append($('<option></option>').attr('value', result.states[i].value).text(result.states[i].name).attr('description', result.states[i].description));
                 }
+                buildShortcuts(result.states);
                 for (i = 0; i < result.components.length; i++) {
                 components.append($('<option></option>').attr('value', result.components[i].value).text(result.components[i].name));
                 }
@@ -857,6 +863,31 @@ editViewButton.click(function(){
     });
 
 });
+
+    ///////////////////////////////////////////////////////////////////////////
+    // Shortcuts
+    ///////////////////////////////////////////////////////////////////////////
+
+    function buildShortcuts(states) {
+        var i;
+        shortcutList.empty();
+        for (i = 0; i < states.length; i++) {
+            createShortcutItem(i, states[i].name, states[i].description, states[i].value)
+        }
+    }
+
+    function createShortcutItem(index, title, description, value) {
+        if('!' === description) return;
+        var wrap, card, body, text, bntGroup;
+        wrap = $('<div class="col-sm-12 col-md-6 col-lg-4 col-xl-3 customConfig"></div>');
+        card = $('<div class="card shadow-sm"></div>');
+        $('<div class="card-header"></div>').append($('<h4 class="my-0 font-weight-normal"></h4>').text(title || 'Untitled')).appendTo(card);
+        body = $('<div class="card-body"></div>').appendTo(card);
+        $('<div class="card-text"></div>').text(description).appendTo(body);
+        body.append($('<button type="button" class="btn btn-outline-dark">Select</button>').attr('state', value));
+        wrap.append(card);
+        shortcutList.append(wrap);
+    }
 
     ///////////////////////////////////////////////////////////////////////////
     // Home

@@ -135,6 +135,7 @@
     // Logic to move to Friends screen
     "home_to_send_gifts": {
       "name": "Home - To Send Gifts",
+      "description": "Navigate to the Friends menu",
       "includes": [
         "_home_daily_fixes",
         "_common-no_op"
@@ -224,6 +225,7 @@
     // Actual Gifting logic
     "send_gifts": {
       "name": "Send Gifts",
+      "description": "Start in the Friends menu",
       "includes": [
         "_home_daily_fixes",
         "_send_gifts",

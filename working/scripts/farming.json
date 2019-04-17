@@ -184,6 +184,7 @@
 
     "main": {
       "name": "Main - Farming Switcher",
+      "description": "!",
       "variables": {
         "toState": {
           "type": "STRING",
@@ -281,6 +282,7 @@
 
     "any_to_home": {
       "name": "Any - To/From Home Screen Router",
+      "description": "!",
       "includes": [
         "_any_router_to_*",
         "_any_can_extra",
@@ -369,6 +371,7 @@
 
     "log-in": {
       "name": "Common - Recovery Log In (Override)",
+      "description": "!",
       "variables": {
         "firstLoop": {
           "type": "INT",

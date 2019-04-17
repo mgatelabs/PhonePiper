@@ -5,6 +5,7 @@
 
     "raid-battle": {
       "name": "Raid - Battle (Override)",
+      "description": "!",
       "includes": [
         "_raid_battle-auto",
         "_raid-battle-message",

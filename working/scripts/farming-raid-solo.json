@@ -333,6 +333,7 @@
 
     "raid-battle": {
       "name": "Raid - Battle (Override)",
+      "description": "!",
       "includes": [
         "_raid_battle-setup",
         "_raid_battle-custom_*",

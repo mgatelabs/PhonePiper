@@ -20,6 +20,7 @@
 
     "extra": {
       "name": "Extra (Wait)",
+      "description": "!",
       "includes": [
         "_common-screen_saver",
         "_extra",

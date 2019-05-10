@@ -151,7 +151,7 @@
               },
               {
                 "is": "LESS",
-                "value": "5",
+                "value": "2",
                 "var": "lbAttempts"
               },
               {

@@ -1811,17 +1811,11 @@
     "name" : "Battle - Unit - 4 - LB Not Full",
     "screenId" : "battle-unit-4_notfull",
     "points" : [ {
-      "x" : 1035,
-      "y" : 1490,
-      "r" : 8,
-      "g" : 10,
-      "b" : 66
-    }, {
-      "x" : 1039,
-      "y" : 1483,
-      "r" : 5,
-      "g" : 5,
-      "b" : 41
+      "x" : 1036,
+      "y" : 1487,
+      "r" : 2,
+      "g" : 2,
+      "b" : 28
     } ],
     "enabled" : true
   }, {

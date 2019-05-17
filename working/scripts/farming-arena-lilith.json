@@ -195,7 +195,7 @@
                   "index": "4"
                 }
               },
-              "type": "CONTINUE"
+              "type": "REPEAT"
             },
             {
               "type": "REPEAT",

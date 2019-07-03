@@ -9,10 +9,11 @@
       "value": "1",
       "type": "INT","modify": "EDITABLE", "order": 10, "tierId": "arena-healer-ayaka-4", "values": [{"name": "Left", "value": "0"},{"name": "Right", "value": "1"}]
     },
+
     {
       "name": "arena-healer_4-dedi-row",
       "display": "Dedication - Ability Row",
-      "description": "The row location of the skill, The first row is 0",,
+      "description": "The row location of the skill, The first row is 0",
       "value": "7",
       "type": "INT", "modify": "EDITABLE", "order": 10, "tierId": "arena-healer-ayaka-4"
     },
@@ -27,7 +28,7 @@
     {
       "name": "arena-healer_4-elys-row",
       "display": "Elysium - Ability Row",
-      "description": "The row location of the skill, The first row is 0",,
+      "description": "The row location of the skill, The first row is 0",
       "value": "9",
       "type": "INT", "modify": "EDITABLE", "order": 11, "tierId": "arena-healer-ayaka-4"
     },
@@ -42,7 +43,7 @@
     {
       "name": "arena-healer_4-purp-row",
       "display": "Purify+ - Ability Row",
-      "description": "The row location of the skill, The first row is 0",,
+      "description": "The row location of the skill, The first row is 0",
       "value": "10",
       "type": "INT", "modify": "EDITABLE", "order": 12, "tierId": "arena-healer-ayaka-4"
     },
@@ -56,7 +57,7 @@
     {
       "name": "arena-healer_4-stod-row",
       "display": "Stop Detatch - Ability Row",
-      "description": "The row location of the skill, The first row is 0",,
+      "description": "The row location of the skill, The first row is 0",
       "value": "6",
       "type": "INT", "modify": "EDITABLE", "order": 13, "tierId": "arena-healer-ayaka-4"
     },
@@ -72,7 +73,7 @@
     {
       "name": "arena-healer_4-resp-row",
       "display": "Resurgence+ - Ability Row",
-      "description": "The row location of the skill, The first row is 0",,
+      "description": "The row location of the skill, The first row is 0",
       "value": "9",
       "type": "INT", "modify": "EDITABLE", "order": 14, "tierId": "arena-healer-ayaka-4"
     },
@@ -88,7 +89,7 @@
     {
       "name": "arena-healer_4-curj-row",
       "display": "Curaja - Ability Row",
-      "description": "The row location of the skill, The first row is 0",,
+      "description": "The row location of the skill, The first row is 0",
       "value": "4",
       "type": "INT", "modify": "EDITABLE", "order": 15, "tierId": "arena-healer-ayaka-4"
     },
@@ -101,10 +102,11 @@
       "value": "0",
       "type": "INT","modify": "EDITABLE", "order": 16, "tierId": "arena-healer-ayaka-4", "values": [{"name": "Left", "value": "0"},{"name": "Right", "value": "1"}]
     },
+
     {
       "name": "arena-healer_4-puri-row",
       "display": "Purify - Ability Row",
-      "description": "The row location of the skill, The first row is 0",,
+      "description": "The row location of the skill, The first row is 0",
       "value": "8",
       "type": "INT", "modify": "EDITABLE", "order": 16, "tierId": "arena-healer-ayaka-4"
     }

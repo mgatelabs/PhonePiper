@@ -135,7 +135,7 @@
                 "is": "CALL",
                 "value": "@readyTriCastSafely",
                 "args": {
-                  "index": "4",
+                  "index": "1",
                   "row0": "${arena-med_1-three_row}",
                   "column0": "${arena-med_1-three_col}",
                   "row1": "${arena-med_1-freeze_row}",
@@ -217,7 +217,7 @@
                 "is": "CALL",
                 "value": "@readyTriCastSafely",
                 "args": {
-                  "index": "4",
+                  "index": "1",
                   "row0": "${arena-med_1-three_row}",
                   "column0": "${arena-med_1-three_col}",
                   "row1": "${arena-med_1-rage_row}",
@@ -304,7 +304,7 @@
                 "is": "CALL",
                 "value": "@readyActionSafely",
                 "args": {
-                  "index": "4",
+                  "index": "1",
                   "row0": "${arena-med_1-freeze_row}",
                   "column0": "${arena-med_1-freeze_col}"
                 }
@@ -384,7 +384,7 @@
                 "is": "CALL",
                 "value": "@readyActionSafely",
                 "args": {
-                  "index": "4",
+                  "index": "1",
                   "row0": "${arena-med_1-rage_row}",
                   "column0": "${arena-med_1-rage_col}"
                 }

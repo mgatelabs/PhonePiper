@@ -645,6 +645,11 @@
     "points" : [ ],
     "enabled" : false
   }, {
+    "name" : "Menu - Home - Raid Event",
+    "screenId" : "menu-home-raid_event",
+    "points" : [ ],
+    "enabled" : false
+  }, {
     "name" : "Menu - Log in again",
     "screenId" : "menu-log_in_again",
     "points" : [ ],

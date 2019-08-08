@@ -515,7 +515,7 @@
               "value": "arena-party-select"
             },
             {
-              "type": "MSG",
+              "type": "FINER",
               "value": "Incorrect Arena Party Selected"
             },
             {

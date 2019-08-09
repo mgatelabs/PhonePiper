@@ -553,11 +553,16 @@
               },
               {
                 "is": "SCREEN",
+                "value": "menu-expedition-item-0-complete"
+              }
+            ],"andOr": [
+              {
+                "is": "SCREEN",
                 "value": "menu-expedition-item-0"
               },
               {
                 "is": "SCREEN",
-                "value": "menu-expedition-item-0-complete"
+                "value": "menu-expedition-item-0_tmr"
               }
             ]
           },

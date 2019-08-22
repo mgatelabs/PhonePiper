@@ -29,7 +29,6 @@ public class LocalDeviceHelper implements DeviceHelper {
     private Logger logger = LoggerFactory.getLogger(this.getClass());
 
     private ConnectionDefinition connectionDefinition;
-    private ImageWrapper lastImage = null;
     private InfoTransfer info;
     private int failures;
 
@@ -90,19 +89,7 @@ public class LocalDeviceHelper implements DeviceHelper {
     @Override
     public Set<String> check(String menu) {
 
-        byte [] bytes = readTemp();
-
-        int w, h;
-        if (bytes.length > 12) { // Sanity
-            ByteBuffer byteBuffer = ByteBuffer.wrap(bytes);
-            byteBuffer.order(ByteOrder.LITTLE_ENDIAN);
-            w = byteBuffer.getInt();
-            h = byteBuffer.getInt();
-        } else {
-            w = 0;
-            h = 0;
-        }
-        ImageWrapper imageWrapper = new RawImageWrapper(w, h, RawImageWrapper.ImageFormats.RGBA, 12, bytes);
+        ImageWrapper imageWrapper = download();
 
         if (imageWrapper == null) {
             failures++;
@@ -200,14 +187,10 @@ public class LocalDeviceHelper implements DeviceHelper {
     @Override
     public int[] pixel(int offset) {
 
-        if (lastImage == null) {
-            return new int[0];
-        }
-
         ByteArrayInputStream fileInputStream = null;
 
         try {
-            fileInputStream = new ByteArrayInputStream(lastImage.getRaw());
+            fileInputStream = new ByteArrayInputStream(readTemp());
 
             byte[] temp = new byte[3];
             int len;
@@ -229,7 +212,20 @@ public class LocalDeviceHelper implements DeviceHelper {
 
     @Override
     public ImageWrapper download() {
-        return lastImage;
+
+        byte [] bytes = readTemp();
+
+        int w, h;
+        if (bytes.length > 12) { // Sanity
+            ByteBuffer byteBuffer = ByteBuffer.wrap(bytes);
+            byteBuffer.order(ByteOrder.LITTLE_ENDIAN);
+            w = byteBuffer.getInt();
+            h = byteBuffer.getInt();
+        } else {
+            w = 0;
+            h = 0;
+        }
+        return new RawImageWrapper(w, h, RawImageWrapper.ImageFormats.RGBA, 12, bytes);
     }
 
     @Override

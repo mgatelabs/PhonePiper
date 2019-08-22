@@ -8,6 +8,7 @@ import com.mgatelabs.piper.shared.image.RawImageWrapper;
 
 import java.io.BufferedInputStream;
 import java.io.ByteArrayOutputStream;
+import java.io.File;
 import java.io.InputStream;
 import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
@@ -98,6 +99,10 @@ public class AdbUtils {
             switch (eventId.toLowerCase()) {
                 case "power": {
                     event = 26;
+                }
+                break;
+                case "wakeup": {
+                    event = 224;
                 }
                 break;
                 case "sleep": {
@@ -261,6 +266,11 @@ public class AdbUtils {
 
     public static boolean persistScreen(AdbShell shell) {
         return shell.exec("screencap /mnt/sdcard/framebuffer.raw");
+    }
+
+    public static boolean downloadScreen(File tempFile) {
+        byte[] bytes =  execStream("adb pull /mnt/sdcard/framebuffer.raw " + tempFile.getAbsolutePath());
+        return true;
     }
 
     public static ImageWrapper getScreen() {

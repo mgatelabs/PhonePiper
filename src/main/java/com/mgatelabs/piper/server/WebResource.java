@@ -14,6 +14,8 @@ import com.mgatelabs.piper.server.entities.*;
 import com.mgatelabs.piper.shared.ScriptThread;
 import com.mgatelabs.piper.shared.details.*;
 import com.mgatelabs.piper.shared.helper.DeviceHelper;
+import com.mgatelabs.piper.shared.helper.LocalDeviceHelper;
+import com.mgatelabs.piper.shared.helper.RemoteDeviceHelper;
 import com.mgatelabs.piper.shared.image.ImageWrapper;
 import com.mgatelabs.piper.shared.util.AdbShell;
 import com.mgatelabs.piper.shared.util.AdbUtils;
@@ -57,7 +59,7 @@ public class WebResource {
         if (connectionDefinition == null) {
             Loggers.init();
             connectionDefinition = new ConnectionDefinition();
-            deviceHelper = new DeviceHelper(connectionDefinition);
+            deviceHelper = new RemoteDeviceHelper(connectionDefinition);
             return true;
         }
         return false;
@@ -401,6 +403,16 @@ public class WebResource {
 
         handleConnection(request);
 
+        if (connectionDefinition.isUseHelper()) {
+            if (!(deviceHelper instanceof RemoteDeviceHelper)) {
+                deviceHelper = new RemoteDeviceHelper(connectionDefinition);
+            }
+        } else {
+            if (!(deviceHelper instanceof LocalDeviceHelper)) {
+                deviceHelper = new LocalDeviceHelper(connectionDefinition);
+            }
+        }
+
         thread = null;
         List<String> views = Lists.newArrayList();
         views.addAll(request.getViews());
@@ -448,6 +460,8 @@ public class WebResource {
                             tempConnection.setIp(value);
                         } else if (field.equalsIgnoreCase("direct")) {
                             tempConnection.setDirect(value);
+                        } else if (field.equalsIgnoreCase("helper")) {
+                            tempConnection.setUseHelper(Boolean.parseBoolean(value));
                         } else if (field.equalsIgnoreCase("wifi")) {
                             tempConnection.setWifi(Boolean.parseBoolean(value));
                         } else if (field.equalsIgnoreCase("throttle")) {
@@ -524,6 +538,16 @@ public class WebResource {
         checkInitialState();
 
         handleConnection(request);
+
+        if (connectionDefinition.isUseHelper()) {
+            if (!(deviceHelper instanceof RemoteDeviceHelper)) {
+                deviceHelper = new RemoteDeviceHelper(connectionDefinition);
+            }
+        } else {
+            if (!(deviceHelper instanceof LocalDeviceHelper)) {
+                deviceHelper = new LocalDeviceHelper(connectionDefinition);
+            }
+        }
 
         thread = null;
 

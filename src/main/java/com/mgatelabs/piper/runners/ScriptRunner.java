@@ -1,14 +1,50 @@
 package com.mgatelabs.piper.runners;
 
 import com.google.common.base.Joiner;
-import com.google.common.collect.*;
-import com.mgatelabs.piper.shared.details.*;
+import com.google.common.collect.ImmutableMap;
+import com.google.common.collect.ImmutableSet;
+import com.google.common.collect.Lists;
+import com.google.common.collect.Maps;
+import com.google.common.collect.Sets;
+import com.mgatelabs.piper.shared.details.ActionDefinition;
+import com.mgatelabs.piper.shared.details.ActionType;
+import com.mgatelabs.piper.shared.details.ComponentDefinition;
+import com.mgatelabs.piper.shared.details.ConditionDefinition;
+import com.mgatelabs.piper.shared.details.ConnectionDefinition;
+import com.mgatelabs.piper.shared.details.DeviceDefinition;
+import com.mgatelabs.piper.shared.details.ExecutableLink;
+import com.mgatelabs.piper.shared.details.ProcessingStateInfo;
+import com.mgatelabs.piper.shared.details.ScreenDefinition;
+import com.mgatelabs.piper.shared.details.ScriptEnvironment;
+import com.mgatelabs.piper.shared.details.StateCallType;
+import com.mgatelabs.piper.shared.details.StateLink;
+import com.mgatelabs.piper.shared.details.StateResult;
+import com.mgatelabs.piper.shared.details.StateType;
+import com.mgatelabs.piper.shared.details.StatementDefinition;
+import com.mgatelabs.piper.shared.details.VarDefinition;
+import com.mgatelabs.piper.shared.details.VarDisplay;
+import com.mgatelabs.piper.shared.details.VarModify;
+import com.mgatelabs.piper.shared.details.VarTabDefinition;
+import com.mgatelabs.piper.shared.details.VarTierDefinition;
+import com.mgatelabs.piper.shared.details.ViewDefinition;
 import com.mgatelabs.piper.shared.helper.DeviceHelper;
 import com.mgatelabs.piper.shared.helper.InfoTransfer;
 import com.mgatelabs.piper.shared.helper.MapTransfer;
 import com.mgatelabs.piper.shared.helper.PointTransfer;
-import com.mgatelabs.piper.shared.image.*;
-import com.mgatelabs.piper.shared.util.*;
+import com.mgatelabs.piper.shared.image.ImageWrapper;
+import com.mgatelabs.piper.shared.image.RawImageWrapper;
+import com.mgatelabs.piper.shared.image.SamplePoint;
+import com.mgatelabs.piper.shared.image.Sampler;
+import com.mgatelabs.piper.shared.image.StateTransfer;
+import com.mgatelabs.piper.shared.util.AdbShell;
+import com.mgatelabs.piper.shared.util.AdbUtils;
+import com.mgatelabs.piper.shared.util.IntVar;
+import com.mgatelabs.piper.shared.util.Mather;
+import com.mgatelabs.piper.shared.util.StringVar;
+import com.mgatelabs.piper.shared.util.Var;
+import com.mgatelabs.piper.shared.util.VarInstance;
+import com.mgatelabs.piper.shared.util.VarManager;
+import com.mgatelabs.piper.shared.util.VarTimer;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -18,13 +54,21 @@ import java.security.SecureRandom;
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
 import java.text.SimpleDateFormat;
-import java.util.*;
+import java.util.Calendar;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.Date;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
+import java.util.Stack;
+import java.util.TimeZone;
 import java.util.concurrent.TimeUnit;
 import java.util.regex.Pattern;
 
 /**
  * Used to run an ScriptEnvironment program
- *
+ * <p>
  * Created by @mgatelabs (Michael Fuller) on 9/4/2017 for Phone-Piper
  */
 public class ScriptRunner {
@@ -43,7 +87,7 @@ public class ScriptRunner {
 
     private static final Pattern SINGLE_VARIABLE = Pattern.compile("^\\$\\{[a-zA-Z0-9_-]+\\}$");
 
-    private static final NumberFormat THREE_DECIMAL = new DecimalFormat("#.###");
+    public static final NumberFormat THREE_DECIMAL = new DecimalFormat("#.###");
 
     private ConnectionDefinition connectionDefinition;
     private ScriptEnvironment scriptEnvironment;
@@ -340,6 +384,7 @@ public class ScriptRunner {
             this.status = Status.RUNNING;
 
             logger.debug("Init Helper");
+
             initHelper();
 
             ImageWrapper imageWrapper;
@@ -381,23 +426,7 @@ public class ScriptRunner {
                 }
 
                 if (deviceHelper != null) {
-                    long startTime = System.nanoTime();
-
-                    if (!AdbUtils.persistScreen(shell)) {
-                        logger.warn("Helper Image Failure");
-                        waitFor(250);
-                        continue;
-                    }
-
-                    long endTime = System.nanoTime();
-
-                    long dif = endTime - startTime;
-
-                    lastImageDate = new Date();
-                    lastImageDuration = ((float) dif / 1000000000.0f);
-
-                    logger.debug("Helper Image Persisted in " + THREE_DECIMAL.format(lastImageDuration) + "s");
-
+                    deviceHelper.refresh(shell);
                     imageWrapper = null;
                 } else {
                     long startTime = System.nanoTime();
@@ -488,7 +517,6 @@ public class ScriptRunner {
         if (deviceHelper != null) {
 
             if (captureAgain) {
-
                 if (!shell.isReady()) {
                     logger.warn("Bad Shell: Will try to reconnect...");
                     if (connectionDefinition.isWifi()) {
@@ -499,23 +527,10 @@ public class ScriptRunner {
                     restartShell();
                     waitFor(1000);
                 }
-
-                long startTime = System.nanoTime();
-
-                if (!AdbUtils.persistScreen(shell)) {
-                    logger.warn("Helper Image Failure");
-                    waitFor(250);
+                if (!deviceHelper.refresh(shell)) {
                     return;
                 }
-                long endTime = System.nanoTime();
-                long dif = endTime - startTime;
-
-                lastImageDate = new Date();
-                lastImageDuration = ((float) dif / 1000000000.0f);
-                logger.debug("Helper Image Persisted in " + THREE_DECIMAL.format(lastImageDuration) + "s");
             }
-
-            logger.debug("Helper: /check/" + vars.getCurrentSceneId());
 
             long startTime = System.nanoTime();
             validScreenIds = deviceHelper.check(vars.getCurrentSceneId());
@@ -681,7 +696,7 @@ public class ScriptRunner {
                             break;
                             case FINER: {
                                 String msg = replaceTokens(actionDefinition.getValue());
-                                logger.debug(logStackTraceInfo(stateStack,  "FINER: " + msg));
+                                logger.debug(logStackTraceInfo(stateStack, "FINER: " + msg));
                             }
                             break;
                             case FINEST: {
@@ -708,15 +723,16 @@ public class ScriptRunner {
                                     c = Calendar.getInstance();
                                 }
                                 if (actionDefinition.getArguments().containsKey("y")) {
-                                    putVar(actionDefinition.getArguments().get("y"), new IntVar( c.get(Calendar.YEAR) ));
+                                    putVar(actionDefinition.getArguments().get("y"), new IntVar(c.get(Calendar.YEAR)));
                                 }
                                 if (actionDefinition.getArguments().containsKey("m")) {
-                                    putVar(actionDefinition.getArguments().get("m"), new IntVar( c.get(Calendar.MONTH) + 1));
+                                    putVar(actionDefinition.getArguments().get("m"), new IntVar(c.get(Calendar.MONTH) + 1));
                                 }
                                 if (actionDefinition.getArguments().containsKey("d")) {
-                                    putVar(actionDefinition.getArguments().get("d"), new IntVar( c.get(Calendar.DATE) ));
+                                    putVar(actionDefinition.getArguments().get("d"), new IntVar(c.get(Calendar.DATE)));
                                 }
-                            } break;
+                            }
+                            break;
                             case TIME: {
                                 Calendar c;
                                 if (actionDefinition.getArguments().containsKey("tz")) {
@@ -725,15 +741,16 @@ public class ScriptRunner {
                                     c = Calendar.getInstance();
                                 }
                                 if (actionDefinition.getArguments().containsKey("h")) {
-                                    putVar(actionDefinition.getArguments().get("h"), new IntVar( c.get(Calendar.HOUR_OF_DAY) ));
+                                    putVar(actionDefinition.getArguments().get("h"), new IntVar(c.get(Calendar.HOUR_OF_DAY)));
                                 }
                                 if (actionDefinition.getArguments().containsKey("m")) {
-                                    putVar(actionDefinition.getArguments().get("m"), new IntVar( c.get(Calendar.MINUTE) + 1));
+                                    putVar(actionDefinition.getArguments().get("m"), new IntVar(c.get(Calendar.MINUTE) + 1));
                                 }
                                 if (actionDefinition.getArguments().containsKey("s")) {
-                                    putVar(actionDefinition.getArguments().get("s"), new IntVar( c.get(Calendar.SECOND) ));
+                                    putVar(actionDefinition.getArguments().get("s"), new IntVar(c.get(Calendar.SECOND)));
                                 }
-                            } break;
+                            }
+                            break;
                             case COMPONENT: {
                                 ComponentDefinition componentDefinition = components.get(replaceTokens(actionDefinition.getValue()));
                                 if (componentDefinition == null) {
@@ -820,7 +837,8 @@ public class ScriptRunner {
                             case REFRESH: {
                                 // Simply tell the system to refresh the view, this may take a second
                                 refreshViews(true);
-                            } break;
+                            }
+                            break;
                             case RANDOM: {
                                 final String varName = actionDefinition.getVar();
                                 Var min = IntVar.ZERO;
@@ -899,7 +917,7 @@ public class ScriptRunner {
                                 stateStack.push(new ProcessingStateInfo(callDefinition.getLink()));
                                 final StateResult callResult = executeState(stateStack, callDefinition, imageWrapper, StateCallType.CALL, callArguments, batchCmds);
 
-                                logStackTraceInfo(callResult.getStack(),  " " + callResult.toString());
+                                logStackTraceInfo(callResult.getStack(), " " + callResult.toString());
 
                                 stateStack.pop();
                                 vars.pop();
@@ -1158,7 +1176,7 @@ public class ScriptRunner {
     public Map<String, String> getStateVariables() {
         final Map<String, String> result = Maps.newHashMap();
         final Map<String, VarInstance> stateVars = vars.GetStateVariables();
-        for (Map.Entry<String, VarInstance> entry: stateVars.entrySet()) {
+        for (Map.Entry<String, VarInstance> entry : stateVars.entrySet()) {
             result.put(entry.getKey(), entry.getValue().getVar().toString());
         }
         return result;

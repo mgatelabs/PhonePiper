@@ -395,6 +395,16 @@
     "points" : [ ],
     "enabled" : false
   }, {
+    "name" : "Menu - Depart - Steal",
+    "screenId" : "menu-depart-steal",
+    "points" : [ ],
+    "enabled" : false
+  }, {
+    "name" : "Menu - Depart - Steal Alt",
+    "screenId" : "menu-depart-steal-alt",
+    "points" : [ ],
+    "enabled" : false
+  }, {
     "name" : "Menu - Depart - Team 0",
     "screenId" : "menu-depart-team_0",
     "points" : [ ],
@@ -455,6 +465,11 @@
     "points" : [ ],
     "enabled" : false
   }, {
+    "name" : "Menu - Expedition - Item - 0 (TMR)",
+    "screenId" : "menu-expedition-item-0_tmr",
+    "points" : [ ],
+    "enabled" : false
+  }, {
     "name" : "Menu - Expedition - Item - 0 - Complete",
     "screenId" : "menu-expedition-item-0-complete",
     "points" : [ ],
@@ -485,13 +500,13 @@
     "points" : [ ],
     "enabled" : false
   }, {
-    "name" : "Menu - Expedition - Item - 4",
-    "screenId" : "menu-expedition-item-4",
+    "name" : "Menu - Expedition - Item - 3 - Complete",
+    "screenId" : "menu-expedition-item-3-complete",
     "points" : [ ],
     "enabled" : false
   }, {
-    "name" : "Menu - Expedition - Item - 3 - Complete",
-    "screenId" : "menu-expedition-item-3-complete",
+    "name" : "Menu - Expedition - Item - 4",
+    "screenId" : "menu-expedition-item-4",
     "points" : [ ],
     "enabled" : false
   }, {
@@ -575,6 +590,11 @@
     "points" : [ ],
     "enabled" : false
   }, {
+    "name" : "Menu - Friend Select - Steal",
+    "screenId" : "menu-friend_selects-steal",
+    "points" : [ ],
+    "enabled" : false
+  }, {
     "name" : "Menu - Friends",
     "screenId" : "menu-friends",
     "points" : [ ],
@@ -627,6 +647,11 @@
   }, {
     "name" : "Menu - Home - Login bonus",
     "screenId" : "menu-home-login_bonus",
+    "points" : [ ],
+    "enabled" : false
+  }, {
+    "name" : "Menu - Home - Raid Event",
+    "screenId" : "menu-home-raid_event",
     "points" : [ ],
     "enabled" : false
   }, {
@@ -731,6 +756,11 @@
     "points" : [ ],
     "enabled" : false
   }, {
+    "name" : "Menu - Results - Steal",
+    "screenId" : "menu-results-steal",
+    "points" : [ ],
+    "enabled" : false
+  }, {
     "name" : "Menu - Results - Units",
     "screenId" : "menu-results-units",
     "points" : [ ],
@@ -763,6 +793,11 @@
   }, {
     "name" : "Menu - Return Title",
     "screenId" : "menu-return_title",
+    "points" : [ ],
+    "enabled" : false
+  }, {
+    "name" : "Menu - Steal - Recover",
+    "screenId" : "menu-steal-recover",
     "points" : [ ],
     "enabled" : false
   }, {
@@ -1507,6 +1542,14 @@
     "h" : 83,
     "enabled" : false
   }, {
+    "name" : "Menu - Depart - Depart - Steal",
+    "componentId" : "menu-depart-depart-steal",
+    "x" : 335,
+    "y" : 1645,
+    "w" : 409,
+    "h" : 83,
+    "enabled" : false
+  }, {
     "name" : "Menu - Depart - Units",
     "componentId" : "menu-depart-units",
     "x" : 0,
@@ -2029,6 +2072,38 @@
   }, {
     "name" : "Menu - Return Title - Yes",
     "componentId" : "menu-return_title-yes",
+    "x" : 0,
+    "y" : 0,
+    "w" : 1,
+    "h" : 1,
+    "enabled" : false
+  }, {
+    "name" : "Menu - Steal - Recover - Orb",
+    "componentId" : "menu-steal-recover-orb",
+    "x" : 0,
+    "y" : 0,
+    "w" : 1,
+    "h" : 1,
+    "enabled" : false
+  }, {
+    "name" : "Menu - Steal - Recover - Orb - Confirm",
+    "componentId" : "menu-steal-recover-orb-confirm",
+    "x" : 0,
+    "y" : 0,
+    "w" : 1,
+    "h" : 1,
+    "enabled" : false
+  }, {
+    "name" : "Menu - Steal - Recover - Orb - Ok",
+    "componentId" : "menu-steal-recover-orb-ok",
+    "x" : 0,
+    "y" : 0,
+    "w" : 1,
+    "h" : 1,
+    "enabled" : false
+  }, {
+    "name" : "Menu - Steal - Recover - Use Item",
+    "componentId" : "menu-steal-recover-use_item",
     "x" : 0,
     "y" : 0,
     "w" : 1,

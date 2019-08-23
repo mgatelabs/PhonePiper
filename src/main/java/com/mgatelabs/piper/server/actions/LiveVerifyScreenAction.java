@@ -14,8 +14,7 @@ public class LiveVerifyScreenAction implements EditActionInterface {
     public String execute(final String id, final String value, final EditHolder holder) {
         ScreenDefinition screenDefinition = holder.getScreenForId(id);
         if (screenDefinition == null) return "Could not find screen with id: " + id;
-
-        AdbUtils.persistScreen(holder.getShell());
+        holder.getDeviceHelper().refresh(holder.getShell());
         ImageWrapper wrapper = holder.getDeviceHelper().download();
         //ImageWrapper wrapper = AdbUtils.getScreen();
         if (wrapper != null && wrapper.isReady()) {

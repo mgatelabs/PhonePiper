@@ -21,6 +21,7 @@ $(function(){
     var deviceIp = $('#device-ip');
     var deviceAdb = $('#device-adb');
     var deviceWifi = $('#device-wifi');
+    var deviceHelper = $('#device-helper');
     var deviceDirect = $('#device-direct');
 
     var playPauseButton = $('#controlPlayPause');

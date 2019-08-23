@@ -15,6 +15,7 @@ public class ConnectionDefinition {
     private String direct;
     private boolean wifi;
     private int throttle = 250;
+    private boolean useHelper;
 
     public ConnectionDefinition() {
 
@@ -74,6 +75,14 @@ public class ConnectionDefinition {
 
     public void setHelperPort(int helperPort) {
         this.helperPort = helperPort;
+    }
+
+    public boolean isUseHelper() {
+        return useHelper;
+    }
+
+    public void setUseHelper(boolean useHelper) {
+        this.useHelper = useHelper;
     }
 
     public void push() {

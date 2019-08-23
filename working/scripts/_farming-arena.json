@@ -515,6 +515,10 @@
               "value": "arena-party-select"
             },
             {
+              "type": "FINER",
+              "value": "Incorrect Arena Party Selected"
+            },
+            {
               "type": "WAIT",
               "value": "2000"
             },

@@ -2,6 +2,7 @@ package com.mgatelabs.piper.server;
 
 import com.mgatelabs.piper.shared.details.*;
 import com.mgatelabs.piper.shared.helper.DeviceHelper;
+import com.mgatelabs.piper.shared.helper.RemoteDeviceHelper;
 import com.mgatelabs.piper.shared.mapper.MapDefinition;
 import com.mgatelabs.piper.shared.util.AdbShell;
 

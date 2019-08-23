@@ -30,7 +30,7 @@
     {
       "name": "raid-method",
       "display": "Method",
-      "value": "3",
+      "value": "0",
       "type": "INT",
       "modify": "EDITABLE",
       "displayType": "BOOLEAN",
@@ -39,7 +39,8 @@
       "values": [
         {"name": "Event Link", "value": "3"},
         {"name": "Banner Link", "value": "2"},
-        {"name": "Vortex Item", "value": "1"}
+        {"name": "Vortex Item", "value": "1"},
+        {"name": "Event/Banner Link", "value": "0"}
       ],
       "description": "Enable or disable Raiding"
     },
@@ -563,20 +564,31 @@
             "value": "menu-home",
             "and": [
               {
+                "is": "SCREEN",
+                "value": "menu-home-raid_event"
+              }
+            ],
+            "andOr": [
+              {
                 "is": "EQUAL",
                 "var": "raid-method",
-                "value": "2"
+                "value": "3"
+              },
+              {
+                "is": "EQUAL",
+                "var": "raid-method",
+                "value": "0"
               }
             ]
           },
           "actions": [
             {
               "type": "INFO",
-              "value": "Going to Banner"
+              "value": "Going to Event Link"
             },
             {
               "type": "TAP",
-              "value": "menu-home-special"
+              "value": "menu-home-raid_event"
             },
             {
               "type": "WAIT",
@@ -592,22 +604,27 @@
           "condition": {
             "is": "SCREEN",
             "value": "menu-home",
-            "and": [
+            "andOr": [
               {
                 "is": "EQUAL",
                 "var": "raid-method",
-                "value": "3"
+                "value": "2"
+              },
+              {
+                "is": "EQUAL",
+                "var": "raid-method",
+                "value": "0"
               }
             ]
           },
           "actions": [
             {
               "type": "INFO",
-              "value": "Going to Event Link"
+              "value": "Going to Banner"
             },
             {
               "type": "TAP",
-              "value": "menu-home-raid_event"
+              "value": "menu-home-special"
             },
             {
               "type": "WAIT",

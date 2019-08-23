@@ -19,4 +19,6 @@ public interface ImageWrapper {
     boolean savePng(File file);
 
     byte [] outputPng();
+
+    byte [] getRaw();
 }

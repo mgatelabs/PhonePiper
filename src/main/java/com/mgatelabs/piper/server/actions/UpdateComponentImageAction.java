@@ -20,7 +20,7 @@ public class UpdateComponentImageAction implements EditActionInterface {
     public String execute(final String id, final String value, final EditHolder holder) {
         ComponentDefinition componentDefinition = holder.getComponentForId(id);
         if (componentDefinition == null) return "Could not find component with id: " + id;
-        AdbUtils.persistScreen(holder.getShell());
+        holder.getDeviceHelper().refresh(holder.getShell());
         ImageWrapper wrapper = holder.getDeviceHelper().download();
         if (wrapper != null && wrapper.isReady()) {
             File previewPath = ComponentDefinition.getPreviewPath(holder.getViewDefinition().getViewId(), componentDefinition.getComponentId());

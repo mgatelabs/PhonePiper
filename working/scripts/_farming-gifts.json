@@ -89,7 +89,7 @@
             {
               "type": "DATE",
               "args": {
-                "tz": "GMT-8",
+                "tz": "GMT-9",
                 "d": "temp-gift-date"
               }
             },
@@ -367,7 +367,7 @@
             {
               "type": "DATE",
               "args": {
-                "tz": "GMT-8",
+                "tz": "GMT-9",
                 "d": "gift-date"
               }
             },
@@ -395,7 +395,7 @@
             {
               "type": "DATE",
               "args": {
-                "tz": "GMT-8",
+                "tz": "GMT-9",
                 "d": "gift-date"
               }
             },

@@ -77,4 +77,8 @@ public class PngImageWrapper implements ImageWrapper {
             return null;
         }
     }
+
+    public byte [] getRaw() {
+        return new byte [0];
+    }
 }

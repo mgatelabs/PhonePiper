@@ -169,6 +169,10 @@ public class ActionDefinition {
                 return "TIME";
             case LINK:
                 return "LINK";
+            case GOTO:
+                return "GOTO";
+            case LABEL:
+                return "LABEL";
         }
         return "???";
     }

@@ -213,13 +213,14 @@
             {
               "condition": {
                 "is": "CALL",
-                "value": "@readyDualCastSafely",
+                "value": "@readyMultiCastSafely",
                 "args": {
                   "index": "4",
                   "row0": "${arena-sfc_4-twice_row}",
                   "column0": "${arena-sfc_4-twice_col}",
                   "row1": "${arena-sfc_4-hts_row}",
-                  "column1": "${arena-sfc_4-hts_col}"
+                  "column1": "${arena-sfc_4-hts_col}",
+                  "times": "2"
                 }
               },
               "type": "REPEAT",

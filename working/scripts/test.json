@@ -9,6 +9,7 @@
         "_random",
         "_time",
         "_link",
+        "_flow",
         "_end"
       ],
       "variables": {
@@ -250,6 +251,61 @@
                 "var": "a",
                 "value":"10"
               }
+            }
+          ]
+        }
+      ]
+    },
+
+    "_flow": {
+      "name": "Random Test",
+      "variables": {
+        "loopCounter": {"type": "INT", "value": "5"}
+      },
+      "statements": [
+        {
+          "actions": [
+            {
+              "type": "INFO",
+              "value": "Flow Text: Start"
+            },
+            {
+              "type": "LABEL",
+              "value": "TEST_LOOP"
+            },
+            {
+              "type": "ADD",
+              "var": "loopCounter",
+              "value": "-1"
+            },
+            {
+              "type": "INFO",
+              "value": "Looping ${loopCounter}"
+            },
+            {
+              "condition": {
+                "is": "GREATER",
+                "var": "loopCounter",
+                "value": "0"
+              },
+              "type": "GOTO",
+              "value": "TEST_LOOP"
+            },
+            {
+              "type": "GOTO",
+              "value": "SKIP_STUFF"
+            },
+            {
+              "type": "INFO",
+              "value": "You should not see this!!!!!"
+            },
+            {
+              "type": "LABEL",
+              "value": "SKIP_STUFF"
+            },
+            {
+              "type": "INFO",
+              "value": "Flow Text: End"
             }
           ]
         }

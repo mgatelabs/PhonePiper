@@ -34,9 +34,11 @@ public enum ActionType {
     EVENT(ActionValueType.EVENT_ID, false, true, true, false), // GENERAL EVENT
     MATH(ActionValueType.MATH, true, true, true, true), // GENERAL EVENT
     CALL(ActionValueType.CALL_ID, false, true, true, true), // GENERAL EVENT
-    LINK(ActionValueType.CALL_ID, false, true, false, false), // GENERAL EVENT
+    LINK(ActionValueType.CALL_ID, false, true, true, true), // LINK
     RANDOM(ActionValueType.NONE, true, true, true, true), // RANDOM
     REFRESH(ActionValueType.NONE, false, true, true, true), // RANDOM
+    LABEL(ActionValueType.NONE, false, true, true, true), // LABEL
+    GOTO(ActionValueType.NONE, false, true, true, true), // GOTO
     INPUT(ActionValueType.INPUT_ID, false, true, true, false); // GENERIC INPUT
 
     private final ActionValueType valueType;

@@ -926,6 +926,17 @@ public class ScriptRunner {
                                 }
                             }
                             break;
+                            case LINK: {
+                                // Pretend we're doing imports
+                                for (StateLink children : actionDefinition.getLinks()) {
+                                    stateStack.push(new ProcessingStateInfo(children));
+                                    StateResult childResult = executableStateProcessor(stateStack, children, imageWrapper, callType, inBatch);
+                                    stateStack.pop();
+                                    if (childResult.getType() != ActionType.SOFT_REPEAT) {
+                                        return childResult;
+                                    }
+                                }
+                            } break;
                             case RETURN: {
                                 if (!StringUtils.isEmpty(actionDefinition.getValue())) {
                                     stateResult.setResult(valueHandler(actionDefinition.getValue()));

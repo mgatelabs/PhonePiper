@@ -280,6 +280,25 @@ public final class ScriptEnvironment {
             Set<StateLink> future = Sets.newHashSet();
             while (!needles.isEmpty()) {
                 for (StateLink link : needles) {
+
+                    // Build the Link Definitions
+                    for (StatementDefinition statementDefinition : link.getState().getStatements()) {
+                        for (ActionDefinition actionDefinition : statementDefinition.getActions()) {
+                            if (actionDefinition.getType() == ActionType.LINK) {
+                                List<StateLink> links = getLinksFor(actionDefinition.getValue(), universe);
+                                for (StateLink includeLink : links) {
+                                    if (includeLink != null) {
+                                        actionDefinition.addLink(includeLink);
+                                        if (!includeLink.isBuilt()) {
+                                            includeLink.setBuilt(true);
+                                            future.add(includeLink);
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+
                     for (String includeState : link.getState().getIncludes()) {
                         List<StateLink> links = getLinksFor(includeState, universe);
                         for (StateLink includeLink : links) {

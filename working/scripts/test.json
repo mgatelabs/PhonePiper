@@ -8,6 +8,7 @@
         "_math",
         "_random",
         "_time",
+        "_link",
         "_end"
       ],
       "variables": {
@@ -316,6 +317,53 @@
               },
               "type": "INFO",
               "value": "TimeZone worked"
+            }
+          ]
+        }
+      ]
+    },
+
+    "_link": {
+      "name": "Link Test",
+      "variables": {
+        "testD": {"type": "INT", "value": "0"}
+      },
+      "statements": [
+        {
+          "actions": [
+            {
+              "type": "INFO",
+              "value": "Start: Link Test, The value of ${testD} = 0"
+            },
+            {
+              "type": "LINK",
+              "value": "_link_task"
+            },
+            {
+              "type": "INFO",
+              "value": "End: Link Test: The value of ${testD} = 2"
+            }
+          ]
+        }
+      ]
+    },
+
+    "_link_task": {
+      "name": "Link Task",
+      "variables": {
+        "testD": {"type": "INT", "value": "0"}
+      },
+      "statements": [
+        {
+          "actions": [
+            {
+              "type": "INFO",
+              "value": "This is a Link, and if you see this, everything is fine, setting value to 2"
+            },
+            {
+              "type": "SET",
+              "var": "testD",
+              "value": "2"
             }
           ]
         }

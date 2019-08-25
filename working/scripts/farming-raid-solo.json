@@ -407,11 +407,10 @@
               "type": "LABEL",
               "value": "JOB_1_LOGIC"
             },
-
             {
               "condition":
                     {
-                      "not": "CALL",
+                      "is": "CALL",
                       "value": "@isBattleReady",
                       "and": [
                         {
@@ -432,9 +431,16 @@
                   }
                 ,
               "type": "GOTO",
+              "value": "JOB_1_WORK"
+            },
+            {
+              "type": "GOTO",
               "value": "NOTHING"
             },
-
+            {
+              "type": "LABEL",
+              "value": "JOB_1_WORK"
+            },
             {
               "type": "INFO",
               "value": "Unit ${index} Setup"

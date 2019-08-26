@@ -15,7 +15,7 @@ import java.util.List;
  */
 public class AdbShell {
 
-    private final Logger logger = LoggerFactory.getLogger(this.getClass());
+    private static final Logger logger = LoggerFactory.getLogger(AdbShell.class);
     public static String ADB_PATH = "adb";
     public static String ADB_DIRECT = "";
 
@@ -67,8 +67,8 @@ public class AdbShell {
                 }
                 return StringUtils.trim(stringBuilder.toString());
             }
-        } catch (IOException i) {
-
+        } catch (IOException ex) {
+            logger.error(ex.getMessage(), ex);
         }
         return "";
     }
@@ -88,9 +88,9 @@ public class AdbShell {
         } catch (IOException e) {
             e.printStackTrace();
             return e.getLocalizedMessage();
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-            return e.getLocalizedMessage();
+        } catch (InterruptedException ex) {
+            logger.error(ex.getMessage(), ex);
+            return ex.getLocalizedMessage();
         }
     }
 
@@ -123,8 +123,8 @@ public class AdbShell {
             // sends to process's input
             processOutput = new BufferedInputStream(adb.getInputStream());
 
-        } catch (IOException e) {
-            e.printStackTrace();
+        } catch (IOException ex) {
+            logger.error(ex.getMessage(), ex);
             ready = false;
         }
     }
@@ -204,7 +204,7 @@ public class AdbShell {
             logger.trace("AdbCommand: " + adbCommand + " (" + String.format("%2.2f", ((float) diff / 1000000000.0)) + "s)");
             return true;
         } catch (Exception ex) {
-            ex.printStackTrace();
+            logger.error(ex.getMessage(), ex);
             ready = false;
             return false;
         }

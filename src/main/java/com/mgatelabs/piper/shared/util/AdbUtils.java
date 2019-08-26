@@ -5,6 +5,9 @@ import com.mgatelabs.piper.shared.details.ComponentDefinition;
 import com.mgatelabs.piper.shared.details.DeviceDefinition;
 import com.mgatelabs.piper.shared.image.ImageWrapper;
 import com.mgatelabs.piper.shared.image.RawImageWrapper;
+import org.apache.commons.lang3.StringUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.BufferedInputStream;
 import java.io.ByteArrayOutputStream;
@@ -20,6 +23,7 @@ import java.security.SecureRandom;
 public class AdbUtils {
 
     private static final SecureRandom RANDOM = new SecureRandom();
+    private static final Logger LOGGER = LoggerFactory.getLogger(AdbUtils.class);
 
     public static void component(DeviceDefinition deviceDefinition, ComponentDefinition componentDefinition, ActionType type, final AdbShell shell, boolean batch) {
         if (!componentDefinition.isEnabled()) return;
@@ -269,12 +273,25 @@ public class AdbUtils {
     }
 
     public static boolean downloadScreen(File tempFile) {
-        byte[] bytes =  execStream("adb pull /mnt/sdcard/framebuffer.raw " + tempFile.getAbsolutePath());
+        final String command;
+        if (StringUtils.isNotBlank(AdbShell.ADB_DIRECT)) {
+            command = String.format("adb -s %s pull /mnt/sdcard/framebuffer.raw %s", AdbShell.ADB_DIRECT, tempFile.getAbsolutePath());
+        } else {
+            command = String.format("adb pull /mnt/sdcard/framebuffer.raw %s", tempFile.getAbsolutePath());
+        }
+        byte[] bytes =  execStream(command);
         return true;
     }
 
     public static ImageWrapper getScreen() {
-        byte[] bytes = execStream("adb exec-out screencap");
+        final String command;
+        if (StringUtils.isNotBlank(AdbShell.ADB_DIRECT)) {
+            command = String.format("adb -s %s pull exec-out screencap", AdbShell.ADB_DIRECT);
+        } else {
+            command = "adb exec-out screencap";
+        }
+
+        byte[] bytes = execStream(command);
         try {
             int w, h;
             if (bytes.length > 12) { // Sanity
@@ -288,7 +305,7 @@ public class AdbUtils {
             }
             return new RawImageWrapper(w, h, RawImageWrapper.ImageFormats.RGBA, 12, bytes);
         } catch (Exception e) {
-            e.printStackTrace();
+            LOGGER.error(e.getMessage(), e);
         }
         return null;
     }
@@ -307,7 +324,7 @@ public class AdbUtils {
             }
             return new RawImageWrapper(w, h, RawImageWrapper.ImageFormats.RGBA, 12, bytes);
         } catch (Exception e) {
-            e.printStackTrace();
+            LOGGER.error(e.getMessage(), e);
         }
         return null;
     }
@@ -318,13 +335,14 @@ public class AdbUtils {
             myProcess.waitFor();
             return true;
         } catch (Exception ex) {
-            ex.printStackTrace();
+            LOGGER.error(ex.getMessage(), ex);
             return false;
         }
     }
 
     private static byte[] execStream(final String command) {
         try {
+            LOGGER.trace(command);
             Process myProcess = Runtime.getRuntime().exec(command);
             return repair(myProcess.getInputStream());
         } catch (Exception ex) {

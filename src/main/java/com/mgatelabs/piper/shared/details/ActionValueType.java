@@ -16,4 +16,5 @@ public enum ActionValueType {
     NONE,
     START_STOP,
     CALL_ID,
+    LINK_ID,
 }

@@ -1140,10 +1140,142 @@
             {
               "condition": {
                 "not": "CALL",
-                "value": "@selectDualActionSafely",
+                "value": "@selectMultiActionSafely",
                 "args": {
                   "row": "${row1}",
-                  "column": "${column1}"
+                  "column": "${column1}",
+                  "times": "2"
+                }
+              },
+              "type": "CONTINUE"
+            },
+            {
+              "type": "WAIT",
+              "value": "500"
+            },
+            {
+              "type": "RETURN",
+              "value": "1"
+            }
+          ]
+        },
+        {
+          "actions": [
+            {
+              "type": "FINER",
+              "value": "We had problems"
+            },
+            {
+              "type": "REFRESH"
+            },
+            {
+              "condition":{
+                "is": "SCREEN",
+                "value": "battle-actions"
+              },
+              "type": "TAP",
+              "value": "battle-actions-back"
+            },
+            {
+              "type": "REFRESH"
+            },
+            {
+              "type": "WAIT",
+              "value": "500"
+            },
+            {
+              "type": "REFRESH"
+            },
+            {
+              "type": "RETURN",
+              "value": "0"
+            }
+          ]
+        }
+      ]
+    },
+
+    "@readyMultiCastSafely": {
+      "name": "Function - Ready Multi Cast Safely",
+      "variables": {
+        "index": {
+          "value": "0",
+          "type": "INT"
+        },
+        "row0": {
+          "value": "0",
+          "type": "INT"
+        },
+        "column0": {
+          "value": "0",
+          "type": "INT"
+        },
+        "row1": {
+          "value": "0",
+          "type": "INT"
+        },
+        "column1": {
+          "value": "0",
+          "type": "INT"
+        },
+        "times": {
+          "value": "1",
+          "type": "INT"
+        }
+      },
+      "statements": [
+        {
+          "actions": [
+            {
+              "type": "CALL",
+              "value": "@showUnitActions",
+              "args": {
+                "index": "${index}"
+              }
+            },
+            {
+              "type": "CALL",
+              "value": "@selectUnitAction",
+              "args": {
+                "row": "${row0}",
+                "column": "${column0}"
+              }
+            },
+            {
+              "type": "FINER",
+              "value": "Refreshing Screen"
+            },
+            {
+              "type": "REFRESH"
+            },
+            {
+              "type": "FINER",
+              "value": "Checking screen"
+            },
+            {
+              "condition":{
+                "not": "SCREEN",
+                "value": "battle-actions"
+              },
+              "type": "CONTINUE"
+            },
+            {
+              "type": "FINER",
+              "value": "Still on Action Screen"
+            },
+            {
+              "type": "SWIPE_DOWN",
+              "value": "battle-skill-top-slider",
+              "count": "${row0}"
+            },
+            {
+              "condition": {
+                "not": "CALL",
+                "value": "@selectMultiActionSafely",
+                "args": {
+                  "row": "${row1}",
+                  "column": "${column1}",
+                  "times": "${times}"
                 }
               },
               "type": "CONTINUE"
@@ -1425,40 +1557,188 @@
               "var": "index"
             },
             {
+              "condition":{
+                "not": "CALL",
+                "value": "@tapActionByIndexAndVerify",
+                "args": {
+                  "index": "${index}"
+                }
+              },
+              "type": "CONTINUE"
+            },
+            {
+              "condition":{
+                "not": "CALL",
+                "value": "@tapActionByIndexAndVerify",
+                "args": {
+                  "index": "${index}"
+                }
+              },
+              "type": "CONTINUE"
+            },
+            {
+              "type": "RETURN",
+              "value": "1"
+            }
+          ]
+        },
+        // Failover
+        {
+          "actions": [
+            {
+              "type": "REFRESH"
+            },
+            {
+              "condition":{
+                "is": "SCREEN",
+                "value": "battle-actions"
+              },
               "type": "TAP",
-              "value": "battle-skill-top-${index}"
+              "value": "battle-actions-back"
+            },
+            {
+              "type": "REFRESH"
             },
             {
               "type": "WAIT",
               "value": "500"
             },
             {
-              "type": "REFRESH"
+              "type": "RETURN",
+              "value": "1"
+            }
+          ]
+        }
+      ]
+    },
+
+    "@selectMultiActionSafely": {
+      "name": "Function - Select a unit's action two times",
+      "variables": {
+        "row": {
+          "value": "0",
+          "type": "INT"
+        },
+        "column": {
+          "value": "0",
+          "type": "INT"
+        },
+        "index": {
+          "value": "0",
+          "type": "INT"
+        },
+        "times": {
+          "value": "1",
+          "type": "INT"
+        },
+        "safety": {
+          "value": "0",
+          "type": "INT"
+        }
+      },
+      "statements": [
+        // No need to drill down
+        {
+          "condition": {
+            "is": "LESS",
+            "var": "row",
+            "value": "3"
+          },
+          "actions": [
+            {
+              "type": "SET",
+              "value": "1",
+              "var": "safety"
+            },
+            {
+              "type": "MATH",
+              "value": "${row}+(${column}*3)",
+              "var": "index"
+            },
+            {
+              "type": "LABEL",
+              "value": "BATTLE_SKILL_LOOP"
+            },
+            {
+              "type": "ADD",
+              "var": "times",
+              "value": "-1"
             },
             {
               "condition":{
-                "not": "SCREEN",
-                "value": "battle-actions"
+                "not": "CALL",
+                "value": "@tapActionByIndexAndVerify",
+                "args": {
+                  "index": "${index}"
+                }
               },
               "type": "CONTINUE"
             },
             {
-              "type": "TAP",
-              "value": "battle-skill-top-${index}"
+              "condition": {
+                "is": "GREATER",
+                "var": "times",
+                "value": "0"
+              },
+              "type": "GOTO",
+              "value": "BATTLE_SKILL_LOOP"
             },
             {
-              "type": "WAIT",
-              "value": "500"
+              "type": "RETURN",
+              "value": "1"
+            }
+          ]
+        },
+        // Need to drill down
+        {
+          "condition": {
+            "is": "EQUAL",
+            "var": "safety",
+            "value": "0"
+          },
+          "actions": [
+            {
+              "type": "MATH",
+              "value": "${row}-2",
+              "var": "row"
             },
             {
-              "type": "REFRESH"
+              "type": "SLOW_UP",
+              "value": "battle-skill-top-slider",
+              "count": "${row}"
+            },
+            {
+              "type": "MATH",
+              "value": "2+(${column}*3)",
+              "var": "index"
+            },
+            {
+              "type": "LABEL",
+              "value": "BATTLE_SKILL_LOOP"
+            },
+            {
+              "type": "ADD",
+              "var": "times",
+              "value": "-1"
             },
             {
               "condition":{
-                "not": "SCREEN",
-                "value": "battle-actions"
+                "not": "CALL",
+                "value": "@tapActionByIndexAndVerify",
+                "args": {
+                  "index": "${index}"
+                }
               },
               "type": "CONTINUE"
+            },
+            {
+              "condition": {
+                "is": "GREATER",
+                "var": "times",
+                "value": "0"
+              },
+              "type": "GOTO",
+              "value": "BATTLE_SKILL_LOOP"
             },
             {
               "type": "RETURN",
@@ -1536,56 +1816,32 @@
               "var": "index"
             },
             {
-              "type": "TAP",
-              "value": "battle-skill-top-${index}"
-            },
-            {
-              "type": "WAIT",
-              "value": "500"
-            },
-            {
-              "type": "REFRESH"
-            },
-            {
               "condition":{
-                "not": "SCREEN",
-                "value": "battle-actions"
+                "not": "CALL",
+                "value": "@tapActionByIndexAndVerify",
+                "args": {
+                  "index": "${index}"
+                }
               },
               "type": "CONTINUE"
             },
             {
-              "type": "TAP",
-              "value": "battle-skill-top-${index}"
-            },
-            {
-              "type": "WAIT",
-              "value": "500"
-            },
-            {
-              "type": "REFRESH"
-            },
-            {
               "condition":{
-                "not": "SCREEN",
-                "value": "battle-actions"
+                "not": "CALL",
+                "value": "@tapActionByIndexAndVerify",
+                "args": {
+                  "index": "${index}"
+                }
               },
               "type": "CONTINUE"
             },
             {
-              "type": "TAP",
-              "value": "battle-skill-top-${index}"
-            },
-            {
-              "type": "WAIT",
-              "value": "500"
-            },
-            {
-              "type": "REFRESH"
-            },
-            {
               "condition":{
-                "not": "SCREEN",
-                "value": "battle-actions"
+                "not": "CALL",
+                "value": "@tapActionByIndexAndVerify",
+                "args": {
+                  "index": "${index}"
+                }
               },
               "type": "CONTINUE"
             },
@@ -1619,56 +1875,32 @@
               "var": "index"
             },
             {
-              "type": "TAP",
-              "value": "battle-skill-top-${index}"
-            },
-            {
-              "type": "WAIT",
-              "value": "500"
-            },
-            {
-              "type": "REFRESH"
-            },
-            {
               "condition":{
-                "not": "SCREEN",
-                "value": "battle-actions"
+                "not": "CALL",
+                "value": "@tapActionByIndexAndVerify",
+                "args": {
+                  "index": "${index}"
+                }
               },
               "type": "CONTINUE"
             },
             {
-              "type": "TAP",
-              "value": "battle-skill-top-${index}"
-            },
-            {
-              "type": "WAIT",
-              "value": "500"
-            },
-            {
-              "type": "REFRESH"
-            },
-            {
               "condition":{
-                "not": "SCREEN",
-                "value": "battle-actions"
+                "not": "CALL",
+                "value": "@tapActionByIndexAndVerify",
+                "args": {
+                  "index": "${index}"
+                }
               },
               "type": "CONTINUE"
             },
             {
-              "type": "TAP",
-              "value": "battle-skill-top-${index}"
-            },
-            {
-              "type": "WAIT",
-              "value": "500"
-            },
-            {
-              "type": "REFRESH"
-            },
-            {
               "condition":{
-                "not": "SCREEN",
-                "value": "battle-actions"
+                "not": "CALL",
+                "value": "@tapActionByIndexAndVerify",
+                "args": {
+                  "index": "${index}"
+                }
               },
               "type": "CONTINUE"
             },
@@ -1708,7 +1940,44 @@
       ]
     },
 
-
+    "@tapActionByIndexAndVerify": {
+      "name": "Function - Tap Action Index And Verify",
+      "variables": {
+        "index": {
+          "value": "0",
+          "type": "INT"
+        }
+      },
+      "statements": [
+        {
+          "actions": [
+            {
+              "type": "TAP",
+              "value": "battle-skill-top-${index}"
+            },
+            {
+              "type": "WAIT",
+              "value": "500"
+            },
+            {
+              "type": "REFRESH"
+            },
+            {
+              "condition":{
+                "not": "SCREEN",
+                "value": "battle-actions"
+              },
+              "type": "RETURN",
+              "value": "0"
+            },
+            {
+              "type": "RETURN",
+              "value": "1"
+            }
+          ]
+        }
+      ]
+    },
 
     "@readyUnitEsper": {
       "name": "Function - Ready Unit Esper",

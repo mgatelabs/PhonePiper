@@ -371,34 +371,76 @@
         }
       },
       "statements": [
-
         {
-          "condition": {
-            "is": "CALL",
-            "value": "@isBattleReady",
-            "and": [
-              {
+          "actions": [
+            {
+              "condition": {
+                "is": "EQUAL",
+                "var": "job",
+                "value": "0"
+              },
+              "type": "GOTO",
+              "value": "JOB_0_LOGIC"
+            },
+            {
+              "condition": {
                 "is": "EQUAL",
                 "var": "job",
                 "value": "1"
               },
-              {
-                "is": "CALL",
-                "value": "@isUnitReady",
-                "args": {
-                  "index": "${index}"
-                }
-              },
-              {
-                "is": "CALL",
-                "value": "@isUnitAtkReady",
-                "args": {
-                  "index": "${index}"
-                }
-              }
-            ]
-          },
-          "actions": [
+              "type": "GOTO",
+              "value": "JOB_1_LOGIC"
+            },
+            {
+              "type": "GOTO",
+              "value": "NOTHING"
+            },
+            {
+              "type": "LABEL",
+              "value": "JOB_0_LOGIC"
+            },
+            {
+              "type": "GOTO",
+              "value": "NOTHING"
+            },
+            {
+              "type": "LABEL",
+              "value": "JOB_1_LOGIC"
+            },
+            {
+              "condition":
+                    {
+                      "is": "CALL",
+                      "value": "@isBattleReady",
+                      "and": [
+                        {
+                          "is": "CALL",
+                          "value": "@isUnitReady",
+                          "args": {
+                            "index": "${index}"
+                          }
+                        },
+                        {
+                          "is": "CALL",
+                          "value": "@isUnitAtkReady",
+                          "args": {
+                            "index": "${index}"
+                          }
+                        }
+                    ]
+                  }
+                ,
+              "type": "GOTO",
+              "value": "JOB_1_WORK"
+            },
+            {
+              "type": "GOTO",
+              "value": "NOTHING"
+            },
+            {
+              "type": "LABEL",
+              "value": "JOB_1_WORK"
+            },
             {
               "type": "INFO",
               "value": "Unit ${index} Setup"
@@ -422,11 +464,12 @@
             {
               "type": "RETURN",
               "value": "1"
-            }
-          ]
-        },
-        {
-          "actions": [
+            },
+
+            {
+              "type": "LABEL",
+              "value": "NOTHING"
+            },
             {
               "type": "RETURN",
               "value": "0"

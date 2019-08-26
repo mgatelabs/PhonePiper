@@ -645,7 +645,9 @@ public class ScriptRunner {
 
             if (checkStatus) {
                 int actionIndex = 0;
-                for (ActionDefinition actionDefinition : statementDefinition.getActions()) {
+                int programIndex = 0;
+                while (programIndex < statementDefinition.getActions().size()) {
+                    ActionDefinition actionDefinition = statementDefinition.getActions().get(programIndex++);
                     stateTracker.setActionIndex(actionIndex++);
                     // Skip actions not allowed for the current state mode
                     if (callType == StateCallType.CALL && !actionDefinition.getType().isAllowedForCall()) {
@@ -834,6 +836,21 @@ public class ScriptRunner {
                                 putVar(varName, result);
                             }
                             break;
+                            case LABEL: {
+                                // NO OP
+                                logger.trace("Found Label: " + actionDefinition.getValue());
+                            } break;
+                            case GOTO: {
+                                logger.trace("Going to Label: " + actionDefinition.getValue());
+                                for (int i = 0; i < statementDefinition.getActions().size(); i++) {
+                                    ActionDefinition inspectAction = statementDefinition.getActions().get(i);
+                                    if (inspectAction.getType() == ActionType.LABEL && inspectAction.getValue().equals(actionDefinition.getValue())) {
+                                        // Set the program counter to this label's index, so it will be proceed next
+                                        programIndex = i;
+                                        break;
+                                    }
+                                }
+                            } break;
                             case REFRESH: {
                                 // Simply tell the system to refresh the view, this may take a second
                                 refreshViews(true);
@@ -926,6 +943,17 @@ public class ScriptRunner {
                                 }
                             }
                             break;
+                            case LINK: {
+                                // Pretend we're doing imports
+                                for (StateLink children : actionDefinition.getLinks()) {
+                                    stateStack.push(new ProcessingStateInfo(children));
+                                    StateResult childResult = executableStateProcessor(stateStack, children, imageWrapper, callType, inBatch);
+                                    stateStack.pop();
+                                    if (childResult.getType() != ActionType.SOFT_REPEAT) {
+                                        return childResult;
+                                    }
+                                }
+                            } break;
                             case RETURN: {
                                 if (!StringUtils.isEmpty(actionDefinition.getValue())) {
                                     stateResult.setResult(valueHandler(actionDefinition.getValue()));

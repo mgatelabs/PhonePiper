@@ -1,9 +1,12 @@
 package com.mgatelabs.piper.shared.details;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 import com.google.common.collect.Sets;
 
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
@@ -16,6 +19,9 @@ public class ActionDefinition {
     private String value;
     private String count;
     private ConditionDefinition condition;
+
+    @JsonIgnore
+    private List<StateLink> links;
 
     @JsonProperty("args")
     private Map<String, String> arguments;
@@ -68,9 +74,24 @@ public class ActionDefinition {
         this.condition = condition;
     }
 
+    public List<StateLink> getLinks() {
+        return links;
+    }
+
+    public void setLinks(List<StateLink> links) {
+        this.links = links;
+    }
+
+    public void addLink(StateLink link) {
+        links.add(link);
+    }
+
     public void fix() {
         if (arguments == null) {
             arguments = Maps.newHashMap();
+        }
+        if (links == null) {
+            links = Lists.newArrayList();
         }
         if (condition != null) {
             condition.fix();
@@ -80,69 +101,48 @@ public class ActionDefinition {
     @Override
     public String toString() {
         switch (type) {
-            case SWIPE_LEFT: {
+            case SWIPE_LEFT:
                 return "Swipe Left: " + value;
-            }
-            case SWIPE_DOWN: {
+            case SWIPE_DOWN:
                 return "Swipe Down: " + value;
-            }
-            case SLOW_DOWN: {
+            case SLOW_DOWN:
                 return "Slow Down: " + value;
-            }
-            case SLOW_RIGHT: {
+            case SLOW_RIGHT:
                 return "Slow Right: " + value;
-            }
-            case SLOW_LEFT: {
+            case SLOW_LEFT:
                 return "Slow Left: " + value;
-            }
-            case SWIPE_UP: {
+            case SWIPE_UP:
                 return "Swipe Up: " + value;
-            }
-            case SLOW_UP: {
+            case SLOW_UP:
                 return "Slow Up: " + value;
-            }
-            case SWIPE_RIGHT: {
+            case SWIPE_RIGHT:
                 return "Swipe Right: " + value;
-            }
-            case TAP: {
+            case TAP:
                 return "Tap: " + value;
-            }
-            case ADD: {
+            case ADD:
                 return "Add: " + value + " to Var: " + var;
-            }
-            case INFO: {
+            case INFO:
                 return "Info Msg: " + value;
-            }
-            case FINER: {
+            case FINER:
                 return "Finer Msg: " + value;
-            }
-            case FINEST: {
+            case FINEST:
                 return "Finest Msg: " + value;
-            }
-            case SET: {
+            case SET:
                 return "Set Var: " + var + " to: " + value;
-            }
-            case MOVE: {
+            case MOVE:
                 return "Move to state: " + value;
-            }
-            case STOP: {
+            case STOP:
                 return "Stop";
-            }
-            case WAIT: {
+            case WAIT:
                 return "Wait: " + value + "ms";
-            }
-            case BATCH: {
+            case BATCH:
                 return "Batch";
-            }
-            case REPEAT: {
+            case REPEAT:
                 return "Repeat";
-            }
-            case LAP: {
+            case LAP:
                 return "Lap: " + value;
-            }
-            case MATH: {
-                return "Lap: " + value;
-            }
+            case MATH:
+                return "Math: " + value;
             case EVENT:
                 return "Event: " + value;
             case INPUT:
@@ -163,6 +163,16 @@ public class ActionDefinition {
                 return "RANDOM";
             case REFRESH:
                 return "REFRESH SCREEN";
+            case DATE:
+                return "DATE";
+            case TIME:
+                return "TIME";
+            case LINK:
+                return "LINK";
+            case GOTO:
+                return "GOTO";
+            case LABEL:
+                return "LABEL";
         }
         return "???";
     }
@@ -174,13 +184,21 @@ public class ActionDefinition {
             found.addAll(getCondition().determineScreenIds(exploredStates, states));
         }
 
-        if (getType() == ActionType.CALL) {
-            ExecutableLink otherDefinition = states.get(getValue());
-            if (otherDefinition != null) {
-                found.addAll(otherDefinition.getLink().getState().determineScreenIds(exploredStates, states));
-            } else {
-                throw new RuntimeException("Could not find executable state: " + getValue());
+        switch (getType()) {
+            case LINK: {
+                for (StateLink stateLink: getLinks()) {
+                    found.addAll(stateLink.determineStateIds(exploredStates, states));
+                }
+            } break;
+            case CALL: {
+                ExecutableLink otherDefinition = states.get(getValue());
+                if (otherDefinition != null) {
+                    found.addAll(otherDefinition.getLink().getState().determineScreenIds(exploredStates, states));
+                } else {
+                    throw new RuntimeException("Could not find executable state: " + getValue());
+                }
             }
+            break;
         }
 
         return found;

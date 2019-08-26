@@ -8,6 +8,8 @@
         "_math",
         "_random",
         "_time",
+        "_link",
+        "_flow",
         "_end"
       ],
       "variables": {
@@ -255,6 +257,61 @@
       ]
     },
 
+    "_flow": {
+      "name": "Random Test",
+      "variables": {
+        "loopCounter": {"type": "INT", "value": "5"}
+      },
+      "statements": [
+        {
+          "actions": [
+            {
+              "type": "INFO",
+              "value": "Flow Text: Start"
+            },
+            {
+              "type": "LABEL",
+              "value": "TEST_LOOP"
+            },
+            {
+              "type": "ADD",
+              "var": "loopCounter",
+              "value": "-1"
+            },
+            {
+              "type": "INFO",
+              "value": "Looping ${loopCounter}"
+            },
+            {
+              "condition": {
+                "is": "GREATER",
+                "var": "loopCounter",
+                "value": "0"
+              },
+              "type": "GOTO",
+              "value": "TEST_LOOP"
+            },
+            {
+              "type": "GOTO",
+              "value": "SKIP_STUFF"
+            },
+            {
+              "type": "INFO",
+              "value": "You should not see this!!!!!"
+            },
+            {
+              "type": "LABEL",
+              "value": "SKIP_STUFF"
+            },
+            {
+              "type": "INFO",
+              "value": "Flow Text: End"
+            }
+          ]
+        }
+      ]
+    },
+
     "_time": {
       "name": "Time Test",
       "variables": {
@@ -316,6 +373,53 @@
               },
               "type": "INFO",
               "value": "TimeZone worked"
+            }
+          ]
+        }
+      ]
+    },
+
+    "_link": {
+      "name": "Link Test",
+      "variables": {
+        "testD": {"type": "INT", "value": "0"}
+      },
+      "statements": [
+        {
+          "actions": [
+            {
+              "type": "INFO",
+              "value": "Start: Link Test, The value of ${testD} = 0"
+            },
+            {
+              "type": "LINK",
+              "value": "_link_task"
+            },
+            {
+              "type": "INFO",
+              "value": "End: Link Test: The value of ${testD} = 2"
+            }
+          ]
+        }
+      ]
+    },
+
+    "_link_task": {
+      "name": "Link Task",
+      "variables": {
+        "testD": {"type": "INT", "value": "0"}
+      },
+      "statements": [
+        {
+          "actions": [
+            {
+              "type": "INFO",
+              "value": "This is a Link, and if you see this, everything is fine, setting value to 2"
+            },
+            {
+              "type": "SET",
+              "var": "testD",
+              "value": "2"
             }
           ]
         }

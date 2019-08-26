@@ -2,6 +2,7 @@ package com.mgatelabs.piper.shared.helper;
 
 import com.google.common.collect.ImmutableSet;
 import com.google.common.collect.Sets;
+import com.mgatelabs.piper.Runner;
 import com.mgatelabs.piper.runners.ScriptRunner;
 import com.mgatelabs.piper.shared.details.ConnectionDefinition;
 import com.mgatelabs.piper.shared.image.ImageWrapper;
@@ -12,11 +13,7 @@ import com.mgatelabs.piper.shared.util.AdbUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.IOException;
+import java.io.*;
 import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
 import java.util.Set;
@@ -37,7 +34,7 @@ public class LocalDeviceHelper implements DeviceHelper {
     public LocalDeviceHelper(ConnectionDefinition connectionDefinition) {
         this.connectionDefinition = connectionDefinition;
         try {
-            this.tempFile = File.createTempFile("phonePiper", ".raw");
+            this.tempFile = File.createTempFile("phonePiper", ".raw", Runner.WORKING_DIRECTORY);
         } catch (IOException e) {
             logger.error(e.getMessage());
         }
@@ -77,6 +74,7 @@ public class LocalDeviceHelper implements DeviceHelper {
                 byteArrayOutputStream.write(temp, 0, len);
             }
         } catch (Exception ex) {
+            logger.error(ex.getMessage(), ex);
             return new byte [0];
         } finally {
             Closer.close(byteArrayOutputStream);
@@ -160,6 +158,7 @@ public class LocalDeviceHelper implements DeviceHelper {
                 }
             }
         } catch (Exception ex) {
+            logger.error(ex.getMessage(), ex);
             failures++;
             return ImmutableSet.of();
         } finally {
@@ -204,6 +203,7 @@ public class LocalDeviceHelper implements DeviceHelper {
             return new int[]{(0xff & temp[0]), (0xff & temp[1]), (0xff & temp[2])};
 
         } catch (Exception ex) {
+            logger.error(ex.getMessage(), ex);
             return new int[0];
         } finally {
             Closer.close(fileInputStream);

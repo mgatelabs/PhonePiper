@@ -18,7 +18,6 @@ import com.mgatelabs.piper.shared.helper.LocalDeviceHelper;
 import com.mgatelabs.piper.shared.helper.RemoteDeviceHelper;
 import com.mgatelabs.piper.shared.image.ImageWrapper;
 import com.mgatelabs.piper.shared.util.AdbShell;
-import com.mgatelabs.piper.shared.util.AdbUtils;
 import com.mgatelabs.piper.shared.util.JsonTool;
 import com.mgatelabs.piper.shared.util.Loggers;
 import com.mgatelabs.piper.ui.FrameChoices;
@@ -864,8 +863,9 @@ public class WebResource {
         try {
             checkInitialState();
             if (frameChoices != null) {
+                AdbShell shell = new AdbShell(frameChoices.getDeviceDefinition());
                 // Save the Image
-                AdbUtils.persistScreen(new AdbShell(frameChoices.getDeviceDefinition()));
+                deviceHelper.refresh(shell);
                 // Get the Image
                 ImageWrapper wrapper = deviceHelper.download();
 

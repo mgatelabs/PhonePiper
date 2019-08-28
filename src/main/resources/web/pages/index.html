@@ -411,10 +411,12 @@
                 <div class="form-group">
                     <button type="button" class="btn btn-info edit-action notWhileRunning whenLoaded prompt-name" editvalue="stubScreen">Stub</button>
                     <button type="button" class="btn btn-info edit-action notWhileRunning whenLoaded" editvalue="editScreen"       lst="edit-screens">Edit Pixels</button>
-                    <button type="button" class="btn btn-info edit-action notWhileRunning whenLoaded" editvalue="fixScreen"        lst="edit-screens">Fix Pixels</button>
-                    <button type="button" class="btn btn-info edit-action notWhileRunning whenLoaded" editvalue="verifyScreen"     lst="edit-screens">Verify (Disk)</button>
-                    <button type="button" class="btn btn-info edit-action notWhileRunning whenLoaded" editvalue="liveVerifyScreen" lst="edit-screens">Verify (Live)</button>
-                    <button type="button" class="btn btn-info edit-action notWhileRunning whenLoaded" editvalue="updateScreen"     lst="edit-screens">Update Image</button>
+                    <button type="button" class="btn btn-info edit-action notWhileRunning whenLoaded" editvalue="fixScreen"        lst="edit-screens" title="Test each pixels and remove failures">Filter</button>
+                    <button type="button" class="btn btn-info edit-action notWhileRunning whenLoaded" editvalue="repairScreen"        lst="edit-screens" title="Test each pixel and look for possible replacements">Repair</button>
+                    <button type="button" class="btn btn-info edit-action notWhileRunning whenLoaded" editvalue="verifyScreen"     lst="edit-screens">Verify (From Disk)</button>
+                    <button type="button" class="btn btn-info edit-action notWhileRunning whenLoaded" editvalue="liveVerifyScreen" lst="edit-screens">Verify (From Device)</button>
+                    <button type="button" class="btn btn-info edit-action notWhileRunning whenLoaded" editvalue="updateScreen"     lst="edit-screens">Update Image (From Device)</button>
+                    <button type="button" class="btn btn-info edit-action notWhileRunning whenLoaded" editvalue="cacheScreen"     lst="edit-screens">Update Image (From Cache)</button>
                     <span class="FileName" id="ScreenName"></span>
                 </div>
 

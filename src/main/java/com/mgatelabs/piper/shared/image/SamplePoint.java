@@ -5,7 +5,7 @@ import java.util.*;
 /**
  * Created by @mgatelabs (Michael Fuller) on 8/27/2017 for Phone-Piper
  */
-public class SamplePoint {
+public class SamplePoint implements Comparable<SamplePoint> {
     private int x;
     private int y;
     private int r;
@@ -13,6 +13,14 @@ public class SamplePoint {
     private int b;
 
     public SamplePoint() {
+    }
+
+    @Override
+    public int compareTo(SamplePoint o) {
+        if (o == null) return 0;
+        int yCompare = Integer.compare(y, o.y);
+        if (yCompare != 0) return yCompare;
+        return Integer.compare(x, o.x);
     }
 
     public SamplePoint(int x, int y, int r, int g, int b) {

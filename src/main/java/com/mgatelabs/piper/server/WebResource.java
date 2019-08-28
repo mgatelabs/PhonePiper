@@ -574,11 +574,14 @@ public class WebResource {
             .put("verifyScreen", new VerifyScreenAction())
             .put("liveVerifyScreen", new LiveVerifyScreenAction())
             .put("updateScreen", new UpdateScreenAction())
+            .put("cacheScreen", new CacheScreenAction())
             .put("editScreen", new EditScreenAction())
             .put("fixScreen", new FixScreenAction())
+            .put("repairScreen", new RepairScreenAction())
             // Components
             .put("stubComponent", new StubComponentAction())
             .put("editComponent", new EditComponentAction())
+            .put("updateComponent", new UpdateComponentImageAction())
             .put("updateComponent", new UpdateComponentImageAction())
             .build();
 

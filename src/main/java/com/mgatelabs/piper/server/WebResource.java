@@ -582,7 +582,6 @@ public class WebResource {
             .put("stubComponent", new StubComponentAction())
             .put("editComponent", new EditComponentAction())
             .put("updateComponent", new UpdateComponentImageAction())
-            .put("updateComponent", new UpdateComponentImageAction())
             .build();
 
     @POST

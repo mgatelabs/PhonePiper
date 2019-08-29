@@ -31,6 +31,14 @@ public class SamplePoint implements Comparable<SamplePoint> {
         this.b = b;
     }
 
+    public SamplePoint(SamplePoint source) {
+        this.x = source.x;
+        this.y = source.y;
+        this.r = source.r;
+        this.g = source.g;
+        this.b = source.b;
+    }
+
     public void setX(int x) {
         this.x = x;
     }

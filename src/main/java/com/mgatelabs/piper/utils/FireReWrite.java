@@ -36,7 +36,7 @@ public class FireReWrite {
                 }
 
                 if (point.getY() < 1919) {
-                    yRate2 = (point.getY() + 1) / 1920;
+                    yRate2 = (point.getY() + 1) / 1920.0f;
                 }
                 else {
                     yRate2 = (point.getY() - 1) / 1920.0f;

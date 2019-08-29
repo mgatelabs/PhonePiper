@@ -51,6 +51,8 @@ public class RepairScreenAction implements EditActionInterface {
                             int newX = origX + x;
                             oldPoint.setX(newX);
                             oldPoint.setY(newY);
+                            // Don't allow duplicates
+                            if (newPoints.contains(oldPoint)) continue;
                             if (SamplePoint.validate(ImmutableList.of(oldPoint), wrapper, false)) {
                                 int pointScore = determineValue(wrapper, oldPoint);
                                 if (pointScore > bestScore) {

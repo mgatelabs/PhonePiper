@@ -666,6 +666,7 @@ $(function(){
         var configForm = $('#config');
 
         $('#configName').val('');
+        $('#configConfigName').val('');
         $('#configStateName').val('');
 
 
@@ -688,6 +689,7 @@ $(function(){
     function extractConfig() {
 
         var title = $('#configName').val();
+        var configName = $('#configConfigName').val();
         var stateName = $('#configStateName').val();
 
         var device1 = $('#device1').val();
@@ -715,6 +717,7 @@ $(function(){
         });
 
         var data = {
+            configName: configName || (scriptList && scriptList[0]) || '',
             stateName: stateName || (scriptList && scriptList[0]) || '',
             device: device1 || '',
             views: viewList,
@@ -759,6 +762,7 @@ $(function(){
 
         $('#configName').val(j.title || '');
 
+        $('#configConfigName').val(j.configName || '');
         $('#configStateName').val(j.stateName || '');
 
         // Device
@@ -937,7 +941,7 @@ editViewButton.click(function(){
     function deleteConfigurations(config) {
             $.ajax({
               type: "DELETE",
-              url: '/piper/configs/' + config.stateName,
+              url: '/piper/configs/' + config.configName,
               success: function(result){
                 if (result.status == 'ok') {
                     loadConfigurations();

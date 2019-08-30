@@ -21,6 +21,8 @@ public class DeviceDefinition {
     private String adbEndLine;
     private int width;
     private int height;
+    private int viewWidth;
+    private int viewHeight;
 
     public DeviceDefinition() {
     }
@@ -73,6 +75,22 @@ public class DeviceDefinition {
         this.height = height;
     }
 
+    public int getViewWidth() {
+        return viewWidth;
+    }
+
+    public void setViewWidth(int viewWidth) {
+        this.viewWidth = viewWidth;
+    }
+
+    public int getViewHeight() {
+        return viewHeight;
+    }
+
+    public void setViewHeight(int viewHeight) {
+        this.viewHeight = viewHeight;
+    }
+
     public String getAdbEndLine() {
         return adbEndLine;
     }
@@ -99,6 +117,15 @@ public class DeviceDefinition {
                 if (deviceDefinition.getAdbEndLine() == null) {
                     deviceDefinition.setAdbEndLine("load average:");
                 }
+
+                if (deviceDefinition.getViewWidth() == 0) {
+                    deviceDefinition.setViewWidth(deviceDefinition.width);
+                }
+
+                if (deviceDefinition.getViewHeight() == 0) {
+                    deviceDefinition.setViewHeight(deviceDefinition.height);
+                }
+
                 return deviceDefinition;
             } catch (JsonParseException e) {
                 e.printStackTrace();

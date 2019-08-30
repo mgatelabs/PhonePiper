@@ -309,7 +309,7 @@ public class ScriptRunner {
                 }
                 boolean valid = true;
                 for (SamplePoint point : screenDefinition.getPoints()) {
-                    if (point.getX() > deviceDefinition.getWidth() || point.getY() >= deviceDefinition.getHeight()) {
+                    if (point.getX() > deviceDefinition.getViewWidth() || point.getY() >= deviceDefinition.getViewHeight()) {
                         valid = false;
                         logger.error("Invalid Screen Point for Screen: " + screenDefinition.getScreenId());
                         break;
@@ -327,7 +327,7 @@ public class ScriptRunner {
                 ScreenDefinition screenDefinition = screens.get(stateTransfer.getScreenIds().get(i));
                 if (!screenDefinition.isEnabled()) continue;
                 for (SamplePoint point : screenDefinition.getPoints()) {
-                    points.add(new PointTransfer(RawImageWrapper.getOffsetFor(deviceDefinition.getWidth(), 12, point.getX(), point.getY(), RawImageWrapper.ImageFormats.RGBA), (byte) i, (byte) point.getR(), (byte) point.getG(), (byte) point.getB()));
+                    points.add(new PointTransfer(RawImageWrapper.getOffsetFor(deviceDefinition.getViewWidth(), 12, point.getX(), point.getY(), RawImageWrapper.ImageFormats.RGBA), (byte) i, (byte) point.getR(), (byte) point.getG(), (byte) point.getB()));
                 }
             }
             Collections.sort(points, pointTransferComparator);
@@ -787,7 +787,7 @@ public class ScriptRunner {
                                 }
                                 final Sampler sample = new Sampler();
                                 if (deviceHelper != null) {
-                                    int[] pixels = deviceHelper.pixel(RawImageWrapper.getOffsetFor(deviceDefinition.getWidth(), 12, x.toInt(), y.toInt(), RawImageWrapper.ImageFormats.RGBA));
+                                    int[] pixels = deviceHelper.pixel(RawImageWrapper.getOffsetFor(deviceDefinition.getViewWidth(), 12, x.toInt(), y.toInt(), RawImageWrapper.ImageFormats.RGBA));
                                     if (pixels != null) {
                                         sample.setR(pixels[0]);
                                         sample.setG(pixels[1]);

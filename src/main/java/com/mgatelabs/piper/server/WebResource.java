@@ -809,12 +809,16 @@ public class WebResource {
         final File configPath = new File(Runner.WORKING_DIRECTORY, Constants.PATH_CONFIGS);
         if (StringUtils.isBlank(request.getStateName())) {
             return errorResponse("StateName was blank, save canceled");
+        } else if (StringUtils.isBlank(request.getConfigName())) {
+            return errorResponse("Config Name was blank, save canceled");
         }
         if (!Constants.ID_PATTERN.matcher(request.getStateName()).matches()) {
             return errorResponse("StateName was not formatted correctly, save canceled");
+        } else if (!Constants.ID_PATTERN.matcher(request.getConfigName()).matches()) {
+            return errorResponse("ConfigName was not formatted correctly, save canceled");
         }
         final ObjectMapper objectMapper = JsonTool.getInstance();
-        final File configFile = new File(configPath, request.getStateName() + ".json");
+        final File configFile = new File(configPath, request.getConfigName() + ".json");
         try {
             objectMapper.writeValue(configFile, request);
             return okResponse("File saved");
@@ -825,16 +829,16 @@ public class WebResource {
     }
 
     @DELETE
-    @Path("/configs/{stateName}")
-    public Map<String, String> saveConfigs(@PathParam("stateName") String stateName) {
+    @Path("/configs/{configName}")
+    public Map<String, String> saveConfigs(@PathParam("configName") String configName) {
         final File configPath = new File(Runner.WORKING_DIRECTORY, Constants.PATH_CONFIGS);
-        if (StringUtils.isBlank(stateName)) {
-            return errorResponse("StateName was blank, delete canceled");
+        if (StringUtils.isBlank(configName)) {
+            return errorResponse("ConfigName was blank, delete canceled");
         }
-        if (!Constants.ID_PATTERN.matcher(stateName).matches()) {
-            return errorResponse("StateName was not formatted correctly, delete canceled");
+        if (!Constants.ID_PATTERN.matcher(configName).matches()) {
+            return errorResponse("ConfigName was not formatted correctly, delete canceled");
         }
-        final File configFile = new File(configPath, stateName + ".json");
+        final File configFile = new File(configPath, configName + ".json");
         try {
             if (configFile.exists()) {
                 if (configFile.delete()) {

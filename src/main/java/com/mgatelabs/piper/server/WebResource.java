@@ -5,14 +5,47 @@ import ch.qos.logback.classic.spi.ILoggingEvent;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.common.base.Charsets;
-import com.google.common.collect.*;
+import com.google.common.collect.ImmutableList;
+import com.google.common.collect.ImmutableMap;
+import com.google.common.collect.ImmutableSet;
+import com.google.common.collect.Lists;
+import com.google.common.collect.Maps;
 import com.google.common.io.Resources;
 import com.mgatelabs.piper.Runner;
 import com.mgatelabs.piper.runners.ScriptRunner;
-import com.mgatelabs.piper.server.actions.*;
-import com.mgatelabs.piper.server.entities.*;
+import com.mgatelabs.piper.server.actions.CacheScreenAction;
+import com.mgatelabs.piper.server.actions.EditActionInterface;
+import com.mgatelabs.piper.server.actions.EditComponentAction;
+import com.mgatelabs.piper.server.actions.EditScreenAction;
+import com.mgatelabs.piper.server.actions.FixScreenAction;
+import com.mgatelabs.piper.server.actions.LiveVerifyScreenAction;
+import com.mgatelabs.piper.server.actions.RepairScreenAction;
+import com.mgatelabs.piper.server.actions.StubComponentAction;
+import com.mgatelabs.piper.server.actions.StubScreenAction;
+import com.mgatelabs.piper.server.actions.UpdateComponentImageAction;
+import com.mgatelabs.piper.server.actions.UpdateScreenAction;
+import com.mgatelabs.piper.server.actions.VerifyScreenAction;
+import com.mgatelabs.piper.server.entities.ConfigListResponse;
+import com.mgatelabs.piper.server.entities.FileListResult;
+import com.mgatelabs.piper.server.entities.LoadRequest;
+import com.mgatelabs.piper.server.entities.NamedValueDescriptionItem;
+import com.mgatelabs.piper.server.entities.NamedValueItem;
+import com.mgatelabs.piper.server.entities.PrepResult;
+import com.mgatelabs.piper.server.entities.StatusLog;
+import com.mgatelabs.piper.server.entities.StatusResult;
+import com.mgatelabs.piper.server.entities.ValueResult;
 import com.mgatelabs.piper.shared.ScriptThread;
-import com.mgatelabs.piper.shared.details.*;
+import com.mgatelabs.piper.shared.details.ActionType;
+import com.mgatelabs.piper.shared.details.ComponentDefinition;
+import com.mgatelabs.piper.shared.details.ConnectionDefinition;
+import com.mgatelabs.piper.shared.details.ExecutableLink;
+import com.mgatelabs.piper.shared.details.ScreenDefinition;
+import com.mgatelabs.piper.shared.details.StateDefinition;
+import com.mgatelabs.piper.shared.details.StateType;
+import com.mgatelabs.piper.shared.details.VarDefinition;
+import com.mgatelabs.piper.shared.details.VarModify;
+import com.mgatelabs.piper.shared.details.VarStateDefinition;
+import com.mgatelabs.piper.shared.helper.Closer;
 import com.mgatelabs.piper.shared.helper.DeviceHelper;
 import com.mgatelabs.piper.shared.helper.LocalDeviceHelper;
 import com.mgatelabs.piper.shared.helper.RemoteDeviceHelper;
@@ -27,13 +60,31 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.web.bind.annotation.RequestBody;
 
-import javax.ws.rs.*;
+import javax.ws.rs.Consumes;
+import javax.ws.rs.DELETE;
+import javax.ws.rs.FormParam;
+import javax.ws.rs.GET;
+import javax.ws.rs.POST;
+import javax.ws.rs.Path;
+import javax.ws.rs.PathParam;
+import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import java.io.File;
+import java.io.FileReader;
 import java.io.IOException;
+import java.io.StringReader;
 import java.net.URL;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.SortedSet;
+import java.util.TreeSet;
 
 /**
  * Created by @mgatelabs (Michael Fuller) on 2/13/2018.
@@ -762,6 +813,8 @@ public class WebResource {
         values.put("devices", Constants.arrayToList(Constants.listJsonFilesIn(new File(Runner.WORKING_DIRECTORY, Constants.PATH_DEVICES), true)));
         values.put("views", Constants.arrayToList(Constants.listFoldersFilesIn(new File(Runner.WORKING_DIRECTORY, Constants.PATH_VIEWS))));
         values.put("scripts", Constants.arrayToList(Constants.listJsonFilesIn(new File(Runner.WORKING_DIRECTORY, Constants.PATH_SCRIPTS), true)));
+        values.put("configs", Constants.arrayToList(Constants.listJsonFilesIn(new File(Runner.WORKING_DIRECTORY, Constants.PATH_CONFIGS), false)));
+        values.put("states", Constants.arrayToList(Constants.listJsonFilesIn(new File(Runner.WORKING_DIRECTORY, Constants.PATH_STATES), false)));
         return values;
     }
 
@@ -771,8 +824,12 @@ public class WebResource {
         final FileListResult result = new FileListResult();
         final List<String> views = Constants.arrayToList(Constants.listFoldersFilesIn(new File(Runner.WORKING_DIRECTORY, Constants.PATH_VIEWS)));
         final List<String> scripts = Constants.arrayToList(Constants.listJsonFilesIn(new File(Runner.WORKING_DIRECTORY, Constants.PATH_SCRIPTS), false));
+        final List<String> configs = Constants.arrayToList(Constants.listJsonFilesIn(new File(Runner.WORKING_DIRECTORY, Constants.PATH_CONFIGS), false));
+        final List<String> states = Constants.arrayToList(Constants.listJsonFilesIn(new File(Runner.WORKING_DIRECTORY, Constants.PATH_STATES), false));
         result.getViews().addAll(views);
         result.getScripts().addAll(scripts);
+        result.getConfigs().addAll(configs);
+        result.getScripts().addAll(states);
         return result;
     }
 
@@ -784,11 +841,17 @@ public class WebResource {
         final List<LoadRequest> result = Lists.newArrayList();
         final List<String> configNames = Constants.arrayToList(Constants.listJsonFilesIn(configPath, false));
 
-        for (String configName: configNames) {
+        for (String configName : configNames) {
             if (StringUtils.isBlank(configName)) continue;
             File configFile = new File(configPath, configName + ".json");
             try {
                 LoadRequest loadRequest = objectMapper.readValue(configFile, LoadRequest.class);
+                if (StringUtils.isBlank(loadRequest.getConfigName())) {
+                    loadRequest.setConfigName(configName);
+                }
+                if (StringUtils.isBlank(loadRequest.getStateName())) {
+                    loadRequest.setStateName(loadRequest.getConfigName());
+                }
                 result.add(loadRequest);
             } catch (Exception ex) {
                 logger.error(configName + ": " + ex.getMessage());
@@ -825,6 +888,42 @@ public class WebResource {
         } catch (Exception ex) {
             logger.error("Save Failed: " + ex.getMessage());
             return errorResponse(ex.getMessage());
+        }
+    }
+
+    @POST
+    @Path("/configs/download")
+    public Response downloadConfig(@FormParam("name") String fileName) {
+        final File configPath = new File(Runner.WORKING_DIRECTORY, Constants.PATH_CONFIGS);
+        final File configFile = new File(configPath, fileName + ".json");
+        final ObjectMapper objectMapper = JsonTool.getInstance();
+        try {
+            LoadRequest data = objectMapper.readValue(configFile, LoadRequest.class);
+            return Response.status(200).entity(data).type(MediaType.APPLICATION_JSON).header("Content-disposition", "attachment; filename=" + fileName + ".json").build();
+        } catch (Exception ex) {
+            return Response.status(500).build();
+        }
+    }
+
+    @POST
+    @Path("/states/download")
+    public Response downloadState(@FormParam("name") String fileName) {
+        final File configPath = new File(Runner.WORKING_DIRECTORY, Constants.PATH_STATES);
+        final File configFile = new File(configPath, fileName + ".json");
+        FileReader fileReader = null;
+        try {
+            fileReader = new FileReader(configFile);
+            char [] temp = new char[128];
+            int len = 0;
+            StringBuilder sb = new StringBuilder();
+            while ((len = fileReader.read(temp, 0, temp.length)) > 0) {
+                sb.append(temp, 0, len);
+            }
+            return Response.status(200).entity(sb.toString()).type(MediaType.APPLICATION_JSON).header("Content-disposition", "attachment; filename=" + fileName + ".json").build();
+        } catch (Exception ex) {
+            return Response.status(500).build();
+        } finally {
+            Closer.close(fileReader);
         }
     }
 

@@ -649,6 +649,8 @@ $(function(){
 
     var loadButton = $('#controlLoad');
     var saveButton = $('#controlSave');
+    var downloadConfigButton = $('#downloadConfig');
+    var downloadStateButton = $('#downloadState');
     var editViewButton = $('#controlEditView');
 
     function createConfigItem(before, title, cssClazz, data) {
@@ -666,9 +668,12 @@ $(function(){
         var configForm = $('#config');
 
         $('#configName').val('');
+
+        populateSelect($('#configConfigName'), settings.configs || []);
+        populateSelect($('#configStateName'), settings.states || []);
+
         $('#configConfigName').val('');
         $('#configStateName').val('');
-
 
         // Remove extra fields
         $('.extra-field', configForm).remove();
@@ -756,6 +761,16 @@ $(function(){
         });
     }
 
+    function downloadConfig() {
+        $('#config-download-name').val($('#configConfigName').val());
+        $('#config-download-form').submit();
+    }
+
+    function downloadState() {
+        $('#state-download-name').val($('#configStateName').val());
+        $('#state-download-form').submit();
+    }
+
     function applySelection(j) {
 
         resetConfigPage();
@@ -820,6 +835,24 @@ $(function(){
         createConfigItem($('#addScriptHolder'), 'Script', 'script-item', settings.scripts)
     });
 
+    $('#addConfigButton').click(function(){
+        var name = prompt("Config Name");
+        if (name) {
+            settings.configs.push(name);
+            populateSelect($('#configConfigName'), settings.configs || []);
+            $('#configConfigName').val(name);
+        }
+    });
+
+    $('#addStateButton').click(function(){
+        var name = prompt("Config Name");
+        if (name) {
+            settings.states.push(name);
+            populateSelect($('#configStateName'), settings.states || []);
+            $('#configStateName').val(name);
+        }
+    });
+
     $('#config').on('click', '.remove', function(){
         $(this).data('row').remove();
     });
@@ -828,6 +861,14 @@ $(function(){
         if (!saveButton.hasClass('disabled')) {
             saveConfig();
         }
+    });
+
+    downloadConfigButton.click(function(){
+        downloadConfig();
+    });
+
+    downloadStateButton.click(function(){
+        downloadState();
     });
 
     loadButton.click(function(){
@@ -971,6 +1012,19 @@ editViewButton.click(function(){
             resetConfigPage();
             loadConfigurations();
             statusCheck(true);
+          }
+        });
+    }
+
+    function refeshStatesAndConfigs(){
+        $.getJSON({
+          url: '/piper/settings/list',
+          data: {},
+          success: function(data){
+            //settings = data;
+            //resetConfigPage();
+            //loadConfigurations();
+            //statusCheck(true);
           }
         });
     }

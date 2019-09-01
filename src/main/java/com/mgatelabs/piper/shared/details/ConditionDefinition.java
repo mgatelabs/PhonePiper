@@ -2,9 +2,11 @@ package com.mgatelabs.piper.shared.details;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.google.common.base.Joiner;
 import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Sets;
+import org.apache.commons.lang3.StringUtils;
 
 import java.util.List;
 import java.util.Map;
@@ -18,6 +20,9 @@ public class ConditionDefinition {
     private ConditionType not;
     private String value;
     private String var;
+
+    @JsonIgnore
+    private Set<String> values;
 
     @JsonProperty("args")
     private Map<String, String> arguments;
@@ -68,6 +73,14 @@ public class ConditionDefinition {
         this.value = value;
     }
 
+    public Set<String> getValues() {
+        return values;
+    }
+
+    public void setValues(Set<String> values) {
+        this.values = values;
+    }
+
     public Map<String, String> getArguments() {
         return arguments;
     }
@@ -100,6 +113,15 @@ public class ConditionDefinition {
         }
         if (arguments == null) {
             arguments = ImmutableMap.of();
+        }
+
+        values = Sets.newHashSet();
+        if ((is != null && is.isSplitValue()) || (not != null && not.isSplitValue()))
+        if (StringUtils.isNotBlank(value)) {
+            String [] temp = StringUtils.split(value, ",");
+            for (String tempItem: temp) {
+                values.add(tempItem);
+            }
         }
     }
 
@@ -146,7 +168,7 @@ public class ConditionDefinition {
                 throw new RuntimeException("Could not find executable state: " + getValue());
             }
         } else if (getUsedCondition() == ConditionType.SCREEN) {
-            screenIds.add(value);
+            screenIds.addAll(values);
         }
 
         if (and != null) {
@@ -223,7 +245,7 @@ public class ConditionDefinition {
             break;
 
             case SCREEN: {
-                stringBuilder.append(definition.getNot() != null ? "!" : "").append("hasScreen('").append(definition.getValue()).append("')");
+                stringBuilder.append(definition.getNot() != null ? "!" : "").append("hasScreen('").append(Joiner.on(",").join(definition.getValues())).append("')");
             }
             break;
 

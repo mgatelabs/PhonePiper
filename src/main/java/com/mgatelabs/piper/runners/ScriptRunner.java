@@ -1110,21 +1110,25 @@ public class ScriptRunner {
                 }
                 break;
                 case SCREEN: {
-                    Var screenValue = valueHandler(conditionDefinition.getValue());
-                    ScreenDefinition screenDefinition = screens.get(screenValue.toString());
-                    if (screenDefinition == null || !screenDefinition.isEnabled() || screenDefinition.getPoints() == null || screenDefinition.getPoints().isEmpty()) {
-                        failure = true;
-                    } else {
-                        if (deviceHelper != null) {
-                            result = validScreenIds.contains(screenDefinition.getScreenId());
+                    for (String value: conditionDefinition.getValues()) {
+                        Var screenValue = valueHandler(value);
+                        ScreenDefinition screenDefinition = screens.get(screenValue.toString());
+                        if (screenDefinition == null || !screenDefinition.isEnabled() || screenDefinition.getPoints() == null || screenDefinition.getPoints().isEmpty()) {
+                            failure = true;
+                            break;
                         } else {
-
-                            if (screenDefinition == null) {
-                                logger.error("Cannot find screen with id: " + conditionDefinition.getValue());
-                                throw new RuntimeException("Cannot find screen with id: " + conditionDefinition.getValue());
+                            if (deviceHelper != null) {
+                                result = validScreenIds.contains(screenDefinition.getScreenId());
+                            } else {
+                                if (screenDefinition == null) {
+                                    logger.error("Cannot find screen with id: " + conditionDefinition.getValue());
+                                    throw new RuntimeException("Cannot find screen with id: " + conditionDefinition.getValue());
+                                }
+                                result = SamplePoint.validate(screenDefinition.getPoints(), imageWrapper, false);
                             }
-                            result = SamplePoint.validate(screenDefinition.getPoints(), imageWrapper, false);
                         }
+                        // On the first success, break out of the loop
+                        if (result) break;
                     }
                 }
                 break;

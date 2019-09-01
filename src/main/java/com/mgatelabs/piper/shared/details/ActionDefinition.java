@@ -186,10 +186,11 @@ public class ActionDefinition {
 
         switch (getType()) {
             case LINK: {
-                for (StateLink stateLink: getLinks()) {
+                for (StateLink stateLink : getLinks()) {
                     found.addAll(stateLink.determineStateIds(exploredStates, states));
                 }
-            } break;
+            }
+            break;
             case CALL: {
                 ExecutableLink otherDefinition = states.get(getValue());
                 if (otherDefinition != null) {

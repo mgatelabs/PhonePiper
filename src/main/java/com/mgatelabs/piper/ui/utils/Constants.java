@@ -31,6 +31,7 @@ public class Constants {
     public static final String PATH_VIEWS = "./views";
     public static final String PATH_CONFIGS = "./configs";
     public static final String PATH_SCRIPTS = "./scripts";
+    public static final String PATH_STATES = "./states";
 
     public static final SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 

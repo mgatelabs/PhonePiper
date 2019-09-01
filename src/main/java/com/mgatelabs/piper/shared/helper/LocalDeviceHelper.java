@@ -135,7 +135,8 @@ public class LocalDeviceHelper implements DeviceHelper {
                 if (!sampleRead) {
                     len = fileInputStream.read(temp);
                     if (len != SAMPLE_SIZE) {
-                        throw new RuntimeException("Invalid byte read");
+                        logger.error("Invalid byte read");
+                        break;
                     }
                     sampleRead = true;
                     extraRead = 0;

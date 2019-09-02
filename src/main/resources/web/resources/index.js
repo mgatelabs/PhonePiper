@@ -777,6 +777,7 @@ $(function(){
 
     function is_valid_name(name) {
         var re = /[0-9A-Za-z_-]+/;
+        return name.match(re);
     }
 
     function applySelection(j) {

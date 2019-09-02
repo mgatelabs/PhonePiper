@@ -187,6 +187,7 @@
                     <select class="form-control view-item default"></select>
                     <div class="input-group-append">
                         <button type="button" id="addViewButton" class="btn btn-success">+</button>
+                        <button type="button" class="btn btn-info edit-view">EDIT</button>
                     </div>
                 </div>
                 <div id="addViewHolder">
@@ -286,8 +287,8 @@
                         <span class="input-group-text">Helper</span>
                     </div>
                     <select class="form-control config-attribute" attrname="device-helper">
-                        <option value="true" selected>Use Helper</option>
-                        <option value="false">No Helper</option>
+                        <option value="true" selected>Use Device Helper</option>
+                        <option value="false">Use Local Helper</option>
                     </select>
                 </div>
 
@@ -312,7 +313,6 @@
                 <br/>
                 <div class="form-group">
                     <button type="button" id="controlLoad" class="btn btn-primary">Run Script</button>
-                    <button type="button" id="controlEditView" class="btn btn-secondary">Edit View</button>
                     <button type="button" id="controlSave" class="btn btn-dark">Save Config</button>
                 </div>
             </form>

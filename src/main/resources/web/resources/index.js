@@ -651,14 +651,18 @@ $(function(){
     var saveButton = $('#controlSave');
     var downloadConfigButton = $('#downloadConfig');
     var downloadStateButton = $('#downloadState');
-    var editViewButton = $('#controlEditView');
 
-    function createConfigItem(before, title, cssClazz, data) {
+    function createConfigItem(before, title, cssClazz, data, editLink) {
         var wrap = $('<div class="input-group extra-field"></div>');
         wrap.append($('<div class="input-group-prepend"></div>').append($('<span class="input-group-text">Title</span>').text(title)));
         var select = $('<select class="form-control"></select>').addClass(cssClazz).appendTo(wrap);
         populateSelect(select, data || []);
-        wrap.append($('<div class="input-group-append"></div>').append($('<button type="button" class="btn btn-danger remove">X</button>').data('row', wrap)));
+        var grp = $('<div class="input-group-append"></div>');
+        grp.append($('<button type="button" class="btn btn-danger remove">X</button>').data('row', wrap));
+        if (editLink) {
+            grp.append($('<button type="button" class="btn btn-info edit-view">EDIT</button>').data('row', wrap));
+        }
+        wrap.append(grp);
         $('<br class="extra-field"/>').insertBefore(before);
         wrap.insertBefore(before);
         return select;
@@ -771,6 +775,10 @@ $(function(){
         $('#state-download-form').submit();
     }
 
+    function is_valid_name(name) {
+        var re = /[0-9A-Za-z_-]+/;
+    }
+
     function applySelection(j) {
 
         resetConfigPage();
@@ -794,7 +802,7 @@ $(function(){
                 if (k == 0) {
                     view1.val(item);
                 } else {
-                    createConfigItem($('#addViewHolder'), 'View', 'view-item', settings.views).val(item);
+                    createConfigItem($('#addViewHolder'), 'View', 'view-item', settings.views, true).val(item);
                 }
                 k++;
             }
@@ -837,7 +845,7 @@ $(function(){
 
     $('#addConfigButton').click(function(){
         var name = prompt("Config Name");
-        if (name) {
+        if (name && is_valid_name(name)) {
             settings.configs.push(name);
             populateSelect($('#configConfigName'), settings.configs || []);
             $('#configConfigName').val(name);
@@ -846,7 +854,7 @@ $(function(){
 
     $('#addStateButton').click(function(){
         var name = prompt("Config Name");
-        if (name) {
+        if (name && is_valid_name(name)) {
             settings.states.push(name);
             populateSelect($('#configStateName'), settings.states || []);
             $('#configStateName').val(name);
@@ -855,6 +863,36 @@ $(function(){
 
     $('#config').on('click', '.remove', function(){
         $(this).data('row').remove();
+    });
+
+    $('#config').on('click', '.edit-view', function(){
+
+        var ref = $(this), blob = extractConfig();
+
+        var viewName = ref.parents('div.input-group').find('select').val();
+
+        if (!viewName) return;
+
+        blob.views = [];
+
+        blob.views.push(viewName);
+
+        $.ajax({
+          type: "POST",
+          url: '/piper/edit/view',
+          data: JSON.stringify(blob),
+          headers: {
+                'Content-Type': 'application/json'
+            },
+          success: function(result){
+            if (result.status == 'ok') {
+                loadEditViewInfo(true);
+                $('[href="#edit"]').tab('show');
+            }
+          },
+          dataType: 'json'
+        });
+
     });
 
     saveButton.click(function(){
@@ -872,43 +910,23 @@ $(function(){
     });
 
     loadButton.click(function(){
-    var blob = extractConfig();
-    $.ajax({
-      type: "POST",
-      url: '/piper/process/prep',
-      data: JSON.stringify(blob),
-      headers: {
-            'Content-Type': 'application/json'
-        },
-      success: function(result){
-        if (result.status == 'ok') {
-            loadProcessInfo(true);
-            $('[href="#run"]').tab('show');
-        }
-      },
-      dataType: 'json'
+        var blob = extractConfig();
+        $.ajax({
+          type: "POST",
+          url: '/piper/process/prep',
+          data: JSON.stringify(blob),
+          headers: {
+                'Content-Type': 'application/json'
+            },
+          success: function(result){
+            if (result.status == 'ok') {
+                loadProcessInfo(true);
+                $('[href="#run"]').tab('show');
+            }
+          },
+          dataType: 'json'
+        });
     });
-});
-
-editViewButton.click(function(){
-    var blob = extractConfig();
-    $.ajax({
-      type: "POST",
-      url: '/piper/edit/view',
-      data: JSON.stringify(blob),
-      headers: {
-            'Content-Type': 'application/json'
-        },
-      success: function(result){
-        if (result.status == 'ok') {
-            loadEditViewInfo(true);
-            $('[href="#edit"]').tab('show');
-        }
-      },
-      dataType: 'json'
-    });
-
-});
 
     ///////////////////////////////////////////////////////////////////////////
     // Shortcuts

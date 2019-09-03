@@ -74,26 +74,48 @@ public class AdbWrapper {
 
     public String status() {
 
+        StringBuilder sb = new StringBuilder();
+
+        List<JadbDevice> devices = Lists.newArrayList();
+
+        try {
+            devices.addAll(connection.getDevices());
+        } catch (Exception e) {
+            sb.append("Could not list devices,");
+        }
+
+        for (JadbDevice device : devices) {
+            sb.append(device.getSerial());
+            try {
+                sb.append("[");
+                sb.append(device.getState().name());
+            } catch (Exception ex) {
+                sb.append(ex.getMessage());
+            }
+            sb.append("],");
+        }
+
         JadbDevice device = getDevice();
         try {
             if (device != null && device.getState() == JadbDevice.State.Device) {
                 logger.trace("AdbWrapper: Re-using connection");
-                return "Has Device";
+                sb.append("Has Device");
             }
         } catch (Exception ex) {
-            return ex.getMessage();
+            sb.append(ex.getMessage());
         }
         try {
             connection.connectToTcpDevice(address);
             connectionStatus = AdbWrapperStatus.READY;
-            return "Found device";
+            sb.append("Found device");
         } catch (IOException e) {
-            return e.getMessage();
+            sb.append( e.getMessage());
         } catch (JadbException e) {
-            return e.getMessage();
+            sb.append( e.getMessage());
         } catch (ConnectionToRemoteDeviceException e) {
-            return e.getMessage();
+            sb.append( e.getMessage());
         }
+        return sb.toString();
     }
 
     @Nullable

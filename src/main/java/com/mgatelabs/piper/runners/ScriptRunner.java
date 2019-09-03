@@ -36,8 +36,8 @@ import com.mgatelabs.piper.shared.image.RawImageWrapper;
 import com.mgatelabs.piper.shared.image.SamplePoint;
 import com.mgatelabs.piper.shared.image.Sampler;
 import com.mgatelabs.piper.shared.image.StateTransfer;
-import com.mgatelabs.piper.shared.util.AdbShell;
 import com.mgatelabs.piper.shared.util.AdbUtils;
+import com.mgatelabs.piper.shared.util.AdbWrapper;
 import com.mgatelabs.piper.shared.util.IntVar;
 import com.mgatelabs.piper.shared.util.Mather;
 import com.mgatelabs.piper.shared.util.StringVar;
@@ -108,7 +108,7 @@ public class ScriptRunner {
 
     private Set<String> validScreenIds;
 
-    private AdbShell shell;
+    private AdbWrapper shell;
 
     private VarManager vars;
 
@@ -121,7 +121,7 @@ public class ScriptRunner {
 
     //private static final String VAR_LOOPS = "_loops";
 
-    public ScriptRunner(ConnectionDefinition connectionDefinition, DeviceHelper deviceHelper, ScriptEnvironment scriptEnvironment, DeviceDefinition deviceDefinition, ViewDefinition viewDefinition) {
+    public ScriptRunner(ConnectionDefinition connectionDefinition, DeviceHelper deviceHelper, ScriptEnvironment scriptEnvironment, DeviceDefinition deviceDefinition, ViewDefinition viewDefinition, AdbWrapper adbWrapper) {
         this.scriptEnvironment = scriptEnvironment;
         this.deviceDefinition = deviceDefinition;
         this.connectionDefinition = connectionDefinition;
@@ -130,7 +130,7 @@ public class ScriptRunner {
         timers = Maps.newHashMap();
         stack = new Stack<>();
 
-        shell = new AdbShell(deviceDefinition);
+        shell = adbWrapper;
 
         logger.debug("Extracting Variables");
 
@@ -182,6 +182,7 @@ public class ScriptRunner {
     }
 
     public void stopShell() {
+        /*
         if (shell != null) {
             try {
                 shell.shutdown();
@@ -190,9 +191,14 @@ public class ScriptRunner {
             }
             shell = null;
         }
+        */
     }
 
     public void restartShell() {
+
+        shell.connect();
+
+        /*
         if (shell != null) {
             try {
                 shell.shutdown();
@@ -201,6 +207,7 @@ public class ScriptRunner {
             }
         }
         shell = new AdbShell(deviceDefinition);
+        */
     }
 
     public Date getLastImageDate() {
@@ -414,38 +421,8 @@ public class ScriptRunner {
                     }
                 }
 
-                if (!shell.isReady()) {
-                    logger.warn("Bad Shell: Will try to reconnect...");
-                    if (connectionDefinition.isWifi()) {
-                        waitFor(1000);
-                        AdbShell.connect(deviceHelper.getIpAddress(), connectionDefinition.getAdbPort());
-                    }
-                    waitFor(1000);
-                    restartShell();
-                    waitFor(1000);
-                }
-
-                if (deviceHelper != null) {
-                    deviceHelper.refresh(shell);
-                    imageWrapper = null;
-                } else {
-                    long startTime = System.nanoTime();
-                    imageWrapper = AdbUtils.getScreen();
-                    long endTime = System.nanoTime();
-
-                    long dif = endTime - startTime;
-
-                    lastImageDate = new Date();
-                    lastImageDuration = ((float) dif / 1000000000.0f);
-
-                    if (imageWrapper == null || !imageWrapper.isReady()) {
-                        logger.warn("USB Image Failure");
-                        waitFor(250);
-                        continue;
-                    } else {
-                        logger.debug("USB Image Persisted in " + THREE_DECIMAL.format(lastImageDuration) + "s");
-                    }
-                }
+                deviceHelper.refresh(shell);
+                imageWrapper = null;
 
                 boolean keepRunning = true;
 
@@ -517,16 +494,6 @@ public class ScriptRunner {
         if (deviceHelper != null) {
 
             if (captureAgain) {
-                if (!shell.isReady()) {
-                    logger.warn("Bad Shell: Will try to reconnect...");
-                    if (connectionDefinition.isWifi()) {
-                        waitFor(1000);
-                        AdbShell.connect(deviceHelper.getIpAddress(), connectionDefinition.getAdbPort());
-                    }
-                    waitFor(1000);
-                    restartShell();
-                    waitFor(1000);
-                }
                 if (!deviceHelper.refresh(shell)) {
                     return;
                 }
@@ -839,7 +806,8 @@ public class ScriptRunner {
                             case LABEL: {
                                 // NO OP
                                 logger.trace("Found Label: " + actionDefinition.getValue());
-                            } break;
+                            }
+                            break;
                             case GOTO: {
                                 logger.trace("Going to Label: " + actionDefinition.getValue());
                                 for (int i = 0; i < statementDefinition.getActions().size(); i++) {
@@ -850,7 +818,8 @@ public class ScriptRunner {
                                         break;
                                     }
                                 }
-                            } break;
+                            }
+                            break;
                             case REFRESH: {
                                 // Simply tell the system to refresh the view, this may take a second
                                 refreshViews(true);
@@ -953,7 +922,8 @@ public class ScriptRunner {
                                         return childResult;
                                     }
                                 }
-                            } break;
+                            }
+                            break;
                             case RETURN: {
                                 if (!StringUtils.isEmpty(actionDefinition.getValue())) {
                                     stateResult.setResult(valueHandler(actionDefinition.getValue()));
@@ -1110,7 +1080,7 @@ public class ScriptRunner {
                 }
                 break;
                 case SCREEN: {
-                    for (String value: conditionDefinition.getValues()) {
+                    for (String value : conditionDefinition.getValues()) {
                         Var screenValue = valueHandler(value);
                         ScreenDefinition screenDefinition = screens.get(screenValue.toString());
                         if (screenDefinition == null || !screenDefinition.isEnabled() || screenDefinition.getPoints() == null || screenDefinition.getPoints().isEmpty()) {

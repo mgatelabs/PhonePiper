@@ -8,6 +8,7 @@ import com.mgatelabs.piper.shared.image.RawImageWrapper;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import se.vidstige.jadb.JadbDevice;
 
 import java.io.BufferedInputStream;
 import java.io.ByteArrayOutputStream;
@@ -25,7 +26,7 @@ public class AdbUtils {
     private static final SecureRandom RANDOM = new SecureRandom();
     private static final Logger LOGGER = LoggerFactory.getLogger(AdbUtils.class);
 
-    public static void component(DeviceDefinition deviceDefinition, ComponentDefinition componentDefinition, ActionType type, final AdbShell shell, boolean batch) {
+    public static void component(DeviceDefinition deviceDefinition, ComponentDefinition componentDefinition, ActionType type, final AdbWrapper shell, boolean batch) {
         if (!componentDefinition.isEnabled()) return;
 
         final String cmd;
@@ -94,7 +95,7 @@ public class AdbUtils {
         }
     }
 
-    public static boolean event(final String eventId, boolean raw, final AdbShell shell, final boolean batch) {
+    public static boolean event(final String eventId, boolean raw, final AdbWrapper shell, final boolean batch) {
         final String cmd;
         final int event;
         if (raw) {
@@ -146,7 +147,7 @@ public class AdbUtils {
         return true;
     }
 
-    public static boolean input(final String inputId, final AdbShell shell, final boolean batch) {
+    public static boolean input(final String inputId, final AdbWrapper shell, final boolean batch) {
         final String cmd;
         final int event = Integer.parseInt(inputId);
         cmd = "input keyevent " + event;
@@ -268,22 +269,11 @@ public class AdbUtils {
         return value;
     }
 
-    public static boolean persistScreen(AdbShell shell) {
-        return shell.exec("screencap /mnt/sdcard/framebuffer.raw");
+    public static boolean persistScreen(AdbWrapper device) {
+        return device.exec("screencap /mnt/sdcard/framebuffer.raw");
     }
 
-    public static boolean downloadScreen(File tempFile) {
-        final String command;
-        if (StringUtils.isNotBlank(AdbShell.ADB_DIRECT)) {
-            command = String.format("adb -s %s pull /mnt/sdcard/framebuffer.raw %s", AdbShell.ADB_DIRECT, tempFile.getAbsolutePath());
-        } else {
-            command = String.format("adb pull /mnt/sdcard/framebuffer.raw %s", tempFile.getAbsolutePath());
-        }
-        byte[] bytes =  execStream(command);
-        return true;
-    }
-
-    public static ImageWrapper getScreen() {
+    public static ImageWrapper getScreen(AdbWrapper wr) {
         final String command;
         if (StringUtils.isNotBlank(AdbShell.ADB_DIRECT)) {
             command = String.format("adb -s %s pull exec-out screencap", AdbShell.ADB_DIRECT);

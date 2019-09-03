@@ -51,6 +51,7 @@ import com.mgatelabs.piper.shared.helper.LocalDeviceHelper;
 import com.mgatelabs.piper.shared.helper.RemoteDeviceHelper;
 import com.mgatelabs.piper.shared.image.ImageWrapper;
 import com.mgatelabs.piper.shared.util.AdbShell;
+import com.mgatelabs.piper.shared.util.AdbWrapper;
 import com.mgatelabs.piper.shared.util.JsonTool;
 import com.mgatelabs.piper.shared.util.Loggers;
 import com.mgatelabs.piper.ui.FrameChoices;
@@ -73,7 +74,6 @@ import javax.ws.rs.core.Response;
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
-import java.io.StringReader;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -102,6 +102,7 @@ public class WebResource {
     private static ConnectionDefinition connectionDefinition;
     private static FrameChoices frameChoices;
     private static DeviceHelper deviceHelper;
+    private static AdbWrapper adbWrapper;
 
     private final Logger logger = LoggerFactory.getLogger(this.getClass());
 
@@ -463,6 +464,11 @@ public class WebResource {
             }
         }
 
+        if (adbWrapper != null) {
+            adbWrapper.shutdown();
+            adbWrapper = null;
+        }
+
         thread = null;
         List<String> views = Lists.newArrayList();
         views.addAll(request.getViews());
@@ -477,7 +483,9 @@ public class WebResource {
 
             editHolder = null;
 
-            runner = new ScriptRunner(connectionDefinition, deviceHelper, frameChoices.getScriptEnvironment(), frameChoices.getDeviceDefinition(), frameChoices.getViewDefinition());
+            adbWrapper = new AdbWrapper(connectionDefinition.getIp(), connectionDefinition.getAdbPort());
+
+            runner = new ScriptRunner(connectionDefinition, deviceHelper, frameChoices.getScriptEnvironment(), frameChoices.getDeviceDefinition(), frameChoices.getViewDefinition(), adbWrapper);
 
             if (VarStateDefinition.exists(frameChoices.getStateNameOrDefault())) {
                 VarStateDefinition varStateDefinition = VarStateDefinition.read(frameChoices.getStateNameOrDefault());
@@ -547,6 +555,11 @@ public class WebResource {
 
         Map<String, String> result = Maps.newHashMap();
 
+        if (adbWrapper != null) {
+            adbWrapper.shutdown();
+            adbWrapper = null;
+        }
+
         if (runner != null) {
             runner.setStatus(ScriptRunner.Status.PAUSED);
             thread = null;
@@ -565,6 +578,11 @@ public class WebResource {
     public Map<String, String> killProcess() {
 
         checkInitialState();
+
+        if (adbWrapper != null) {
+            adbWrapper.shutdown();
+            adbWrapper = null;
+        }
 
         Map<String, String> result = Maps.newHashMap();
 
@@ -599,6 +617,11 @@ public class WebResource {
             }
         }
 
+        if (adbWrapper != null) {
+            adbWrapper.shutdown();
+            adbWrapper = null;
+        }
+
         thread = null;
 
         frameChoices = new FrameChoices(Constants.ACTION_EDIT, Constants.MODE_VIEW, null, "", request.getDevice(), request.getViews(), request.getScripts());
@@ -611,7 +634,10 @@ public class WebResource {
                 }
                 runner = null;
             }
-            editHolder = new EditHolder(frameChoices.getScriptEnvironment(), frameChoices.getMapDefinition(), frameChoices.getDeviceDefinition(), frameChoices.getViewDefinition(), connectionDefinition, new AdbShell(frameChoices.getDeviceDefinition()), deviceHelper);
+
+            adbWrapper = new AdbWrapper(connectionDefinition.getIp(), connectionDefinition.getAdbPort());
+
+            editHolder = new EditHolder(frameChoices.getScriptEnvironment(), frameChoices.getMapDefinition(), frameChoices.getDeviceDefinition(), frameChoices.getViewDefinition(), connectionDefinition, adbWrapper, deviceHelper);
             deviceHelper = editHolder.getDeviceHelper();
             return result;
         } else {
@@ -913,7 +939,7 @@ public class WebResource {
         FileReader fileReader = null;
         try {
             fileReader = new FileReader(configFile);
-            char [] temp = new char[128];
+            char[] temp = new char[128];
             int len = 0;
             StringBuilder sb = new StringBuilder();
             while ((len = fileReader.read(temp, 0, temp.length)) > 0) {
@@ -968,9 +994,8 @@ public class WebResource {
         try {
             checkInitialState();
             if (frameChoices != null) {
-                AdbShell shell = new AdbShell(frameChoices.getDeviceDefinition());
                 // Save the Image
-                deviceHelper.refresh(shell);
+                deviceHelper.refresh(adbWrapper);
                 // Get the Image
                 ImageWrapper wrapper = deviceHelper.download();
 

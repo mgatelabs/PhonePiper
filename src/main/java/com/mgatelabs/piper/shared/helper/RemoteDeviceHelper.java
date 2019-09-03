@@ -5,8 +5,8 @@ import com.google.common.collect.ImmutableSet;
 import com.mgatelabs.piper.runners.ScriptRunner;
 import com.mgatelabs.piper.shared.details.ConnectionDefinition;
 import com.mgatelabs.piper.shared.image.ImageWrapper;
-import com.mgatelabs.piper.shared.util.AdbShell;
 import com.mgatelabs.piper.shared.util.AdbUtils;
+import com.mgatelabs.piper.shared.util.AdbWrapper;
 import com.mgatelabs.piper.shared.util.JsonTool;
 import okhttp3.MediaType;
 import okhttp3.OkHttpClient;
@@ -157,7 +157,7 @@ public class RemoteDeviceHelper implements DeviceHelper {
     }
 
     @Override
-    public boolean refresh(AdbShell shell) {
+    public boolean refresh(AdbWrapper shell) {
 
         long startTime = System.nanoTime();
 

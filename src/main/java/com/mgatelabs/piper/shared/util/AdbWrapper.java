@@ -72,6 +72,30 @@ public class AdbWrapper {
         return null;
     }
 
+    public String status() {
+
+        JadbDevice device = getDevice();
+        try {
+            if (device != null && device.getState() == JadbDevice.State.Device) {
+                logger.trace("AdbWrapper: Re-using connection");
+                return "Has Device";
+            }
+        } catch (Exception ex) {
+            return ex.getMessage();
+        }
+        try {
+            connection.connectToTcpDevice(address);
+            connectionStatus = AdbWrapperStatus.READY;
+            return "Found device";
+        } catch (IOException e) {
+            return e.getMessage();
+        } catch (JadbException e) {
+            return e.getMessage();
+        } catch (ConnectionToRemoteDeviceException e) {
+            return e.getMessage();
+        }
+    }
+
     @Nullable
     public JadbDevice getDevice() {
         try {

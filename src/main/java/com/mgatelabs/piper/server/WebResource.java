@@ -304,18 +304,26 @@ public class WebResource {
 
         if (adbWrapper != null) {
             JadbDevice device = adbWrapper.connect();
+
+            StringBuilder sb = new StringBuilder();
+
+            sb.append(adbWrapper.status());
+
+            sb.append(" - ");
+
             if (device == null) {
-                valueResult.setValue("Null Device");
+                sb.append("Null Device");
                 valueResult.setStatus("error");
             } else {
                 try {
-                    valueResult.setValue(device.getSerial() + " - " + device.getState().name());
+                    sb.append(device.getSerial() + " - " + device.getState().name());
                     valueResult.setStatus("ok");
                 } catch (Exception ex) {
-                    valueResult.setValue(ex.getLocalizedMessage());
+                    sb.append(ex.getLocalizedMessage());
                     valueResult.setStatus("error");
                 }
             }
+            valueResult.setStatus(sb.toString());
         } else {
             valueResult.setStatus("no adb wrapper");
         }

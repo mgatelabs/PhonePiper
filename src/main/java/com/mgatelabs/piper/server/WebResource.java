@@ -60,6 +60,7 @@ import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.web.bind.annotation.RequestBody;
+import se.vidstige.jadb.JadbDevice;
 
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
@@ -290,6 +291,33 @@ public class WebResource {
             }
         } else {
             valueResult.setStatus("error");
+        }
+        return valueResult;
+    }
+
+    @POST
+    @Path("/adb/status")
+    @Produces(MediaType.APPLICATION_JSON)
+    public synchronized ValueResult adbStatus() {
+        checkInitialState();
+        final ValueResult valueResult = new ValueResult();
+
+        if (adbWrapper != null) {
+            JadbDevice device = adbWrapper.connect();
+            if (device == null) {
+                valueResult.setValue("Null Device");
+                valueResult.setStatus("error");
+            } else {
+                try {
+                    valueResult.setValue(device.getSerial() + " - " + device.getState().name());
+                    valueResult.setStatus("ok");
+                } catch (Exception ex) {
+                    valueResult.setValue(ex.getLocalizedMessage());
+                    valueResult.setStatus("error");
+                }
+            }
+        } else {
+            valueResult.setStatus("no adb wrapper");
         }
         return valueResult;
     }

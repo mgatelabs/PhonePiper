@@ -75,14 +75,18 @@ public class AdbWrapper {
     @Nullable
     public JadbDevice getDevice() {
         try {
+            JadbDevice temp = null;
             if (connectionStatus == AdbWrapperStatus.READY) {
                 for (JadbDevice device : connection.getDevices()) {
                     if (device.getSerial().equals(address.toString())) {
                         logger.trace("AdbWrapper: Getting connection: " + device.getSerial() + ", State: " + device.getState());
-                        return device;
+                        if (device.getState() == JadbDevice.State.Device)
+                            return device;
+                        temp = device;
                     }
                 }
             }
+            return temp;
         } catch (Exception ex) {
             ex.printStackTrace();
         }

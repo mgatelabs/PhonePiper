@@ -61,7 +61,7 @@ public class ViewDefinition {
         }
         for (ComponentDefinition componentDefinition : source.getComponents()) {
             if (tempComponents.containsKey(componentDefinition.getComponentId())) {
-                if (overwrite && !tempComponents.get(componentDefinition.getComponentId()).isEnabled()) {
+                if (overwrite && componentDefinition.isEnabled()) {
                     // Only replace items that are not enabled
                     tempScreens.remove(componentDefinition.getComponentId());
                     tempComponents.put(componentDefinition.getComponentId(), componentDefinition);

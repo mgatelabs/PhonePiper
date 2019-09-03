@@ -48,6 +48,7 @@ public class AdbWrapper {
         JadbDevice device = getDevice();
         try {
             if (device != null && device.getState() == JadbDevice.State.Device) {
+                logger.trace("AdbWrapper: Re-using connection");
                 return device;
             }
         } catch (Exception ex) {
@@ -77,6 +78,7 @@ public class AdbWrapper {
             if (connectionStatus == AdbWrapperStatus.READY) {
                 for (JadbDevice device : connection.getDevices()) {
                     if (device.getSerial().equals(address.toString())) {
+                        logger.trace("AdbWrapper: Getting connection: " + device.getSerial() + ", State: " + device.getState());
                         return device;
                     }
                 }

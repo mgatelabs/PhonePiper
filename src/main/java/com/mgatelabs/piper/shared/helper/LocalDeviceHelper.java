@@ -264,9 +264,11 @@ public class LocalDeviceHelper implements DeviceHelper {
             device.pull(new RemoteFile("/mnt/sdcard/framebuffer.raw"), byteArrayOutputStream);
             lastImageDownload = byteArrayOutputStream.toByteArray();
         } catch (IOException e) {
+            logger.error(e.getMessage());
             e.printStackTrace();
             return false;
         } catch (JadbException e) {
+            logger.error(e.getMessage());
             e.printStackTrace();
             return false;
         }

@@ -11,3 +11,4 @@
 /.idea/*
 *.db
 *.zip
+/target/*

@@ -323,9 +323,9 @@ public class WebResource {
                     valueResult.setStatus("error");
                 }
             }
-            valueResult.setStatus(sb.toString());
+            valueResult.setValue(sb.toString());
         } else {
-            valueResult.setStatus("no adb wrapper");
+            valueResult.setValue("no adb wrapper");
         }
         return valueResult;
     }

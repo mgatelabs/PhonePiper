@@ -519,6 +519,8 @@ public class WebResource {
 
             editHolder = null;
 
+            adbDevices();
+
             adbWrapper = new AdbWrapper(connectionDefinition.getIp(), connectionDefinition.getAdbPort());
 
             runner = new ScriptRunner(connectionDefinition, deviceHelper, frameChoices.getScriptEnvironment(), frameChoices.getDeviceDefinition(), frameChoices.getViewDefinition(), adbWrapper);
@@ -670,6 +672,8 @@ public class WebResource {
                 }
                 runner = null;
             }
+
+            adbDevices();
 
             adbWrapper = new AdbWrapper(connectionDefinition.getIp(), connectionDefinition.getAdbPort());
 

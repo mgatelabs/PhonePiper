@@ -22,7 +22,7 @@ public class AdbShell {
     private ProcessBuilder builder;
     private Process adb;
     private static final byte[] LS = new byte[]{0x0a};
-    private static final byte[] ECHO = "uptime".getBytes();
+    public static final byte[] ECHO = "uptime".getBytes();
 
     //private char[] ECHO_KEY = {'9', '8', '7', '6', '1', '2', '3', '4'};
     //ailsa_ii:/

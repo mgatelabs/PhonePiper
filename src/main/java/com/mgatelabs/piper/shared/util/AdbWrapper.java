@@ -161,18 +161,18 @@ public class AdbWrapper {
         if (device == null) return false;
 
         try {
-            InputStream inputStream = device.executeShell(adbCommand);
+            InputStream inputStream = device.executeShell(adbCommand + " && " + AdbShell.ECHO);
 
             final long startTime = System.nanoTime();
 
-            int len;
+            int len, read = 0;
             while ((len = inputStream.read(tempBytes, 0, tempBytes.length)) > 0) {
-
+                read += len;
             }
 
             long endTime = System.nanoTime();
             long diff = endTime - startTime;
-            logger.trace("AdbCommand: " + adbCommand + " (" + String.format("%2.2f", ((float) diff / 1000000000.0)) + "s)");
+            logger.trace("AdbCommand: " + adbCommand + " [" + read + "]" + " (" + String.format("%2.2f", ((float) diff / 1000000000.0)) + "s)");
             return true;
         } catch (IOException e) {
             e.printStackTrace();

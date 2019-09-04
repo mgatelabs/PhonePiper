@@ -36,6 +36,7 @@ import com.mgatelabs.piper.shared.image.RawImageWrapper;
 import com.mgatelabs.piper.shared.image.SamplePoint;
 import com.mgatelabs.piper.shared.image.Sampler;
 import com.mgatelabs.piper.shared.image.StateTransfer;
+import com.mgatelabs.piper.shared.util.AdbShell;
 import com.mgatelabs.piper.shared.util.AdbUtils;
 import com.mgatelabs.piper.shared.util.AdbWrapper;
 import com.mgatelabs.piper.shared.util.IntVar;
@@ -196,6 +197,11 @@ public class ScriptRunner {
 
     public void restartShell() {
 
+        // Kill the Server
+        AdbShell.killServer();
+        // Bring it back up
+        AdbShell.devices();
+        // Bring the shell back up
         shell.connect();
 
         /*

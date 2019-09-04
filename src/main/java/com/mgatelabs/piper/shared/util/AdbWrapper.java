@@ -22,54 +22,108 @@ public class AdbWrapper {
 
     private static final Logger logger = LoggerFactory.getLogger(AdbWrapper.class);
 
+    enum ConnectionType {
+        WIFI,
+        SERIAL
+    }
+
     enum AdbWrapperStatus {
         INIT,
         READY,
         FAILED
     }
 
+    private JadbDevice targetedDevice;
+
+    private final ConnectionType type;
     private final JadbConnection connection;
     private final InetSocketAddress address;
+    private String serial;
     private AdbWrapperStatus connectionStatus;
 
     public AdbWrapper(final String path, final int port) {
+        this(ConnectionType.WIFI, path, port, path + ":" + port);
+
+        serial = path + ":" + port;
+    }
+
+    public AdbWrapper(final String serial) {
+        this(ConnectionType.SERIAL, "127.0.0.1", 5555, serial);
+    }
+
+    private AdbWrapper(ConnectionType type, String host, int port, String serial) {
+        this.type = type;
+        this.serial = serial;
+        this.address = InetSocketAddress.createUnresolved(host, port);
         batch = Lists.newArrayList();
         connectionStatus = AdbWrapperStatus.INIT;
         connection = new JadbConnection();
-        address = InetSocketAddress.createUnresolved(path, port);
-        connect();
+        targetedDevice = null;
     }
 
     public void shutdown() {
 
     }
 
-    public JadbDevice connect() {
-        JadbDevice device = getDevice();
-        try {
-            if (device != null && device.getState() == JadbDevice.State.Device) {
-                logger.trace("AdbWrapper: Re-using connection");
-                return device;
+    public boolean connect() {
+
+        if (targetedDevice != null) {
+            try {
+                switch (targetedDevice.getState()) {
+                    case Device:
+                        return true;
+                }
+            } catch (Exception ex) {
+                logger.error(ex.getMessage());
+                targetedDevice = null;
             }
-        } catch (Exception ex) {
-            ex.printStackTrace();
         }
 
+        boolean wasSeen = false;
+
         try {
-            connection.connectToTcpDevice(address);
-            connectionStatus = AdbWrapperStatus.READY;
-            return getDevice();
-        } catch (IOException e) {
-            e.printStackTrace();
-            connectionStatus = AdbWrapperStatus.FAILED;
-        } catch (JadbException e) {
-            e.printStackTrace();
-            connectionStatus = AdbWrapperStatus.FAILED;
-        } catch (ConnectionToRemoteDeviceException e) {
-            e.printStackTrace();
-            connectionStatus = AdbWrapperStatus.FAILED;
+            for (JadbDevice device : connection.getDevices()) {
+                if (device.getSerial().equals(serial)) {
+                    wasSeen = true;
+                    switch (targetedDevice.getState()) {
+                        case Device:
+                            targetedDevice = device;
+                            return true;
+                    }
+                }
+            }
+        } catch (Exception ex) {
+            logger.error(ex.getMessage());
+            targetedDevice = null;
         }
-        return null;
+
+        if (!wasSeen && type == ConnectionType.WIFI) {
+            try {
+                connection.connectToTcpDevice(this.address);
+
+                for (JadbDevice device : connection.getDevices()) {
+                    if (device.getSerial().equals(serial)) {
+                        switch (targetedDevice.getState()) {
+                            case Device:
+                                targetedDevice = device;
+                                return true;
+                        }
+                    }
+                }
+
+                logger.error("Could not obtain connection to Remote ADB");
+
+            } catch (Exception ex) {
+                logger.error(ex.getMessage());
+                targetedDevice = null;
+            }
+        }
+
+        return false;
+    }
+
+    public JadbDevice getTargetedDevice() {
+        return targetedDevice;
     }
 
     public String status() {
@@ -109,11 +163,11 @@ public class AdbWrapper {
             connectionStatus = AdbWrapperStatus.READY;
             sb.append("Found device");
         } catch (IOException e) {
-            sb.append( e.getMessage());
+            sb.append(e.getMessage());
         } catch (JadbException e) {
-            sb.append( e.getMessage());
+            sb.append(e.getMessage());
         } catch (ConnectionToRemoteDeviceException e) {
-            sb.append( e.getMessage());
+            sb.append(e.getMessage());
         }
         return sb.toString();
     }
@@ -156,7 +210,7 @@ public class AdbWrapper {
     private byte[] tempBytes = new byte[1024];
 
     public synchronized boolean exec(String adbCommand) {
-        JadbDevice device = connect();
+        JadbDevice device = getTargetedDevice();
 
         if (device == null) return false;
 

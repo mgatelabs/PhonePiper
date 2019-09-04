@@ -254,7 +254,7 @@ public class LocalDeviceHelper implements DeviceHelper {
 
         if (!AdbUtils.persistScreen(shell)) return false;
 
-        JadbDevice device = shell.connect();
+        JadbDevice device = shell.getTargetedDevice();
 
         if (device == null) return false;
 

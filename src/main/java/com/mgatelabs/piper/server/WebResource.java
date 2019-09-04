@@ -304,27 +304,12 @@ public class WebResource {
         final ValueResult valueResult = new ValueResult();
 
         if (adbWrapper != null) {
-            JadbDevice device = adbWrapper.connect();
-
-            StringBuilder sb = new StringBuilder();
-
-            sb.append(adbWrapper.status());
-
-            sb.append(" - ");
-
-            if (device == null) {
-                sb.append("Null Device");
-                valueResult.setStatus("error");
-            } else {
-                try {
-                    sb.append(device.getSerial() + " - " + device.getState().name());
-                    valueResult.setStatus("ok");
-                } catch (Exception ex) {
-                    sb.append(ex.getLocalizedMessage());
-                    valueResult.setStatus("error");
-                }
+            if (adbWrapper.connect()) {
+                valueResult.setStatus("Connected");
+                valueResult.setStatus("ok");
             }
-            valueResult.setValue(sb.toString());
+            valueResult.setValue("Null Device");
+            valueResult.setStatus("error");
         } else {
             valueResult.setValue("no adb wrapper");
         }
@@ -520,9 +505,17 @@ public class WebResource {
 
             editHolder = null;
 
+            adbKill();
+
             adbDevices();
 
-            adbWrapper = new AdbWrapper(connectionDefinition.getIp(), connectionDefinition.getAdbPort());
+            if (connectionDefinition.isWifi()) {
+                adbWrapper = new AdbWrapper(connectionDefinition.getIp(), connectionDefinition.getAdbPort());
+            } else {
+                adbWrapper = new AdbWrapper(connectionDefinition.getDirect());
+            }
+
+            adbWrapper.connect();
 
             runner = new ScriptRunner(connectionDefinition, deviceHelper, frameChoices.getScriptEnvironment(), frameChoices.getDeviceDefinition(), frameChoices.getViewDefinition(), adbWrapper);
 
@@ -674,9 +667,17 @@ public class WebResource {
                 runner = null;
             }
 
+            adbKill();
+
             adbDevices();
 
-            adbWrapper = new AdbWrapper(connectionDefinition.getIp(), connectionDefinition.getAdbPort());
+            if (connectionDefinition.isWifi()) {
+                adbWrapper = new AdbWrapper(connectionDefinition.getIp(), connectionDefinition.getAdbPort());
+            } else {
+                adbWrapper = new AdbWrapper(connectionDefinition.getDirect());
+            }
+
+            adbWrapper.connect();
 
             editHolder = new EditHolder(frameChoices.getScriptEnvironment(), frameChoices.getMapDefinition(), frameChoices.getDeviceDefinition(), frameChoices.getViewDefinition(), connectionDefinition, adbWrapper, deviceHelper);
             deviceHelper = editHolder.getDeviceHelper();

@@ -51,6 +51,7 @@ import com.mgatelabs.piper.shared.helper.LocalDeviceHelper;
 import com.mgatelabs.piper.shared.helper.RemoteDeviceHelper;
 import com.mgatelabs.piper.shared.image.ImageWrapper;
 import com.mgatelabs.piper.shared.util.AdbShell;
+import com.mgatelabs.piper.shared.util.AdbUtils;
 import com.mgatelabs.piper.shared.util.AdbWrapper;
 import com.mgatelabs.piper.shared.util.JsonTool;
 import com.mgatelabs.piper.shared.util.Loggers;
@@ -896,6 +897,45 @@ public class WebResource {
         result.getScripts().addAll(scripts);
         result.getConfigs().addAll(configs);
         result.getScripts().addAll(states);
+        return result;
+    }
+
+    @POST
+    @Path("/control/key/event/{event}")
+    public ValueResult controlKeyEvent(@PathParam("event") String eventId) {
+        checkInitialState();
+        ValueResult result = new ValueResult();
+        AdbUtils.event(eventId, false, adbWrapper, false);
+        result.setStatus("ok");
+        return result;
+    }
+
+    @POST
+    @Path("/control/component/{componentId}/{actionId}")
+    public ValueResult controlKeyEvent(@PathParam("componentId") String componentId, @PathParam("actionId") String actionId) {
+        checkInitialState();
+        ValueResult result = new ValueResult();
+
+        ComponentDefinition componentDefinition = null;
+
+        for (ComponentDefinition temp : frameChoices.getViewDefinition().getComponents()) {
+            if (temp.getComponentId().equals(componentId)) {
+                componentDefinition = temp;
+                break;
+            }
+        }
+
+        if (componentDefinition == null) {
+            result.setStatus("fail");
+            result.setValue("Component missing");
+            return result;
+        }
+
+        ActionType type = ActionType.valueOf(actionId);
+
+        AdbUtils.component(frameChoices.getDeviceDefinition(), componentDefinition, type, adbWrapper, false);
+
+        result.setStatus("ok");
         return result;
     }
 

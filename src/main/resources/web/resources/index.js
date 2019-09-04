@@ -324,8 +324,7 @@ $(function(){
         var ref= $(this), button = ref.attr('controlButton'), componentId = $('#components').val();
         $.ajax({
             type: "POST",
-            url: '/piper/button',
-            data: {buttonId: button, componentId: componentId}
+            url: '/piper/control/component/' + encodeURIComponent(componentId) + '/' + encodeURIComponent(button)
         });
     });
 

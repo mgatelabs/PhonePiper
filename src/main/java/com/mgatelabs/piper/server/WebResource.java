@@ -61,7 +61,6 @@ import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.web.bind.annotation.RequestBody;
-import se.vidstige.jadb.JadbDevice;
 
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
@@ -1109,6 +1108,14 @@ public class WebResource {
             contentType = "application/javascript";
         } else if (path.toLowerCase().endsWith(".css")) {
             contentType = "text/css";
+        } else if (path.toLowerCase().endsWith(".woff")) {
+            contentType = "font/woff";
+        } else if (path.toLowerCase().endsWith(".woff2")) {
+            contentType = "font/woff2";
+        } else if (path.toLowerCase().endsWith(".eot")) {
+            contentType = "font/eot";
+        } else if (path.toLowerCase().endsWith(".ttf")) {
+            contentType = "font/ttf";
         } else if (path.toLowerCase().endsWith(".webmanifest")) {
             contentType = "application/manifest+json";
         } else {

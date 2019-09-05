@@ -46,8 +46,6 @@ $(function(){
     var adbInfo = $('#adb-info');
     var linkedVariables = {};
 
-    var connectionName = $('#connectionName');
-
     var notWhileRunning = $('.notWhileRunning');
 
     var logItems = [];
@@ -58,6 +56,17 @@ $(function(){
     var configs = [];
 
     var settings = {};
+
+    function loadNotice(clsName, name) {
+        clsName = clsName || 'cloud-download';
+        name = name || 'Loading';
+
+        var span = $('<span class="oi oi-cloud-download" title="icon name" aria-hidden="true"></span>').attr('title', name).addClass('oi-' + clsName);
+
+        $('#loadZone').append(span);
+
+        return span;
+    }
 
     function populateSelect(select, items) {
         var i = 0;
@@ -101,13 +110,13 @@ $(function(){
 
     function statusCheck(firstTime) {
 
-        connectionName.text('$');
+        var loadIcon = loadNotice(undefined, 'Status Check');
 
         $.getJSON({
             url: '/piper/status',
             data: {},
             complete: function(){
-                connectionName.text('');
+                loadIcon.remove();
             },
             success: function(data){
 
@@ -249,9 +258,13 @@ $(function(){
 
     $(".logging").change(function(){
         var ref = $(this), level = ref.val(), mode = ref.attr('mode');
+        var loadIcon = loadNotice(undefined, 'Log Change: ' + mode + " - " + level);
         $.ajax({
             type: "POST",
             url: '/piper/process/level/' + mode + '/' + level,
+            complete: function(){
+            	loadIcon.remove();
+            },
             success: function(result){
 
             }
@@ -259,10 +272,14 @@ $(function(){
     });
 
     playPauseButton.click(function(){
+        var loadIcon = loadNotice(undefined, 'Play/Pause');
         if (!playPauseButton.hasClass('disabled')) {
             $.ajax({
               type: "POST",
               url: '/piper/process/playPause/' + states.val(),
+              complete: function(){
+              	loadIcon.remove();
+              },
               success: function(result){
                 statusCheck();
               }
@@ -271,13 +288,14 @@ $(function(){
     });
 
     unloadButton.click(function(){
-        connectionName.text('$');
+        var loadIcon = loadNotice(undefined, 'Unload App');
+
         if (!unloadButton.hasClass('disabled')) {
             $.ajax({
               type: "POST",
               url: '/piper/process/unload',
               complete: function(){
-                connectionName.text('');
+                loadIcon.remove();
               },
               success: function(result){
                 statusCheck();
@@ -288,13 +306,13 @@ $(function(){
     });
 
     killButton.click(function(){
-        connectionName.text('$');
+        var loadIcon = loadNotice(undefined, 'Kill App');
         if (!unloadButton.hasClass('disabled')) {
             $.ajax({
                 type: "POST",
                 url: '/piper/process/kill',
                 complete: function(){
-                    connectionName.text('');
+                    loadIcon.remove();
                 },
                 success: function(result){
                     statusCheck();
@@ -305,10 +323,14 @@ $(function(){
     });
 
     dumpStateButton.click(function(){
+        var loadIcon = loadNotice(undefined, 'Dump State');
         $.ajax({
             type: "POST",
             url: '/piper/dump/state',
             dataType: 'json',
+            complete: function(){
+            	loadIcon.remove();
+            },
             success: function(result){
                 console.log(result);
             }
@@ -316,13 +338,13 @@ $(function(){
     });
 
     unloadEdit.click(function(){
-        connectionName.text('$');
+        var loadIcon = loadNotice(undefined, 'Unload Edit');
         if (!unloadEdit.hasClass('disabled')) {
             $.ajax({
               type: "POST",
               url: '/piper/edit/unload',
               complete: function(){
-                connectionName.text('');
+                loadIcon.remove();
               },
               success: function(result){
                 statusCheck();
@@ -333,14 +355,14 @@ $(function(){
     });
 
     controlAdb.click(function(){
-        connectionName.text('$$');
+        var cmd = $(this).attr('adb'), loadIcon = loadNotice(undefined, 'Adb Command: ' + cmd);
         adbInfo.val("Please Wait...");
         $.ajax({
             type: "POST",
-            url: '/piper/adb/' + $(this).attr('adb'),
+            url: '/piper/adb/' + cmd,
             data: {},
             complete: function(){
-                connectionName.text('');
+                loadIcon.remove();
             },
             success: function(result){
                 adbInfo.val(result.value || 'Done');
@@ -350,12 +372,12 @@ $(function(){
 
     $('.controlButton').click(function(){
         var ref= $(this), button = ref.attr('controlButton'), componentId = $('#components').val();
-        connectionName.text('$$');
+        var loadIcon = loadNotice(undefined, 'Control Action: ' + button + " - " + componentId);
         $.ajax({
             type: "POST",
             url: '/piper/control/component/' + encodeURIComponent(componentId) + '/' + encodeURIComponent(button),
             complete: function(){
-                connectionName.text('');
+                loadIcon.remove();
             }
         });
     });
@@ -409,12 +431,12 @@ $(function(){
     }
 
     function loadProcessInfo(firstTime) {
-        connectionName.text('$');
+        var loadIcon = loadNotice(undefined, 'Load App');
         $.ajax({
           type: "GET",
           url: '/piper/process/info',
           complete: function(){
-                    connectionName.text('');
+                    loadIcon.remove();
           },
           success: function(result){
             if (result.status == 'ok') {
@@ -542,12 +564,12 @@ $(function(){
     }
 
     function loadEditViewInfo(firstTime) {
-        connectionName.text('$');
+        var loadIcon = loadNotice(undefined, 'Load Editor');
         $.ajax({
           type: "GET",
           url: '/piper/edit/view/info',
           complete: function(){
-            connectionName.text('');
+            loadIcon.remove();
           },
           success: function(result){
             if (result.status == 'ok') {
@@ -585,11 +607,15 @@ $(function(){
 
     myTabContent.on('click', 'button.updateVariable', function(){
         var ref = $(this), key = ref.data('key'), input = linkedVariables[key];
+        var loadIcon = loadNotice(undefined, 'Update Variable: ' + key);
         input.removeClass('updatedValue');
         if (input.val()) {
             $.ajax({
               type: "POST",
               url: '/piper/variable',
+              complete: function(){
+              	loadIcon.remove();
+              },
               data: {key: key, value: input.val()}
             });
         }
@@ -613,10 +639,14 @@ $(function(){
             var ref = $(this), key = ref.data('key');
             items.push(key);
         });
+        var loadIcon = loadNotice(undefined, 'Reset');
         $.ajax({
             type: "POST",
             url: '/piper/reset',
             data: {items: JSON.stringify(items)},
+            complete: function(){
+            	loadIcon.remove();
+            },
             success: function(){
                 // Reset red markings
                 $('input.updatedValue,select.updatedValue').removeClass('updatedValue');
@@ -638,6 +668,7 @@ $(function(){
         });
 
     $('.import-action').click(function(){
+        var loadIcon = loadNotice(undefined, 'Import');
         if (!$(this).hasClass('disabled')) {
             var content = $('#import-text-area').val();
             if (content) {
@@ -645,6 +676,9 @@ $(function(){
                   type: "POST",
                   url: '/piper/variables',
                   data: {content: content},
+                  complete: function(){
+                  	loadIcon.remove();
+                  },
                   success: function(){
                         // Reset red markings
                         $('input.updatedValue,select.updatedValue').removeClass('updatedValue');
@@ -660,7 +694,6 @@ $(function(){
     ///////////////////////////////////////////////////////////////////////////
 
     $('.edit-action').click(function() {
-        connectionName.text('$');
         var ref = $(this), action = ref.attr('editvalue'), list, id;
         if (ref.hasClass('prompt-name')) {
             id = $.trim(prompt('Name:'));
@@ -668,12 +701,13 @@ $(function(){
             list = $('#' + ref.attr('lst'));
             id = list.val();
         }
+        var loadIcon = loadNotice(undefined, 'Edit Action: ' + action + ' - ' + id);
         if (id) {
             $.ajax({
                 type: "POST",
                 url: '/piper/edit/action/' + action + "/" + id + '/' + 'null',
                 complete: function(){
-                    connectionName.text('');
+                    loadIcon.remove();
                 },
                 success: function (result) {
                     if (result.msg) {
@@ -790,14 +824,19 @@ $(function(){
             return;
         }
 
+        var loadIcon = loadNotice(undefined, 'Save Config');
+
         $.ajax({
-          type: "POST",
-          url: '/piper/configs',
-          data: JSON.stringify(data),
-          headers: {
+            type: "POST",
+            url: '/piper/configs',
+            data: JSON.stringify(data),
+            headers: {
                 'Content-Type': 'application/json'
             },
-          success: function(result){
+            complete: function(){
+            	loadIcon.remove();
+            },
+            success: function(result){
                 if (result.status == 'ok') {
                     loadConfigurations();
                 } else {
@@ -921,12 +960,17 @@ $(function(){
 
         blob.views.push(viewName);
 
+        var loadIcon = loadNotice(undefined, 'Edit View');
+
         $.ajax({
           type: "POST",
           url: '/piper/edit/view',
           data: JSON.stringify(blob),
           headers: {
                 'Content-Type': 'application/json'
+            },
+            complete: function(){
+            	loadIcon.remove();
             },
           success: function(result){
             if (result.status == 'ok') {
@@ -954,6 +998,9 @@ $(function(){
     });
 
     loadButton.click(function(){
+
+        var loadIcon = loadNotice(undefined, 'Load');
+
         var blob = extractConfig();
         $.ajax({
           type: "POST",
@@ -961,6 +1008,9 @@ $(function(){
           data: JSON.stringify(blob),
           headers: {
                 'Content-Type': 'application/json'
+            },
+            complete: function(){
+            	loadIcon.remove();
             },
           success: function(result){
             if (result.status == 'ok') {
@@ -1017,18 +1067,22 @@ $(function(){
         body = $('<div class="card-body"></div>').appendTo(card);
         bntGroup = $('<div class="btn-group" role="group" aria-label="Controls"></div>').appendTo(body);
         if (allowRun) {
-            bntGroup.append($('<button type="button" class="btn run-config btn-primary">Run</button>').attr('index', index));
+            bntGroup.append($('<button type="button" class="btn run-config btn-primary oi oi-media-play"></button>').attr('index', index));
         }
-        bntGroup.append($('<button type="button" class="btn modify-config btn-outline-dark">Modify</button>').attr('index', index));
-        bntGroup.append($('<button type="button" class="btn delete-config btn-outline-danger">Delete</button>').attr('index', index));
+        bntGroup.append($('<button type="button" class="btn modify-config btn-outline-dark oi oi-cog"></button>').attr('index', index));
+        bntGroup.append($('<button type="button" class="btn delete-config btn-outline-danger oi oi-trash"></button>').attr('index', index));
         wrap.append(card);
         configList.append(wrap);
     }
 
     function loadConfigurations() {
+        var loadIcon = loadNotice(undefined, 'Load Configurations');
         $.ajax({
           type: "GET",
           url: '/piper/configs',
+          complete: function(){
+              loadIcon.remove();
+          },
           success: function(result){
             if (result.status == 'ok') {
                 configs = result.configs;
@@ -1042,19 +1096,25 @@ $(function(){
     }
 
     function deleteConfigurations(config) {
-            $.ajax({
-              type: "DELETE",
-              url: '/piper/configs/' + config.configName,
-              success: function(result){
-                if (result.status == 'ok') {
-                    loadConfigurations();
-                } else {
-                    alert(result.msg || "Error");
-                }
-              },
-              dataType: 'json'
-            });
-        }
+
+        var loadIcon = loadNotice(undefined, 'Delete Configuration');
+
+        $.ajax({
+          type: "DELETE",
+          url: '/piper/configs/' + config.configName,
+          complete: function(){
+          	loadIcon.remove();
+          },
+          success: function(result){
+            if (result.status == 'ok') {
+                loadConfigurations();
+            } else {
+                alert(result.msg || "Error");
+            }
+          },
+          dataType: 'json'
+        });
+    }
 
     $('#new-config').click(function(){
         resetConfigPage();
@@ -1066,9 +1126,14 @@ $(function(){
     ///////////////////////////////////////////////////////////////////////////
 
     function firstTimeLoad() {
+        var loadIcon = loadNotice(undefined, 'First Time Load');
+
         $.getJSON({
           url: '/piper/settings/list',
           data: {},
+          complete: function(){
+            loadIcon.remove();
+          },
           success: function(data){
             settings = data;
             resetConfigPage();
@@ -1079,9 +1144,14 @@ $(function(){
     }
 
     function refeshStatesAndConfigs(){
+        var loadIcon = loadNotice(undefined, 'Refresh Status And Configurations');
+
         $.getJSON({
           url: '/piper/settings/list',
           data: {},
+          complete: function(){
+          	loadIcon.remove();
+          },
           success: function(data){
             //settings = data;
             //resetConfigPage();

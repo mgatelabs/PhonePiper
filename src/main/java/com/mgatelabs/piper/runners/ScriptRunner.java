@@ -196,24 +196,12 @@ public class ScriptRunner {
     }
 
     public void restartShell() {
-
         // Kill the Server
         AdbShell.killServer();
         // Bring it back up
         AdbShell.devices();
         // Bring the shell back up
         shell.connect();
-
-        /*
-        if (shell != null) {
-            try {
-                shell.shutdown();
-            } catch (Exception ex) {
-                ex.printStackTrace();
-            }
-        }
-        shell = new AdbShell(deviceDefinition);
-        */
     }
 
     public Date getLastImageDate() {
@@ -230,15 +218,15 @@ public class ScriptRunner {
             return false;
         }
         if (deviceHelper.ready()) {
-            logger.error("Phone Helper is ready @ " + deviceHelper.getIpAddress());
+            logger.info("Phone Helper is ready @ " + deviceHelper.getIpAddress());
             InfoTransfer infoTransfer = new InfoTransfer();
             infoTransfer.setStates(transferStateMap);
             infoTransfer.setMap(transferMap);
             if (deviceHelper.setup(infoTransfer)) {
-                logger.error("Phone Helper is configured");
+                logger.info("Phone Helper is configured");
                 return true;
             } else {
-                logger.error("Phone Helper is not configured");
+                logger.info("Phone Helper is not configured");
             }
         } else {
             logger.error("Phone Helper is not configured");
@@ -317,14 +305,14 @@ public class ScriptRunner {
                     continue;
                 }
                 if (!screenDefinition.isEnabled() || screenDefinition.getPoints() == null || (screenDefinition.getPoints() != null && screenDefinition.getPoints().isEmpty())) {
-                    logger.error("Disabled Screen: " + screenDefinition.getScreenId() + " for state: " + executionEntry.getValue().getId());
+                    logger.debug("Disabled Screen: " + screenDefinition.getScreenId() + " for state: " + executionEntry.getValue().getId());
                     continue;
                 }
                 boolean valid = true;
                 for (SamplePoint point : screenDefinition.getPoints()) {
                     if (point.getX() > deviceDefinition.getViewWidth() || point.getY() >= deviceDefinition.getViewHeight()) {
                         valid = false;
-                        logger.error("Invalid Screen Point for Screen: " + screenDefinition.getScreenId());
+                        logger.debug("Invalid Screen Point for Screen: " + screenDefinition.getScreenId());
                         break;
                     }
                 }

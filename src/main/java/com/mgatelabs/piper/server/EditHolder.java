@@ -8,6 +8,7 @@ import com.mgatelabs.piper.shared.details.ScriptEnvironment;
 import com.mgatelabs.piper.shared.details.ViewDefinition;
 import com.mgatelabs.piper.shared.helper.DeviceHelper;
 import com.mgatelabs.piper.shared.mapper.MapDefinition;
+import com.mgatelabs.piper.shared.util.AdbShell;
 import com.mgatelabs.piper.shared.util.AdbWrapper;
 
 /**
@@ -78,6 +79,13 @@ public class EditHolder {
     }
 
     public void restartShell() {
+
+        // Kill the Server
+        AdbShell.killServer();
+        // Bring it back up
+        AdbShell.devices();
+        // Bring the shell back up
+        shell.connect();
 
     }
 

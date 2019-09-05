@@ -46,6 +46,8 @@ $(function(){
     var adbInfo = $('#adb-info');
     var linkedVariables = {};
 
+    var connectionName = $('#connectionName');
+
     var notWhileRunning = $('.notWhileRunning');
 
     var logItems = [];
@@ -93,10 +95,20 @@ $(function(){
         $('#previewImage').attr('src', '/piper/screen?time=' + (new Date().getTime()));
     });
 
+    $('#update-logs').click(function(){
+        statusCheck(false);
+    });
+
     function statusCheck(firstTime) {
+
+        connectionName.text('$');
+
         $.getJSON({
             url: '/piper/status',
             data: {},
+            complete: function(){
+                connectionName.text('');
+            },
             success: function(data){
 
                 var i = 0, item, div;
@@ -259,10 +271,14 @@ $(function(){
     });
 
     unloadButton.click(function(){
+        connectionName.text('$');
         if (!unloadButton.hasClass('disabled')) {
             $.ajax({
               type: "POST",
               url: '/piper/process/unload',
+              complete: function(){
+                connectionName.text('');
+              },
               success: function(result){
                 statusCheck();
                 $('[href="#home"]').tab('show');
@@ -272,10 +288,14 @@ $(function(){
     });
 
     killButton.click(function(){
+        connectionName.text('$');
         if (!unloadButton.hasClass('disabled')) {
             $.ajax({
                 type: "POST",
                 url: '/piper/process/kill',
+                complete: function(){
+                    connectionName.text('');
+                },
                 success: function(result){
                     statusCheck();
                     $('[href="#home"]').tab('show');
@@ -296,10 +316,14 @@ $(function(){
     });
 
     unloadEdit.click(function(){
+        connectionName.text('$');
         if (!unloadEdit.hasClass('disabled')) {
             $.ajax({
               type: "POST",
               url: '/piper/edit/unload',
+              complete: function(){
+                connectionName.text('');
+              },
               success: function(result){
                 statusCheck();
                 $('[href="#home"]').tab('show');
@@ -309,11 +333,15 @@ $(function(){
     });
 
     controlAdb.click(function(){
+        connectionName.text('$$');
         adbInfo.val("Please Wait...");
         $.ajax({
             type: "POST",
             url: '/piper/adb/' + $(this).attr('adb'),
             data: {},
+            complete: function(){
+                connectionName.text('');
+            },
             success: function(result){
                 adbInfo.val(result.value || 'Done');
             }
@@ -322,9 +350,13 @@ $(function(){
 
     $('.controlButton').click(function(){
         var ref= $(this), button = ref.attr('controlButton'), componentId = $('#components').val();
+        connectionName.text('$$');
         $.ajax({
             type: "POST",
-            url: '/piper/control/component/' + encodeURIComponent(componentId) + '/' + encodeURIComponent(button)
+            url: '/piper/control/component/' + encodeURIComponent(componentId) + '/' + encodeURIComponent(button),
+            complete: function(){
+                connectionName.text('');
+            }
         });
     });
 
@@ -377,9 +409,13 @@ $(function(){
     }
 
     function loadProcessInfo(firstTime) {
+        connectionName.text('$');
         $.ajax({
           type: "GET",
           url: '/piper/process/info',
+          complete: function(){
+                    connectionName.text('');
+          },
           success: function(result){
             if (result.status == 'ok') {
                 states.empty();
@@ -506,9 +542,13 @@ $(function(){
     }
 
     function loadEditViewInfo(firstTime) {
+        connectionName.text('$');
         $.ajax({
           type: "GET",
           url: '/piper/edit/view/info',
+          complete: function(){
+            connectionName.text('');
+          },
           success: function(result){
             if (result.status == 'ok') {
                 editScreens.empty();
@@ -620,6 +660,7 @@ $(function(){
     ///////////////////////////////////////////////////////////////////////////
 
     $('.edit-action').click(function() {
+        connectionName.text('$');
         var ref = $(this), action = ref.attr('editvalue'), list, id;
         if (ref.hasClass('prompt-name')) {
             id = $.trim(prompt('Name:'));
@@ -631,6 +672,9 @@ $(function(){
             $.ajax({
                 type: "POST",
                 url: '/piper/edit/action/' + action + "/" + id + '/' + 'null',
+                complete: function(){
+                    connectionName.text('');
+                },
                 success: function (result) {
                     if (result.msg) {
                         alert(result.msg);

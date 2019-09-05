@@ -2,6 +2,7 @@ package com.mgatelabs.piper.shared.util;
 
 import com.google.common.base.Joiner;
 import com.google.common.collect.Lists;
+import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import se.vidstige.jadb.ConnectionToRemoteDeviceException;
@@ -38,17 +39,15 @@ public class AdbWrapper {
     private final ConnectionType type;
     private final JadbConnection connection;
     private final InetSocketAddress address;
-    private String serial;
+    private final String serial;
     private AdbWrapperStatus connectionStatus;
 
     public AdbWrapper(final String path, final int port) {
-        this(ConnectionType.WIFI, path, port, path + ":" + port);
-
-        serial = path + ":" + port;
+        this(ConnectionType.WIFI, StringUtils.trim(path), port, StringUtils.trim(path) + ":" + port);
     }
 
     public AdbWrapper(final String serial) {
-        this(ConnectionType.SERIAL, "127.0.0.1", 5555, serial);
+        this(ConnectionType.SERIAL, "127.0.0.1", 5555, StringUtils.isNotBlank(serial) ? StringUtils.trim(serial) : "");
     }
 
     private AdbWrapper(ConnectionType type, String host, int port, String serial) {
@@ -83,9 +82,9 @@ public class AdbWrapper {
 
         try {
             for (JadbDevice device : connection.getDevices()) {
-                if (device.getSerial().equals(serial)) {
+                if (StringUtils.isBlank(serial) || device.getSerial().equals(serial)) {
                     wasSeen = true;
-                    switch (targetedDevice.getState()) {
+                    switch (device.getState()) {
                         case Device:
                             targetedDevice = device;
                             return true;
@@ -103,7 +102,7 @@ public class AdbWrapper {
 
                 for (JadbDevice device : connection.getDevices()) {
                     if (device.getSerial().equals(serial)) {
-                        switch (targetedDevice.getState()) {
+                        switch (device.getState()) {
                             case Device:
                                 targetedDevice = device;
                                 return true;

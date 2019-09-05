@@ -305,8 +305,9 @@ public class WebResource {
 
         if (adbWrapper != null) {
             if (adbWrapper.connect()) {
-                valueResult.setStatus("Connected");
+                valueResult.setValue("Connected");
                 valueResult.setStatus("ok");
+                return valueResult;
             }
             valueResult.setValue("Null Device");
             valueResult.setStatus("error");
@@ -505,17 +506,7 @@ public class WebResource {
 
             editHolder = null;
 
-            adbKill();
-
-            adbDevices();
-
-            if (connectionDefinition.isWifi()) {
-                adbWrapper = new AdbWrapper(connectionDefinition.getIp(), connectionDefinition.getAdbPort());
-            } else {
-                adbWrapper = new AdbWrapper(connectionDefinition.getDirect());
-            }
-
-            adbWrapper.connect();
+            setupAdbWrapper(connectionDefinition);
 
             runner = new ScriptRunner(connectionDefinition, deviceHelper, frameChoices.getScriptEnvironment(), frameChoices.getDeviceDefinition(), frameChoices.getViewDefinition(), adbWrapper);
 
@@ -667,15 +658,7 @@ public class WebResource {
                 runner = null;
             }
 
-            adbKill();
-
-            adbDevices();
-
-            if (connectionDefinition.isWifi()) {
-                adbWrapper = new AdbWrapper(connectionDefinition.getIp(), connectionDefinition.getAdbPort());
-            } else {
-                adbWrapper = new AdbWrapper(connectionDefinition.getDirect());
-            }
+            setupAdbWrapper(connectionDefinition);
 
             adbWrapper.connect();
 
@@ -685,6 +668,20 @@ public class WebResource {
         } else {
             return new PrepResult(StatusEnum.error);
         }
+    }
+
+    private void setupAdbWrapper(ConnectionDefinition connectionDefinition) {
+        adbKill();
+
+        adbDevices();
+
+        if (connectionDefinition.isWifi()) {
+            adbWrapper = new AdbWrapper(connectionDefinition.getIp(), connectionDefinition.getAdbPort());
+        } else {
+            adbWrapper = new AdbWrapper(connectionDefinition.getDirect());
+        }
+
+        adbWrapper.connect();
     }
 
     private static final ImmutableMap<String, EditActionInterface> ACTIONS = ImmutableMap.<String, EditActionInterface>builder()

@@ -53,6 +53,10 @@ public class AdbShell {
         return commonHandler(new ProcessBuilder(ADB_PATH, "devices"));
     }
 
+    public static String disconnect() {
+        return commonHandler(new ProcessBuilder(ADB_PATH, "disconnect"));
+    }
+
     public static String enableUsb() {
         return commonHandler(new ProcessBuilder(ADB_PATH, "usb"));
     }

@@ -79,7 +79,7 @@ public class EditHolder {
     }
 
     public void restartShell() {
-
+        AdbShell.disconnect();
         // Kill the Server
         AdbShell.killServer();
         // Bring it back up

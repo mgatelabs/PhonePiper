@@ -61,7 +61,8 @@ public class AdbWrapper {
     }
 
     public void shutdown() {
-
+        AdbShell.disconnect();
+        AdbShell.killServer();
     }
 
     public boolean connect() {

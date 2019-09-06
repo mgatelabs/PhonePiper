@@ -8,12 +8,19 @@ import com.mgatelabs.piper.shared.details.ConnectionDefinition;
 import com.mgatelabs.piper.shared.image.ImageWrapper;
 import com.mgatelabs.piper.shared.image.RawImageWrapper;
 import com.mgatelabs.piper.shared.image.StateTransfer;
-import com.mgatelabs.piper.shared.util.AdbShell;
 import com.mgatelabs.piper.shared.util.AdbUtils;
+import com.mgatelabs.piper.shared.util.AdbWrapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import se.vidstige.jadb.JadbDevice;
+import se.vidstige.jadb.JadbException;
+import se.vidstige.jadb.RemoteFile;
 
-import java.io.*;
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
 import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
 import java.util.Set;
@@ -61,21 +68,21 @@ public class LocalDeviceHelper implements DeviceHelper {
         return true;
     }
 
-    private byte [] readTemp() {
+    private byte[] readTemp() {
         ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
 
         FileInputStream fileInputStream = null;
 
         try {
             fileInputStream = new FileInputStream(tempFile);
-            byte [] temp = new byte[1024];
+            byte[] temp = new byte[1024];
             int len = 0;
             while ((len = fileInputStream.read(temp, 0, 1024)) > 0) {
                 byteArrayOutputStream.write(temp, 0, len);
             }
         } catch (Exception ex) {
             logger.error(ex.getMessage(), ex);
-            return new byte [0];
+            return new byte[0];
         } finally {
             Closer.close(byteArrayOutputStream);
             Closer.close(fileInputStream);
@@ -190,7 +197,7 @@ public class LocalDeviceHelper implements DeviceHelper {
         ByteArrayInputStream fileInputStream = null;
 
         try {
-            fileInputStream = new ByteArrayInputStream(readTemp());
+            fileInputStream = new ByteArrayInputStream(lastImageDownload);
 
             byte[] temp = new byte[3];
             int len;
@@ -214,7 +221,11 @@ public class LocalDeviceHelper implements DeviceHelper {
     @Override
     public ImageWrapper download() {
 
-        byte [] bytes = readTemp();
+        byte[] bytes = lastImageDownload;
+
+        if (bytes == null) {
+            bytes = new byte[0];
+        }
 
         int w, h;
         if (bytes.length > 12) { // Sanity
@@ -234,14 +245,33 @@ public class LocalDeviceHelper implements DeviceHelper {
         return failures;
     }
 
+    byte[] lastImageDownload = null;
+
     @Override
-    public boolean refresh(AdbShell shell) {
+    public boolean refresh(AdbWrapper shell) {
 
         long startTime = System.nanoTime();
 
-        AdbUtils.persistScreen(shell);
+        if (!AdbUtils.persistScreen(shell)) return false;
 
-        AdbUtils.downloadScreen(tempFile);
+        JadbDevice device = shell.getTargetedDevice();
+
+        if (device == null) return false;
+
+        ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
+
+        try {
+            device.pull(new RemoteFile("/mnt/sdcard/framebuffer.raw"), byteArrayOutputStream);
+            lastImageDownload = byteArrayOutputStream.toByteArray();
+        } catch (IOException e) {
+            logger.error(e.getMessage());
+            e.printStackTrace();
+            return false;
+        } catch (JadbException e) {
+            logger.error(e.getMessage());
+            e.printStackTrace();
+            return false;
+        }
 
         long endTime = System.nanoTime();
         long dif = endTime - startTime;

@@ -1,10 +1,15 @@
 package com.mgatelabs.piper.server;
 
-import com.mgatelabs.piper.shared.details.*;
+import com.mgatelabs.piper.shared.details.ComponentDefinition;
+import com.mgatelabs.piper.shared.details.ConnectionDefinition;
+import com.mgatelabs.piper.shared.details.DeviceDefinition;
+import com.mgatelabs.piper.shared.details.ScreenDefinition;
+import com.mgatelabs.piper.shared.details.ScriptEnvironment;
+import com.mgatelabs.piper.shared.details.ViewDefinition;
 import com.mgatelabs.piper.shared.helper.DeviceHelper;
-import com.mgatelabs.piper.shared.helper.RemoteDeviceHelper;
 import com.mgatelabs.piper.shared.mapper.MapDefinition;
 import com.mgatelabs.piper.shared.util.AdbShell;
+import com.mgatelabs.piper.shared.util.AdbWrapper;
 
 /**
  * Created by @mgatelabs (Michael Fuller) on 7/29/2018.
@@ -18,9 +23,9 @@ public class EditHolder {
     private ViewDefinition viewDefinition;
     private DeviceHelper deviceHelper;
 
-    private AdbShell shell;
+    private AdbWrapper shell;
 
-    public EditHolder(ScriptEnvironment scriptEnvironment, MapDefinition mapDefinition, DeviceDefinition deviceDefinition, ViewDefinition viewDefinition, ConnectionDefinition connectionDefinition, AdbShell shell, DeviceHelper deviceHelper) {
+    public EditHolder(ScriptEnvironment scriptEnvironment, MapDefinition mapDefinition, DeviceDefinition deviceDefinition, ViewDefinition viewDefinition, ConnectionDefinition connectionDefinition, AdbWrapper shell, DeviceHelper deviceHelper) {
         this.scriptEnvironment = scriptEnvironment;
         this.mapDefinition = mapDefinition;
         this.deviceDefinition = deviceDefinition;
@@ -32,7 +37,7 @@ public class EditHolder {
     }
 
     public ScreenDefinition getScreenForId(String id) {
-        for (ScreenDefinition screenDefinition: viewDefinition.getScreens()) {
+        for (ScreenDefinition screenDefinition : viewDefinition.getScreens()) {
             if (screenDefinition.getScreenId().equals(id)) {
                 return screenDefinition;
             }
@@ -41,7 +46,7 @@ public class EditHolder {
     }
 
     public ComponentDefinition getComponentForId(String id) {
-        for (ComponentDefinition screenDefinition: viewDefinition.getComponents()) {
+        for (ComponentDefinition screenDefinition : viewDefinition.getComponents()) {
             if (screenDefinition.getComponentId().equals(id)) {
                 return screenDefinition;
             }
@@ -69,12 +74,24 @@ public class EditHolder {
         return deviceHelper;
     }
 
-    public AdbShell getShell() {
+    public AdbWrapper getShell() {
         return shell;
     }
 
-    public void restartShell() {
-        shell = new AdbShell(deviceDefinition);
+    public String restartShell() {
+        StringBuilder sb =  new StringBuilder();
+
+        sb.append(AdbShell.disconnect());
+        // Kill the Server
+        sb.append(" - ");
+        sb.append(AdbShell.killServer());
+        // Bring it back up
+        sb.append(" - ");
+        sb.append(AdbShell.devices());
+        // Bring the shell back up
+        sb.append(" - Connect: ").append(shell.connect());
+
+        return sb.toString();
     }
 
     public ConnectionDefinition getConnectionDefinition() {

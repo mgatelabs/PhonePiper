@@ -38,6 +38,7 @@ import com.mgatelabs.piper.shared.image.Sampler;
 import com.mgatelabs.piper.shared.image.StateTransfer;
 import com.mgatelabs.piper.shared.util.AdbShell;
 import com.mgatelabs.piper.shared.util.AdbUtils;
+import com.mgatelabs.piper.shared.util.AdbWrapper;
 import com.mgatelabs.piper.shared.util.IntVar;
 import com.mgatelabs.piper.shared.util.Mather;
 import com.mgatelabs.piper.shared.util.StringVar;
@@ -46,6 +47,7 @@ import com.mgatelabs.piper.shared.util.VarInstance;
 import com.mgatelabs.piper.shared.util.VarManager;
 import com.mgatelabs.piper.shared.util.VarTimer;
 import org.apache.commons.lang3.StringUtils;
+import org.glassfish.jersey.message.internal.StringBuilderUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.slf4j.MDC;
@@ -108,7 +110,7 @@ public class ScriptRunner {
 
     private Set<String> validScreenIds;
 
-    private AdbShell shell;
+    private AdbWrapper shell;
 
     private VarManager vars;
 
@@ -121,7 +123,7 @@ public class ScriptRunner {
 
     //private static final String VAR_LOOPS = "_loops";
 
-    public ScriptRunner(ConnectionDefinition connectionDefinition, DeviceHelper deviceHelper, ScriptEnvironment scriptEnvironment, DeviceDefinition deviceDefinition, ViewDefinition viewDefinition) {
+    public ScriptRunner(ConnectionDefinition connectionDefinition, DeviceHelper deviceHelper, ScriptEnvironment scriptEnvironment, DeviceDefinition deviceDefinition, ViewDefinition viewDefinition, AdbWrapper adbWrapper) {
         this.scriptEnvironment = scriptEnvironment;
         this.deviceDefinition = deviceDefinition;
         this.connectionDefinition = connectionDefinition;
@@ -130,7 +132,7 @@ public class ScriptRunner {
         timers = Maps.newHashMap();
         stack = new Stack<>();
 
-        shell = new AdbShell(deviceDefinition);
+        shell = adbWrapper;
 
         logger.debug("Extracting Variables");
 
@@ -182,6 +184,7 @@ public class ScriptRunner {
     }
 
     public void stopShell() {
+        /*
         if (shell != null) {
             try {
                 shell.shutdown();
@@ -190,17 +193,23 @@ public class ScriptRunner {
             }
             shell = null;
         }
+        */
     }
 
-    public void restartShell() {
-        if (shell != null) {
-            try {
-                shell.shutdown();
-            } catch (Exception ex) {
-                ex.printStackTrace();
-            }
-        }
-        shell = new AdbShell(deviceDefinition);
+    public String restartShell() {
+        StringBuilder sb =  new StringBuilder();
+
+        sb.append(AdbShell.disconnect());
+        // Kill the Server
+        sb.append(" - ");
+        sb.append(AdbShell.killServer());
+        // Bring it back up
+        sb.append(" - ");
+        sb.append(AdbShell.devices());
+        // Bring the shell back up
+        sb.append(" - Connect: ").append(shell.connect());
+
+        return sb.toString();
     }
 
     public Date getLastImageDate() {
@@ -217,15 +226,15 @@ public class ScriptRunner {
             return false;
         }
         if (deviceHelper.ready()) {
-            logger.error("Phone Helper is ready @ " + deviceHelper.getIpAddress());
+            logger.info("Phone Helper is ready @ " + deviceHelper.getIpAddress());
             InfoTransfer infoTransfer = new InfoTransfer();
             infoTransfer.setStates(transferStateMap);
             infoTransfer.setMap(transferMap);
             if (deviceHelper.setup(infoTransfer)) {
-                logger.error("Phone Helper is configured");
+                logger.info("Phone Helper is configured");
                 return true;
             } else {
-                logger.error("Phone Helper is not configured");
+                logger.info("Phone Helper is not configured");
             }
         } else {
             logger.error("Phone Helper is not configured");
@@ -304,14 +313,14 @@ public class ScriptRunner {
                     continue;
                 }
                 if (!screenDefinition.isEnabled() || screenDefinition.getPoints() == null || (screenDefinition.getPoints() != null && screenDefinition.getPoints().isEmpty())) {
-                    logger.error("Disabled Screen: " + screenDefinition.getScreenId() + " for state: " + executionEntry.getValue().getId());
+                    logger.debug("Disabled Screen: " + screenDefinition.getScreenId() + " for state: " + executionEntry.getValue().getId());
                     continue;
                 }
                 boolean valid = true;
                 for (SamplePoint point : screenDefinition.getPoints()) {
                     if (point.getX() > deviceDefinition.getViewWidth() || point.getY() >= deviceDefinition.getViewHeight()) {
                         valid = false;
-                        logger.error("Invalid Screen Point for Screen: " + screenDefinition.getScreenId());
+                        logger.debug("Invalid Screen Point for Screen: " + screenDefinition.getScreenId());
                         break;
                     }
                 }
@@ -414,38 +423,8 @@ public class ScriptRunner {
                     }
                 }
 
-                if (!shell.isReady()) {
-                    logger.warn("Bad Shell: Will try to reconnect...");
-                    if (connectionDefinition.isWifi()) {
-                        waitFor(1000);
-                        AdbShell.connect(deviceHelper.getIpAddress(), connectionDefinition.getAdbPort());
-                    }
-                    waitFor(1000);
-                    restartShell();
-                    waitFor(1000);
-                }
-
-                if (deviceHelper != null) {
-                    deviceHelper.refresh(shell);
-                    imageWrapper = null;
-                } else {
-                    long startTime = System.nanoTime();
-                    imageWrapper = AdbUtils.getScreen();
-                    long endTime = System.nanoTime();
-
-                    long dif = endTime - startTime;
-
-                    lastImageDate = new Date();
-                    lastImageDuration = ((float) dif / 1000000000.0f);
-
-                    if (imageWrapper == null || !imageWrapper.isReady()) {
-                        logger.warn("USB Image Failure");
-                        waitFor(250);
-                        continue;
-                    } else {
-                        logger.debug("USB Image Persisted in " + THREE_DECIMAL.format(lastImageDuration) + "s");
-                    }
-                }
+                deviceHelper.refresh(shell);
+                imageWrapper = null;
 
                 boolean keepRunning = true;
 
@@ -517,16 +496,6 @@ public class ScriptRunner {
         if (deviceHelper != null) {
 
             if (captureAgain) {
-                if (!shell.isReady()) {
-                    logger.warn("Bad Shell: Will try to reconnect...");
-                    if (connectionDefinition.isWifi()) {
-                        waitFor(1000);
-                        AdbShell.connect(deviceHelper.getIpAddress(), connectionDefinition.getAdbPort());
-                    }
-                    waitFor(1000);
-                    restartShell();
-                    waitFor(1000);
-                }
                 if (!deviceHelper.refresh(shell)) {
                     return;
                 }
@@ -839,7 +808,8 @@ public class ScriptRunner {
                             case LABEL: {
                                 // NO OP
                                 logger.trace("Found Label: " + actionDefinition.getValue());
-                            } break;
+                            }
+                            break;
                             case GOTO: {
                                 logger.trace("Going to Label: " + actionDefinition.getValue());
                                 for (int i = 0; i < statementDefinition.getActions().size(); i++) {
@@ -850,7 +820,8 @@ public class ScriptRunner {
                                         break;
                                     }
                                 }
-                            } break;
+                            }
+                            break;
                             case REFRESH: {
                                 // Simply tell the system to refresh the view, this may take a second
                                 refreshViews(true);
@@ -953,7 +924,8 @@ public class ScriptRunner {
                                         return childResult;
                                     }
                                 }
-                            } break;
+                            }
+                            break;
                             case RETURN: {
                                 if (!StringUtils.isEmpty(actionDefinition.getValue())) {
                                     stateResult.setResult(valueHandler(actionDefinition.getValue()));
@@ -1110,7 +1082,7 @@ public class ScriptRunner {
                 }
                 break;
                 case SCREEN: {
-                    for (String value: conditionDefinition.getValues()) {
+                    for (String value : conditionDefinition.getValues()) {
                         Var screenValue = valueHandler(value);
                         ScreenDefinition screenDefinition = screens.get(screenValue.toString());
                         if (screenDefinition == null || !screenDefinition.isEnabled() || screenDefinition.getPoints() == null || screenDefinition.getPoints().isEmpty()) {

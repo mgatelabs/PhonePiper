@@ -2,7 +2,7 @@ package com.mgatelabs.piper.shared.helper;
 
 import com.mgatelabs.piper.shared.details.ConnectionDefinition;
 import com.mgatelabs.piper.shared.image.ImageWrapper;
-import com.mgatelabs.piper.shared.util.AdbShell;
+import com.mgatelabs.piper.shared.util.AdbWrapper;
 
 import java.util.Set;
 
@@ -26,5 +26,5 @@ public interface DeviceHelper {
 
     int getFailures();
 
-    boolean refresh(AdbShell shell);
+    boolean refresh(AdbWrapper shell);
 }

@@ -51,6 +51,8 @@ import com.mgatelabs.piper.shared.helper.LocalDeviceHelper;
 import com.mgatelabs.piper.shared.helper.RemoteDeviceHelper;
 import com.mgatelabs.piper.shared.image.ImageWrapper;
 import com.mgatelabs.piper.shared.util.AdbShell;
+import com.mgatelabs.piper.shared.util.AdbUtils;
+import com.mgatelabs.piper.shared.util.AdbWrapper;
 import com.mgatelabs.piper.shared.util.JsonTool;
 import com.mgatelabs.piper.shared.util.Loggers;
 import com.mgatelabs.piper.ui.FrameChoices;
@@ -73,7 +75,6 @@ import javax.ws.rs.core.Response;
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
-import java.io.StringReader;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -102,6 +103,7 @@ public class WebResource {
     private static ConnectionDefinition connectionDefinition;
     private static FrameChoices frameChoices;
     private static DeviceHelper deviceHelper;
+    private static AdbWrapper adbWrapper;
 
     private final Logger logger = LoggerFactory.getLogger(this.getClass());
 
@@ -246,7 +248,7 @@ public class WebResource {
         final ValueResult valueResult = new ValueResult();
         if (runner != null) {
             try {
-                runner.restartShell();
+                valueResult.setValue(runner.restartShell());
                 valueResult.setStatus("ok");
             } catch (Exception ex) {
                 valueResult.setStatus("error");
@@ -254,7 +256,7 @@ public class WebResource {
             }
         } else if (editHolder != null) {
             try {
-                editHolder.restartShell();
+                valueResult.setValue(editHolder.restartShell());
                 valueResult.setStatus("ok");
             } catch (Exception ex) {
                 valueResult.setStatus("error");
@@ -272,16 +274,16 @@ public class WebResource {
     public synchronized ValueResult adbKill() {
         checkInitialState();
         final ValueResult valueResult = new ValueResult();
+        StringBuilder sb = new StringBuilder();
         if (runner != null) {
             try {
                 if (runner != null) {
                     runner.stopShell();
                 }
-                String s = AdbShell.killServer();
-                if (runner != null) {
-                    runner.restartShell();
-                }
-                valueResult.setValue(s);
+                sb.append(AdbShell.disconnect());
+                sb.append(" - ");
+                sb.append(AdbShell.killServer());
+                valueResult.setValue(sb.toString());
                 valueResult.setStatus("ok");
             } catch (Exception ex) {
                 valueResult.setStatus("error");
@@ -289,6 +291,27 @@ public class WebResource {
             }
         } else {
             valueResult.setStatus("error");
+        }
+        return valueResult;
+    }
+
+    @POST
+    @Path("/adb/status")
+    @Produces(MediaType.APPLICATION_JSON)
+    public synchronized ValueResult adbStatus() {
+        checkInitialState();
+        final ValueResult valueResult = new ValueResult();
+
+        if (adbWrapper != null) {
+            if (adbWrapper.connect()) {
+                valueResult.setValue("Connected");
+                valueResult.setStatus("ok");
+                return valueResult;
+            }
+            valueResult.setValue("Null Device");
+            valueResult.setStatus("error");
+        } else {
+            valueResult.setValue("no adb wrapper");
         }
         return valueResult;
     }
@@ -463,6 +486,11 @@ public class WebResource {
             }
         }
 
+        if (adbWrapper != null) {
+            adbWrapper.shutdown();
+            adbWrapper = null;
+        }
+
         thread = null;
         List<String> views = Lists.newArrayList();
         views.addAll(request.getViews());
@@ -477,7 +505,9 @@ public class WebResource {
 
             editHolder = null;
 
-            runner = new ScriptRunner(connectionDefinition, deviceHelper, frameChoices.getScriptEnvironment(), frameChoices.getDeviceDefinition(), frameChoices.getViewDefinition());
+            setupAdbWrapper(connectionDefinition);
+
+            runner = new ScriptRunner(connectionDefinition, deviceHelper, frameChoices.getScriptEnvironment(), frameChoices.getDeviceDefinition(), frameChoices.getViewDefinition(), adbWrapper);
 
             if (VarStateDefinition.exists(frameChoices.getStateNameOrDefault())) {
                 VarStateDefinition varStateDefinition = VarStateDefinition.read(frameChoices.getStateNameOrDefault());
@@ -545,6 +575,8 @@ public class WebResource {
 
         checkInitialState();
 
+        StringBuilder sb = new StringBuilder();
+
         Map<String, String> result = Maps.newHashMap();
 
         if (runner != null) {
@@ -555,6 +587,13 @@ public class WebResource {
         } else {
             result.put("status", "error");
         }
+
+        if (adbWrapper != null) {
+            sb.append(adbWrapper.shutdown());
+            adbWrapper = null;
+        }
+
+        result.put("value", sb.toString());
 
         return result;
     }
@@ -566,6 +605,8 @@ public class WebResource {
 
         checkInitialState();
 
+        StringBuilder sb = new StringBuilder();
+
         Map<String, String> result = Maps.newHashMap();
 
         if (runner != null) {
@@ -576,6 +617,13 @@ public class WebResource {
         } else {
             result.put("status", "error");
         }
+
+        if (adbWrapper != null) {
+            sb.append(adbWrapper.shutdown());
+            adbWrapper = null;
+        }
+
+        result.put("value", sb.toString());
 
         return result;
     }
@@ -599,6 +647,11 @@ public class WebResource {
             }
         }
 
+        if (adbWrapper != null) {
+            adbWrapper.shutdown();
+            adbWrapper = null;
+        }
+
         thread = null;
 
         frameChoices = new FrameChoices(Constants.ACTION_EDIT, Constants.MODE_VIEW, null, "", request.getDevice(), request.getViews(), request.getScripts());
@@ -611,12 +664,31 @@ public class WebResource {
                 }
                 runner = null;
             }
-            editHolder = new EditHolder(frameChoices.getScriptEnvironment(), frameChoices.getMapDefinition(), frameChoices.getDeviceDefinition(), frameChoices.getViewDefinition(), connectionDefinition, new AdbShell(frameChoices.getDeviceDefinition()), deviceHelper);
+
+            setupAdbWrapper(connectionDefinition);
+
+            adbWrapper.connect();
+
+            editHolder = new EditHolder(frameChoices.getScriptEnvironment(), frameChoices.getMapDefinition(), frameChoices.getDeviceDefinition(), frameChoices.getViewDefinition(), connectionDefinition, adbWrapper, deviceHelper);
             deviceHelper = editHolder.getDeviceHelper();
             return result;
         } else {
             return new PrepResult(StatusEnum.error);
         }
+    }
+
+    private void setupAdbWrapper(ConnectionDefinition connectionDefinition) {
+        adbKill();
+
+        adbDevices();
+
+        if (connectionDefinition.isWifi()) {
+            adbWrapper = new AdbWrapper(connectionDefinition.getIp(), connectionDefinition.getAdbPort());
+        } else {
+            adbWrapper = new AdbWrapper(connectionDefinition.getDirect());
+        }
+
+        adbWrapper.connect();
     }
 
     private static final ImmutableMap<String, EditActionInterface> ACTIONS = ImmutableMap.<String, EditActionInterface>builder()
@@ -833,6 +905,45 @@ public class WebResource {
         return result;
     }
 
+    @POST
+    @Path("/control/key/event/{event}")
+    public ValueResult controlKeyEvent(@PathParam("event") String eventId) {
+        checkInitialState();
+        ValueResult result = new ValueResult();
+        AdbUtils.event(eventId, false, adbWrapper, false);
+        result.setStatus("ok");
+        return result;
+    }
+
+    @POST
+    @Path("/control/component/{componentId}/{actionId}")
+    public ValueResult controlKeyEvent(@PathParam("componentId") String componentId, @PathParam("actionId") String actionId) {
+        checkInitialState();
+        ValueResult result = new ValueResult();
+
+        ComponentDefinition componentDefinition = null;
+
+        for (ComponentDefinition temp : frameChoices.getViewDefinition().getComponents()) {
+            if (temp.getComponentId().equals(componentId)) {
+                componentDefinition = temp;
+                break;
+            }
+        }
+
+        if (componentDefinition == null) {
+            result.setStatus("fail");
+            result.setValue("Component missing");
+            return result;
+        }
+
+        ActionType type = ActionType.valueOf(actionId);
+
+        AdbUtils.component(frameChoices.getDeviceDefinition(), componentDefinition, type, adbWrapper, false);
+
+        result.setStatus("ok");
+        return result;
+    }
+
     @GET
     @Path("/configs")
     public ConfigListResponse listConfigs() {
@@ -913,7 +1024,7 @@ public class WebResource {
         FileReader fileReader = null;
         try {
             fileReader = new FileReader(configFile);
-            char [] temp = new char[128];
+            char[] temp = new char[128];
             int len = 0;
             StringBuilder sb = new StringBuilder();
             while ((len = fileReader.read(temp, 0, temp.length)) > 0) {
@@ -968,9 +1079,8 @@ public class WebResource {
         try {
             checkInitialState();
             if (frameChoices != null) {
-                AdbShell shell = new AdbShell(frameChoices.getDeviceDefinition());
                 // Save the Image
-                deviceHelper.refresh(shell);
+                deviceHelper.refresh(adbWrapper);
                 // Get the Image
                 ImageWrapper wrapper = deviceHelper.download();
 
@@ -1006,6 +1116,14 @@ public class WebResource {
             contentType = "application/javascript";
         } else if (path.toLowerCase().endsWith(".css")) {
             contentType = "text/css";
+        } else if (path.toLowerCase().endsWith(".woff")) {
+            contentType = "font/woff";
+        } else if (path.toLowerCase().endsWith(".woff2")) {
+            contentType = "font/woff2";
+        } else if (path.toLowerCase().endsWith(".eot")) {
+            contentType = "font/eot";
+        } else if (path.toLowerCase().endsWith(".ttf")) {
+            contentType = "font/ttf";
         } else if (path.toLowerCase().endsWith(".webmanifest")) {
             contentType = "application/manifest+json";
         } else {

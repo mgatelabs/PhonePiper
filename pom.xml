@@ -14,6 +14,13 @@
         <exec.mainClass>com.mgatelabs.piper.Runner</exec.mainClass>
     </properties>
 
+    <repositories>
+        <repository>
+            <id>jitpack.io</id>
+            <url>https://jitpack.io</url>
+        </repository>
+    </repositories>
+
     <dependencies>
 
         <!-- https://mvnrepository.com/artifact/org.imgscalr/imgscalr-lib -->
@@ -142,6 +149,11 @@
             <version>1.2</version>
         </dependency>
 
+        <dependency>
+            <groupId>com.github.vidstige</groupId>
+            <artifactId>jadb</artifactId>
+            <version>v1.1.0</version>
+        </dependency>
 
     </dependencies>
 

@@ -60,9 +60,12 @@ public class AdbWrapper {
         targetedDevice = null;
     }
 
-    public void shutdown() {
-        AdbShell.disconnect();
-        AdbShell.killServer();
+    public String shutdown() {
+        StringBuilder sb = new StringBuilder();
+        sb.append(AdbShell.disconnect());
+        sb.append(" - ");
+        sb.append(AdbShell.killServer());
+        return sb.toString();
     }
 
     public boolean connect() {

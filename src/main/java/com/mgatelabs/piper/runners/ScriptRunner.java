@@ -47,6 +47,7 @@ import com.mgatelabs.piper.shared.util.VarInstance;
 import com.mgatelabs.piper.shared.util.VarManager;
 import com.mgatelabs.piper.shared.util.VarTimer;
 import org.apache.commons.lang3.StringUtils;
+import org.glassfish.jersey.message.internal.StringBuilderUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.slf4j.MDC;
@@ -195,14 +196,20 @@ public class ScriptRunner {
         */
     }
 
-    public void restartShell() {
-        AdbShell.disconnect();
+    public String restartShell() {
+        StringBuilder sb =  new StringBuilder();
+
+        sb.append(AdbShell.disconnect());
         // Kill the Server
-        AdbShell.killServer();
+        sb.append(" - ");
+        sb.append(AdbShell.killServer());
         // Bring it back up
-        AdbShell.devices();
+        sb.append(" - ");
+        sb.append(AdbShell.devices());
         // Bring the shell back up
-        shell.connect();
+        sb.append(" - Connect: ").append(shell.connect());
+
+        return sb.toString();
     }
 
     public Date getLastImageDate() {

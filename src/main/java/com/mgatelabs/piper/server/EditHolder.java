@@ -78,15 +78,20 @@ public class EditHolder {
         return shell;
     }
 
-    public void restartShell() {
-        AdbShell.disconnect();
-        // Kill the Server
-        AdbShell.killServer();
-        // Bring it back up
-        AdbShell.devices();
-        // Bring the shell back up
-        shell.connect();
+    public String restartShell() {
+        StringBuilder sb =  new StringBuilder();
 
+        sb.append(AdbShell.disconnect());
+        // Kill the Server
+        sb.append(" - ");
+        sb.append(AdbShell.killServer());
+        // Bring it back up
+        sb.append(" - ");
+        sb.append(AdbShell.devices());
+        // Bring the shell back up
+        sb.append(" - Connect: ").append(shell.connect());
+
+        return sb.toString();
     }
 
     public ConnectionDefinition getConnectionDefinition() {

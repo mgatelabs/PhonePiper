@@ -248,7 +248,7 @@ public class WebResource {
         final ValueResult valueResult = new ValueResult();
         if (runner != null) {
             try {
-                runner.restartShell();
+                valueResult.setValue(runner.restartShell());
                 valueResult.setStatus("ok");
             } catch (Exception ex) {
                 valueResult.setStatus("error");
@@ -256,7 +256,7 @@ public class WebResource {
             }
         } else if (editHolder != null) {
             try {
-                editHolder.restartShell();
+                valueResult.setValue(editHolder.restartShell());
                 valueResult.setStatus("ok");
             } catch (Exception ex) {
                 valueResult.setStatus("error");
@@ -274,16 +274,16 @@ public class WebResource {
     public synchronized ValueResult adbKill() {
         checkInitialState();
         final ValueResult valueResult = new ValueResult();
+        StringBuilder sb = new StringBuilder();
         if (runner != null) {
             try {
                 if (runner != null) {
                     runner.stopShell();
                 }
-                String s = AdbShell.killServer();
-                if (runner != null) {
-                    runner.restartShell();
-                }
-                valueResult.setValue(s);
+                sb.append(AdbShell.disconnect());
+                sb.append(" - ");
+                sb.append(AdbShell.killServer());
+                valueResult.setValue(sb.toString());
                 valueResult.setStatus("ok");
             } catch (Exception ex) {
                 valueResult.setStatus("error");
@@ -575,12 +575,9 @@ public class WebResource {
 
         checkInitialState();
 
-        Map<String, String> result = Maps.newHashMap();
+        StringBuilder sb = new StringBuilder();
 
-        if (adbWrapper != null) {
-            adbWrapper.shutdown();
-            adbWrapper = null;
-        }
+        Map<String, String> result = Maps.newHashMap();
 
         if (runner != null) {
             runner.setStatus(ScriptRunner.Status.PAUSED);
@@ -590,6 +587,13 @@ public class WebResource {
         } else {
             result.put("status", "error");
         }
+
+        if (adbWrapper != null) {
+            sb.append(adbWrapper.shutdown());
+            adbWrapper = null;
+        }
+
+        result.put("value", sb.toString());
 
         return result;
     }
@@ -601,10 +605,7 @@ public class WebResource {
 
         checkInitialState();
 
-        if (adbWrapper != null) {
-            adbWrapper.shutdown();
-            adbWrapper = null;
-        }
+        StringBuilder sb = new StringBuilder();
 
         Map<String, String> result = Maps.newHashMap();
 
@@ -616,6 +617,13 @@ public class WebResource {
         } else {
             result.put("status", "error");
         }
+
+        if (adbWrapper != null) {
+            sb.append(adbWrapper.shutdown());
+            adbWrapper = null;
+        }
+
+        result.put("value", sb.toString());
 
         return result;
     }

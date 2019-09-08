@@ -51,3 +51,11 @@ body.running .whileRunning  {
 #statusName.oi {
     cursor:pointer;
 }
+
+.nav-item a.oi:before {
+    vertical-align:middle;
+}
+
+.nav-item a.oi > span {
+    padding-left: 4px;
+}

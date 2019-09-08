@@ -317,6 +317,63 @@ public class WebResource {
     }
 
     @POST
+    @Path("/adb/appclose")
+    @Produces(MediaType.APPLICATION_JSON)
+    public synchronized ValueResult adbAppClose() {
+        checkInitialState();
+        final ValueResult valueResult = new ValueResult();
+        if (adbWrapper != null) {
+            if (adbWrapper.connect()) {
+                if (StringUtils.isNotBlank(connectionDefinition.getApp())) {
+                    valueResult.setValue(adbWrapper.execWithOutput("am force-stop " + connectionDefinition.getApp()));
+                    valueResult.setStatus("ok");
+                    return valueResult;
+                }
+            }
+            valueResult.setValue("No Connection");
+            valueResult.setStatus("error");
+        } else {
+            valueResult.setValue("no adb wrapper");
+        }
+        return valueResult;
+    }
+
+    @POST
+    @Path("/adb/appcheck")
+    @Produces(MediaType.APPLICATION_JSON)
+    public synchronized ValueResult adbAppCheck() {
+        checkInitialState();
+        final ValueResult valueResult = new ValueResult();
+        if (adbWrapper != null) {
+            if (adbWrapper.connect()) {
+
+                if (StringUtils.isNotBlank(connectionDefinition.getApp())) {
+                    final String results = adbWrapper.execWithOutput("ps");
+                    if (StringUtils.isBlank(results)) {
+                        valueResult.setValue(results);
+                        valueResult.setStatus("error");
+                        return valueResult;
+                    } else {
+                        if (!results.contains(connectionDefinition.getApp())) {
+                            logger.error("App: " + connectionDefinition.getApp() + " is not running, will restart");
+                            valueResult.setValue(adbWrapper.execWithOutput("monkey -p " + connectionDefinition.getApp() + " -c android.intent.category.LAUNCHER 1"));
+                            valueResult.setStatus("ok");
+                            return valueResult;
+                        }
+                    }
+                }
+
+                return valueResult;
+            }
+            valueResult.setValue("No Connection");
+            valueResult.setStatus("error");
+        } else {
+            valueResult.setValue("no adb wrapper");
+        }
+        return valueResult;
+    }
+
+    @POST
     @Path("/adb/remote")
     @Produces(MediaType.APPLICATION_JSON)
     public synchronized ValueResult adbUseRemote() {

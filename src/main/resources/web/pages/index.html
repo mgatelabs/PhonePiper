@@ -54,10 +54,10 @@
         <div class="collapse navbar-collapse" id="navbarsExample01">
             <ul class="nav navbar-nav mr-auto" id="myTab" role="tablist">
                 <li class="nav-item">
-                    <a class="nav-link notLoaded active oi oi-home" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home" aria-selected="true"></a>
+                    <a class="nav-link notLoaded active oi oi-home" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home" aria-selected="true"><span class="d-md-none">Home</span></a>
                 </li>
                 <li class="nav-item notLoaded">
-                    <a class="nav-link oi oi-cog" id="config-tab" data-toggle="tab" href="#config" role="tab" aria-controls="config" aria-selected="true"></a>
+                    <a class="nav-link oi oi-cog" id="config-tab" data-toggle="tab" href="#config" role="tab" aria-controls="config" aria-selected="true"><span class="d-md-none">Configuration</span></a>
                 </li>
                 <!--
                 <li class="nav-item notLoaded">
@@ -65,28 +65,28 @@
                 </li>
                 -->
                 <li class="nav-item whenRun">
-                    <a class="nav-link oi oi-pulse" id="run-tab" data-toggle="tab" href="#run" role="tab" aria-controls="run" aria-selected="false"></a>
+                    <a class="nav-link oi oi-pulse" id="run-tab" data-toggle="tab" href="#run" role="tab" aria-controls="run" aria-selected="false"><span class="d-md-none">Status</span></a>
                 </li>
                 <li class="nav-item whenRun dropdown">
-                    <a class="nav-link dropdown-toggle oi oi-layers" id="dropdownVars" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"></a>
+                    <a class="nav-link dropdown-toggle oi oi-layers" id="dropdownVars" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span class="d-block d-md-none">Variables</span></a>
                     <div class="dropdown-menu" id="dropdownVarLinks" aria-labelledby="dropdownVars">
                         <a class="nav-link" id="vars-tab" data-toggle="tab" href="#vars" role="tab" aria-controls="vars" aria-selected="false">Variables</a>
                     </div>
                 </li>
                 <li class="nav-item whenLoaded">
-                    <a class="nav-link oi oi-cloud-upload notWhileRunning" id="imports-tab" data-toggle="tab" href="#imports" role="tab" aria-controls="imports" aria-selected="false"></a>
+                    <a class="nav-link oi oi-cloud-upload notWhileRunning" id="imports-tab" data-toggle="tab" href="#imports" role="tab" aria-controls="imports" aria-selected="false"><span class="d-md-none">Import</span></a>
                 </li>
                 <li class="nav-item whenEdit">
-                    <a class="nav-link oi oi-pencil" id="edit-tab" data-toggle="tab" href="#edit" role="tab" aria-controls="edit" aria-selected="false"></a>
+                    <a class="nav-link oi oi-pencil" id="edit-tab" data-toggle="tab" href="#edit" role="tab" aria-controls="edit" aria-selected="false"><span class="d-md-none">Edit</span></a>
                 </li>
                 <li class="nav-item whenLoaded">
-                    <a class="nav-link oi oi-wifi" id="device-tab" data-toggle="tab" href="#device" role="tab" aria-controls="device" aria-selected="false"></a>
+                    <a class="nav-link oi oi-wifi" id="device-tab" data-toggle="tab" href="#device" role="tab" aria-controls="device" aria-selected="false"><span class="d-md-none">Device</span></a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link oi oi-print" id="console-tab" data-toggle="tab" href="#console" role="tab" aria-controls="console" aria-selected="false"></a>
+                    <a class="nav-link oi oi-print" id="console-tab" data-toggle="tab" href="#console" role="tab" aria-controls="console" aria-selected="false"><span class="d-md-none">Log</span></a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link oi oi-question-mark" id="about-tab" data-toggle="tab" href="#about" role="tab" aria-controls="console" aria-selected="false"></a>
+                    <a class="nav-link oi oi-question-mark" id="about-tab" data-toggle="tab" href="#about" role="tab" aria-controls="console" aria-selected="false"><span class="d-md-none">About</span></a>
                 </li>
             </ul>
 
@@ -367,7 +367,7 @@
 
                 </div>
 
-                <div class="form-group">
+                <div class="form-group notWhileRunning">
                     <label for="components">Components</label>
                     <select id="components" class="form-control notWhileRunning"></select>
                 </div>
@@ -419,6 +419,8 @@
                     <button type="button" class="btn controlAdb btn-info notWhileRunning whenLoaded" adb="remote">Enable Remote Access</button>
                     <button type="button" class="btn controlAdb btn-info notWhileRunning whenLoaded" adb="devices">List Devices</button>
 
+                    <button type="button" class="btn controlAdb btn-secondary notWhileRunning whenLoaded" adb="appcheck">Open App</button>
+                    <button type="button" class="btn controlAdb btn-secondary notWhileRunning whenLoaded" adb="appclose">Close App</button>
                     <button type="button" class="btn controlAdb btn-secondary notWhileRunning whenLoaded" adb="status">Status</button>
                     <!--<button type="button" class="btn controlAdb btn-info notWhileRunning whenLoaded" adb="connect">Connect</button>-->
                 </div>

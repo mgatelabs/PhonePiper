@@ -9,6 +9,7 @@ import org.apache.commons.lang3.StringUtils;
 public class ConnectionDefinition {
 
     private String ip;
+    private String app;
     private int adbPort = 5555;
     private int helperPort = 8080;
     private String adb = "adb";
@@ -16,6 +17,13 @@ public class ConnectionDefinition {
     private boolean wifi;
     private int throttle = 250;
     private boolean useHelper;
+    private HelperType helperType = HelperType.LOCAL;
+
+    public enum HelperType {
+        REMOTE,
+        LOCAL,
+        LOCAL_PNG
+    }
 
     public ConnectionDefinition() {
 
@@ -27,6 +35,14 @@ public class ConnectionDefinition {
 
     public void setIp(String ip) {
         this.ip = ip;
+    }
+
+    public String getApp() {
+        return app;
+    }
+
+    public void setApp(String app) {
+        this.app = app;
     }
 
     public String getDirect() {
@@ -83,6 +99,14 @@ public class ConnectionDefinition {
 
     public void setUseHelper(boolean useHelper) {
         this.useHelper = useHelper;
+    }
+
+    public HelperType getHelperType() {
+        return helperType;
+    }
+
+    public void setHelperType(HelperType helperType) {
+        this.helperType = helperType;
     }
 
     public void push() {

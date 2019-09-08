@@ -8,6 +8,8 @@ $(function(){
     var script4 = $('#script4');
     var statusName = $('#statusName');
 
+    var bodyElement = $('body');
+
     var logs = $('#logs');
     var states = $('#states');
     var components = $('#components');
@@ -21,10 +23,11 @@ $(function(){
     var deviceIp = $('#device-ip');
     var deviceAdb = $('#device-adb');
     var deviceWifi = $('#device-wifi');
-    var deviceHelper = $('#device-helper');
     var deviceDirect = $('#device-direct');
 
-    var playPauseButton = $('#controlPlayPause');
+    var playPauseButton = $('.controlPlayPause');
+    var playButton = $('#playButton');
+    var pauseButton = $('.pauseButton');
     var unloadButton = $('#controlUnload');
     var killButton = $('#controlKill');
     var dumpStateButton = $('#controlDumpState');
@@ -124,7 +127,21 @@ $(function(){
 
                 configList.hide();
 
-                statusName.text(data.status);
+                switch( data.status  ) {
+                    case 'READY': {
+                        statusName.removeClass().addClass('navbar-brand').addClass('oi').addClass('oi-media-pause').text('');
+                    } break;
+                    case 'RUNNING': {
+                        statusName.removeClass().addClass('navbar-brand').addClass('oi').addClass('oi-media-play').text('');
+                    } break;
+                    case 'STOPPING':
+                    case 'STOPPED': {
+                        statusName.removeClass().addClass('navbar-brand').addClass('oi').addClass('oi-power-standby').text('');
+                    } break;
+                    default: {
+                        statusName.removeClass().addClass('navbar-brand').text(data.status);
+                    } break;
+                }
 
                 switch(data.status) {
                         case 'EDIT_VIEW':
@@ -205,6 +222,7 @@ $(function(){
                             loadedForm.show();
                             states.prop('disabled', false);
                             notWhileRunning.prop('disabled', false);
+                            bodyElement.removeClass('running');
                         }
                     } break;
                     case 'RUNNING':
@@ -221,6 +239,7 @@ $(function(){
                             loadedForm.show();
                             states.prop('disabled', true);
                             notWhileRunning.prop('disabled', true);
+                            bodyElement.addClass('running');
                             setTimeout(statusCheck, 3000);
                         }
                     } break;
@@ -271,20 +290,30 @@ $(function(){
         });
     });
 
-    playPauseButton.click(function(){
+    function playPauseFunc() {
         var loadIcon = loadNotice(undefined, 'Play/Pause');
         if (!playPauseButton.hasClass('disabled')) {
             $.ajax({
               type: "POST",
               url: '/piper/process/playPause/' + states.val(),
               complete: function(){
-              	loadIcon.remove();
+                loadIcon.remove();
               },
               success: function(result){
                 statusCheck();
               }
             });
         }
+    }
+
+    statusName.click(function(){
+        if (statusName.hasClass('oi-media-play') || statusName.hasClass('oi-media-pause')) {
+            playPauseFunc();
+        }
+    });
+
+    playPauseButton.click(function(){
+        playPauseFunc();
     });
 
     unloadButton.click(function(){
@@ -541,7 +570,10 @@ $(function(){
                         } else if (item.displayType == 'BOOLEAN') {
                            linkedVariables[item.name] = $('<select class="form-control notWhileRunning updateVariable"><option value="0">False</option><option value="1">True</option></select>')
                         } else {
-                            linkedVariables[item.name] = $('<input type="text" class="form-control notWhileRunning updateVariable"/>');
+                            linkedVariables[item.name] = $('<input type="text" class="form-control updateVariable"/>');
+                            if (item.modify == 'EDITABLE') {
+                                linkedVariables[item.name].addClass('notWhileRunning');
+                            }
                         }
 
                         linkedVariables[item.name].data('key', item.name).val(formatVariable(item)).attr('id', 'var_' + item.name).appendTo(grp);
@@ -735,9 +767,9 @@ $(function(){
         var select = $('<select class="form-control"></select>').addClass(cssClazz).appendTo(wrap);
         populateSelect(select, data || []);
         var grp = $('<div class="input-group-append"></div>');
-        grp.append($('<button type="button" class="btn btn-danger remove">X</button>').data('row', wrap));
+        grp.append($('<button type="button" class="btn btn-danger remove oi oi-trash"></button>').data('row', wrap));
         if (editLink) {
-            grp.append($('<button type="button" class="btn btn-info edit-view">EDIT</button>').data('row', wrap));
+            grp.append($('<button type="button" class="btn btn-info edit-view oi oi-pencil"></button>').data('row', wrap));
         }
         wrap.append(grp);
         $('<br class="extra-field"/>').insertBefore(before);

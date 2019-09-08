@@ -317,6 +317,63 @@ public class WebResource {
     }
 
     @POST
+    @Path("/adb/appclose")
+    @Produces(MediaType.APPLICATION_JSON)
+    public synchronized ValueResult adbAppClose() {
+        checkInitialState();
+        final ValueResult valueResult = new ValueResult();
+        if (adbWrapper != null) {
+            if (adbWrapper.connect()) {
+                if (StringUtils.isNotBlank(connectionDefinition.getApp())) {
+                    valueResult.setValue(adbWrapper.execWithOutput("am force-stop " + connectionDefinition.getApp()));
+                    valueResult.setStatus("ok");
+                    return valueResult;
+                }
+            }
+            valueResult.setValue("No Connection");
+            valueResult.setStatus("error");
+        } else {
+            valueResult.setValue("no adb wrapper");
+        }
+        return valueResult;
+    }
+
+    @POST
+    @Path("/adb/appcheck")
+    @Produces(MediaType.APPLICATION_JSON)
+    public synchronized ValueResult adbAppCheck() {
+        checkInitialState();
+        final ValueResult valueResult = new ValueResult();
+        if (adbWrapper != null) {
+            if (adbWrapper.connect()) {
+
+                if (StringUtils.isNotBlank(connectionDefinition.getApp())) {
+                    final String results = adbWrapper.execWithOutput("ps");
+                    if (StringUtils.isBlank(results)) {
+                        valueResult.setValue(results);
+                        valueResult.setStatus("error");
+                        return valueResult;
+                    } else {
+                        if (!results.contains(connectionDefinition.getApp())) {
+                            logger.error("App: " + connectionDefinition.getApp() + " is not running, will restart");
+                            valueResult.setValue(adbWrapper.execWithOutput("monkey -p " + connectionDefinition.getApp() + " -c android.intent.category.LAUNCHER 1"));
+                            valueResult.setStatus("ok");
+                            return valueResult;
+                        }
+                    }
+                }
+
+                return valueResult;
+            }
+            valueResult.setValue("No Connection");
+            valueResult.setStatus("error");
+        } else {
+            valueResult.setValue("no adb wrapper");
+        }
+        return valueResult;
+    }
+
+    @POST
     @Path("/adb/remote")
     @Produces(MediaType.APPLICATION_JSON)
     public synchronized ValueResult adbUseRemote() {
@@ -476,7 +533,7 @@ public class WebResource {
 
         handleConnection(request);
 
-        if (connectionDefinition.isUseHelper()) {
+        if (connectionDefinition.getHelperType() == ConnectionDefinition.HelperType.REMOTE) {
             if (!(deviceHelper instanceof RemoteDeviceHelper)) {
                 deviceHelper = new RemoteDeviceHelper(connectionDefinition);
             }
@@ -484,6 +541,7 @@ public class WebResource {
             if (!(deviceHelper instanceof LocalDeviceHelper)) {
                 deviceHelper = new LocalDeviceHelper(connectionDefinition);
             }
+            ((LocalDeviceHelper) deviceHelper).setUsePng(connectionDefinition.getHelperType() == ConnectionDefinition.HelperType.LOCAL_PNG);
         }
 
         if (adbWrapper != null) {
@@ -538,10 +596,12 @@ public class WebResource {
                             tempConnection.setAdb(value);
                         } else if (field.equalsIgnoreCase("ip")) {
                             tempConnection.setIp(value);
+                        } else if (field.equalsIgnoreCase("app")) {
+                            tempConnection.setApp(value);
                         } else if (field.equalsIgnoreCase("direct")) {
                             tempConnection.setDirect(value);
-                        } else if (field.equalsIgnoreCase("helper")) {
-                            tempConnection.setUseHelper(Boolean.parseBoolean(value));
+                        } else if (field.equalsIgnoreCase("helperType")) {
+                            tempConnection.setHelperType(ConnectionDefinition.HelperType.valueOf(value));
                         } else if (field.equalsIgnoreCase("wifi")) {
                             tempConnection.setWifi(Boolean.parseBoolean(value));
                         } else if (field.equalsIgnoreCase("throttle")) {
@@ -637,7 +697,7 @@ public class WebResource {
 
         handleConnection(request);
 
-        if (connectionDefinition.isUseHelper()) {
+        if (connectionDefinition.getHelperType() == ConnectionDefinition.HelperType.REMOTE) {
             if (!(deviceHelper instanceof RemoteDeviceHelper)) {
                 deviceHelper = new RemoteDeviceHelper(connectionDefinition);
             }
@@ -645,6 +705,7 @@ public class WebResource {
             if (!(deviceHelper instanceof LocalDeviceHelper)) {
                 deviceHelper = new LocalDeviceHelper(connectionDefinition);
             }
+            ((LocalDeviceHelper) deviceHelper).setUsePng(connectionDefinition.getHelperType() == ConnectionDefinition.HelperType.LOCAL_PNG);
         }
 
         if (adbWrapper != null) {
@@ -735,12 +796,19 @@ public class WebResource {
     public Map<String, String> unloadEdit() {
         checkInitialState();
         Map<String, String> result = Maps.newHashMap();
+
         if (editHolder != null) {
             editHolder = null;
             result.put("status", "ok");
         } else {
             result.put("status", "error");
         }
+
+        if (adbWrapper != null) {
+            adbWrapper.shutdown();
+            adbWrapper = null;
+        }
+
         return result;
     }
 

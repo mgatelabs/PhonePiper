@@ -35,3 +35,27 @@
 {
     cursor: pointer;
 }
+
+body.running .notWhileRunning {
+    display:none;
+}
+
+.whileRunning {
+    display:none !important;
+}
+
+body.running .whileRunning  {
+    display:inline-block !important;
+}
+
+#statusName.oi {
+    cursor:pointer;
+}
+
+.nav-item a.oi:before {
+    vertical-align:middle;
+}
+
+.nav-item a.oi > span {
+    padding-left: 4px;
+}

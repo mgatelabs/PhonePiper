@@ -2,10 +2,10 @@ package com.mgatelabs.piper.shared.helper;
 
 import com.google.common.collect.ImmutableSet;
 import com.google.common.collect.Sets;
-import com.mgatelabs.piper.Runner;
 import com.mgatelabs.piper.runners.ScriptRunner;
 import com.mgatelabs.piper.shared.details.ConnectionDefinition;
 import com.mgatelabs.piper.shared.image.ImageWrapper;
+import com.mgatelabs.piper.shared.image.PngImageWrapper;
 import com.mgatelabs.piper.shared.image.RawImageWrapper;
 import com.mgatelabs.piper.shared.image.StateTransfer;
 import com.mgatelabs.piper.shared.util.AdbUtils;
@@ -16,13 +16,9 @@ import se.vidstige.jadb.JadbDevice;
 import se.vidstige.jadb.JadbException;
 import se.vidstige.jadb.RemoteFile;
 
-import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
-import java.io.File;
-import java.io.FileInputStream;
 import java.io.IOException;
-import java.nio.ByteBuffer;
-import java.nio.ByteOrder;
+import java.io.InputStream;
 import java.util.Set;
 
 /**
@@ -36,15 +32,18 @@ public class LocalDeviceHelper implements DeviceHelper {
     private InfoTransfer info;
     private int failures;
 
-    private File tempFile;
+    private boolean usePng;
 
     public LocalDeviceHelper(ConnectionDefinition connectionDefinition) {
         this.connectionDefinition = connectionDefinition;
-        try {
-            this.tempFile = File.createTempFile("phonePiper", ".raw", Runner.WORKING_DIRECTORY);
-        } catch (IOException e) {
-            logger.error(e.getMessage());
-        }
+    }
+
+    public boolean isUsePng() {
+        return usePng;
+    }
+
+    public void setUsePng(boolean usePng) {
+        this.usePng = usePng;
     }
 
     @Override
@@ -68,29 +67,6 @@ public class LocalDeviceHelper implements DeviceHelper {
         return true;
     }
 
-    private byte[] readTemp() {
-        ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
-
-        FileInputStream fileInputStream = null;
-
-        try {
-            fileInputStream = new FileInputStream(tempFile);
-            byte[] temp = new byte[1024];
-            int len = 0;
-            while ((len = fileInputStream.read(temp, 0, 1024)) > 0) {
-                byteArrayOutputStream.write(temp, 0, len);
-            }
-        } catch (Exception ex) {
-            logger.error(ex.getMessage(), ex);
-            return new byte[0];
-        } finally {
-            Closer.close(byteArrayOutputStream);
-            Closer.close(fileInputStream);
-        }
-
-        return byteArrayOutputStream.toByteArray();
-    }
-
     @Override
     public Set<String> check(String menu) {
 
@@ -110,7 +86,7 @@ public class LocalDeviceHelper implements DeviceHelper {
             return ImmutableSet.of();
         }
 
-        ByteArrayInputStream fileInputStream = null;
+        InputStream fileInputStream = null;
         boolean[] success = new boolean[stateTransfer.getScreenIds().size()];
         for (int i = 0; i < success.length; i++) {
             if (debugName.length() > 0 && stateTransfer.getScreenIds().get(i).equalsIgnoreCase(debugName)) {
@@ -120,7 +96,7 @@ public class LocalDeviceHelper implements DeviceHelper {
         }
 
         try {
-            fileInputStream = new ByteArrayInputStream(imageWrapper.getRaw());
+            fileInputStream = imageWrapper.getInputStream();
 
             byte[] temp = new byte[3];
             int len;
@@ -194,10 +170,10 @@ public class LocalDeviceHelper implements DeviceHelper {
     @Override
     public int[] pixel(int offset) {
 
-        ByteArrayInputStream fileInputStream = null;
+        InputStream fileInputStream = null;
 
         try {
-            fileInputStream = new ByteArrayInputStream(lastImageDownload);
+            fileInputStream = lastImageDownload.getInputStream();
 
             byte[] temp = new byte[3];
             int len;
@@ -220,24 +196,7 @@ public class LocalDeviceHelper implements DeviceHelper {
 
     @Override
     public ImageWrapper download() {
-
-        byte[] bytes = lastImageDownload;
-
-        if (bytes == null) {
-            bytes = new byte[0];
-        }
-
-        int w, h;
-        if (bytes.length > 12) { // Sanity
-            ByteBuffer byteBuffer = ByteBuffer.wrap(bytes);
-            byteBuffer.order(ByteOrder.LITTLE_ENDIAN);
-            w = byteBuffer.getInt();
-            h = byteBuffer.getInt();
-        } else {
-            w = 0;
-            h = 0;
-        }
-        return new RawImageWrapper(w, h, RawImageWrapper.ImageFormats.RGBA, 12, bytes);
+        return lastImageDownload;
     }
 
     @Override
@@ -245,14 +204,16 @@ public class LocalDeviceHelper implements DeviceHelper {
         return failures;
     }
 
-    byte[] lastImageDownload = null;
+    //byte[] lastImageDownload = null;
+
+    private ImageWrapper lastImageDownload;
 
     @Override
     public boolean refresh(AdbWrapper shell) {
 
         long startTime = System.nanoTime();
 
-        if (!AdbUtils.persistScreen(shell)) return false;
+        if (!AdbUtils.persistScreen(shell, usePng)) return false;
 
         JadbDevice device = shell.getTargetedDevice();
 
@@ -261,8 +222,15 @@ public class LocalDeviceHelper implements DeviceHelper {
         ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
 
         try {
-            device.pull(new RemoteFile("/mnt/sdcard/framebuffer.raw"), byteArrayOutputStream);
-            lastImageDownload = byteArrayOutputStream.toByteArray();
+            device.pull(new RemoteFile("/mnt/sdcard/framebuffer." + (usePng ? "png" : "raw")), byteArrayOutputStream);
+            byte[] temp = byteArrayOutputStream.toByteArray();
+            if (temp != null) {
+                if (usePng) {
+                    lastImageDownload = new PngImageWrapper(temp);
+                } else {
+                    lastImageDownload = RawImageWrapper.convert(temp);
+                }
+            }
         } catch (IOException e) {
             logger.error(e.getMessage());
             e.printStackTrace();

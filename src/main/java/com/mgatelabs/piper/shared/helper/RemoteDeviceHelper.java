@@ -161,7 +161,7 @@ public class RemoteDeviceHelper implements DeviceHelper {
 
         long startTime = System.nanoTime();
 
-        if (!AdbUtils.persistScreen(shell)) {
+        if (!AdbUtils.persistScreen(shell, false)) {
             logger.warn("Helper Image Failure");
             waitFor(250);
             return false;

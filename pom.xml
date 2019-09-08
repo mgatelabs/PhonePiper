@@ -6,7 +6,7 @@
 
     <groupId>com.mgatelabs</groupId>
     <artifactId>PhonePiper</artifactId>
-    <version>2019.10-SNAPSHOT</version>
+    <version>2019.10.3-SNAPSHOT</version>
 
     <properties>
         <maven.compiler.source>1.8</maven.compiler.source>

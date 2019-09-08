@@ -9,6 +9,7 @@ import org.apache.commons.lang3.StringUtils;
 public class ConnectionDefinition {
 
     private String ip;
+    private String app;
     private int adbPort = 5555;
     private int helperPort = 8080;
     private String adb = "adb";
@@ -34,6 +35,14 @@ public class ConnectionDefinition {
 
     public void setIp(String ip) {
         this.ip = ip;
+    }
+
+    public String getApp() {
+        return app;
+    }
+
+    public void setApp(String app) {
+        this.app = app;
     }
 
     public String getDirect() {

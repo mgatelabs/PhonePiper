@@ -238,4 +238,33 @@ public class AdbWrapper {
         }
         return false;
     }
+
+    public synchronized String execWithOutput(String adbCommand) {
+        JadbDevice device = getTargetedDevice();
+
+        if (device == null) return "";
+
+        try {
+            InputStream inputStream = device.executeShell(adbCommand + " && " + AdbShell.ECHO);
+
+            final long startTime = System.nanoTime();
+
+            int len, read = 0;
+            StringBuilder sb = new StringBuilder();
+            while ((len = inputStream.read(tempBytes, 0, tempBytes.length)) > 0) {
+                sb.append(new String(tempBytes, 0, len));
+                read += len;
+            }
+
+            long endTime = System.nanoTime();
+            long diff = endTime - startTime;
+            logger.trace("AdbCommand: " + adbCommand + " [" + read + "]" + " (" + String.format("%2.2f", ((float) diff / 1000000000.0)) + "s)");
+            return sb.toString();
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (JadbException e) {
+            e.printStackTrace();
+        }
+        return "";
+    }
 }

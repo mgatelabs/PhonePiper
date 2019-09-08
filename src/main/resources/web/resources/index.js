@@ -767,9 +767,9 @@ $(function(){
         var select = $('<select class="form-control"></select>').addClass(cssClazz).appendTo(wrap);
         populateSelect(select, data || []);
         var grp = $('<div class="input-group-append"></div>');
-        grp.append($('<button type="button" class="btn btn-danger remove">X</button>').data('row', wrap));
+        grp.append($('<button type="button" class="btn btn-danger remove oi oi-trash"></button>').data('row', wrap));
         if (editLink) {
-            grp.append($('<button type="button" class="btn btn-info edit-view">EDIT</button>').data('row', wrap));
+            grp.append($('<button type="button" class="btn btn-info edit-view oi oi-pencil"></button>').data('row', wrap));
         }
         wrap.append(grp);
         $('<br class="extra-field"/>').insertBefore(before);

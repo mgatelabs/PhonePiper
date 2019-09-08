@@ -171,6 +171,8 @@ public class ActionDefinition {
                 return "LINK";
             case GOTO:
                 return "GOTO";
+            case APP:
+                return "APP";
             case LABEL:
                 return "LABEL";
         }

@@ -47,7 +47,6 @@ import com.mgatelabs.piper.shared.util.VarInstance;
 import com.mgatelabs.piper.shared.util.VarManager;
 import com.mgatelabs.piper.shared.util.VarTimer;
 import org.apache.commons.lang3.StringUtils;
-import org.glassfish.jersey.message.internal.StringBuilderUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.slf4j.MDC;
@@ -197,7 +196,7 @@ public class ScriptRunner {
     }
 
     public String restartShell() {
-        StringBuilder sb =  new StringBuilder();
+        StringBuilder sb = new StringBuilder();
 
         sb.append(AdbShell.disconnect());
         // Kill the Server
@@ -822,6 +821,24 @@ public class ScriptRunner {
                                 }
                             }
                             break;
+                            case APP: {
+                                if (StringUtils.equalsIgnoreCase(actionDefinition.getValue(), "CHECK")) {
+                                    if (StringUtils.isNotBlank(connectionDefinition.getApp())) {
+                                        final String results = shell.execWithOutput("ps");
+                                        if (StringUtils.isBlank(results)) {
+                                            logger.error("ADB connection may be down");
+                                        } else {
+                                            if (!results.contains(connectionDefinition.getApp())) {
+                                                logger.error("App: " + connectionDefinition.getApp() + " is not running, will restart");
+                                                shell.exec("monkey -p " + connectionDefinition.getApp() + " -c android.intent.category.LAUNCHER 1");
+                                            }
+                                        }
+                                    }
+                                } else if (StringUtils.equalsIgnoreCase(actionDefinition.getValue(), "CLOSE")) {
+                                    logger.error("Closing App: " + connectionDefinition.getApp());
+                                    shell.exec("am force-stop " + connectionDefinition.getApp());
+                                }
+                            } break;
                             case REFRESH: {
                                 // Simply tell the system to refresh the view, this may take a second
                                 refreshViews(true);

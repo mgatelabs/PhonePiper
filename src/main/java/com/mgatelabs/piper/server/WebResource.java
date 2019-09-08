@@ -539,6 +539,8 @@ public class WebResource {
                             tempConnection.setAdb(value);
                         } else if (field.equalsIgnoreCase("ip")) {
                             tempConnection.setIp(value);
+                        } else if (field.equalsIgnoreCase("app")) {
+                            tempConnection.setApp(value);
                         } else if (field.equalsIgnoreCase("direct")) {
                             tempConnection.setDirect(value);
                         } else if (field.equalsIgnoreCase("helperType")) {

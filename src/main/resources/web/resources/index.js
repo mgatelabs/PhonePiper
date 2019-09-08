@@ -570,7 +570,10 @@ $(function(){
                         } else if (item.displayType == 'BOOLEAN') {
                            linkedVariables[item.name] = $('<select class="form-control notWhileRunning updateVariable"><option value="0">False</option><option value="1">True</option></select>')
                         } else {
-                            linkedVariables[item.name] = $('<input type="text" class="form-control notWhileRunning updateVariable"/>');
+                            linkedVariables[item.name] = $('<input type="text" class="form-control updateVariable"/>');
+                            if (item.modify == 'EDITABLE') {
+                                linkedVariables[item.name].addClass('notWhileRunning');
+                            }
                         }
 
                         linkedVariables[item.name].data('key', item.name).val(formatVariable(item)).attr('id', 'var_' + item.name).appendTo(grp);

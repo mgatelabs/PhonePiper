@@ -8,11 +8,9 @@ import com.mgatelabs.piper.shared.image.RawImageWrapper;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import se.vidstige.jadb.JadbDevice;
 
 import java.io.BufferedInputStream;
 import java.io.ByteArrayOutputStream;
-import java.io.File;
 import java.io.InputStream;
 import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
@@ -269,8 +267,8 @@ public class AdbUtils {
         return value;
     }
 
-    public static boolean persistScreen(AdbWrapper device) {
-        return device.exec("screencap /mnt/sdcard/framebuffer.raw");
+    public static boolean persistScreen(AdbWrapper device, boolean png) {
+        return device.exec("screencap "+(png ? "-p " : "")+"/mnt/sdcard/framebuffer." + (png ? "png" : "raw"));
     }
 
     public static ImageWrapper getScreen(AdbWrapper wr) {

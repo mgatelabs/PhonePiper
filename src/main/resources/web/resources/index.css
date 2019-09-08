@@ -35,3 +35,19 @@
 {
     cursor: pointer;
 }
+
+body.running .notWhileRunning {
+    display:none;
+}
+
+.whileRunning {
+    display:none !important;
+}
+
+body.running .whileRunning  {
+    display:inline-block !important;
+}
+
+#statusName.oi {
+    cursor:pointer;
+}

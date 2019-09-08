@@ -476,7 +476,7 @@ public class WebResource {
 
         handleConnection(request);
 
-        if (connectionDefinition.isUseHelper()) {
+        if (connectionDefinition.getHelperType() == ConnectionDefinition.HelperType.REMOTE) {
             if (!(deviceHelper instanceof RemoteDeviceHelper)) {
                 deviceHelper = new RemoteDeviceHelper(connectionDefinition);
             }
@@ -484,6 +484,7 @@ public class WebResource {
             if (!(deviceHelper instanceof LocalDeviceHelper)) {
                 deviceHelper = new LocalDeviceHelper(connectionDefinition);
             }
+            ((LocalDeviceHelper) deviceHelper).setUsePng(connectionDefinition.getHelperType() == ConnectionDefinition.HelperType.LOCAL_PNG);
         }
 
         if (adbWrapper != null) {
@@ -540,8 +541,8 @@ public class WebResource {
                             tempConnection.setIp(value);
                         } else if (field.equalsIgnoreCase("direct")) {
                             tempConnection.setDirect(value);
-                        } else if (field.equalsIgnoreCase("helper")) {
-                            tempConnection.setUseHelper(Boolean.parseBoolean(value));
+                        } else if (field.equalsIgnoreCase("helperType")) {
+                            tempConnection.setHelperType(ConnectionDefinition.HelperType.valueOf(value));
                         } else if (field.equalsIgnoreCase("wifi")) {
                             tempConnection.setWifi(Boolean.parseBoolean(value));
                         } else if (field.equalsIgnoreCase("throttle")) {
@@ -637,7 +638,7 @@ public class WebResource {
 
         handleConnection(request);
 
-        if (connectionDefinition.isUseHelper()) {
+        if (connectionDefinition.getHelperType() == ConnectionDefinition.HelperType.REMOTE) {
             if (!(deviceHelper instanceof RemoteDeviceHelper)) {
                 deviceHelper = new RemoteDeviceHelper(connectionDefinition);
             }
@@ -645,6 +646,7 @@ public class WebResource {
             if (!(deviceHelper instanceof LocalDeviceHelper)) {
                 deviceHelper = new LocalDeviceHelper(connectionDefinition);
             }
+            ((LocalDeviceHelper) deviceHelper).setUsePng(connectionDefinition.getHelperType() == ConnectionDefinition.HelperType.LOCAL_PNG);
         }
 
         if (adbWrapper != null) {
@@ -735,12 +737,19 @@ public class WebResource {
     public Map<String, String> unloadEdit() {
         checkInitialState();
         Map<String, String> result = Maps.newHashMap();
+
         if (editHolder != null) {
             editHolder = null;
             result.put("status", "ok");
         } else {
             result.put("status", "error");
         }
+
+        if (adbWrapper != null) {
+            adbWrapper.shutdown();
+            adbWrapper = null;
+        }
+
         return result;
     }
 

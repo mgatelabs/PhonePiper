@@ -2,9 +2,13 @@ package com.mgatelabs.piper.shared.image;
 
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
+import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
+import java.nio.ByteBuffer;
+import java.nio.ByteOrder;
 
 /**
  * Created by @mgatelabs (Michael Fuller) on 8/31/2017 for Phone-Piper
@@ -100,6 +104,20 @@ public class RawImageWrapper implements ImageWrapper {
     private final int height;
     private final ImageFormats format;
     private final byte [] data;
+
+    public static ImageWrapper convert(byte [] data) {
+        int w, h;
+        if (data.length > 12) { // Sanity
+            ByteBuffer byteBuffer = ByteBuffer.wrap(data);
+            byteBuffer.order(ByteOrder.LITTLE_ENDIAN);
+            w = byteBuffer.getInt();
+            h = byteBuffer.getInt();
+        } else {
+            w = 0;
+            h = 0;
+        }
+        return new RawImageWrapper(w,h, ImageFormats.RGBA, 12, data);
+    }
 
     public RawImageWrapper(int width, int height, ImageFormats format, int dataOffset, byte[] data) {
         this.dataOffset = dataOffset;
@@ -209,5 +227,10 @@ public class RawImageWrapper implements ImageWrapper {
 
     public byte [] getRaw() {
         return data;
+    }
+
+    @Override
+    public InputStream getInputStream() {
+        return new ByteArrayInputStream(data);
     }
 }

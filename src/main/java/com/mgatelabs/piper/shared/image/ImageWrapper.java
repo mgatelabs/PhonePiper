@@ -1,6 +1,7 @@
 package com.mgatelabs.piper.shared.image;
 
 import java.io.File;
+import java.io.InputStream;
 
 /**
  * Created by @mgatelabs (Michael Fuller) on 9/1/2017 for Phone-Piper
@@ -21,4 +22,6 @@ public interface ImageWrapper {
     byte [] outputPng();
 
     byte [] getRaw();
+
+    InputStream getInputStream();
 }

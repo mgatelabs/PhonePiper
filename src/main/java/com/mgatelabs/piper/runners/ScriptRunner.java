@@ -835,8 +835,10 @@ public class ScriptRunner {
                                         }
                                     }
                                 } else if (StringUtils.equalsIgnoreCase(actionDefinition.getValue(), "CLOSE")) {
-                                    logger.error("Closing App: " + connectionDefinition.getApp());
-                                    shell.exec("am force-stop " + connectionDefinition.getApp());
+                                    if (StringUtils.isNotBlank(connectionDefinition.getApp())) {
+                                        logger.error("Closing App: " + connectionDefinition.getApp());
+                                        shell.exec("am force-stop " + connectionDefinition.getApp());
+                                    }
                                 }
                             } break;
                             case REFRESH: {

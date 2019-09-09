@@ -182,35 +182,6 @@ public class ScriptRunner {
         status = Status.INIT;
     }
 
-    public void stopShell() {
-        /*
-        if (shell != null) {
-            try {
-                shell.shutdown();
-            } catch (Exception ex) {
-                ex.printStackTrace();
-            }
-            shell = null;
-        }
-        */
-    }
-
-    public String restartShell() {
-        StringBuilder sb = new StringBuilder();
-
-        sb.append(AdbShell.disconnect());
-        // Kill the Server
-        sb.append(" - ");
-        sb.append(AdbShell.killServer());
-        // Bring it back up
-        sb.append(" - ");
-        sb.append(AdbShell.devices());
-        // Bring the shell back up
-        sb.append(" - Connect: ").append(shell.connect());
-
-        return sb.toString();
-    }
-
     public Date getLastImageDate() {
         return lastImageDate;
     }
@@ -830,7 +801,7 @@ public class ScriptRunner {
                                         } else {
                                             if (!results.contains(connectionDefinition.getApp())) {
                                                 logger.error("App: " + connectionDefinition.getApp() + " is not running, will restart");
-                                                shell.exec("monkey -p " + connectionDefinition.getApp() + " -c android.intent.category.LAUNCHER 1");
+                                                shell.exec("monkey --pct-syskeys 0 -p " + connectionDefinition.getApp() +" 1");
                                             }
                                         }
                                     }

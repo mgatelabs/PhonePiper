@@ -18,11 +18,18 @@ public class ConnectionDefinition {
     private int throttle = 250;
     private boolean useHelper;
     private HelperType helperType = HelperType.LOCAL;
+    private AdbType adbLevel = AdbType.FULL;
 
     public enum HelperType {
         REMOTE,
         LOCAL,
         LOCAL_PNG
+    }
+
+    public enum AdbType {
+        FULL,
+        DISCONNECT,
+        LEAVE
     }
 
     public ConnectionDefinition() {
@@ -107,6 +114,14 @@ public class ConnectionDefinition {
 
     public void setHelperType(HelperType helperType) {
         this.helperType = helperType;
+    }
+
+    public AdbType getAdbLevel() {
+        return adbLevel;
+    }
+
+    public void setAdbLevel(AdbType adbLevel) {
+        this.adbLevel = adbLevel;
     }
 
     public void push() {

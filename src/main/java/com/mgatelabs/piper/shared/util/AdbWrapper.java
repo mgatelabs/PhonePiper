@@ -2,6 +2,7 @@ package com.mgatelabs.piper.shared.util;
 
 import com.google.common.base.Joiner;
 import com.google.common.collect.Lists;
+import com.mgatelabs.piper.shared.details.ConnectionDefinition;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -60,11 +61,35 @@ public class AdbWrapper {
         targetedDevice = null;
     }
 
-    public String shutdown() {
-        StringBuilder sb = new StringBuilder();
+    public String shutdown(final ConnectionDefinition.AdbType type) {
+        final StringBuilder sb = new StringBuilder();
+        switch (type) {
+            case FULL: {
+                sb.append(AdbShell.disconnect());
+                sb.append(" - ");
+                sb.append(AdbShell.killServer());
+            } break;
+            case DISCONNECT: {
+                sb.append(AdbShell.disconnect());
+
+            } break;
+            default:
+                sb.append("No Operation");
+        }
+        return sb.toString();
+    }
+
+    public String restart() {
+        final StringBuilder sb = new StringBuilder();
         sb.append(AdbShell.disconnect());
+        // Kill the Server
         sb.append(" - ");
         sb.append(AdbShell.killServer());
+        // Bring it back up
+        sb.append(" - ");
+        sb.append(AdbShell.devices());
+        // Bring the shell back up
+        sb.append(" - Connect: ").append(connect());
         return sb.toString();
     }
 
@@ -86,7 +111,7 @@ public class AdbWrapper {
 
         try {
             for (JadbDevice device : connection.getDevices()) {
-                if (StringUtils.isBlank(serial) || device.getSerial().equals(serial)) {
+                if (StringUtils.isBlank(serial) || device.getSerial().equals(serial) || "*".equals(serial)) {
                     wasSeen = true;
                     switch (device.getState()) {
                         case Device:
@@ -105,7 +130,7 @@ public class AdbWrapper {
                 connection.connectToTcpDevice(this.address);
 
                 for (JadbDevice device : connection.getDevices()) {
-                    if (device.getSerial().equals(serial)) {
+                    if (device.getSerial().equals(serial) || "*".equals(serial)) {
                         switch (device.getState()) {
                             case Device:
                                 targetedDevice = device;

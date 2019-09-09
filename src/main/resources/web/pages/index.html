@@ -216,7 +216,7 @@
                 </div>
                 <br/>
 
-                <h3>Device</h3>
+                <h3>Application</h3>
 
                 <div class="input-group">
                     <div class="input-group-prepend">
@@ -225,7 +225,8 @@
                     <input type="text" class="form-control config-attribute" attrname="device-app" placeholder="Target App Package to Execute">
                 </div>
 
-                <h3>Device</h3>
+                <br/>
+                <h3>Helper</h3>
 
                 <div class="input-group">
                     <div class="input-group-prepend">
@@ -263,6 +264,20 @@
                 <br/>
                 <div class="input-group">
                     <div class="input-group-prepend">
+                        <span class="input-group-text">Helper</span>
+                    </div>
+                    <select class="form-control config-attribute" attrname="device-helperType">
+                        <option value="REMOTE" selected>Use On Device Helper</option>
+                        <option value="LOCAL">Use Local Helper</option>
+                        <option value="LOCAL_PNG">Use Local Helper (png)</option>
+                    </select>
+                </div>
+
+                <br/>
+                <h3>ADB</h3>
+
+                <div class="input-group">
+                    <div class="input-group-prepend">
                         <span class="input-group-text">ADB</span>
                     </div>
                     <input type="text" class="form-control config-attribute" attrname="device-adb" placeholder="Path to ADB execuable">
@@ -276,14 +291,13 @@
                 <br/>
                 <div class="input-group">
                     <div class="input-group-prepend">
-                        <span class="input-group-text">Direct</span>
+                        <span class="input-group-text">ADB Level</span>
                     </div>
-                    <input type="text" class="form-control config-attribute" attrname="device-direct" placeholder="ADB direct value">
-                </div>
-
-                <br/>
-                <div class="alert alert-dark" role="alert">
-                    Leave blank in most cases.  Used to identity which device to communicate with, if multiple have been connected.
+                    <select class="form-control config-attribute" attrname="device-adbLevel">
+                        <option value="FULL" selected>Clean Start &amp; Stop</option>
+                        <option value="DISCONNECT">Disconnect from Device</option>
+                        <option value="LEAVE">Leave it alone</option>
+                    </select>
                 </div>
 
                 <br/>
@@ -300,13 +314,14 @@
                 <br/>
                 <div class="input-group">
                     <div class="input-group-prepend">
-                        <span class="input-group-text">Helper</span>
+                        <span class="input-group-text">Direct</span>
                     </div>
-                    <select class="form-control config-attribute" attrname="device-helperType">
-                        <option value="REMOTE" selected>Use Device Helper</option>
-                        <option value="LOCAL">Use Local Helper</option>
-                        <option value="LOCAL_PNG">Use Local Helper (png)</option>
-                    </select>
+                    <input type="text" class="form-control config-attribute" attrname="device-direct" placeholder="ADB direct value">
+                </div>
+
+                <br/>
+                <div class="alert alert-dark" role="alert">
+                    Leave blank in most cases.  Used to identity which device to communicate with, if multiple have been connected.  Set to * for any device.
                 </div>
 
                 <br/>

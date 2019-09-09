@@ -847,7 +847,7 @@ $(function(){
         return data;
     }
 
-    function saveConfig() {
+    function saveConfig(callback) {
 
         var data = extractConfig();
 
@@ -870,7 +870,7 @@ $(function(){
             },
             success: function(result){
                 if (result.status == 'ok') {
-                    loadConfigurations();
+                    loadConfigurations(callback);
                 } else {
                     alert(result.msg || "Error");
                 }
@@ -1031,27 +1031,30 @@ $(function(){
 
     loadButton.click(function(){
 
-        var loadIcon = loadNotice(undefined, 'Load');
+        saveConfig(function(){
+            var loadIcon = loadNotice(undefined, 'Load');
 
-        var blob = extractConfig();
-        $.ajax({
-          type: "POST",
-          url: '/piper/process/prep',
-          data: JSON.stringify(blob),
-          headers: {
-                'Content-Type': 'application/json'
-            },
-            complete: function(){
-            	loadIcon.remove();
-            },
-          success: function(result){
-            if (result.status == 'ok') {
-                loadProcessInfo(true);
-                $('[href="#run"]').tab('show');
-            }
-          },
-          dataType: 'json'
+            var blob = extractConfig();
+            $.ajax({
+              type: "POST",
+              url: '/piper/process/prep',
+              data: JSON.stringify(blob),
+              headers: {
+                    'Content-Type': 'application/json'
+                },
+                complete: function(){
+                    loadIcon.remove();
+                },
+              success: function(result){
+                if (result.status == 'ok') {
+                    loadProcessInfo(true);
+                    $('[href="#run"]').tab('show');
+                }
+              },
+              dataType: 'json'
+            });
         });
+
     });
 
     ///////////////////////////////////////////////////////////////////////////
@@ -1107,7 +1110,7 @@ $(function(){
         configList.append(wrap);
     }
 
-    function loadConfigurations() {
+    function loadConfigurations(callback) {
         var loadIcon = loadNotice(undefined, 'Load Configurations');
         $.ajax({
           type: "GET",
@@ -1119,6 +1122,9 @@ $(function(){
             if (result.status == 'ok') {
                 configs = result.configs;
                 buildConfigs();
+                if (callback) {
+                    callback();
+                }
             } else {
                 alert(result.msg || "Error");
             }

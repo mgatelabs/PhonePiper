@@ -946,6 +946,16 @@ public class WebResource {
     }
 
     @POST
+    @Path("/control/tap/{x}}/{y}")
+    public ValueResult controlKeyEvent(@PathParam("x") int x, @PathParam("y") int y) {
+        checkInitialState();
+        ValueResult result = new ValueResult();
+        AdbUtils.tap(x, y, adbWrapper);
+        result.setStatus("ok");
+        return result;
+    }
+
+    @POST
     @Path("/control/component/{componentId}/{actionId}")
     public ValueResult controlKeyEvent(@PathParam("componentId") String componentId, @PathParam("actionId") String actionId) {
         checkInitialState();

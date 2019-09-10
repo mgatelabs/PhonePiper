@@ -1097,8 +1097,12 @@ $(function(){
         c.attr('width', viewSetup.controlWidth);
         c.attr('height', viewSetup.controlHeight);
 
-        controlImage.src = '/piper/screen?time=' + (new Date().getTime());
+        updateControlPreviewImage();
     }
+
+    function updateControlPreviewImage() {
+            controlImage.src = '/piper/screen?time=' + (new Date().getTime());
+        }
 
     $('#controlCanvas').click(function(e){
         var points = getClickPosition(e);
@@ -1114,7 +1118,7 @@ $(function(){
                 loadIcon.remove();
             },
             success: function(result){
-
+                updateControlPreviewImage();
             }
         });
 

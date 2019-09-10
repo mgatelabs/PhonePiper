@@ -18,6 +18,11 @@ public class PrepResult {
     private String fileLevel;
     private String consoleLevel;
 
+    private int controlWidth;
+    private int controlHeight;
+    private int viewWidth;
+    private int viewHeight;
+
     private List<NamedValueDescriptionItem> states;
     private List<NamedValueItem> components;
     private List<NamedValueItem> screens;
@@ -93,5 +98,37 @@ public class PrepResult {
 
     public void setVariableTiers(List<VarTierDefinition> variableTiers) {
         this.variableTiers = variableTiers;
+    }
+
+    public int getControlWidth() {
+        return controlWidth;
+    }
+
+    public void setControlWidth(int controlWidth) {
+        this.controlWidth = controlWidth;
+    }
+
+    public int getControlHeight() {
+        return controlHeight;
+    }
+
+    public void setControlHeight(int controlHeight) {
+        this.controlHeight = controlHeight;
+    }
+
+    public int getViewWidth() {
+        return viewWidth;
+    }
+
+    public void setViewWidth(int viewWidth) {
+        this.viewWidth = viewWidth;
+    }
+
+    public int getViewHeight() {
+        return viewHeight;
+    }
+
+    public void setViewHeight(int viewHeight) {
+        this.viewHeight = viewHeight;
     }
 }

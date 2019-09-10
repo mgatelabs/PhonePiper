@@ -524,6 +524,11 @@ public class WebResource {
 
             setupAdbWrapper(connectionDefinition);
 
+            result.setViewWidth(frameChoices.getDeviceDefinition().getViewWidth());
+            result.setViewHeight(frameChoices.getDeviceDefinition().getViewHeight());
+            result.setControlWidth(frameChoices.getDeviceDefinition().getWidth());
+            result.setControlHeight(frameChoices.getDeviceDefinition().getHeight());
+
             runner = new ScriptRunner(connectionDefinition, deviceHelper, frameChoices.getScriptEnvironment(), frameChoices.getDeviceDefinition(), frameChoices.getViewDefinition(), adbWrapper);
 
             if (VarStateDefinition.exists(frameChoices.getStateNameOrDefault())) {
@@ -872,6 +877,11 @@ public class WebResource {
             result.setConsoleLevel(Loggers.consoleHandler.getLevel().toString());
             result.setFileLevel(Loggers.fileHandler.getLevel().toString());
 
+            result.setViewWidth(frameChoices.getDeviceDefinition().getViewWidth());
+            result.setViewHeight(frameChoices.getDeviceDefinition().getViewHeight());
+            result.setControlWidth(frameChoices.getDeviceDefinition().getWidth());
+            result.setControlHeight(frameChoices.getDeviceDefinition().getHeight());
+
             return result;
         } else {
             return new PrepResult(StatusEnum.error);
@@ -946,7 +956,7 @@ public class WebResource {
     }
 
     @POST
-    @Path("/control/tap/{x}}/{y}")
+    @Path("/control/tap/{x}/{y}")
     public ValueResult controlKeyEvent(@PathParam("x") int x, @PathParam("y") int y) {
         checkInitialState();
         ValueResult result = new ValueResult();

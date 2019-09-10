@@ -82,6 +82,9 @@
                 <li class="nav-item whenLoaded">
                     <a class="nav-link oi oi-wifi" id="device-tab" data-toggle="tab" href="#device" role="tab" aria-controls="device" aria-selected="false"><span class="d-md-none">Device</span></a>
                 </li>
+                <li class="nav-item whenLoaded">
+                    <a class="nav-link oi oi-terminal" id="device-control" data-toggle="tab" href="#control" role="tab" aria-controls="device" aria-selected="false"><span class="d-md-none">Control</span></a>
+                </li>
                 <li class="nav-item">
                     <a class="nav-link oi oi-print" id="console-tab" data-toggle="tab" href="#console" role="tab" aria-controls="console" aria-selected="false"><span class="d-md-none">Log</span></a>
                 </li>
@@ -466,6 +469,24 @@
 
 
         </div>
+
+        <div class="tab-pane fade" id="control" role="tabpanel" aria-labelledby="device-tab">
+
+            <form id="control-form" class="col-sm-12">
+
+                <h3>ADB</h3>
+
+                <div class="input-group">
+                    <button type="button" class="btn btn-info notWhileRunning whenLoaded" id="RefreshControl">Refresh Screen</button>
+                </div>
+
+                <br/>
+
+                <canvas id="controlCanvas"></canvas>
+
+            </form>
+        </div>
+
         <div class="tab-pane fade" id="edit" role="tabpanel" aria-labelledby="edit-tab">
 
             <form id="edit-form" class="col-sm-12" style="display:none;">

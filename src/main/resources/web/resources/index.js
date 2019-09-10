@@ -418,6 +418,18 @@ $(function(){
         });
     });
 
+    $('.eventButton').click(function(){
+        var ref= $(this), button = ref.attr('controlButton');
+        var loadIcon = loadNotice(undefined, 'Event Action: ' + button);
+        $.ajax({
+            type: "POST",
+            url: '/piper/control/key/event/' + encodeURIComponent(button),
+            complete: function(){
+                loadIcon.remove();
+            }
+        });
+    });
+
     configList.on('click', 'button', function(){
         var ref = $(this), index = ref.attr('index') - 0;
         if (index >= 0 && index < configs.length) {

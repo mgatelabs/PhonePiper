@@ -1134,7 +1134,9 @@ public class WebResource {
                 // Get the Image
                 ImageWrapper wrapper = deviceHelper.download();
 
-                if (wrapper.isReady()) {
+                if (wrapper == null) {
+                    return Response.status(500).build();
+                } else if (wrapper.isReady()) {
                     byte[] stream = wrapper.outputPng();
                     if (stream != null) {
                         return Response.status(200).header("content-type", "image/png").entity(stream).build();

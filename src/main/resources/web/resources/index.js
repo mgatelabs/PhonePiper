@@ -1094,26 +1094,50 @@ $(function(){
 
     var controlImage = new Image();
 
+    var isLoadingImage = false;
+
     controlImage.addEventListener('load', function() {
-        console.log("Loaded");
+        console.log("Image Loaded");
+        isLoadingImage = false;
 
         var c = $('#controlCanvas');
         var ctx = c[0].getContext('2d');
 
-        ctx.drawImage(controlImage, 0, 0, viewSetup.viewWidth - 0, viewSetup.viewHeight - 0, 0, 0, viewSetup.controlWidth - 0, viewSetup.controlHeight - 0);
+        ctx.drawImage(controlImage, 0, 0, viewSetup.viewWidth - 0, viewSetup.viewHeight - 0, 0, 0, (viewSetup.controlWidth - 0) / 2.0, (viewSetup.controlHeight - 0) / 2.0);
     }, false);
+
+    controlImage.addEventListener('error', function() {
+            console.log("Image Error");
+            isLoadingImage = false;
+
+            var c = $('#controlCanvas');
+            var ctx = c[0].getContext('2d');
+
+            ctx.font = "30px Arial";
+            ctx.fillText("Hello World", viewSetup.controlWidth / 2.0, 50);
+    }, false);
+
+    var determineImageWidth = -1;
+    var determineImageHeight = -1;
 
     function updateControlPreview() {
 
-        var c = $('#controlCanvas');
-        c.attr('width', viewSetup.controlWidth);
-        c.attr('height', viewSetup.controlHeight);
+        var c = $('#controlCanvas'), dw = (viewSetup.controlWidth - 0) / 2, dh = (viewSetup.controlHeight - 0) / 2;
+        if (determineImageWidth != dw || determineImageHeight != dh) {
+            determineImageWidth = dw;
+            determineImageHeight = dh;
+            c.attr('width', dw);
+            c.attr('height', dh);
+        }
 
         updateControlPreviewImage();
     }
 
     function updateControlPreviewImage() {
-            controlImage.src = '/piper/screen?time=' + (new Date().getTime());
+            if (!isLoadingImage) {
+                isLoadingImage = true;
+                controlImage.src = '/piper/screen?time=' + (new Date().getTime());
+            }
         }
 
     $('#controlCanvas').click(function(e){
@@ -1138,8 +1162,8 @@ $(function(){
 
     function getClickPosition(e) {
         var parentPosition = getPosition(e.currentTarget);
-        var xPosition = e.clientX - parentPosition.x;
-        var yPosition = e.clientY - parentPosition.y;
+        var xPosition = (e.clientX - parentPosition.x) * 2;
+        var yPosition = (e.clientY - parentPosition.y) * 2;
         return {x: xPosition, y: yPosition};
     }
 

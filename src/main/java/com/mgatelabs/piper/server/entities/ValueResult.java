@@ -11,15 +11,17 @@ public class ValueResult {
         return value;
     }
 
-    public void setValue(String value) {
+    public ValueResult setValue(String value) {
         this.value = value;
+        return this;
     }
 
     public String getStatus() {
         return status;
     }
 
-    public void setStatus(String status) {
+    public ValueResult setStatus(String status) {
         this.status = status;
+        return this;
     }
 }

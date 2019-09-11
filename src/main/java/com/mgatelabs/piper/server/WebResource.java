@@ -932,6 +932,7 @@ public class WebResource {
 
     @GET
     @Path("/files/list")
+    @Produces("application/json")
     public FileListResult listFiles() {
         final FileListResult result = new FileListResult();
         final List<String> views = Constants.arrayToList(Constants.listFoldersFilesIn(new File(Runner.WORKING_DIRECTORY, Constants.PATH_VIEWS)));
@@ -947,6 +948,7 @@ public class WebResource {
 
     @POST
     @Path("/control/key/event/{event}")
+    @Produces("application/json")
     public ValueResult controlKeyEvent(@PathParam("event") String eventId) {
         checkInitialState();
         ValueResult result = new ValueResult();
@@ -957,6 +959,7 @@ public class WebResource {
 
     @POST
     @Path("/control/tap/{x}/{y}")
+    @Produces("application/json")
     public ValueResult controlKeyEvent(@PathParam("x") int x, @PathParam("y") int y) {
         checkInitialState();
         ValueResult result = new ValueResult();
@@ -967,6 +970,7 @@ public class WebResource {
 
     @POST
     @Path("/control/component/{componentId}/{actionId}")
+    @Produces("application/json")
     public ValueResult controlKeyEvent(@PathParam("componentId") String componentId, @PathParam("actionId") String actionId) {
         checkInitialState();
         ValueResult result = new ValueResult();
@@ -996,6 +1000,7 @@ public class WebResource {
 
     @GET
     @Path("/configs")
+    @Produces("application/json")
     public ConfigListResponse listConfigs() {
         final File configPath = new File(Runner.WORKING_DIRECTORY, Constants.PATH_CONFIGS);
         final ObjectMapper objectMapper = JsonTool.getInstance();
@@ -1029,6 +1034,7 @@ public class WebResource {
 
     @POST
     @Path("/configs")
+    @Produces("application/json")
     public Map<String, String> saveConfigs(@RequestBody LoadRequest request) {
         final File configPath = new File(Runner.WORKING_DIRECTORY, Constants.PATH_CONFIGS);
         if (StringUtils.isBlank(request.getStateName())) {
@@ -1090,6 +1096,7 @@ public class WebResource {
 
     @DELETE
     @Path("/configs/{configName}")
+    @Produces("application/json")
     public Map<String, String> saveConfigs(@PathParam("configName") String configName) {
         final File configPath = new File(Runner.WORKING_DIRECTORY, Constants.PATH_CONFIGS);
         if (StringUtils.isBlank(configName)) {
@@ -1125,19 +1132,12 @@ public class WebResource {
 
     @GET
     @Path("/screen")
+    @Produces("image/png")
     public Response screen() {
         try {
-            checkInitialState();
-            if (frameChoices != null) {
-                // Save the Image
-                deviceHelper.refresh(adbWrapper);
-                // Get the Image
-                ImageWrapper wrapper = deviceHelper.download();
-
-                if (wrapper == null) {
-                    return Response.status(500).build();
-                } else if (wrapper.isReady()) {
-                    byte[] stream = wrapper.outputPng();
+            if (screenWrapper != null) {
+                if (screenWrapper.isReady()) {
+                    byte[] stream = screenWrapper.outputPng();
                     if (stream != null) {
                         return Response.status(200).header("content-type", "image/png").entity(stream).build();
                     }
@@ -1147,6 +1147,27 @@ public class WebResource {
             ex.printStackTrace();
         }
         return Response.status(500).build();
+    }
+
+    private static ImageWrapper screenWrapper;
+
+    @POST
+    @Path("/screen/prep")
+    @Produces("application/json")
+    public ValueResult screenPrep() {
+        try {
+            checkInitialState();
+            if (frameChoices != null) {
+                // Save the Image
+                deviceHelper.refresh(adbWrapper);
+                // Get the Image
+                screenWrapper = deviceHelper.download();
+                return new ValueResult().setStatus("ok");
+            }
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+        return new ValueResult().setStatus("fail");
     }
 
     @GET

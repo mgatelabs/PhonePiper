@@ -1114,7 +1114,7 @@ $(function(){
             var ctx = c[0].getContext('2d');
 
             ctx.font = "30px Arial";
-            ctx.fillText("Hello World", viewSetup.controlWidth / 2.0, 50);
+            ctx.fillText("Error", 50, 50);
     }, false);
 
     var determineImageWidth = -1;
@@ -1130,15 +1130,39 @@ $(function(){
             c.attr('height', dh);
         }
 
-        updateControlPreviewImage();
+        requestControlPreviewUpdate();
+    }
+
+    function requestControlPreviewUpdate() {
+
+        if (!isLoadingImage) {
+
+            var c = $('#controlCanvas');
+            var ctx = c[0].getContext('2d');
+
+            ctx.font = "30px Arial";
+            ctx.fillText("Please Wait, Loading...", 50, 50);
+
+            var loadIcon = loadNotice("Screen Tap ", 'Load');
+            isLoadingImage = true;
+            $.ajax({
+                type: "POST",
+                dataType:'json',
+                url: '/piper/screen/prep',
+                complete: function(){
+                    loadIcon.remove();
+                    isLoadingImage = false;
+                },
+                success: function(result){
+                    updateControlPreviewImage();
+                }
+            });
+        }
     }
 
     function updateControlPreviewImage() {
-            if (!isLoadingImage) {
-                isLoadingImage = true;
-                controlImage.src = '/piper/screen?time=' + (new Date().getTime());
-            }
-        }
+        controlImage.src = '/piper/screen?time=' + (new Date().getTime());
+    }
 
     $('#controlCanvas').click(function(e){
         var points = getClickPosition(e);
@@ -1154,7 +1178,9 @@ $(function(){
                 loadIcon.remove();
             },
             success: function(result){
-                updateControlPreviewImage();
+                if (result && result.status == 'ok') {
+                    requestControlPreviewUpdate();
+                }
             }
         });
 

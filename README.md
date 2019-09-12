@@ -172,7 +172,7 @@ Make a new folder PhonePiper
 
 Clone the latest source
 
-git clone git@github.com:mgatelabs/PhonePiper.git ./PhonePiper
+`git clone git@github.com:mgatelabs/PhonePiper.git ./PhonePiper`
 
 Build from source
 

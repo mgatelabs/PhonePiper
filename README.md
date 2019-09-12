@@ -177,5 +177,7 @@ Clone the latest source
 Build from source
 
 `cd PhonePiper
+
 mvn clean compile package
+
 cd ..`

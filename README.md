@@ -158,6 +158,10 @@ sudo apt-get install wget git-core
 
 `sudo apt-get install -y android-tools-adb`
 
+### Install Maven
+
+`sudo apt-get install maven`
+
 ## Installing Phone Piper
 
 ## Installing Scripts

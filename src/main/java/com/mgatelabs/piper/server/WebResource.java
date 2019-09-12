@@ -225,13 +225,8 @@ public class WebResource {
         checkInitialState();
         final ValueResult valueResult = new ValueResult();
         try {
-            if (runner != null) {
-                runner.stopShell();
-            }
+            adbWrapper.restart();
             String s = AdbShell.enableUsb();
-            if (runner != null) {
-                runner.restartShell();
-            }
             valueResult.setValue(s);
             valueResult.setStatus("ok");
         } catch (Exception ex) {
@@ -246,25 +241,8 @@ public class WebResource {
     public synchronized ValueResult adbRestart() {
         checkInitialState();
         final ValueResult valueResult = new ValueResult();
-        if (runner != null) {
-            try {
-                valueResult.setValue(runner.restartShell());
-                valueResult.setStatus("ok");
-            } catch (Exception ex) {
-                valueResult.setStatus("error");
-                ex.printStackTrace();
-            }
-        } else if (editHolder != null) {
-            try {
-                valueResult.setValue(editHolder.restartShell());
-                valueResult.setStatus("ok");
-            } catch (Exception ex) {
-                valueResult.setStatus("error");
-                ex.printStackTrace();
-            }
-        } else {
-            valueResult.setStatus("error");
-        }
+        valueResult.setValue(adbWrapper.restart());
+        valueResult.setStatus("ok");
         return valueResult;
     }
 
@@ -274,24 +252,9 @@ public class WebResource {
     public synchronized ValueResult adbKill() {
         checkInitialState();
         final ValueResult valueResult = new ValueResult();
-        StringBuilder sb = new StringBuilder();
-        if (runner != null) {
-            try {
-                if (runner != null) {
-                    runner.stopShell();
-                }
-                sb.append(AdbShell.disconnect());
-                sb.append(" - ");
-                sb.append(AdbShell.killServer());
-                valueResult.setValue(sb.toString());
-                valueResult.setStatus("ok");
-            } catch (Exception ex) {
-                valueResult.setStatus("error");
-                ex.printStackTrace();
-            }
-        } else {
-            valueResult.setStatus("error");
-        }
+        if (adbWrapper != null)
+            valueResult.setValue(adbWrapper.shutdown(ConnectionDefinition.AdbType.FULL));
+        valueResult.setStatus("ok");
         return valueResult;
     }
 
@@ -356,11 +319,14 @@ public class WebResource {
                     } else {
                         if (!results.contains(connectionDefinition.getApp())) {
                             logger.error("App: " + connectionDefinition.getApp() + " is not running, will restart");
-                            valueResult.setValue(adbWrapper.execWithOutput("monkey -p " + connectionDefinition.getApp() + " -c android.intent.category.LAUNCHER 1"));
+                            valueResult.setValue(adbWrapper.execWithOutput("monkey --pct-syskeys 0 -p " + connectionDefinition.getApp() + " 1"));
                             valueResult.setStatus("ok");
                             return valueResult;
                         }
                     }
+                } else {
+                    valueResult.setValue("App package missing");
+                    valueResult.setStatus("error");
                 }
 
                 return valueResult;
@@ -380,13 +346,8 @@ public class WebResource {
         checkInitialState();
         final ValueResult valueResult = new ValueResult();
         try {
-            if (runner != null) {
-                runner.stopShell();
-            }
+            adbWrapper.restart();
             String s = AdbShell.enableRemote();
-            if (runner != null) {
-                runner.restartShell();
-            }
             valueResult.setValue(s);
             valueResult.setStatus("ok");
         } catch (Exception ex) {
@@ -397,6 +358,7 @@ public class WebResource {
         return valueResult;
     }
 
+    /*
     @POST
     @Path("/adb/connect")
     @Produces(MediaType.APPLICATION_JSON)
@@ -404,14 +366,10 @@ public class WebResource {
         checkInitialState();
         final ValueResult valueResult = new ValueResult();
         try {
-            if (runner != null) {
-                runner.stopShell();
-            }
+
 
             String s = AdbShell.connect(deviceHelper.getIpAddress(), connectionDefinition.getAdbPort());
-            if (runner != null) {
-                runner.restartShell();
-            }
+
             valueResult.setValue(s);
             valueResult.setStatus("ok");
         } catch (Exception ex) {
@@ -421,6 +379,7 @@ public class WebResource {
         }
         return valueResult;
     }
+    */
 
     @POST
     @Path("/adb/devices")
@@ -430,6 +389,24 @@ public class WebResource {
         final ValueResult valueResult = new ValueResult();
         try {
             String s = AdbShell.devices();
+            valueResult.setValue(s);
+            valueResult.setStatus("ok");
+        } catch (Exception ex) {
+            valueResult.setStatus("error");
+            valueResult.setValue(ex.getLocalizedMessage());
+            ex.printStackTrace();
+        }
+        return valueResult;
+    }
+
+    @POST
+    @Path("/adb/reboot")
+    @Produces(MediaType.APPLICATION_JSON)
+    public synchronized ValueResult adbReboot() {
+        checkInitialState();
+        final ValueResult valueResult = new ValueResult();
+        try {
+            String s = AdbShell.reboot();
             valueResult.setValue(s);
             valueResult.setStatus("ok");
         } catch (Exception ex) {
@@ -545,7 +522,7 @@ public class WebResource {
         }
 
         if (adbWrapper != null) {
-            adbWrapper.shutdown();
+            adbWrapper.shutdown(connectionDefinition.getAdbLevel());
             adbWrapper = null;
         }
 
@@ -564,6 +541,11 @@ public class WebResource {
             editHolder = null;
 
             setupAdbWrapper(connectionDefinition);
+
+            result.setViewWidth(frameChoices.getDeviceDefinition().getViewWidth());
+            result.setViewHeight(frameChoices.getDeviceDefinition().getViewHeight());
+            result.setControlWidth(frameChoices.getDeviceDefinition().getWidth());
+            result.setControlHeight(frameChoices.getDeviceDefinition().getHeight());
 
             runner = new ScriptRunner(connectionDefinition, deviceHelper, frameChoices.getScriptEnvironment(), frameChoices.getDeviceDefinition(), frameChoices.getViewDefinition(), adbWrapper);
 
@@ -602,6 +584,8 @@ public class WebResource {
                             tempConnection.setDirect(value);
                         } else if (field.equalsIgnoreCase("helperType")) {
                             tempConnection.setHelperType(ConnectionDefinition.HelperType.valueOf(value));
+                        } else if (field.equalsIgnoreCase("adbLevel")) {
+                            tempConnection.setAdbLevel(ConnectionDefinition.AdbType.valueOf(value));
                         } else if (field.equalsIgnoreCase("wifi")) {
                             tempConnection.setWifi(Boolean.parseBoolean(value));
                         } else if (field.equalsIgnoreCase("throttle")) {
@@ -649,7 +633,7 @@ public class WebResource {
         }
 
         if (adbWrapper != null) {
-            sb.append(adbWrapper.shutdown());
+            sb.append(adbWrapper.shutdown(connectionDefinition.getAdbLevel()));
             adbWrapper = null;
         }
 
@@ -679,7 +663,7 @@ public class WebResource {
         }
 
         if (adbWrapper != null) {
-            sb.append(adbWrapper.shutdown());
+            sb.append(adbWrapper.shutdown(connectionDefinition.getAdbLevel()));
             adbWrapper = null;
         }
 
@@ -709,7 +693,7 @@ public class WebResource {
         }
 
         if (adbWrapper != null) {
-            adbWrapper.shutdown();
+            adbWrapper.shutdown(connectionDefinition.getAdbLevel());
             adbWrapper = null;
         }
 
@@ -739,7 +723,8 @@ public class WebResource {
     }
 
     private void setupAdbWrapper(ConnectionDefinition connectionDefinition) {
-        adbKill();
+        if (connectionDefinition.getAdbLevel() == ConnectionDefinition.AdbType.FULL)
+            adbKill();
 
         adbDevices();
 
@@ -805,7 +790,7 @@ public class WebResource {
         }
 
         if (adbWrapper != null) {
-            adbWrapper.shutdown();
+            adbWrapper.shutdown(connectionDefinition.getAdbLevel());
             adbWrapper = null;
         }
 
@@ -910,6 +895,11 @@ public class WebResource {
             result.setConsoleLevel(Loggers.consoleHandler.getLevel().toString());
             result.setFileLevel(Loggers.fileHandler.getLevel().toString());
 
+            result.setViewWidth(frameChoices.getDeviceDefinition().getViewWidth());
+            result.setViewHeight(frameChoices.getDeviceDefinition().getViewHeight());
+            result.setControlWidth(frameChoices.getDeviceDefinition().getWidth());
+            result.setControlHeight(frameChoices.getDeviceDefinition().getHeight());
+
             return result;
         } else {
             return new PrepResult(StatusEnum.error);
@@ -960,6 +950,7 @@ public class WebResource {
 
     @GET
     @Path("/files/list")
+    @Produces("application/json")
     public FileListResult listFiles() {
         final FileListResult result = new FileListResult();
         final List<String> views = Constants.arrayToList(Constants.listFoldersFilesIn(new File(Runner.WORKING_DIRECTORY, Constants.PATH_VIEWS)));
@@ -975,6 +966,7 @@ public class WebResource {
 
     @POST
     @Path("/control/key/event/{event}")
+    @Produces("application/json")
     public ValueResult controlKeyEvent(@PathParam("event") String eventId) {
         checkInitialState();
         ValueResult result = new ValueResult();
@@ -984,7 +976,19 @@ public class WebResource {
     }
 
     @POST
+    @Path("/control/tap/{x}/{y}")
+    @Produces("application/json")
+    public ValueResult controlKeyEvent(@PathParam("x") int x, @PathParam("y") int y) {
+        checkInitialState();
+        ValueResult result = new ValueResult();
+        AdbUtils.tap(x, y, adbWrapper);
+        result.setStatus("ok");
+        return result;
+    }
+
+    @POST
     @Path("/control/component/{componentId}/{actionId}")
+    @Produces("application/json")
     public ValueResult controlKeyEvent(@PathParam("componentId") String componentId, @PathParam("actionId") String actionId) {
         checkInitialState();
         ValueResult result = new ValueResult();
@@ -1014,6 +1018,7 @@ public class WebResource {
 
     @GET
     @Path("/configs")
+    @Produces("application/json")
     public ConfigListResponse listConfigs() {
         final File configPath = new File(Runner.WORKING_DIRECTORY, Constants.PATH_CONFIGS);
         final ObjectMapper objectMapper = JsonTool.getInstance();
@@ -1047,6 +1052,7 @@ public class WebResource {
 
     @POST
     @Path("/configs")
+    @Produces("application/json")
     public Map<String, String> saveConfigs(@RequestBody LoadRequest request) {
         final File configPath = new File(Runner.WORKING_DIRECTORY, Constants.PATH_CONFIGS);
         if (StringUtils.isBlank(request.getStateName())) {
@@ -1108,6 +1114,7 @@ public class WebResource {
 
     @DELETE
     @Path("/configs/{configName}")
+    @Produces("application/json")
     public Map<String, String> saveConfigs(@PathParam("configName") String configName) {
         final File configPath = new File(Runner.WORKING_DIRECTORY, Constants.PATH_CONFIGS);
         if (StringUtils.isBlank(configName)) {
@@ -1143,17 +1150,12 @@ public class WebResource {
 
     @GET
     @Path("/screen")
+    @Produces("image/png")
     public Response screen() {
         try {
-            checkInitialState();
-            if (frameChoices != null) {
-                // Save the Image
-                deviceHelper.refresh(adbWrapper);
-                // Get the Image
-                ImageWrapper wrapper = deviceHelper.download();
-
-                if (wrapper.isReady()) {
-                    byte[] stream = wrapper.outputPng();
+            if (screenWrapper != null) {
+                if (screenWrapper.isReady()) {
+                    byte[] stream = screenWrapper.outputPng();
                     if (stream != null) {
                         return Response.status(200).header("content-type", "image/png").entity(stream).build();
                     }
@@ -1163,6 +1165,27 @@ public class WebResource {
             ex.printStackTrace();
         }
         return Response.status(500).build();
+    }
+
+    private static ImageWrapper screenWrapper;
+
+    @POST
+    @Path("/screen/prep")
+    @Produces("application/json")
+    public ValueResult screenPrep() {
+        try {
+            checkInitialState();
+            if (frameChoices != null) {
+                // Save the Image
+                deviceHelper.refresh(adbWrapper);
+                // Get the Image
+                screenWrapper = deviceHelper.download();
+                return new ValueResult().setStatus("ok");
+            }
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+        return new ValueResult().setStatus("fail");
     }
 
     @GET

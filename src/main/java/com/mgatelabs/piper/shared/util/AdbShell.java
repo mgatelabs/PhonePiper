@@ -53,6 +53,10 @@ public class AdbShell {
         return commonHandler(new ProcessBuilder(ADB_PATH, "devices"));
     }
 
+    public static String reboot() {
+        return commonHandler(new ProcessBuilder(ADB_PATH, "reboot"));
+    }
+
     public static String disconnect() {
         return commonHandler(new ProcessBuilder(ADB_PATH, "disconnect"));
     }

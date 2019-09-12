@@ -59,3 +59,7 @@ body.running .whileRunning  {
 .nav-item a.oi > span {
     padding-left: 4px;
 }
+
+#controlCanvas {
+    border:1px solid black;
+}

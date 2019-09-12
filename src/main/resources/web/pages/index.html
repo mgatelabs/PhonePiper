@@ -82,6 +82,9 @@
                 <li class="nav-item whenLoaded">
                     <a class="nav-link oi oi-wifi" id="device-tab" data-toggle="tab" href="#device" role="tab" aria-controls="device" aria-selected="false"><span class="d-md-none">Device</span></a>
                 </li>
+                <li class="nav-item whenLoaded">
+                    <a class="nav-link oi oi-terminal" id="device-control" data-toggle="tab" href="#control" role="tab" aria-controls="device" aria-selected="false"><span class="d-md-none">Control</span></a>
+                </li>
                 <li class="nav-item">
                     <a class="nav-link oi oi-print" id="console-tab" data-toggle="tab" href="#console" role="tab" aria-controls="console" aria-selected="false"><span class="d-md-none">Log</span></a>
                 </li>
@@ -216,7 +219,7 @@
                 </div>
                 <br/>
 
-                <h3>Device</h3>
+                <h3>Application</h3>
 
                 <div class="input-group">
                     <div class="input-group-prepend">
@@ -225,7 +228,8 @@
                     <input type="text" class="form-control config-attribute" attrname="device-app" placeholder="Target App Package to Execute">
                 </div>
 
-                <h3>Device</h3>
+                <br/>
+                <h3>Helper</h3>
 
                 <div class="input-group">
                     <div class="input-group-prepend">
@@ -263,6 +267,20 @@
                 <br/>
                 <div class="input-group">
                     <div class="input-group-prepend">
+                        <span class="input-group-text">Helper</span>
+                    </div>
+                    <select class="form-control config-attribute" attrname="device-helperType">
+                        <option value="REMOTE" selected>Use On Device Helper</option>
+                        <option value="LOCAL">Use Local Helper</option>
+                        <option value="LOCAL_PNG">Use Local Helper (png)</option>
+                    </select>
+                </div>
+
+                <br/>
+                <h3>ADB</h3>
+
+                <div class="input-group">
+                    <div class="input-group-prepend">
                         <span class="input-group-text">ADB</span>
                     </div>
                     <input type="text" class="form-control config-attribute" attrname="device-adb" placeholder="Path to ADB execuable">
@@ -276,14 +294,13 @@
                 <br/>
                 <div class="input-group">
                     <div class="input-group-prepend">
-                        <span class="input-group-text">Direct</span>
+                        <span class="input-group-text">ADB Level</span>
                     </div>
-                    <input type="text" class="form-control config-attribute" attrname="device-direct" placeholder="ADB direct value">
-                </div>
-
-                <br/>
-                <div class="alert alert-dark" role="alert">
-                    Leave blank in most cases.  Used to identity which device to communicate with, if multiple have been connected.
+                    <select class="form-control config-attribute" attrname="device-adbLevel">
+                        <option value="FULL" selected>Clean Start &amp; Stop</option>
+                        <option value="DISCONNECT">Disconnect from Device</option>
+                        <option value="LEAVE">Leave it alone</option>
+                    </select>
                 </div>
 
                 <br/>
@@ -300,13 +317,14 @@
                 <br/>
                 <div class="input-group">
                     <div class="input-group-prepend">
-                        <span class="input-group-text">Helper</span>
+                        <span class="input-group-text">Direct</span>
                     </div>
-                    <select class="form-control config-attribute" attrname="device-helperType">
-                        <option value="REMOTE" selected>Use Device Helper</option>
-                        <option value="LOCAL">Use Local Helper</option>
-                        <option value="LOCAL_PNG">Use Local Helper (png)</option>
-                    </select>
+                    <input type="text" class="form-control config-attribute" attrname="device-direct" placeholder="ADB direct value">
+                </div>
+
+                <br/>
+                <div class="alert alert-dark" role="alert">
+                    Leave blank in most cases.  Used to identity which device to communicate with, if multiple have been connected.  Set to * for any device.
                 </div>
 
                 <br/>
@@ -400,6 +418,31 @@
                     <button type="button" id="controlSlowLeft" controlButton="SLOW_LEFT"
                             class="btn btn-warning notWhileRunning controlButton">Left
                     </button>
+
+                    <button type="button" id="eventWake" controlButton="wakeup"
+                            class="btn btn-danger notWhileRunning eventButton">Wakeup
+                    </button>
+
+                    <button type="button" id="eventSleep" controlButton="sleep"
+                            class="btn btn-danger notWhileRunning eventButton">Sleep
+                    </button>
+
+                    <button type="button" id="eventPower" controlButton="power"
+                            class="btn btn-danger notWhileRunning eventButton">Power
+                    </button>
+
+                    <button type="button" id="eventBack" controlButton="back"
+                            class="btn btn-danger notWhileRunning eventButton">Back
+                    </button>
+
+                    <button type="button" id="eventBrighter" controlButton="brighter"
+                            class="btn btn-danger notWhileRunning eventButton">Brighter
+                    </button>
+
+                    <button type="button" id="eventDarker" controlButton="darker"
+                            class="btn btn-danger notWhileRunning eventButton">Darker
+                    </button>
+
                 </div>
             </form>
 
@@ -418,6 +461,7 @@
                     <!--<button type="button" class="btn controlAdb btn-info notWhileRunning whenLoaded" adb="usb">USB</button>-->
                     <button type="button" class="btn controlAdb btn-info notWhileRunning whenLoaded" adb="remote">Enable Remote Access</button>
                     <button type="button" class="btn controlAdb btn-info notWhileRunning whenLoaded" adb="devices">List Devices</button>
+                    <button type="button" class="btn controlAdb btn-danger notWhileRunning whenLoaded" adb="reboot">Reboot Device</button>
 
                     <button type="button" class="btn controlAdb btn-secondary notWhileRunning whenLoaded" adb="appcheck">Open App</button>
                     <button type="button" class="btn controlAdb btn-secondary notWhileRunning whenLoaded" adb="appclose">Close App</button>
@@ -451,6 +495,24 @@
 
 
         </div>
+
+        <div class="tab-pane fade" id="control" role="tabpanel" aria-labelledby="device-tab">
+
+            <form id="control-form" class="col-sm-12">
+
+                <h3>ADB</h3>
+
+                <div class="input-group">
+                    <button type="button" class="btn btn-info notWhileRunning whenLoaded" id="RefreshControl">Refresh Screen</button>
+                </div>
+
+                <br/>
+
+                <canvas id="controlCanvas"></canvas>
+
+            </form>
+        </div>
+
         <div class="tab-pane fade" id="edit" role="tabpanel" aria-labelledby="edit-tab">
 
             <form id="edit-form" class="col-sm-12" style="display:none;">

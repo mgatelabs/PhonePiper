@@ -60,6 +60,13 @@ $(function(){
 
     var settings = {};
 
+    var viewSetup = {
+        viewWidth:1080,
+        viewHeight:1920,
+        controlWidth:1080,
+        controlHeight:1920
+    }
+
     function loadNotice(clsName, name) {
         clsName = clsName || 'cloud-download';
         name = name || 'Loading';
@@ -411,6 +418,18 @@ $(function(){
         });
     });
 
+    $('.eventButton').click(function(){
+        var ref= $(this), button = ref.attr('controlButton');
+        var loadIcon = loadNotice(undefined, 'Event Action: ' + button);
+        $.ajax({
+            type: "POST",
+            url: '/piper/control/key/event/' + encodeURIComponent(button),
+            complete: function(){
+                loadIcon.remove();
+            }
+        });
+    });
+
     configList.on('click', 'button', function(){
         var ref = $(this), index = ref.attr('index') - 0;
         if (index >= 0 && index < configs.length) {
@@ -471,6 +490,12 @@ $(function(){
             if (result.status == 'ok') {
                 states.empty();
                 components.empty();
+
+                viewSetup.viewWidth = result.viewWidth;
+                viewSetup.viewHeight = result.viewHeight;
+                viewSetup.controlWidth = result.controlWidth;
+                viewSetup.controlHeight = result.controlHeight;
+
                 var i, valueLoop, item, grp, label, input, button, def;
                 for (i = 0; i < result.states.length; i++) {
                 states.append($('<option></option>').attr('value', result.states[i].value).text(result.states[i].name).attr('description', result.states[i].description));
@@ -847,7 +872,7 @@ $(function(){
         return data;
     }
 
-    function saveConfig() {
+    function saveConfig(callback) {
 
         var data = extractConfig();
 
@@ -870,7 +895,7 @@ $(function(){
             },
             success: function(result){
                 if (result.status == 'ok') {
-                    loadConfigurations();
+                    loadConfigurations(callback);
                 } else {
                     alert(result.msg || "Error");
                 }
@@ -1031,27 +1056,171 @@ $(function(){
 
     loadButton.click(function(){
 
-        var loadIcon = loadNotice(undefined, 'Load');
+        saveConfig(function(){
+            var loadIcon = loadNotice(undefined, 'Load');
 
-        var blob = extractConfig();
-        $.ajax({
-          type: "POST",
-          url: '/piper/process/prep',
-          data: JSON.stringify(blob),
-          headers: {
-                'Content-Type': 'application/json'
-            },
-            complete: function(){
-            	loadIcon.remove();
-            },
-          success: function(result){
-            if (result.status == 'ok') {
-                loadProcessInfo(true);
-                $('[href="#run"]').tab('show');
-            }
-          },
-          dataType: 'json'
+            var blob = extractConfig();
+            $.ajax({
+              type: "POST",
+              url: '/piper/process/prep',
+              data: JSON.stringify(blob),
+              headers: {
+                    'Content-Type': 'application/json'
+                },
+                complete: function(){
+                    loadIcon.remove();
+                },
+              success: function(result){
+                if (result.status == 'ok') {
+
+                    viewSetup.viewWidth = result.viewWidth;
+                    viewSetup.viewHeight = result.viewHeight;
+                    viewSetup.controlWidth = result.controlWidth;
+                    viewSetup.controlHeight = result.controlHeight;
+
+                    loadProcessInfo(true);
+                    $('[href="#run"]').tab('show');
+                }
+              },
+              dataType: 'json'
+            });
         });
+
+    });
+
+    ///////////////////////////////////////////////////////////////////////////
+    // Control
+    ///////////////////////////////////////////////////////////////////////////
+
+    var controlImage = new Image();
+
+    var isLoadingImage = false;
+
+    controlImage.addEventListener('load', function() {
+        console.log("Image Loaded");
+        isLoadingImage = false;
+
+        var c = $('#controlCanvas');
+        var ctx = c[0].getContext('2d');
+
+        ctx.drawImage(controlImage, 0, 0, viewSetup.viewWidth - 0, viewSetup.viewHeight - 0, 0, 0, (viewSetup.controlWidth - 0) / 2.0, (viewSetup.controlHeight - 0) / 2.0);
+    }, false);
+
+    controlImage.addEventListener('error', function() {
+            console.log("Image Error");
+            isLoadingImage = false;
+
+            var c = $('#controlCanvas');
+            var ctx = c[0].getContext('2d');
+
+            ctx.font = "30px Arial";
+            ctx.fillText("Error", 50, 50);
+    }, false);
+
+    var determineImageWidth = -1;
+    var determineImageHeight = -1;
+
+    function updateControlPreview() {
+
+        var c = $('#controlCanvas'), dw = (viewSetup.controlWidth - 0) / 2, dh = (viewSetup.controlHeight - 0) / 2;
+        if (determineImageWidth != dw || determineImageHeight != dh) {
+            determineImageWidth = dw;
+            determineImageHeight = dh;
+            c.attr('width', dw);
+            c.attr('height', dh);
+        }
+
+        requestControlPreviewUpdate();
+    }
+
+    function requestControlPreviewUpdate() {
+
+        if (!isLoadingImage) {
+
+            var c = $('#controlCanvas');
+            var ctx = c[0].getContext('2d');
+
+            ctx.font = "30px Arial";
+            ctx.fillText("Please Wait, Loading...", 50, 50);
+
+            var loadIcon = loadNotice("Screen Tap ", 'Load');
+            isLoadingImage = true;
+            $.ajax({
+                type: "POST",
+                dataType:'json',
+                url: '/piper/screen/prep',
+                complete: function(){
+                    loadIcon.remove();
+                    isLoadingImage = false;
+                },
+                success: function(result){
+                    updateControlPreviewImage();
+                }
+            });
+        }
+    }
+
+    function updateControlPreviewImage() {
+        controlImage.src = '/piper/screen?time=' + (new Date().getTime());
+    }
+
+    $('#controlCanvas').click(function(e){
+        var points = getClickPosition(e);
+        console.log(points);
+
+        var loadIcon = loadNotice("Screen Tap ", 'Load');
+
+        $.ajax({
+            type: "POST",
+            dataType:'json',
+            url: '/piper/control/tap/' + points.x + '/' + points.y,
+            complete: function(){
+                loadIcon.remove();
+            },
+            success: function(result){
+                if (result && result.status == 'ok') {
+                    requestControlPreviewUpdate();
+                }
+            }
+        });
+
+    });
+
+    function getClickPosition(e) {
+        var parentPosition = getPosition(e.currentTarget);
+        var xPosition = (e.clientX - parentPosition.x) * 2;
+        var yPosition = (e.clientY - parentPosition.y) * 2;
+        return {x: xPosition, y: yPosition};
+    }
+
+    function getPosition(el) {
+      var xPos = 0;
+      var yPos = 0;
+
+      while (el) {
+        if (el.tagName == "BODY") {
+          // deal with browser quirks with body/window/document and page scroll
+          var xScroll = el.scrollLeft || document.documentElement.scrollLeft;
+          var yScroll = el.scrollTop || document.documentElement.scrollTop;
+
+          xPos += (el.offsetLeft - xScroll + el.clientLeft);
+          yPos += (el.offsetTop - yScroll + el.clientTop);
+        } else {
+          // for all other non-BODY elements
+          xPos += (el.offsetLeft - el.scrollLeft + el.clientLeft);
+          yPos += (el.offsetTop - el.scrollTop + el.clientTop);
+        }
+
+        el = el.offsetParent;
+      }
+      return {
+        x: xPos,
+        y: yPos
+      };
+    }
+
+    $('#RefreshControl').click(function(){
+        updateControlPreview();
     });
 
     ///////////////////////////////////////////////////////////////////////////
@@ -1107,7 +1276,7 @@ $(function(){
         configList.append(wrap);
     }
 
-    function loadConfigurations() {
+    function loadConfigurations(callback) {
         var loadIcon = loadNotice(undefined, 'Load Configurations');
         $.ajax({
           type: "GET",
@@ -1119,6 +1288,9 @@ $(function(){
             if (result.status == 'ok') {
                 configs = result.configs;
                 buildConfigs();
+                if (callback) {
+                    callback();
+                }
             } else {
                 alert(result.msg || "Error");
             }

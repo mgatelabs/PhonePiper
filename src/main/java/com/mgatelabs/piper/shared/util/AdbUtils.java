@@ -24,6 +24,12 @@ public class AdbUtils {
     private static final SecureRandom RANDOM = new SecureRandom();
     private static final Logger LOGGER = LoggerFactory.getLogger(AdbUtils.class);
 
+    public static void tap(final int x, final int y, final AdbWrapper shell) {
+        final String cmd;
+        cmd = ("input tap " + x + " " + y);
+        shell.exec(cmd);
+    }
+
     public static void component(DeviceDefinition deviceDefinition, ComponentDefinition componentDefinition, ActionType type, final AdbWrapper shell, boolean batch) {
         if (!componentDefinition.isEnabled()) return;
 
@@ -45,7 +51,8 @@ public class AdbUtils {
                 final int time = 200;
 
                 cmd = ("input swipe " + x1 + " " + y1 + " " + x2 + " " + y2 + " " + time);
-            } break;
+            }
+            break;
             case SWIPE_RIGHT:
             case SWIPE_LEFT: {
                 final int x1 = getStartX(componentDefinition, type);
@@ -68,7 +75,8 @@ public class AdbUtils {
                 final int time = 2000;
 
                 cmd = ("input swipe " + x1 + " " + y1 + " " + x2 + " " + y2 + " " + time);
-            } break;
+            }
+            break;
             case SLOW_LEFT:
             case SLOW_RIGHT: {
                 final int x1 = getStartX(componentDefinition, type);
@@ -268,7 +276,7 @@ public class AdbUtils {
     }
 
     public static boolean persistScreen(AdbWrapper device, boolean png) {
-        return device.exec("screencap "+(png ? "-p " : "")+"/mnt/sdcard/framebuffer." + (png ? "png" : "raw"));
+        return device.exec("screencap " + (png ? "-p " : "") + "/mnt/sdcard/framebuffer." + (png ? "png" : "raw"));
     }
 
     public static ImageWrapper getScreen(AdbWrapper wr) {

@@ -399,6 +399,24 @@ public class WebResource {
         return valueResult;
     }
 
+    @POST
+    @Path("/adb/reboot")
+    @Produces(MediaType.APPLICATION_JSON)
+    public synchronized ValueResult adbReboot() {
+        checkInitialState();
+        final ValueResult valueResult = new ValueResult();
+        try {
+            String s = AdbShell.reboot();
+            valueResult.setValue(s);
+            valueResult.setStatus("ok");
+        } catch (Exception ex) {
+            valueResult.setStatus("error");
+            valueResult.setValue(ex.getLocalizedMessage());
+            ex.printStackTrace();
+        }
+        return valueResult;
+    }
+
     @GET
     @Path("/status")
     @Produces("application/json")

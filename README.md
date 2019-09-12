@@ -126,3 +126,56 @@ For NAT routing you need to do the following.
 
 `<Forwarding name="ADB" proto="1" hostip="127.0.0.1" hostport="21503" guestip="10.0.2.15" guestport="5555"/>`
 `<Forwarding name="PPH" proto="1" hostip="127.0.0.1" hostport="8080" guestip="10.0.2.15" guestport="8080"/>`
+
+
+# Update Guide
+
+This will include instruction for setting up Phone Piper to run on a Raspberry PI.  You already need to have working headless Raspberry PI.
+
+# Raspberry PI Setup
+
+## Device Setup
+
+First thing you need to do is insure everything is up to date
+
+`sudo apt-get update`
+
+Next you need to upgrade your system
+
+`sudo apt-get upgrade`
+
+Now reboot it for all changes to take effect
+
+`sudo reboot`
+
+## Software Setup
+
+### Install Git
+
+sudo apt-get install wget git-core
+
+### Install ADB
+
+`sudo apt-get install -y android-tools-adb`
+
+## Installing Phone Piper
+
+## Installing Scripts
+
+Goto the root folder
+
+`cd ~`
+
+Make a new folder PhonePiper
+
+`mkdir PhonePiper`
+
+Clone the latest source
+
+git clone git@github.com:mgatelabs/PhonePiper.git ./PhonePiper
+
+Build from source
+
+`cd PhonePiper
+mvn clean compile package
+cd ..`

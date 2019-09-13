@@ -162,21 +162,33 @@ sudo apt-get install wget git-core
 
 `sudo apt-get install maven`
 
-## Installing Phone Piper
-
 ## Installing Scripts
 
 Goto the root folder
 
 `cd ~`
 
-Make a new folder PhonePiper
+Create a folder for the scripts (Example for FFBE)
 
-`mkdir PhonePiper`
+`mkdir ffbe`
+
+Clone the latest scripts
+
+`git clone git@github.com:mgatelabs/PhonePiperFFBE.git ./ffbe`
+
+## Installing Phone Piper
+
+Goto the root folder
+
+`cd ~`
+
+Make a new folder Phone-Piper
+
+`mkdir Phone-Piper`
 
 Clone the latest source
 
-`git clone git@github.com:mgatelabs/PhonePiper.git ./PhonePiper`
+`git clone git@github.com:mgatelabs/PhonePiper.git ./Phone-Piper`
 
 Build from source
 
@@ -184,4 +196,16 @@ Build from source
 
 `mvn clean compile package`
 
-`cd ..`
+## Auto-start Phone Piper
+
+You need to copy the file phone_piper to the /etc/init.d folder
+
+`sudo cp ~/Phone-Piper/extra/phone-piper /etc/init.d`
+
+Make the file runable
+
+`sudo chmod +x /etc/init.d/phone-piper`
+
+Install the script
+
+`sudo systemctl enable phone-piper`

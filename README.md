@@ -130,7 +130,7 @@ For NAT routing you need to do the following.
 
 # Update Guide
 
-This will include instruction for setting up Phone Piper to run on a Raspberry PI.  You already need to have working headless Raspberry PI.
+This will include instructions for setting up Phone Piper to run on a Raspberry PI.  You need to have working headless Raspberry PI before attempting to get Phone-Piper working.
 
 # Raspberry PI Setup
 

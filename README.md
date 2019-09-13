@@ -209,3 +209,19 @@ Make the file runable
 Install the script
 
 `sudo systemctl enable phone-piper`
+
+## Update Phone Piper
+
+Copy the phone-piper-build script to the home directory
+
+`cp ~/Phone-Piper/extra/phone-piper-build ~/`
+
+Make the script runable
+
+`sudo chmod +x ~/phone-piper-build`
+
+Run the update script.  The system will reboot after it's finished
+
+`cd ~`
+
+`./phone-piper-build`

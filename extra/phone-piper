@@ -11,8 +11,8 @@ start)
 echo "Starting Phone Piper"
 # Turn 0 on which keeps relay off
 #/home/pi/Phone-Piper/server.sh &
-cd /home/pi/Phone-Piper/working
-java -jar "../target/phone-piper.jar" server &
+cd /home/pi/ffbe
+java -jar "../Phone-Piper/target/phone-piper.jar" server &
 echo $! > /home/pi/phone-piper.pid
 ;;
 stop)

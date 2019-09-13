@@ -1,0 +1,8 @@
+sudo ./phone-piper stop
+cd ffbe
+git pull
+cd ..
+cd Phone-Piper
+git pull
+mvn clean compile package
+sudo reboot

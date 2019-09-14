@@ -1113,6 +1113,9 @@ $(function(){
             var c = $('#controlCanvas');
             var ctx = c[0].getContext('2d');
 
+            ctx.fillStyle = "#FFFFFF";
+            ctx.fillRect(0, 0, viewSetup.controlWidth, 100);
+
             ctx.font = "30px Arial";
             ctx.fillText("Error", 50, 50);
     }, false);

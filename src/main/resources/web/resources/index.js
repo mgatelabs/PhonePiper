@@ -1133,11 +1133,12 @@ $(function(){
         requestControlPreviewUpdate();
     }
 
-    function requestControlPreviewUpdate() {
+    function requestControlPreviewUpdate(cached) {
 
         if (!isLoadingImage) {
 
             var c = $('#controlCanvas');
+            c.prop('cached', cached ? 'C' : 'N');
             var ctx = c[0].getContext('2d');
 
             ctx.font = "30px Arial";
@@ -1148,7 +1149,7 @@ $(function(){
             $.ajax({
                 type: "POST",
                 dataType:'json',
-                url: '/piper/screen/prep',
+                url: '/piper/screen/prep' + (cached ? '/cache' : ''),
                 complete: function(){
                     loadIcon.remove();
                     isLoadingImage = false;
@@ -1165,6 +1166,10 @@ $(function(){
     }
 
     $('#controlCanvas').click(function(e){
+        var ref = $(this), mode = ref.prop('cached');
+        if (cached != 'N') {
+            return;
+        }
         var points = getClickPosition(e);
         console.log(points);
 
@@ -1179,11 +1184,10 @@ $(function(){
             },
             success: function(result){
                 if (result && result.status == 'ok') {
-                    requestControlPreviewUpdate();
+                    requestControlPreviewUpdate(cached == 'C');
                 }
             }
         });
-
     });
 
     function getClickPosition(e) {
@@ -1220,7 +1224,11 @@ $(function(){
     }
 
     $('#RefreshControl').click(function(){
-        updateControlPreview();
+        requestControlPreviewUpdate(false);
+    });
+
+    $('#CacheRefreshControl').click(function(){
+        requestControlPreviewUpdate(true);
     });
 
     ///////////////////////////////////////////////////////////////////////////

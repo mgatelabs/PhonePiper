@@ -385,67 +385,6 @@
 
                 </div>
 
-                <div class="form-group notWhileRunning">
-                    <label for="components">Components</label>
-                    <select id="components" class="form-control notWhileRunning"></select>
-                </div>
-                <div class="form-group">
-                    <button type="button" id="controlTap" controlButton="TAP"
-                            class="btn btn-info notWhileRunning controlButton">Tap
-                    </button>
-                    <button type="button" id="controlSwipeUp" controlButton="SWIPE_UP"
-                            class="btn btn-info notWhileRunning controlButton">Up
-                    </button>
-                    <button type="button" id="controlSwipeRight" controlButton="SWIPE_RIGHT"
-                            class="btn btn-info notWhileRunning controlButton">Right
-                    </button>
-                    <button type="button" id="controlSwipeDown" controlButton="SWIPE_DOWN"
-                            class="btn btn-info notWhileRunning controlButton">Down
-                    </button>
-                    <button type="button" id="controlSwipeLeft" controlButton="SWIPE_LEFT"
-                            class="btn btn-info notWhileRunning controlButton">Left
-                    </button>
-
-                    <button type="button" id="controlSlowUp" controlButton="SLOW_UP"
-                            class="btn btn-warning notWhileRunning controlButton">Up
-                    </button>
-                    <button type="button" id="controlSlowRight" controlButton="SLOW_RIGHT"
-                            class="btn btn-warning notWhileRunning controlButton">Right
-                    </button>
-                    <button type="button" id="controlSlowDown" controlButton="SLOW_DOWN"
-                            class="btn btn-warning notWhileRunning controlButton">Down
-                    </button>
-                    <button type="button" id="controlSlowLeft" controlButton="SLOW_LEFT"
-                            class="btn btn-warning notWhileRunning controlButton">Left
-                    </button>
-
-                    <button type="button" id="eventWake" controlButton="wakeup"
-                            class="btn btn-danger notWhileRunning eventButton">Wakeup
-                    </button>
-
-                    <button type="button" id="eventSleep" controlButton="sleep"
-                            class="btn btn-danger notWhileRunning eventButton">Sleep
-                    </button>
-
-                    <button type="button" id="eventPower" controlButton="power"
-                            class="btn btn-danger notWhileRunning eventButton">Power
-                    </button>
-
-                    <button type="button" id="eventBack" controlButton="back"
-                            class="btn btn-danger notWhileRunning eventButton">Back
-                    </button>
-
-                    <button type="button" id="eventBrighter" controlButton="brighter"
-                            class="btn btn-danger notWhileRunning eventButton">Brighter
-                    </button>
-
-                    <button type="button" id="eventDarker" controlButton="darker"
-                            class="btn btn-danger notWhileRunning eventButton">Darker
-                    </button>
-
-                </div>
-            </form>
-
         </div>
 
         <div class="tab-pane fade" id="device" role="tabpanel" aria-labelledby="device-tab">
@@ -502,8 +441,69 @@
 
                 <h3>ADB</h3>
 
+                <div class="form-group notWhileRunning">
+                    <label for="components">Components</label>
+                    <select id="components" class="form-control notWhileRunning"></select>
+                </div>
+
+                <div class="form-group">
+                    <button type="button" id="controlTap" controlButton="TAP"
+                            class="btn btn-info notWhileRunning controlButton">Tap
+                    </button>
+                    <button type="button" id="controlSwipeUp" controlButton="SWIPE_UP"
+                            class="btn btn-info notWhileRunning controlButton">Up
+                    </button>
+                    <button type="button" id="controlSwipeRight" controlButton="SWIPE_RIGHT"
+                            class="btn btn-info notWhileRunning controlButton">Right
+                    </button>
+                    <button type="button" id="controlSwipeDown" controlButton="SWIPE_DOWN"
+                            class="btn btn-info notWhileRunning controlButton">Down
+                    </button>
+                    <button type="button" id="controlSwipeLeft" controlButton="SWIPE_LEFT"
+                            class="btn btn-info notWhileRunning controlButton">Left
+                    </button>
+
+                    <button type="button" id="controlSlowUp" controlButton="SLOW_UP"
+                            class="btn btn-warning notWhileRunning controlButton">Up
+                    </button>
+                    <button type="button" id="controlSlowRight" controlButton="SLOW_RIGHT"
+                            class="btn btn-warning notWhileRunning controlButton">Right
+                    </button>
+                    <button type="button" id="controlSlowDown" controlButton="SLOW_DOWN"
+                            class="btn btn-warning notWhileRunning controlButton">Down
+                    </button>
+                    <button type="button" id="controlSlowLeft" controlButton="SLOW_LEFT"
+                            class="btn btn-warning notWhileRunning controlButton">Left
+                    </button>
+
+                    <button type="button" id="eventWake" controlButton="wakeup"
+                            class="btn btn-danger notWhileRunning eventButton">Wakeup
+                    </button>
+
+                    <button type="button" id="eventSleep" controlButton="sleep"
+                            class="btn btn-danger notWhileRunning eventButton">Sleep
+                    </button>
+
+                    <button type="button" id="eventPower" controlButton="power"
+                            class="btn btn-danger notWhileRunning eventButton">Power
+                    </button>
+
+                    <button type="button" id="eventBack" controlButton="back"
+                            class="btn btn-danger notWhileRunning eventButton">Back
+                    </button>
+
+                    <button type="button" id="eventBrighter" controlButton="brighter"
+                            class="btn btn-danger notWhileRunning eventButton">Brighter
+                    </button>
+
+                    <button type="button" id="eventDarker" controlButton="darker"
+                            class="btn btn-danger notWhileRunning eventButton">Darker
+                    </button>
+                </div>
+
                 <div class="input-group">
                     <button type="button" class="btn btn-info notWhileRunning whenLoaded" id="RefreshControl">Refresh Screen</button>
+                    <button type="button" class="btn btn-info whileRunning whenLoaded" id="CacheRefreshControl">Cached Screen</button>
                 </div>
 
                 <br/>

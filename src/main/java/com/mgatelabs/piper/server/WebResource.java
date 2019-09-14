@@ -1188,6 +1188,27 @@ public class WebResource {
         return new ValueResult().setStatus("fail");
     }
 
+    @POST
+    @Path("/screen/prep/cache")
+    @Produces("application/json")
+    public ValueResult cacheScreenPrep() {
+        try {
+            checkInitialState();
+            if (frameChoices != null) {
+                if (deviceHelper instanceof LocalDeviceHelper) {
+                    screenWrapper = deviceHelper.download();
+                    if (screenWrapper != null) {
+                        return new ValueResult().setStatus("ok");
+                    }
+                }
+                return new ValueResult().setStatus("fail");
+            }
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+        return new ValueResult().setStatus("fail");
+    }
+
     @GET
     @Path("/resource/{filename}")
     public Response resource(@PathParam("filename") String path) {

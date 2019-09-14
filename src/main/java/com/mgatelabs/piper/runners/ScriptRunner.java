@@ -797,7 +797,8 @@ public class ScriptRunner {
                                     if (StringUtils.isNotBlank(connectionDefinition.getApp())) {
                                         final String results = shell.execWithOutput("ps");
                                         if (StringUtils.isBlank(results)) {
-                                            logger.error("ADB connection may be down");
+                                            logger.error("ADB connection may be down, attempting to recover ADB");
+                                            logger.info(AdbShell.devices());
                                         } else {
                                             if (!results.contains(connectionDefinition.getApp())) {
                                                 logger.error("App: " + connectionDefinition.getApp() + " is not running, will restart");

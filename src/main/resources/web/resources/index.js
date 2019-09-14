@@ -1120,7 +1120,7 @@ $(function(){
     var determineImageWidth = -1;
     var determineImageHeight = -1;
 
-    function updateControlPreview() {
+    function updateControlPreview(cached) {
 
         var c = $('#controlCanvas'), dw = (viewSetup.controlWidth - 0) / 2, dh = (viewSetup.controlHeight - 0) / 2;
         if (determineImageWidth != dw || determineImageHeight != dh) {
@@ -1130,7 +1130,7 @@ $(function(){
             c.attr('height', dh);
         }
 
-        requestControlPreviewUpdate();
+        requestControlPreviewUpdate(cached);
     }
 
     function requestControlPreviewUpdate(cached) {
@@ -1141,10 +1141,14 @@ $(function(){
             c.prop('cached', cached ? 'C' : 'N');
             var ctx = c[0].getContext('2d');
 
+            ctx.fillStyle = "#FFFFFF";
+            ctx.fillRect(0, 0, viewSetup.controlWidth, 100);
+
+            ctx.fillStyle = "#000000";
             ctx.font = "30px Arial";
             ctx.fillText("Please Wait, Loading...", 50, 50);
 
-            var loadIcon = loadNotice("Screen Tap ", 'Load');
+            var loadIcon = loadNotice(undefined, 'Screen Update');
             isLoadingImage = true;
             $.ajax({
                 type: "POST",
@@ -1167,13 +1171,23 @@ $(function(){
 
     $('#controlCanvas').click(function(e){
         var ref = $(this), mode = ref.prop('cached');
-        if (cached != 'N') {
+        if (mode != 'N') {
             return;
         }
         var points = getClickPosition(e);
         console.log(points);
 
-        var loadIcon = loadNotice("Screen Tap ", 'Load');
+        var c = $('#controlCanvas');
+        var ctx = c[0].getContext('2d');
+
+        ctx.fillStyle = "#FFFFFF";
+        ctx.fillRect(0, 0, viewSetup.controlWidth, 100);
+
+        ctx.fillStyle = "#000000";
+        ctx.font = "30px Arial";
+        ctx.fillText("Please Wait, Tapping...", 50, 50);
+
+        var loadIcon = loadNotice(undefined, 'Tapping');
 
         $.ajax({
             type: "POST",
@@ -1184,7 +1198,7 @@ $(function(){
             },
             success: function(result){
                 if (result && result.status == 'ok') {
-                    requestControlPreviewUpdate(cached == 'C');
+                    requestControlPreviewUpdate(false);
                 }
             }
         });
@@ -1224,11 +1238,11 @@ $(function(){
     }
 
     $('#RefreshControl').click(function(){
-        requestControlPreviewUpdate(false);
+        updateControlPreview(false);
     });
 
     $('#CacheRefreshControl').click(function(){
-        requestControlPreviewUpdate(true);
+        updateControlPreview(true);
     });
 
     ///////////////////////////////////////////////////////////////////////////

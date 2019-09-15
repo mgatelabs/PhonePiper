@@ -957,14 +957,13 @@ public class ScriptRunner {
                                     stateResult.setResult(valueHandler(actionDefinition.getValue()));
                                 }
                             } // Let it fall through
-                            case CONTINUE:
-                                break;
-                            case SOFT_REPEAT:
-                                break;
                             case MOVE:
                             case REPEAT:
                             case STOP:
                                 return stateResult;
+                            case CONTINUE:
+                            case SOFT_REPEAT:
+                                break;
                         }
                     }
                 }

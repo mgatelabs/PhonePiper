@@ -136,10 +136,10 @@ $(function(){
 
                 switch( data.status  ) {
                     case 'READY': {
-                        statusName.removeClass().addClass('navbar-brand').addClass('oi').addClass('oi-media-pause').text('');
+                        statusName.removeClass().addClass('navbar-brand').addClass('oi').addClass('oi-cog').text('');
                     } break;
                     case 'RUNNING': {
-                        statusName.removeClass().addClass('navbar-brand').addClass('oi').addClass('oi-media-play').text('');
+                        statusName.removeClass().addClass('navbar-brand').addClass('oi').addClass('oi-cog').addClass('rotate').text('');
                     } break;
                     case 'STOPPING':
                     case 'STOPPED': {

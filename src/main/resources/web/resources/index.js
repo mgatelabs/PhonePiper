@@ -314,7 +314,7 @@ $(function(){
     }
 
     statusName.click(function(){
-        if (statusName.hasClass('oi-media-play') || statusName.hasClass('oi-media-pause')) {
+        if (statusName.hasClass('oi-cog')) {
             playPauseFunc();
         }
     });

@@ -1167,7 +1167,7 @@ public class WebResource {
         return Response.status(500).build();
     }
 
-    @GET
+    @POST
     @Path("/screen/download")
     @Produces(MediaType.APPLICATION_OCTET_STREAM)
     public Response screenDown() {

@@ -1123,7 +1123,7 @@ $(function(){
     var determineImageWidth = -1;
     var determineImageHeight = -1;
 
-    function updateControlPreview(cached) {
+    function updateControlPreview(cached, download) {
 
         var c = $('#controlCanvas'), dw = (viewSetup.controlWidth - 0) / 2, dh = (viewSetup.controlHeight - 0) / 2;
         if (determineImageWidth != dw || determineImageHeight != dh) {
@@ -1131,12 +1131,13 @@ $(function(){
             determineImageHeight = dh;
             c.attr('width', dw);
             c.attr('height', dh);
+            c.show();
         }
 
-        requestControlPreviewUpdate(cached);
+        requestControlPreviewUpdate(cached, download);
     }
 
-    function requestControlPreviewUpdate(cached) {
+    function requestControlPreviewUpdate(cached, download) {
 
         if (!isLoadingImage) {
 
@@ -1149,7 +1150,7 @@ $(function(){
 
             ctx.fillStyle = "#000000";
             ctx.font = "30px Arial";
-            ctx.fillText("Please Wait, Loading...", 50, 50);
+            ctx.fillText("Please Wait, Prepping...", 50, 50);
 
             var loadIcon = loadNotice(undefined, 'Screen Update');
             isLoadingImage = true;
@@ -1162,10 +1163,23 @@ $(function(){
                     isLoadingImage = false;
                 },
                 success: function(result){
-                    updateControlPreviewImage();
+                    if (download) {
+                        $('#downloadScreenForm').submit();
+                    } else {
+
+                        ctx.fillStyle = "#FFFFFF";
+                        ctx.fillRect(0, 0, viewSetup.controlWidth, 100);
+
+                        ctx.fillStyle = "#000000";
+                        ctx.font = "30px Arial";
+                        ctx.fillText("Please Wait, Loading...", 50, 50);
+
+                        updateControlPreviewImage();
+                    }
                 }
             });
         }
+
     }
 
     function updateControlPreviewImage() {
@@ -1201,7 +1215,7 @@ $(function(){
             },
             success: function(result){
                 if (result && result.status == 'ok') {
-                    requestControlPreviewUpdate(false);
+                    requestControlPreviewUpdate(false, false);
                 }
             }
         });
@@ -1244,8 +1258,16 @@ $(function(){
         updateControlPreview(false);
     });
 
+    $('#RefreshDownloadControl').click(function(){
+        updateControlPreview(false, true);
+    });
+
     $('#CacheRefreshControl').click(function(){
         updateControlPreview(true);
+    });
+
+    $('#CacheRefreshDownloadControl').click(function(){
+        updateControlPreview(true, true);
     });
 
     ///////////////////////////////////////////////////////////////////////////

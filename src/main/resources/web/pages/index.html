@@ -79,11 +79,13 @@
                 <li class="nav-item whenEdit">
                     <a class="nav-link oi oi-pencil" id="edit-tab" data-toggle="tab" href="#edit" role="tab" aria-controls="edit" aria-selected="false"><span class="d-md-none">Edit</span></a>
                 </li>
+                <!--
                 <li class="nav-item whenLoaded">
                     <a class="nav-link oi oi-wifi" id="device-tab" data-toggle="tab" href="#device" role="tab" aria-controls="device" aria-selected="false"><span class="d-md-none">Device</span></a>
                 </li>
+                -->
                 <li class="nav-item whenLoaded">
-                    <a class="nav-link oi oi-terminal" id="device-control" data-toggle="tab" href="#control" role="tab" aria-controls="device" aria-selected="false"><span class="d-md-none">Control</span></a>
+                    <a class="nav-link oi oi-wifi" id="device-control" data-toggle="tab" href="#control" role="tab" aria-controls="device" aria-selected="false"><span class="d-md-none">Control</span></a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link oi oi-print" id="console-tab" data-toggle="tab" href="#console" role="tab" aria-controls="console" aria-selected="false"><span class="d-md-none">Log</span></a>
@@ -393,25 +395,6 @@
 
                 <h3>ADB</h3>
 
-                <div class="input-group">
-                    <button type="button" class="btn controlAdb btn-danger notWhileRunning whenLoaded" adb="kill">Kill Local</button>
-
-                    <button type="button" class="btn controlAdb btn-warning notWhileRunning whenLoaded" adb="restart">Restart</button>
-                    <!--<button type="button" class="btn controlAdb btn-info notWhileRunning whenLoaded" adb="usb">USB</button>-->
-                    <button type="button" class="btn controlAdb btn-info notWhileRunning whenLoaded" adb="remote">Enable Remote Access</button>
-                    <button type="button" class="btn controlAdb btn-info notWhileRunning whenLoaded" adb="devices">List Devices</button>
-                    <button type="button" class="btn controlAdb btn-danger notWhileRunning whenLoaded" adb="reboot">Reboot Device</button>
-
-                    <button type="button" class="btn controlAdb btn-secondary notWhileRunning whenLoaded" adb="appcheck">Open App</button>
-                    <button type="button" class="btn controlAdb btn-secondary notWhileRunning whenLoaded" adb="appclose">Close App</button>
-                    <button type="button" class="btn controlAdb btn-secondary notWhileRunning whenLoaded" adb="status">Status</button>
-                    <!--<button type="button" class="btn controlAdb btn-info notWhileRunning whenLoaded" adb="connect">Connect</button>-->
-                </div>
-                <br/>
-                <div class="form-group">
-                    <textarea class="form-control" id="adb-info" rows="3"></textarea>
-                </div>
-
                 <br/>
 
                 <h3>Test Connection</h3>
@@ -440,6 +423,27 @@
             <form id="control-form" class="col-sm-12">
 
                 <h3>ADB</h3>
+
+                <div class="input-group">
+                    <button type="button" class="btn controlAdb btn-danger notWhileRunning whenLoaded" adb="kill">Kill Local</button>
+
+                    <button type="button" class="btn controlAdb btn-warning notWhileRunning whenLoaded" adb="restart">Restart</button>
+                    <!--<button type="button" class="btn controlAdb btn-info notWhileRunning whenLoaded" adb="usb">USB</button>-->
+                    <button type="button" class="btn controlAdb btn-info notWhileRunning whenLoaded" adb="remote">Enable Remote Access</button>
+                    <button type="button" class="btn controlAdb btn-info notWhileRunning whenLoaded" adb="devices">List Devices</button>
+                    <button type="button" class="btn controlAdb btn-danger notWhileRunning whenLoaded" adb="reboot">Reboot Device</button>
+
+                    <button type="button" class="btn controlAdb btn-secondary notWhileRunning whenLoaded" adb="appcheck">Open App</button>
+                    <button type="button" class="btn controlAdb btn-secondary notWhileRunning whenLoaded" adb="appclose">Close App</button>
+                    <button type="button" class="btn controlAdb btn-secondary notWhileRunning whenLoaded" adb="status">Status</button>
+                    <!--<button type="button" class="btn controlAdb btn-info notWhileRunning whenLoaded" adb="connect">Connect</button>-->
+                </div>
+                <br/>
+                <div class="form-group">
+                    <textarea class="form-control" id="adb-info" rows="3"></textarea>
+                </div>
+
+                <h3>Remote</h3>
 
                 <div class="form-group notWhileRunning">
                     <label for="components">Components</label>
@@ -500,6 +504,8 @@
                             class="btn btn-danger notWhileRunning eventButton">Darker
                     </button>
                 </div>
+
+
 
                 <div class="input-group">
                     <button type="button" class="btn btn-info notWhileRunning whenLoaded" id="RefreshControl">Refresh Screen</button>

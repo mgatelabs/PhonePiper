@@ -1167,6 +1167,25 @@ public class WebResource {
         return Response.status(500).build();
     }
 
+    @GET
+    @Path("/screen/download")
+    @Produces(MediaType.APPLICATION_OCTET_STREAM)
+    public Response screenDown() {
+        try {
+            if (screenWrapper != null) {
+                if (screenWrapper.isReady()) {
+                    byte[] stream = screenWrapper.outputPng();
+                    if (stream != null) {
+                        return Response.ok(stream, MediaType.APPLICATION_OCTET_STREAM).header("content-disposition","attachment; filename = screen.png").build();
+                    }
+                }
+            }
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+        return Response.status(500).build();
+    }
+
     private static ImageWrapper screenWrapper;
 
     @POST

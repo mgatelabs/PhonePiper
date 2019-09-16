@@ -793,25 +793,61 @@ public class ScriptRunner {
                             }
                             break;
                             case APP: {
-                                if (StringUtils.equalsIgnoreCase(actionDefinition.getValue(), "CHECK")) {
-                                    if (StringUtils.isNotBlank(connectionDefinition.getApp())) {
-                                        final String results = shell.execWithOutput("ps");
+
+                                boolean isOpen = StringUtils.equalsIgnoreCase(actionDefinition.getValue(), "CHECK");
+                                boolean isClose = StringUtils.equalsIgnoreCase(actionDefinition.getValue(), "CLOSE");
+                                boolean hasApp = StringUtils.isNotBlank(connectionDefinition.getApp());
+
+                                if ((isOpen || isClose) && hasApp) {
+                                    for (int i = 0; i < 10; i++) {
+                                        String results = shell.execWithOutput("ps");
                                         if (StringUtils.isBlank(results)) {
-                                            logger.error("ADB connection may be down");
-                                        } else {
-                                            if (!results.contains(connectionDefinition.getApp())) {
-                                                logger.error("App: " + connectionDefinition.getApp() + " is not running, will restart");
-                                                shell.exec("monkey --pct-syskeys 0 -p " + connectionDefinition.getApp() +" 1");
+                                            logger.error("ADB connection may be down, attempting to recover ADB");
+                                            // Make sure ADB is up
+                                            logger.info(AdbShell.devices());
+                                            // Make sure we're connected
+                                            shell.connect();
+
+                                            try {
+                                                // Wait a little bit
+                                                Thread.sleep(3000);
+                                            } catch (InterruptedException e) {
+                                                logger.error(e.getMessage());
                                             }
+                                        } else {
+
+                                            final boolean appFound = results.contains(connectionDefinition.getApp());
+
+                                            if (!appFound) {
+                                                if (isOpen) {
+                                                    logger.info("App: " + connectionDefinition.getApp() + " is not running, will restart");
+                                                    shell.exec("monkey --pct-syskeys 0 -p " + connectionDefinition.getApp() + " 1");
+                                                } else if (isClose) {
+                                                    logger.debug("App: " + connectionDefinition.getApp() + " is not running, no operation required");
+                                                }
+                                            } else {
+                                                if (isOpen) {
+                                                    logger.debug("App: " + connectionDefinition.getApp() + " is running, no operation required");
+                                                } else if (isClose) {
+                                                    logger.info("App: " + connectionDefinition.getApp() + " is running, closing");
+                                                    shell.exec("am force-stop " + connectionDefinition.getApp());
+                                                }
+                                            }
+
+                                            try {
+                                                // Wait a little bit
+                                                Thread.sleep(3000);
+                                            } catch (InterruptedException e) {
+                                                logger.error(e.getMessage());
+                                            }
+
+                                            break;
                                         }
                                     }
-                                } else if (StringUtils.equalsIgnoreCase(actionDefinition.getValue(), "CLOSE")) {
-                                    if (StringUtils.isNotBlank(connectionDefinition.getApp())) {
-                                        logger.error("Closing App: " + connectionDefinition.getApp());
-                                        shell.exec("am force-stop " + connectionDefinition.getApp());
-                                    }
                                 }
-                            } break;
+
+                            }
+                            break;
                             case REFRESH: {
                                 // Simply tell the system to refresh the view, this may take a second
                                 refreshViews(true);
@@ -925,6 +961,9 @@ public class ScriptRunner {
                             case REPEAT:
                             case STOP:
                                 return stateResult;
+                            case CONTINUE:
+                            case SOFT_REPEAT:
+                                break;
                         }
                     }
                 }

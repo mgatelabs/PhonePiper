@@ -136,10 +136,10 @@ $(function(){
 
                 switch( data.status  ) {
                     case 'READY': {
-                        statusName.removeClass().addClass('navbar-brand').addClass('oi').addClass('oi-media-pause').text('');
+                        statusName.removeClass().addClass('navbar-brand').addClass('oi').addClass('oi-cog').text('');
                     } break;
                     case 'RUNNING': {
-                        statusName.removeClass().addClass('navbar-brand').addClass('oi').addClass('oi-media-play').text('');
+                        statusName.removeClass().addClass('navbar-brand').addClass('oi').addClass('oi-cog').addClass('rotate').text('');
                     } break;
                     case 'STOPPING':
                     case 'STOPPED': {
@@ -314,7 +314,7 @@ $(function(){
     }
 
     statusName.click(function(){
-        if (statusName.hasClass('oi-media-play') || statusName.hasClass('oi-media-pause')) {
+        if (statusName.hasClass('oi-cog')) {
             playPauseFunc();
         }
     });
@@ -1113,6 +1113,9 @@ $(function(){
             var c = $('#controlCanvas');
             var ctx = c[0].getContext('2d');
 
+            ctx.fillStyle = "#FFFFFF";
+            ctx.fillRect(0, 0, viewSetup.controlWidth, 100);
+
             ctx.font = "30px Arial";
             ctx.fillText("Error", 50, 50);
     }, false);
@@ -1120,7 +1123,7 @@ $(function(){
     var determineImageWidth = -1;
     var determineImageHeight = -1;
 
-    function updateControlPreview() {
+    function updateControlPreview(cached, download) {
 
         var c = $('#controlCanvas'), dw = (viewSetup.controlWidth - 0) / 2, dh = (viewSetup.controlHeight - 0) / 2;
         if (determineImageWidth != dw || determineImageHeight != dh) {
@@ -1128,36 +1131,55 @@ $(function(){
             determineImageHeight = dh;
             c.attr('width', dw);
             c.attr('height', dh);
+            c.show();
         }
 
-        requestControlPreviewUpdate();
+        requestControlPreviewUpdate(cached, download);
     }
 
-    function requestControlPreviewUpdate() {
+    function requestControlPreviewUpdate(cached, download) {
 
         if (!isLoadingImage) {
 
             var c = $('#controlCanvas');
+            c.prop('cached', cached ? 'C' : 'N');
             var ctx = c[0].getContext('2d');
 
-            ctx.font = "30px Arial";
-            ctx.fillText("Please Wait, Loading...", 50, 50);
+            ctx.fillStyle = "#FFFFFF";
+            ctx.fillRect(0, 0, viewSetup.controlWidth, 100);
 
-            var loadIcon = loadNotice("Screen Tap ", 'Load');
+            ctx.fillStyle = "#000000";
+            ctx.font = "30px Arial";
+            ctx.fillText("Please Wait, Prepping...", 50, 50);
+
+            var loadIcon = loadNotice(undefined, 'Screen Update');
             isLoadingImage = true;
             $.ajax({
                 type: "POST",
                 dataType:'json',
-                url: '/piper/screen/prep',
+                url: '/piper/screen/prep' + (cached ? '/cache' : ''),
                 complete: function(){
                     loadIcon.remove();
                     isLoadingImage = false;
                 },
                 success: function(result){
-                    updateControlPreviewImage();
+                    if (download) {
+                        $('#downloadScreenForm').submit();
+                    } else {
+
+                        ctx.fillStyle = "#FFFFFF";
+                        ctx.fillRect(0, 0, viewSetup.controlWidth, 100);
+
+                        ctx.fillStyle = "#000000";
+                        ctx.font = "30px Arial";
+                        ctx.fillText("Please Wait, Loading...", 50, 50);
+
+                        updateControlPreviewImage();
+                    }
                 }
             });
         }
+
     }
 
     function updateControlPreviewImage() {
@@ -1165,10 +1187,24 @@ $(function(){
     }
 
     $('#controlCanvas').click(function(e){
+        var ref = $(this), mode = ref.prop('cached');
+        if (mode != 'N') {
+            return;
+        }
         var points = getClickPosition(e);
         console.log(points);
 
-        var loadIcon = loadNotice("Screen Tap ", 'Load');
+        var c = $('#controlCanvas');
+        var ctx = c[0].getContext('2d');
+
+        ctx.fillStyle = "#FFFFFF";
+        ctx.fillRect(0, 0, viewSetup.controlWidth, 100);
+
+        ctx.fillStyle = "#000000";
+        ctx.font = "30px Arial";
+        ctx.fillText("Please Wait, Tapping...", 50, 50);
+
+        var loadIcon = loadNotice(undefined, 'Tapping');
 
         $.ajax({
             type: "POST",
@@ -1179,11 +1215,10 @@ $(function(){
             },
             success: function(result){
                 if (result && result.status == 'ok') {
-                    requestControlPreviewUpdate();
+                    requestControlPreviewUpdate(false, false);
                 }
             }
         });
-
     });
 
     function getClickPosition(e) {
@@ -1220,7 +1255,19 @@ $(function(){
     }
 
     $('#RefreshControl').click(function(){
-        updateControlPreview();
+        updateControlPreview(false);
+    });
+
+    $('#RefreshDownloadControl').click(function(){
+        updateControlPreview(false, true);
+    });
+
+    $('#CacheRefreshControl').click(function(){
+        updateControlPreview(true);
+    });
+
+    $('#CacheRefreshDownloadControl').click(function(){
+        updateControlPreview(true, true);
     });
 
     ///////////////////////////////////////////////////////////////////////////

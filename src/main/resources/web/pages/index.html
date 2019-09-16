@@ -44,7 +44,7 @@
     <!-- !!!!!!!! -->
 
     <nav class="navbar navbar-expand-md navbar-dark bg-dark" style="margin-bottom: 1em;">
-        <a class="navbar-brand" href="#">Phone Piper</a>
+        <a class="navbar-brand" href="/piper">Phone Piper</a>
         <span class="navbar-brand" id="statusName">Status</span>
 
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsExample01" aria-controls="navbarsExample01" aria-expanded="false" aria-label="Toggle navigation">
@@ -79,11 +79,13 @@
                 <li class="nav-item whenEdit">
                     <a class="nav-link oi oi-pencil" id="edit-tab" data-toggle="tab" href="#edit" role="tab" aria-controls="edit" aria-selected="false"><span class="d-md-none">Edit</span></a>
                 </li>
+                <!--
                 <li class="nav-item whenLoaded">
                     <a class="nav-link oi oi-wifi" id="device-tab" data-toggle="tab" href="#device" role="tab" aria-controls="device" aria-selected="false"><span class="d-md-none">Device</span></a>
                 </li>
+                -->
                 <li class="nav-item whenLoaded">
-                    <a class="nav-link oi oi-terminal" id="device-control" data-toggle="tab" href="#control" role="tab" aria-controls="device" aria-selected="false"><span class="d-md-none">Control</span></a>
+                    <a class="nav-link oi oi-wifi" id="device-control" data-toggle="tab" href="#control" role="tab" aria-controls="device" aria-selected="false"><span class="d-md-none">Control</span></a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link oi oi-print" id="console-tab" data-toggle="tab" href="#console" role="tab" aria-controls="console" aria-selected="false"><span class="d-md-none">Log</span></a>
@@ -385,65 +387,6 @@
 
                 </div>
 
-                <div class="form-group notWhileRunning">
-                    <label for="components">Components</label>
-                    <select id="components" class="form-control notWhileRunning"></select>
-                </div>
-                <div class="form-group">
-                    <button type="button" id="controlTap" controlButton="TAP"
-                            class="btn btn-info notWhileRunning controlButton">Tap
-                    </button>
-                    <button type="button" id="controlSwipeUp" controlButton="SWIPE_UP"
-                            class="btn btn-info notWhileRunning controlButton">Up
-                    </button>
-                    <button type="button" id="controlSwipeRight" controlButton="SWIPE_RIGHT"
-                            class="btn btn-info notWhileRunning controlButton">Right
-                    </button>
-                    <button type="button" id="controlSwipeDown" controlButton="SWIPE_DOWN"
-                            class="btn btn-info notWhileRunning controlButton">Down
-                    </button>
-                    <button type="button" id="controlSwipeLeft" controlButton="SWIPE_LEFT"
-                            class="btn btn-info notWhileRunning controlButton">Left
-                    </button>
-
-                    <button type="button" id="controlSlowUp" controlButton="SLOW_UP"
-                            class="btn btn-warning notWhileRunning controlButton">Up
-                    </button>
-                    <button type="button" id="controlSlowRight" controlButton="SLOW_RIGHT"
-                            class="btn btn-warning notWhileRunning controlButton">Right
-                    </button>
-                    <button type="button" id="controlSlowDown" controlButton="SLOW_DOWN"
-                            class="btn btn-warning notWhileRunning controlButton">Down
-                    </button>
-                    <button type="button" id="controlSlowLeft" controlButton="SLOW_LEFT"
-                            class="btn btn-warning notWhileRunning controlButton">Left
-                    </button>
-
-                    <button type="button" id="eventWake" controlButton="wakeup"
-                            class="btn btn-danger notWhileRunning eventButton">Wakeup
-                    </button>
-
-                    <button type="button" id="eventSleep" controlButton="sleep"
-                            class="btn btn-danger notWhileRunning eventButton">Sleep
-                    </button>
-
-                    <button type="button" id="eventPower" controlButton="power"
-                            class="btn btn-danger notWhileRunning eventButton">Power
-                    </button>
-
-                    <button type="button" id="eventBack" controlButton="back"
-                            class="btn btn-danger notWhileRunning eventButton">Back
-                    </button>
-
-                    <button type="button" id="eventBrighter" controlButton="brighter"
-                            class="btn btn-danger notWhileRunning eventButton">Brighter
-                    </button>
-
-                    <button type="button" id="eventDarker" controlButton="darker"
-                            class="btn btn-danger notWhileRunning eventButton">Darker
-                    </button>
-
-                </div>
             </form>
 
         </div>
@@ -453,25 +396,6 @@
             <form id="player-form" class="col-sm-12">
 
                 <h3>ADB</h3>
-
-                <div class="input-group">
-                    <button type="button" class="btn controlAdb btn-danger notWhileRunning whenLoaded" adb="kill">Kill Local</button>
-
-                    <button type="button" class="btn controlAdb btn-warning notWhileRunning whenLoaded" adb="restart">Restart</button>
-                    <!--<button type="button" class="btn controlAdb btn-info notWhileRunning whenLoaded" adb="usb">USB</button>-->
-                    <button type="button" class="btn controlAdb btn-info notWhileRunning whenLoaded" adb="remote">Enable Remote Access</button>
-                    <button type="button" class="btn controlAdb btn-info notWhileRunning whenLoaded" adb="devices">List Devices</button>
-                    <button type="button" class="btn controlAdb btn-danger notWhileRunning whenLoaded" adb="reboot">Reboot Device</button>
-
-                    <button type="button" class="btn controlAdb btn-secondary notWhileRunning whenLoaded" adb="appcheck">Open App</button>
-                    <button type="button" class="btn controlAdb btn-secondary notWhileRunning whenLoaded" adb="appclose">Close App</button>
-                    <button type="button" class="btn controlAdb btn-secondary notWhileRunning whenLoaded" adb="status">Status</button>
-                    <!--<button type="button" class="btn controlAdb btn-info notWhileRunning whenLoaded" adb="connect">Connect</button>-->
-                </div>
-                <br/>
-                <div class="form-group">
-                    <textarea class="form-control" id="adb-info" rows="3"></textarea>
-                </div>
 
                 <br/>
 
@@ -498,17 +422,188 @@
 
         <div class="tab-pane fade" id="control" role="tabpanel" aria-labelledby="device-tab">
 
-            <form id="control-form" class="col-sm-12">
+            <form id="control-form" class="col-md-12 col-lg-12 col-sm-12 col-xs-12">
 
-                <h3>ADB</h3>
+                <div class="row">
 
-                <div class="input-group">
-                    <button type="button" class="btn btn-info notWhileRunning whenLoaded" id="RefreshControl">Refresh Screen</button>
+                    <div class="col-lg-5 col-md-8 col-sm-12 col-xs-12 notWhileRunning">
+
+                        <div class="card">
+
+                            <div class="card-body">
+
+                                <h5 class="card-title">Connection Controls</h5>
+
+                                <div class="form-group">
+                                    <button type="button" class="btn controlAdb btn-danger whenLoaded" adb="kill">Kill Local</button>
+
+                                    <button type="button" class="btn controlAdb btn-warning whenLoaded" adb="restart">Restart</button>
+                                    <!--<button type="button" class="btn controlAdb btn-info notWhileRunning whenLoaded" adb="usb">USB</button>-->
+                                </div>
+
+                                <div class="form-group">
+
+
+                                    <!--<button type="button" class="btn controlAdb btn-info notWhileRunning whenLoaded" adb="usb">USB</button>-->
+                                    <button type="button" class="btn controlAdb btn-info whenLoaded" adb="remote">Enable Remote Access</button>
+                                    <button type="button" class="btn controlAdb btn-danger whenLoaded" adb="reboot">Reboot Device</button>
+
+                                    <button type="button" class="btn controlAdb btn-info whenLoaded" adb="devices">List Devices</button>
+                                    <button type="button" class="btn controlAdb btn-secondary whenLoaded" adb="status">Status</button>
+                                </div>
+
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <div class="col-lg-2 col-md-4 col-sm-12 col-xs-12 notWhileRunning">
+
+                        <div class="card">
+
+                            <div class="card-body">
+
+                                <h5 class="card-title">App Controls</h5>
+
+                                <div class="form-group">
+                                    <button type="button" class="btn controlAdb btn-primary whenLoaded" adb="appcheck">Open</button>
+                                    <button type="button" class="btn controlAdb btn-danger whenLoaded" adb="appclose">Close</button>
+                                </div>
+
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <div class="col-lg-5 col-md-6 col-sm-12 col-xs-12 notWhileRunning">
+
+                        <div class="card">
+
+                            <div class="card-body">
+
+                                <h5 class="card-title">Device Response</h5>
+
+                                <div class="form-group">
+                                    <textarea class="form-control" id="adb-info" rows="3"></textarea>
+                                </div>
+
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12 notWhileRunning">
+
+                        <div class="card">
+
+                            <div class="card-body">
+
+                                <h5 class="card-title">Component Controls</h5>
+
+                                <div class="form-group">
+                                    <label for="components">Component</label>
+                                    <select id="components" class="form-control notWhileRunning"></select>
+                                </div>
+
+                                <div class="form-group">
+                                    <button type="button" id="controlTap" controlButton="TAP"
+                                            class="btn btn-info notWhileRunning controlButton">Tap
+                                    </button>
+                                    <button type="button" id="controlSwipeUp" controlButton="SWIPE_UP"
+                                            class="btn btn-info notWhileRunning controlButton">Up
+                                    </button>
+                                    <button type="button" id="controlSwipeRight" controlButton="SWIPE_RIGHT"
+                                            class="btn btn-info notWhileRunning controlButton">Right
+                                    </button>
+                                    <button type="button" id="controlSwipeDown" controlButton="SWIPE_DOWN"
+                                            class="btn btn-info notWhileRunning controlButton">Down
+                                    </button>
+                                    <button type="button" id="controlSwipeLeft" controlButton="SWIPE_LEFT"
+                                            class="btn btn-info notWhileRunning controlButton">Left
+                                    </button>
+
+                                    <button type="button" id="controlSlowUp" controlButton="SLOW_UP"
+                                            class="btn btn-warning notWhileRunning controlButton">Up
+                                    </button>
+                                    <button type="button" id="controlSlowRight" controlButton="SLOW_RIGHT"
+                                            class="btn btn-warning notWhileRunning controlButton">Right
+                                    </button>
+                                    <button type="button" id="controlSlowDown" controlButton="SLOW_DOWN"
+                                            class="btn btn-warning notWhileRunning controlButton">Down
+                                    </button>
+                                    <button type="button" id="controlSlowLeft" controlButton="SLOW_LEFT"
+                                            class="btn btn-warning notWhileRunning controlButton">Left
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <div class="col-lg-6 col-md-12 col-sm-12 col-xs-12 notWhileRunning">
+
+                        <div class="card">
+
+                            <div class="card-body">
+
+                                <h5 class="card-title">Device Controls</h5>
+
+                                <div class="form-group">
+                                    <button type="button" id="eventWake" controlButton="wakeup"
+                                            class="btn btn-success notWhileRunning eventButton">Wakeup
+                                    </button>
+
+                                    <button type="button" id="eventSleep" controlButton="sleep"
+                                            class="btn btn-warning notWhileRunning eventButton">Sleep
+                                    </button>
+
+                                    <button type="button" id="eventPower" controlButton="power"
+                                            class="btn btn-danger notWhileRunning eventButton">Power
+                                    </button>
+
+                                    <button type="button" id="eventBack" controlButton="back"
+                                            class="btn btn-secondary notWhileRunning eventButton">Back
+                                    </button>
+
+                                    <button type="button" id="eventBrighter" controlButton="brighter"
+                                            class="btn btn-light notWhileRunning eventButton">Brighter
+                                    </button>
+
+                                    <button type="button" id="eventDarker" controlButton="darker"
+                                            class="btn btn-dark notWhileRunning eventButton">Darker
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+
+                        <div class="card">
+
+                            <div class="card-body">
+
+                                <h5 class="card-title">Remote Control</h5>
+
+                                <div class="form-group">
+                                    <button type="button" class="btn btn-info notWhileRunning" id="RefreshControl">Show Preview</button>
+                                    <button type="button" class="btn btn-info notWhileRunning" id="RefreshDownloadControl">Download</button>
+                                    <button type="button" class="btn btn-info whileRunning" id="CacheRefreshControl">Show Current</button>
+                                    <button type="button" class="btn btn-info whileRunning" id="CacheRefreshDownloadControl">Download</button>
+                                </div>
+
+                                <br/>
+
+                                <canvas id="controlCanvas" style="display:none;"></canvas>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
                 </div>
-
-                <br/>
-
-                <canvas id="controlCanvas"></canvas>
 
             </form>
         </div>
@@ -553,6 +648,12 @@
 
 
             </form>
+
+            <form method="POST" action="/piper/screen/download" target="downloadScreenFrame" id="downloadScreenForm"></form>
+
+            <div style="display:none;">
+            <iframe name="downloadScreenFrame"></iframe>
+            </div>
 
         </div>
         <div class="tab-pane fade" id="vars" role="tabpanel" aria-labelledby="vars-tab">

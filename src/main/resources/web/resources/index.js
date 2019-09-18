@@ -1103,7 +1103,8 @@ $(function(){
         var c = $('#controlCanvas');
         var ctx = c[0].getContext('2d');
 
-        ctx.drawImage(controlImage, 0, 0, viewSetup.viewWidth - 0, viewSetup.viewHeight - 0, 0, 0, (viewSetup.controlWidth - 0) / 2.0, (viewSetup.controlHeight - 0) / 2.0);
+        //ctx.drawImage(controlImage, 0, 0, viewSetup.viewWidth - 0, viewSetup.viewHeight - 0, 0, 0, canvasWidth - 0, canvasHeight - 0);
+        ctx.drawImage(controlImage, 0, 0, canvasWidth - 0, canvasHeight - 0);
     }, false);
 
     controlImage.addEventListener('error', function() {
@@ -1114,7 +1115,7 @@ $(function(){
             var ctx = c[0].getContext('2d');
 
             ctx.fillStyle = "#FFFFFF";
-            ctx.fillRect(0, 0, viewSetup.controlWidth, 100);
+            ctx.fillRect(0, 0, canvasWidth, 100);
 
             ctx.font = "30px Arial";
             ctx.fillText("Error", 50, 50);
@@ -1124,16 +1125,7 @@ $(function(){
     var determineImageHeight = -1;
 
     function updateControlPreview(cached, download) {
-
-        var c = $('#controlCanvas'), dw = (viewSetup.controlWidth - 0) / 2, dh = (viewSetup.controlHeight - 0) / 2;
-        if (determineImageWidth != dw || determineImageHeight != dh) {
-            determineImageWidth = dw;
-            determineImageHeight = dh;
-            c.attr('width', dw);
-            c.attr('height', dh);
-            c.show();
-        }
-
+        canvasResize();
         requestControlPreviewUpdate(cached, download);
     }
 
@@ -1146,7 +1138,7 @@ $(function(){
             var ctx = c[0].getContext('2d');
 
             ctx.fillStyle = "#FFFFFF";
-            ctx.fillRect(0, 0, viewSetup.controlWidth, 100);
+            ctx.fillRect(0, 0, canvasWidth, 100);
 
             ctx.fillStyle = "#000000";
             ctx.font = "30px Arial";
@@ -1168,7 +1160,7 @@ $(function(){
                     } else {
 
                         ctx.fillStyle = "#FFFFFF";
-                        ctx.fillRect(0, 0, viewSetup.controlWidth, 100);
+                        ctx.fillRect(0, 0, canvasWidth, 100);
 
                         ctx.fillStyle = "#000000";
                         ctx.font = "30px Arial";
@@ -1186,7 +1178,48 @@ $(function(){
         controlImage.src = '/piper/screen?time=' + (new Date().getTime());
     }
 
-    $('#controlCanvas').click(function(e){
+    var canvasHolder = $('#canvasHolder');
+    var controlCanvas = $('#controlCanvas');
+
+    var canvasWidth = -1;
+    var canvasHeight = -1;
+    var canvasFactor = 1.0;
+
+    $(window).resize(function() {
+        canvasResize();
+    });
+
+    function canvasResize() {
+
+         controlCanvas.hide();
+
+        var iw = canvasHolder.innerWidth();
+        if (iw <= 80) return;
+
+        iw -= 60;
+
+        if (viewSetup.controlWidth < iw) {
+            canvasWidth = viewSetup.controlWidth - 0;
+            canvasHeight = viewSetup.controlHeight - 0;
+            canvasFactor = 1.0;
+        } else {
+            canvasFactor = viewSetup.controlWidth / iw;
+            canvasWidth = iw;
+            canvasHeight = Math.floor((iw * viewSetup.controlHeight) / viewSetup.controlWidth);
+        }
+
+        console.log({w:canvasWidth, h:canvasHeight});
+
+        controlCanvas.attr('width', canvasWidth);
+        controlCanvas.attr('height', canvasHeight);
+
+        controlCanvas.css('width', canvasWidth + 'px');
+        controlCanvas.css('height', canvasHeight + 'px');
+
+        controlCanvas.show();
+    }
+
+    controlCanvas.click(function(e){
         var ref = $(this), mode = ref.prop('cached');
         if (mode != 'N') {
             return;
@@ -1194,17 +1227,17 @@ $(function(){
         var points = getClickPosition(e);
         console.log(points);
 
-        var c = $('#controlCanvas');
+        var c = controlCanvas;
         var ctx = c[0].getContext('2d');
 
         ctx.fillStyle = "#FFFFFF";
-        ctx.fillRect(0, 0, viewSetup.controlWidth, 100);
+        ctx.fillRect(0, 0, canvasWidth, 100);
 
         ctx.fillStyle = "#000000";
         ctx.font = "30px Arial";
         ctx.fillText("Please Wait, Tapping...", 50, 50);
 
-        var loadIcon = loadNotice(undefined, 'Tapping');
+        var loadIcon = loadNotice(undefined, 'Tapping ' + points.x + " - " + points.y);
 
         $.ajax({
             type: "POST",
@@ -1223,8 +1256,8 @@ $(function(){
 
     function getClickPosition(e) {
         var parentPosition = getPosition(e.currentTarget);
-        var xPosition = (e.clientX - parentPosition.x) * 2;
-        var yPosition = (e.clientY - parentPosition.y) * 2;
+        var xPosition = Math.floor((e.clientX - parentPosition.x) * canvasFactor);
+        var yPosition = Math.floor((e.clientY - parentPosition.y) * canvasFactor);
         return {x: xPosition, y: yPosition};
     }
 

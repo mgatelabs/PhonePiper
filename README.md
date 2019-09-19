@@ -196,7 +196,7 @@ Clone the latest source
 
 Build from source
 
-`cd PhonePiper`
+`cd Phone-Piper`
 
 `mvn clean compile package`
 

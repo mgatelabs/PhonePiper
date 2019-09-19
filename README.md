@@ -152,7 +152,7 @@ Now reboot it for all changes to take effect
 
 ### Install Git
 
-sudo apt-get install wget git-core
+`sudo apt-get install wget git-core`
 
 ### Install ADB
 

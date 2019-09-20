@@ -1095,6 +1095,7 @@ $(function(){
     var controlImage = new Image();
 
     var isLoadingImage = false;
+    var isImageLoaded = false;
 
     controlImage.addEventListener('load', function() {
         console.log("Image Loaded");
@@ -1105,6 +1106,8 @@ $(function(){
 
         //ctx.drawImage(controlImage, 0, 0, viewSetup.viewWidth - 0, viewSetup.viewHeight - 0, 0, 0, canvasWidth - 0, canvasHeight - 0);
         ctx.drawImage(controlImage, 0, 0, canvasWidth - 0, canvasHeight - 0);
+
+        isImageLoaded = true;
     }, false);
 
     controlImage.addEventListener('error', function() {
@@ -1119,6 +1122,8 @@ $(function(){
 
             ctx.font = "30px Arial";
             ctx.fillText("Error", 50, 50);
+
+            isImageLoaded = false;
     }, false);
 
     var determineImageWidth = -1;
@@ -1186,10 +1191,10 @@ $(function(){
     var canvasFactor = 1.0;
 
     $(window).resize(function() {
-        canvasResize();
+        canvasResize(true);
     });
 
-    function canvasResize() {
+    function canvasResize(repaint) {
 
          controlCanvas.hide();
 
@@ -1216,7 +1221,15 @@ $(function(){
         controlCanvas.css('width', canvasWidth + 'px');
         controlCanvas.css('height', canvasHeight + 'px');
 
+        canvasHolder.css('min-height', canvasHeight + 'px');
+
         controlCanvas.show();
+
+        if (repaint && isImageLoaded) {
+            var ctx = controlCanvas[0].getContext('2d');
+            //ctx.drawImage(controlImage, 0, 0, viewSetup.viewWidth - 0, viewSetup.viewHeight - 0, 0, 0, canvasWidth - 0, canvasHeight - 0);
+            ctx.drawImage(controlImage, 0, 0, canvasWidth - 0, canvasHeight - 0);
+        }
     }
 
     controlCanvas.click(function(e){
@@ -1248,7 +1261,9 @@ $(function(){
             },
             success: function(result){
                 if (result && result.status == 'ok') {
-                    requestControlPreviewUpdate(false, false);
+                    setTimeout(function(){
+                        requestControlPreviewUpdate(false, false);
+                    }, 1000);
                 }
             }
         });

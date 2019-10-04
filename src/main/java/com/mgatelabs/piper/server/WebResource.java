@@ -50,6 +50,7 @@ import com.mgatelabs.piper.shared.helper.DeviceHelper;
 import com.mgatelabs.piper.shared.helper.LocalDeviceHelper;
 import com.mgatelabs.piper.shared.helper.RemoteDeviceHelper;
 import com.mgatelabs.piper.shared.image.ImageWrapper;
+import com.mgatelabs.piper.shared.image.Sampler;
 import com.mgatelabs.piper.shared.util.AdbShell;
 import com.mgatelabs.piper.shared.util.AdbUtils;
 import com.mgatelabs.piper.shared.util.AdbWrapper;
@@ -62,6 +63,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.web.bind.annotation.RequestBody;
 
+import javax.imageio.ImageIO;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.FormParam;
@@ -70,8 +72,11 @@ import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
+import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
+import java.awt.image.BufferedImage;
+import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
@@ -1148,16 +1153,41 @@ public class WebResource {
         return ImmutableMap.of("status", "ok", "msg", msg);
     }
 
+    private static final int previewFactor = 8;
+
     @GET
     @Path("/screen")
     @Produces("image/png")
-    public Response screen() {
+    public Response screen(@QueryParam("factor") String factor) {
         try {
+            int factorValue = previewFactor;
+            if (StringUtils.isNotBlank(factor)) {
+                factorValue = Integer.parseInt(factor);
+            }
+
             if (screenWrapper != null) {
                 if (screenWrapper.isReady()) {
-                    byte[] stream = screenWrapper.outputPng();
-                    if (stream != null) {
-                        return Response.status(200).header("content-type", "image/png").entity(stream).build();
+
+                    int newHeight = screenWrapper.getHeight() / factorValue;
+                    int newWidth = screenWrapper.getWidth() / factorValue;
+
+                    BufferedImage bufferedImage = new BufferedImage(newWidth, newHeight, BufferedImage.TYPE_INT_RGB);
+
+                    Sampler sampler = new Sampler();
+                    for (int y = 0; y < newHeight; y++) {
+                        for (int x = 0; x < newWidth; x++) {
+                            screenWrapper.getPixel(x * factorValue, y * factorValue, sampler);
+                            bufferedImage.setRGB(x, y, (sampler.getR() << 16) + (sampler.getG() << 8) + sampler.getB());
+                        }
+                    }
+
+                    ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
+                    try {
+                        ImageIO.write(bufferedImage, "PNG", byteArrayOutputStream);
+                        return Response.status(200).header("content-type", "image/png").entity(byteArrayOutputStream.toByteArray()).build();
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                        return null;
                     }
                 }
             }

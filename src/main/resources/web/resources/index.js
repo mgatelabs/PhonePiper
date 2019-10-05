@@ -233,6 +233,9 @@ $(function(){
                         }
                     } break;
                     case 'RUNNING':
+                        if (!firstTime) {
+                            $('#liveCanvas').css("height", ((128.0 / viewSetup.controlWidth) * viewSetup.controlHeight) + 'px').attr('src', '/piper/screen?factor=24&live=true&time=' + (new Date().getTime()));
+                        }
                     case 'STOPPING':
                     case 'STOPPED': {
                         if (firstTime) {

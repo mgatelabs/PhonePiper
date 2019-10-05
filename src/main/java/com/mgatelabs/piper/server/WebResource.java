@@ -1158,11 +1158,18 @@ public class WebResource {
     @GET
     @Path("/screen")
     @Produces("image/png")
-    public Response screen(@QueryParam("factor") String factor) {
+    public Response screen(@QueryParam("factor") String factor, @QueryParam("live") String isLive) {
         try {
             int factorValue = previewFactor;
             if (StringUtils.isNotBlank(factor)) {
                 factorValue = Integer.parseInt(factor);
+            }
+
+            if ("true".equals(isLive)) {
+                if (frameChoices != null && deviceHelper instanceof LocalDeviceHelper) {
+                    // Get the Image
+                    screenWrapper = deviceHelper.download();
+                }
             }
 
             if (screenWrapper != null) {

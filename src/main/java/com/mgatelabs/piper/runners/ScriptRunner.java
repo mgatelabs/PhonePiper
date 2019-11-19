@@ -792,11 +792,32 @@ public class ScriptRunner {
                                 }
                             }
                             break;
+                            case DEVICE: {
+                                final boolean isRestart = StringUtils.equalsIgnoreCase(actionDefinition.getValue(), "RESTART");
+                                final boolean isConnect = !isRestart && StringUtils.equalsIgnoreCase(actionDefinition.getValue(), "CONNECT");
+                                final boolean isReboot = !isConnect && StringUtils.equalsIgnoreCase(actionDefinition.getValue(), "REBOOT");
+                                final boolean isDisconnect = !isReboot && StringUtils.equalsIgnoreCase(actionDefinition.getValue(), "DISCONNECT");
+
+                                if (isRestart) {
+                                    logger.info("Device: Restarting connection");
+                                    logger.debug(shell.restart());
+                                } else if (isReboot) {
+                                    logger.info("Device: Reboot requested");
+                                    logger.debug(AdbShell.reboot());
+                                } else if (isDisconnect) {
+                                    logger.info("Device: Disconnect requested");
+                                    logger.debug(shell.shutdown(ConnectionDefinition.AdbType.FULL));
+                                } else if (isConnect) {
+                                    logger.info("Device: Connect requested");
+                                    logger.debug(shell.connect() ? "Connected" : "Connection Failure");
+                                }
+                            }
+                            break;
                             case APP: {
 
-                                boolean isOpen = StringUtils.equalsIgnoreCase(actionDefinition.getValue(), "CHECK");
-                                boolean isClose = StringUtils.equalsIgnoreCase(actionDefinition.getValue(), "CLOSE");
                                 boolean hasApp = StringUtils.isNotBlank(connectionDefinition.getApp());
+                                boolean isOpen = hasApp && StringUtils.equalsIgnoreCase(actionDefinition.getValue(), "CHECK");
+                                boolean isClose = hasApp && StringUtils.equalsIgnoreCase(actionDefinition.getValue(), "CLOSE");
 
                                 if ((isOpen || isClose) && hasApp) {
                                     for (int i = 0; i < 10; i++) {
@@ -1108,6 +1129,20 @@ public class ScriptRunner {
                         throw new RuntimeException("All condition calls must return a 0 or 1");
                     }
                     result = callResult.getResult().toInt() == 1;
+                }
+                break;
+                case DEVICE: {
+                    final boolean isConnected = "CONNECTED".equalsIgnoreCase(conditionDefinition.getValue());
+                    final boolean hasApp = !isConnected && StringUtils.isNotBlank(connectionDefinition.getApp());
+                    final boolean isRunning = hasApp && "RUNNING".equalsIgnoreCase(conditionDefinition.getValue());
+                    if (isConnected) {
+                        result = shell.connect();
+                    } else if (isRunning) {
+                        String results = shell.execWithOutput("ps");
+                        if (StringUtils.isNotBlank(results)) {
+                            result = results.contains(connectionDefinition.getApp());
+                        }
+                    }
                 }
                 break;
                 case SCREEN: {

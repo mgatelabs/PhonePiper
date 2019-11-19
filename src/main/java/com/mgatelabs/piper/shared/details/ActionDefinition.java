@@ -173,6 +173,8 @@ public class ActionDefinition {
                 return "GOTO";
             case APP:
                 return "APP";
+            case DEVICE:
+                return "DEVICE";
             case LABEL:
                 return "LABEL";
         }

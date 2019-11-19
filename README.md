@@ -152,11 +152,15 @@ Now reboot it for all changes to take effect
 
 ### Install Git
 
-sudo apt-get install wget git-core
+`sudo apt-get install wget git-core`
 
 ### Install ADB
 
 `sudo apt-get install -y android-tools-adb`
+
+### Install Java 8
+
+`sudo apt-get install oracle-java8-jdk`
 
 ### Install Maven
 
@@ -192,7 +196,7 @@ Clone the latest source
 
 Build from source
 
-`cd PhonePiper`
+`cd Phone-Piper`
 
 `mvn clean compile package`
 

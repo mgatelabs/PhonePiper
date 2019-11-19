@@ -40,6 +40,7 @@ public enum ActionType {
     LABEL(ActionValueType.NONE, false, true, true, true), // LABEL
     GOTO(ActionValueType.NONE, false, true, true, true), // GOTO
     APP(ActionValueType.NONE, false, true, true, true), // APP
+    DEVICE(ActionValueType.NONE, false, true, true, true), // APP
     INPUT(ActionValueType.INPUT_ID, false, true, true, false); // GENERIC INPUT
 
     private final ActionValueType valueType;

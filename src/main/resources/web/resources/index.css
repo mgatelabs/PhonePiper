@@ -60,10 +60,6 @@ body.running .whileRunning  {
     padding-left: 4px;
 }
 
-#controlCanvas {
-    border:1px solid black;
-}
-
 .rotate {
   animation: rotation 2s infinite linear;
 }

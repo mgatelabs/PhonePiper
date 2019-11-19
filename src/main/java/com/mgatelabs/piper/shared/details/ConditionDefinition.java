@@ -249,6 +249,9 @@ public class ConditionDefinition {
             }
             break;
 
+            case DEVICE:
+                stringBuilder.append(definition.getNot() != null ? "!" : "").append("DEVICE: ").append(definition.getValue());
+
             case GREATER: {
                 stringBuilder.append(definition.getVar()).append(definition.getNot() != null ? " <= " : " > ").append(definition.getValue());
             }

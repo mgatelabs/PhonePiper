@@ -164,8 +164,8 @@ public class WebResource {
     public synchronized void setVariables(@FormParam("content") String contentStr) {
         try {
             final ObjectMapper objectMapper = JsonTool.getInstance();
-            TypeReference<HashMap<String, Object>> typeRef
-                    = new TypeReference<HashMap<String, Object>>() {
+            TypeReference<HashMap<String, String>> typeRef
+                    = new TypeReference<HashMap<String, String>>() {
             };
             Map<String, String> content = objectMapper.readValue(contentStr, typeRef);
             for (Map.Entry<String, String> entry : content.entrySet()) {

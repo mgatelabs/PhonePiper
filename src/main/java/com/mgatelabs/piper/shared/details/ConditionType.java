@@ -9,6 +9,7 @@ public enum ConditionType {
     GREATER(false),
     LESS(false),
     EQUAL(false),
+    CONNECTION(false),
     CALL(false);
 
     private boolean splitValue;

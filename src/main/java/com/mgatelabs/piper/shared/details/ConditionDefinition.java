@@ -249,6 +249,9 @@ public class ConditionDefinition {
             }
             break;
 
+            case CONNECTION:
+                stringBuilder.append(definition.getNot() != null ? "!" : "").append("CONNECTED");
+
             case GREATER: {
                 stringBuilder.append(definition.getVar()).append(definition.getNot() != null ? " <= " : " > ").append(definition.getValue());
             }

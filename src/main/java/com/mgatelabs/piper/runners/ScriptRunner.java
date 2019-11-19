@@ -1131,9 +1131,9 @@ public class ScriptRunner {
                     result = callResult.getResult().toInt() == 1;
                 }
                 break;
-                case CONNECTION: {
+                case DEVICE: {
                     final boolean isConnected = "CONNECTED".equalsIgnoreCase(conditionDefinition.getValue());
-                    final boolean hasApp = StringUtils.isNotBlank(connectionDefinition.getApp());
+                    final boolean hasApp = !isConnected && StringUtils.isNotBlank(connectionDefinition.getApp());
                     final boolean isRunning = hasApp && "RUNNING".equalsIgnoreCase(conditionDefinition.getValue());
                     if (isConnected) {
                         result = shell.connect();

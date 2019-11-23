@@ -753,6 +753,13 @@ $(function(){
     // EDIT
     ///////////////////////////////////////////////////////////////////////////
 
+    $('#uploadScreenButton').click(function(){
+        var ref = $(this), id;
+        list = $('#' + ref.attr('lst'));
+        id = list.val();
+        $('#screenUploadForm').attr('action', '/piper/edit/upload/' + action + "/" + id).attr('target', '_blank').submit();
+    });
+
     $('.edit-action').click(function() {
         var ref = $(this), action = ref.attr('editvalue'), list, id;
         if (ref.hasClass('prompt-name')) {

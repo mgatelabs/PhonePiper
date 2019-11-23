@@ -647,6 +647,18 @@
                     <span class="FileName" id="ScreenName"></span>
                 </div>
 
+                <form action="" id="screenUploadForm" method="POST" enctype="multipart/form-data">
+                    <div class="input-group">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text">Screen</span>
+                        </div>
+                        <input type="file" name="file">
+                        <div class="input-group-append">
+                            <button type="button" id="uploadScreenButton" lst="edit-screens" class="btn btn-success oi oi-plus"></button>
+                        </div>
+                    </div>
+                </form>
+
                 <div class="form-group">
                     <label for="edit-components">Components</label>
                     <select id="edit-components" class="form-control notWhileRunning"></select>

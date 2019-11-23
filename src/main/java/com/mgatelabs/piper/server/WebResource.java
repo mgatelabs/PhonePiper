@@ -59,6 +59,8 @@ import com.mgatelabs.piper.shared.util.Loggers;
 import com.mgatelabs.piper.ui.FrameChoices;
 import com.mgatelabs.piper.ui.utils.Constants;
 import org.apache.commons.lang3.StringUtils;
+import org.glassfish.jersey.media.multipart.FormDataContentDisposition;
+import org.glassfish.jersey.media.multipart.FormDataParam;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -80,6 +82,7 @@ import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
+import java.io.InputStream;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -677,6 +680,33 @@ public class WebResource {
         return result;
     }
 
+
+    @POST
+    @Path("/edit/upload/{type}/{id}")
+    @Consumes(MediaType.MULTIPART_FORM_DATA)
+    @Produces("application/json")
+    public Map<String, String> uploadImageForScreen(@FormDataParam("file") InputStream stream, @FormDataParam("file") FormDataContentDisposition fileDetail, @PathParam("type") String type, @PathParam("id") String id) {
+        Map<String, String> result = Maps.newHashMap();
+        if (StringUtils.equalsIgnoreCase(type, "SCREEN") || StringUtils.equalsIgnoreCase(type, "COMPONENT")) {
+            try {
+                BufferedImage bufferedImage = ImageIO.read(stream);
+                final File filePath;
+                if (StringUtils.equalsIgnoreCase(type, "SCREEN")) {
+                    filePath = ScreenDefinition.getPreviewPath(editHolder.getViewDefinition().getViewId(), id);
+                } else {
+                    filePath = ComponentDefinition.getPreviewPath(editHolder.getViewDefinition().getViewId(), id);
+                }
+                ImageIO.write(bufferedImage, "PNG", filePath);
+                result.put("status", "ok");
+            } catch (Exception ex) {
+                result.put("status", "error");
+            }
+        } else {
+            result.put("status", "error");
+        }
+        return result;
+    }
+
     @POST
     @Path("/edit/view")
     @Consumes("application/json")
@@ -1213,7 +1243,7 @@ public class WebResource {
                 if (screenWrapper.isReady()) {
                     byte[] stream = screenWrapper.outputPng();
                     if (stream != null) {
-                        return Response.ok(stream, MediaType.APPLICATION_OCTET_STREAM).header("content-disposition","attachment; filename = screen.png").build();
+                        return Response.ok(stream, MediaType.APPLICATION_OCTET_STREAM).header("content-disposition", "attachment; filename = screen.png").build();
                     }
                 }
             }

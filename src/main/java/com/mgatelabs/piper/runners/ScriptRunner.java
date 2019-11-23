@@ -195,6 +195,7 @@ public class ScriptRunner {
             logger.error("Phone Helper connection is down, please restart app");
             return false;
         }
+        deviceHelper.makeReady(shell);
         if (deviceHelper.ready()) {
             logger.info("Phone Helper is ready @ " + deviceHelper.getIpAddress());
             InfoTransfer infoTransfer = new InfoTransfer();
@@ -382,6 +383,14 @@ public class ScriptRunner {
             //putVar(VAR_LOOPS, IntVar.ZERO);
 
             vars.state(currentExecutionLink, Maps.newHashMap());
+
+            // Reset the timers
+            for (VarDefinition varDefinition : getRawEditVariables()) {
+                if (varDefinition.getDisplayType() == VarDisplay.SECONDS && varDefinition.getModify() != VarModify.EDITABLE) {
+                    final VarTimer timer = timers.get(varDefinition.getName());
+                    timer.reset();
+                }
+            }
 
             while (isRunning()) {
 

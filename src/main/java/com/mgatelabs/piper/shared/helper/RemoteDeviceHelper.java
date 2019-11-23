@@ -176,6 +176,11 @@ public class RemoteDeviceHelper implements DeviceHelper {
         return true;
     }
 
+    @Override
+    public DeviceHelper makeReady(AdbWrapper shell) {
+        return this;
+    }
+
     private void waitFor(long milli) {
         try {
             final long startTime = System.nanoTime();

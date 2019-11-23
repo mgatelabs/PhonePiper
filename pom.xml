@@ -135,6 +135,12 @@
             <version>1.5.10.RELEASE</version>
         </dependency>
 
+        <dependency>
+            <groupId>org.glassfish.jersey.media</groupId>
+            <artifactId>jersey-media-multipart</artifactId>
+            <version>2.25.1</version>
+        </dependency>
+
         <!-- https://mvnrepository.com/artifact/org.apache.tomcat/tomcat-juli -->
         <dependency>
             <groupId>org.apache.tomcat</groupId>

@@ -754,11 +754,21 @@ $(function(){
     ///////////////////////////////////////////////////////////////////////////
 
     $('#uploadScreenButton').click(function(){
-        var ref = $(this), id;
-        list = $('#' + ref.attr('lst'));
-        id = list.val();
-        $('#screenUploadForm').attr('action', '/piper/edit/upload/' + action + "/" + id).attr('target', '_blank').submit();
+        var ref = $(this), form = ref.parents('form.uploadBase');
+        uploadCommon(ref, form, "SCREEN");
     });
+
+    $('#uploadComponentButton').click(function(){
+        var ref = $(this), form = ref.parents('form.uploadBase');
+        uploadCommon(ref, form, "COMPONENT");
+    });
+
+    function uploadCommon(ref, form, action) {
+        var list = $('#' + ref.attr('lst'));
+        var id = list.val();
+        form.attr('action', '/piper/edit/upload/' + action + "/" + id);
+        form.submit();
+    }
 
     $('.edit-action').click(function() {
         var ref = $(this), action = ref.attr('editvalue'), list, id;

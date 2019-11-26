@@ -275,6 +275,7 @@
                         <option value="REMOTE" selected>Use On Device Helper</option>
                         <option value="LOCAL">Use Local Helper</option>
                         <option value="LOCAL_PNG">Use Local Helper (png)</option>
+                        <option value="NOOP">Fake Helper (No-Op)</option>
                     </select>
                 </div>
 
@@ -647,17 +648,7 @@
                     <span class="FileName" id="ScreenName"></span>
                 </div>
 
-                <form action="" id="screenUploadForm" method="POST" enctype="multipart/form-data">
-                    <div class="input-group">
-                        <div class="input-group-prepend">
-                            <span class="input-group-text">Screen</span>
-                        </div>
-                        <input type="file" name="file">
-                        <div class="input-group-append">
-                            <button type="button" id="uploadScreenButton" lst="edit-screens" class="btn btn-success oi oi-plus"></button>
-                        </div>
-                    </div>
-                </form>
+
 
                 <div class="form-group">
                     <label for="edit-components">Components</label>
@@ -673,13 +664,44 @@
                     </div>
                 </div>
 
-
             </form>
+
+            <p></p>
+
+            <form id="screenUploadForm" class="uploadBase col-sm-12" method="POST" enctype="multipart/form-data" target="uploadTarget">
+                <div class="input-group">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text">Upload Screen</span>
+                    </div>
+                    <input type="file" name="file">
+                    <div class="input-group-append">
+                        <button type="button" id="uploadScreenButton" lst="edit-screens" class="btn btn-success oi oi-plus"></button>
+                    </div>
+                </div>
+            </form>
+
+            <p></p>
+
+            <form id="componentUploadForm" class="uploadBase col-sm-12" method="POST" enctype="multipart/form-data" target="uploadTarget">
+                <div class="input-group">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text">Upload Component</span>
+                    </div>
+                    <input type="file" name="file">
+                    <div class="input-group-append">
+                        <button type="button" id="uploadComponentButton" lst="edit-components" class="btn btn-success oi oi-plus"></button>
+                    </div>
+                </div>
+            </form>
+
+            <div style="display:none;">
+                <iframe name="uploadTarget"></iframe>
+            </div>
 
             <form method="POST" action="/piper/screen/download" target="downloadScreenFrame" id="downloadScreenForm"></form>
 
             <div style="display:none;">
-            <iframe name="downloadScreenFrame"></iframe>
+                <iframe name="downloadScreenFrame"></iframe>
             </div>
 
         </div>

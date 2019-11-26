@@ -48,6 +48,7 @@ import com.mgatelabs.piper.shared.details.VarStateDefinition;
 import com.mgatelabs.piper.shared.helper.Closer;
 import com.mgatelabs.piper.shared.helper.DeviceHelper;
 import com.mgatelabs.piper.shared.helper.LocalDeviceHelper;
+import com.mgatelabs.piper.shared.helper.NoOpDeviceHelper;
 import com.mgatelabs.piper.shared.helper.RemoteDeviceHelper;
 import com.mgatelabs.piper.shared.image.ImageWrapper;
 import com.mgatelabs.piper.shared.image.Sampler;
@@ -63,6 +64,7 @@ import org.glassfish.jersey.media.multipart.FormDataContentDisposition;
 import org.glassfish.jersey.media.multipart.FormDataParam;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.cglib.proxy.NoOp;
 import org.springframework.web.bind.annotation.RequestBody;
 
 import javax.imageio.ImageIO;
@@ -522,6 +524,10 @@ public class WebResource {
             if (!(deviceHelper instanceof RemoteDeviceHelper)) {
                 deviceHelper = new RemoteDeviceHelper(connectionDefinition);
             }
+        } else if (connectionDefinition.getHelperType() == ConnectionDefinition.HelperType.NOOP) {
+            if (!(deviceHelper instanceof NoOpDeviceHelper)) {
+                deviceHelper = new NoOpDeviceHelper();
+            }
         } else {
             if (!(deviceHelper instanceof LocalDeviceHelper)) {
                 deviceHelper = new LocalDeviceHelper(connectionDefinition);
@@ -719,6 +725,10 @@ public class WebResource {
         if (connectionDefinition.getHelperType() == ConnectionDefinition.HelperType.REMOTE) {
             if (!(deviceHelper instanceof RemoteDeviceHelper)) {
                 deviceHelper = new RemoteDeviceHelper(connectionDefinition);
+            }
+        } else if (connectionDefinition.getHelperType() == ConnectionDefinition.HelperType.NOOP) {
+            if (!(deviceHelper instanceof NoOpDeviceHelper)) {
+                deviceHelper = new NoOpDeviceHelper();
             }
         } else {
             if (!(deviceHelper instanceof LocalDeviceHelper)) {

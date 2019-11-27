@@ -117,12 +117,12 @@ public class ConditionDefinition {
 
         values = Sets.newHashSet();
         if ((is != null && is.isSplitValue()) || (not != null && not.isSplitValue()))
-        if (StringUtils.isNotBlank(value)) {
-            String [] temp = StringUtils.split(value, ",");
-            for (String tempItem: temp) {
-                values.add(tempItem);
+            if (StringUtils.isNotBlank(value)) {
+                String[] temp = StringUtils.split(value, ",");
+                for (String tempItem : temp) {
+                    values.add(tempItem);
+                }
             }
-        }
     }
 
     public List<ConditionDefinition> getAnd() {
@@ -251,14 +251,22 @@ public class ConditionDefinition {
 
             case DEVICE:
                 stringBuilder.append(definition.getNot() != null ? "!" : "").append("DEVICE: ").append(definition.getValue());
+                break;
+
+            case INTENT:
+                stringBuilder.append(definition.getNot() != null ? "!" : "").append("INTENT");
+                break;
 
             case GREATER: {
                 stringBuilder.append(definition.getVar()).append(definition.getNot() != null ? " <= " : " > ").append(definition.getValue());
             }
             break;
+
             case CALL: {
                 stringBuilder.append(definition.getNot() != null ? "!" : "").append("function('").append(definition.getValue()).append("')");
             }
+            break;
+
             case BOOLEAN: {
                 final boolean booleanValue = "true".equalsIgnoreCase(definition.getValue());
                 stringBuilder.append(definition.getNot() != null ? !booleanValue : booleanValue);

@@ -26,6 +26,7 @@ $(function(){
     var deviceDirect = $('#device-direct');
 
     var playPauseButton = $('.controlPlayPause');
+    var intentButton = $('.controlIntent');
     var playButton = $('#playButton');
     var pauseButton = $('.pauseButton');
     var unloadButton = $('#controlUnload');
@@ -324,6 +325,22 @@ $(function(){
 
     playPauseButton.click(function(){
         playPauseFunc();
+    });
+
+    intentButton.click(function(){
+        var loadIcon = loadNotice(undefined, 'Intent to Pause');
+        if (!intentButton.hasClass('disabled')) {
+            $.ajax({
+              type: "POST",
+              url: '/piper/process/intent/pause',
+              complete: function(){
+                loadIcon.remove();
+              },
+              success: function(result){
+                statusCheck();
+              }
+            });
+        }
     });
 
     unloadButton.click(function(){

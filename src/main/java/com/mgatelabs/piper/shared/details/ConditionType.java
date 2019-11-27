@@ -10,6 +10,7 @@ public enum ConditionType {
     LESS(false),
     EQUAL(false),
     DEVICE(false),
+    INTENT(false),
     CALL(false);
 
     private boolean splitValue;

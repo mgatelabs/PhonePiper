@@ -512,6 +512,25 @@ public class WebResource {
     }
 
     @POST
+    @Path("/process/intent/pause")
+    @Produces("application/json")
+    public Map<String, String> intendToPause() {
+
+        checkInitialState();
+
+        Map<String, String> result = Maps.newHashMap();
+
+        if (runner != null) {
+            runner.setIntent(ScriptRunner.Intent.PAUSE);
+            result.put("status", "ok");
+        } else {
+            result.put("status", "error");
+        }
+
+        return result;
+    }
+
+    @POST
     @Path("/process/prep")
     @Consumes("application/json")
     @Produces("application/json")

@@ -84,6 +84,11 @@ public class ScriptRunner {
         STOPPED
     }
 
+    public enum Intent {
+        NONE,
+        PAUSE
+    }
+
     private final SecureRandom SECURE_RANDOM = new SecureRandom();
 
     private static final Pattern SINGLE_VARIABLE = Pattern.compile("^\\$\\{[a-zA-Z0-9_-]+\\}$");
@@ -114,6 +119,7 @@ public class ScriptRunner {
     private VarManager vars;
 
     private volatile Status status;
+    private volatile Intent intent;
 
     private Date lastImageDate;
     private float lastImageDuration;
@@ -219,6 +225,14 @@ public class ScriptRunner {
 
     public void setStatus(Status status) {
         this.status = status;
+    }
+
+    public Intent getIntent() {
+        return intent;
+    }
+
+    public void setIntent(Intent intent) {
+        this.intent = intent;
     }
 
     private Var getVar(String name) {
@@ -362,6 +376,7 @@ public class ScriptRunner {
         try {
             currentStateId = stateName;
             this.status = Status.RUNNING;
+            this.intent = Intent.NONE;
 
             logger.debug("Init Helper");
 
@@ -1154,6 +1169,9 @@ public class ScriptRunner {
                     }
                 }
                 break;
+                case INTENT: {
+                    result = intent != Intent.NONE;
+                } break;
                 case SCREEN: {
                     for (String value : conditionDefinition.getValues()) {
                         Var screenValue = valueHandler(value);

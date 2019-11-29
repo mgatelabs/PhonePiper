@@ -631,73 +631,145 @@
 
         <div class="tab-pane fade" id="edit" role="tabpanel" aria-labelledby="edit-tab">
 
-            <form id="edit-form" class="col-sm-12" style="display:none;">
-                <div class="form-group">
-                    <button type="button" id="unloadEdit" class="btn  btn-danger notWhileRunning">Unload</button>
-                </div>
+            <div class="form-group" style="margin-left:16px;">
+                <button type="button" id="unloadEdit" class="btn  btn-danger notWhileRunning">Unload</button>
+            </div>
 
-                <div class="form-group">
-                    <label for="edit-screens">Screens</label>
-                    <select id="edit-screens" class="form-control notWhileRunning"></select>
-                </div>
+            <div id="edit-form" class="col-sm-12" style="display:none;">
 
-                <div class="form-group">
-                    <button type="button" class="btn btn-info edit-action notWhileRunning whenLoaded prompt-name" editvalue="stubScreen">Stub</button>
-                    <button type="button" class="btn btn-info edit-action notWhileRunning whenLoaded" editvalue="editScreen"       lst="edit-screens">Edit Pixels</button>
-                    <button type="button" class="btn btn-info edit-action notWhileRunning whenLoaded" editvalue="fixScreen"        lst="edit-screens" title="Test each pixels and remove failures">Filter</button>
-                    <button type="button" class="btn btn-info edit-action notWhileRunning whenLoaded" editvalue="repairScreen"        lst="edit-screens" title="Test each pixel and look for possible replacements">Repair</button>
-                    <button type="button" class="btn btn-info edit-action notWhileRunning whenLoaded" editvalue="verifyScreen"     lst="edit-screens">Verify (From Disk)</button>
-                    <button type="button" class="btn btn-info edit-action notWhileRunning whenLoaded" editvalue="liveVerifyScreen" lst="edit-screens">Verify (From Device)</button>
-                    <button type="button" class="btn btn-info edit-action notWhileRunning whenLoaded" editvalue="updateScreen"     lst="edit-screens">Update Image (From Device)</button>
-                    <button type="button" class="btn btn-info edit-action notWhileRunning whenLoaded" editvalue="cacheScreen"     lst="edit-screens">Update Image (From Cache)</button>
-                    <span class="FileName" id="ScreenName"></span>
-                </div>
+                <div class="row">
 
+                    <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12 notWhileRunning">
+                        <div class="card" style="background-color:#eee;">
+                            <div class="card-body">
 
+                                <h5 class="card-title">Screens</h5>
 
-                <div class="form-group">
-                    <label for="edit-components">Components</label>
-                    <select id="edit-components" class="form-control notWhileRunning"></select>
-                </div>
+                                <div class="form-group">
+                                    <label for="edit-screens">Screens</label>
+                                    <select id="edit-screens" class="form-control notWhileRunning"></select>
+                                </div>
 
-                <div class="form-group">
-                    <div class="form-group">
-                        <button type="button" class="edit-action notWhileRunning btn btn-info notWhileRunning whenLoaded prompt-name" editvalue="stubComponent">Stub</button>
-                        <button type="button" class="edit-action notWhileRunning btn btn-info notWhileRunning whenLoaded" lst="edit-components" editvalue="editComponent">Edit</button>
-                        <button type="button" class="edit-action notWhileRunning btn btn-info notWhileRunning whenLoaded" lst="edit-components" editvalue="updateComponent">Update</button>
-                        <span class="FileName" id="ComponentName"></span>
+                                <div class="FileName" id="ScreenName"></div>
+
+                                <button type="button" class="btn btn-info edit-action notWhileRunning whenLoaded prompt-name" editvalue="stubScreen">Stub</button>
+                                <button type="button" class="btn btn-info edit-action notWhileRunning whenLoaded" editvalue="editScreen"       lst="edit-screens">Edit Pixels</button>
+                                <button type="button" class="btn btn-info edit-action notWhileRunning whenLoaded" editvalue="fixScreen"        lst="edit-screens" title="Test each pixels and remove failures">Filter</button>
+                                <button type="button" class="btn btn-info edit-action notWhileRunning whenLoaded" editvalue="repairScreen"        lst="edit-screens" title="Test each pixel and look for possible replacements">Repair</button>
+
+                            </div>
+                        </div>
+                        <br/>
                     </div>
+
+                    <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12 notWhileRunning">
+                        <div class="card" style="background-color:#eee;">
+                            <div class="card-body">
+
+                                <h5 class="card-title">Verification</h5>
+
+                                <button type="button" class="btn btn-info edit-action notWhileRunning whenLoaded" editvalue="verifyScreen"     lst="edit-screens">From Disk</button>
+                                <button type="button" class="btn btn-info edit-action notWhileRunning whenLoaded" editvalue="liveVerifyScreen" lst="edit-screens">From Device</button>
+
+                            </div>
+                        </div>
+                        <br/>
+                    </div>
+
+                    <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12 notWhileRunning">
+                        <div class="card" style="background-color:#eee;">
+                            <div class="card-body">
+
+                                <h5 class="card-title">Update Image</h5>
+                                <button type="button" class="btn btn-info edit-action notWhileRunning whenLoaded" editvalue="updateScreen"     lst="edit-screens">From Device</button>
+                                <button type="button" class="btn btn-info edit-action notWhileRunning whenLoaded" editvalue="cacheScreen"     lst="edit-screens">From Cache</button>
+                                <button type="button" class="btn btn-info edit-action notWhileRunning whenLoaded" editvalue="cacheScreen"     lst="edit-screens">From Cache</button>
+
+                                <p></p>
+
+                                <form id="screenUploadForm" class="uploadBase" method="POST" enctype="multipart/form-data" target="uploadTarget">
+                                    <div class="input-group">
+                                        <input type="file" name="file">
+                                        <div class="input-group-append">
+                                            <button type="button" id="uploadScreenButton" lst="edit-screens" class="btn btn-success oi oi-plus"></button>
+                                        </div>
+                                    </div>
+                                </form>
+
+                            </div>
+                        </div>
+                        <br/>
+                    </div>
+
+                    <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12 notWhileRunning">
+                        <div class="card" style="background-color:#eee;">
+                            <div class="card-body">
+
+                                <h5 class="card-title">Import/Export</h5>
+
+                                <p></p>
+
+                                <textarea id="screenExtractArea"></textarea>
+
+                                <div class="form-group">
+                                    <button type="button" id="extractScreen" class="btn btn-info notWhileRunning whenLoaded" lst="edit-screens">Export Screen</button>
+                                    <button type="button" id="importScreen" class="btn btn-info notWhileRunning whenLoaded" lst="edit-screens">Import Screen</button>
+                                </div>
+
+                            </div>
+                        </div>
+                        <br/>
+                    </div>
+
+                    <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12 notWhileRunning">
+                        <div class="card">
+                            <div class="card-body">
+
+                                <h5 class="card-title">Components</h5>
+
+                                <div class="form-group">
+                                    <label for="edit-components">Components</label>
+                                    <select id="edit-components" class="form-control notWhileRunning"></select>
+                                </div>
+
+                                <div class="FileName" id="ComponentName"></div>
+
+                                <button type="button" class="edit-action notWhileRunning btn btn-info notWhileRunning whenLoaded prompt-name" editvalue="stubComponent">Stub</button>
+                                <button type="button" class="edit-action notWhileRunning btn btn-info notWhileRunning whenLoaded" lst="edit-components" editvalue="editComponent">Edit</button>
+
+
+                            </div>
+                        </div>
+                        <br/>
+                    </div>
+
+                    <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12 notWhileRunning">
+                        <div class="card">
+                            <div class="card-body">
+
+                                <h5 class="card-title">Update Image</h5>
+
+                                <button type="button" class="edit-action notWhileRunning btn btn-info notWhileRunning whenLoaded" lst="edit-components" editvalue="updateComponent">From Device</button>
+
+                                <p></p>
+
+                                <form id="componentUploadForm" class="uploadBase col-sm-12" method="POST" enctype="multipart/form-data" target="uploadTarget">
+                                    <div class="input-group">
+                                        <input type="file" name="file">
+                                        <div class="input-group-append">
+                                            <button type="button" id="uploadComponentButton" lst="edit-components" class="btn btn-success oi oi-plus"></button>
+                                        </div>
+                                    </div>
+                                </form>
+
+                            </div>
+                        </div>
+                        <br/>
+                    </div>
+
                 </div>
 
-            </form>
-
-            <p></p>
-
-            <form id="screenUploadForm" class="uploadBase col-sm-12" method="POST" enctype="multipart/form-data" target="uploadTarget">
-                <div class="input-group">
-                    <div class="input-group-prepend">
-                        <span class="input-group-text">Upload Screen</span>
-                    </div>
-                    <input type="file" name="file">
-                    <div class="input-group-append">
-                        <button type="button" id="uploadScreenButton" lst="edit-screens" class="btn btn-success oi oi-plus"></button>
-                    </div>
-                </div>
-            </form>
-
-            <p></p>
-
-            <form id="componentUploadForm" class="uploadBase col-sm-12" method="POST" enctype="multipart/form-data" target="uploadTarget">
-                <div class="input-group">
-                    <div class="input-group-prepend">
-                        <span class="input-group-text">Upload Component</span>
-                    </div>
-                    <input type="file" name="file">
-                    <div class="input-group-append">
-                        <button type="button" id="uploadComponentButton" lst="edit-components" class="btn btn-success oi oi-plus"></button>
-                    </div>
-                </div>
-            </form>
+            </div>
 
             <div style="display:none;">
                 <iframe name="uploadTarget"></iframe>
@@ -834,6 +906,9 @@
 
 </div>
 
+<div style="display:none; font-weight: bold; line-height: 28px; overflow: hidden; position: fixed; left: 10px; right: 10px;  bottom: 10px; height: 48px; border: 1px solid black; background-color: #eee; border-radius: 5px; padding: 8px;" id="toast">
+
+</div>
 
 </body>
 </html>

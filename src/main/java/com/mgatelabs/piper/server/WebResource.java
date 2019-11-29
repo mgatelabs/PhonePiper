@@ -64,7 +64,6 @@ import org.glassfish.jersey.media.multipart.FormDataContentDisposition;
 import org.glassfish.jersey.media.multipart.FormDataParam;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.cglib.proxy.NoOp;
 import org.springframework.web.bind.annotation.RequestBody;
 
 import javax.imageio.ImageIO;
@@ -87,6 +86,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.Base64;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Comparator;
@@ -834,6 +834,76 @@ public class WebResource {
             }
         } else {
             result.put("msg", "Edit engine isn't running");
+            result.put("status", "error");
+        }
+        return result;
+    }
+
+    @POST
+    @Path("/edit/extract/{id}")
+    @Produces("application/json")
+    public Map<String, String> editAction(@PathParam("id") String id) {
+        checkInitialState();
+        Map<String, String> result = Maps.newHashMap();
+        try {
+            if (editHolder != null) {
+                ScreenDefinition screenDefinition = editHolder.getScreenForId(id);
+                if (screenDefinition == null) {
+                    result.put("msg", "Unknown Screen Id: " + id);
+                    result.put("status", "error");
+                } else {
+                    final ObjectMapper objectMapper = JsonTool.getInstance();
+                    final String extracted = Base64.getEncoder().encodeToString(objectMapper.writeValueAsString(screenDefinition).getBytes("UTF-8"));
+                    result.put("msg", "DONE");
+                    result.put("content", extracted);
+                    result.put("status", "ok");
+                }
+            } else {
+                result.put("msg", "Edit engine isn't running");
+                result.put("status", "error");
+            }
+        } catch (Exception ex) {
+            result.put("msg", ex.getMessage());
+            result.put("status", "error");
+        }
+        return result;
+    }
+
+    @POST
+    @Path("/edit/import/screen")
+    @Produces("application/json")
+    public Map<String, String> editImportScreen(@FormParam("content") String content) {
+        checkInitialState();
+        Map<String, String> result = Maps.newHashMap();
+        try {
+            if (editHolder != null) {
+                final ObjectMapper objectMapper = JsonTool.getInstance();
+
+                byte [] bytes = Base64.getDecoder().decode(content);
+
+                final ScreenDefinition newScreenDef =  objectMapper.readValue(bytes, ScreenDefinition.class);
+                final ScreenDefinition oldScreenDefinition = editHolder.getScreenForId(newScreenDef.getScreenId());
+
+                if (oldScreenDefinition == null) {
+                    result.put("msg", "The screen to be imported: " + newScreenDef.getScreenId() + " does not exist in the current view definition.");
+                    result.put("status", "error");
+                } else {
+
+                    oldScreenDefinition.getPoints().clear();
+                    oldScreenDefinition.getPoints().addAll(newScreenDef.getPoints());
+
+                    // Save the points
+                    editHolder.getViewDefinition().save();
+
+                    result.put("msg", "DONE");
+                    result.put("status", "ok");
+                }
+            } else {
+                result.put("msg", "Edit engine isn't running");
+                result.put("status", "error");
+            }
+        } catch (Exception ex) {
+            result.put("msg", ex.getMessage());
             result.put("status", "error");
         }
         return result;

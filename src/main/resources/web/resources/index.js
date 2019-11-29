@@ -26,6 +26,7 @@ $(function(){
     var deviceDirect = $('#device-direct');
 
     var playPauseButton = $('.controlPlayPause');
+    var intentButton = $('.controlIntent');
     var playButton = $('#playButton');
     var pauseButton = $('.pauseButton');
     var unloadButton = $('#controlUnload');
@@ -84,6 +85,30 @@ $(function(){
         for (i = 0; i < items.length; i++) {
             select.append($('<option></option>').text(items[i]).attr('value', items[i]));
         }
+    }
+
+    var toaster = $('#toast');
+
+    function resultHandler(result) {
+        if (!result) {
+
+        } else if (result.status && result.status == 'ok') {
+            info(result.msg);
+            return true;
+        } else {
+            error(result.msg);
+        }
+        return false;
+    }
+
+    function info(message) {
+        if (message)
+            toaster.text(message).css('background-color', '#ddffc7').fadeIn().delay(2000).fadeOut();
+    }
+
+    function error(message) {
+        if (message)
+            toaster.text(message).css('background-color', '#ffcac7').fadeIn().delay(2000).fadeOut();
     }
 
     view1.change(function(){
@@ -326,6 +351,22 @@ $(function(){
         playPauseFunc();
     });
 
+    intentButton.click(function(){
+        var loadIcon = loadNotice(undefined, 'Intent to Pause');
+        if (!intentButton.hasClass('disabled')) {
+            $.ajax({
+              type: "POST",
+              url: '/piper/process/intent/pause',
+              complete: function(){
+                loadIcon.remove();
+              },
+              success: function(result){
+                statusCheck();
+              }
+            });
+        }
+    });
+
     unloadButton.click(function(){
         var loadIcon = loadNotice(undefined, 'Unload App');
 
@@ -490,6 +531,9 @@ $(function(){
                     loadIcon.remove();
           },
           success: function(result){
+
+            resultHandler(result);
+
             if (result.status == 'ok') {
                 states.empty();
                 components.empty();
@@ -615,8 +659,6 @@ $(function(){
                     variableForm.hide();
                 }
                 statusCheck();
-            } else {
-                alert(result.msg || "Error");
             }
           },
           dataType: 'json'
@@ -632,6 +674,9 @@ $(function(){
             loadIcon.remove();
           },
           success: function(result){
+
+            resultHandler(result);
+
             if (result.status == 'ok') {
                 editScreens.empty();
                 editComponents.empty();
@@ -645,9 +690,8 @@ $(function(){
                 if (firstTime) {
                     statusCheck();
                 }
-            } else {
-                alert(result.msg || "Error");
             }
+
           },
           dataType: 'json'
         });
@@ -753,6 +797,23 @@ $(function(){
     // EDIT
     ///////////////////////////////////////////////////////////////////////////
 
+    $('#uploadScreenButton').click(function(){
+        var ref = $(this), form = ref.parents('form.uploadBase');
+        uploadCommon(ref, form, "SCREEN");
+    });
+
+    $('#uploadComponentButton').click(function(){
+        var ref = $(this), form = ref.parents('form.uploadBase');
+        uploadCommon(ref, form, "COMPONENT");
+    });
+
+    function uploadCommon(ref, form, action) {
+        var list = $('#' + ref.attr('lst'));
+        var id = list.val();
+        form.attr('action', '/piper/edit/upload/' + action + "/" + id);
+        form.submit();
+    }
+
     $('.edit-action').click(function() {
         var ref = $(this), action = ref.attr('editvalue'), list, id;
         if (ref.hasClass('prompt-name')) {
@@ -761,8 +822,8 @@ $(function(){
             list = $('#' + ref.attr('lst'));
             id = list.val();
         }
-        var loadIcon = loadNotice(undefined, 'Edit Action: ' + action + ' - ' + id);
         if (id) {
+            var loadIcon = loadNotice(undefined, 'Edit Action: ' + action + ' - ' + id);
             $.ajax({
                 type: "POST",
                 url: '/piper/edit/action/' + action + "/" + id + '/' + 'null',
@@ -770,14 +831,59 @@ $(function(){
                     loadIcon.remove();
                 },
                 success: function (result) {
-                    if (result.msg) {
-                        alert(result.msg);
+                    resultHandler(result);
+                },
+                dataType: 'json'
+            });
+        } else {
+            error("Please enter a ID");
+        }
+    });
+
+    $('#extractScreen').click(function(){
+        var ref = $(this), lst, id;
+        list = $('#' + ref.attr('lst'));
+        id = list.val();
+
+        var loadIcon = loadNotice(undefined, 'Extract Screen: ' + id);
+        if (id) {
+            $.ajax({
+                type: "POST",
+                url: '/piper/edit/extract/' + id,
+                complete: function(){
+                    loadIcon.remove();
+                },
+                success: function (result) {
+                    if (resultHandler(result) && result.content) {
+                        $('#screenExtractArea').val(result.content);
                     }
                 },
                 dataType: 'json'
             });
         }
     });
+
+    $('#importScreen').click(function(){
+            var ref = $(this), content = $('#screenExtractArea').val();
+
+            var loadIcon = loadNotice(undefined, 'Import Screen');
+            if (content) {
+                $.ajax({
+                    type: "POST",
+                    url: '/piper/edit/import/screen',
+                    data: {
+                        content: content
+                    },
+                    complete: function(){
+                        loadIcon.remove();
+                    },
+                    success: function (result) {
+                        resultHandler(result);
+                    },
+                    dataType: 'json'
+                });
+            }
+        });
 
 
     ///////////////////////////////////////////////////////////////////////////
@@ -880,7 +986,7 @@ $(function(){
         var data = extractConfig();
 
         if (!data.title) {
-            alert('Please provide a name');
+            error('Please provide a name');
             return;
         }
 
@@ -897,10 +1003,8 @@ $(function(){
             	loadIcon.remove();
             },
             success: function(result){
-                if (result.status == 'ok') {
+                if (resultHandler(result)) {
                     loadConfigurations(callback);
-                } else {
-                    alert(result.msg || "Error");
                 }
           },
           dataType: 'json'
@@ -1383,14 +1487,12 @@ $(function(){
               loadIcon.remove();
           },
           success: function(result){
-            if (result.status == 'ok') {
+            if (resultHandler(result)) {
                 configs = result.configs;
                 buildConfigs();
                 if (callback) {
                     callback();
                 }
-            } else {
-                alert(result.msg || "Error");
             }
           },
           dataType: 'json'
@@ -1408,10 +1510,8 @@ $(function(){
           	loadIcon.remove();
           },
           success: function(result){
-            if (result.status == 'ok') {
+            if (resultHandler(result)) {
                 loadConfigurations();
-            } else {
-                alert(result.msg || "Error");
             }
           },
           dataType: 'json'

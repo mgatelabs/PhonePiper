@@ -84,6 +84,11 @@ public class ScriptRunner {
         STOPPED
     }
 
+    public enum Intent {
+        NONE,
+        PAUSE
+    }
+
     private final SecureRandom SECURE_RANDOM = new SecureRandom();
 
     private static final Pattern SINGLE_VARIABLE = Pattern.compile("^\\$\\{[a-zA-Z0-9_-]+\\}$");
@@ -114,6 +119,7 @@ public class ScriptRunner {
     private VarManager vars;
 
     private volatile Status status;
+    private volatile Intent intent;
 
     private Date lastImageDate;
     private float lastImageDuration;
@@ -195,6 +201,7 @@ public class ScriptRunner {
             logger.error("Phone Helper connection is down, please restart app");
             return false;
         }
+        deviceHelper.makeReady(shell);
         if (deviceHelper.ready()) {
             logger.info("Phone Helper is ready @ " + deviceHelper.getIpAddress());
             InfoTransfer infoTransfer = new InfoTransfer();
@@ -218,6 +225,14 @@ public class ScriptRunner {
 
     public void setStatus(Status status) {
         this.status = status;
+    }
+
+    public Intent getIntent() {
+        return intent;
+    }
+
+    public void setIntent(Intent intent) {
+        this.intent = intent;
     }
 
     private Var getVar(String name) {
@@ -361,6 +376,7 @@ public class ScriptRunner {
         try {
             currentStateId = stateName;
             this.status = Status.RUNNING;
+            this.intent = Intent.NONE;
 
             logger.debug("Init Helper");
 
@@ -382,6 +398,14 @@ public class ScriptRunner {
             //putVar(VAR_LOOPS, IntVar.ZERO);
 
             vars.state(currentExecutionLink, Maps.newHashMap());
+
+            // Reset the timers
+            for (VarDefinition varDefinition : getRawEditVariables()) {
+                if (varDefinition.getDisplayType() == VarDisplay.SECONDS && varDefinition.getModify() != VarModify.EDITABLE) {
+                    final VarTimer timer = timers.get(varDefinition.getName());
+                    timer.reset();
+                }
+            }
 
             while (isRunning()) {
 
@@ -1145,6 +1169,9 @@ public class ScriptRunner {
                     }
                 }
                 break;
+                case INTENT: {
+                    result = intent != Intent.NONE;
+                } break;
                 case SCREEN: {
                     for (String value : conditionDefinition.getValues()) {
                         Var screenValue = valueHandler(value);

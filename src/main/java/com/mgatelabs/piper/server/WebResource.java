@@ -48,6 +48,7 @@ import com.mgatelabs.piper.shared.details.VarStateDefinition;
 import com.mgatelabs.piper.shared.helper.Closer;
 import com.mgatelabs.piper.shared.helper.DeviceHelper;
 import com.mgatelabs.piper.shared.helper.LocalDeviceHelper;
+import com.mgatelabs.piper.shared.helper.NoOpDeviceHelper;
 import com.mgatelabs.piper.shared.helper.RemoteDeviceHelper;
 import com.mgatelabs.piper.shared.image.ImageWrapper;
 import com.mgatelabs.piper.shared.image.Sampler;
@@ -59,6 +60,8 @@ import com.mgatelabs.piper.shared.util.Loggers;
 import com.mgatelabs.piper.ui.FrameChoices;
 import com.mgatelabs.piper.ui.utils.Constants;
 import org.apache.commons.lang3.StringUtils;
+import org.glassfish.jersey.media.multipart.FormDataContentDisposition;
+import org.glassfish.jersey.media.multipart.FormDataParam;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -80,8 +83,10 @@ import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
+import java.io.InputStream;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.Base64;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Comparator;
@@ -507,6 +512,25 @@ public class WebResource {
     }
 
     @POST
+    @Path("/process/intent/pause")
+    @Produces("application/json")
+    public Map<String, String> intendToPause() {
+
+        checkInitialState();
+
+        Map<String, String> result = Maps.newHashMap();
+
+        if (runner != null) {
+            runner.setIntent(ScriptRunner.Intent.PAUSE);
+            result.put("status", "ok");
+        } else {
+            result.put("status", "error");
+        }
+
+        return result;
+    }
+
+    @POST
     @Path("/process/prep")
     @Consumes("application/json")
     @Produces("application/json")
@@ -518,6 +542,10 @@ public class WebResource {
         if (connectionDefinition.getHelperType() == ConnectionDefinition.HelperType.REMOTE) {
             if (!(deviceHelper instanceof RemoteDeviceHelper)) {
                 deviceHelper = new RemoteDeviceHelper(connectionDefinition);
+            }
+        } else if (connectionDefinition.getHelperType() == ConnectionDefinition.HelperType.NOOP) {
+            if (!(deviceHelper instanceof NoOpDeviceHelper)) {
+                deviceHelper = new NoOpDeviceHelper();
             }
         } else {
             if (!(deviceHelper instanceof LocalDeviceHelper)) {
@@ -677,6 +705,33 @@ public class WebResource {
         return result;
     }
 
+
+    @POST
+    @Path("/edit/upload/{type}/{id}")
+    @Consumes(MediaType.MULTIPART_FORM_DATA)
+    @Produces("application/json")
+    public Map<String, String> uploadImageForScreen(@FormDataParam("file") InputStream stream, @FormDataParam("file") FormDataContentDisposition fileDetail, @PathParam("type") String type, @PathParam("id") String id) {
+        Map<String, String> result = Maps.newHashMap();
+        if (StringUtils.equalsIgnoreCase(type, "SCREEN") || StringUtils.equalsIgnoreCase(type, "COMPONENT")) {
+            try {
+                BufferedImage bufferedImage = ImageIO.read(stream);
+                final File filePath;
+                if (StringUtils.equalsIgnoreCase(type, "SCREEN")) {
+                    filePath = ScreenDefinition.getPreviewPath(editHolder.getViewDefinition().getViewId(), id);
+                } else {
+                    filePath = ComponentDefinition.getPreviewPath(editHolder.getViewDefinition().getViewId(), id);
+                }
+                ImageIO.write(bufferedImage, "PNG", filePath);
+                result.put("status", "ok");
+            } catch (Exception ex) {
+                result.put("status", "error");
+            }
+        } else {
+            result.put("status", "error");
+        }
+        return result;
+    }
+
     @POST
     @Path("/edit/view")
     @Consumes("application/json")
@@ -689,6 +744,10 @@ public class WebResource {
         if (connectionDefinition.getHelperType() == ConnectionDefinition.HelperType.REMOTE) {
             if (!(deviceHelper instanceof RemoteDeviceHelper)) {
                 deviceHelper = new RemoteDeviceHelper(connectionDefinition);
+            }
+        } else if (connectionDefinition.getHelperType() == ConnectionDefinition.HelperType.NOOP) {
+            if (!(deviceHelper instanceof NoOpDeviceHelper)) {
+                deviceHelper = new NoOpDeviceHelper();
             }
         } else {
             if (!(deviceHelper instanceof LocalDeviceHelper)) {
@@ -775,6 +834,76 @@ public class WebResource {
             }
         } else {
             result.put("msg", "Edit engine isn't running");
+            result.put("status", "error");
+        }
+        return result;
+    }
+
+    @POST
+    @Path("/edit/extract/{id}")
+    @Produces("application/json")
+    public Map<String, String> editAction(@PathParam("id") String id) {
+        checkInitialState();
+        Map<String, String> result = Maps.newHashMap();
+        try {
+            if (editHolder != null) {
+                ScreenDefinition screenDefinition = editHolder.getScreenForId(id);
+                if (screenDefinition == null) {
+                    result.put("msg", "Unknown Screen Id: " + id);
+                    result.put("status", "error");
+                } else {
+                    final ObjectMapper objectMapper = JsonTool.getInstance();
+                    final String extracted = Base64.getEncoder().encodeToString(objectMapper.writeValueAsString(screenDefinition).getBytes("UTF-8"));
+                    result.put("msg", "DONE");
+                    result.put("content", extracted);
+                    result.put("status", "ok");
+                }
+            } else {
+                result.put("msg", "Edit engine isn't running");
+                result.put("status", "error");
+            }
+        } catch (Exception ex) {
+            result.put("msg", ex.getMessage());
+            result.put("status", "error");
+        }
+        return result;
+    }
+
+    @POST
+    @Path("/edit/import/screen")
+    @Produces("application/json")
+    public Map<String, String> editImportScreen(@FormParam("content") String content) {
+        checkInitialState();
+        Map<String, String> result = Maps.newHashMap();
+        try {
+            if (editHolder != null) {
+                final ObjectMapper objectMapper = JsonTool.getInstance();
+
+                byte [] bytes = Base64.getDecoder().decode(content);
+
+                final ScreenDefinition newScreenDef =  objectMapper.readValue(bytes, ScreenDefinition.class);
+                final ScreenDefinition oldScreenDefinition = editHolder.getScreenForId(newScreenDef.getScreenId());
+
+                if (oldScreenDefinition == null) {
+                    result.put("msg", "The screen to be imported: " + newScreenDef.getScreenId() + " does not exist in the current view definition.");
+                    result.put("status", "error");
+                } else {
+
+                    oldScreenDefinition.getPoints().clear();
+                    oldScreenDefinition.getPoints().addAll(newScreenDef.getPoints());
+
+                    // Save the points
+                    editHolder.getViewDefinition().save();
+
+                    result.put("msg", "DONE");
+                    result.put("status", "ok");
+                }
+            } else {
+                result.put("msg", "Edit engine isn't running");
+                result.put("status", "error");
+            }
+        } catch (Exception ex) {
+            result.put("msg", ex.getMessage());
             result.put("status", "error");
         }
         return result;
@@ -1213,7 +1342,7 @@ public class WebResource {
                 if (screenWrapper.isReady()) {
                     byte[] stream = screenWrapper.outputPng();
                     if (stream != null) {
-                        return Response.ok(stream, MediaType.APPLICATION_OCTET_STREAM).header("content-disposition","attachment; filename = screen.png").build();
+                        return Response.ok(stream, MediaType.APPLICATION_OCTET_STREAM).header("content-disposition", "attachment; filename = screen.png").build();
                     }
                 }
             }

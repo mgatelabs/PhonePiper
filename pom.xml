@@ -6,7 +6,7 @@
 
     <groupId>com.mgatelabs</groupId>
     <artifactId>PhonePiper</artifactId>
-    <version>2019.10.6-SNAPSHOT</version>
+    <version>2019.12.1-SNAPSHOT</version>
 
     <properties>
         <maven.compiler.source>1.8</maven.compiler.source>
@@ -133,6 +133,12 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-jersey</artifactId>
             <version>1.5.10.RELEASE</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.glassfish.jersey.media</groupId>
+            <artifactId>jersey-media-multipart</artifactId>
+            <version>2.25.1</version>
         </dependency>
 
         <!-- https://mvnrepository.com/artifact/org.apache.tomcat/tomcat-juli -->

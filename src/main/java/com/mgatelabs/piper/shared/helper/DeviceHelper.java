@@ -27,4 +27,6 @@ public interface DeviceHelper {
     int getFailures();
 
     boolean refresh(AdbWrapper shell);
+
+    DeviceHelper makeReady(AdbWrapper shell);
 }

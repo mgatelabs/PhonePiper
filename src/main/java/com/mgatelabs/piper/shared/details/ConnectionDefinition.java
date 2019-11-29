@@ -23,7 +23,8 @@ public class ConnectionDefinition {
     public enum HelperType {
         REMOTE,
         LOCAL,
-        LOCAL_PNG
+        LOCAL_PNG,
+        NOOP
     }
 
     public enum AdbType {

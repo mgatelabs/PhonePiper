@@ -249,4 +249,12 @@ public class LocalDeviceHelper implements DeviceHelper {
 
         return true;
     }
+
+    @Override
+    public DeviceHelper makeReady(AdbWrapper shell) {
+        if (!shell.connect()) {
+            shell.restart();
+        }
+        return this;
+    }
 }

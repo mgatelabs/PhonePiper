@@ -1,5 +1,6 @@
 package com.mgatelabs.piper.server;
 
+import org.glassfish.jersey.media.multipart.MultiPartFeature;
 import org.glassfish.jersey.server.ResourceConfig;
 import org.springframework.stereotype.Component;
 
@@ -18,5 +19,6 @@ public class JerseyConfig extends ResourceConfig {
     }
     private void registerEndpoints() {
         register(WebResource.class);
+        register(MultiPartFeature.class);
     }
 }

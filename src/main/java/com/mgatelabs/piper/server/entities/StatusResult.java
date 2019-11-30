@@ -4,6 +4,7 @@ import com.google.common.collect.Lists;
 import com.mgatelabs.piper.shared.details.VarDefinition;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  *
@@ -28,9 +29,19 @@ public class StatusResult {
 
     private List<VarDefinition> variables;
 
+    private Map<String, String> stats;
+
     public StatusResult() {
         logs = Lists.newArrayList();
         variables = Lists.newArrayList();
+    }
+
+    public Map<String, String> getStats() {
+        return stats;
+    }
+
+    public void setStats(Map<String, String> stats) {
+        this.stats = stats;
     }
 
     public Status getStatus() {

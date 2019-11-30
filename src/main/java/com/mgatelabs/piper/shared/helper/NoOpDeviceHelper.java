@@ -60,4 +60,24 @@ public class NoOpDeviceHelper implements DeviceHelper {
     public DeviceHelper makeReady(AdbWrapper shell) {
         return this;
     }
+
+    @Override
+    public boolean imageReady() {
+        return false;
+    }
+
+    @Override
+    public long getImageAverage() {
+        return 0;
+    }
+
+    @Override
+    public long getImageSamples() {
+        return 0;
+    }
+
+    @Override
+    public long getLastImageTime() {
+        return 0;
+    }
 }

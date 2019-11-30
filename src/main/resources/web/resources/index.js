@@ -44,7 +44,7 @@ $(function(){
     var variableForm = $('#variable-form');
     var variableContainer = $('#variable-container');
     var myTabContent = $('#myTabContent');
-    var loadedForm = $('#loaded-form');
+    //var loadedForm = $('#loaded-form');
 
     var controlAdb = $('.controlAdb');
     var adbInfo = $('#adb-info');
@@ -143,7 +143,13 @@ $(function(){
         statusCheck(false);
     });
 
+    var lastSampleCount = -1;
+
     function statusCheck(firstTime) {
+
+        if (firstTime) {
+            lastSampleCount = -1;
+        }
 
         var loadIcon = loadNotice(undefined, 'Status Check');
 
@@ -238,7 +244,7 @@ $(function(){
                         playPauseButton.addClass('disabled');
                         unloadButton.addClass('disabled');
                         settingForm.show();
-                        loadedForm.hide();
+                        //loadedForm.hide();
                         states.prop('disabled', true);
                         configList.show();
                     } break;
@@ -251,16 +257,23 @@ $(function(){
                             playPauseButton.removeClass('disabled');
                             unloadButton.removeClass('disabled');
                             settingForm.hide();
-                            loadedForm.show();
+                            //loadedForm.show();
                             states.prop('disabled', false);
                             notWhileRunning.prop('disabled', false);
                             bodyElement.removeClass('running');
                         }
                     } break;
                     case 'RUNNING':
-                        if (!firstTime) {
+
+                        if ((data.stats.image_samples - 0) != lastSampleCount) {
+                            lastSampleCount = data.stats.image_samples - 0;
                             $('#liveCanvas').css("height", ((256.0 / viewSetup.controlWidth) * viewSetup.controlHeight) + 'px').attr('src', '/piper/screen?factor=20&live=true&time=' + (new Date().getTime()));
                         }
+
+                        $('#time_avg').text(data.stats.image_avg || '?');
+                        $('#time_last').text(data.stats.image_last || '?');
+                        $('#time_samples').text(data.stats.image_samples || '?');
+
                     case 'STOPPING':
                     case 'STOPPED': {
                         if (firstTime) {
@@ -271,7 +284,7 @@ $(function(){
                             playPauseButton.removeClass('disabled');
                             unloadButton.removeClass('disabled');
                             settingForm.hide();
-                            loadedForm.show();
+                            //loadedForm.show();
                             states.prop('disabled', true);
                             notWhileRunning.prop('disabled', true);
                             bodyElement.addClass('running');

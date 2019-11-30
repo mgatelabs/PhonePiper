@@ -366,49 +366,94 @@
         </div>
         <div class="tab-pane fade" id="run" role="tabpanel" aria-labelledby="run-tab">
 
-            <form id="loaded-form" class="col-sm-12" style="display:none;">
-                <h3>Run</h3>
-                <div class="form-group">
-                    <label for="states">State</label>
-                    <select id="states" class="form-control"></select>
+            <div class="row">
+
+                <div class="col-lg-3 col-md-3 col-sm-12 col-xs-12">
+
+                    <div class="card">
+
+                        <div class="card-body">
+
+                            <h5 class="card-title">Engine Controls</h5>
+
+                            <div class="form-group">
+                                <label for="states">State</label>
+                                <select id="states" class="form-control"></select>
+                            </div>
+                            <div class="form-group">
+                                <button type="button" id="playButton" class="btn notWhileRunning controlPlayPause btn-primary oi oi-media-play" title="Play"></button>
+                                <button type="button" id="pauseButton" class="btn whileRunning controlPlayPause btn-primary oi oi-media-pause" title="Pause"></button>
+                                <button type="button" id="controlUnload" class="btn btn-danger notWhileRunning oi oi-x" title="Unload"></button>
+                                <button type="button" id="controlKill" class="btn btn-danger oi oi-power-standby" title="Force Unload"></button>
+                                <button type="button" id="controlDumpState" class="btn btn-secondary oi oi-print" title="Debug Print"></button>
+                            </div>
+
+
+                            <div class="form-group">
+                                <button type="button" id="intentButton" class="btn whileRunning controlIntent btn-primary oi oi-timer" title="Intent to Pause"></button>
+                            </div>
+
+                        </div>
+                    </div>
+
                 </div>
-                <div class="form-group">
-                    <button type="button" id="playButton" class="btn notWhileRunning controlPlayPause btn-primary oi oi-media-play" title="Play"></button>
-                    <button type="button" id="pauseButton" class="btn whileRunning controlPlayPause btn-primary oi oi-media-pause" title="Pause"></button>
-                    <button type="button" id="controlUnload" class="btn btn-danger notWhileRunning oi oi-x" title="Unload"></button>
-                    <button type="button" id="controlKill" class="btn btn-danger oi oi-power-standby" title="Force Unload"></button>
-                    <button type="button" id="controlDumpState" class="btn btn-secondary oi oi-print" title="Debug Print"></button>
+
+                <div class="col-lg-3 col-md-3 col-sm-12 col-xs-12 whileRunning">
+
+                    <div class="card">
+
+                        <div class="card-body">
+                            <h5 class="card-title">Statistics</h5>
+                            <br/>
+
+                            <table>
+                                <tr>
+                                    <td>Image Average</td>
+                                    <td id="time_avg"></td>
+                                </tr>
+                                <tr>
+                                    <td>Image Samples</td>
+                                    <td id="time_samples"></td>
+                                </tr>
+                                <tr>
+                                    <td>Image Last</td>
+                                    <td id="time_last"></td>
+                                </tr>
+                            </table>
+
+                        </div>
+
+                    </div>
+
                 </div>
 
+                <div class="col-lg-3 col-md-3 col-sm-12 col-xs-12 whileRunning">
 
-                <div class="form-group">
-                    <button type="button" id="intentButton" class="btn whileRunning controlIntent btn-primary oi oi-timer" title="Intent to Pause"></button>
+                    <div class="card">
+
+                        <div class="card-body" id="liveHolder">
+                            <h5 class="card-title">Live View</h5>
+                            <br/>
+                            <img id="liveCanvas" style="width:256px;height:128px;"/>
+                        </div>
+
+                    </div>
+
                 </div>
 
-                <div class="col-sm-12 notWhileRunning">
-                    <h3>Shortcuts</h3>
-                </div>
+                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 notWhileRunning">
 
-                <div class="row text-center notWhileRunning" id="shortcut-list">
+                    <div class="col-sm-12 notWhileRunning">
+                        <h3>Shortcuts</h3>
+                    </div>
 
-                </div>
+                    <div class="row text-center notWhileRunning" id="shortcut-list">
 
-            </form>
-
-            <div class="col-lg-3 col-md-3 col-sm-12 col-xs-12 whileRunning">
-
-                <div class="card">
-
-                    <div class="card-body" id="liveHolder">
-                        <h5 class="card-title">Live View</h5>
-                        <br/>
-                        <img id="liveCanvas" style="width:256px;height:128px;"/>
                     </div>
 
                 </div>
 
             </div>
-
 
         </div>
 

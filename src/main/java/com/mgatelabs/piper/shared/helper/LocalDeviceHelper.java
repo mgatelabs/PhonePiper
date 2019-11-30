@@ -206,7 +206,7 @@ public class LocalDeviceHelper implements DeviceHelper {
 
     //byte[] lastImageDownload = null;
 
-    private ImageWrapper lastImageDownload;
+    private ImageWrapper lastImageDownload = null;
 
     @Override
     public boolean refresh(AdbWrapper shell) {
@@ -224,7 +224,7 @@ public class LocalDeviceHelper implements DeviceHelper {
         try {
             device.pull(new RemoteFile("/mnt/sdcard/framebuffer." + (usePng ? "png" : "raw")), byteArrayOutputStream);
             byte[] temp = byteArrayOutputStream.toByteArray();
-            if (temp != null) {
+            if (temp != null && temp.length > 0) {
                 if (usePng) {
                     lastImageDownload = new PngImageWrapper(temp);
                 } else {
@@ -244,6 +244,10 @@ public class LocalDeviceHelper implements DeviceHelper {
         long endTime = System.nanoTime();
         long dif = endTime - startTime;
 
+        imageSamples++;
+        imageSum += dif;
+        imageLast = dif;
+
         float lastImageDuration = ((float) dif / 1000000000.0f);
         logger.debug("Helper Image Persisted in " + ScriptRunner.THREE_DECIMAL.format(lastImageDuration) + "s");
 
@@ -255,6 +259,37 @@ public class LocalDeviceHelper implements DeviceHelper {
         if (!shell.connect()) {
             shell.restart();
         }
+        lastImageDownload = null;
+        imageSum = 0;
+        imageSamples = 0;
+        imageLast = 0;
         return this;
+    }
+
+    @Override
+    public boolean imageReady() {
+        return lastImageDownload != null;
+    }
+
+    long imageSum = 0;
+    long imageSamples = 0;
+    long imageLast = 0;
+
+    @Override
+    public long getImageAverage() {
+        if (imageSum > 0 && imageSamples > 0) {
+            return (long)((double)imageSum / imageSamples);
+        }
+        return 0;
+    }
+
+    @Override
+    public long getImageSamples() {
+        return imageSamples;
+    }
+
+    @Override
+    public long getLastImageTime() {
+        return imageLast;
     }
 }

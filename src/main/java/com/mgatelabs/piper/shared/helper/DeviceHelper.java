@@ -29,4 +29,12 @@ public interface DeviceHelper {
     boolean refresh(AdbWrapper shell);
 
     DeviceHelper makeReady(AdbWrapper shell);
+
+    boolean imageReady();
+
+    long getImageAverage();
+
+    long getImageSamples();
+
+    long getLastImageTime();
 }

@@ -169,6 +169,10 @@ public class RemoteDeviceHelper implements DeviceHelper {
         long endTime = System.nanoTime();
         long dif = endTime - startTime;
 
+        imageSamples++;
+        imageSum += dif;
+        imageLast = dif;
+
         //lastImageDate = new Date();
         float lastImageDuration = ((float) dif / 1000000000.0f);
         logger.debug("Helper Image Persisted in " + ScriptRunner.THREE_DECIMAL.format(lastImageDuration) + "s");
@@ -178,7 +182,15 @@ public class RemoteDeviceHelper implements DeviceHelper {
 
     @Override
     public DeviceHelper makeReady(AdbWrapper shell) {
+        imageSum = 0;
+        imageSamples = 0;
+        imageLast = 0;
         return this;
+    }
+
+    @Override
+    public boolean imageReady() {
+        return true;
     }
 
     private void waitFor(long milli) {
@@ -193,5 +205,27 @@ public class RemoteDeviceHelper implements DeviceHelper {
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
+    }
+
+    long imageSum = 0;
+    long imageSamples = 0;
+    long imageLast = 0;
+
+    @Override
+    public long getImageAverage() {
+        if (imageSum > 0 && imageSamples > 0) {
+            return (long)((double)imageSum / imageSamples);
+        }
+        return 0;
+    }
+
+    @Override
+    public long getImageSamples() {
+        return imageSamples;
+    }
+
+    @Override
+    public long getLastImageTime() {
+        return imageLast;
     }
 }

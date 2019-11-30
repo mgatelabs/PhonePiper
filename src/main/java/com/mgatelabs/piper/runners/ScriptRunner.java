@@ -417,7 +417,13 @@ public class ScriptRunner {
                     }
                 }
 
-                deviceHelper.refresh(shell);
+                if (!deviceHelper.refresh(shell)) {
+                    if (connectionDefinition.getAdbLevel() == ConnectionDefinition.AdbType.FULL) {
+                        logger.debug("Attempting to Recover from Image Failure, Restarting Shell, Getting Image: " + shell.restart());
+                        deviceHelper.refresh(shell);
+                    }
+                }
+
                 imageWrapper = null;
 
                 boolean keepRunning = true;

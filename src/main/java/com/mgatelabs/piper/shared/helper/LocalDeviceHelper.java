@@ -230,26 +230,36 @@ public class LocalDeviceHelper implements DeviceHelper {
                 } else {
                     lastImageDownload = RawImageWrapper.convert(temp);
                 }
+            } else {
+                // Reset the image
+                lastImageDownload = null;
             }
         } catch (IOException e) {
             logger.error(e.getMessage());
             e.printStackTrace();
+            lastImageDownload = null;
             return false;
         } catch (JadbException e) {
             logger.error(e.getMessage());
             e.printStackTrace();
+            lastImageDownload = null;
             return false;
         }
 
         long endTime = System.nanoTime();
         long dif = endTime - startTime;
 
-        imageSamples++;
-        imageSum += dif;
-        imageLast = dif;
-
         float lastImageDuration = ((float) dif / 1000000000.0f);
-        logger.debug("Helper Image Persisted in " + ScriptRunner.THREE_DECIMAL.format(lastImageDuration) + "s");
+
+        if (lastImageDownload != null) {
+            imageSamples++;
+            imageSum += dif;
+            imageLast = dif;
+            logger.debug("Helper Image Persisted in " + ScriptRunner.THREE_DECIMAL.format(lastImageDuration) + "s");
+        } else {
+            logger.error("Helper Image Failed to Persist: " + ScriptRunner.THREE_DECIMAL.format(lastImageDuration) + "s");
+            return false;
+        }
 
         return true;
     }

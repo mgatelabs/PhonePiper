@@ -297,6 +297,8 @@ $(function(){
                     states.val(data.state);
                 }
 
+                item = undefined;
+
                 for (i = 0; i < data.logs.length; i++) {
                     item = data.logs[i];
                     div = $('<div class="row"></div>')
@@ -308,7 +310,11 @@ $(function(){
                     logs.prepend(div);
                 }
 
-                while (logItems.length > 50) {
+                if (item && item.message) {
+                    $('#last_log').text(item.message);
+                }
+
+                while (logItems.length > 75) {
                     logItems.splice(0,1)[0].detach();
                 }
 

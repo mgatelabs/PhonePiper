@@ -28,6 +28,7 @@ public class ConditionDefinition {
     private Map<String, String> arguments;
 
     private List<ConditionDefinition> and;
+    private List<ConditionDefinition> postAnd;
     private List<ConditionDefinition> andOr;
     private List<ConditionDefinition> or;
 
@@ -111,6 +112,13 @@ public class ConditionDefinition {
                 conditionDefinition.fix();
             }
         }
+        if (postAnd == null) {
+            postAnd = Lists.newArrayList();
+        } else {
+            for (ConditionDefinition conditionDefinition : postAnd) {
+                conditionDefinition.fix();
+            }
+        }
         if (arguments == null) {
             arguments = ImmutableMap.of();
         }
@@ -147,6 +155,14 @@ public class ConditionDefinition {
 
     public void setAndOr(List<ConditionDefinition> andOr) {
         this.andOr = andOr;
+    }
+
+    public List<ConditionDefinition> getPostAnd() {
+        return postAnd;
+    }
+
+    public void setPostAnd(List<ConditionDefinition> postAnd) {
+        this.postAnd = postAnd;
     }
 
     public String getVar() {
@@ -189,6 +205,12 @@ public class ConditionDefinition {
             }
         }
 
+        if (postAnd != null) {
+            for (ConditionDefinition conditionDefinition : postAnd) {
+                screenIds.addAll(conditionDefinition.determineScreenIds(exploredStates, states));
+            }
+        }
+
         return screenIds;
     }
 
@@ -222,6 +244,14 @@ public class ConditionDefinition {
             stringBuilder.append(" )");
         }
 
+        if (!postAnd.isEmpty()) {
+            for (ConditionDefinition subCondition : postAnd) {
+                stringBuilder.append(" && ");
+                stringBuilder.append(subCondition.toString());
+            }
+            stringBuilder.append(" )");
+        }
+
         return stringBuilder.toString();
     }
 
@@ -231,7 +261,6 @@ public class ConditionDefinition {
         if (definition == null) return "NULL";
 
         ConditionType conditionType = definition.getUsedCondition();
-
 
         switch (conditionType) {
             case LESS: {

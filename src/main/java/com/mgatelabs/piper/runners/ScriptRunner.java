@@ -1264,6 +1264,17 @@ public class ScriptRunner {
                     }
                 }
             }
+
+            // If we have a post AND handle it
+            if (!failure && result && checkAnd && !conditionDefinition.getPostAnd().isEmpty()) {
+                for (ConditionDefinition sub : conditionDefinition.getPostAnd()) {
+                    if (!check(stateStack, sub, imageWrapper)) {
+                        result = false;
+                        break;
+                    }
+                }
+            }
+
         } catch (Throwable t) {
             logger.error(t.getMessage(), t);
             throw t;

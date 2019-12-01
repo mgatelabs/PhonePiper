@@ -488,9 +488,9 @@ public class WebResource {
             );
         }
 
-        stats.put("image_avg", Float.toString(TimeUnit.NANOSECONDS.toSeconds(deviceHelper.getImageAverage())));
-        stats.put("image_last", Float.toString(TimeUnit.NANOSECONDS.toSeconds(deviceHelper.getLastImageTime())));
-        stats.put("image_samples", Long.toString(deviceHelper.getImageSamples()));
+        stats.put("image_avg", ScriptRunner.THREE_DECIMAL.format(TimeUnit.NANOSECONDS.toSeconds(deviceHelper.getImageAverage())) + " sec");
+        stats.put("image_last", ScriptRunner.THREE_DECIMAL.format(TimeUnit.NANOSECONDS.toSeconds(deviceHelper.getLastImageTime())) + " sec");
+        stats.put("image_samples", ScriptRunner.COMMA_NUMBER.format(deviceHelper.getImageSamples()));
 
         result.setStats(stats);
 

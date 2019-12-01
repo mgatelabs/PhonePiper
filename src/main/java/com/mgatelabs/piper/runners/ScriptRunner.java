@@ -94,6 +94,7 @@ public class ScriptRunner {
     private static final Pattern SINGLE_VARIABLE = Pattern.compile("^\\$\\{[a-zA-Z0-9_-]+\\}$");
 
     public static final NumberFormat THREE_DECIMAL = new DecimalFormat("#.###");
+    public static final NumberFormat COMMA_NUMBER = new DecimalFormat("#,###,###");
 
     private ConnectionDefinition connectionDefinition;
     private ScriptEnvironment scriptEnvironment;

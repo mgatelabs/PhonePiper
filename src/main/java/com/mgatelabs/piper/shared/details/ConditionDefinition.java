@@ -257,6 +257,10 @@ public class ConditionDefinition {
                 stringBuilder.append(definition.getNot() != null ? "!" : "").append("INTENT");
                 break;
 
+            case SAFETY:
+                stringBuilder.append(definition.getNot() != null ? "!" : "").append("SAFETY: ").append(definition.getValue());
+                break;
+
             case GREATER: {
                 stringBuilder.append(definition.getVar()).append(definition.getNot() != null ? " <= " : " > ").append(definition.getValue());
             }

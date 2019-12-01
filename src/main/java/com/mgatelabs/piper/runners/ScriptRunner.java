@@ -127,6 +127,8 @@ public class ScriptRunner {
 
     private Map<String, VarTimer> timers;
 
+    private Map<String, Integer> safetyMarkers = Maps.newHashMap();
+
     //private static final String VAR_LOOPS = "_loops";
 
     public ScriptRunner(ConnectionDefinition connectionDefinition, DeviceHelper deviceHelper, ScriptEnvironment scriptEnvironment, DeviceDefinition deviceDefinition, ViewDefinition viewDefinition, AdbWrapper adbWrapper) {
@@ -408,6 +410,8 @@ public class ScriptRunner {
                 }
             }
 
+            safetyMarkers.clear();
+
             while (isRunning()) {
 
                 for (VarDefinition varDefinition : getRawEditVariables()) {
@@ -440,6 +444,7 @@ public class ScriptRunner {
                             return;
                         }
                         case MOVE: {
+                            safetyMarkers.clear();
                             currentExecutionLink = scriptEnvironment.getExecutableState(result.getValue());
                             if (currentExecutionLink == null) {
                                 logger.error("Cannot find state with id: " + result.getValue());
@@ -1179,6 +1184,23 @@ public class ScriptRunner {
                 case INTENT: {
                     result = intent != Intent.NONE;
                 } break;
+                case SAFETY: {
+
+                    final String safetyId = conditionDefinition.getValue().toUpperCase();
+
+                    final int value;
+
+                    if (safetyMarkers.containsKey(safetyId)) {
+                        value = safetyMarkers.get(safetyId) + 1;
+                        safetyMarkers.replace(safetyId, value);
+                    } else {
+                        value = 1;
+                        safetyMarkers.put(safetyId, value);
+                    }
+
+                    result = value < 25;
+                }
+                break;
                 case SCREEN: {
                     for (String value : conditionDefinition.getValues()) {
                         Var screenValue = valueHandler(value);

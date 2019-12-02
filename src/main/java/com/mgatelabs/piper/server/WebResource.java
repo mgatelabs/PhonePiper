@@ -51,6 +51,7 @@ import com.mgatelabs.piper.shared.helper.LocalDeviceHelper;
 import com.mgatelabs.piper.shared.helper.NoOpDeviceHelper;
 import com.mgatelabs.piper.shared.helper.RemoteDeviceHelper;
 import com.mgatelabs.piper.shared.image.ImageWrapper;
+import com.mgatelabs.piper.shared.image.PngImageWrapper;
 import com.mgatelabs.piper.shared.image.Sampler;
 import com.mgatelabs.piper.shared.util.AdbShell;
 import com.mgatelabs.piper.shared.util.AdbUtils;
@@ -96,6 +97,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.SortedSet;
 import java.util.TreeSet;
+import java.util.concurrent.TimeUnit;
 
 /**
  * Created by @mgatelabs (Michael Fuller) on 2/13/2018.
@@ -433,6 +435,8 @@ public class WebResource {
     public StatusResult status() {
         StatusResult result = new StatusResult();
 
+        Map<String, String> stats = Maps.newHashMap();
+
         if (checkInitialState()) {
             result.setStatus(StatusResult.Status.INIT);
         } else {
@@ -484,6 +488,12 @@ public class WebResource {
             );
         }
 
+        stats.put("image_avg", ScriptRunner.THREE_DECIMAL.format(TimeUnit.NANOSECONDS.toMillis(deviceHelper.getImageAverage()) / 1000.0f) + " sec");
+        stats.put("image_last", ScriptRunner.THREE_DECIMAL.format(TimeUnit.NANOSECONDS.toMillis(deviceHelper.getLastImageTime()) / 1000.0f) + " sec");
+        stats.put("image_samples", ScriptRunner.COMMA_NUMBER.format(deviceHelper.getImageSamples()));
+
+        result.setStats(stats);
+
         return result;
     }
 
@@ -498,6 +508,7 @@ public class WebResource {
 
         if (runner != null) {
             if (thread == null) {
+                deviceHelper.makeReady(adbWrapper);
                 thread = new ScriptThread(runner, stateId);
                 thread.start();
             } else {
@@ -588,6 +599,8 @@ public class WebResource {
                     runner.updateVariableFromUserInput(varDefinition.getName(), varDefinition.getValue());
                 }
             }
+
+            deviceHelper.makeReady(adbWrapper);
 
             return result;
 
@@ -780,6 +793,8 @@ public class WebResource {
 
             editHolder = new EditHolder(frameChoices.getScriptEnvironment(), frameChoices.getMapDefinition(), frameChoices.getDeviceDefinition(), frameChoices.getViewDefinition(), connectionDefinition, adbWrapper, deviceHelper);
             deviceHelper = editHolder.getDeviceHelper();
+
+            deviceHelper.makeReady(editHolder.getShell());
             return result;
         } else {
             return new PrepResult(StatusEnum.error);
@@ -1297,7 +1312,15 @@ public class WebResource {
             if ("true".equals(isLive)) {
                 if (frameChoices != null && deviceHelper instanceof LocalDeviceHelper) {
                     // Get the Image
-                    screenWrapper = deviceHelper.download();
+                    if (deviceHelper.imageReady()) {
+                        screenWrapper = deviceHelper.download();
+                    } else {
+                        final URL url = Resources.getResource("web/resources/no-signal.png");
+                        return Response.status(200).header("content-type", "image/png").entity(Resources.toByteArray(url)).build();
+                    }
+                } else if (deviceHelper instanceof NoOpDeviceHelper) {
+                    final URL url = Resources.getResource("web/resources/no-signal.png");
+                    return Response.status(200).header("content-type", "image/png").entity(Resources.toByteArray(url)).build();
                 }
             }
 

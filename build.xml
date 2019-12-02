@@ -8,7 +8,7 @@
         <copydir src="./extra" dest="./release"/>
         <copy file="./target/phone-piper.jar" tofile="./release/phone-piper.jar"/>
         <copy file="./LICENSE.txt" tofile="./release/LICENSE.txt"/>
-        <zip destfile="./target/PhonePiper2019.12.1.zip">
+        <zip destfile="./target/PhonePiper2019.12.2.zip">
             <fileset dir="./release" includes="**/*"/>
         </zip>
         <delete dir="./release"/>

@@ -229,3 +229,11 @@ Run the update script.  The system will reboot after it's finished
 `cd ~`
 
 `./phone-piper-build`
+
+## Useful Links
+
+### Getting the Raspberry Pi Webcam working
+https://pimylifeup.com/raspberry-pi-webcam-server/
+
+### Fixing a permission issue
+https://raspberrypi.stackexchange.com/questions/78715/motion-daemon-var-log-motion-motion-log-permission-denied

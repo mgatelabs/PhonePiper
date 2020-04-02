@@ -19,6 +19,7 @@ import com.mgatelabs.piper.server.actions.EditComponentAction;
 import com.mgatelabs.piper.server.actions.EditScreenAction;
 import com.mgatelabs.piper.server.actions.FixScreenAction;
 import com.mgatelabs.piper.server.actions.LiveVerifyScreenAction;
+import com.mgatelabs.piper.server.actions.RenameScreenAction;
 import com.mgatelabs.piper.server.actions.RepairScreenAction;
 import com.mgatelabs.piper.server.actions.StubComponentAction;
 import com.mgatelabs.piper.server.actions.StubScreenAction;
@@ -824,6 +825,7 @@ public class WebResource {
             .put("updateScreen", new UpdateScreenAction())
             .put("cacheScreen", new CacheScreenAction())
             .put("editScreen", new EditScreenAction())
+            .put("renameScreen", new RenameScreenAction())
             .put("fixScreen", new FixScreenAction())
             .put("repairScreen", new RepairScreenAction())
             // Components

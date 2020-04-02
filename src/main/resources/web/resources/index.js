@@ -89,16 +89,20 @@ $(function(){
 
     var toaster = $('#toast');
 
-    function resultHandler(result) {
+    function resultHandler(result, action, value) {
+        var status = true;
         if (!result) {
-
+            status = false;
         } else if (result.status && result.status == 'ok') {
             info(result.msg);
-            return true;
         } else {
             error(result.msg);
+            status = false;
         }
-        return false;
+        if (status && result.msg == '' && action == 'renameScreen' && value) {
+            $("option:selected", $('#edit-screens')).text(value);
+        }
+        return status;
     }
 
     function info(message) {
@@ -834,23 +838,26 @@ $(function(){
     }
 
     $('.edit-action').click(function() {
-        var ref = $(this), action = ref.attr('editvalue'), list, id;
+        var ref = $(this), action = ref.attr('editvalue'), list, id, value = 'null', lstItem;
         if (ref.hasClass('prompt-name')) {
             id = $.trim(prompt('Name:'));
         } else {
             list = $('#' + ref.attr('lst'));
             id = list.val();
+            if (ref.hasClass('prompt-value')) {
+               value = $.trim(prompt('Value:', $("option:selected", list).text()));
+            }
         }
         if (id) {
             var loadIcon = loadNotice(undefined, 'Edit Action: ' + action + ' - ' + id);
             $.ajax({
                 type: "POST",
-                url: '/piper/edit/action/' + action + "/" + id + '/' + 'null',
+                url: '/piper/edit/action/' + action + "/" + id + '/' + encodeURIComponent(value),
                 complete: function(){
                     loadIcon.remove();
                 },
                 success: function (result) {
-                    resultHandler(result);
+                    resultHandler(result, action, value);
                 },
                 dataType: 'json'
             });

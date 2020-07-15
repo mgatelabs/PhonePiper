@@ -35,7 +35,7 @@ public class WebLogHandler extends AsyncAppender implements LogAppender {
     @Override
     protected void append(ILoggingEvent iLoggingEvent) {
         if (isLoggable(iLoggingEvent.getLevel())) {
-            if (iLoggingEvent.getMessage().contains("org.apache.catalina.connector")) return;
+            if (iLoggingEvent.getMessage().contains("org.apache.")) return;
             super.preprocess(iLoggingEvent);
             synchronized (events) {
                 while (events.size() >= 200) {

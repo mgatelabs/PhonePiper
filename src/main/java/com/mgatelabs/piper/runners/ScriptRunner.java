@@ -502,7 +502,9 @@ public class ScriptRunner {
         if (deviceHelper != null) {
 
             if (captureAgain) {
+                logger.debug("Capture Again Requested");
                 if (!deviceHelper.refresh(shell)) {
+                    logger.debug("Could not refresh again");
                     return;
                 }
             }

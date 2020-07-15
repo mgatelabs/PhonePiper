@@ -10,6 +10,7 @@ import org.slf4j.LoggerFactory;
 
 import java.util.concurrent.ArrayBlockingQueue;
 import java.util.concurrent.BlockingQueue;
+
 /**
  * Created by @mgatelabs (Michael Fuller) on 9/25/2017 for Phone-Piper
  */
@@ -34,6 +35,7 @@ public class WebLogHandler extends AsyncAppender implements LogAppender {
     @Override
     protected void append(ILoggingEvent iLoggingEvent) {
         if (isLoggable(iLoggingEvent.getLevel())) {
+            if (iLoggingEvent.getMessage().contains("org.apache.catalina.connector")) return;
             super.preprocess(iLoggingEvent);
             synchronized (events) {
                 while (events.size() >= 200) {

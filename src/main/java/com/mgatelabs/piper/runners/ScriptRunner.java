@@ -416,7 +416,7 @@ public class ScriptRunner {
 
             while (isRunning()) {
 
-                int offset = Math.abs(new Random().nextInt() % 50) + 4000;
+                int offset = Math.abs(new Random().nextInt() % 20) + 4000;
 
                 for (VarDefinition varDefinition : getRawEditVariables()) {
                     if (varDefinition.getDisplayType() == VarDisplay.SECONDS && varDefinition.getModify() != VarModify.EDITABLE) {

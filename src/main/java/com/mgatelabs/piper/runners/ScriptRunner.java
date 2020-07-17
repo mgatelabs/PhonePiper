@@ -511,6 +511,8 @@ public class ScriptRunner {
         return result;
     }
 
+    private int refreshOffset = 0;
+
     private synchronized void refreshViews(boolean captureAgain) {
         if (deviceHelper != null) {
 
@@ -518,7 +520,9 @@ public class ScriptRunner {
 
                 for (int i = 0; i < 10; i++) {
                     logger.debug("Capture Again Requested");
-                    if (!deviceHelper.refresh(shell, deviceHelper instanceof LocalDeviceHelper ? i + 20 : 0)) {
+                    refreshOffset = (refreshOffset + 1) % 10;
+
+                    if (!deviceHelper.refresh(shell, deviceHelper instanceof LocalDeviceHelper ? refreshOffset + 20 : 0)) {
                         switch (connectionDefinition.getAdbLevel()) {
                             case LEAVE:
                                 return;

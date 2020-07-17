@@ -157,11 +157,11 @@ public class RemoteDeviceHelper implements DeviceHelper {
     }
 
     @Override
-    public boolean refresh(AdbWrapper shell) {
+    public boolean refresh(AdbWrapper shell, int screenIndex) {
 
         long startTime = System.nanoTime();
 
-        if (!AdbUtils.persistScreen(shell, false)) {
+        if (!AdbUtils.persistScreen(shell, false, 0)) {
             logger.warn("Helper Image Failure");
             waitFor(250);
             return false;

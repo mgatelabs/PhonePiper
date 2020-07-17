@@ -29,6 +29,7 @@ import com.mgatelabs.piper.shared.details.VarTierDefinition;
 import com.mgatelabs.piper.shared.details.ViewDefinition;
 import com.mgatelabs.piper.shared.helper.DeviceHelper;
 import com.mgatelabs.piper.shared.helper.InfoTransfer;
+import com.mgatelabs.piper.shared.helper.LocalDeviceHelper;
 import com.mgatelabs.piper.shared.helper.MapTransfer;
 import com.mgatelabs.piper.shared.helper.PointTransfer;
 import com.mgatelabs.piper.shared.image.ImageWrapper;
@@ -61,6 +62,7 @@ import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
+import java.util.Random;
 import java.util.Set;
 import java.util.Stack;
 import java.util.TimeZone;
@@ -414,6 +416,8 @@ public class ScriptRunner {
 
             while (isRunning()) {
 
+                int offset = Math.abs(new Random().nextInt() % 50) + 4000;
+
                 for (VarDefinition varDefinition : getRawEditVariables()) {
                     if (varDefinition.getDisplayType() == VarDisplay.SECONDS && varDefinition.getModify() != VarModify.EDITABLE) {
                         final VarTimer timer = timers.get(varDefinition.getName());
@@ -422,10 +426,19 @@ public class ScriptRunner {
                     }
                 }
 
-                if (!deviceHelper.refresh(shell)) {
-                    if (connectionDefinition.getAdbLevel() == ConnectionDefinition.AdbType.FULL) {
-                        logger.debug("Attempting to Recover from Image Failure, Restarting Shell, Getting Image: " + shell.restart());
-                        deviceHelper.refresh(shell);
+                for (int loopCount = 0; loopCount < 10; loopCount++) {
+                    if (!deviceHelper.refresh(shell, deviceHelper instanceof LocalDeviceHelper ? (loopCount + offset) : 0)) {
+                        switch (connectionDefinition.getAdbLevel()) {
+                            case LEAVE:
+                                break;
+                            case FULL:
+                            case DISCONNECT:
+                                logger.debug("Attempting to Recover from Image Failure, Restarting Shell, Getting Image: " + shell.restart());
+                                waitFor(1200);
+                                break;
+                        }
+                    } else {
+                        break;
                     }
                 }
 
@@ -502,10 +515,22 @@ public class ScriptRunner {
         if (deviceHelper != null) {
 
             if (captureAgain) {
-                logger.debug("Capture Again Requested");
-                if (!deviceHelper.refresh(shell)) {
-                    logger.debug("Could not refresh again");
-                    return;
+
+                for (int i = 0; i < 10; i++) {
+                    logger.debug("Capture Again Requested");
+                    if (!deviceHelper.refresh(shell, deviceHelper instanceof LocalDeviceHelper ? i + 20 : 0)) {
+                        switch (connectionDefinition.getAdbLevel()) {
+                            case LEAVE:
+                                return;
+                            case FULL:
+                            case DISCONNECT:
+                                logger.debug("Attempting to Recover from Image Failure, Restarting Shell, Getting Image: " + shell.restart());
+                                waitFor(1200);
+                                break;
+                        }
+                    } else {
+                        break;
+                    }
                 }
             }
 
@@ -1185,7 +1210,8 @@ public class ScriptRunner {
                 break;
                 case INTENT: {
                     result = intent != Intent.NONE;
-                } break;
+                }
+                break;
                 case SAFETY: {
 
                     final String safetyId = conditionDefinition.getValue().toUpperCase();

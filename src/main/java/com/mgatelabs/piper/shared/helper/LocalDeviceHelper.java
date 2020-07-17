@@ -209,11 +209,11 @@ public class LocalDeviceHelper implements DeviceHelper {
     private ImageWrapper lastImageDownload = null;
 
     @Override
-    public boolean refresh(AdbWrapper shell) {
+    public boolean refresh(AdbWrapper shell, int screenIndex) {
 
         long startTime = System.nanoTime();
 
-        if (!AdbUtils.persistScreen(shell, usePng)) return false;
+        if (!AdbUtils.persistScreen(shell, usePng, screenIndex)) return false;
 
         JadbDevice device = shell.getTargetedDevice();
 
@@ -222,7 +222,7 @@ public class LocalDeviceHelper implements DeviceHelper {
         ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
 
         try {
-            device.pull(new RemoteFile("/mnt/sdcard/framebuffer." + (usePng ? "png" : "raw")), byteArrayOutputStream);
+            device.pull(new RemoteFile("/mnt/sdcard/framebuffer" + (screenIndex > 0 ? Integer.toString(screenIndex) : "") + "." + (usePng ? "png" : "raw")), byteArrayOutputStream);
             byte[] temp = byteArrayOutputStream.toByteArray();
             if (temp != null && temp.length > 0) {
                 if (usePng) {
@@ -288,7 +288,7 @@ public class LocalDeviceHelper implements DeviceHelper {
     @Override
     public long getImageAverage() {
         if (imageSum > 0 && imageSamples > 0) {
-            return (long)((double)imageSum / imageSamples);
+            return (long) ((double) imageSum / imageSamples);
         }
         return 0;
     }

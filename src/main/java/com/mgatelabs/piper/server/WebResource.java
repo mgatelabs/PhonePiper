@@ -52,7 +52,6 @@ import com.mgatelabs.piper.shared.helper.LocalDeviceHelper;
 import com.mgatelabs.piper.shared.helper.NoOpDeviceHelper;
 import com.mgatelabs.piper.shared.helper.RemoteDeviceHelper;
 import com.mgatelabs.piper.shared.image.ImageWrapper;
-import com.mgatelabs.piper.shared.image.PngImageWrapper;
 import com.mgatelabs.piper.shared.image.Sampler;
 import com.mgatelabs.piper.shared.util.AdbShell;
 import com.mgatelabs.piper.shared.util.AdbUtils;
@@ -1387,7 +1386,7 @@ public class WebResource {
             checkInitialState();
             if (frameChoices != null) {
                 // Save the Image
-                deviceHelper.refresh(adbWrapper);
+                deviceHelper.refresh(adbWrapper, deviceHelper instanceof LocalDeviceHelper ? 15 : 0);
                 // Get the Image
                 screenWrapper = deviceHelper.download();
                 return new ValueResult().setStatus("ok");

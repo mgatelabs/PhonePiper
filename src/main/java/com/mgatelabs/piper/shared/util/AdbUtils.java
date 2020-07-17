@@ -5,7 +5,6 @@ import com.mgatelabs.piper.shared.details.ComponentDefinition;
 import com.mgatelabs.piper.shared.details.DeviceDefinition;
 import com.mgatelabs.piper.shared.image.ImageWrapper;
 import com.mgatelabs.piper.shared.image.RawImageWrapper;
-import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -275,10 +274,11 @@ public class AdbUtils {
         return value;
     }
 
-    public static boolean persistScreen(AdbWrapper device, boolean png) {
-        return device.exec("screencap " + (png ? "-p " : "") + "/mnt/sdcard/framebuffer." + (png ? "png" : "raw"));
+    public static boolean persistScreen(AdbWrapper device, boolean png, int screenIndex) {
+        return device.exec("screencap " + (png ? "-p " : "") + "/mnt/sdcard/framebuffer" + (screenIndex > 0 ? Integer.toString(screenIndex) : "") + "." + (png ? "png" : "raw"));
     }
 
+    /*
     public static ImageWrapper getScreen(AdbWrapper wr) {
         final String command;
         if (StringUtils.isNotBlank(AdbShell.ADB_DIRECT)) {
@@ -305,6 +305,7 @@ public class AdbUtils {
         }
         return null;
     }
+    */
 
     public static ImageWrapper getScreenFrom(byte[] bytes) {
         try {

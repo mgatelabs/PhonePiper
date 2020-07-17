@@ -52,7 +52,7 @@ public class NoOpDeviceHelper implements DeviceHelper {
     }
 
     @Override
-    public boolean refresh(AdbWrapper shell) {
+    public boolean refresh(AdbWrapper shell, int screenIndex) {
         return true;
     }
 

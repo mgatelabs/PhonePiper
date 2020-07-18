@@ -605,15 +605,12 @@ public class ScriptRunner {
     private String logStackTraceInfo(final Stack<ProcessingStateInfo> stack, String additionalMessages) {
         final StringBuilder sb = new StringBuilder();
         if (logger.isTraceEnabled()) {
-            logger.trace("{}", new Object() {
-                @Override
-                public String toString() {
-                    String string = logStackTraceInfo(stack);
-                    sb.append(string);
-                    sb.append(' ').append(additionalMessages).toString();
-                    return sb.toString();
-                }
-            });
+
+            String string = logStackTraceInfo(stack);
+            sb.append(string);
+            sb.append(' ').append(additionalMessages).toString();
+
+            logger.trace(sb.toString());
         }
         return sb.append(' ').append(additionalMessages).toString();
     }

@@ -16,6 +16,7 @@ public class ConnectionDefinition {
     private String direct;
     private boolean wifi;
     private int throttle = 250;
+    private int refreshThrottle = 250;
     private boolean useHelper;
     private HelperType helperType = HelperType.LOCAL;
     private AdbType adbLevel = AdbType.FULL;
@@ -83,6 +84,14 @@ public class ConnectionDefinition {
 
     public void setThrottle(int throttle) {
         this.throttle = throttle;
+    }
+
+    public int getRefreshThrottle() {
+        return refreshThrottle;
+    }
+
+    public void setRefreshThrottle(int refreshThrottle) {
+        this.refreshThrottle = refreshThrottle;
     }
 
     public int getAdbPort() {

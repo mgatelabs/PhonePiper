@@ -338,7 +338,7 @@
                 <br/>
                 <div class="input-group">
                     <div class="input-group-prepend">
-                        <span class="input-group-text">Throttle</span>
+                        <span class="input-group-text">General Throttle</span>
                     </div>
                     <input type="text" class="form-control config-attribute" attrname="device-throttle" placeholder="250">
                 </div>
@@ -346,6 +346,19 @@
                 <br/>
                 <div class="alert alert-dark" role="alert">
                     This is the time in MS to throttle the main loop.  The default is 250, or 250 miliseconds.  1000 milliseconds is a second.
+                </div>
+
+                <br/>
+                <div class="input-group">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text">Refresh Throttle</span>
+                    </div>
+                    <input type="text" class="form-control config-attribute" attrname="device-refreshThrottle" placeholder="250">
+                </div>
+
+                <br/>
+                <div class="alert alert-dark" role="alert">
+                    This is the time in MS to throttle the refresh command.  The default is 250, or 250 miliseconds.
                 </div>
 
                 <br/>

@@ -638,6 +638,10 @@ public class WebResource {
                             if (StringUtils.isNotBlank(value)) {
                                 tempConnection.setThrottle(Integer.parseInt(value));
                             }
+                        } else if (field.equalsIgnoreCase("refreshThrottle")) {
+                            if (StringUtils.isNotBlank(value)) {
+                                tempConnection.setRefreshThrottle(Integer.parseInt(value));
+                            }
                         } else if (field.equalsIgnoreCase("adbPort")) {
                             if (StringUtils.isNotBlank(value)) {
                                 tempConnection.setAdbPort(Integer.parseInt(value));

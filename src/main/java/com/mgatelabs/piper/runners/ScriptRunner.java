@@ -516,8 +516,8 @@ public class ScriptRunner {
     private synchronized void refreshViews(boolean captureAgain) {
         if (deviceHelper != null) {
 
-            if (connectionDefinition.getThrottle() > 0)
-                waitFor(connectionDefinition.getThrottle());
+            if (connectionDefinition.getRefreshThrottle() > 0)
+                waitFor(connectionDefinition.getRefreshThrottle());
 
             if (captureAgain) {
 

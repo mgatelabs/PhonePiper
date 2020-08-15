@@ -657,7 +657,7 @@ $(function(){
                             .appendTo(grp);
 
                         if (item.values && item.values.length > 0) {
-                            gen = $('<select class="form-control notWhileRunning updateVariable"></select>');
+                            gen = $('<select class="form-control updateVariable"></select>');
                             for (valueLoop = 0; valueLoop < item.values.length; valueLoop++) {
                                 gen.append($('<option></option>').text(item.values[valueLoop].name).attr('value', item.values[valueLoop].value));
                             }

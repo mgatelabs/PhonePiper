@@ -1402,6 +1402,33 @@ $(function(){
         });
     });
 
+    $('#sendTextNow').click(function(){
+        var text = $.trim($('#textToSend').val()), data;
+        if (text) {
+            data = {text:text};
+
+            var loadIcon = loadNotice(undefined, 'Sending Text');
+
+            $.ajax({
+                type: "POST",
+                url: '/piper/control/text',
+                data: JSON.stringify(data),
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                complete: function(){
+                    loadIcon.remove();
+                },
+                success: function(result){
+                    if (resultHandler(result)) {
+
+                    }
+              },
+              dataType: 'json'
+            });
+        }
+    });
+
     function getClickPosition(e) {
         var parentPosition = getPosition(e.currentTarget);
         var xPosition = Math.floor((e.clientX - parentPosition.x) * canvasFactor);

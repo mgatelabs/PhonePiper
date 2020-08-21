@@ -29,6 +29,15 @@ public class AdbUtils {
         shell.exec(cmd);
     }
 
+    public static void text(String text, final AdbWrapper shell) {
+        final String cmd;
+
+        text = text.replaceAll(" ", "%s").replaceAll("'", "\\'").replaceAll("\"", "\\\"");
+
+        cmd = ("input text '"  + text + "'");
+        shell.exec(cmd);
+    }
+
     public static void component(DeviceDefinition deviceDefinition, ComponentDefinition componentDefinition, ActionType type, final AdbWrapper shell, boolean batch) {
         if (!componentDefinition.isEnabled()) return;
 

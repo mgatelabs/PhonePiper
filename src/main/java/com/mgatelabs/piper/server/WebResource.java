@@ -34,6 +34,7 @@ import com.mgatelabs.piper.server.entities.NamedValueItem;
 import com.mgatelabs.piper.server.entities.PrepResult;
 import com.mgatelabs.piper.server.entities.StatusLog;
 import com.mgatelabs.piper.server.entities.StatusResult;
+import com.mgatelabs.piper.server.entities.TextRequest;
 import com.mgatelabs.piper.server.entities.ValueResult;
 import com.mgatelabs.piper.shared.ScriptThread;
 import com.mgatelabs.piper.shared.details.ActionType;
@@ -899,9 +900,9 @@ public class WebResource {
             if (editHolder != null) {
                 final ObjectMapper objectMapper = JsonTool.getInstance();
 
-                byte [] bytes = Base64.getDecoder().decode(content);
+                byte[] bytes = Base64.getDecoder().decode(content);
 
-                final ScreenDefinition newScreenDef =  objectMapper.readValue(bytes, ScreenDefinition.class);
+                final ScreenDefinition newScreenDef = objectMapper.readValue(bytes, ScreenDefinition.class);
                 final ScreenDefinition oldScreenDefinition = editHolder.getScreenForId(newScreenDef.getScreenId());
 
                 if (oldScreenDefinition == null) {
@@ -1136,6 +1137,17 @@ public class WebResource {
         checkInitialState();
         ValueResult result = new ValueResult();
         AdbUtils.tap(x, y, adbWrapper);
+        result.setStatus("ok");
+        return result;
+    }
+
+    @POST
+    @Path("/control/text/")
+    @Produces("application/json")
+    public ValueResult controlKeyEvent(@RequestBody TextRequest request) {
+        checkInitialState();
+        ValueResult result = new ValueResult();
+        AdbUtils.text(request.getText(), adbWrapper);
         result.setStatus("ok");
         return result;
     }

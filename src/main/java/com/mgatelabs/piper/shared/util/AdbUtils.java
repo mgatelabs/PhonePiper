@@ -3,6 +3,7 @@ package com.mgatelabs.piper.shared.util;
 import com.mgatelabs.piper.shared.details.ActionType;
 import com.mgatelabs.piper.shared.details.ComponentDefinition;
 import com.mgatelabs.piper.shared.details.DeviceDefinition;
+import com.mgatelabs.piper.shared.helper.LocalDeviceHelper;
 import com.mgatelabs.piper.shared.image.ImageWrapper;
 import com.mgatelabs.piper.shared.image.RawImageWrapper;
 import org.slf4j.Logger;
@@ -284,7 +285,11 @@ public class AdbUtils {
     }
 
     public static boolean persistScreen(AdbWrapper device, boolean png, int screenIndex) {
-        return device.exec("screencap " + (png ? "-p " : "") + "/mnt/sdcard/framebuffer" + (screenIndex > 0 ? Integer.toString(screenIndex) : "") + "." + (png ? "png" : "raw"));
+        return device.exec("screencap " + (png ? "-p " : "") + LocalDeviceHelper.getImagePathForIndex(screenIndex, png));
+    }
+
+    public static boolean removeScreen(AdbWrapper device, boolean png, int screenIndex) {
+        return device.exec("rm " + LocalDeviceHelper.getImagePathForIndex(screenIndex, png));
     }
 
     /*

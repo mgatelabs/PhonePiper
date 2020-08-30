@@ -208,27 +208,42 @@ public class LocalDeviceHelper implements DeviceHelper {
 
     private ImageWrapper lastImageDownload = null;
 
+    public static String getImagePathForIndex(int index, boolean usePng) {
+        return "/mnt/sdcard/framebuffer" + (index > 0 ? Integer.toString(index) : "") + "." + (usePng ? "png" : "raw");
+    }
+
     @Override
-    public boolean refresh(AdbWrapper shell, int screenIndex) {
+    public RefreshReceipt refresh(AdbWrapper shell, int screenIndex) {
+
+        int receiptIndex = ReceiptPrinter.getNextIndex();
 
         long startTime = System.nanoTime();
 
-        if (!AdbUtils.persistScreen(shell, usePng, screenIndex)) return false;
-
+        if (!AdbUtils.persistScreen(shell, usePng, receiptIndex)) {
+            lastImageDownload = null;
+            return new RefreshReceipt(receiptIndex, System.currentTimeMillis(), false);
+        }
         JadbDevice device = shell.getTargetedDevice();
 
-        if (device == null) return false;
+        if (device == null) {
+            lastImageDownload = null;
+            return new RefreshReceipt(receiptIndex, System.currentTimeMillis(), false);
+        }
 
         ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
 
         try {
-            device.pull(new RemoteFile("/mnt/sdcard/framebuffer" + (screenIndex > 0 ? Integer.toString(screenIndex) : "") + "." + (usePng ? "png" : "raw")), byteArrayOutputStream);
+            device.pull(new RemoteFile(getImagePathForIndex(receiptIndex, usePng)), byteArrayOutputStream);
             byte[] temp = byteArrayOutputStream.toByteArray();
             if (temp != null && temp.length > 0) {
                 if (usePng) {
                     lastImageDownload = new PngImageWrapper(temp);
                 } else {
                     lastImageDownload = RawImageWrapper.convert(temp);
+                }
+                // Auto Delete file after download
+                if (!AdbUtils.removeScreen(shell, usePng, receiptIndex)) {
+                    logger.error("Could not delete image: " + getImagePathForIndex(receiptIndex, usePng));
                 }
             } else {
                 // Reset the image
@@ -238,12 +253,12 @@ public class LocalDeviceHelper implements DeviceHelper {
             logger.error(e.getMessage());
             e.printStackTrace();
             lastImageDownload = null;
-            return false;
+            return new RefreshReceipt(receiptIndex, System.currentTimeMillis(), false);
         } catch (JadbException e) {
             logger.error(e.getMessage());
             e.printStackTrace();
             lastImageDownload = null;
-            return false;
+            return new RefreshReceipt(receiptIndex, System.currentTimeMillis(), false);
         }
 
         long endTime = System.nanoTime();
@@ -258,10 +273,10 @@ public class LocalDeviceHelper implements DeviceHelper {
             logger.debug("Helper Image Persisted in " + ScriptRunner.THREE_DECIMAL.format(lastImageDuration) + "s");
         } else {
             logger.error("Helper Image Failed to Persist: " + ScriptRunner.THREE_DECIMAL.format(lastImageDuration) + "s");
-            return false;
+            return new RefreshReceipt(receiptIndex, System.currentTimeMillis(), false);
         }
 
-        return true;
+        return new RefreshReceipt(receiptIndex, System.currentTimeMillis(), true);
     }
 
     @Override

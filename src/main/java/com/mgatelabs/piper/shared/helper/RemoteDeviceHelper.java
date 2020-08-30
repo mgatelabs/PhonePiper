@@ -157,7 +157,7 @@ public class RemoteDeviceHelper implements DeviceHelper {
     }
 
     @Override
-    public RefreshReceipt refresh(AdbWrapper shell, int screenIndex) {
+    public RefreshReceipt refresh(AdbWrapper shell) {
 
         long startTime = System.nanoTime();
 

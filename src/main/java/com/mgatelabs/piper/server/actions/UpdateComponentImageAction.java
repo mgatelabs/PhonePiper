@@ -2,7 +2,6 @@ package com.mgatelabs.piper.server.actions;
 
 import com.mgatelabs.piper.server.EditHolder;
 import com.mgatelabs.piper.shared.details.ComponentDefinition;
-import com.mgatelabs.piper.shared.helper.LocalDeviceHelper;
 import com.mgatelabs.piper.shared.image.ImageWrapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -20,7 +19,7 @@ public class UpdateComponentImageAction implements EditActionInterface {
     public String execute(final String id, final String value, final EditHolder holder) {
         ComponentDefinition componentDefinition = holder.getComponentForId(id);
         if (componentDefinition == null) return "Could not find component with id: " + id;
-        holder.getDeviceHelper().makeReady(holder.getShell()).refresh(holder.getShell(), holder.getDeviceHelper() instanceof LocalDeviceHelper ? 4 : 0);
+        holder.getDeviceHelper().makeReady(holder.getShell()).refresh(holder.getShell());
         ImageWrapper wrapper = holder.getDeviceHelper().download();
         if (wrapper != null && wrapper.isReady()) {
             File previewPath = ComponentDefinition.getPreviewPath(holder.getViewDefinition().getViewId(), componentDefinition.getComponentId());

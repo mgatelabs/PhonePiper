@@ -29,7 +29,6 @@ import com.mgatelabs.piper.shared.details.VarTierDefinition;
 import com.mgatelabs.piper.shared.details.ViewDefinition;
 import com.mgatelabs.piper.shared.helper.DeviceHelper;
 import com.mgatelabs.piper.shared.helper.InfoTransfer;
-import com.mgatelabs.piper.shared.helper.LocalDeviceHelper;
 import com.mgatelabs.piper.shared.helper.MapTransfer;
 import com.mgatelabs.piper.shared.helper.PointTransfer;
 import com.mgatelabs.piper.shared.image.ImageWrapper;
@@ -427,7 +426,7 @@ public class ScriptRunner {
                 }
 
                 for (int loopCount = 0; loopCount < 10; loopCount++) {
-                    if (!deviceHelper.refresh(shell, deviceHelper instanceof LocalDeviceHelper ? (loopCount + offset) : 0).isSuccess()) {
+                    if (!deviceHelper.refresh(shell).isSuccess()) {
                         switch (connectionDefinition.getAdbLevel()) {
                             case LEAVE:
                                 break;
@@ -525,7 +524,7 @@ public class ScriptRunner {
                     logger.debug("Capture Again Requested");
                     refreshOffset = (refreshOffset + 1) % 10;
 
-                    if (!deviceHelper.refresh(shell, deviceHelper instanceof LocalDeviceHelper ? refreshOffset + 20 : 0).isSuccess()) {
+                    if (!deviceHelper.refresh(shell).isSuccess()) {
                         switch (connectionDefinition.getAdbLevel()) {
                             case LEAVE:
                                 return;

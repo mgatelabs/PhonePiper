@@ -157,14 +157,14 @@ public class RemoteDeviceHelper implements DeviceHelper {
     }
 
     @Override
-    public boolean refresh(AdbWrapper shell, int screenIndex) {
+    public RefreshReceipt refresh(AdbWrapper shell, int screenIndex) {
 
         long startTime = System.nanoTime();
 
         if (!AdbUtils.persistScreen(shell, false, 0)) {
             logger.warn("Helper Image Failure");
             waitFor(250);
-            return false;
+            return new RefreshReceipt(0, System.currentTimeMillis(), false);
         }
         long endTime = System.nanoTime();
         long dif = endTime - startTime;
@@ -177,7 +177,7 @@ public class RemoteDeviceHelper implements DeviceHelper {
         float lastImageDuration = ((float) dif / 1000000000.0f);
         logger.debug("Helper Image Persisted in " + ScriptRunner.THREE_DECIMAL.format(lastImageDuration) + "s");
 
-        return true;
+        return new RefreshReceipt(0, System.currentTimeMillis(), true);
     }
 
     @Override

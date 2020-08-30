@@ -427,7 +427,7 @@ public class ScriptRunner {
                 }
 
                 for (int loopCount = 0; loopCount < 10; loopCount++) {
-                    if (!deviceHelper.refresh(shell, deviceHelper instanceof LocalDeviceHelper ? (loopCount + offset) : 0)) {
+                    if (!deviceHelper.refresh(shell, deviceHelper instanceof LocalDeviceHelper ? (loopCount + offset) : 0).isSuccess()) {
                         switch (connectionDefinition.getAdbLevel()) {
                             case LEAVE:
                                 break;
@@ -525,7 +525,7 @@ public class ScriptRunner {
                     logger.debug("Capture Again Requested");
                     refreshOffset = (refreshOffset + 1) % 10;
 
-                    if (!deviceHelper.refresh(shell, deviceHelper instanceof LocalDeviceHelper ? refreshOffset + 20 : 0)) {
+                    if (!deviceHelper.refresh(shell, deviceHelper instanceof LocalDeviceHelper ? refreshOffset + 20 : 0).isSuccess()) {
                         switch (connectionDefinition.getAdbLevel()) {
                             case LEAVE:
                                 return;

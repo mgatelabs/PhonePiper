@@ -52,7 +52,7 @@ public class NoOpDeviceHelper implements DeviceHelper {
     }
 
     @Override
-    public RefreshReceipt refresh(AdbWrapper shell, int screenIndex) {
+    public RefreshReceipt refresh(AdbWrapper shell) {
         return new RefreshReceipt(0, System.currentTimeMillis(), true);
     }
 

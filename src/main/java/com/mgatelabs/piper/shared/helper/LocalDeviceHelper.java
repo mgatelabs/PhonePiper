@@ -213,7 +213,7 @@ public class LocalDeviceHelper implements DeviceHelper {
     }
 
     @Override
-    public RefreshReceipt refresh(AdbWrapper shell, int screenIndex) {
+    public RefreshReceipt refresh(AdbWrapper shell) {
 
         int receiptIndex = ReceiptPrinter.getNextIndex();
 

@@ -1402,7 +1402,7 @@ public class WebResource {
             checkInitialState();
             if (frameChoices != null) {
                 // Save the Image
-                deviceHelper.refresh(adbWrapper, deviceHelper instanceof LocalDeviceHelper ? 15 : 0);
+                deviceHelper.refresh(adbWrapper);
                 // Get the Image
                 screenWrapper = deviceHelper.download();
                 return new ValueResult().setStatus("ok");

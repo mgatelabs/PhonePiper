@@ -1313,7 +1313,8 @@ $(function(){
     }
 
     function updateControlPreviewImage() {
-        controlImage.src = '/piper/screen?time=' + (new Date().getTime());
+        var quality = $('#qualityCheck').is(':checked');
+        controlImage.src = '/piper/screen?time=' + (new Date().getTime()) + (quality === true ? '&factor=2' : '');
     }
 
     var canvasHolder = $('#canvasHolder');
